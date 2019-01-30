@@ -44,8 +44,8 @@ class app:
 
         if(data_return['url'][0] == config['admin']):
             del data_return['url'][0]
-            if 0 not in data_return['url']:
-                data_return['url'][0]='home'
+            if len(data_return['url']) == 0:
+                data_return['url'][0] = 'home'
             self.front = False
 
         if self.front:
@@ -55,16 +55,17 @@ class app:
             self.controller_dir += 'back/themes/'+config['theme_back']+'/'
             self.view_dir += 'back/themes/'+config['theme_back']+'/'
 
-        controller=self.controller_dir+data_return['url'][0]
+        controller = self.controller_dir+data_return['url'][0]
         my_file = Path(self.root+controller+'.py')
         view.add('file', str(my_file))
         if my_file.is_file():
-            current_module = importlib.import_module(controller.replace("/", "."))
+            current_module = importlib.import_module(
+                controller.replace("/", "."))
         else:
             view.add('existe', 'no')
-        
-        response=current_module.init()
-        
+
+        response = current_module.init()
+
         view.add('url_data', str(data_return['url']))
         view.add('url_extra', str(data_return['extra']))
 

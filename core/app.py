@@ -23,7 +23,8 @@ class app:
         data_return = {}
         data_return['status'] = "200 OK"
         data_return['content_type'] = 'text/html; charset=utf-8'
-        data_return['extra'] = self.parse_extra(parse_qs(environ['QUERY_STRING']))
+        data_return['extra'] = self.parse_extra(
+            parse_qs(environ['QUERY_STRING']))
         data_return['url'] = self.parse_url(environ['PATH_INFO'])
         config = self.get_config()
         site = environ['SERVER_NAME']
@@ -49,11 +50,10 @@ class app:
             self.controller_dir += 'back/'+config['theme_back']+'/'
             self.view_dir += 'back/'+config['theme_back']+'/'
 
-        my_file = Path(self.controller_dir+data_return['url'][0])
+        my_file = Path(self.controller_dir+data_return['url'][0]+'.py')
         if my_file.is_file():
             sys.path.insert(0, self.controller_dir)
-            module = importlib.import_module(data_return['url'][0])
-        
+            module = importlib.import_module(data_return['url'][0]+'.py')
 
         for i in range(5):
             view.add('hola'+str(i), 'hello world ááá bbbaa')

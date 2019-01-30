@@ -10,7 +10,7 @@ def init(environ):
     data_return['status']="200 OK"
     data_return['content_type']='text/html'
     #data_return['url'] = parse_qs(environ['QUERY_STRING'])
-    data_return['url'] = (environ['QUERY_STRING'])
+    data_return['url'] = parse_qs(environ['QUERY_STRING'])
 
     for i in range(10):
         view.add('hola'+str(i),'hello world')

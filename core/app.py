@@ -86,7 +86,7 @@ class app:
             
         else:
             url = ['home']
-        return url.join(' ').split()
+        return ' '.join(url).split()
 
     @staticmethod
     def parse_extra(url):

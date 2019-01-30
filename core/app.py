@@ -4,6 +4,7 @@ import sys
 import os
 from core.view import view
 from cgi import parse_qs
+import json
 
 
 def init(environ):
@@ -12,6 +13,8 @@ def init(environ):
     data_return['content_type'] = 'text/html; charset=utf-8'
     data_return['extra'] = parse_extra(parse_qs(environ['QUERY_STRING']))
     data_return['url'] = parse_url(environ['PATH_INFO'])
+    with open('data.json') as f:
+        data = json.load(f)
 
     for i in range(5):
         view.add('hola'+str(i), 'hello world ááá bbbaa')

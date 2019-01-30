@@ -1,6 +1,6 @@
 import sys
 import os
-from core import app
+from .core import app
 import linecache
 from wsgiref.simple_server import make_server
 from cgi import parse_qs, escape

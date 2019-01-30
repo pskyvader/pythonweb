@@ -51,7 +51,7 @@ class app:
             self.view_dir += 'back/'+config['theme_back']+'/'
 
         my_file = Path('../'+self.controller_dir+data_return['url'][0]+'.py')
-        view.add('file', my_file)
+        view.add('file', str(my_file))
         if my_file.is_file():
             view.add('existe', 'si')
             sys.path.insert(0, self.controller_dir)

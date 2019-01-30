@@ -49,6 +49,6 @@ class app:
 
     def get_config(self):
         if len(app.config)==0:
-            with open(self.app_dir+'data.json') as f:
+            with open(self.app_dir+'config/config.json') as f:
                 app.config = json.load(f)
 

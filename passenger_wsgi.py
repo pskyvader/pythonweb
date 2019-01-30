@@ -24,7 +24,7 @@ def application(environ, start_response):
         linecache.checkcache(filename)
         line = linecache.getline(filename, lineno, f.f_globals)
         es = '''Error in {}, Line {} "{}": {}'''.format(filename, lineno, line.strip(), exc_obj)
-        start_response('200 OK', [('Content-type', 'text/html; charset=utf-8'),])
+        start_response('500 Internal Server Error', [('Content-type', 'text/html; charset=utf-8'),])
         ret=es
 
     return [bytes(ret, 'utf-8')]

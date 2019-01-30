@@ -17,7 +17,7 @@ class view:
     def render():
         data_return=[]
         for key, value in view.data.items():
-            a='<div>'+key+':'+value+'</div>'
+            a='<div>'+key+':'+str(value)+'</div>'
             data_return.append(a)
         body='<br/>'.join(data_return)
         

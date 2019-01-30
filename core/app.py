@@ -19,6 +19,7 @@ class app:
         data_return['status'] = "200 OK"
         data_return['content_type'] = 'text/html; charset=utf-8'
         data_return['extra'] = self.parse_extra(parse_qs(environ['QUERY_STRING']))
+        data_return['extra'] = environ
         data_return['url'] = self.parse_url(environ['PATH_INFO'])
         config=self.get_config()
         if(data_return['url'][0]==config['admin']):

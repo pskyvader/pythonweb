@@ -4,7 +4,6 @@ from core import app
 import linecache
 from wsgiref.simple_server import make_server
 
-#sys.path.insert(0, os.getcwd())
 sys.path.insert(0, os.path.dirname(__file__))
 
 def application(environ, start_response):

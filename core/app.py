@@ -11,7 +11,7 @@ def init(environ):
     data_return['content_type']='text/html'
     data_return['url'] = parse_url(parse_qs(environ['QUERY_STRING']))
 
-    for i in range(20):
+    for i in range(5):
         view.add('hola'+str(i),'hello world ááá bbbaa')
 
     view.add('url_data',str(data_return['url']))

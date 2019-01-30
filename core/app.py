@@ -10,10 +10,7 @@ import json
 class app:
     config={}
     app_dir='app/'
-    def __init__(self):
-        app_dir='app/'
-        
-    def init(environ):
+    def init(self,environ):
         data_return = {}
         data_return['status'] = "200 OK"
         data_return['content_type'] = 'text/html; charset=utf-8'
@@ -53,6 +50,6 @@ class app:
     @staticmethod
     def get_config():
         if len(app.config)==0:
-            with open(app_dir 'data.json') as f:
+            with open(app_dir+'data.json') as f:
                 app.config = json.load(f)
 

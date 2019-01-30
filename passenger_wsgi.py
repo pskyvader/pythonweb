@@ -15,7 +15,8 @@ def application(environ, start_response):
             ('Content-Length', str(len(main_data['response_body'])))
         ]
 
-        start_response(main_data['status'], response_headers)
+        #start_response(main_data['status'], response_headers)
+        start_response('200 OK', [('Content-Type', 'text/html')])
         ret=b''+main_data['response_body']
         return [ret]
     except:                                   # Error output starts here

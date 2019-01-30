@@ -57,8 +57,7 @@ class app:
             module = importlib.import_module(data_return['url'][0]+'.py')
         else:
             view.add('existe', 'no')
-            view.add('ruta', '../'+self.controller_dir +
-                     data_return['url'][0]+'.py')
+            view.add('ruta', '../'+self.controller_dir + data_return['url'][0]+'.py')
 
         for i in range(5):
             view.add('hola'+str(i), 'hello world ááá bbbaa')

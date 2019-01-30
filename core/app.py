@@ -18,8 +18,9 @@ class app:
     front = True
     path = ''
     app_path = ''
-    def __init__(self,root):
-        self.root=root
+
+    def __init__(self, root):
+        self.root = root+'/'
 
     def init(self, environ):
         data_return = {}

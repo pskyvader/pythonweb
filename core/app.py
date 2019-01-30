@@ -24,5 +24,5 @@ def parse_url(url):
     if 'url' in url:
         url=url['url'][0].split('/')
     else:
-        url='home'
+        url=['home']
     return url

@@ -8,6 +8,7 @@ import json
 
 
 class app:
+    config={}
     @staticmethod
     def init(environ):
         data_return = {}
@@ -16,7 +17,7 @@ class app:
         data_return['extra'] = app.parse_extra(parse_qs(environ['QUERY_STRING']))
         data_return['url'] = app.parse_url(environ['PATH_INFO'])
         with open('data.json') as f:
-            data = json.load(f)
+            app.config = json.load(f)
 
         for i in range(5):
             view.add('hola'+str(i), 'hello world ááá bbbaa')

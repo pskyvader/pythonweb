@@ -28,7 +28,7 @@ class app:
             self.controller_dir='front'
         else:
             self.controller_dir='back'
-
+        
         for i in range(5):
             view.add('hola'+str(i), 'hello world ááá bbbaa')
 

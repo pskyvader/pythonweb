@@ -10,12 +10,22 @@ import json
 class app:
     config={}
     app_dir='app/'
+    url={}
+    front=True
     def init(self,environ):
         data_return = {}
         data_return['status'] = "200 OK"
         data_return['content_type'] = 'text/html; charset=utf-8'
         data_return['extra'] = self.parse_extra(parse_qs(environ['QUERY_STRING']))
         data_return['url'] = self.parse_url(environ['PATH_INFO'])
+        config=self.get_config()
+        if(data_return['url'][0]==config['admin']):
+            front=False
+        
+
+
+
+
 
         for i in range(5):
             view.add('hola'+str(i), 'hello world ááá bbbaa')

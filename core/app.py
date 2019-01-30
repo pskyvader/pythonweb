@@ -35,12 +35,12 @@ class app:
         www           = "www." if config['www'] else ""
 
         self.path = https + www + site + "/";
-        if subdirectorio != ''
+        if subdirectorio != '':
             self.path += subdirectorio + "/"
-            subdirectorio = "/" + $subdirectorio + "/"
-         else {
-            $subdirectorio = "/";
-        }
+            subdirectorio = "/" + subdirectorio + "/"
+         else :
+            subdirectorio = "/"
+        
 
         
         for i in range(5):

@@ -25,6 +25,8 @@ def parse_url(url):
         url=url['url'][0].split('/')
         if url[0] == 'manifest.js':
             url[0] = 'manifest'
+        else if url[0] == 'sw.js':
+            url[0] = 'sw'
     else:
         url=['home']
     return url

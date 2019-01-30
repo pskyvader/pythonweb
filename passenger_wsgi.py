@@ -11,12 +11,12 @@ def application(environ, start_response):
     try:
         main_data=app.init(environ)
         response_headers = [
-            ('Content-Type', main_data['content_type']),
+            ('Content-Type', main_data['content_type']+'; charset=utf-8'),
             ('Content-Length', str(len(main_data['response_body'])))
         ]
 
         #start_response(main_data['status'], response_headers)
-        start_response('200 OK', [('Content-Type', 'text/html')])
+        start_response('200 OK', [('Content-Type', 'text/html; charset=utf-8')])
         ret =main_data['response_body']
     except:                                   # Error output starts here
         exc_type, exc_obj, tb = sys.exc_info()

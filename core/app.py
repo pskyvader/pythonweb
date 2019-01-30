@@ -10,7 +10,8 @@ import json
 class app:
     config={}
     app_dir='app/'
-    controller_dir=''
+    controller_dir=app_dir+'controllers/'
+    view_dir=app_dir+'views/'
     url={}
     front=True
     path=''
@@ -22,13 +23,6 @@ class app:
         data_return['extra'] = environ
         data_return['url'] = self.parse_url(environ['PATH_INFO'])
         config=self.get_config()
-        if(data_return['url'][0]==config['admin']):
-            self.front=False
-        
-        if self.front:
-            self.controller_dir='front'
-        else:
-            self.controller_dir='back'
         site          = environ['SERVER_NAME']
         subdirectorio = config['dir']
         https         = "https://" if config['https']  else "http://"
@@ -42,6 +36,15 @@ class app:
             subdirectorio = "/"
         
 
+        if(data_return['url'][0]==config['admin']):
+            self.front=False
+        
+        if self.front:
+            self.controller_dir='front'
+        else:
+            self.controller_dir='back'
+            
+        
         
         for i in range(5):
             view.add('hola'+str(i), 'hello world ááá bbbaa')

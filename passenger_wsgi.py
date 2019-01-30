@@ -8,9 +8,10 @@ sys.path.insert(0, os.path.dirname(__file__))
 
 
 def application(environ, start_response):
+    app_web=app.app(os.path.dirname(__file__))
+    main_data = app_web.init(environ)
     try:
-        app_web=app.app(os.path.dirname(__file__))
-        main_data = app_web.init(environ)
+        
         response_headers = [
             ('Content-Type', main_data['content_type']),
             ('Content-Length', str(len(main_data['response_body'])))

@@ -57,7 +57,6 @@ class app:
 
         controller = self.controller_dir+data_return['url'][0]
         my_file = Path(self.root+controller+'.py')
-        view.add('file', str(my_file))
         if my_file.is_file():
             current_module = importlib.import_module( controller.replace("/", "."))
             response = current_module.init()

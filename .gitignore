@@ -106,5 +106,4 @@ venv.bak/
 
 #custom
 .autogit
-.vscode
 server.py

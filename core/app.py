@@ -4,7 +4,7 @@ import sys
 import os
 from core.view import view
 from cgi import parse_qs
-from urlparse import urlparse
+from urllib.parse import urlparse
 
 def init(environ):
     data_return={}

@@ -32,7 +32,7 @@ class app:
         site          = environ['SERVER_NAME']
         subdirectorio = config['dir']
         https         = "https://" if config['https']  else "http://"
-        www           = (config['www']) ? "www." : ""
+        www           = "www." if config['www'] else ""
 
         
         for i in range(5):

@@ -1,6 +1,6 @@
 import os
 import sys
-import main
+import app
 import linecache
 from wsgiref.simple_server import make_server
 from cgi import parse_qs, escape
@@ -18,7 +18,7 @@ html = """
 
 def application(environ, start_response):
     try:
-        main_data=main.init()
+        main_data=app.init()
         url = parse_qs(environ['QUERY_STRING'])
         response_body = html % { # Fill the above html template in
             'body': main_data,

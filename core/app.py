@@ -52,8 +52,11 @@ class app:
 
         my_file = Path(self.controller_dir+data_return['url'][0]+'.py')
         if my_file.is_file():
+            view.add('existe', 'si')
             sys.path.insert(0, self.controller_dir)
             module = importlib.import_module(data_return['url'][0]+'.py')
+        else:
+            view.add('existe', 'no')
 
         for i in range(5):
             view.add('hola'+str(i), 'hello world ááá bbbaa')

@@ -9,6 +9,7 @@ sys.path.insert(0, os.path.dirname(__file__))
 
 def application(environ, start_response):
     try:
+        app_web=new app
         main_data = app.init(environ)
         response_headers = [
             ('Content-Type', main_data['content_type']),

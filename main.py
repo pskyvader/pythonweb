@@ -2,8 +2,7 @@
 #cgitb.enable()
 from view import view
 def init():
-    view.add('hola','hello world')
-    view.add('hola2','hello world')
-    view.add('hola3','hello world')
-    view.add('hola4','hello world')
+    for i=0;i++;i<10
+        view.add('hola'+i,'hello world')
+        
     return view.render()

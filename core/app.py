@@ -9,7 +9,7 @@ import json
 
 class app:
     config={}
-    app='app/'
+    app_dir='app/'
     @staticmethod
     def init(environ):
         data_return = {}
@@ -51,6 +51,6 @@ class app:
     @staticmethod
     def get_config():
         if len(app.config)==0:
-            with open(this.app 'data.json') as f:
+            with open(app_dir 'data.json') as f:
                 app.config = json.load(f)
 

@@ -30,5 +30,5 @@ def application(environ, start_response):
         return [es]
 
 
-main_data=app.init(environ)
+main_data=app.init('s')
 print(main_data)

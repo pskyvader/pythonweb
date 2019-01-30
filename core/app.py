@@ -10,6 +10,8 @@ import json
 class app:
     config={}
     app_dir='app/'
+    def __init__(self):
+        return true
     def init(environ):
         data_return = {}
         data_return['status'] = "200 OK"

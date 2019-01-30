@@ -52,7 +52,8 @@ class app:
 
         my_file = Path(self.controller_dir+data_return['url'][0])
         if my_file.is_file():
-            from self.controller_dir import data_return['url'][0]
+            sys.path.insert(0, self.controller_dir)
+            import data_return['url'][0]
         
 
         for i in range(5):

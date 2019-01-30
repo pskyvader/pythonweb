@@ -31,7 +31,7 @@ class app:
             self.controller_dir='back'
         site          = environ['SERVER_NAME']
         subdirectorio = config['dir']
-        https         = (config['https']) ? "https://" : "http://"
+        https         = if config['https']: "https://" else "http://"
         www           = (config['www']) ? "www." : ""
 
         

@@ -9,8 +9,8 @@ def init(environ):
     data_return={}
     data_return['status']="200 OK"
     data_return['content_type']='text/html; charset=utf-8'
-    #data_return['url'] = parse_url(parse_qs(environ['QUERY_STRING']))
-    data_return['url'] = environ
+    data_return['extra'] = parse_url(parse_qs(environ['QUERY_STRING']))
+    data_return['url'] = parse_url(parse_qs(environ['PATH_INFO']))
 
     for i in range(5):
         view.add('hola'+str(i),'hello world ááá bbbaa')
@@ -22,7 +22,6 @@ def init(environ):
     return data_return
 
 def parse_url(url):
-    return url
     if 'url' in url:
         url=url['url'][0].split('/')
         if url[0] == 'manifest.js':

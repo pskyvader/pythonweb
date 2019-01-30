@@ -38,7 +38,7 @@ class app:
         if subdirectorio != '':
             self.path += subdirectorio + "/"
             subdirectorio = "/" + subdirectorio + "/"
-         else :
+        else :
             subdirectorio = "/"
         
 

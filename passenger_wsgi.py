@@ -11,7 +11,6 @@ sys.path.insert(0, os.path.dirname(__file__))
 def application(environ, start_response):
     try:
         main_data=app.init(environ)
-        status = main_data.status
         response_headers = [
             ('Content-Type', main_data.content_type),
             ('Content-Length', str(len(main_data.response_body)))

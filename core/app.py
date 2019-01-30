@@ -5,6 +5,7 @@ import os
 from core.view import view
 from cgi import parse_qs
 import json
+from pathlib import Path
 
 
 class app:
@@ -39,14 +40,19 @@ class app:
             subdirectorio = "/"
 
         if(data_return['url'][0] == config['admin']):
+            del data_return['url'][0]
             self.front = False
 
         if self.front:
-            self.controller_dir += 'front/'+config['theme']
-            self.view_dir += 'front/'+config['theme']
+            self.controller_dir += 'front/'+config['theme']+'/'
+            self.view_dir += 'front/'+config['theme']+'/'
         else:
-            self.controller_dir += 'back/'+config['theme_back']
-            self.view_dir += 'back/'+config['theme_back']
+            self.controller_dir += 'back/'+config['theme_back']+'/'
+            self.view_dir += 'back/'+config['theme_back']+'/'
+
+        my_file = Path(self.controller_dir+)
+        if my_file.is_file():
+        
 
         for i in range(5):
             view.add('hola'+str(i), 'hello world ááá bbbaa')

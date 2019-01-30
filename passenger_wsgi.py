@@ -16,8 +16,10 @@ def application(environ, start_response):
         ]
 
         start_response(main_data['status'], response_headers)
-        
-        return main_data['response_body']
+        #return main_data['response_body']
+
+        start_response('200 OK', [('Content-Type', 'text/html')])
+        return [b'Hello, world!']
     except:                                   # Error output starts here
         exc_type, exc_obj, tb = sys.exc_info()
         f = tb.tb_frame

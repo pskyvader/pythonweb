@@ -34,7 +34,7 @@ def application(environ, start_response):
         start_response(status, response_headers)
         return [response_body]
     except:                                   # Error output starts here
-        exc_type, exc_obj, tb = sys.exc_info()
+        exc_obj, tb = sys.exc_info()
         f = tb.tb_frame
         lineno = tb.tb_lineno
         filename = f.f_code.co_filename

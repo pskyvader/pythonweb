@@ -6,13 +6,15 @@ from core.view import view
 from cgi import parse_qs
 import json
 
+
 class app:
+    @staticmethod
     def init(environ):
         data_return = {}
         data_return['status'] = "200 OK"
         data_return['content_type'] = 'text/html; charset=utf-8'
-        data_return['extra'] = parse_extra(parse_qs(environ['QUERY_STRING']))
-        data_return['url'] = parse_url(environ['PATH_INFO'])
+        data_return['extra'] = app.parse_extra(parse_qs(environ['QUERY_STRING']))
+        data_return['url'] = app.parse_url(environ['PATH_INFO'])
         with open('data.json') as f:
             data = json.load(f)
 
@@ -26,7 +28,7 @@ class app:
 
         return data_return
 
-
+    @staticmethod
     def parse_url(url):
         url = url.lstrip('/')
         if url != '':
@@ -40,7 +42,7 @@ class app:
             url = ['home']
         return url
 
-
+    @staticmethod
     def parse_extra(url):
         if 'url' in url:
             del url['url']

@@ -15,8 +15,8 @@ def application(environ, start_response):
             ('Content-Length', str(len(main_data['response_body'])))
         ]
 
-        #start_response(main_data['status'], response_headers)
-        start_response('200 OK', [('Content-Type', 'text/html; charset=utf-8')])
+        start_response(main_data['status'], response_headers)
+        #start_response('200 OK', [('Content-Type', 'text/html; charset=utf-8')])
         ret =main_data['response_body']
     except:                                   # Error output starts here
         exc_type, exc_obj, tb = sys.exc_info()
@@ -26,7 +26,7 @@ def application(environ, start_response):
         linecache.checkcache(filename)
         line = linecache.getline(filename, lineno, f.f_globals)
         es = '''Error in {}, Line {} "{}": {}'''.format(filename, lineno, line.strip(), exc_obj)
-        start_response('200 OK', [('Content-type', 'text/html'),])
+        start_response('200 OK', [('Content-type', 'text/html; charset=utf-8'),])
         ret=es
 
     return [bytes(ret, 'utf-8')]

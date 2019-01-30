@@ -5,13 +5,13 @@ import linecache
 from wsgiref.simple_server import make_server
 from cgi import parse_qs, escape
 
-sys.path.insert(0, os.getcwd())
-#sys.path.insert(0, os.path.dirname(__file__))
+#sys.path.insert(0, os.getcwd())
+sys.path.insert(0, os.path.dirname(__file__))
 
 def application(environ, start_response):
     try:
         main_data=app.init(environ)
-        print(main_data)
+        status = main_data.status
         response_headers = [
             ('Content-Type', main_data.content_type),
             ('Content-Length', str(len(main_data.response_body)))

@@ -31,4 +31,4 @@ def application(environ, start_response):
 
 
 main_data=app.init('s')
-print(main_data)
+print(main_data['content_type'])

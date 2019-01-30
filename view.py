@@ -10,7 +10,5 @@ class view:
         for key, value in view.data.items():
             a='<div>'+key+':'+value+'</div>'
             data_return.append(a)
-        else:
-            pass
         body='<br/>'.join(data_return)
         return body

@@ -12,12 +12,12 @@ def application(environ, start_response):
     try:
         main_data=app.init(environ)
         response_headers = [
-            ('Content-Type', main_data.content_type),
-            ('Content-Length', str(len(main_data.response_body)))
+            ('Content-Type', main_data['content_type']),
+            ('Content-Length', str(len(main_data['response_body'])))
         ]
 
-        start_response(main_data.status, response_headers)
-        return [main_data.response_body]
+        start_response(main_data['status'], response_headers)
+        return [main_data['response_body']]
     except:                                   # Error output starts here
         exc_type, exc_obj, tb = sys.exc_info()
         f = tb.tb_frame
@@ -28,7 +28,3 @@ def application(environ, start_response):
         es = '''Error in {}, Line {} "{}": {}'''.format(filename, lineno, line.strip(), exc_obj)
         start_response('200 OK', [('Content-type', 'text/html'),])
         return [es]
-
-
-main_data=app.init('s')
-print(main_data['content_type'])

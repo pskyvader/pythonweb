@@ -50,8 +50,9 @@ class app:
             self.controller_dir += 'back/'+config['theme_back']+'/'
             self.view_dir += 'back/'+config['theme_back']+'/'
 
-        my_file = Path(self.controller_dir+)
+        my_file = Path(self.controller_dir+data_return['url'][0])
         if my_file.is_file():
+            from self.controller_dir import data_return['url'][0]
         
 
         for i in range(5):

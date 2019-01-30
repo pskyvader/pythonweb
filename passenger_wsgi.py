@@ -8,7 +8,7 @@ from cgi import parse_qs, escape
 sys.path.insert(0, os.getcwd())
 #sys.path.insert(0, os.path.dirname(__file__))
 
-def application(environ):
+def application(environ, start_response):
     try:
         main_data=app.init(environ)
         print(main_data)
@@ -17,7 +17,7 @@ def application(environ):
             ('Content-Length', str(len(main_data.response_body)))
         ]
 
-        #start_response(main_data.status, response_headers)
+        start_response(main_data.status, response_headers)
         return [main_data.response_body]
     except:                                   # Error output starts here
         exc_type, exc_obj, tb = sys.exc_info()
@@ -29,5 +29,3 @@ def application(environ):
         es = '''Error in {}, Line {} "{}": {}'''.format(filename, lineno, line.strip(), exc_obj)
         start_response('200 OK', [('Content-type', 'text/html'),])
         return [es]
-
-application('aa')

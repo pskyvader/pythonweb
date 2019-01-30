@@ -10,7 +10,6 @@ html = """
 <html>
     <body>
         %(body)s
-        %(url)s
     </body>
 </html>
 """
@@ -18,10 +17,8 @@ html = """
 def application(environ, start_response):
     try:
         main_data=app.init()
-        url = parse_qs(environ['QUERY_STRING'])
         response_body = html % { # Fill the above html template in
-            'body': main_data,
-            'url': url,
+            'body': main_data
         }
 
         status = '200 OK'

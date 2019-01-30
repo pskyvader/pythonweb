@@ -5,9 +5,6 @@ import os
 from core.view import view
 from cgi import parse_qs
 
-sys.path.insert(0, os.path.dirname(__file__))
-
-
 def init(environ):
     data_return={}
     data_return['status']="200 OK"

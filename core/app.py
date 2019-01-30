@@ -16,6 +16,7 @@ def init(environ):
         view.add('hola'+str(i),'hello world ááá bbbaa')
 
     view.add('url_data',str(data_return['url']))
+    view.add('url_extra',str(data_return['extra']))
     
     data_return['response_body']=view.render()
     

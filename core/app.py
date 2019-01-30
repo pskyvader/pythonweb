@@ -23,7 +23,7 @@ def init(environ):
 def parse_url(url):
     if 'url' in url:
         url=url['url'][0].split('/')
-        if url[0] == 'manifest.js'
+        if url[0] == 'manifest.js':
             url[0] = 'manifest'
     else:
         url=['home']

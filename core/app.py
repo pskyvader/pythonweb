@@ -45,7 +45,7 @@ class app:
         if(data_return['url'][0] == config['admin']):
             self.front = False
             del data_return['url'][0]
-            view.add('urls', str(data_return['url']))
+            view.add('urls', str(len(data_return['url'])))
             if len(data_return['url']) == 0:
                 data_return['url'][0] = 'home'
 

@@ -1,6 +1,6 @@
 #import cgitb
 #cgitb.enable()
-import view
+from view import view
 def init():
     view.add('hola','hello world')
     view.add('hola2','hello world')

@@ -60,6 +60,8 @@ class app:
             module = importlib.import_module(controller.replace("/", "."))
         else:
             view.add('existe', 'no')
+        
+        module.init()
 
         for i in range(5):
             view.add('hola'+str(i), 'hello world ááá bbbaa')

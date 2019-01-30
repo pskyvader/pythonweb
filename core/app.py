@@ -12,7 +12,7 @@ def init(environ):
     data_return['url'] = parse_url(parse_qs(environ['QUERY_STRING']))
 
     for i in range(10):
-        view.add('hola'+str(i),'hello world')
+        view.add('hola'+str(i),'hello world ááá bbbaa')
 
     view.add('url_data',str(data_return['url']))
     

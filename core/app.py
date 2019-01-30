@@ -1,5 +1,7 @@
 #import cgitb
 #cgitb.enable()
+
+sys.path.insert(0, os.path.dirname(__file__))
 from view import view
 def init():
     for i in range(10):

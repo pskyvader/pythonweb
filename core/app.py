@@ -14,7 +14,7 @@ def init(environ):
     for i in range(10):
         view.add('hola'+str(i),'hello world')
 
-    view.add('url_data',str(parse_qs(environ['QUERY_STRING'])))
+    view.add('url_data',str(data_return['url']))
     
     data_return['response_body']=view.render()
     

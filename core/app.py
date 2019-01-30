@@ -8,7 +8,7 @@ from cgi import parse_qs
 sys.path.insert(0, os.path.dirname(__file__))
 
 
-def init():
+def init(environ):
     url = parse_qs(environ['QUERY_STRING'])
     for i in range(10):
         view.add('hola'+str(i),'hello world')

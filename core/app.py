@@ -20,7 +20,7 @@ class app:
         data_return['url'] = self.parse_url(environ['PATH_INFO'])
         config=self.get_config()
         if(data_return['url'][0]==config['admin']):
-            front=False
+            self.front=False
         
 
 
@@ -59,4 +59,5 @@ class app:
         if len(app.config)==0:
             with open(self.app_dir+'config/config.json') as f:
                 app.config = json.load(f)
+        return app.config
 

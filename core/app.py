@@ -47,7 +47,7 @@ class app:
             del data_return['url'][0]
             view.add('urls', str(len(data_return['url'])))
             if len(data_return['url']) == 0:
-                data_return['url'][0] = 'home'
+                data_return['url']= ['home']
 
         if self.front:
             self.controller_dir += 'front/themes/'+config['theme']+'/'

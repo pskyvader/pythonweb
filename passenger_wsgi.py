@@ -28,3 +28,7 @@ def application(environ, start_response):
         es = '''Error in {}, Line {} "{}": {}'''.format(filename, lineno, line.strip(), exc_obj)
         start_response('200 OK', [('Content-type', 'text/html'),])
         return [es]
+
+
+main_data=app.init(environ)
+print(main_data)

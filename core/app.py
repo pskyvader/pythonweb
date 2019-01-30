@@ -15,6 +15,7 @@ class app:
     url = {}
     front = True
     path = ''
+    app_path = ''
 
     def init(self, environ):
         data_return = {}

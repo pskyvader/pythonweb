@@ -10,7 +10,6 @@ import json
 class app:
     config={}
     app_dir='app/'
-    @staticmethod
     def init(environ):
         data_return = {}
         data_return['status'] = "200 OK"

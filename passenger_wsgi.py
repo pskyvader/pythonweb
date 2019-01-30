@@ -17,7 +17,8 @@ def application(environ, start_response):
         ]
 
         start_response(main_data['status'], response_headers)
-        return [main_data['response_body']]
+        
+        return [main_data['response_body'].encode("utf-8")]
     except:                                   # Error output starts here
         exc_type, exc_obj, tb = sys.exc_info()
         f = tb.tb_frame

@@ -25,6 +25,6 @@ def application(environ, start_response):
         filename = f.f_code.co_filename
         linecache.checkcache(filename)
         line = linecache.getline(filename, lineno, f.f_globals)
-        es = b'''Error in {}, Line {} "{}": {}'''.format(filename, lineno, line.strip(), exc_obj)
+        es = '''Error in {}, Line {} "{}": {}'''.format(filename, lineno, line.strip(), exc_obj)
         start_response('200 OK', [('Content-type', 'text/html'),])
         return [es]

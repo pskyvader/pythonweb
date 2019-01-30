@@ -16,7 +16,6 @@ def application(environ, start_response):
         ]
 
         start_response(main_data['status'], response_headers)
-        #start_response('200 OK', [('Content-Type', 'text/html; charset=utf-8')])
         ret =main_data['response_body']
     except:                                   # Error output starts here
         exc_type, exc_obj, tb = sys.exc_info()

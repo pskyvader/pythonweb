@@ -42,11 +42,11 @@ class app:
             self.front = False
 
         if self.front:
-            self.controller_dir += 'front/'
-            self.view_dir += 'front/'
+            self.controller_dir += 'front/'+config['theme']
+            self.view_dir += 'front/'+config['theme']
         else:
-            self.controller_dir += 'back/'
-            self.view_dir += 'back/'
+            self.controller_dir += 'back/'+config['theme_back']
+            self.view_dir += 'back/'+config['theme_back']
 
         for i in range(5):
             view.add('hola'+str(i), 'hello world ááá bbbaa')

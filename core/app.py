@@ -6,6 +6,7 @@ from core.view import view
 from cgi import parse_qs
 import json
 from pathlib import Path
+import importlib
 
 
 class app:
@@ -53,7 +54,7 @@ class app:
         my_file = Path(self.controller_dir+data_return['url'][0])
         if my_file.is_file():
             sys.path.insert(0, self.controller_dir)
-            import data_return['url'][0]
+            module = importlib.import_module(data_return['url'][0])
         
 
         for i in range(5):

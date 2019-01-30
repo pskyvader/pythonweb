@@ -48,3 +48,8 @@ class app:
         if 'url' in url:
             del url['url']
         return url
+
+    @staticmethod
+    def get_config():
+        if len(app.config)==0
+            

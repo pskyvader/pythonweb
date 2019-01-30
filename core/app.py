@@ -50,14 +50,15 @@ class app:
             self.controller_dir += 'back/'+config['theme_back']+'/'
             self.view_dir += 'back/'+config['theme_back']+'/'
 
-        my_file = '../'+self.controller_dir+data_return['url'][0]+'.py'
-        if os.path.isfile(my_file):
+        my_file = Path('../'+self.controller_dir+data_return['url'][0]+'.py')
+        view.add('file', my_file)
+        if my_file.is_file():
             view.add('existe', 'si')
             sys.path.insert(0, self.controller_dir)
             module = importlib.import_module(data_return['url'][0]+'.py')
         else:
             view.add('existe', 'no')
-            view.add('ruta', '../'+self.controller_dir + data_return['url'][0]+'.py')
+            view.add('ruta', '../'+self.controller_dir+data_return['url'][0]+'.py')
 
         for i in range(5):
             view.add('hola'+str(i), 'hello world ááá bbbaa')

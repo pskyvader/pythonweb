@@ -47,11 +47,11 @@ class app:
             self.front = False
 
         if self.front:
-            self.controller_dir += 'front/'+config['theme']+'/'
-            self.view_dir += 'front/'+config['theme']+'/'
+            self.controller_dir += 'front/themes/'+config['theme']+'/'
+            self.view_dir += 'front/themes/'+config['theme']+'/'
         else:
-            self.controller_dir += 'back/'+config['theme_back']+'/'
-            self.view_dir += 'back/'+config['theme_back']+'/'
+            self.controller_dir += 'back/themes/'+config['theme_back']+'/'
+            self.view_dir += 'back/themes/'+config['theme_back']+'/'
 
         my_file = Path(self.root+self.controller_dir+data_return['url'][0]+'.py')
         view.add('file', str(my_file))

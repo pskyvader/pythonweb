@@ -57,11 +57,11 @@ class app:
         my_file = Path(self.root+controller+'.py')
         view.add('file', str(my_file))
         if my_file.is_file():
-            module = importlib.import_module(controller.replace("/", "."))
+            current_module = importlib.import_module(controller.replace("/", "."))
         else:
             view.add('existe', 'no')
         
-        response=module.init()
+        response=current_module.init()
         
         view.add('url_data', str(data_return['url']))
         view.add('url_extra', str(data_return['extra']))

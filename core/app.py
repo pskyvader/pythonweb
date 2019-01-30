@@ -22,7 +22,7 @@ def init(environ):
     return data_return
 
 def parse_url(url):
-    return url
+    return url.lstrip('/')
     if 'url' in url:
         url=url['url'][0].split('/')
         if url[0] == 'manifest.js':

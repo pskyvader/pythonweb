@@ -8,7 +8,7 @@ from cgi import parse_qs
 def init(environ):
     data_return={}
     data_return['status']="200 OK"
-    data_return['content_type']='text/html'
+    data_return['content_type']='text/html; charset=utf-8'
     data_return['url'] = parse_url(parse_qs(environ['QUERY_STRING']))
 
     for i in range(5):

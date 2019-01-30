@@ -10,7 +10,7 @@ def application(environ, start_response):
     try:
         main_data=app.init(environ)
         response_headers = [
-            ('Content-Type', main_data['content_type']+'; charset=utf-8'),
+            ('Content-Type', main_data['content_type']),
             ('Content-Length', str(len(main_data['response_body'])))
         ]
 

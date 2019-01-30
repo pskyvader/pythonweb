@@ -8,44 +8,45 @@ import json
 
 
 class app:
-    config={}
-    app_dir='app/'
-    controller_dir=app_dir+'controllers/'
-    view_dir=app_dir+'views/'
-    url={}
-    front=True
-    path=''
-    def init(self,environ):
+    config = {}
+    app_dir = 'app/'
+    controller_dir = app_dir+'controllers/'
+    view_dir = app_dir+'views/'
+    url = {}
+    front = True
+    path = ''
+
+    def init(self, environ):
         data_return = {}
         data_return['status'] = "200 OK"
         data_return['content_type'] = 'text/html; charset=utf-8'
-        data_return['extra'] = self.parse_extra(parse_qs(environ['QUERY_STRING']))
+        data_return['extra'] = self.parse_extra(
+            parse_qs(environ['QUERY_STRING']))
         data_return['extra'] = environ
         data_return['url'] = self.parse_url(environ['PATH_INFO'])
-        config=self.get_config()
-        site          = environ['SERVER_NAME']
+        config = self.get_config()
+        site = environ['SERVER_NAME']
         subdirectorio = config['dir']
-        https         = "https://" if config['https']  else "http://"
-        www           = "www." if config['www'] else ""
+        https = "https://" if config['https'] else "http://"
+        www = "www." if config['www'] else ""
 
-        self.path = https + www + site + "/";
+        self.path = https + www + site + "/"
         if subdirectorio != '':
             self.path += subdirectorio + "/"
             subdirectorio = "/" + subdirectorio + "/"
-        else :
-            subdirectorio = "/"
-        
-
-        if(data_return['url'][0]==config['admin']):
-            self.front=False
-        
-        if self.front:
-            self.controller_dir='front'
         else:
-            self.controller_dir='back'
-            
-        
-        
+            subdirectorio = "/"
+
+        if(data_return['url'][0] == config['admin']):
+            self.front = False
+
+        if self.front:
+            self.controller_dir += 'front/'
+            self.view_dir += 'front/'
+        else:
+            self.controller_dir += 'back/'
+            self.view_dir += 'back/'
+
         for i in range(5):
             view.add('hola'+str(i), 'hello world ááá bbbaa')
 
@@ -77,8 +78,7 @@ class app:
         return url
 
     def get_config(self):
-        if len(app.config)==0:
+        if len(app.config) == 0:
             with open(self.app_dir+'config/config.json') as f:
                 app.config = json.load(f)
         return app.config
-

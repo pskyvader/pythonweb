@@ -53,11 +53,8 @@ class app:
             self.controller_dir += 'back/'+config['theme_back']+'/'
             self.view_dir += 'back/'+config['theme_back']+'/'
 
-        my_file = Path(self.controller_dir+data_return['url'][0]+'.py')
-        my_file = Path(self.root+'prueba.txt')
-        view.add('file', str(my_file))
+        my_file = Path(self.root+self.controller_dir+data_return['url'][0]+'.py')
         if my_file.is_file():
-            view.add('existe', 'si')
             sys.path.insert(0, self.controller_dir)
             module = importlib.import_module(data_return['url'][0]+'.py')
         else:

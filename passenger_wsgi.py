@@ -7,14 +7,6 @@ from cgi import parse_qs, escape
 
 sys.path.insert(0, os.path.dirname(__file__))
 
-html = """
-<html>
-    <body>
-        %(body)s
-    </body>
-</html>
-"""
-
 def application(environ, start_response):
     try:
         main_data=app.init(environ)

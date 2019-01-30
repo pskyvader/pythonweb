@@ -9,6 +9,7 @@ import json
 
 class app:
     config={}
+    app='app/'
     @staticmethod
     def init(environ):
         data_return = {}

@@ -83,9 +83,10 @@ class app:
             else:
                 if url[0] == 'sw.js':
                     url[0] = 'sw'
+            
         else:
             url = ['home']
-        return url
+        return ' '.join(url).split()
 
     @staticmethod
     def parse_extra(url):

@@ -3,6 +3,7 @@ import os
 from core import app
 import linecache
 from wsgiref.simple_server import make_server
+from cgi import parse_qs, escape
 
 sys.path.insert(0, os.path.dirname(__file__))
 
@@ -16,19 +17,15 @@ html = """
 
 def application(environ, start_response):
     try:
-        main_data=app.init()
-        response_body = html % { # Fill the above html template in
-            'body': main_data
-        }
-
-        status = '200 OK'
+        main_data=app.init(environ)
+        status = main_data.status
         response_headers = [
-            ('Content-Type', 'text/html'),
-            ('Content-Length', str(len(response_body)))
+            ('Content-Type', main_data.content_type),
+            ('Content-Length', str(len(main_data.response_body)))
         ]
 
         start_response(status, response_headers)
-        return [response_body]
+        return [main_data.response_body]
     except:                                   # Error output starts here
         exc_type, exc_obj, tb = sys.exc_info()
         f = tb.tb_frame

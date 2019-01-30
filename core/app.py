@@ -22,7 +22,7 @@ def init(environ):
 
 def parse_url(url):
     key='url'
-    if key in url
+    if key in url:
         url=url['url'][0].split('/')
     else:
         url='home'

@@ -14,8 +14,8 @@ class app:
         data_return = {}
         data_return['status'] = "200 OK"
         data_return['content_type'] = 'text/html; charset=utf-8'
-        data_return['extra'] = app.parse_extra(parse_qs(environ['QUERY_STRING']))
-        data_return['url'] = app.parse_url(environ['PATH_INFO'])
+        data_return['extra'] = self.parse_extra(parse_qs(environ['QUERY_STRING']))
+        data_return['url'] = self.parse_url(environ['PATH_INFO'])
 
         for i in range(5):
             view.add('hola'+str(i), 'hello world ááá bbbaa')

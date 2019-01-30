@@ -10,6 +10,7 @@ import json
 class app:
     config={}
     app_dir='app/'
+    controller_dir='front'
     url={}
     front=True
     def init(self,environ):
@@ -21,9 +22,9 @@ class app:
         config=self.get_config()
         if(data_return['url'][0]==config['admin']):
             self.front=False
+            self.controller_dir='back'
         
-
-
+        
 
         for i in range(5):
             view.add('hola'+str(i), 'hello world ááá bbbaa')

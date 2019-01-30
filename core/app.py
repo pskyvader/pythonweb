@@ -51,6 +51,6 @@ class app:
     @staticmethod
     def get_config():
         if len(app.config)==0:
-            with open('data.json') as f:
+            with open(this.app 'data.json') as f:
                 app.config = json.load(f)
 

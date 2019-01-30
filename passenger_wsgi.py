@@ -29,4 +29,4 @@ def application(environ, start_response):
         start_response('200 OK', [('Content-type', 'text/html'),])
         ret=es
 
-    return [bytes(ret)]
+    return [bytes(ret, 'utf-8')]

@@ -15,7 +15,7 @@ def application(environ, start_response):
         ]
 
         start_response(main_data['status'], response_headers)
-        ret =main_data['response_body'] assaf
+        ret =main_data['response_body']
     except:                                   # Error output starts here
         exc_type, exc_obj, tb = sys.exc_info()
         f = tb.tb_frame

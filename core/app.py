@@ -78,15 +78,15 @@ class app:
         url = url.lstrip('/')
         if url != '':
             url = url.split('/')
+            url = ' '.join(url).split()
             if url[0] == 'manifest.js':
                 url[0] = 'manifest'
             else:
                 if url[0] == 'sw.js':
                     url[0] = 'sw'
-            
         else:
             url = ['home']
-        return ' '.join(url).split()
+        return url
 
     @staticmethod
     def parse_extra(url):

@@ -1,11 +1,11 @@
 import sys
 import os
-sys.path.insert(0, os.path.dirname(__file__))
 from core import app
 import linecache
 from wsgiref.simple_server import make_server
 from cgi import parse_qs, escape
 
+sys.path.insert(0, os.path.dirname(__file__))
 
 html = """
 <html>

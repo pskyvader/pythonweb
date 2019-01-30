@@ -53,8 +53,8 @@ class app:
             self.controller_dir += 'back/themes/'+config['theme_back']+'/'
             self.view_dir += 'back/themes/'+config['theme_back']+'/'
 
-        controller=self.controller_dir+data_return['url'][0]+'.py'
-        my_file = Path(self.root+controller)
+        controller=self.controller_dir+data_return['url'][0]
+        my_file = Path(self.root+controller+'.py')
         view.add('file', str(my_file))
         if my_file.is_file():
             module = importlib.import_module(controller.replace(".", "/"))

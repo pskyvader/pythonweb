@@ -1,6 +1,6 @@
 import sys
 import os
-from core import app
+import core
 import linecache
 from wsgiref.simple_server import make_server
 
@@ -9,7 +9,7 @@ sys.path.insert(0, os.path.dirname(__file__))
 
 def application(environ, start_response):
     try:
-        app_web=app.app()
+        app_web=app()
         main_data = app_web.init(environ)
         response_headers = [
             ('Content-Type', main_data['content_type']),

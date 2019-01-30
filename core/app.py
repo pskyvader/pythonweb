@@ -29,6 +29,18 @@ class app:
             self.controller_dir='front'
         else:
             self.controller_dir='back'
+        site          = environ['SERVER_NAME']
+        subdirectorio = $config['dir']
+        https         = ($config['https']) ? "https://" : "http://"
+        $www           = ($config['www']) ? "www." : "";
+
+        self::$_path = $https . $www . $site . "/";
+        if ($subdirectorio != '') {
+            self::$_path .= $subdirectorio . "/";
+            $subdirectorio = "/" . $subdirectorio . "/";
+        } else {
+            $subdirectorio = "/";
+        }
         
         for i in range(5):
             view.add('hola'+str(i), 'hello world ááá bbbaa')

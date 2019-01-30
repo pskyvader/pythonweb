@@ -57,7 +57,7 @@ class app:
         my_file = Path(self.root+controller)
         view.add('file', str(my_file))
         if my_file.is_file():
-            module = importlib.import_module(controller)
+            module = importlib.import_module(controller.replace(".", "/"))
         else:
             view.add('existe', 'no')
 

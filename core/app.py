@@ -43,10 +43,11 @@ class app:
             subdirectorio = "/"
 
         if(data_return['url'][0] == config['admin']):
+            self.front = False
             del data_return['url'][0]
+            view.add('urls', data_return['url'])
             if len(data_return['url']) == 0:
                 data_return['url'][0] = 'home'
-            self.front = False
 
         if self.front:
             self.controller_dir += 'front/themes/'+config['theme']+'/'

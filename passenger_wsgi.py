@@ -3,7 +3,6 @@ import os
 from core import app
 import linecache
 from wsgiref.simple_server import make_server
-from cgi import parse_qs, escape
 
 sys.path.insert(0, os.path.dirname(__file__))
 

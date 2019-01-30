@@ -1,6 +1,6 @@
 import sys
 import os
-from core.app import app
+from core import app
 import linecache
 from wsgiref.simple_server import make_server
 

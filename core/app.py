@@ -2,7 +2,7 @@
 #cgitb.enable()
 import sys
 import os
-import core.view.view
+from core import core.view
 from cgi import parse_qs
 
 sys.path.insert(0, os.path.dirname(__file__))

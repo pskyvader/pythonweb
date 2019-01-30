@@ -44,6 +44,8 @@ class app:
 
         if(data_return['url'][0] == config['admin']):
             del data_return['url'][0]
+            if 0 not in data_return['url']:
+                data_return['url'][0]='home'
             self.front = False
 
         if self.front:

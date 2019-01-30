@@ -21,5 +21,8 @@ def init(environ):
     return data_return
 
 def parse_url(url):
-    url=url['url'][0].split('/')
+    if 'url' in url
+        url=url['url'][0].split('/')
+    else:
+        url='home'
     return url

@@ -61,11 +61,8 @@ class app:
         else:
             view.add('existe', 'no')
         
-        module.init()
-
-        for i in range(5):
-            view.add('hola'+str(i), 'hello world ááá bbbaa')
-
+        response=module.init()
+        
         view.add('url_data', str(data_return['url']))
         view.add('url_extra', str(data_return['extra']))
 

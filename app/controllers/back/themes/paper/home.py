@@ -2,9 +2,9 @@ from core.view import view
 import os
 
 
-def init():
+def init(url):
     h = home()
-    h.init()
+    h.init(url)
 
 
 class home:

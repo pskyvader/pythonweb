@@ -24,6 +24,6 @@ def index():
     ret={}
     for i in range(10):
         view.add('hola-- '+str(i), 'hello ááá bbbaa')
-    ret['body'] = view.render()
+    ret['body'] = view.render('home')
     ret['headers'] = [('Content-Type', 'text/html; charset=utf-8')]
     return ret

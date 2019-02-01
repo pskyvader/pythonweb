@@ -1,5 +1,6 @@
 
 class view:
+    extension='html'
     html = """
     <html>
         <body>
@@ -15,6 +16,8 @@ class view:
 
     @staticmethod
     def render(template,minify=False,return_body=False):
+        theme='test'
+        template_url = theme +template + "." + view.extension;
         data_return = []
         for key, value in view.data.items():
             a = '<div>'+key+':'+value+'</div>'

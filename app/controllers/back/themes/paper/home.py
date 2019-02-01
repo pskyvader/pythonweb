@@ -6,7 +6,7 @@ metadata = {'title': 'Home', 'modulo': 'home'}
 
 def init(var):
     if 0 in var:
-        if hasattr(self, var[0]) and callable(getattr(self, var[0])):
+        if var[0] in dir(os):
             fun = var[0]
             del var[0]
             ret = fun(var)

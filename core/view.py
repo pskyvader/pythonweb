@@ -12,6 +12,9 @@ class view:
     @staticmethod
     def add(key, value):
         view.data[key] = value
+    @staticmethod
+    def reset():
+        view.data={}
 
     @staticmethod
     def render(template,minify=False,return_body=False):

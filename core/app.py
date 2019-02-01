@@ -67,15 +67,16 @@ class app:
             response = {'error': 404}
 
         if 'error' in response:
-            response['body'] = ''
             response['headers'] = [
                 ('Content-Type', 'text/html; charset=utf-8')
             ]
             if response['error'] == 301:
                 data_return['status'] = '301 Moved Permanently'
                 response['headers'] = [('Location', response['redirect'])]
+                response['body'] = ''
             else:
                 data_return['status'] = '404 Not Found'
+                response['body'] = ''
         else:
             data_return['status'] = '200 OK'
 

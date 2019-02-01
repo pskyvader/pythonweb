@@ -20,7 +20,7 @@ class view:
         my_file = Path(template_url)
         if not my_file.is_file():
             body = view.html % {  # Fill the above html template in
-                'body': " <body>Error: El archivo " +template_url + " no existe </body>"
+                'content': " <body>Error: El archivo " +template_url + " no existe </body>"
             }
             return body
         
@@ -42,21 +42,17 @@ class view:
             body=str_content
             #cache.add_cache(str_content)
         
-        
-
+        return body
+    
+    @staticmethod
+    def render_template(template_url):
         data_return = []
         for key, value in view.data.items():
             a = '<div>'+key+':'+value+'</div>'
             data_return.append(a)
         body = '<br/>'.join(data_return)
 
-        body = view.html % {  # Fill the above html template in
-            'body': body
+        str_content = view.html % {  # Fill the above html template in
+            'content': body
         }
-
-        return body
-    
-    @staticmethod
-    def render_template(template_url):
-        view.data
-        return False
+        return str_content

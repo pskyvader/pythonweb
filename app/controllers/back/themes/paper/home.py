@@ -21,6 +21,7 @@ def init(var):
 
 
 def index():
+    ret={}
     for i in range(10):
         view.add('hola-- '+str(i), 'hello world ááá bbbaa')
     ret['body'] = view.render()

@@ -5,13 +5,13 @@ metadata = {'title': 'Home', 'modulo': 'home'}
 
 
 def init(var):
-    if 1 in var:
-        exist=hasattr(home, 'index') and callable(getattr(home, 'index'))
+    if 0 in var and hasattr(home, var[0]) and callable(getattr(home, var[0])):
+        fun=var[0]
+        del var[0]
+        ret=fun(var)
     else:
-        
-    for i in range(10):
-        view.add('hola-- '+str(i), 'hello world ááá bbbaa')
-    return True
+        ret=index()
+    return ret
 
 def index():
     for i in range(10):

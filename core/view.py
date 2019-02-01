@@ -66,9 +66,9 @@ class view:
             #res = view.template_if(content, key, d)
             #content = res[0]
             #if not res[1]:  # no es bloque if
-            s = Template(content)
-            dic = {key:d}
-            content = s.safe_substitute(dic)
+            #s = Template(content)
+            #dic = {key:d}
+            #content = s.safe_substitute(dic)
         return content
 
 

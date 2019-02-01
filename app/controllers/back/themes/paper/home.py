@@ -10,13 +10,13 @@ def init(var):
         if var[0] in dir(os):
             fun = var[0]
             del var[0]
-            ret = fun(var)
+            ret = h.fun(var)
         else:
             ret = {
                 'error': 404,
             }
     else:
-        ret = home.index()
+        ret = h.index()
     return ret
 
 

@@ -1,6 +1,6 @@
 from pathlib import Path
 from string import Template
-
+from jinja2 import Template
 
 class view:
     extension = 'html'

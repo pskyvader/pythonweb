@@ -1,5 +1,5 @@
 from pathlib import Path
-from core import app.app
+from core.app import app
 class view:
     extension='html'
     content_url={}
@@ -19,7 +19,7 @@ class view:
 
     @staticmethod
     def render(template,minify=True):
-        theme=app.app.view_dir
+        theme=app.view_dir
         template_url = theme +template + "." + view.extension;
         my_file = Path(template_url)
         if not my_file.is_file():

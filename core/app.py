@@ -25,7 +25,7 @@ class app:
     def init(self, environ):
         data_return = {}
         data_return['status'] = "200 OK"
-        data_return['content_type'] = 'text/html; charset=utf-8'
+
         data_return['extra'] = self.parse_extra(
             parse_qs(environ['QUERY_STRING']))
         data_return['url'] = self.parse_url(environ['PATH_INFO'])
@@ -59,7 +59,7 @@ class app:
         my_file = Path(self.root+controller+'.py')
         if my_file.is_file():
             current_module = importlib.import_module( controller.replace("/", "."))
-            response = current_module.init()
+            response = current_module.init(data_return['url'])
         else:
             view.add('existe', 'no')
 
@@ -68,6 +68,15 @@ class app:
         view.add('url_extra', str(data_return['extra']))
 
         data_return['response_body'] = view.render()
+
+        
+        data_return['headers']=[
+            ('Content-Type', 'text/html; charset=utf-8'),
+            ('Content-Length', str(len(data_return['response_body'])))
+        ]
+        
+        start_response('301 Moved Permanently', [('Location','http://google.com')])
+
 
         return data_return
 

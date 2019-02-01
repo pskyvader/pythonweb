@@ -26,15 +26,12 @@ class view:
             }
             return body
         
-        if template_url in content_url:
-            content = content_url[template_url]
-         else:
+        if template_url in view.content_url:
+            content = view.content_url[template_url]
+        else:
             with open(template_url, 'r') as f:
-                data = f.read()
-
-            $content                          = file_get_contents($template_url);
-            self::$content_url[$template_url] = $content;
-        }
+                content=view.content_url[template_url] = f.read()
+        
 
         data_return = []
         for key, value in view.data.items():

@@ -6,10 +6,6 @@ def init(var):
     h = home()
     if len(var) > 0:
         if hasattr(h, var[0]) and callable(getattr(h, var[0])):
-            ret = {
-                'error': 404,
-            }
-        if var[0] in dir(os):
             fun = var[0]
             del var[0]
             ret=getattr(h, fun)(var)

@@ -76,9 +76,6 @@ class app:
             ('Content-Type', 'text/html; charset=utf-8'),
             ('Content-Length', str(len(data_return['response_body'])))
         ]
-        
-        start_response('301 Moved Permanently', [('Location','http://google.com')])
-
 
         return data_return
 

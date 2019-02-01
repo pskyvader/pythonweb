@@ -61,7 +61,7 @@ class app:
             current_module = importlib.import_module(
                 controller.replace("/", "."))
             del url[0]
-            response = current_module.init(url)
+            response = current_module.init(url) #returns {'body':str,'headers':str} or {'error':int,...'redirect':str}
         else:
             response = {'error': 404}
 

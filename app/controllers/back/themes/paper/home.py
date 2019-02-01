@@ -6,8 +6,8 @@ metadata = {'title': 'Home', 'modulo': 'home'}
 
 
 def init(var):
-    view.add('var',str(var));
     if 0 in var:
+        view.add('var',str(var));
         if var[0] in dir(os):
             fun = var[0]
             del var[0]
@@ -17,6 +17,7 @@ def init(var):
                 'error': 404,
             }
     else:
+        view.add('var',str(var));
         ret = index()
     return ret
 

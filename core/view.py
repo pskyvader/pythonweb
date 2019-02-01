@@ -19,7 +19,7 @@ class view:
 
     @staticmethod
     def render(template,minify=True):
-        theme='test'
+        theme=app.app.view_dir
         template_url = theme +template + "." + view.extension;
         my_file = Path(template_url)
         if not my_file.is_file():

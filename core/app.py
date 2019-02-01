@@ -26,7 +26,7 @@ class app:
         data_return = {}
         data_return['extra'] = self.parse_extra(
             parse_qs(environ['QUERY_STRING']))
-        data_return['url'], url = self.parse_url(environ['PATH_INFO'])
+        data_return['url'] = url = self.parse_url(environ['PATH_INFO'])
         config = self.get_config()
         site = environ['SERVER_NAME']
         subdirectorio = config['dir']
@@ -61,7 +61,8 @@ class app:
             current_module = importlib.import_module(
                 controller.replace("/", "."))
             del url[0]
-            response = current_module.init(url) #returns {'body':str,'headers':str} or {'error':int,...'redirect':str}
+            # returns {'body':str,'headers':str} or {'error':int,...'redirect':str}
+            response = current_module.init(url)
         else:
             response = {'error': 404}
 
@@ -78,7 +79,6 @@ class app:
                 data_return['status'] = '404 Not Found'
         else:
             data_return['status'] = '200 OK'
-                
 
         data_return['response_body'] = response['body']
         data_return['headers'] = response['headers']

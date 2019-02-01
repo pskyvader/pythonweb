@@ -5,8 +5,7 @@ class home:
     url = ['home']
     metadata = {'title': 'Home', 'modulo': 'home'}
 
-
-    def init(var):
+    def init(self,var):
         if len(var)>0:
             if hasattr(self.__class__, 'mymethod') and callable(getattr(self.__class__, 'mymethod')):
                 return False
@@ -19,11 +18,11 @@ class home:
                     'error': 404,
                 }
         else:
-            ret = index()
+            ret = self.index()
         return ret
 
 
-    def index():
+    def index(self):
         ret={}
         view.add('title','index');
         ret['body'] = view.render('home')
@@ -32,7 +31,7 @@ class home:
 
 
 
-    def ver():
+    def ver(self):
         ret={}
         view.add('title','ver');
         ret['body'] = view.render('home')

@@ -5,10 +5,11 @@ metadata = {'title': 'Home', 'modulo': 'home'}
 
 
 def init(var):
-    if 0 in var and hasattr(home, var[0]) and callable(getattr(home, var[0])):
-        fun=var[0]
-        del var[0]
-        ret=fun(var)
+    if 0 in var: 
+        if hasattr(home, var[0]) and callable(getattr(home, var[0])):
+            fun=var[0]
+            del var[0]
+            ret=fun(var)
     else:
         ret=index()
     return ret

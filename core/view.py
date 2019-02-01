@@ -30,7 +30,7 @@ class view:
             with open(template_url, 'r') as f:
                 content=view.content_url[template_url] = f.read()
         
-        str_content = view.render_template(view.data, content)
+        str_content = view.render_template(content)
 
         #if minify and not return_body and cache.is_cacheable():
         #    str_content = mini.html(str_content)
@@ -57,37 +57,6 @@ class view:
         return body
     
     @staticmethod
-    def render_template(view.data,template_url):
+    def render_template(template_url):
+        view.data
         return False
-
-public static function render($template, $minify = true, $return = false)
-    {
-        $theme        = self::get_theme();
-        $template_url = $theme . $template . "." . self::EXTENSION_TEMPLATES;
-        if (!file_exists($template_url)) {
-            throw new \Exception("Error: El archivo " . $template_url . " no existe", 1);
-        }
-
-        if (isset(self::$content_url[$template_url])) {
-            $content = self::$content_url[$template_url];
-        } else {
-            $content                          = file_get_contents($template_url);
-            self::$content_url[$template_url] = $content;
-        }
-        $str = self::render_template(self::$data, $content);
-        if ($minify && !$return && cache::is_cacheable()) {
-            $str = mini::html($str,array('collapse_whitespace'=>true));
-        }
-
-        self::reset();
-        if ($return) {
-            return $str;
-        } else {
-            /*ob_start();
-            echo $str;
-            $str = ob_get_contents();
-            ob_end_clean();*/
-            echo $str;
-            cache::add_cache($str);
-        }
-    }

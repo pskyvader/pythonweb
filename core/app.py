@@ -66,17 +66,8 @@ class app:
         else:
             view.add('existe', 'no')
 
-
-        view.add('url_data', str(data_return['url']))
-        view.add('url_extra', str(data_return['extra']))
-
-        data_return['response_body'] = view.render()
-
-        
-        data_return['headers']=[
-            ('Content-Type', 'text/html; charset=utf-8'),
-            ('Content-Length', str(len(data_return['response_body'])))
-        ]
+        data_return['response_body'] = response['body']
+        data_return['headers']=response['headers']
 
         return data_return
 

@@ -6,7 +6,7 @@ metadata = {'title': 'Home', 'modulo': 'home'}
 
 
 def init(var):
-    if 0 in var:
+    if len(var)>0:
         view.add('var',str(var));
         if var[0] in dir(os):
             fun = var[0]

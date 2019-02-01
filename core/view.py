@@ -3,12 +3,13 @@ from core import app
 class view:
     extension='html'
     content_url={}
+    data = {}
+    theme = ''
     html = """
     <html>
         %(content)s
     </html>
     """
-    data = {}
 
     @staticmethod
     def add(key, value):
@@ -19,7 +20,7 @@ class view:
 
     @staticmethod
     def render(template,minify=True):
-        theme=app.app.root+app.app.view_dir
+        theme=view.get_theme()
         template_url = theme +template + "." + view.extension;
         my_file = Path(template_url)
         if not my_file.is_file():
@@ -54,3 +55,16 @@ class view:
             'content': body
         }
         return str_content
+
+    @staticmethod
+    def get_theme():
+        if view.theme == '':
+            config = app.getConfig()
+            if (!app::$_front) {
+                self::$theme = '../' . self::VIEWS_PATH . 'back/themes/' . $config['theme_back'] . '/';
+            } else {
+                self::$theme = self::VIEWS_PATH . 'front/themes/' . $config['theme'] . '/';
+            }
+        
+        return view.theme
+    

@@ -34,7 +34,7 @@ class view:
         
         str = view.render_template(view.data, content)
 
-        if minify and not return_body and cache::is_cacheable():
+        if minify and not return_body and cache.is_cacheable():
             str = minify.html(str)
         
 

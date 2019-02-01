@@ -63,12 +63,12 @@ class view:
                 data2[key] = d
 
         for key, d in data2.items():
-            res = view.template_if(content, key, d)
-            content = res[0]
-            if not res[1]:  # no es bloque if
-                s = Template(content)
-                dic = dict(key=d)
-                content = s.substitute(dic)
+            #res = view.template_if(content, key, d)
+            #content = res[0]
+            #if not res[1]:  # no es bloque if
+            s = Template(content)
+            dic = dict(key=d)
+            content = s.substitute(dic)
         return content
 
 

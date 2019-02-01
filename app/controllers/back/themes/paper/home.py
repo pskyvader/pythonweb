@@ -1,4 +1,5 @@
 from core.view import view
+import os
 
 url = ['home']
 metadata = {'title': 'Home', 'modulo': 'home'}

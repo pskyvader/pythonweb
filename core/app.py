@@ -62,7 +62,7 @@ class app:
         if my_file.is_file():
             current_module = importlib.import_module( controller.replace("/", "."))
             del url[0]
-            response = current_module.current_module.init(url)# returns {'body':str,'headers':str} or {'error':int,...'redirect':str}
+            response = current_module.url[0].init(url)# returns {'body':str,'headers':str} or {'error':int,...'redirect':str}
         else:
             response = {'error': 404}
 

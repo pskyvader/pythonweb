@@ -17,7 +17,7 @@ class view:
         view.data={}
 
     @staticmethod
-    def render(template,minify=False,return_body=False):
+    def render(template,minify=True):
         theme='test'
         template_url = theme +template + "." + view.extension;
         my_file = Path(template_url)

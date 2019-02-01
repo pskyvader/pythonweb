@@ -5,7 +5,7 @@ import os
 def init(var):
     h = home()
     if len(var) > 0:
-        if hasattr(home, var[0]) and callable(getattr(home, var[0])):
+        if hasattr(h, var[0]) and callable(getattr(h, var[0])):
             return False
         if var[0] in dir(os):
             fun = var[0]

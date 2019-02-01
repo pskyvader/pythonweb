@@ -54,6 +54,8 @@ class app:
         else:
             self.controller_dir += 'back/themes/'+config['theme_back']+'/'
             self.view_dir += 'back/themes/'+config['theme_back']+'/'
+        
+        view.set_theme(self.root+self.view_dir)
 
         controller = self.controller_dir+url[0]
         my_file = Path(self.root+controller+'.py')

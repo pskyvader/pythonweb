@@ -11,12 +11,7 @@ def application(environ, start_response):
     try:
         app_web=app.app(os.path.dirname(__file__))
         main_data = app_web.init(environ)
-        response_headers = [
-            ('Content-Type', main_data['content_type']),
-            ('Content-Length', str(len(main_data['response_body'])))
-        ]
-
-        start_response(main_data['status'], response_headers)
+        start_response(main_data['status'], main_data['headers'])
         ret = main_data['response_body']
     except:                                   # Error output starts here
         exc_type, exc_obj, tb = sys.exc_info()

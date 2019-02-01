@@ -22,7 +22,7 @@ def init(var):
 
 def index():
     ret={}
-    view.add('title','titulo');
+    view.add('title','index');
     ret['body'] = view.render('home')
     ret['headers'] = [('Content-Type', 'text/html; charset=utf-8')]
     return ret
@@ -31,7 +31,7 @@ def index():
 
 def ver():
     ret={}
-    view.add('title','titulo');
+    view.add('title','ver');
     ret['body'] = view.render('home')
     ret['headers'] = [('Content-Type', 'text/html; charset=utf-8')]
     return ret

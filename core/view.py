@@ -57,7 +57,9 @@ class view:
         return str_content
 
     @staticmethod
+    def set_theme(theme):
+        view.theme=theme
+
+    @staticmethod
     def get_theme():
-        if view.theme == '':
-            view.theme = app.app.root + app.app.view_dir
         return view.theme

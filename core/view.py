@@ -1,5 +1,4 @@
 from pathlib import Path
-from flask import Flask, render_template
 
 class view:
     extension = 'html'

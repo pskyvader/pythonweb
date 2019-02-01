@@ -8,10 +8,10 @@ sys.path.insert(0, os.path.dirname(__file__))
 
 
 def application(environ, start_response):
-    try:
         app_web=app.app(os.path.dirname(__file__))
         main_data = app_web.init(environ)
         start_response(main_data['status'], main_data['headers'])
+    try:
         ret = main_data['response_body']
     except:                                   # Error output starts here
         exc_type, exc_obj, tb = sys.exc_info()

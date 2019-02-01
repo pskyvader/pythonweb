@@ -1,5 +1,6 @@
 from pathlib import Path
-from mako.template import Template
+from flask import Flask, render_template
+
 class view:
     extension = 'html'
     content_url = {}

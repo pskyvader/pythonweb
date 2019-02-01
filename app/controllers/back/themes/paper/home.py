@@ -26,3 +26,12 @@ def index():
     ret['body'] = view.render('home')
     ret['headers'] = [('Content-Type', 'text/html; charset=utf-8')]
     return ret
+
+
+
+def ver():
+    ret={}
+    view.add('title','titulo');
+    ret['body'] = view.render('home')
+    ret['headers'] = [('Content-Type', 'text/html; charset=utf-8')]
+    return ret

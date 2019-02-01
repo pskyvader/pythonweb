@@ -1,6 +1,7 @@
 from pathlib import Path
 class view:
     extension='html'
+    content_url={}
     html = """
     <html>
         <body>
@@ -18,8 +19,23 @@ class view:
     def render(template,minify=False,return_body=False):
         theme='test'
         template_url = theme +template + "." + view.extension;
-        my_file = Path(self.root+controller+'.py')
-        if my_file.is_file():
+        my_file = Path(template_url)
+        if not my_file.is_file():
+            body = view.html % {  # Fill the above html template in
+                'body': "Error: El archivo " +template_url + " no existe"
+            }
+            return body
+        
+        if template_url in content_url:
+            content = content_url[template_url]
+         else:
+            with open(template_url, 'r') as f:
+                data = f.read()
+
+            $content                          = file_get_contents($template_url);
+            self::$content_url[$template_url] = $content;
+        }
+
         data_return = []
         for key, value in view.data.items():
             a = '<div>'+key+':'+value+'</div>'
@@ -31,6 +47,10 @@ class view:
         }
 
         return body
+    
+    @staticmethod
+    def render_template(view.data,template_url):
+        return False
 
 public static function render($template, $minify = true, $return = false)
     {

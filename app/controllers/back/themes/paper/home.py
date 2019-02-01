@@ -7,7 +7,7 @@ metadata = {'title': 'Home', 'modulo': 'home'}
 
 def init(var):
     if len(var)>0:
-        if hasattr(Dynamo, 'mymethod') and callable(getattr(Dynamo, 'mymethod')):
+        if hasattr(self.__class__, 'mymethod') and callable(getattr(self.__class__, 'mymethod')):
             return False
         if var[0] in dir(os):
             fun = var[0]

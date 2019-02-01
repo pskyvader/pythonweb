@@ -1,5 +1,5 @@
 from pathlib import Path
-from jinja2 import Template
+from pack.jinja2 import Template
 
 class view:
     extension = 'html'

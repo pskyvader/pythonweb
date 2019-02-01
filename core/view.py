@@ -1,4 +1,5 @@
 from pathlib import Path
+from core import app
 class view:
     extension='html'
     content_url={}

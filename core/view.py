@@ -33,18 +33,12 @@ class view:
             with open(template_url, 'r') as f:
                 content=view.content_url[template_url] = f.read()
         
-        str_content = view.render_template(content)
+        body = view.render_template(content)
 
         #if minify and not return_body and cache.is_cacheable():
-        #    str_content = mini.html(str_content)
+        #    body = mini.html(body)
 
         view.reset()
-        if return_body:
-            return str_content
-        else:
-            body=str_content
-            #cache.add_cache(str_content)
-        
         return body
     
     @staticmethod

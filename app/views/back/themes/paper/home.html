@@ -1,9 +1,10 @@
 <div class="page-content">
     <ol class="breadcrumb">
-        {foreach breadcrumb}
-        <li class="{active}">
-            <a href="{url}">${title}</a>
-        </li> {/foreach breadcrumb}
+        {% for bc in breadcrumb %}
+        <li class="{{bd.active}}">
+            <a href="{{bd.url}}">{{bc.title}}</a>
+        </li>
+        {% endfor %}
     </ol>
     <div class="page-heading">
         <h1> {{title}} </h1>

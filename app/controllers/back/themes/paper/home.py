@@ -6,7 +6,7 @@ metadata = {'title': 'Home', 'modulo': 'home'}
 
 def init(var):
     if 1 in var:
-        exist=hasattr(home, key) and callable(getattr(home, key))
+        exist=hasattr(home, 'index') and callable(getattr(home, 'index'))
     else:
         
     for i in range(10):

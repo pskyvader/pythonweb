@@ -28,7 +28,7 @@ class app:
 
         data_return['extra'] = self.parse_extra(
             parse_qs(environ['QUERY_STRING']))
-        data_return['url'] = self.parse_url(environ['PATH_INFO'])
+        data_return['url'],url = self.parse_url(environ['PATH_INFO'])
         config = self.get_config()
         site = environ['SERVER_NAME']
         subdirectorio = config['dir']
@@ -42,11 +42,13 @@ class app:
         else:
             subdirectorio = "/"
 
-        if(data_return['url'][0] == config['admin']):
+        if(url[0] == config['admin']):
             self.front = False
-            del data_return['url'][0]
-            if len(data_return['url']) == 0:
-                data_return['url']= ['home']
+            del url[0]
+            if len(url) == 0:
+                url= ['home']
+        else:
+            self.front = True
 
         if self.front:
             self.controller_dir += 'front/themes/'+config['theme']+'/'
@@ -55,11 +57,11 @@ class app:
             self.controller_dir += 'back/themes/'+config['theme_back']+'/'
             self.view_dir += 'back/themes/'+config['theme_back']+'/'
 
-        controller = self.controller_dir+data_return['url'][0]
+        controller = self.controller_dir+url[0]
         my_file = Path(self.root+controller+'.py')
         if my_file.is_file():
             current_module = importlib.import_module( controller.replace("/", "."))
-            response = current_module.init(data_return['url'])
+            response = current_module.init(url)
         else:
             view.add('existe', 'no')
 

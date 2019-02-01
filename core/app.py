@@ -17,7 +17,6 @@ class app:
     url = {}
     front = True
     path = ''
-    app_path = ''
     root = ''
 
     def __init__(self, root):

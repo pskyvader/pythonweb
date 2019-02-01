@@ -69,8 +69,7 @@ class app:
         if 'error' in response:
             response['body'] = ''
             response['headers'] = [
-                ('Content-Type', 'text/html; charset=utf-8'),
-                ('Content-Length', 0)
+                ('Content-Type', 'text/html; charset=utf-8')
             ]
             if response['error'] == 301:
                 data_return['status'] = '301 Moved Permanently'

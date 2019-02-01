@@ -7,7 +7,7 @@ class home:
 
     def init(self,var):
         if len(var)>0:
-            if hasattr(self.__class__, 'mymethod') and callable(getattr(self.__class__, 'mymethod')):
+            if hasattr(self.__class__, var[0]) and callable(getattr(self.__class__, var[0])):
                 return False
             if var[0] in dir(os):
                 fun = var[0]

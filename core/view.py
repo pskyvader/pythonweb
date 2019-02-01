@@ -60,8 +60,8 @@ class view:
         for key, d in data2.items():
             res = view.template_if(content, key, d)
             content = res[0]
-            if not res[1]  # no es bloque if
-            content = str_replace('{' + key + '}', d, content)
+            if not res[1]:  # no es bloque if
+                content = str_replace('{' + key + '}', d, content)
 
         data_return = []
         for key, value in view.data.items():

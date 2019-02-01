@@ -54,24 +54,7 @@ class view:
     @staticmethod
     def render_template(content):
         template = Template(content)
-        return template.render(view.data)
-
-        data2 = {}
-        for key, d in view.data.items():
-            if isinstance(d, dict):  # es dictionary de elementos en vista
-                array_open = "{foreach " + key + "}"
-                array_close = "{/foreach " + key + "}"
-                return False
-            else:
-                data2[key] = d
-
-        for key, d in data2.items():
-            #res = view.template_if(content, key, d)
-            #content = res[0]
-            #if not res[1]:  # no es bloque if
-            #s = Template(content)
-            dic = {key:d}
-            #content = s.safe_substitute(dic)
+        content= template.render(view.data)
         return content
 
 

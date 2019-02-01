@@ -61,6 +61,7 @@ class app:
         my_file = Path(self.root+controller+'.py')
         if my_file.is_file():
             current_module = importlib.import_module( controller.replace("/", "."))
+            del url[0]
             response = current_module.init(url)
         else:
             view.add('existe', 'no')

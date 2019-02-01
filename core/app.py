@@ -24,8 +24,6 @@ class app:
 
     def init(self, environ):
         data_return = {}
-        data_return['status'] = "200 OK"
-
         data_return['extra'] = self.parse_extra(
             parse_qs(environ['QUERY_STRING']))
         data_return['url'],url = self.parse_url(environ['PATH_INFO'])
@@ -66,6 +64,7 @@ class app:
         else:
             view.add('existe', 'no')
 
+        data_return['status'] = response['status']
         data_return['response_body'] = response['body']
         data_return['headers']=response['headers']
 

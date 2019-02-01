@@ -32,6 +32,11 @@ class view:
             with open(template_url, 'r') as f:
                 content=view.content_url[template_url] = f.read()
         
+        str = view.render_template(view.data, content)
+
+        if minify and not return_body and cache::is_cacheable():
+            $str = mini::html($str,array('collapse_whitespace'=>true));
+        }
 
         data_return = []
         for key, value in view.data.items():

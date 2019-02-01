@@ -1,8 +1,10 @@
 from pathlib import Path
 from core import app
+
+
 class view:
-    extension='html'
-    content_url={}
+    extension = 'html'
+    content_url = {}
     data = {}
     theme = ''
     html = """
@@ -14,35 +16,36 @@ class view:
     @staticmethod
     def add(key, value):
         view.data[key] = value
-    @staticmethod
-    def reset():
-        view.data={}
 
     @staticmethod
-    def render(template,minify=True):
-        theme=view.get_theme()
-        template_url = theme +template + "." + view.extension;
+    def reset():
+        view.data = {}
+
+    @staticmethod
+    def render(template, minify=True):
+        theme = view.get_theme()
+        template_url = theme + template + "." + view.extension
         my_file = Path(template_url)
         if not my_file.is_file():
             body = view.html % {  # Fill the above html template in
-                'content': " <body>Error: El archivo " +template_url + " no existe </body>"
+                'content': " <body>Error: El archivo " + template_url + " no existe </body>"
             }
             return body
-        
+
         if template_url in view.content_url:
             content = view.content_url[template_url]
         else:
             with open(template_url, 'r') as f:
-                content=view.content_url[template_url] = f.read()
-        
+                content = view.content_url[template_url] = f.read()
+
         body = view.render_template(content)
 
-        #if minify and not return_body and cache.is_cacheable():
+        # if minify and not return_body and cache.is_cacheable():
         #    body = mini.html(body)
 
         view.reset()
         return body
-    
+
     @staticmethod
     def render_template(template_url):
         data_return = []
@@ -59,12 +62,5 @@ class view:
     @staticmethod
     def get_theme():
         if view.theme == '':
-            config = app.getConfig()
-            if (!app::$_front) {
-                self::$theme = '../' . self::VIEWS_PATH . 'back/themes/' . $config['theme_back'] . '/';
-            } else {
-                self::$theme = self::VIEWS_PATH . 'front/themes/' . $config['theme'] . '/';
-            }
-        
+            view.theme = app.app.root + app.app.view_dir
         return view.theme
-    

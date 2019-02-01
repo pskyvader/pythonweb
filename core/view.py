@@ -1,5 +1,5 @@
 from pathlib import Path
-
+from string import Template
 class view:
     extension = 'html'
     content_url = {}

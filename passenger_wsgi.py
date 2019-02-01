@@ -9,9 +9,8 @@ sys.path.insert(0, os.path.dirname(__file__))
 
 
 
-application = LoggingMiddleware(application)
 
-def application(environ, start_response):
+def application2(environ, start_response):
     app_web = app.app(os.path.dirname(__file__))
     main_data = app_web.init(environ)
     start_response(main_data['status'], main_data['headers'])
@@ -32,3 +31,6 @@ class LoggingMiddleware:
             return start_response(status, headers, *args)
 
         return self.__application(environ, _start_response)
+
+
+application = LoggingMiddleware(application2)

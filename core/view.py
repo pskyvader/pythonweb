@@ -14,7 +14,7 @@ class view:
         view.data[key] = value
 
     @staticmethod
-    def render(template,minify=False,return=False):
+    def render(template,minify=False,return_body=False):
         data_return = []
         for key, value in view.data.items():
             a = '<div>'+key+':'+value+'</div>'

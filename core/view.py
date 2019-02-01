@@ -1,4 +1,4 @@
-
+from pathlib import Path
 class view:
     extension='html'
     html = """
@@ -18,6 +18,8 @@ class view:
     def render(template,minify=False,return_body=False):
         theme='test'
         template_url = theme +template + "." + view.extension;
+        my_file = Path(self.root+controller+'.py')
+        if my_file.is_file():
         data_return = []
         for key, value in view.data.items():
             a = '<div>'+key+':'+value+'</div>'

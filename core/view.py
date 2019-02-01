@@ -67,7 +67,7 @@ class view:
             #content = res[0]
             #if not res[1]:  # no es bloque if
             #s = Template(content)
-            #dic = {key:d}
+            dic = {key:d}
             #content = s.safe_substitute(dic)
         return content
 

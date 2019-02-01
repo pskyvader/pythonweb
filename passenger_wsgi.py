@@ -9,7 +9,7 @@ sys.path.insert(0, os.path.dirname(__file__))
 
 
 
-application = LoggingMiddleware(passenger_wsgi.application)
+application = LoggingMiddleware(application)
 
 def application(environ, start_response):
     app_web = app.app(os.path.dirname(__file__))

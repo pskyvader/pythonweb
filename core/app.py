@@ -18,7 +18,7 @@ class app:
     front = True
     path = ''
     app_path = ''
-    root = os.path.dirname(__file__)+'/'
+    root = ''
 
     def __init__(self, root):
         self.root = root+'/'

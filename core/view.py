@@ -56,7 +56,6 @@ class view:
         content= template.render(view.data)
         return content
 
-
     @staticmethod
     def set_theme(theme):
         view.theme = theme

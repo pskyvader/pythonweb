@@ -62,7 +62,7 @@ class app:
                 controller.replace("/", "."))
             del url[0]
             # returns {'body':str,'headers':str} or {'error':int,...'redirect':str}
-            response = current_module.init(url)
+            response = current_module.init(self,url)
         else:
             response = {'error': 404}
 

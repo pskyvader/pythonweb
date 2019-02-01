@@ -17,7 +17,7 @@ def init(var):
                 'error': 404,
             }
     else:
-        view.add('var',str(var));
+        view.add('var',str(var)+'aaa');
         ret = index()
     return ret
 

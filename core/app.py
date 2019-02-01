@@ -60,9 +60,10 @@ class app:
         controller = self.controller_dir+url[0]
         my_file = Path(self.root+controller+'.py')
         if my_file.is_file():
-            current_module = importlib.import_module( controller.replace("/", ".")+'.'+url[0])
+            current_module = importlib.import_module( controller.replace("/", "."))
             del url[0]
-            response = current_module.init(url)# returns {'body':str,'headers':str} or {'error':int,...'redirect':str}
+            module=current_module()
+            response = module.init(url)# returns {'body':str,'headers':str} or {'error':int,...'redirect':str}
         else:
             response = {'error': 404}
 

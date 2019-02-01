@@ -47,7 +47,7 @@ class view:
         if return_body:
             return body
         else:
-            return html % {  # Fill the above html template in
+            return view.html % {  # Fill the above html template in
                 'content': body
             }
 
@@ -72,8 +72,8 @@ class view:
         return content
 
 
-  @staticmethod
-   def set_theme(theme):
+    @staticmethod
+    def set_theme(theme):
         view.theme = theme
 
     @staticmethod

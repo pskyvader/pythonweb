@@ -26,7 +26,7 @@ class app:
         data_return = {}
         data_return['extra'] = self.parse_extra(
             parse_qs(environ['QUERY_STRING']))
-        data_return['url'],url = self.parse_url(environ['PATH_INFO'])
+        data_return['url'], url = self.parse_url(environ['PATH_INFO'])
         config = self.get_config()
         site = environ['SERVER_NAME']
         subdirectorio = config['dir']
@@ -44,7 +44,7 @@ class app:
             self.front = False
             del url[0]
             if len(url) == 0:
-                url= ['home']
+                url = ['home']
         else:
             self.front = True
 
@@ -58,15 +58,30 @@ class app:
         controller = self.controller_dir+url[0]
         my_file = Path(self.root+controller+'.py')
         if my_file.is_file():
-            current_module = importlib.import_module( controller.replace("/", "."))
+            current_module = importlib.import_module(
+                controller.replace("/", "."))
             del url[0]
             response = current_module.init(url)
         else:
-            view.add('existe', 'no')
+            response = {'error': 404}
 
-        data_return['status'] = response['status']
+        if 'error' in response:
+            response['body'] = ''
+            response['headers'] = [
+                ('Content-Type', 'text/html; charset=utf-8'),
+                ('Content-Length', 0)
+            ]
+            if response['error'] == 301:
+                data_return['status'] = '301 Moved Permanently'
+                response['headers'] = [('Location', response['redirect'])]
+            else:
+                data_return['status'] = '404 Not Found'
+        else:
+            data_return['status'] = '200 OK'
+                
+
         data_return['response_body'] = response['body']
-        data_return['headers']=response['headers']
+        data_return['headers'] = response['headers']
 
         return data_return
 

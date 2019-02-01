@@ -53,6 +53,9 @@ class view:
 
     @staticmethod
     def render_template(content):
+        template = Template(content)
+        return template.render(view.data)
+
         data2 = {}
         for key, d in view.data.items():
             if isinstance(d, dict):  # es dictionary de elementos en vista

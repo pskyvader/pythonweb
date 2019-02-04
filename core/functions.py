@@ -1,3 +1,5 @@
-import os.environ
+import os
 def current_url():
-    return False
+    url = os.environ['HTTP_HOST']
+    uri = os.environ['REQUEST_URI']
+    return url + uri

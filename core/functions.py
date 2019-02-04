@@ -32,7 +32,7 @@ class functions():
                 if not isinstance(extra,bool) or extra==True:
                     url += urlencode(functions.extra)
         
-        url =  app.get_url() ? front_auto : (app.get_url(front))) +url
+        url =  app.get_url() if front_auto else app.get_url(front) +url
         return url
     
 

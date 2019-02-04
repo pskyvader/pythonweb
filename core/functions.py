@@ -1,3 +1,4 @@
+from core.app import app
 class functions(app):
     environ=''
 

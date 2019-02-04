@@ -40,6 +40,7 @@ class home:
             {'active':'','url':'bbb','title':'titulo2'},
             {'active':'active','url':'ccc','title':'titulo3'},
         ]
+        view.add('breadcrumb', breadcrumb)
         ret['body'] = view.render('home')
         return ret
 

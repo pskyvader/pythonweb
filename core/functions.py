@@ -23,7 +23,7 @@ class functions():
                     url = url+"?" + urlencode(app.extra)
 
         url = (app.get_url() if front_auto else app.get_url(front)) + url
-        #url= urlretrieve(url)
+        url= urlretrieve(url)
         return url
 
     @staticmethod

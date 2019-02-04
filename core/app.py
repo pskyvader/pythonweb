@@ -112,7 +112,13 @@ class app:
     def parse_extra(url):
         if 'url' in url:
             del url['url']
-        return url
+        url_return={}
+        for k,u in url:
+            if len(url)==1:
+                url_return[k]=u[0]
+            else:
+                url_return[k]=u
+        return url_return
 
     def get_config(self):
         if len(self.config) == 0:

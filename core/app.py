@@ -122,6 +122,6 @@ class app:
     @staticmethod
     def get_url(front=False):
         if (app.front or front):
-            return app.url['base']
+            return app.url['base']+'cccc'
         else:
             return app.url['admin']+'bbbb'

@@ -3,6 +3,7 @@ class functions():
     
     @staticmethod
     def current_url():
+        environ=functions.environ
         url = environ['wsgi.url_scheme']+'://'
         if environ.get('HTTP_HOST'):
             url += environ['HTTP_HOST']

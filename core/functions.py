@@ -26,11 +26,11 @@ class functions():
     def generar_url(url, extra = [], front_auto = True, front = True):
         url='/'.join(url)
         if isinstance(extra,list) and len(extra) > 0:
-            url = urlencode(url,extra)
+            url+ = urlencode(extra)
         else:
             if (len(functions.extra) > 0):
                 if not isinstance(extra,bool) or extra==True:
-                url = urlencode(url,functions.extra)
+                url += urlencode(functions.extra)
                 
             
         $url = str_replace("%2F", "/", $url);

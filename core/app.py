@@ -109,11 +109,12 @@ class app:
 
     @staticmethod
     def parse_extra():
-        from urllib import parse
-        url=dict(parse.parse_qsl(app.environ['QUERY_STRING']))
+    from cgi import parse_qs
+        url=dict(parse_qs(app.environ['QUERY_STRING']))
+
         if 'url' in url:
             del url['url']
-        
+            
         return url
 
     def get_config(self):

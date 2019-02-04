@@ -110,17 +110,10 @@ class app:
     @staticmethod
     def parse_extra():
         from urllib import parse
-        url=parse_qs(app.environ['QUERY_STRING'])
-        url=dict(parse.parse_qsl(parse.urlsplit(url).query))
+        url=dict(parse.parse_qsl(app.environ['QUERY_STRING']))
         if 'url' in url:
             del url['url']
-        url_return = {}
-        for k, u in url.items():
-            if len(u) == 1:
-                url_return[k] = u[0]
-            else:
-                url_return[k] = u
-        return url_return
+        return url
 
     def get_config(self):
         if len(self.config) == 0:

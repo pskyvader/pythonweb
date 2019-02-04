@@ -1,6 +1,4 @@
 from urllib.parse import urlencode
-
-
 class functions():
     @staticmethod
     def url_redirect(url):
@@ -19,9 +17,9 @@ class functions():
         if isinstance(extra, list) and len(extra) > 0:
             url += urlencode(extra)
         else:
-            if (len(functions.extra) > 0):
+            if (len(app.extra) > 0):
                 if not isinstance(extra, bool) or extra == True:
-                    url += urlencode(functions.extra)
+                    url += urlencode(app.extra)
 
         url = app.get_url() if front_auto else app.get_url(front) + url
         return url

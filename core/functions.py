@@ -1,4 +1,6 @@
 class functions():
+    environ=''
+    
     @staticmethod
     def current_url():
         url = environ['wsgi.url_scheme']+'://'

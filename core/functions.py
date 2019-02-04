@@ -3,7 +3,7 @@ from collections import OrderedDict
 
 class functions():
     environ = {}
-    extra = {}
+    path = {}
     extra = {}
 
     @staticmethod
@@ -27,11 +27,12 @@ class functions():
         url='/'.join(url)
         if isinstance(extra,list) and len(extra) > 0:
             url = urlencode(url,extra)
-        } elseif (count($_GET) > 0) {
-            if (!is_bool($extra) || $extra) {
-                $url .= "?" . http_build_query($_GET);
-            }
-        }
+        else:
+            if (len(functions.extra) > 0):
+                if not isinstance(extra,bool) or extra==True:
+                url = urlencode(url,functions.extra)
+                
+            
         $url = str_replace("%2F", "/", $url);
         $url = (($front_auto) ? (app::get_url()) : (app::get_url($front))) . $url;
 

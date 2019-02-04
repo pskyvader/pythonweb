@@ -33,7 +33,7 @@ class home:
             ret['error']=301
             ret['redirect']=url_return
             return ret
-        view.add('title', str(url_return))
+        view.add('title', 'index')
         ret['body'] = view.render('home')
         ret['headers'] = [('Content-Type', 'text/html; charset=utf-8')]
         return ret

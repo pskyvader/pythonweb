@@ -16,6 +16,7 @@ class app:
     controller_dir = app_dir+'controllers/'
     view_dir = app_dir+'views/'
     url = {}
+    front = ''
     path = ''
     root = ''
     environ = {}
@@ -44,14 +45,14 @@ class app:
             subdirectorio = "/"
 
         if(url[0] == config['admin']):
-            self.config['front'] = False
+            self.front = False
             del url[0]
             if len(url) == 0:
                 url = ['home']
         else:
-            self.config['front'] = True
+            self.front = True
 
-        if self.config['front']:
+        if self.front:
             self.controller_dir += 'front/themes/'+config['theme']+'/'
             self.view_dir += 'front/themes/'+config['theme']+'/'
         else:
@@ -122,7 +123,7 @@ class app:
 
     @staticmethod
     def get_url(front=False):
-        if (app.config['front'] or front):
+        if (app.front or front):
             return app.url['base']
         else:
             return app.url['admin']

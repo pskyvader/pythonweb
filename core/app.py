@@ -52,7 +52,7 @@ class app:
         else:
             app.front = True
 
-        if self.front:
+        if app.front:
             self.controller_dir += 'front/themes/'+config['theme']+'/'
             self.view_dir += 'front/themes/'+config['theme']+'/'
         else:

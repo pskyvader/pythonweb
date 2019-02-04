@@ -91,6 +91,9 @@ class app:
 
         if config['debug']:
             response['status']='200 OK'
+            response['headers'] = [
+                ('Content-Type', 'text/html; charset=utf-8')
+            ]
         
         data_return['response_body'] = response['body']
         data_return['headers'] = response['headers']

@@ -39,7 +39,7 @@ class home:
             {'active':'active','url':'aaaa','title':'titulo'},
             {'active':'','url':'bbb','title':'titulo2'},
             {'active':'active','url':'ccc','title':'titulo3'},
-            }
+        }
         ret['body'] = view.render('home')
         return ret
 

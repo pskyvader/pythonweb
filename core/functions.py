@@ -5,7 +5,7 @@ class functions():
         current = functions.current_url()
 
         if (ruta != current):
-            return ruta
+            return current
         else:
             return ""
 

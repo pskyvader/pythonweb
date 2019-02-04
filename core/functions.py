@@ -24,6 +24,7 @@ class functions():
 
     @staticmethod
     def generar_url(url, extra = [], front_auto = True, front = True):
+        from core.app import app
         url='/'.join(url)
         if isinstance(extra,list) and len(extra) > 0:
             url+= urlencode(extra)
@@ -32,7 +33,6 @@ class functions():
                 if not isinstance(extra,bool) or extra==True:
                     url += urlencode(functions.extra)
         
-        from core.app import app
         url =  app.get_url() if front_auto else app.get_url(front) + url
         return url
     

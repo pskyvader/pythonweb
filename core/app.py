@@ -24,7 +24,6 @@ class app:
         self.root = root+'/'
 
     def init(self, environ):
-        functions.set_environ(environ)
         data_return = {}
         extra = self.parse_extra(
             parse_qs(environ['QUERY_STRING']))
@@ -41,6 +40,8 @@ class app:
             subdirectorio = "/" + subdirectorio + "/"
         else:
             subdirectorio = "/"
+        
+        functions.set_variable(environ,self.path,extra)
 
         if(url[0] == config['admin']):
             self.front = False

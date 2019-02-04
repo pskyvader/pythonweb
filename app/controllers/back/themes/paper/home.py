@@ -25,6 +25,10 @@ def init(var,environ):
 class home:
     url = ['home']
     metadata = {'title': 'Home', 'modulo': 'home'}
+    environ=''
+
+    def __init__(self, environ):
+        home.environ=environ
 
     def index(self):
         ret = {}

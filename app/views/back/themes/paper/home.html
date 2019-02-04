@@ -1,8 +1,8 @@
 <div class="page-content">
     <ol class="breadcrumb">
-        {% for key, bc in breadcrumb.iteritems() %}
+        {% for bc in breadcrumb.iteritems() %}
             {% if bc.active!='' %}
-                <li class="{{bc.active}} {{key}}">
+                <li class="{{bc.active}} {{loop.index}}">
                     <a href="{{bc.url}}">{{bc.title}}</a>
                 </li>
             {% endif %}

@@ -13,6 +13,7 @@ class functions():
     def generar_url(url, extra={}, front_auto=True, front=True):
         from core.app import app
         from urllib.parse import urlencode
+        import urllib
         url = '/'.join(url)
         if isinstance(extra, dict) and len(extra) > 0:
             url = url+"?" + urllib.quote(extra)

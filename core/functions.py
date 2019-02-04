@@ -1,5 +1,11 @@
 class functions():
     environ={}
+
+    
+    
+    @staticmethod
+    def set_environ(environ):
+        functions.environ=environ
     
     @staticmethod
     def current_url():

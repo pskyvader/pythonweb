@@ -3,8 +3,8 @@ from core.functions import functions
 import os
 
 
-def init(var,extra):
-    h = home(extra)
+def init(var):
+    h = home()
     if len(var) > 0:
         if hasattr(h, var[0]) and callable(getattr(h, var[0])):
             fun = var[0]
@@ -25,9 +25,6 @@ def init(var,extra):
 class home:
     url = ['home']
     metadata = {'title': 'Home', 'modulo': 'home'}
-    extra={}
-    def __init__(self, extra):
-        self.extra=extra
 
     def index(self):
         ret = {}

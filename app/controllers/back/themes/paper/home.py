@@ -28,7 +28,7 @@ class home:
 
     def index(self):
         ret = {}
-        url_return=functions.url_redirect(self.url)
+        url_return=functions.generar_url(self.url)
         view.add('title', str(functions.current_url()))
         ret['body'] = view.render('home')
         ret['headers'] = [('Content-Type', 'text/html; charset=utf-8')]

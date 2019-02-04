@@ -5,7 +5,7 @@ class functions():
         current = functions.current_url()
 
         if (ruta != current):
-            return current
+            return ruta
         else:
             return ""
 
@@ -43,5 +43,5 @@ class functions():
         url += environ['SCRIPT_NAME']
         url += environ['PATH_INFO']
         if environ['QUERY_STRING']:
-            url += '?' + environ['QUERY_STRING']
+            url += '?' + urlencode(extra,'utf-8')
         return url

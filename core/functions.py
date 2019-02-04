@@ -1,8 +1,7 @@
-
 class functions:
+    environ=''
 
-
-    def current_url():
+    def current_url(self,app):
         url = environ['wsgi.url_scheme']+'://'
         if environ.get('HTTP_HOST'):
             url += environ['HTTP_HOST']

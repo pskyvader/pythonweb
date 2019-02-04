@@ -1,5 +1,5 @@
 from core.view import view
-from core import functions
+from core.functions import functions
 import os
 
 

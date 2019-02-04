@@ -3,7 +3,7 @@ from core import functions
 import os
 
 
-def init(var):
+def init(var,environ):
     h = home()
     if len(var) > 0:
         if hasattr(h, var[0]) and callable(getattr(h, var[0])):

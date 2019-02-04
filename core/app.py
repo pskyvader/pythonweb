@@ -80,18 +80,17 @@ class app:
                 ('Content-Type', 'text/html; charset=utf-8')
             ]
             if response['error'] == 301:
-                data_return['status'] = '200 OK'
-                #data_return['status'] = '301 Moved Permanently'
-                #response['headers'] = [('Location', response['redirect'])]
-                response['body'] = '<html><body>redirige ' + response['redirect']+ str(config) +'</body></html>'
+                data_return['status'] = '301 Moved Permanently'
+                response['headers'] = [('Location', response['redirect'])]
+                response['body'] = '<html><body>redirige ' + response['redirect']+'</body></html>'
             else:
                 data_return['status'] = '404 Not Found'
                 response['body'] = '<html><body>No encontrado ' + str(my_file)+'</body></html>'
         else:
             data_return['status'] = '200 OK'
 
-        #if config['debug']=='true':
-            #response['status']='200 OK'
+        if config['debug']:
+            response['status']='200 OK'
         
         data_return['response_body'] = response['body']
         data_return['headers'] = response['headers']

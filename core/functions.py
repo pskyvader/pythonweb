@@ -11,17 +11,19 @@ class functions():
 
     @staticmethod
     def generar_url(url, extra=[], front_auto=True, front=True):
-        from urllib.parse import urlencode
         from core.app import app
-        from collections import OrderedDict
+
+        from urllib.request import urlretrieve
+        from urllib.parse import urlencode
+        
+
         url = '/'.join(url)
         if isinstance(extra, list) and len(extra) > 0:
-            url = urlencode(OrderedDict(data=url, search=extra))
-
+            url = urlretrieve(url+"?" + urlencode(extra))
         else:
             if (len(app.extra) > 0):
                 if not isinstance(extra, bool) or extra == True:
-                    url = urlencode(OrderedDict(data=url, search=app.extra))
+                    url = urlretrieve(url+"?" + urlencode(app.extra))
 
         url = (app.get_url() if front_auto else app.get_url(front)) + url
         return url

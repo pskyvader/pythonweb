@@ -77,10 +77,14 @@ class app:
         else:
             response = {'error': 404}
 
-        if 'error' in response:
+
+        if 'headers' not in data_return:
+            response['headers']
+        else:
             response['headers'] = [
                 ('Content-Type', 'text/html; charset=utf-8')
             ]
+        if 'error' in response:
             if response['error'] == 301:
                 if config['debug']:
                     data_return['status'] = '200 OK'

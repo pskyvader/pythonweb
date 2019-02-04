@@ -79,8 +79,6 @@ class app:
 
 
         if 'headers' not in data_return:
-            response['headers']
-        else:
             response['headers'] = [
                 ('Content-Type', 'text/html; charset=utf-8')
             ]

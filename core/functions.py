@@ -1,9 +1,14 @@
 class functions():
     environ = {}
+    extra = {}
 
     @staticmethod
     def set_environ(environ):
         functions.environ = environ
+
+    @staticmethod
+    def set_extra(extra):
+        functions.extra = extra
 
     @staticmethod
     def url_redirect(url):

@@ -122,6 +122,7 @@ class app:
 
     @staticmethod
     def get_url(front=False):
+        print(app.config)
         if (app.config['front'] or front):
             return app.url['base']
         else:

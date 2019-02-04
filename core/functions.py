@@ -1,7 +1,7 @@
 from core.app import app
 class functions(app):
     environ=''
-
+    @staticmethod
     def current_url():
         url = environ['wsgi.url_scheme']+'://'
         if environ.get('HTTP_HOST'):

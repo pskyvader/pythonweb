@@ -51,11 +51,13 @@ class app:
             app.front = True
 
         if app.front:
-            app.controller_dir = app.app_dir+'controllers/'+'front/themes/'+config['theme']+'/'
-            app.view_dir = app.app_dir+'views/'+'front/themes/'+config['theme']+'/'
+            app.controller_dir = app.app_dir+'controllers/front/themes/'+config['theme']+'/'
+            app.view_dir = app.app_dir+'views/front/themes/'+config['theme']+'/'
         else:
-            app.controller_dir = app.app_dir+'controllers/'+'back/themes/'+config['theme_back']+'/'
-            app.view_dir = app.app_dir+'views/'+'back/themes/'+config['theme_back']+'/'
+            app.controller_dir = app.app_dir+'controllers/' + \
+                'back/themes/'+config['theme_back']+'/'
+            app.view_dir = app.app_dir+'views/' + \
+                'back/themes/'+config['theme_back']+'/'
 
         app.url['base'] = app.path
         app.url['admin'] = app.path+config['admin']+'/'
@@ -83,7 +85,8 @@ class app:
                 response['body'] = ''
             else:
                 data_return['status'] = '404 Not Found'
-                response['body'] = '<html><body>No encontrado '+str(my_file)+'</body></html>'
+                response['body'] = '<html><body>No encontrado ' + \
+                    str(my_file)+'</body></html>'
         else:
             data_return['status'] = '200 OK'
 
@@ -110,10 +113,10 @@ class app:
     @staticmethod
     def parse_extra():
         from cgi import parse_qs
-        url=dict(parse_qs(app.environ['QUERY_STRING']))
+        url = dict(parse_qs(app.environ['QUERY_STRING']))
         if 'url' in url:
             del url['url']
-            
+
         return url
 
     def get_config(self):

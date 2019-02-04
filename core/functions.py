@@ -2,13 +2,11 @@ from urllib.parse import urlencode
 
 
 class functions():
-    environ = {}
     path = {}
     extra = {}
 
     @staticmethod
-    def set_variable(environ, path, extra):
-        functions.environ = environ
+    def set_variable(path, extra):
         functions.path = path
         functions.extra = extra
 
@@ -38,7 +36,8 @@ class functions():
 
     @staticmethod
     def current_url():
-        environ = functions.environ
+        from core.app import app
+        environ = app.environ
         url = environ['wsgi.url_scheme']+'://'
         if environ.get('HTTP_HOST'):
             url += environ['HTTP_HOST']

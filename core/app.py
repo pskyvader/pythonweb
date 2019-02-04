@@ -60,7 +60,7 @@ class app:
 
         self.url['base'] = self.path
         self.url['admin'] = self.path+config['admin']
-        functions.set_variable(environ, self.path, extra)
+        functions.set_variable(self.path, extra)
 
         view.set_theme(self.root+self.view_dir)
 

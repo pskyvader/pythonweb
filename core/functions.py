@@ -12,8 +12,8 @@ def current_url(environ):
         else:
             if environ['SERVER_PORT'] != '80':
                 url += ':' + environ['SERVER_PORT']
-    url += environ.get('SCRIPT_NAME', '')
-    url += environ.get('PATH_INFO', '')
-    if environ.get('QUERY_STRING'):
+    url += environ['SCRIPT_NAME']
+    url += environ['PATH_INFO']
+    if environ['QUERY_STRING']:
         url += '?' + environ['QUERY_STRING']
     return url

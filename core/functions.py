@@ -1,3 +1,6 @@
+from urllib import quote
+
+
 def current_url(environ):
     url = environ['wsgi.url_scheme']+'://'
     if environ.get('HTTP_HOST'):
@@ -7,11 +10,10 @@ def current_url(environ):
 
         if environ['wsgi.url_scheme'] == 'https':
             if environ['SERVER_PORT'] != '443':
-            url += ':' + environ['SERVER_PORT']
+                url += ':' + environ['SERVER_PORT']
         else:
             if environ['SERVER_PORT'] != '80':
-            url += ':' + environ['SERVER_PORT']
-
+                url += ':' + environ['SERVER_PORT']
     url += quote(environ.get('SCRIPT_NAME', ''))
     url += quote(environ.get('PATH_INFO', ''))
     if environ.get('QUERY_STRING'):

@@ -83,7 +83,7 @@ class app:
             ]
             if response['error'] == 301:
                 if config['debug']:
-                    response['status'] = '200 OK'
+                    data_return['status'] = '200 OK'
                     response['body'] = '<html><body>redirige <a href="' + \
                         response['redirect']+'">' + \
                         response['redirect']+'</a></body></html>'

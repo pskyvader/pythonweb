@@ -6,7 +6,7 @@ class functions():
         functions.environ = environ
 
     @staticmethod
-    def generar_url(url, extra = null, front_auto = true, front = true):
+    def generar_url(url, extra = {}, front_auto = True, front = True):
     {
         $url = implode('/', $url);
         if (is_array($extra) && count($extra) > 0) {

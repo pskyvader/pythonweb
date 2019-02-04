@@ -123,7 +123,7 @@ class app:
 
     @staticmethod
     def get_url(front=False):
-        if (app.front or front):
+        if (front):
             return app.url['base']
         else:
             return app.url['admin']

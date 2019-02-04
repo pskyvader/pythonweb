@@ -27,7 +27,6 @@ class home:
     metadata = {'title': 'Home', 'modulo': 'home'}
 
     def index(self):
-        import collections
         ret = {}
         url_return=functions.url_redirect(self.url)
         if url_return!='':
@@ -36,11 +35,11 @@ class home:
             return ret
         view.add('title', 'index')
         view.add('var', 'index')
-        breadcrumb=collections.OrderedDict([
+        breadcrumb=[
             {'active':'active','url':'aaaa','title':'titulo'},
             {'active':'','url':'bbb','title':'titulo2'},
             {'active':'active','url':'ccc','title':'titulo3'},
-        ])
+        ]
         view.add('breadcrumb', breadcrumb)
         ret['body'] = view.render('home')
         return ret

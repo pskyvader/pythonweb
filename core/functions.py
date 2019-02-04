@@ -10,11 +10,11 @@ class functions():
             return ""
 
     @staticmethod
-    def generar_url(url, extra=[], front_auto=True, front=True):
+    def generar_url(url, extra={}, front_auto=True, front=True):
         from core.app import app
         from urllib.parse import urlencode
         url = '/'.join(url)
-        if isinstance(extra, list) and len(extra) > 0:
+        if isinstance(extra, dict) and len(extra) > 0:
             url = url+"?" + urlencode(extra)
         else:
             if (len(app.extra) > 0):

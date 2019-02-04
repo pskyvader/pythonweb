@@ -13,10 +13,10 @@ class functions():
     def generar_url(url, extra={}, front_auto=True, front=True):
         from core.app import app
         from urllib.parse import urlencode
-        import urllib
+        from urllib.parse import quote
         url = '/'.join(url)
         if isinstance(extra, dict) and len(extra) > 0:
-            url = url+"?" + urllib.quote(extra)
+            url = url+"?" + quote(extra)
         else:
             if (len(app.extra) > 0):
                 if not isinstance(extra, bool) or extra == True:

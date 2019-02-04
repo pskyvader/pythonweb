@@ -125,7 +125,7 @@ class app:
         if len(self.config) == 0:
             with open(self.app_dir+'config/config.json') as f:
                 app.config = json.load(f)
-        return self.config
+        return app.config
 
     @staticmethod
     def get_url(front=False):

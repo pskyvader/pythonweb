@@ -28,7 +28,7 @@ class app:
     def init(self, environ):
         app.environ = environ
         data_return = {}
-        app.extra = self.parse_extra(parse_qs(environ['QUERY_STRING']))
+        app.extra = self.parse_extra()
         url = self.parse_url(environ['PATH_INFO'])
         config = self.get_config()
         site = environ['SERVER_NAME']
@@ -109,7 +109,8 @@ class app:
         return url
 
     @staticmethod
-    def parse_extra(url):
+    def parse_extra():
+        url=parse_qs(app.environ['QUERY_STRING'])
         if 'url' in url:
             del url['url']
         url_return = {}

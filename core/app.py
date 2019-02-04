@@ -51,8 +51,10 @@ class app:
             app.front = True
 
         if app.front:
-            app.controller_dir = app.app_dir+'controllers/front/themes/'+config['theme']+'/'
-            app.view_dir = app.app_dir+'views/front/themes/'+config['theme']+'/'
+            app.controller_dir = app.app_dir + \
+                'controllers/front/themes/'+config['theme']+'/'
+            app.view_dir = app.app_dir + \
+                'views/front/themes/'+config['theme']+'/'
         else:
             app.controller_dir = app.app_dir+'controllers/' + \
                 'back/themes/'+config['theme_back']+'/'
@@ -81,20 +83,21 @@ class app:
             ]
             if response['error'] == 301:
                 if config['debug']:
-                    response['status']='200 OK'
-                    response['body'] = '<html><body>redirige <a href="'+response['redirect']+'">' + response['redirect']+'</a></body></html>'
+                    response['status'] = '200 OK'
+                    response['body'] = '<html><body>redirige <a href="' + \
+                        response['redirect']+'">' + \
+                        response['redirect']+'</a></body></html>'
                 else:
                     data_return['status'] = '301 Moved Permanently'
                     response['headers'] = [('Location', response['redirect'])]
                     response['body'] = ''
             else:
                 data_return['status'] = '404 Not Found'
-                response['body'] = '<html><body>No encontrado ' + str(my_file)+'</body></html>'
+                response['body'] = '<html><body>No encontrado ' + \
+                    str(my_file)+'</body></html>'
         else:
             data_return['status'] = '200 OK'
 
-        
-        
         data_return['response_body'] = response['body']
         data_return['headers'] = response['headers']
 

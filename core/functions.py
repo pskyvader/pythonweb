@@ -1,5 +1,5 @@
 class functions():
-    environ=''
+    environ={}
     
     @staticmethod
     def current_url():

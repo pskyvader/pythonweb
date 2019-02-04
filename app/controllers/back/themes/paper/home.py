@@ -3,8 +3,8 @@ from core import functions
 import os
 
 
-def init(var,environ):
-    h = home(environ)
+def init(var,extra):
+    h = home()
     if len(var) > 0:
         if hasattr(h, var[0]) and callable(getattr(h, var[0])):
             fun = var[0]
@@ -25,14 +25,10 @@ def init(var,environ):
 class home:
     url = ['home']
     metadata = {'title': 'Home', 'modulo': 'home'}
-    environ=''
-
-    def __init__(self, environ):
-        self.environ=environ
 
     def index(self):
         ret = {}
-        view.add('title', str(functions.current_url(self.environ)))
+        view.add('title', str(functions.current_url()))
         ret['body'] = view.render('home')
         ret['headers'] = [('Content-Type', 'text/html; charset=utf-8')]
         return ret

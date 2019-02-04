@@ -1,4 +1,4 @@
-#import cgitb
+# import cgitb
 # cgitb.enable()
 import sys
 import os
@@ -40,8 +40,6 @@ class app:
             subdirectorio = "/" + subdirectorio + "/"
         else:
             subdirectorio = "/"
-        
-        functions.set_variable(environ,self.path,extra)
 
         if(url[0] == config['admin']):
             self.front = False
@@ -57,13 +55,18 @@ class app:
         else:
             self.controller_dir += 'back/themes/'+config['theme_back']+'/'
             self.view_dir += 'back/themes/'+config['theme_back']+'/'
-        
+
+        self.url['base'] = self.path
+        self.url['admin'] = self.path+config['admin']
+        functions.set_variable(environ, self.path, extra)
+
         view.set_theme(self.root+self.view_dir)
 
         controller = self.controller_dir+url[0]
         my_file = Path(self.root+controller+'.py')
         if my_file.is_file():
-            current_module = importlib.import_module( controller.replace("/", "."))
+            current_module = importlib.import_module(
+                controller.replace("/", "."))
             del url[0]
             # returns {'body':str,'headers':str} or {'error':int,...'redirect':str}
             response = current_module.init(url)
@@ -111,7 +114,14 @@ class app:
         return url
 
     def get_config(self):
-        if len(app.config) == 0:
+        if len(self.config) == 0:
             with open(self.app_dir+'config/config.json') as f:
-                app.config = json.load(f)
-        return app.config
+                self.config = json.load(f)
+        return self.config
+
+    @staticmethod
+    def get_url(front=False):
+        if (app.front or front):
+            return app.url['base']
+        else:
+            return app.url['admin']

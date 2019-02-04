@@ -2,7 +2,7 @@
     <ol class="breadcrumb">
         {% for bc in breadcrumb %}
             {% if bc.active!='' %}
-                <li class="{{bc.active}}">
+                <li class="{{bc.active}} {{bc.index}}">
                     <a href="{{bc.url}}">{{bc.title}}</a>
                 </li>
             {% endif %}

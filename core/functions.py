@@ -14,8 +14,6 @@ class functions():
             return ruta
         else:
             return ""
-        
-    
 
     @staticmethod
     def generar_url(url, extra = {}, front_auto = True, front = True):

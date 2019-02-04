@@ -1,6 +1,10 @@
 from core.app import app
 class functions(app):
     environ=''
+    def __init__(self, root):
+        
+        return super().__init__(root)
+
     @staticmethod
     def current_url():
         url = environ['wsgi.url_scheme']+'://'

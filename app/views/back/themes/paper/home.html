@@ -1,8 +1,8 @@
 <div class="page-content">
     <ol class="breadcrumb">
         {% for bc in breadcrumb %}
-        <li class="{{bd.active}}">
-            <a href="{{bd.url}}">{{bc.title}}</a>
+        <li class="{{bc.active}}">
+            <a href="{{bc.url}}">{{bc.title}}</a>
         </li>
         {% endfor %}
     </ol>

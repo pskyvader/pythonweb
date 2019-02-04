@@ -15,7 +15,7 @@ class functions():
         from urllib.parse import urlencode
         url = '/'.join(url)
         if isinstance(extra, dict) and len(extra) > 0:
-            url = url+"?" + urlencode(extra)
+            url = url+"?" + urllib.quote(extra)
         else:
             if (len(app.extra) > 0):
                 if not isinstance(extra, bool) or extra == True:

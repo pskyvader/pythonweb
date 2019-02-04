@@ -1,8 +1,7 @@
 from urllib.parse import urlencode
-from core.app import app
 from collections import OrderedDict
 
-class functions(app):
+class functions():
     environ = {}
     path = {}
     extra = {}

@@ -27,6 +27,7 @@ class functions():
     @staticmethod
     def current_url():
         from core.app import app
+        from urllib.parse import urlencode
         environ = app.environ
         url = environ['wsgi.url_scheme']+'://'
         if environ.get('HTTP_HOST'):
@@ -43,5 +44,5 @@ class functions():
         url += environ['SCRIPT_NAME']
         url += environ['PATH_INFO']
         if environ['QUERY_STRING']:
-            url += '?' + urlencode(extra,'utf-8')
+            url += '?' + urlencode(app.extra,'utf-8')
         return url

@@ -6,8 +6,23 @@ class functions():
         functions.environ = environ
 
     @staticmethod
+    def url_redirect(url):
+    
+        $ruta    = self::generar_url($url);
+        $current = self::current_url();
+
+        if ($ruta != $current) {
+            if (error_reporting()) {
+                exit("<a href='" . $ruta . "'>" . $ruta . "</a>");
+            }
+            header("HTTP/1.1 301 Moved Permanently");
+            header("Location: " . $ruta);
+            exit;
+        }
+    
+
+    @staticmethod
     def generar_url(url, extra = {}, front_auto = True, front = True):
-    {
         $url = implode('/', $url);
         if (is_array($extra) && count($extra) > 0) {
             $url .= "?" . http_build_query($extra);
@@ -20,7 +35,7 @@ class functions():
         $url = (($front_auto) ? (app::get_url()) : (app::get_url($front))) . $url;
 
         return $url;
-    }
+    
 
     @staticmethod
     def current_url():

@@ -1,8 +1,11 @@
 from core.app import app
 class functions(app):
+    def __init__(self, root):
+        super().__init__(root)
+
     @staticmethod
     def current_url():
-        url = functions.environ['wsgi.url_scheme']+'://'
+        url = app.environ['wsgi.url_scheme']+'://'
         if environ.get('HTTP_HOST'):
             url += environ['HTTP_HOST']
         else:

@@ -33,7 +33,7 @@ class functions():
                     url += urlencode(functions.extra)
         
         from core.app import app
-        url =  app.get_url(False) if front_auto else app.get_url(front) + url
+        url =  app.get_url(False) if front_auto else app.get_url(False) + url
         return url
     
 

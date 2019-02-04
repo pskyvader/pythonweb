@@ -1,4 +1,5 @@
 from core.view import view
+from core import functions
 import os
 
 
@@ -27,7 +28,7 @@ class home:
 
     def index(self):
         ret = {}
-        view.add('title', 'index')
+        view.add('title', functions.current_url())
         ret['body'] = view.render('home')
         ret['headers'] = [('Content-Type', 'text/html; charset=utf-8')]
         return ret

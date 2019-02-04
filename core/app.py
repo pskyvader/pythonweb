@@ -16,7 +16,6 @@ class app:
     controller_dir = app_dir+'controllers/'
     view_dir = app_dir+'views/'
     url = {}
-    front = True
     path = ''
     root = ''
     environ = {}
@@ -50,7 +49,7 @@ class app:
             if len(url) == 0:
                 url = ['home']
         else:
-            self.front = False
+            self.front = True
 
         if self.front:
             self.controller_dir += 'front/themes/'+config['theme']+'/'

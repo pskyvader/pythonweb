@@ -109,8 +109,8 @@ class app:
 
     @staticmethod
     def parse_extra():
-        from urllib import parse
-        url=dict(parse.parse_qsl(app.environ['QUERY_STRING']))
+        import urlparse
+        url=dict(urlparse.parse_qs(app.environ['QUERY_STRING']))
         if 'url' in url:
             del url['url']
         return url

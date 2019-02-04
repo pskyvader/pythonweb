@@ -26,7 +26,7 @@ class app:
         self.root = root+'/'
 
     def init(self, environ):
-        app.environ=environ
+        app.environ = environ
         data_return = {}
         app.extra = self.parse_extra(parse_qs(environ['QUERY_STRING']))
         url = self.parse_url(environ['PATH_INFO'])
@@ -112,12 +112,12 @@ class app:
     def parse_extra(url):
         if 'url' in url:
             del url['url']
-        url_return={}
-        for k,u in url.items():
-            if len(url)==1:
-                url_return[k]=u[0]
+        url_return = {}
+        for k, u in url.items():
+            if len(u) == 1:
+                url_return[k] = u[0]
             else:
-                url_return[k]=u
+                url_return[k] = u
         return url_return
 
     def get_config(self):

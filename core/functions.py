@@ -21,6 +21,7 @@ class functions():
 
     @staticmethod
     def generar_url(url, extra = {}, front_auto = True, front = True):
+        url='/'.join(extra)
         $url = implode('/', $url);
         if (is_array($extra) && count($extra) > 0) {
             $url .= "?" . http_build_query($extra);

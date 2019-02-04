@@ -111,7 +111,6 @@ class app:
     def parse_extra():
         from cgi import parse_qs
         url=dict(parse_qs(app.environ['QUERY_STRING']))
-
         if 'url' in url:
             del url['url']
             

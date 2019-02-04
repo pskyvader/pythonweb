@@ -60,7 +60,7 @@ class app:
             self.view_dir += 'back/themes/'+config['theme_back']+'/'
 
         self.url['base'] = self.path
-        self.url['admin'] = self.path+config['admin']
+        self.url['admin'] = self.path+config['admin']+'/'
 
         view.set_theme(self.root+self.view_dir)
 
@@ -123,7 +123,7 @@ class app:
 
     @staticmethod
     def get_url(front=False):
-        if (front):
+        if (app.front):
             return app.url['base']
         else:
             return app.url['admin']

@@ -20,11 +20,10 @@ class functions():
             return ""
 
     @staticmethod
-    def generar_url(url, extra = {}, front_auto = True, front = True):
-        url='/'.join(extra)
-        $url = implode('/', $url);
-        if (is_array($extra) && count($extra) > 0) {
-            $url .= "?" . http_build_query($extra);
+    def generar_url(url, extra = [], front_auto = True, front = True):
+        url='/'.join(url)
+        if isinstance(extra,list) and len(extra) > 0:
+            $url += "?" + http_build_query($extra);
         } elseif (count($_GET) > 0) {
             if (!is_bool($extra) || $extra) {
                 $url .= "?" . http_build_query($_GET);

@@ -36,12 +36,10 @@ class home:
         view.add('title', 'index')
         view.add('var', 'index')
         ret['body'] = view.render('home')
-        ret['headers'] = [('Content-Type', 'text/html; charset=utf-8')]
         return ret
 
     def ver(self,var):
         ret = {}
         view.add('title', 'ver')
         ret['body'] = view.render('home')
-        ret['headers'] = [('Content-Type', 'text/html; charset=utf-8')]
         return ret

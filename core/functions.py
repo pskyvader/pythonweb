@@ -1,15 +1,13 @@
 class functions():
-    environ={}
+    environ = {}
 
-    
-    
     @staticmethod
     def set_environ(environ):
-        functions.environ=environ
-    
+        functions.environ = environ
+
     @staticmethod
     def current_url():
-        environ=functions.environ
+        environ = functions.environ
         url = environ['wsgi.url_scheme']+'://'
         if environ.get('HTTP_HOST'):
             url += environ['HTTP_HOST']

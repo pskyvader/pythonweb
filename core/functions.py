@@ -23,7 +23,7 @@ class functions():
         else:
             if (len(app.extra) > 0):
                 if not isinstance(extra, bool) or extra == True:
-                    url = urlretrieve(url+"?" + urlencode(app.extra))
+                    url = url+"?" + urlencode(app.extra)
 
         url = (app.get_url() if front_auto else app.get_url(front)) + url
         return url

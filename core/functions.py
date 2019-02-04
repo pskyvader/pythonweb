@@ -5,7 +5,7 @@ class functions(app):
 
     @staticmethod
     def current_url():
-        url = environ['wsgi.url_scheme']+'://'
+        url = functions.environ['wsgi.url_scheme']+'://'
         if environ.get('HTTP_HOST'):
             url += environ['HTTP_HOST']
         else:

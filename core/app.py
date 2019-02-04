@@ -4,7 +4,6 @@ import sys
 import os
 from core.view import view
 from core.functions import functions
-from cgi import parse_qs
 import json
 from pathlib import Path
 import importlib
@@ -110,7 +109,9 @@ class app:
 
     @staticmethod
     def parse_extra():
+        from urllib import parse
         url=parse_qs(app.environ['QUERY_STRING'])
+        url=dict(parse.parse_qsl(parse.urlsplit(url).query))
         if 'url' in url:
             del url['url']
         url_return = {}

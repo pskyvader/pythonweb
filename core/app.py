@@ -89,8 +89,8 @@ class app:
         else:
             data_return['status'] = '200 OK'
 
-        if config['debug']=='true':
-            response['status']='200 OK'
+        #if config['debug']=='true':
+        response['status']='200 OK'
         
         data_return['response_body'] = response['body']
         data_return['headers'] = response['headers']

@@ -83,7 +83,7 @@ class app:
                 response['body'] = ''
             else:
                 data_return['status'] = '404 Not Found'
-                response['body'] = '<html><body>No encontrado --'+str(url[0])+'</body></html>'
+                response['body'] = '<html><body>No encontrado'+str(controller)+'</body></html>'
         else:
             data_return['status'] = '200 OK'
 

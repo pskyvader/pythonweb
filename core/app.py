@@ -111,6 +111,8 @@ class app:
     def parse_extra():
         from urllib import parse
         url=dict(parse.parse_qsl(app.environ['QUERY_STRING']))
+        if 'url' in url:
+            del url['url']
         return url
 
     def get_config(self):

@@ -6,6 +6,23 @@ class functions():
         functions.environ = environ
 
     @staticmethod
+    def generar_url(array url, extra = null, front_auto = true, front = true):
+    {
+        $url = implode('/', $url);
+        if (is_array($extra) && count($extra) > 0) {
+            $url .= "?" . http_build_query($extra);
+        } elseif (count($_GET) > 0) {
+            if (!is_bool($extra) || $extra) {
+                $url .= "?" . http_build_query($_GET);
+            }
+        }
+        $url = str_replace("%2F", "/", $url);
+        $url = (($front_auto) ? (app::get_url()) : (app::get_url($front))) . $url;
+
+        return $url;
+    }
+
+    @staticmethod
     def current_url():
         environ = functions.environ
         url = environ['wsgi.url_scheme']+'://'

@@ -1,5 +1,5 @@
 from urllib.parse import urlencode
-from collections import OrderedDict
+
 
 class functions():
     environ = {}
@@ -7,14 +7,14 @@ class functions():
     extra = {}
 
     @staticmethod
-    def set_variable(environ,path,extra):
+    def set_variable(environ, path, extra):
         functions.environ = environ
         functions.path = path
         functions.extra = extra
 
     @staticmethod
     def url_redirect(url):
-        ruta    = functions.generar_url(url)
+        ruta = functions.generar_url(url)
         current = functions.current_url()
 
         if (ruta != current):
@@ -23,19 +23,18 @@ class functions():
             return ""
 
     @staticmethod
-    def generar_url(url, extra = [], front_auto = True, front = True):
+    def generar_url(url, extra=[], front_auto=True, front=True):
         from core.app import app
-        url='/'.join(url)
-        if isinstance(extra,list) and len(extra) > 0:
-            url+= urlencode(extra)
+        url = '/'.join(url)
+        if isinstance(extra, list) and len(extra) > 0:
+            url += urlencode(extra)
         else:
             if (len(functions.extra) > 0):
-                if not isinstance(extra,bool) or extra==True:
+                if not isinstance(extra, bool) or extra == True:
                     url += urlencode(functions.extra)
-        
-        url =  app.get_url() if front_auto else app.get_url(front) + url
+
+        url = app.get_url() if front_auto else app.get_url(front) + url
         return url
-    
 
     @staticmethod
     def current_url():

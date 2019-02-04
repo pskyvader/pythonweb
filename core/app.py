@@ -56,8 +56,8 @@ class app:
             self.controller_dir += 'back/themes/'+config['theme_back']+'/'
             self.view_dir += 'back/themes/'+config['theme_back']+'/'
 
-        self.url['base'] = self.path
-        self.url['admin'] = self.path+config['admin']
+        #self.url['base'] = self.path
+        #self.url['admin'] = self.path+config['admin']
         functions.set_variable(environ, self.path, extra)
 
         view.set_theme(self.root+self.view_dir)

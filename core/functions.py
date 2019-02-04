@@ -14,8 +14,6 @@ class functions():
         from core.app import app
         from urllib.request import urlretrieve
         from urllib.parse import urlencode
-        
-
         url = '/'.join(url)
         if isinstance(extra, list) and len(extra) > 0:
             url = urlretrieve(url+"?" + urlencode(extra))

@@ -113,7 +113,7 @@ class app:
         if 'url' in url:
             del url['url']
         url_return={}
-        for k,u in url:
+        for k,u in url.items():
             if len(url)==1:
                 url_return[k]=u[0]
             else:

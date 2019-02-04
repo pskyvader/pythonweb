@@ -24,9 +24,9 @@ class app:
 
     def init(self, environ):
         data_return = {}
-        data_return['extra'] = self.parse_extra(
+        extra = self.parse_extra(
             parse_qs(environ['QUERY_STRING']))
-        data_return['url'] = url = self.parse_url(environ['PATH_INFO'])
+        url = self.parse_url(environ['PATH_INFO'])
         config = self.get_config()
         site = environ['SERVER_NAME']
         subdirectorio = config['dir']
@@ -63,7 +63,7 @@ class app:
             current_module = importlib.import_module( controller.replace("/", "."))
             del url[0]
             # returns {'body':str,'headers':str} or {'error':int,...'redirect':str}
-            response = current_module.init(url,environ)
+            response = current_module.init(url,extra)
         else:
             response = {'error': 404}
 

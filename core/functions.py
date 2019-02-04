@@ -1,8 +1,4 @@
-from core.app import app
-class functions(app):
-    def __init__(self, root):
-        super().__init__(root)
-
+class functions():
     @staticmethod
     def current_url():
         url = app.environ['wsgi.url_scheme']+'://'

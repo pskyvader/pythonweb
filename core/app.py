@@ -28,8 +28,7 @@ class app:
     def init(self, environ):
         app.environ=environ
         data_return = {}
-        app.extra = self.parse_extra(
-            parse_qs(environ['QUERY_STRING']))
+        app.extra = self.parse_extra(parse_qs(environ['QUERY_STRING']))
         url = self.parse_url(environ['PATH_INFO'])
         config = self.get_config()
         site = environ['SERVER_NAME']

@@ -1,13 +1,12 @@
 class functions():
     environ = {}
     extra = {}
+    extra = {}
 
     @staticmethod
-    def set_environ(environ):
+    def set_variable(environ,path,extra):
         functions.environ = environ
-
-    @staticmethod
-    def set_extra(extra):
+        functions.path = path
         functions.extra = extra
 
     @staticmethod

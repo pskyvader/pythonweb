@@ -16,7 +16,7 @@ class functions():
         from urllib.parse import quote
         url = '/'.join(url)
         if isinstance(extra, dict) and len(extra) > 0:
-            url = url+"?" + quote(extra)
+            url = url+"?" + quote(extra, safe='')
         else:
             if (len(app.extra) > 0):
                 if not isinstance(extra, bool) or extra == True:

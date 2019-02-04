@@ -51,11 +51,11 @@ class app:
             app.front = True
 
         if app.front:
-            app.controller_dir += 'front/themes/'+config['theme']+'/'
-            app.view_dir += 'front/themes/'+config['theme']+'/'
+            app.controller_dir = app.app_dir+'controllers/'+'front/themes/'+config['theme']+'/'
+            app.view_dir = app.app_dir+'views/'+'front/themes/'+config['theme']+'/'
         else:
-            app.controller_dir += 'back/themes/'+config['theme_back']+'/'
-            app.view_dir += 'back/themes/'+config['theme_back']+'/'
+            app.controller_dir = app.app_dir+'controllers/'+'back/themes/'+config['theme']+'/'
+            app.view_dir = app.app_dir+'views/'+'back/themes/'+config['theme_back']+'/'
 
         app.url['base'] = app.path
         app.url['admin'] = app.path+config['admin']+'/'

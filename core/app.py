@@ -50,7 +50,7 @@ class app:
             if len(url) == 0:
                 url = ['home']
         else:
-            self.front = True
+            self.front = False
 
         if self.front:
             self.controller_dir += 'front/themes/'+config['theme']+'/'

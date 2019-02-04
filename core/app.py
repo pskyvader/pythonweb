@@ -54,19 +54,19 @@ class app:
             app.front = True
 
         if app.front:
-            self.controller_dir += 'front/themes/'+config['theme']+'/'
-            self.view_dir += 'front/themes/'+config['theme']+'/'
+            app.controller_dir += 'front/themes/'+config['theme']+'/'
+            app.view_dir += 'front/themes/'+config['theme']+'/'
         else:
-            self.controller_dir += 'back/themes/'+config['theme_back']+'/'
-            self.view_dir += 'back/themes/'+config['theme_back']+'/'
+            app.controller_dir += 'back/themes/'+config['theme_back']+'/'
+            app.view_dir += 'back/themes/'+config['theme_back']+'/'
 
-        self.url['base'] = self.path
-        self.url['admin'] = self.path+config['admin']+'/'
+        app.url['base'] = app.path
+        app.url['admin'] = app.path+config['admin']+'/'
 
-        view.set_theme(self.root+self.view_dir)
+        view.set_theme(app.root+app.view_dir)
 
-        controller = self.controller_dir+url[0]
-        my_file = Path(self.root+controller+'.py')
+        controller = app.controller_dir+url[0]
+        my_file = Path(app.root+controller+'.py')
         if my_file.is_file():
             current_module = importlib.import_module(
                 controller.replace("/", "."))

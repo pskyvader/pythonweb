@@ -7,18 +7,14 @@ class functions():
 
     @staticmethod
     def url_redirect(url):
-    
-        $ruta    = self::generar_url($url);
-        $current = self::current_url();
+        ruta    = functions.generar_url(url)
+        current = functions.current_url()
 
-        if ($ruta != $current) {
-            if (error_reporting()) {
-                exit("<a href='" . $ruta . "'>" . $ruta . "</a>");
-            }
-            header("HTTP/1.1 301 Moved Permanently");
-            header("Location: " . $ruta);
-            exit;
-        }
+        if (ruta != current):
+            return ruta
+        else:
+            return ""
+        
     
 
     @staticmethod

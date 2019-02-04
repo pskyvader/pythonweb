@@ -30,6 +30,7 @@ class app:
         data_return = {}
         app.extra = self.parse_extra(
             parse_qs(environ['QUERY_STRING']))
+        print(app.extra)
         url = self.parse_url(environ['PATH_INFO'])
         config = self.get_config()
         site = environ['SERVER_NAME']

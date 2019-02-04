@@ -124,4 +124,4 @@ class app:
         if (app.front or front):
             return app.url['base']
         else:
-            return app.url['admin']
+            return app.url['admin']+'bbbb'

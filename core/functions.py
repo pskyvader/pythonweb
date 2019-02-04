@@ -12,7 +12,6 @@ class functions():
     @staticmethod
     def generar_url(url, extra=[], front_auto=True, front=True):
         from core.app import app
-        from urllib.request import urlretrieve
         from urllib.parse import urlencode
         url = '/'.join(url)
         if isinstance(extra, list) and len(extra) > 0:
@@ -23,7 +22,6 @@ class functions():
                     url = url+"?" + urlencode(app.extra)
 
         url = (app.get_url() if front_auto else app.get_url(front)) + url
-        url = urlretrieve(url)
         return url
 
     @staticmethod

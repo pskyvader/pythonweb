@@ -19,11 +19,13 @@ class app:
     front = True
     path = ''
     root = ''
+    environ = {}
 
     def __init__(self, root):
         self.root = root+'/'
 
     def init(self, environ):
+        self.environ=environ
         data_return = {}
         extra = self.parse_extra(
             parse_qs(environ['QUERY_STRING']))

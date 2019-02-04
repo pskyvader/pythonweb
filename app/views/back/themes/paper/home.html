@@ -1,7 +1,7 @@
 <div class="page-content">
     <ol class="breadcrumb">
         {% for bc in breadcrumb %}
-            <li class="{{bc.active}} {{loop.index}} {{ loop.cycle('odd', 'even') }}">
+            <li class="{{bc.active}} {{ loop.cycle('odd', 'even') }}">
                 <a href="{{bc.url}}">{{bc.title}}</a>
             </li>
         {% endfor %}

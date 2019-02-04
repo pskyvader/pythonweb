@@ -1,8 +1,5 @@
 from core.app import app
 class functions(app):
-    def __init__(self, root):
-        return super().__init__(root)
-
     @staticmethod
     def current_url():
         url = functions.environ['wsgi.url_scheme']+'://'

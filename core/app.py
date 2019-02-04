@@ -26,9 +26,9 @@ class app:
         self.root = root+'/'
 
     def init(self, environ):
-        self.environ=environ
+        app.environ=environ
         data_return = {}
-        self.extra = self.parse_extra(
+        app.extra = self.parse_extra(
             parse_qs(environ['QUERY_STRING']))
         url = self.parse_url(environ['PATH_INFO'])
         config = self.get_config()

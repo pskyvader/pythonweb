@@ -2,14 +2,6 @@ from urllib.parse import urlencode
 
 
 class functions():
-    path = {}
-    extra = {}
-
-    @staticmethod
-    def set_variable(path, extra):
-        functions.path = path
-        functions.extra = extra
-
     @staticmethod
     def url_redirect(url):
         ruta = functions.generar_url(url)

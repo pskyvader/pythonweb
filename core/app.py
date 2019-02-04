@@ -20,6 +20,7 @@ class app:
     path = ''
     root = ''
     environ = {}
+    extra = {}
 
     def __init__(self, root):
         self.root = root+'/'
@@ -27,7 +28,7 @@ class app:
     def init(self, environ):
         self.environ=environ
         data_return = {}
-        extra = self.parse_extra(
+        self.extra = self.parse_extra(
             parse_qs(environ['QUERY_STRING']))
         url = self.parse_url(environ['PATH_INFO'])
         config = self.get_config()
@@ -60,7 +61,6 @@ class app:
 
         self.url['base'] = self.path
         self.url['admin'] = self.path+config['admin']
-        functions.set_variable(self.path, extra)
 
         view.set_theme(self.root+self.view_dir)
 

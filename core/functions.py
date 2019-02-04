@@ -1,4 +1,5 @@
 from urllib.parse import urlencode
+from core.app import app
 from collections import OrderedDict
 
 class functions():

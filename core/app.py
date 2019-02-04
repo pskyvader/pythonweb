@@ -82,7 +82,7 @@ class app:
             if response['error'] == 301:
                 data_return['status'] = '301 Moved Permanently'
                 response['headers'] = [('Location', response['redirect'])]
-                response['body'] = '<html><body>redirige ' + response['redirect']+'</body></html>'
+                response['body'] = '<html><body>redirige ' + response['redirect']+ str(config) +'</body></html>'
             else:
                 data_return['status'] = '404 Not Found'
                 response['body'] = '<html><body>No encontrado ' + str(my_file)+'</body></html>'

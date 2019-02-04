@@ -34,6 +34,7 @@ class home:
             ret['redirect']=url_return
             return ret
         view.add('title', 'index')
+        view.add('var', 'index')
         ret['body'] = view.render('home')
         ret['headers'] = [('Content-Type', 'text/html; charset=utf-8')]
         return ret

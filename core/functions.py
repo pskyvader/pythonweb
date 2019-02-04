@@ -31,12 +31,9 @@ class functions():
             if (len(functions.extra) > 0):
                 if not isinstance(extra,bool) or extra==True:
                     url += urlencode(functions.extra)
-                
-            
-        $url = str_replace("%2F", "/", $url);
-        $url = (($front_auto) ? (app::get_url()) : (app::get_url($front))) . $url;
-
-        return $url;
+        
+        url = (front_auto ? (app.get_url()) : (app.get_url(front))) +url
+        return url
     
 
     @staticmethod

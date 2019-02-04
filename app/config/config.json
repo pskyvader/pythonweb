@@ -5,7 +5,7 @@
     "database": "mysitioc_mysitio",
     "prefix": "seo",
     "www": false,
-    "https": true,
+    "https": false,
     "cache": false,
     "theme": "mdbootstrap",
     "dir": "",

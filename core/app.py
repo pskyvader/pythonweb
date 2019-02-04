@@ -22,7 +22,7 @@ class app:
     extra = {}
 
     def __init__(self, root):
-        self.root = root+'/'
+        app.root = root+'/'
 
     def init(self, environ):
         app.environ = environ

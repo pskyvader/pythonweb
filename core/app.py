@@ -16,6 +16,7 @@ class app:
     controller_dir = app_dir+'controllers/'
     view_dir = app_dir+'views/'
     url = {}
+    front = True
     path = ''
     root = ''
     environ = {}

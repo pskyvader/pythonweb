@@ -28,11 +28,11 @@ class home:
     environ=''
 
     def __init__(self, environ):
-        home.environ=environ
+        self.environ=environ
 
     def index(self):
         ret = {}
-        view.add('title', functions.current_url())
+        view.add('title', functions.current_url(self.environ))
         ret['body'] = view.render('home')
         ret['headers'] = [('Content-Type', 'text/html; charset=utf-8')]
         return ret

@@ -3,6 +3,7 @@
 import sys
 import os
 from core.view import view
+from core.functions import functions
 from cgi import parse_qs
 import json
 from pathlib import Path

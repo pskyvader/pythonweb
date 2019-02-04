@@ -32,6 +32,7 @@ class functions():
                 if not isinstance(extra,bool) or extra==True:
                     url += urlencode(functions.extra)
         
+        from core.app import app
         url =  app.get_url() if front_auto else app.get_url(front) +url
         return url
     

@@ -43,6 +43,6 @@ class functions():
                     url += ':' + environ['SERVER_PORT']
         url += environ['SCRIPT_NAME']
         url += environ['PATH_INFO']
-        if environ['QUERY_STRING']:
+        if len(app.extra)>0:
             url += '?' + urlencode(app.extra,'utf-8')
         return url

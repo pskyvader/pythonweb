@@ -113,6 +113,7 @@ class app:
         url=dict(parse.parse_qsl(app.environ['QUERY_STRING']))
         if 'url' in url:
             del url['url']
+        
         return url
 
     def get_config(self):

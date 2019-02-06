@@ -97,41 +97,43 @@ class aside:
                         menu.append(me)
 
             if tipo_admin == 1:
-                menu.append({'title': 'Solo para desarrollo', 'separador': True})
-                url = functions.generar_url( ["moduloconfiguracion"], False)
+                menu.append(
+                    {'title': 'Solo para desarrollo', 'separador': True})
+                url = functions.generar_url(["moduloconfiguracion"], False)
                 active = (url == current_url)
                 me = {'url': url, 'icon': 'mode_edit', 'title': 'Modulos', 'has_submenu': True, 'active': active, 'separador': False)}
-                me['submenu'].append({'url': url, 'sub_title': 'TODOS', 'active': active})
+                me['submenu'].append(
+                    {'url': url, 'sub_title': 'TODOS', 'active': active})
 
-                mc = moduloconfiguracion_model.getAll()
-                for key,m in mc.items():
-                    url = functions.generar_url(['modulo'], {'idmoduloconfiguracion': m[0]})
-                    active = (url == current_url)
-                    me['submenu'].append({'url': url, 'sub_title': m['titulo'], 'active': active})
-                
+                mc=moduloconfiguracion_model.getAll()
+                for key, m in mc.items():
+                    url=functions.generar_url(
+                        ['modulo'], {'idmoduloconfiguracion': m[0]})
+                    active=(url == current_url)
+                    me['submenu'].append(
+                        {'url': url, 'sub_title': m['titulo'], 'active': active})
+
                 menu.append(me)
 
-                url = functions.generar_url({"table"), False)
-                active = (url == current_url)
-                menu.append({'url': url, 'icon': 'table', 'title': 'Tablas', 'has_submenu': False, 'active': active, 'separador': False)})
+                url=functions.generar_url(["table"], False)
+                active=(url == current_url)
+                menu.append({'url': url, 'icon': 'table', 'title': 'Tablas',
+                            'has_submenu': False, 'active': active, 'separador': False})
 
-                url = functions.generar_url(
-                    {"configuracion_administrador"), False)
-                active = (url == current_url)
-                menu.append({'url': url, 'icon': 'settings_applications', 'title': 'Configuracion Administrador', 'has_submenu': False, 'active': active, 'separador': False)})
+                url=functions.generar_url(
+                    ["configuracion_administrador"], False)
+                active=(url == current_url)
+                menu.append({'url': url, 'icon': 'settings_applications', 'title': 'Configuracion Administrador', 'has_submenu': False, 'active': active, 'separador': False})
 
-            
+
 
             view.set('menu', menu)
 
             view.set('name', administrador["nombre"])
             view.set('email', administrador["email"])
-            view.set('url_admin', functions.generar_url(array("administrador", "detail", administrador[0], 'profile'), array('tipo': tipo_admin)))
+            view.set('url_admin', functions.generar_url(["administrador", "detail", administrador[0], 'profile'], {'tipo': tipo_admin}))
             view.set('img_admin', image.generar_url(
                 administrador["foto"][0], 'profile'))
 
-            view.render('aside')
-        }
-    }
-
-}
+            ret['body']=view.render('aside')
+        return ret

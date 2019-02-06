@@ -33,6 +33,9 @@ class home:
             ret['error']=301
             ret['redirect']=url_return
             return ret
+
+
+        head=
         view.add('title', 'index')
         view.add('var', 'index')
         breadcrumb=[

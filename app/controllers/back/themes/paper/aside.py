@@ -9,7 +9,7 @@ class aside:
         ret = {'body': ''}
         if app.post.getfirst("ajax") is None:
             #administrador = administrador_model.getById( _SESSION[administrador_model.idname . app.prefix_site])
-            administrador = {'nombre':'Pablo','email':'pablo.rain.contreras@gmail.com','tipo': 1}
+            administrador = {0:1,'nombre':'Pablo','email':'pablo.rain.contreras@gmail.com','tipo': 1}
             tipo_admin = administrador["tipo"]
             #moduloconfiguracion = moduloconfiguracion_model.getAll( {'estado': True, 'aside': True})
             moduloconfiguracion = {}
@@ -134,8 +134,7 @@ class aside:
 
             view.add('name', administrador["nombre"])
             view.add('email', administrador["email"])
-            view.add('url_admin', functions.generar_url(
-                ["administrador", "detail", administrador[0], 'profile'], {'tipo': tipo_admin}))
+            view.add('url_admin', functions.generar_url( ["administrador", "detail", administrador[0], 'profile'], {'tipo': tipo_admin}))
             #view.add('img_admin', image.generar_url( administrador["foto"][0], 'profile'))
             view.add('img_admin', '')
 

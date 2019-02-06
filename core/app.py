@@ -140,12 +140,7 @@ class app:
             environ=post_env,
             keep_blank_values=True
         )
-        #return post
-
-        import urllib.parse
-
-        post_input = urllib.parse.parse_qs(app.environ['wsgi.input'].readline().decode(),True)
-        return post_input
+        return post
 
     @staticmethod
     def get_config():

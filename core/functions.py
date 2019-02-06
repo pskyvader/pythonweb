@@ -1,3 +1,4 @@
+from core.app import app
 class functions():
     @staticmethod
     def url_redirect(url):
@@ -11,7 +12,6 @@ class functions():
 
     @staticmethod
     def generar_url(url, extra={}, front_auto=True, front=True):
-        from core.app import app
         from urllib.parse import urlencode
         url = '/'.join(url)
         if isinstance(extra, dict) and len(extra) > 0:
@@ -26,7 +26,6 @@ class functions():
 
     @staticmethod
     def current_url():
-        from core.app import app
         from urllib.parse import urlencode
         environ = app.environ
         url = environ['wsgi.url_scheme']+'://'

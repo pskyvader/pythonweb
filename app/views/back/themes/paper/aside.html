@@ -35,7 +35,7 @@
                                 <span> {{m.title}} </span>
                             </a>
                             <ul class="acc-menu">
-                                {% for sm in n.submenu %}
+                                {% for sm in m.submenu %}
                                 <li class="{% if sm.active %} active {% endif %}">
                                     <a class="withripple" href="{{sm.url}}">{{sm.sub_title}} </a>
                                 </li>

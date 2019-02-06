@@ -4,7 +4,8 @@ from core.app import app
 
 
 class aside:
-    def normal(self.):
+    
+    def normal(self):
         ret = {'body': ''}
         if app.post.getfirst("ajax") is None:
             #administrador = administrador_model.getById( _SESSION[administrador_model.idname . app.prefix_site])

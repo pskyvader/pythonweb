@@ -37,7 +37,7 @@ class home:
 
 
         view.add('title', 'index')
-        view.add('var', app.enviroment)
+        view.add('var', app.environ['wsgi.input'])
         breadcrumb=[
             {'active':'active','url':'aaaa','title':'titulo'},
             {'active':'','url':'bbb','title':'titulo2'},

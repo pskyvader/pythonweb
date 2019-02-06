@@ -1,6 +1,7 @@
 from core.view import view
 from core.functions import functions
 import os
+import head
 
 
 def init(var):

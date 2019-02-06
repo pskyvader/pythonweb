@@ -25,9 +25,9 @@ class head:
                 head.data = value
 
         config = app.get_config()
+        head.data['color_primario'] = config['color_primario']
         head.data['current_url'] = functions.current_url()
         head.data['path'] = app.path
-        head.data['color_primario'] = config['color_primario']
         head.data['googlemaps_key'] = config['googlemaps_key']
         # size=functions::get_max_size()
         #head.data['max_size'] = size

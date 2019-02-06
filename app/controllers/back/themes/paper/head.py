@@ -62,7 +62,7 @@ class head:
         from core.view import view
         import json
         
-        ret={'headers':'','body':''}
+        ret={'headers':'','body':'asdf'}
         if app.post.getfirst("ajax") is not None:
             if app.post.getfirst("ajax_header") is not None:
                 ret['headers']='Content-Type: application/json'

@@ -20,6 +20,7 @@ class app:
     root = ''
     environ = {}
     get = {}
+    post = {}
 
     def __init__(self, root):
         app.root = root+'/'
@@ -28,6 +29,7 @@ class app:
         app.environ = environ
         data_return = {}
         app.get = self.parse_get()
+        app.post = self.parse_post()
         url = self.parse_url(environ['PATH_INFO'])
         config = self.get_config()
         site = environ['SERVER_NAME']
@@ -126,8 +128,13 @@ class app:
         url = dict(parse_qs(app.environ['QUERY_STRING']))
         if 'url' in url:
             del url['url']
-
         return url
+
+    @staticmethod
+    def parse_post():
+        url = app.environ['wsgi.input']
+        return url
+
     @staticmethod
     def get_config():
         if len(app.config) == 0:

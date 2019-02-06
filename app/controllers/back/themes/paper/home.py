@@ -1,9 +1,10 @@
+from core.app import app
 from core.view import view
 from core.functions import functions
 from .head import head
 from .header import header
 from .aside import aside
-from core.app import app
+from .footer import footer
 
 def init(var):
     h = home()
@@ -60,6 +61,12 @@ class home:
         ]
         view.add('breadcrumb', breadcrumb)
         ret['body'] += view.render('home')
+
+
+        f = footer()
+        ret_f=f.normal()
+        ret['body']+=ret_f['body']
+
         return ret
 
     def ver(self,var):

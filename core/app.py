@@ -144,7 +144,7 @@ class app:
 
         import urllib.parse
 
-        post_input = urllib.parse.parse_qs(environ['wsgi.input'].readline().decode(),True)
+        post_input = urllib.parse.parse_qs(app.environ['wsgi.input'].readline().decode(),True)
         return post_input
 
     @staticmethod

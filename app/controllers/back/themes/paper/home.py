@@ -26,7 +26,7 @@ class home:
 
     def index(self):
         from core.app import app
-        from . import head
+        from . import head.head
         ret = {}
         url_return=functions.url_redirect(self.url)
         if url_return!='':

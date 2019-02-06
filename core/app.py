@@ -132,8 +132,17 @@ class app:
 
     @staticmethod
     def parse_post():
-        #from cgi import parse_qs
         import cgi
+        post_env = app.environ.copy()
+        post_env['QUERY_STRING'] = ''
+        post = cgi.FieldStorage(
+            fp=app.environ['wsgi.input'],
+            environ=post_env,
+            keep_blank_values=True
+        )
+        return post
+
+        #from cgi import parse_qs
         url=cgi.FieldStorage()
         #url = parse_qs(app.environ['wsgi.input'].readline().decode(),True)
         return url

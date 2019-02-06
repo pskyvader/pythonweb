@@ -1,15 +1,11 @@
 class head:
     data = {
         'favicon': '',
-        'keywords': False,
-        'keywords_text': '',
-        'description': False,
-        'description_text': '',
+        'keywords': '',
+        'description': '',
         'title': '',
         'current_url': '',
-        'image': False,
-        'image_url': '',
-        'logo': '',
+        'image': '',
         'color_primario': '',
         'manifest_url': '',
         'path': '',
@@ -45,11 +41,11 @@ class head:
 
         head.data['title'] = titulo
 
-        # logo = logo_model::getById(3)
-        # head.data['logo'] = image::generar_url(logo['foto'][0], 'panel_max')
         # if (isset(metadata['image'])) {
-        #   head.data['image_url'] = metadata['image']
-        #  head.data['image'] = true
+        #   head.data['image'] = metadata['image']
+        # }else{
+        # logo = logo_model::getById(3)
+        # head.data['image']=image::generar_url(logo['foto'][0], 'panel_max')
         # }
         # logo = logo_model::getById(1)
         # head.data['favicon'] = image::generar_url(logo['foto'][0], 'favicon')

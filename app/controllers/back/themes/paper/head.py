@@ -1,4 +1,3 @@
-from core.view import view
 from core.functions import functions
 import json
 
@@ -63,6 +62,7 @@ class head:
 
     def normal(self):
         from core.app import app
+        from core.view import view
         import json
         
         ret={'headers':'','body':''}

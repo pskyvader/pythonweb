@@ -9,7 +9,7 @@ class aside:
         ret = {'body': ''}
         if app.post.getfirst("ajax") is None:
             #administrador = administrador_model.getById( _SESSION[administrador_model.idname . app.prefix_site])
-            administrador = {'tipo': 1}
+            administrador = {'nombre':'Pablo','tipo': 1}
             tipo_admin = administrador["tipo"]
             #moduloconfiguracion = moduloconfiguracion_model.getAll( {'estado': True, 'aside': True})
             moduloconfiguracion = {}

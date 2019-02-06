@@ -140,7 +140,10 @@ class app:
             environ=post_env,
             keep_blank_values=True
         )
-        return post
+        newpost={}
+        for k,p in post.items():
+            newpost[k]=p
+        return newpost
 
     @staticmethod
     def get_config():

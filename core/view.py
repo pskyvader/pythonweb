@@ -1,20 +1,24 @@
 from pathlib import Path
 from jinja2 import Template
 
+
 class view:
     extension = 'html'
     content_url = {}
     data = {}
     theme = ''
-
+    html = """
+        <html>
+            %(content)s
+        </html>
+    """
     @staticmethod
     def add(key, value):
         view.data[key] = value
 
-
     @staticmethod
     def add_array(data):
-        view.data=data
+        view.data = data
 
     @staticmethod
     def reset():
@@ -48,10 +52,8 @@ class view:
     @staticmethod
     def render_template(content):
         template = Template(content)
-        content= template.render(view.data)
+        content = template.render(view.data)
         return content
-
-
 
     @staticmethod
     def css(return_css=False):

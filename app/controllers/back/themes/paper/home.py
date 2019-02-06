@@ -27,7 +27,7 @@ class home:
     def index(self):
         from core.app import app
         from .head import head
-        ret = {}
+        ret = {'body':''}
         url_return=functions.url_redirect(self.url)
         if url_return!='':
             ret['error']=301
@@ -38,7 +38,8 @@ class home:
         ret_head=h.normal()
         if ret_head['header']!='':
             return ret_head
-        
+        ret['body']+=ret_head['body']
+
         view.add('title', 'index')
         view.add('var', str(app.post.getfirst("ajax")))
         breadcrumb=[
@@ -47,7 +48,7 @@ class home:
             {'active':'active','url':'ccc','title':'titulo3'},
         ]
         view.add('breadcrumb', breadcrumb)
-        ret['body'] = view.render('home')
+        ret['body'] += view.render('home')
         return ret
 
     def ver(self,var):

@@ -132,7 +132,8 @@ class app:
 
     @staticmethod
     def parse_post():
-        url = app.environ['wsgi.input']
+        from cgi import parse_qs
+        url = dict(parse_qs(app.environ['wsgi.input'].readline().decode(),True))
         return url
 
     @staticmethod

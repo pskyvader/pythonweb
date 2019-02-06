@@ -37,7 +37,7 @@ class head:
             titulo = head.data['title']
 
         if (len(titulo) > 75):
-            titulo = head.data['title'][0, 75]
+            titulo = head.data['title'][0:75]
 
         head.data['title'] = titulo
 
@@ -52,19 +52,18 @@ class head:
 
         head.data['manifest_url'] = app.get_url() + 'manifest.js'
 
-
     def normal(self):
         from core.app import app
         from core.view import view
         import json
-        
-        ret={'headers':'','body':''}
+
+        ret = {'headers': '', 'body': ''}
         if app.post.getfirst("ajax") is None:
             if app.post.getfirst("ajax_header") is None:
-                self.data['css']=view.css(True)
+                self.data['css'] = view.css(True)
                 view.add_array(self.data)
-                ret['body']=view.render('head')
+                ret['body'] = view.render('head')
             else:
-                ret['headers']='Content-Type: application/json'
-                ret['body']=json.dumps(self.data)
+                ret['headers'] = 'Content-Type: application/json'
+                ret['body'] = json.dumps(self.data)
         return ret

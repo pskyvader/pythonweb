@@ -63,7 +63,7 @@ class head:
 
     def normal():
         from core.app import app
-        if app.post.getfirst("ajax") is not None
+        if app.post.getfirst("ajax")!=None:
         if (!isset($_POST['ajax']))
             if (isset($_POST['ajax_header'])) 
                 $this->ajax();

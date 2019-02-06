@@ -1,7 +1,7 @@
 from core.functions import functions
 from core.view import view
 
-class header:
+class aside:
     data = {'logo': '', 'url_exit': '', }
 
     def normal(self):

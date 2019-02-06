@@ -39,6 +39,7 @@ class home:
         if ret_head['headers']!='':
             return ret_head
         ret['body']+=ret_head['body']
+        
 
 
 

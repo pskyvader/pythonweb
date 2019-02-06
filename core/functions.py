@@ -17,9 +17,9 @@ class functions():
         if isinstance(extra, dict) and len(extra) > 0:
             url = url+"?" + urlencode(extra,'utf-8')
         else:
-            if (len(app.extra) > 0):
+            if (len(app.get) > 0):
                 if not isinstance(extra, bool) or extra == True:
-                    url = url+"?" + urlencode(app.extra,'utf-8')
+                    url = url+"?" + urlencode(app.get,'utf-8')
 
         url = (app.get_url() if front_auto else app.get_url(front)) + url
         return url
@@ -43,6 +43,6 @@ class functions():
                     url += ':' + environ['SERVER_PORT']
         url += environ['SCRIPT_NAME']
         url += environ['PATH_INFO']
-        if len(app.extra)>0:
-            url += '?' + urlencode(app.extra,'utf-8')
+        if len(app.get)>0:
+            url += '?' + urlencode(app.get,'utf-8')
         return url

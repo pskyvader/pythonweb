@@ -36,7 +36,7 @@ class home:
         
         h = head(self.metadata)
         ret_head=h.normal()
-        if ret_head['header']!='':
+        if ret_head['headers']!='':
             return ret_head
         ret['body']+=ret_head['body']
 

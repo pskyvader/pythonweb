@@ -3,6 +3,7 @@ from core.functions import functions
 from .head import head
 from .header import header
 from .aside import aside
+from core.app import app
 
 def init(var):
     h = home()
@@ -28,7 +29,6 @@ class home:
     metadata = {'title': 'Home', 'modulo': 'home'}
 
     def index(self):
-        from core.app import app
         ret = {'body':''}
         url_return=functions.url_redirect(self.url)
         if url_return!='':

@@ -106,7 +106,7 @@ class aside:
 
                 #mc=moduloconfiguracion_model.getAll()
                 mc={}
-                for key, m in mc.items():
+                for m in mc:
                     url=functions.generar_url(
                         ['modulo'], {'idmoduloconfiguracion': m[0]})
                     active=(url == current_url)

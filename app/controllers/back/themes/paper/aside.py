@@ -63,79 +63,72 @@ class aside:
 
                         url = functions.generar_url([cm['module']], extra)
                         active = (url == current_url)
-                        menu.append({'url': url, 'icon': cm['icono'], 'title': modulo['titulo'], 'has_submenu': False, 'active': active, 'separador': False})
-
+                        menu.append({'url': url, 'icon': cm['icono'], 'title': modulo['titulo'],
+                                    'has_submenu': False, 'active': active, 'separador': False})
                 else:
                     active = False
-                    me = array('icon': cm['icono'], 'title': cm['titulo'], 'has_submenu': True, 'submenu': {}, 'active': active, 'separador': False)
-                    for (mod[cm[0]] as key= > m) {
+                    me = {'icon': cm['icono'], 'title': cm['titulo'], 'has_submenu': True, 'submenu': {
+                        }, 'active': active, 'separador': False}
+                    for key, m in mod[cm[0]]:
                         modulo = m
                         estados = modulo['estado'][0]['estado']
-                        if (estados[tipo_admin] == 'True') {
+                        if estados[tipo_admin] == 'true':
                             extra = {}
-                            if (cm['tipos']) {
+                            if cm['tipos']:
                                 extra['tipo'] = modulo['tipo']
-                            }
-                            if (modulo['hijos']) {
+
+                            if modulo['hijos']:
                                 extra['idpadre'] = 0
-                            }
-                            if(cm['module'] == "pedido"){
+
+                            if cm['module'] == "pedido":
                                 extra['idpedidoestado'] = modulo['idpedidoestado']
-                            }
-                            if (count(extra) == 0) {
+
+                            if len(extra) == 0:
                                 extra = False
-                            }
-                            url = functions.generar_url(
-                                array(cm['module']), extra)
+
+                            url = functions.generar_url([cm['module']], extra)
                             active = (url == current_url)
-                            me['submenu'][] = array('url'= > url, 'sub_title': modulo['titulo'], 'active': active)
-                            if (active) {
+                            me['submenu'].append(
+                                {'url': url, 'sub_title': modulo['titulo'], 'active': active})
+                            if active:
                                 me['active'] = True
-                            }
-                        }
-                    }
-                    if (count(me['submenu']) > 0) {
-                        menu[] = me
-                    }
-                }
 
-            }
+                    if len(me['submenu']) > 0:
+                        menu.append(me)
 
-            if (tipo_admin == 1) {
-                menu[] = array('title': 'Solo para desarrollo', 'separador': True)
-                url = functions.generar_url(
-                    array("moduloconfiguracion"), False)
-                active=(url == current_url)
-                me=array('url': url, 'icon': 'mode_edit', 'title': 'Modulos', 'has_submenu': True, 'active': active, 'separador': False)
-                me['submenu'][]=array('url' = > url, 'sub_title': 'TODOS', 'active': active)
-
-                mc=moduloconfiguracion_model.getAll()
-                for (mc as key = > m) {
-                    url = functions.generar_url(array('modulo'), array('idmoduloconfiguracion': m[0]))
-                    active = (url == current_url)
-                    me['submenu'][] = array('url'= > url, 'sub_title': m['titulo'], 'active': active)
-                }
-                menu[] = me
-
-                url = functions.generar_url(array("table"), False)
+            if tipo_admin == 1:
+                menu.append({'title': 'Solo para desarrollo', 'separador': True})
+                url = functions.generar_url( ["moduloconfiguracion"], False)
                 active = (url == current_url)
-                menu[] = array('url': url, 'icon': 'table', 'title': 'Tablas', 'has_submenu': False, 'active': active, 'separador': False)
+                me = {'url': url, 'icon': 'mode_edit', 'title': 'Modulos', 'has_submenu': True, 'active': active, 'separador': False)}
+                me['submenu'].append({'url'= > url, 'sub_title': 'TODOS', 'active': active)
+
+                mc = moduloconfiguracion_model.getAll()
+                for (mc as key= > m) {
+                    url = functions.generar_url({'modulo'), {'idmoduloconfiguracion': m[0]))
+                    active = (url == current_url)
+                    me['submenu'].append({'url'=> url, 'sub_title': m['titulo'], 'active': active)
+                }
+                menu.append(me
+
+                url = functions.generar_url({"table"), False)
+                active = (url == current_url)
+                menu.append({'url': url, 'icon': 'table', 'title': 'Tablas', 'has_submenu': False, 'active': active, 'separador': False)
 
                 url = functions.generar_url(
-                    array("configuracion_administrador"), False)
-                active=(url == current_url)
-                menu[]=array('url': url, 'icon': 'settings_applications', 'title': 'Configuracion Administrador', 'has_submenu': False, 'active': active, 'separador': False)
+                    {"configuracion_administrador"), False)
+                active = (url == current_url)
+                menu.append({'url': url, 'icon': 'settings_applications', 'title': 'Configuracion Administrador', 'has_submenu': False, 'active': active, 'separador': False)
 
-            }
+            
 
             view.set('menu', menu)
 
             view.set('name', administrador["nombre"])
             view.set('email', administrador["email"])
-            view.set('url_admin', functions.generar_url(array("administrador", "detail", administrador[0], 'profile'), array('tipo'= > tipo_admin)))
+            view.set('url_admin', functions.generar_url(array("administrador", "detail", administrador[0], 'profile'), array('tipo'=> tipo_admin)))
             view.set('img_admin', image.generar_url(
                 administrador["foto"][0], 'profile'))
-
 
             view.render('aside')
         }

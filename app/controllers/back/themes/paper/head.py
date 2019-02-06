@@ -61,10 +61,13 @@ class head:
         head.data['manifest_url'] = app.get_url() + 'manifest.js'
 
 
-    def normal():
+    def normal(self):
         from core.app import app
-        if app.post.getfirst("ajax")!=None:
-        if (!isset($_POST['ajax']))
+        if app.post.getfirst("ajax") is not None:
+            if app.post.getfirst("ajax_header") is not None:
+                return self.ajax()
+            else:
+                self.data['css']=view.css(true)
             if (isset($_POST['ajax_header'])) 
                 $this->ajax();
              else 

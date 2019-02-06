@@ -1,6 +1,6 @@
 from core.view import view
 from core.functions import functions
-import os
+import json
 
 
 class head:
@@ -63,24 +63,16 @@ class head:
 
     def normal(self):
         from core.app import app
+        import json
+        
+        ret={'headers':'','body':''}
         if app.post.getfirst("ajax") is not None:
             if app.post.getfirst("ajax_header") is not None:
-                return self.ajax()
+                ret['headers']='Content-Type: application/json'
+                ret['body']=json.dumps(self.data)
             else:
                 self.data['css']=view.css(true)
-            if (isset($_POST['ajax_header'])) 
-                $this->ajax();
-             else 
-                $this->data['css'] = view::css(true);
-                view::set_array($this->data);
-                view::render('head');
-            
+                view.add_array(self.data)
+                ret['body']=view.render('head')
         
-    
-
-    def ajax():
-    {
-        header('Content-Type: application/json');
-        echo json_encode($this->data);
-        exit;
-    }
+        return ret

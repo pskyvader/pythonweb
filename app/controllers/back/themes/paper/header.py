@@ -74,6 +74,7 @@ class header:
     data = { 'logo' : '', 'url_exit' : '', }
     def normal(self):
         from core.app import app
+        import datetime
         if app.post.getfirst("ajax") is None:
             logo = logo_model.getById(3);
             self.data['logo_max'] = image.generar_url(logo['foto'][0], 'panel_max');

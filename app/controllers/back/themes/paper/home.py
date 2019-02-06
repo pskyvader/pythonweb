@@ -36,8 +36,8 @@ class home:
             ret['redirect']=url_return
             return ret
         
-        head = head(self.metadata)
-        ret_head=head.normal()
+        h = head(self.metadata)
+        ret_head=h.normal()
 
         view.add('title', 'index')
         view.add('var', str(app.post.getfirst("ajax")))

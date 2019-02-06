@@ -41,7 +41,7 @@ class head:
             titulo = head.data['title']
 
         if (len(titulo) > 75):
-            titulo = str(head.data['title'])[0, 75]
+            titulo = head.data['title'][0, 75]
 
         head.data['title'] = titulo
 

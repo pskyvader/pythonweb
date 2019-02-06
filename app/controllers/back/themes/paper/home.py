@@ -1,4 +1,4 @@
-from core.view import view
+#from core.view import view
 from core.functions import functions
 
 def init(var):
@@ -36,16 +36,6 @@ class home:
         
         h = head(self.metadata)
         ret_head=h.normal()
-
-        view.add('title', 'index')
-        view.add('var', str(app.post.getfirst("ajax")))
-        breadcrumb=[
-            {'active':'active','url':'aaaa','title':'titulo'},
-            {'active':'','url':'bbb','title':'titulo2'},
-            {'active':'active','url':'ccc','title':'titulo3'},
-        ]
-        view.add('breadcrumb', breadcrumb)
-        ret['body'] = view.render('home')
         return ret
 
     def ver(self,var):

@@ -127,13 +127,13 @@ class aside:
 
 
 
-            view.set('menu', menu)
+            view.add('menu', menu)
 
-            view.set('name', administrador["nombre"])
-            view.set('email', administrador["email"])
-            view.set('url_admin', functions.generar_url(["administrador", "detail", administrador[0], 'profile'], {'tipo': tipo_admin}))
-            #view.set('img_admin', image.generar_url( administrador["foto"][0], 'profile'))
-            view.set('img_admin', '')
+            view.add('name', administrador["nombre"])
+            view.add('email', administrador["email"])
+            view.add('url_admin', functions.generar_url(["administrador", "detail", administrador[0], 'profile'], {'tipo': tipo_admin}))
+            #view.add('img_admin', image.generar_url( administrador["foto"][0], 'profile'))
+            view.add('img_admin', '')
 
             ret['body']=view.render('aside')
         return ret

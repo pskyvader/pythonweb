@@ -6,11 +6,6 @@ class view:
     content_url = {}
     data = {}
     theme = ''
-    html = """
-    <html>
-        %(content)s
-    </html>
-    """
 
     @staticmethod
     def add(key, value):
@@ -26,7 +21,7 @@ class view:
         view.data = {}
 
     @staticmethod
-    def render(template, minify=True, return_body=False):
+    def render(template, minify=True):
         theme = view.get_theme()
         template_url = theme + template + "." + view.extension
         my_file = Path(template_url)
@@ -48,12 +43,7 @@ class view:
         #    body = mini.html(body)
 
         view.reset()
-        if return_body:
-            return body
-        else:
-            return view.html % {  # Fill the above html template in
-                'content': body
-            }
+        return body
 
     @staticmethod
     def render_template(content):

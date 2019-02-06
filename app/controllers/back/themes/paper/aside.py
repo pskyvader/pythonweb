@@ -17,9 +17,9 @@ class aside:
             current_url = functions.current_url()
 
             menu   = {}
-            url    = functions.generar_url(array("home"), false)
+            url    = functions.generar_url(["home"], False)
             active = (url == current_url)
-            menu[] = array('url' => url, 'icon' => 'home', 'title' => 'Home', 'has_submenu' => false, 'active' => active, 'separador' => false)
+            menu[] = {'url' : url, 'icon' : 'home', 'title' : 'Home', 'has_submenu' : False, 'active' : active, 'separador' : False}
 
             for (moduloconfiguracion as key => cm) {
                 if(cm['module']=="pedido"){
@@ -59,15 +59,15 @@ class aside:
                             extra['idpedidoestado'] = modulo['idpedidoestado']
                         }
                         if (count(extra) == 0) {
-                            extra = false
+                            extra = False
                         }
                         url    = functions.generar_url(array(cm['module']), extra)
                         active = (url == current_url)
-                        menu[] = array('url' => url, 'icon' => cm['icono'], 'title' => modulo['titulo'], 'has_submenu' => false, 'active' => active, 'separador' => false)
+                        menu[] = array('url' => url, 'icon' => cm['icono'], 'title' => modulo['titulo'], 'has_submenu' => False, 'active' => active, 'separador' => False)
                     }
                 } else {
-                    active = false
-                    me     = array('icon' => cm['icono'], 'title' => cm['titulo'], 'has_submenu' => true, 'submenu' => {}, 'active' => active, 'separador' => false)
+                    active = False
+                    me     = array('icon' => cm['icono'], 'title' => cm['titulo'], 'has_submenu' => true, 'submenu' => {}, 'active' => active, 'separador' => False)
                     for (mod[cm[0]] as key => m) {
                         modulo  = m
                         estados = modulo['estado'][0]['estado']
@@ -83,7 +83,7 @@ class aside:
                                 extra['idpedidoestado'] = modulo['idpedidoestado']
                             }
                             if (count(extra) == 0) {
-                                extra = false
+                                extra = False
                             }
                             url             = functions.generar_url(array(cm['module']), extra)
                             active          = (url == current_url)
@@ -102,9 +102,9 @@ class aside:
 
             if (tipo_admin == 1) {
                 menu[] = array('title' => 'Solo para desarrollo', 'separador' => true)
-                url    = functions.generar_url(array("moduloconfiguracion"), false)
+                url    = functions.generar_url(array("moduloconfiguracion"), False)
                 active = (url == current_url)
-                me = array('url' => url, 'icon' => 'mode_edit', 'title' => 'Modulos', 'has_submenu' => true, 'active' => active, 'separador' => false)
+                me = array('url' => url, 'icon' => 'mode_edit', 'title' => 'Modulos', 'has_submenu' => true, 'active' => active, 'separador' => False)
                 me['submenu'][] = array('url' => url, 'sub_title' => 'TODOS', 'active' => active)
                 
                 mc     = moduloconfiguracion_model.getAll()
@@ -115,13 +115,13 @@ class aside:
                 }
                 menu[]=me
 
-                url    = functions.generar_url(array("table"), false)
+                url    = functions.generar_url(array("table"), False)
                 active = (url == current_url)
-                menu[] = array('url' => url, 'icon' => 'table', 'title' => 'Tablas', 'has_submenu' => false, 'active' => active, 'separador' => false)
+                menu[] = array('url' => url, 'icon' => 'table', 'title' => 'Tablas', 'has_submenu' => False, 'active' => active, 'separador' => False)
 
-                url    = functions.generar_url(array("configuracion_administrador"), false)
+                url    = functions.generar_url(array("configuracion_administrador"), False)
                 active = (url == current_url)
-                menu[] = array('url' => url, 'icon' => 'settings_applications', 'title' => 'Configuracion Administrador', 'has_submenu' => false, 'active' => active, 'separador' => false)
+                menu[] = array('url' => url, 'icon' => 'settings_applications', 'title' => 'Configuracion Administrador', 'has_submenu' => False, 'active' => active, 'separador' => False)
             
             }
 

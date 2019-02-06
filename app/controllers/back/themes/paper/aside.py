@@ -4,7 +4,7 @@ from core.app import app
 
 
 class aside:
-    
+
     def normal(self):
         ret = {'body': ''}
         if app.post.getfirst("ajax") is None:
@@ -28,13 +28,13 @@ class aside:
             menu.append({'url': url, 'icon': 'home', 'title': 'Home',
                         'has_submenu': False, 'active': active, 'separador': False})
 
-            for key, cm in moduloconfiguracion.items():
+            for cm in moduloconfiguracion:
                 if cm['module'] == "pedido":
                     #pedidoestado = pedidoestado_model.getAll( {'tipo': 1}, {'order': 'orden ASC'})
                     pedidoestado={}
                     tmp = mod[cm[0]]
                     mod[cm[0]] = {}
-                    for k, t in tmp.items():
+                    for t in tmp:
                         titulo = t['titulo']
                         t['idpedidoestado'] = 0
                         t['titulo'] = 'Todos'

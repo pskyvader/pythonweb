@@ -1,5 +1,5 @@
-
 from core.functions import functions
+from core.view import view
 class head:
     data = {
         'favicon': '',
@@ -55,7 +55,6 @@ class head:
 
     def normal(self):
         from core.app import app
-        from core.view import view
         import json
 
         ret = {'headers': '', 'body': ''}

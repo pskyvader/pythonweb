@@ -35,7 +35,6 @@ class aside:
                     tmp = mod[cm[0]]
                     mod[cm[0]] = {}
                     for t in tmp:
-                        titulo = t['titulo']
                         t['idpedidoestado'] = 0
                         t['titulo'] = 'Todos'
                         mod[cm[0]].append(t)

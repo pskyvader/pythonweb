@@ -1,6 +1,8 @@
-class header:
-    data = {'logo': '', 'url_exit': '', }
+from core.view import view
+from core.app import app
 
+
+class footer:
     def normal(self):
         ret = {'body': ''}
         if app.post.getfirst("ajax") is None:
@@ -13,3 +15,11 @@ class header:
             view.add('date', datetime.datetime.today().strftime('%Y-%m-%d'))
             ret['body'] = view.render('header')
         return ret
+
+public function normal()
+    {
+        if (!isset($_POST['ajax'])) {
+            view::render('footer');
+            view::js();
+        }
+    }

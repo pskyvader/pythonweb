@@ -29,8 +29,7 @@ class aside:
 
             for key, cm in moduloconfiguracion.items():
                 if cm['module'] == "pedido":
-                    pedidoestado = pedidoestado_model.getAll(
-                        {'tipo': 1}, {'order': 'orden ASC'})
+                    pedidoestado = pedidoestado_model.getAll( {'tipo': 1}, {'order': 'orden ASC'})
                     tmp = mod[cm[0]]
                     mod[cm[0]] = {}
                     for k, t in tmp.items():
@@ -99,15 +98,15 @@ class aside:
                         menu.append(me)
 
             if tipo_admin == 1:
-                menu.append(
-                    {'title': 'Solo para desarrollo', 'separador': True})
+                menu.append( {'title': 'Solo para desarrollo', 'separador': True})
                 url = functions.generar_url(["moduloconfiguracion"], False)
                 active = (url == current_url)
                 me = {'url': url, 'icon': 'mode_edit', 'title': 'Modulos', 'has_submenu': True, 'active': active, 'separador': False)}
                 me['submenu'].append(
                     {'url': url, 'sub_title': 'TODOS', 'active': active})
 
-                mc=moduloconfiguracion_model.getAll()
+                #mc=moduloconfiguracion_model.getAll()
+                mc={}
                 for key, m in mc.items():
                     url=functions.generar_url(
                         ['modulo'], {'idmoduloconfiguracion': m[0]})

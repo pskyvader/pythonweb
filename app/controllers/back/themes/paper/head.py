@@ -5,13 +5,13 @@ import os
 class head:
     data = {
         'favicon' : '',
-        'keywords' : false,
+        'keywords' : False,
         'keywords_text' : '',
-        'description' : false,
+        'description' : False,
         'description_text' : '',
         'title' : '',
         'current_url' : '',
-        'image' : false,
+        'image' : False,
         'image_url' : '',
         'logo' : '',
         'color_primario' : '',

@@ -80,7 +80,7 @@ class header:
             self.data['logo_max'] = image.generar_url(logo['foto'][0], 'panel_max');
             logo = logo_model.getById(4);
             self.data['logo_min'] = image.generar_url(logo['foto'][0], 'panel_min');
-            self.data['url_exit'] = functions.generar_url(array('logout'), false);
+            self.data['url_exit'] = functions.generar_url(['logout'], False);
             view.set_array(self.data);
             view.set('date', date('Y-m-d H:i:s'));
             view.render('header');

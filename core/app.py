@@ -20,7 +20,6 @@ class app:
     root = ''
     environ = {}
     get = {}
-    post = {}
 
     def __init__(self, root):
         app.root = root+'/'

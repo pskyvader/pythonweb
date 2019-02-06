@@ -25,9 +25,9 @@ class head:
         head.data['path'] = app.path
         head.data['color_primario'] = config['color_primario']
         head.data['googlemaps_key'] = config['googlemaps_key']
-        # size=functions::get_max_size()
+        # size=functions.get_max_size()
         #head.data['max_size'] = size
-        # head.data['max_size_format'] = (size<0)?"Ilimitado":functions::file_size(size,true)
+        # head.data['max_size_format'] = (size<0)?"Ilimitado":functions.file_size(size,true)
 
         titulo = head.data['title'] + ' - ' + config['title']
         if (len(titulo) > 75):
@@ -44,11 +44,11 @@ class head:
         # if (isset(metadata['image'])) {
         #   head.data['image'] = metadata['image']
         # }else{
-        # logo = logo_model::getById(3)
-        # head.data['image']=image::generar_url(logo['foto'][0], 'panel_max')
+        # logo = logo_model.getById(3)
+        # head.data['image']=image.generar_url(logo['foto'][0], 'panel_max')
         # }
-        # logo = logo_model::getById(1)
-        # head.data['favicon'] = image::generar_url(logo['foto'][0], 'favicon')
+        # logo = logo_model.getById(1)
+        # head.data['favicon'] = image.generar_url(logo['foto'][0], 'favicon')
 
         head.data['manifest_url'] = app.get_url() + 'manifest.js'
 
@@ -71,21 +71,18 @@ class head:
 
 
 class header:
-    data = {
-        'logo' : '',
-        'url_exit' : '',
-    }
-    public function normal()
-    {
-        if (!isset($_POST['ajax'])) {
-            $logo = logo_model::getById(3);
-            $this->data['logo_max'] = image::generar_url($logo['foto'][0], 'panel_max');
-            $logo = logo_model::getById(4);
-            $this->data['logo_min'] = image::generar_url($logo['foto'][0], 'panel_min');
-            $this->data['url_exit'] = functions::generar_url(array('logout'), false);
-            view::set_array($this->data);
-            view::set('date', date('Y-m-d H:i:s'));
-            view::render('header');
-        }
-    }
-}
+    data = { 'logo' : '', 'url_exit' : '', }
+    def normal(self):
+        from core.app import app
+        if app.post.getfirst("ajax") is None:
+            logo = logo_model.getById(3);
+            self.data['logo_max'] = image.generar_url(logo['foto'][0], 'panel_max');
+            logo = logo_model.getById(4);
+            self.data['logo_min'] = image.generar_url(logo['foto'][0], 'panel_min');
+            self.data['url_exit'] = functions.generar_url(array('logout'), false);
+            view.set_array(self.data);
+            view.set('date', date('Y-m-d H:i:s'));
+            view.render('header');
+        
+    
+

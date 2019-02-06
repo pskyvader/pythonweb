@@ -60,8 +60,12 @@ class head:
         head_tmp['manifest_url'] = app.get_url() + 'manifest.js'
 
         for key, value in head_tmp.items():
-            if key in self.data:
-                head_tmp = value
+            if key not in head.metadata:
+                head.metadata = value
+
+        for key, value in head.data.items():
+            if key not in head.metadata:
+                head.metadata = value
 
 
 

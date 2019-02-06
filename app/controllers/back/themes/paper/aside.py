@@ -4,7 +4,7 @@ from core.app import app
 
 
 class aside:
-    def normal():
+    def normal(self.):
         ret = {'body': ''}
         if app.post.getfirst("ajax") is None:
             #administrador = administrador_model.getById( _SESSION[administrador_model.idname . app.prefix_site])
@@ -16,7 +16,7 @@ class aside:
             modulo={}
 
             mod = {}
-            for key, m in modulo.items():
+            for m in modulo:
                 mod[m['idmoduloconfiguracion']].append(m)
 
             current_url = functions.current_url()

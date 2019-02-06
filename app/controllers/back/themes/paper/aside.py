@@ -39,7 +39,7 @@ class aside:
                         t['idpedidoestado'] = 0
                         t['titulo'] = 'Todos'
                         mod[cm[0]].append(t)
-                        for j, pe in pedidoestado.items():
+                        for pe in pedidoestado:
                             t['idpedidoestado'] = pe[0]
                             t['titulo'] = pe['titulo']
                             mod[cm[0]].append(t)

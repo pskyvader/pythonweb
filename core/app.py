@@ -3,7 +3,6 @@
 import sys
 import os
 from core.view import view
-from core.functions import functions
 import json
 from pathlib import Path
 import importlib

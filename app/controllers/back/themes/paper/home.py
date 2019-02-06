@@ -1,7 +1,7 @@
 from core.view import view
 from core.functions import functions
 import os
-
+from . import head
 
 def init(var):
     h = home()
@@ -28,7 +28,6 @@ class home:
 
     def index(self):
         from core.app import app
-        import head
         ret = {}
         url_return=functions.url_redirect(self.url)
         if url_return!='':

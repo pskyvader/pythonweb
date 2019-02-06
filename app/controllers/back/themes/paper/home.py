@@ -1,6 +1,5 @@
 from core.view import view
 from core.functions import functions
-import os
 
 def init(var):
     h = home()

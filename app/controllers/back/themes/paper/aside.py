@@ -103,8 +103,7 @@ class aside:
                 url = functions.generar_url(["moduloconfiguracion"], False)
                 active = (url == current_url)
                 me = {'url': url, 'icon': 'mode_edit', 'title': 'Modulos', 'has_submenu': True, 'active': active, 'separador': False}
-                me['submenu'].append(
-                    {'url': url, 'sub_title': 'TODOS', 'active': active})
+                me['submenu'].append( {'url': url, 'sub_title': 'TODOS', 'active': active})
 
                 #mc=moduloconfiguracion_model.getAll()
                 mc={}

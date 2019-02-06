@@ -28,8 +28,6 @@ class head:
                 head_tmp = value
 
         config = app.get_config()
-        
-        head_tmp={}
         head_tmp['current_url'] = functions.current_url()
         head_tmp['path'] = app.path
         head_tmp['color_primario'] = config['color_primario']

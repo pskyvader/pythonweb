@@ -128,10 +128,10 @@ class app:
             del url['url']
 
         return url
-
-    def get_config(self):
-        if len(self.config) == 0:
-            with open(self.app_dir+'config/config.json') as f:
+    @staticmethod
+    def get_config():
+        if len(app.config) == 0:
+            with open(app.app_dir+'config/config.json') as f:
                 app.config = json.load(f)
         return app.config
 

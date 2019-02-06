@@ -69,7 +69,7 @@ class aside:
                     active = False
                     me = {'icon': cm['icono'], 'title': cm['titulo'], 'has_submenu': True, 'submenu': {
                         }, 'active': active, 'separador': False}
-                    for key, m in mod[cm[0]]:
+                    for key, m in mod[cm[0]].items():
                         modulo = m
                         estados = modulo['estado'][0]['estado']
                         if estados[tipo_admin] == 'true':
@@ -104,11 +104,11 @@ class aside:
                 me['submenu'].append({'url': url, 'sub_title': 'TODOS', 'active': active})
 
                 mc = moduloconfiguracion_model.getAll()
-                for (mc as key= > m) {
+                for key,m in mc.items():
                     url = functions.generar_url(['modulo'], {'idmoduloconfiguracion': m[0]})
                     active = (url == current_url)
-                    me['submenu'].append({'url'=> url, 'sub_title': m['titulo'], 'active': active})
-                }
+                    me['submenu'].append({'url': url, 'sub_title': m['titulo'], 'active': active})
+                
                 menu.append(me)
 
                 url = functions.generar_url({"table"), False)
@@ -126,7 +126,7 @@ class aside:
 
             view.set('name', administrador["nombre"])
             view.set('email', administrador["email"])
-            view.set('url_admin', functions.generar_url(array("administrador", "detail", administrador[0], 'profile'), array('tipo'=> tipo_admin)))
+            view.set('url_admin', functions.generar_url(array("administrador", "detail", administrador[0], 'profile'), array('tipo': tipo_admin)))
             view.set('img_admin', image.generar_url(
                 administrador["foto"][0], 'profile'))
 

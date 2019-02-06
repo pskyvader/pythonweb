@@ -141,10 +141,6 @@ class app:
             keep_blank_values=True
         )
         #return post
-        newpost={}
-        for k,p in post.items():
-            newpost[k]=p
-        #return newpost
         try:
             request_body_size = int(app.environ.get('CONTENT_LENGTH', 0))
         except (ValueError):

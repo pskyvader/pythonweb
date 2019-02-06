@@ -16,6 +16,11 @@ class view:
     def add(key, value):
         view.data[key] = value
 
+
+    @staticmethod
+    def add_array(data):
+        view.data=data
+
     @staticmethod
     def reset():
         view.data = {}

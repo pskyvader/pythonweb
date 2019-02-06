@@ -71,5 +71,4 @@ class head:
                 self.data['css']=view.css(True)
                 view.add_array(self.data)
                 ret['body']=view.render('head')
-        
         return ret

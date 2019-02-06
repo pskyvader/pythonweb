@@ -140,10 +140,19 @@ class app:
             environ=post_env,
             keep_blank_values=True
         )
+        #return post
         newpost={}
         for k,p in post.items():
             newpost[k]=p
-        return newpost
+        #return newpost
+        try:
+            request_body_size = int(app.environ.get('CONTENT_LENGTH', 0))
+        except (ValueError):
+            request_body_size = 0
+
+        request_body = app.environ['wsgi.input'].read(request_body_size)
+        data = json.loads(request_body)
+        return data
 
     @staticmethod
     def get_config():

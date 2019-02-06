@@ -19,7 +19,7 @@ class app:
     path = ''
     root = ''
     environ = {}
-    extra = {}
+    get = {}
 
     def __init__(self, root):
         app.root = root+'/'
@@ -27,7 +27,7 @@ class app:
     def init(self, environ):
         app.environ = environ
         data_return = {}
-        app.extra = self.parse_extra()
+        app.get = self.parse_get()
         url = self.parse_url(environ['PATH_INFO'])
         config = self.get_config()
         site = environ['SERVER_NAME']
@@ -121,7 +121,7 @@ class app:
         return url
 
     @staticmethod
-    def parse_extra():
+    def parse_get():
         from cgi import parse_qs
         url = dict(parse_qs(app.environ['QUERY_STRING']))
         if 'url' in url:

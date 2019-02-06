@@ -71,7 +71,7 @@ class aside:
                     active = False
                     me = {'icon': cm['icono'], 'title': cm['titulo'], 'has_submenu': True, 'submenu': {
                         }, 'active': active, 'separador': False}
-                    for key, m in mod[cm[0]].items():
+                    for m in mod[cm[0]]:
                         modulo = m
                         estados = modulo['estado'][0]['estado']
                         if estados[tipo_admin] == 'true':

@@ -2,6 +2,8 @@ from core.app import app
 from core.functions import functions
 from core.view import view
 import json
+
+
 class head:
     data = {
         'favicon': '',
@@ -55,7 +57,6 @@ class head:
         head.data['manifest_url'] = app.get_url() + 'manifest.js'
 
     def normal(self):
-
         ret = {'headers': '', 'body': ''}
         if app.post.getfirst("ajax") is None:
             if app.post.getfirst("ajax_header") is None:

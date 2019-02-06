@@ -36,7 +36,7 @@ class home:
         
         h = head(self.metadata)
         ret_head=h.normal()
-        if ret_head['header']!='' or ret_head['body']=='':
+        if ret_head['header']!='':
             return ret_head
         
         view.add('title', 'index')

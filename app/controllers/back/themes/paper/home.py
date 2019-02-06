@@ -36,7 +36,6 @@ class home:
             return ret
 
 
-        head=
         view.add('title', 'index')
         view.add('var', 'index')
         breadcrumb=[

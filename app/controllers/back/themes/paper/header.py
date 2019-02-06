@@ -1,3 +1,5 @@
+
+from core.functions import functions
 class head:
     data = {
         'favicon': '',
@@ -15,7 +17,6 @@ class head:
 
     def __init__(self, metadata):
         from core.app import app
-        from core.functions import functions
         for key, value in metadata.items():
             if key in self.data:
                 head.data[key] = value

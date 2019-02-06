@@ -1,5 +1,5 @@
 from pathlib import Path
-from jinja2 import Template
+from jinja2 import Template, Environment, select_autoescape
 
 
 class view:
@@ -51,6 +51,8 @@ class view:
 
     @staticmethod
     def render_template(content):
+        env = Environment(autoescape=select_autoescape(
+            enabled_extensions=('html', 'xml'), default_for_string=True, ))
         template = Template(content)
         content = template.render(view.data)
         return content
@@ -58,7 +60,7 @@ class view:
     @staticmethod
     def css(return_css=False):
         return ''
-    
+
     @staticmethod
     def js(return_js=False):
         return ''

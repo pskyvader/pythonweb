@@ -37,7 +37,7 @@ class home:
 
 
         view.add('title', 'index')
-        view.add('var', str(app.post['aaa'].value))
+        view.add('var', str(app.post['aaa']))
         breadcrumb=[
             {'active':'active','url':'aaaa','title':'titulo'},
             {'active':'','url':'bbb','title':'titulo2'},

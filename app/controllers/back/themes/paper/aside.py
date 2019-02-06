@@ -29,7 +29,8 @@ class aside:
 
             for key, cm in moduloconfiguracion.items():
                 if cm['module'] == "pedido":
-                    pedidoestado = pedidoestado_model.getAll( {'tipo': 1}, {'order': 'orden ASC'})
+                    #pedidoestado = pedidoestado_model.getAll( {'tipo': 1}, {'order': 'orden ASC'})
+                    pedidoestado={}
                     tmp = mod[cm[0]]
                     mod[cm[0]] = {}
                     for k, t in tmp.items():

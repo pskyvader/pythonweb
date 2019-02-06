@@ -69,8 +69,7 @@ class aside:
                                     'has_submenu': False, 'active': active, 'separador': False})
                 else:
                     active = False
-                    me = {'icon': cm['icono'], 'title': cm['titulo'], 'has_submenu': True, 'submenu': {
-                        }, 'active': active, 'separador': False}
+                    me = {'icon': cm['icono'], 'title': cm['titulo'], 'has_submenu': True, 'submenu': [], 'active': active, 'separador': False}
                     for m in mod[cm[0]]:
                         modulo = m
                         estados = modulo['estado'][0]['estado']

@@ -42,7 +42,8 @@ class home:
         ret['body']+=ret_head['body']
         
         he=header()
-        ret_head=he.normal()
+        ret_header=he.normal()
+        ret['body']+=ret_header['body']
 
 
 

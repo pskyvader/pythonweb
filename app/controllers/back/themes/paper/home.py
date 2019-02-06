@@ -1,6 +1,7 @@
 from core.view import view
 from core.functions import functions
 from .head import head
+from .header import header
 
 def init(var):
     h = home()
@@ -40,6 +41,8 @@ class home:
             return ret_head
         ret['body']+=ret_head['body']
         
+        he=header()
+        ret_head=he.normal()
 
 
 

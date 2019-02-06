@@ -1,5 +1,6 @@
 from core.view import view
 from core.functions import functions
+from .head import head
 
 def init(var):
     h = home()
@@ -26,7 +27,6 @@ class home:
 
     def index(self):
         from core.app import app
-        from .head import head
         ret = {'body':''}
         url_return=functions.url_redirect(self.url)
         if url_return!='':
@@ -39,6 +39,8 @@ class home:
         if ret_head['headers']!='':
             return ret_head
         ret['body']+=ret_head['body']
+
+
 
         view.add('title', 'index')
         view.add('var', str(app.post.getfirst("ajax")))

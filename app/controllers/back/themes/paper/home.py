@@ -23,6 +23,7 @@ def init(var):
 
 
 class home:
+    from core.app import app
     url = ['home']
     metadata = {'title': 'Home', 'modulo': 'home'}
 
@@ -36,7 +37,7 @@ class home:
 
 
         view.add('title', 'index')
-        view.add('var', 'index')
+        view.add('var', app.enviroment)
         breadcrumb=[
             {'active':'active','url':'aaaa','title':'titulo'},
             {'active':'','url':'bbb','title':'titulo2'},

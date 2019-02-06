@@ -102,7 +102,7 @@ class aside:
                 menu.append( {'title': 'Solo para desarrollo', 'separador': True})
                 url = functions.generar_url(["moduloconfiguracion"], False)
                 active = (url == current_url)
-                me = {'url': url, 'icon': 'mode_edit', 'title': 'Modulos', 'has_submenu': True, 'active': active, 'separador': False)}
+                me = {'url': url, 'icon': 'mode_edit', 'title': 'Modulos', 'has_submenu': True, 'active': active, 'separador': False}
                 me['submenu'].append(
                     {'url': url, 'sub_title': 'TODOS', 'active': active})
 
@@ -134,8 +134,8 @@ class aside:
             view.set('name', administrador["nombre"])
             view.set('email', administrador["email"])
             view.set('url_admin', functions.generar_url(["administrador", "detail", administrador[0], 'profile'], {'tipo': tipo_admin}))
-            view.set('img_admin', image.generar_url(
-                administrador["foto"][0], 'profile'))
+            #view.set('img_admin', image.generar_url( administrador["foto"][0], 'profile'))
+            view.set('img_admin', '')
 
             ret['body']=view.render('aside')
         return ret

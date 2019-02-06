@@ -14,7 +14,7 @@ class functions():
 
     @staticmethod
     def generar_url(url, extra={}, front_auto=True, front=True):
-        url = '/'.join(url)
+        url = '/'.join(map(str, url))
         if isinstance(extra, dict) and len(extra) > 0:
             url = url+"?" + urlencode(extra, 'utf-8')
         else:

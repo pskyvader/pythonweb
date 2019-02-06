@@ -1,12 +1,13 @@
 from core.functions import functions
 from core.view import view
+from core.app import app
+import datetime
+
 
 class header:
     data = {'logo': '', 'url_exit': '', }
 
     def normal(self):
-        from core.app import app
-        import datetime
         ret = {'body': ''}
         if app.post.getfirst("ajax") is None:
             #logo = logo_model.getById(3);

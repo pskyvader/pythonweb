@@ -71,7 +71,7 @@ class head:
                 ret['headers']='Content-Type: application/json'
                 ret['body']=json.dumps(self.data)
             else:
-                self.data['css']=view.css(true)
+                self.data['css']=view.css(True)
                 view.add_array(self.data)
                 ret['body']=view.render('head')
         

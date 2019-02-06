@@ -62,10 +62,6 @@ class view:
     @staticmethod
     def js(return_js=False):
         return ''
-    
-    @staticmethod
-    def js(return_js=False):
-        return ''
 
     @staticmethod
     def set_theme(theme):

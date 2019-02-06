@@ -42,12 +42,12 @@ class aside:
 
                 if (!isset(mod[cm[0]])) {
                     if (cm['module'] == 'separador') {
-                        menu[] = array('title' => cm['titulo'], 'separador' => true)
+                        menu[] = array('title' => cm['titulo'], 'separador' => True)
                     }
                 } elseif (count(mod[cm[0]]) == 1) {
                     modulo  = mod[cm[0]][0]
                     estados = modulo['estado'][0]['estado']
-                    if (estados[tipo_admin] == 'true') {
+                    if (estados[tipo_admin] == 'True') {
                         extra = {}
                         if (cm['tipos']) {
                             extra['tipo'] = modulo['tipo']
@@ -67,11 +67,11 @@ class aside:
                     }
                 } else {
                     active = False
-                    me     = array('icon' => cm['icono'], 'title' => cm['titulo'], 'has_submenu' => true, 'submenu' => {}, 'active' => active, 'separador' => False)
+                    me     = array('icon' => cm['icono'], 'title' => cm['titulo'], 'has_submenu' => True, 'submenu' => {}, 'active' => active, 'separador' => False)
                     for (mod[cm[0]] as key => m) {
                         modulo  = m
                         estados = modulo['estado'][0]['estado']
-                        if (estados[tipo_admin] == 'true') {
+                        if (estados[tipo_admin] == 'True') {
                             extra = {}
                             if (cm['tipos']) {
                                 extra['tipo'] = modulo['tipo']
@@ -89,7 +89,7 @@ class aside:
                             active          = (url == current_url)
                             me['submenu'][] = array('url' => url, 'sub_title' => modulo['titulo'], 'active' => active)
                             if (active) {
-                                me['active'] = true
+                                me['active'] = True
                             }
                         }
                     }
@@ -101,10 +101,10 @@ class aside:
             }
 
             if (tipo_admin == 1) {
-                menu[] = array('title' => 'Solo para desarrollo', 'separador' => true)
+                menu[] = array('title' => 'Solo para desarrollo', 'separador' => True)
                 url    = functions.generar_url(array("moduloconfiguracion"), False)
                 active = (url == current_url)
-                me = array('url' => url, 'icon' => 'mode_edit', 'title' => 'Modulos', 'has_submenu' => true, 'active' => active, 'separador' => False)
+                me = array('url' => url, 'icon' => 'mode_edit', 'title' => 'Modulos', 'has_submenu' => True, 'active' => active, 'separador' => False)
                 me['submenu'][] = array('url' => url, 'sub_title' => 'TODOS', 'active' => active)
                 
                 mc     = moduloconfiguracion_model.getAll()

@@ -53,7 +53,8 @@ class view:
     def render_template(content):
         env = Environment(autoescape=select_autoescape(
             enabled_extensions=('html', 'xml'), default_for_string=True, ))
-        template = Template(content)
+        #template = Template(content)
+        template=env.from_string(content)
         content = template.render(view.data)
         return content
 

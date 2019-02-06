@@ -81,7 +81,7 @@ class header:
             self.data['logo_min'] = image.generar_url(logo['foto'][0], 'panel_min');
             self.data['url_exit'] = functions.generar_url(['logout'], False);
             view.add_array(self.data);
-            view.add('date', date('Y-m-d H:i:s'));
+            view.add('date', datetime.datetime.today().strftime('%Y-%m-%d'));
             view.render('header');
         
     

@@ -1,17 +1,19 @@
 from core.functions import functions
 from core.view import view
+from core.app import app
 
 
 class aside:
     def normal():
         ret = {'body': ''}
         if app.post.getfirst("ajax") is None:
-            administrador = administrador_model.getById(
-                _SESSION[administrador_model.idname . app.prefix_site])
+            #administrador = administrador_model.getById( _SESSION[administrador_model.idname . app.prefix_site])
+            administrador={'tipo':1}
             tipo_admin = administrador["tipo"]
-            moduloconfiguracion = moduloconfiguracion_model.getAll(
-                {'estado': True, 'aside': True})
-            modulo = modulo_model.getAll({'aside': True})
+            #moduloconfiguracion = moduloconfiguracion_model.getAll( {'estado': True, 'aside': True})
+            moduloconfiguracion={}
+            #modulo = modulo_model.getAll({'aside': True})
+            modulo={}
 
             mod = {}
             for key, m in modulo.items():

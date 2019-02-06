@@ -136,9 +136,7 @@ class app:
         post_env = app.environ.copy()
         post_env['QUERY_STRING'] = ''
         post = cgi.FieldStorage(
-            fp=app.environ['wsgi.input'],
-            environ=post_env,
-            keep_blank_values=True
+            fp=app.environ['wsgi.input']
         )
         return post
 

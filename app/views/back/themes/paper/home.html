@@ -1,9 +1,9 @@
 <div class="page-content">
     <ol class="breadcrumb">
         {% for bc in breadcrumb %}
-            <li class="{{bc.active}} {{ loop.cycle('odd', 'even') }}">
-                <a href="{{bc.url}}">{{bc.title}}</a>
-            </li>
+        <li class="{{bc.active}} {{ loop.cycle('odd', 'even') }}">
+            <a href="{{bc.url}}">{{bc.title}}</a>
+        </li>
         {% endfor %}
     </ol>
     <div class="page-heading">
@@ -12,7 +12,9 @@
     </div>
     <div class="container-fluid"> </div>
 </div>
-
 <form action="" method="POST">
+    <input type="text" name="aaa">
+    <input type="text" name="aaa">
+    <input type="text" name="aaa">
     <input type="text" name="aaa">
 </form>

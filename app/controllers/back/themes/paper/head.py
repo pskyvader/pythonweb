@@ -63,8 +63,8 @@ class head:
         import json
         
         ret={'headers':'','body':''}
-        if app.post.getfirst("ajax") is not None:
-            if app.post.getfirst("ajax_header") is not None:
+        if app.post.getfirst("ajax") is None:
+            if app.post.getfirst("ajax_header") is None:
                 ret['headers']='Content-Type: application/json'
                 ret['body']=json.dumps(self.data)
             else:

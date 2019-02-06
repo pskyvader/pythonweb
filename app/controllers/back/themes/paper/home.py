@@ -23,7 +23,7 @@ def init(var):
 
 class home:
     url = ['home']
-    metadata = {'title': 'HomeHomeHomeHomeHomeHomeHomeHomeHomeHomeHomeHomeHomeHomeHomeHomeHomeHomeHomeHome', 'modulo': 'home'}
+    metadata = {'title': 'Home', 'modulo': 'home'}
 
     def index(self):
         from core.app import app

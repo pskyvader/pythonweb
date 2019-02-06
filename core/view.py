@@ -59,7 +59,7 @@ class view:
 
 
     @staticmethod
-    def css():
+    def css(return_css=False):
         return ''
 
     @staticmethod

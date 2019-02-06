@@ -2,6 +2,7 @@ from core.view import view
 from core.functions import functions
 from .head import head
 from .header import header
+from .aside import aside
 
 def init(var):
     h = home()
@@ -45,6 +46,9 @@ class home:
         ret_header=he.normal()
         ret['body']+=ret_header['body']
 
+        asi = aside()
+        ret_asi=asi.normal()
+        ret['body']+=ret_asi['body']
 
 
         view.add('title', 'index')

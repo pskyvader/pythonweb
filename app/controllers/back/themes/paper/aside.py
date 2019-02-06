@@ -107,18 +107,18 @@ class aside:
                 for (mc as key= > m) {
                     url = functions.generar_url({'modulo'), {'idmoduloconfiguracion': m[0]))
                     active = (url == current_url)
-                    me['submenu'].append({'url'=> url, 'sub_title': m['titulo'], 'active': active)
+                    me['submenu'].append({'url'=> url, 'sub_title': m['titulo'], 'active': active)})
                 }
-                menu.append(me
+                menu.append(me)
 
                 url = functions.generar_url({"table"), False)
                 active = (url == current_url)
-                menu.append({'url': url, 'icon': 'table', 'title': 'Tablas', 'has_submenu': False, 'active': active, 'separador': False)
+                menu.append({'url': url, 'icon': 'table', 'title': 'Tablas', 'has_submenu': False, 'active': active, 'separador': False)})
 
                 url = functions.generar_url(
                     {"configuracion_administrador"), False)
                 active = (url == current_url)
-                menu.append({'url': url, 'icon': 'settings_applications', 'title': 'Configuracion Administrador', 'has_submenu': False, 'active': active, 'separador': False)
+                menu.append({'url': url, 'icon': 'settings_applications', 'title': 'Configuracion Administrador', 'has_submenu': False, 'active': active, 'separador': False)})
 
             
 

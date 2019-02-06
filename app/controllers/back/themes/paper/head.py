@@ -23,11 +23,11 @@ class head:
     }
 
     def __init__(self, metadata):
+        from core.app import app
         for key, value in metadata.items():
             if key in self.data:
                 head.data = value
 
-        from core.app import app
         config = app.get_config()
         head.data['current_url'] = functions.current_url()
         head.data['path'] = app.path
@@ -59,3 +59,25 @@ class head:
         # head.data['favicon'] = image::generar_url(logo['foto'][0], 'favicon')
 
         head.data['manifest_url'] = app.get_url() + 'manifest.js'
+
+
+    def normal():
+        from core.app import app
+        
+        if (!isset($_POST['ajax']))
+            if (isset($_POST['ajax_header'])) 
+                $this->ajax();
+             else 
+                $this->data['css'] = view::css(true);
+                view::set_array($this->data);
+                view::render('head');
+            
+        
+    
+
+    def ajax():
+    {
+        header('Content-Type: application/json');
+        echo json_encode($this->data);
+        exit;
+    }

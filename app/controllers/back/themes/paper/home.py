@@ -1,6 +1,7 @@
 from core.view import view
 from core.functions import functions
 import os
+import head
 
 
 def init(var):
@@ -34,7 +35,9 @@ class home:
             ret['error']=301
             ret['redirect']=url_return
             return ret
-
+        
+        head = head(self.metadata)
+        ret_head=head.normal()
 
         view.add('title', 'index')
         view.add('var', str(app.post.getfirst("ajax")))

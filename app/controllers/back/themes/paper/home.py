@@ -23,11 +23,11 @@ def init(var):
 
 
 class home:
-    from core.app import app
     url = ['home']
     metadata = {'title': 'Home', 'modulo': 'home'}
 
     def index(self):
+        from core.app import app
         ret = {}
         url_return=functions.url_redirect(self.url)
         if url_return!='':

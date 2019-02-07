@@ -1,6 +1,7 @@
 from core.app import app
+from pathlib import Path
 from urllib.parse import urlencode
-
+from os.path import getmtime
 
 class functions():
     @staticmethod
@@ -48,11 +49,12 @@ class functions():
     @staticmethod
     def fecha_archivo(archivo, only_fecha =False):
         c  = '?time=' if "?" not in archivo else '&time='
-        ac =archivo.split('?',)
+        ac =archivo.split('?',2)
         ac = ac[0];
-        if (only_fecha) {
-            return file_exists(ac) ? filemtime(ac) : false;
-        } else {
-            return file_exists(ac) ? archivo . c . filemtime(ac) : "";
-        }
+        my_file = Path(ac)
+                
+        if only_fecha:
+            return getmtime(ac) if not my_file.is_file() else False;
+        else:
+            return archivo + c + getmtime(ac) if not my_file.is_file() else "";
     

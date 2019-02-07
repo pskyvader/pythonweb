@@ -112,12 +112,12 @@ class view:
             file = 'resources-' + nuevo + '-' + len(locales) + '.css';
             my_file = Path(directory+'resources/'+file)
             if my_file.is_file():
-                if (isset(_COOKIE['loaded_css']) && _COOKIE['loaded_css']) {
-                    defer = false;
-                } else {
-                    functions::set_cookie('loaded_css', true, time() + (31536000));
-                    defer = true;
-                }
+                if functions.get_cookie('loaded_css')!=False:
+                    defer = False
+                else:
+                    functions.set_cookie('loaded_css', True, time() + (31536000));
+                    defer = True
+                
                 locales = array(array('url' => app::_path . file, 'media' => 'all', 'defer' => defer, 'is_content' => false));
             } else {
                 cache::delete_cache();

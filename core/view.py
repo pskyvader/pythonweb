@@ -88,7 +88,7 @@ class view:
                 c['url_tmp'] = c['url']
                 c['url'] = theme + c['url']
                 my_file = Path(c['url'])
-                if not my_file.is_file():
+                if my_file.is_file():
                     if combine and c['combine']:
                         fecha = functions.fecha_archivo(c['url'], True)
                         if (fecha > nuevo):

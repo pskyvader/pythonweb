@@ -68,12 +68,12 @@ class view:
         if app.post.getfirst("ajax") is None:
             return ''
 
+        print('resources:')
         theme = view.get_theme()
         if(view.resources == ''):
             with open(theme+'resources.json') as f:
                 view.resources = json.load(f)
 
-        print('resources:')
         print(view.resources)
         css = []
         locales = []

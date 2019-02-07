@@ -7,7 +7,6 @@ import pprint
 
 sys.path.insert(0, os.path.dirname(__file__))
 
-
 def application2(environ, start_response):
     app_web = app(os.path.dirname(__file__))
     main_data = app_web.init(environ)
@@ -17,7 +16,7 @@ def application2(environ, start_response):
 
 
 class LoggingMiddleware:
-
+    
     def __init__(self, application):
         self.__application = application
 

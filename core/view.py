@@ -1,6 +1,5 @@
 from pathlib import Path
 from jinja2 import Template, Environment, select_autoescape
-from core.functions import functions
 import os
 import json
 
@@ -64,6 +63,7 @@ class view:
 
     @staticmethod
     def css(combine=True, array_only=False):
+        from core.functions import functions
         from core.app import app
         if app.post.getfirst("ajax") is None:
             return ''

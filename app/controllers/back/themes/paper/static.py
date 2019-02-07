@@ -24,7 +24,7 @@ class static:
             ret = {'error': 404}
         else:
             ret['body'] = open(resource_url,'r', encoding='utf-8').read()
-            ret['body'] = ret['body'].encode('utf-8')
+            ret['body'] = ret['body'].decode('utf-8')
             file_extension = splitext(resource_url)[1][1:]
             ret['headers'] = [ ('Content-Type', 'text/'+file_extension) ]
         return ret

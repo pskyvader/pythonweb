@@ -25,7 +25,7 @@ class static:
         else:
             from codecs import open
             #ret['body'] = open(resource_url, "r",encoding = "ISO-8859-1").read()
-            ret['body'] = open(resource_url,errors=None).read()
+            ret['body'] = open(resource_url).read()
             ret['encode']=False
             file_extension = splitext(resource_url)[1][1:]
             ret['headers'] = [ ('Content-Type', 'text/'+file_extension) ]

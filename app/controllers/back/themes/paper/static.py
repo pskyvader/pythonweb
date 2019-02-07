@@ -11,12 +11,14 @@ def init(var):
 
 class static:
     def index(self, var):
+        if len(var) == 0:
+            return {'error': 404}
         ret = {'body': ''}
         theme = view.get_theme()
         resource = '/'.join(var)
         resource_url = theme + resource
         file = Path(resource_url)
-        if (not file.is_file() ) or (len(var) == 0):
+        if not file.is_file():
             ret = {'error': 404}
         else:
             ret['body'] = open(resource_url, "r").read()

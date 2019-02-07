@@ -4,12 +4,12 @@ from pathlib import Path
 
 
 def init(var):
-    h = static()
+    h = static_file()
     ret = h.index(var)
     return ret
 
 
-class static:
+class static_file:
     url = ['home']
     metadata = {'title': 'Home', 'modulo': 'home'}
 

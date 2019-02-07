@@ -2,13 +2,16 @@ from core.app import app
 from pathlib import Path
 from urllib.parse import urlencode
 from os.path import getmtime
-import http.cookies
 
 class functions():
     @staticmethod
     def get_cookie(cookie):
         from http import cookies
-
+        c=cookies.SimpleCookie()
+        if cookie in c:
+            return c[cookie].value
+        else:
+            return False
     
     @staticmethod
     def url_redirect(url):

@@ -2,9 +2,14 @@ from core.app import app
 from pathlib import Path
 from urllib.parse import urlencode
 from os.path import getmtime
-
+import requests
 
 class functions():
+    @staticmethod
+    def get_cookie(cookie):
+        from http import cookies
+
+    
     @staticmethod
     def url_redirect(url):
         ruta = functions.generar_url(url)
@@ -54,7 +59,7 @@ class functions():
         ac = archivo.split('?', 2)
         if final_file!='':
             archivo=final_file
-            
+
         ac = ac[0]
         my_file = Path(ac)
 

@@ -10,9 +10,6 @@ def init(var):
 
 
 class static:
-    url = ['home']
-    metadata = {'title': 'Home', 'modulo': 'home'}
-
     def index(self, var):
         ret = {'body': ''}
         theme = view.get_theme()

@@ -106,6 +106,9 @@ class app:
         data_return['response_body'] = response['body']
         data_return['headers'] = response['headers']
 
+        if 'encode' in response:
+            data_return['encode'] = response['encode']
+
         return data_return
 
     @staticmethod

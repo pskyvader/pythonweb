@@ -61,7 +61,6 @@ class head:
         if app.post.getfirst("ajax") is None:
             if app.post.getfirst("ajax_header") is None:
                 head.data['css'] = view.css()
-                print(head.data['css'])
                 view.add_array(head.data)
                 ret['body'] = view.render('head')
             else:

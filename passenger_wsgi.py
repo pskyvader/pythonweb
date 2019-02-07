@@ -12,7 +12,7 @@ def application2(environ, start_response):
     main_data = app_web.init(environ)
     start_response(main_data['status'], main_data['headers'])
     ret = main_data['response_body']
-    if 'encode' in main_data:
+    if 'encode' in main_data and not main_data['encode']:
         return [bytes(ret)]
     else:
         return [bytes(ret, 'utf-8')]

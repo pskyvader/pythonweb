@@ -24,7 +24,7 @@ class functions():
         directory = app.url['base_sub'] if app.front else app.url['admin_sub']
         c[cookie] = value
         c[cookie]["path"] = directory
-        c[cookie]["time"] = datetime.now().timestamp() + time
+        c[cookie]["expires"] = datetime.now().timestamp() + time
         return True
 
     @staticmethod

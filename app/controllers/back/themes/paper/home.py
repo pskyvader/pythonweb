@@ -22,9 +22,6 @@ def init(var):
         ret = h.index()
     return ret
 
-
-
-
 class home:
     url = ['home']
     metadata = {'title': 'Home', 'modulo': 'home'}
@@ -67,10 +64,4 @@ class home:
         ret_f=f.normal()
         ret['body']+=ret_f['body']
 
-        return ret
-
-    def ver(self,var):
-        ret = {}
-        view.add('title', 'ver')
-        ret['body'] = view.render('home')
         return ret

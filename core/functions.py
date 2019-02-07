@@ -45,3 +45,14 @@ class functions():
         if len(app.get) > 0:
             url += '?' + urlencode(app.get, 'utf-8')
         return url
+    @staticmethod
+    def fecha_archivo(archivo, only_fecha =False):
+        c  = '?time=' if "?" not in archivo else '&time='
+        ac = explode("?", archivo);
+        ac = ac[0];
+        if (only_fecha) {
+            return file_exists(ac) ? filemtime(ac) : false;
+        } else {
+            return file_exists(ac) ? archivo . c . filemtime(ac) : "";
+        }
+    

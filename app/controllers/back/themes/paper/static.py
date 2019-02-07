@@ -1,3 +1,5 @@
+from core.view import view
+from pathlib import Path
 
 def init(var):
     h = static()
@@ -12,40 +14,13 @@ class static:
 
     def index(self,var):
         ret = {'body':''}
-        url_return=functions.url_redirect(self.url)
-        if url_return!='':
-            ret['error']=301
-            ret['redirect']=url_return
-            return ret
-        
-        h = head(self.metadata)
-        ret_head=h.normal()
-        if ret_head['headers']!='':
-            return ret_head
-        ret['body']+=ret_head['body']
-        
-        he=header()
-        ret_header=he.normal()
-        ret['body']+=ret_header['body']
+        theme = view.get_theme()
+        template_url = theme + template + "." + view.extension
+        my_file = Path(template_url)
+        if not my_file.is_file():
 
-        asi = aside()
-        ret_asi=asi.normal()
-        ret['body']+=ret_asi['body']
-
-
-        view.add('title', 'index')
-        view.add('var', str(app.post.getfirst("ajax")))
-        breadcrumb=[
-            {'active':'active','url':'aaaa','title':'titulo'},
-            {'active':'','url':'bbb','title':'titulo2'},
-            {'active':'active','url':'ccc','title':'titulo3'},
-        ]
-        view.add('breadcrumb', breadcrumb)
-        ret['body'] += view.render('home')
-
-
-        f = footer()
-        ret_f=f.normal()
-        ret['body']+=ret_f['body']
+        ret = {
+                'error': 404
+            }
 
         return ret

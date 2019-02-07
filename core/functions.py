@@ -58,3 +58,15 @@ class functions():
             return getmtime(ac) if not my_file.is_file() else False
         else:
             return archivo + c + getmtime(ac) if not my_file.is_file() else ""
+
+    @staticmethod
+    def ruta(texto):
+        texto = texto.strip()
+        if "http" in texto or texto == '#':
+            ruta = texto
+        elif '.' == texto:
+            ruta = ''
+        else:
+            ruta = "http://" + texto
+
+        return ruta

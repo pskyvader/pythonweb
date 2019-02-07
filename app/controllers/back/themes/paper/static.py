@@ -19,7 +19,7 @@ class static:
         resource = '/'.join(var)
         resource_url = theme + resource
         my_file = Path(resource_url)
-        if not my_file.is_file():
+        if not my_file.is_file() or len(var)==0:
             ret = {'error': 404}
         else:
             ret['body'] = open(resource_url, "r").read()

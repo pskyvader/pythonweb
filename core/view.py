@@ -98,9 +98,7 @@ class view:
                             c['content_css'] = open(c['url'], "r").read()
                             c['is_content'] = True
                         else:
-                            c['url'] = base_url + \
-                                functions.fecha_archivo(
-                                    c['url'], False, c['url_tmp'])
+                            c['url'] = base_url + functions.fecha_archivo( c['url'], False, c['url_tmp'])
 
                         no_combinados.append(c)
                 else:
@@ -143,9 +141,7 @@ class view:
                                 'media': 'all', 'defer': True, 'is_content': False}]
                 else:
                     for key, l in locales.items():
-                        locales[key]['url'] = base_url + \
-                            functions.fecha_archivo(
-                                c['url'], False, c['url_tmp'])
+                        locales[key]['url'] = base_url + functions.fecha_archivo( c['url'], False, c['url_tmp'])
 
         css = no_combinados + locales + css
 

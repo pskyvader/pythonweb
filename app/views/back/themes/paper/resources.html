@@ -1,14 +1,14 @@
 {% if is_css %}
     {% for c in css %} 
         {% if defer %}
-        <script>
-            var element = document.createElement('link');
-            element.rel = 'stylesheet';
-            element.type = 'text/css';
-            element.href = '{{c.url}}';
-            element.media = '{{c.media}}';
-            document.head.appendChild(element);
-        </script> 
+            <script>
+                var element = document.createElement('link');
+                element.rel = 'stylesheet';
+                element.type = 'text/css';
+                element.href = '{{c.url}}';
+                element.media = '{{c.media}}';
+                document.head.appendChild(element);
+            </script> 
         {% else %}
             {% if is_content %}
                 {{ '<'+'style'+'>' + c.content_css + '</'+'style'+'>'}}

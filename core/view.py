@@ -141,7 +141,7 @@ class view:
                                 'media': 'all', 'defer': True, 'is_content': False}]
                 else:
                     for l in locales:
-                        l['url'] = base_url + functions.fecha_archivo( l['url'], False, c['url_tmp'])
+                        l['url'] = base_url + functions.fecha_archivo( l['url'], False, l['url_tmp'])
 
         css = no_combinados + locales + css
 

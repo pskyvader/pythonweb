@@ -5,7 +5,8 @@ from pathlib import Path
 
 def init(var):
     h = static()
-    del var[0]
+    if 0 in var:
+        del var[0]
     ret = h.index(var)
     return ret
 

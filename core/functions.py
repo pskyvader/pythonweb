@@ -15,6 +15,21 @@ class functions():
             return False
     
     @staticmethod
+    def set_cookie(cookie,value,time):
+        from http import cookies
+        c=cookies.SimpleCookie()
+        #c=cookie.load(app.environ['HTTP_COOKIE'])
+        directory=app.url['base_sub'] if app.front else  app.url['admin_sub']
+            if (!headers_sent()) {
+                setcookie($cookie, $value, $time, $path);
+            } else {
+                echo '<script>document.cookie = "' . $cookie . '=' . $value . '; expires=' . date('r', $time) . '; path=' . $path . ';";</script>';
+            }
+        }
+    }
+
+
+    @staticmethod
     def url_redirect(url):
         ruta = functions.generar_url(url)
         current = functions.current_url()

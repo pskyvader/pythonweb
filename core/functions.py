@@ -49,11 +49,15 @@ class functions():
         return url
 
     @staticmethod
-    def fecha_archivo(archivo, only_fecha=False):
+    def fecha_archivo(archivo, only_fecha=False,final_file=''):
         c = '?time=' if "?" not in archivo else '&time='
         ac = archivo.split('?', 2)
+        if final_file!='':
+            archivo=final_file
+            
         ac = ac[0]
         my_file = Path(ac)
+
         if only_fecha:
             return getmtime(ac) if not my_file.is_file() else False
         else:

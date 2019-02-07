@@ -1,6 +1,8 @@
 from pathlib import Path
 from jinja2 import Template, Environment, select_autoescape
-
+from core.functions import functions
+from os.path import getsize
+import json
 
 class view:
     extension = 'html'
@@ -66,97 +68,93 @@ class view:
             return ''
 
         theme = view.get_theme()
+        if(view.resources==''):
+            with open(theme+'resources.json') as f:
+                view.resources = json.load(f)
         
-        if (self::$resources == '') {
-            $resources       = file_get_contents($theme . 'resources.json');
-            self::$resources = json_decode($resources, true);
-        }
-        $css           = array();
-        $locales       = array();
-        $no_combinados = array();
-        $nuevo         = 0;
-        foreach (self::$resources['css'] as $key => $c) {
-            $c['is_content'] = false;
-            if ($c['local']) {
-                $c['url'] = $theme . $c['url'];
-                if (file_exists($c['url'])) {
-                    if ($combine && $c['combine']) {
-                        $fecha = functions::fecha_archivo($c['url'], true);
-                        if ($fecha > $nuevo) {
-                            $nuevo = $fecha;
-                        }
-                        $locales[] = $c;
-                    } else {
-                        if (filesize($c['url']) < 2000) {
-                            $minifier = new mini_files\CSS($c['url']);
-                            //$c['content_css'] = file_get_contents($c['url']);
-                            $c['content_css'] = $minifier->minify();
-                            $c['is_content']  = true;
-                        } else {
-                            $c['url'] = app::$_path . functions::fecha_archivo($c['url']);
-                        }
-                        $no_combinados[] = $c;
-                    }
-                } else {
-                    if (error_reporting()) {
-                        exit("Recurso no existe:" . $c['url']);
-                    }
-                }
-            } else {
-                $c['url'] = functions::ruta($c['url']);
-                $css[]    = $c;
-            }
-        }
+        css           = [];
+        locales       = [];
+        no_combinados = [];
+        nuevo         = 0;
 
-        if ($combine && count($locales) > 0) {
-            $dir  = app::get_dir();
-            $file = 'resources-' . $nuevo . '-' . count($locales) . '.css';
-            if (file_exists($dir . '/' . $file)) {
-                if (isset($_COOKIE['loaded_css']) && $_COOKIE['loaded_css']) {
-                    $defer = false;
+
+        for c in view.resources['css']:
+            c['is_content'] = False;
+            if c['local']:
+                url_tmp=c['url']
+                c['url'] = theme + c['url']
+                my_file = Path(c['url'])
+                if not my_file.is_file():
+                    if combine and c['combine']:
+                        fecha = functions.fecha_archivo(c['url'],True)
+                        if (fecha > nuevo):
+                            nuevo = fecha;
+                        locales.append(c)
+                    else:
+                        if getsize(c['url']) < 2000:
+                            c['content_css'] = open(c['url'], "r").read()
+                            c['is_content']  = True;
+                        else:
+                            c['url'] = app.path + functions.fecha_archivo(c['url'],False,url_tmp)
+                        no_combinados.append(c)
+                else:
+                    if app.config['debug']:
+                        return "Recurso no existe:" + c['url']
+            else:
+                c['url'] = functions.ruta(c['url'])
+                css.append(c)
+            
+        
+
+        if combine and len(locales) > 0:
+            dir  = app::get_dir();
+            file = 'resources-' . nuevo . '-' . count(locales) . '.css';
+            if (file_exists(dir . '/' . file)) {
+                if (isset(_COOKIE['loaded_css']) && _COOKIE['loaded_css']) {
+                    defer = false;
                 } else {
                     functions::set_cookie('loaded_css', true, time() + (31536000));
-                    $defer = true;
+                    defer = true;
                 }
-                $locales = array(array('url' => app::$_path . $file, 'media' => 'all', 'defer' => $defer, 'is_content' => false));
+                locales = array(array('url' => app::_path . file, 'media' => 'all', 'defer' => defer, 'is_content' => false));
             } else {
                 cache::delete_cache();
-                if (isset($_COOKIE['loaded_css'])) {
+                if (isset(_COOKIE['loaded_css'])) {
                     functions::set_cookie('loaded_css', false, time() + (31536000));
                 }
-                if (is_writable($dir)) {
-                    $minifier = null;
-                    foreach ($locales as $key => $l) {
-                        if ($minifier == null) {
-                            $minifier = new mini_files\CSS($l['url']);
+                if (is_writable(dir)) {
+                    minifier = null;
+                    foreach (locales as key => l) {
+                        if (minifier == null) {
+                            minifier = new mini_files\CSS(l['url']);
                         } else {
-                            $minifier->add($l['url']);
+                            minifier->add(l['url']);
                         }
                     }
-                    array_map('unlink', glob($dir . "/*.css"));
-                    $minify  = $minifier->minify($dir . '/' . $file);
-                    $locales = array(array('url' => app::$_path . $file, 'media' => 'all', 'defer' => true, 'is_content' => false));
+                    array_map('unlink', glob(dir . "/*.css"));
+                    minify  = minifier->minify(dir . '/' . file);
+                    locales = array(array('url' => app::_path . file, 'media' => 'all', 'defer' => true, 'is_content' => false));
                 } else {
-                    foreach ($locales as $key => $l) {
-                        $locales[$key]['url'] = app::$_path . functions::fecha_archivo($l['url']);
+                    foreach (locales as key => l) {
+                        locales[key]['url'] = app::_path . functions::fecha_archivo(l['url']);
                     }
                 }
             }
         }
-        $css = array_merge($no_combinados, $locales, $css);
+        css = array_merge(no_combinados, locales, css);
 
-        if ($array_only) {
-            return array($css, $nuevo);
+        if (array_only) {
+            return array(css, nuevo);
         } else {
             self::set('js', array());
             self::set('is_css', true);
-            self::set('css', $css);
+            self::set('css', css);
 
-            if ($return) {
-                $theme        = self::get_theme();
-                $template_url = $theme . 'resources' . "." . self::EXTENSION_TEMPLATES;
-                $content      = file_get_contents($template_url);
-                return self::render_template(self::$data, $content);
+            if (return) {
+                theme        = self::get_theme();
+                template_url = theme . 'resources' . "." . self::EXTENSION_TEMPLATES;
+                content      = file_get_contents(template_url);
+                return self::render_template(self::data, content);
             } else {
                 self::render('resources');
             }

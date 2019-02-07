@@ -23,7 +23,9 @@ class static:
         if not my_file.is_file():
             ret = {'error': 404}
         else:
-            ret['body'] = open(resource_url, "r",encoding='utf8').read()
+            with open(resource_url, 'r') as f:
+                ret['body'] = f.read()
+            #ret['body'] = open(resource_url, "r",encoding='utf8').read()
             file_extension = splitext(resource_url)[1][1:]
             ret['headers'] = [ ('Content-Type', 'text/'+file_extension) ]
         return ret

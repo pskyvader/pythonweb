@@ -3,6 +3,7 @@ from pathlib import Path
 from urllib.parse import urlencode
 from os.path import getmtime
 
+
 class functions():
     @staticmethod
     def url_redirect(url):
@@ -46,15 +47,14 @@ class functions():
         if len(app.get) > 0:
             url += '?' + urlencode(app.get, 'utf-8')
         return url
+
     @staticmethod
-    def fecha_archivo(archivo, only_fecha =False):
-        c  = '?time=' if "?" not in archivo else '&time='
-        ac =archivo.split('?',2)
-        ac = ac[0];
+    def fecha_archivo(archivo, only_fecha=False):
+        c = '?time=' if "?" not in archivo else '&time='
+        ac = archivo.split('?', 2)
+        ac = ac[0]
         my_file = Path(ac)
-                
         if only_fecha:
-            return getmtime(ac) if not my_file.is_file() else False;
+            return getmtime(ac) if not my_file.is_file() else False
         else:
-            return archivo + c + getmtime(ac) if not my_file.is_file() else "";
-    
+            return archivo + c + getmtime(ac) if not my_file.is_file() else ""

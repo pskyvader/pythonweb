@@ -140,8 +140,8 @@ class view:
                     locales = [{'url': base_url+'resources/' + file,
                                 'media': 'all', 'defer': True, 'is_content': False}]
                 else:
-                    for key, l in locales.items():
-                        locales[key]['url'] = base_url + functions.fecha_archivo( c['url'], False, c['url_tmp'])
+                    for l in locales:
+                        l['url'] = base_url + functions.fecha_archivo( l['url'], False, c['url_tmp'])
 
         css = no_combinados + locales + css
 

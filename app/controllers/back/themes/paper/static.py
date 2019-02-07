@@ -25,7 +25,7 @@ class static:
         else:
             #with open(resource_url, 'r', encoding='utf8') as f:
             #    ret['body'] = f.read()
-            ret['body'] = (open(resource_url, "r",encoding='utf8').read()).decode("utf-8")
+            ret['body'] = (open(resource_url, "r",encoding='utf8').read()).encode("windows-1252").decode("utf-8")
 
             file_extension = splitext(resource_url)[1][1:]
             ret['headers'] = [ ('Content-Type', 'text/'+file_extension) ]

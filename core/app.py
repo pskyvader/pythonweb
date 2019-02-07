@@ -78,7 +78,7 @@ class app:
             response = {'error': 404}
 
 
-        if 'headers' not in data_return:
+        if 'headers' not in response:
             response['headers'] = [
                 ('Content-Type', 'text/html; charset=utf-8')
             ]

@@ -80,9 +80,9 @@ class functions():
         my_file = Path(ac)
 
         if only_fecha:
-            return getmtime(ac) if not my_file.is_file() else -1
+            return getmtime(ac) if my_file.is_file() else -1
         else:
-            return archivo + c + getmtime(ac) if not my_file.is_file() else ""
+            return archivo + c + getmtime(ac) if my_file.is_file() else ""
 
     @staticmethod
     def ruta(texto):

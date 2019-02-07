@@ -20,5 +20,5 @@
 {% endif %}
 {% endfor %} 
 {% else %} 
-{foreach js} <script src="{url}" {defer}></script> {/foreach js} 
+{% for j in js %} <script src="{{j.url}}" {{j.defer}}></script> {% endfor %} 
 {% endif %}

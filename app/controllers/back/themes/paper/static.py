@@ -7,3 +7,11 @@ def init(var):
     h = static()
     ret = h.index(var)
     return ret
+
+
+class static:
+    def index(self, var):
+        ret = {'body': ''}
+        theme = view.get_theme()
+        resource = '/'.join(var)
+        return ret

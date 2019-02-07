@@ -9,11 +9,11 @@ def init(var):
 
 
 class static:
-    from pathlib import Path
     url = ['home']
     metadata = {'title': 'Home', 'modulo': 'home'}
 
     def index(self, var):
+        from pathlib import Path
         ret = {'body': ''}
         theme = view.get_theme()
         resource = '/'.join(var)

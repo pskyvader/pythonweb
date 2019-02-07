@@ -78,8 +78,6 @@ class view:
 
         base_url = app.url['base'] + \
             'static/' if app.front else app.url['admin'] + 'static/'
-        directory = app.url['base_sub'] + \
-            'static/' if app.front else app.url['admin_sub'] + 'static/'
 
         for c in view.resources['css']:
             c['is_content'] = False
@@ -109,7 +107,7 @@ class view:
                 css.append(c)
 
         if combine and len(locales) > 0:
-            dir_resources = directory+'resources/'
+            dir_resources = theme+'resources/'
             file = 'resources-' + str(nuevo) + '-' + str(len(locales)) + '.css'
             my_file = Path(dir_resources+file)
             if my_file.is_file():
@@ -126,8 +124,6 @@ class view:
                 if functions.get_cookie('loaded_css') != False:
                     functions.set_cookie('loaded_css', True, (31536000))
                 
-                print(dir_resources)
-                print(os.access(dir_resources, os.R_OK))
                 if os.access(dir_resources, os.R_OK):
                     combine_files = ''
                     for l in locales:

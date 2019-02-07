@@ -157,8 +157,6 @@ class view:
             view.add('js', [])
             view.add('is_css', True)
             view.add('css', css)
-            
-            print(view.data)
             return view.render('resources')
 
     @staticmethod

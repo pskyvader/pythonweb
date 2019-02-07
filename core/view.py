@@ -62,7 +62,7 @@ class view:
         return content
 
     @staticmethod
-    def css(return_css=False,combine=True,array_only=False):
+    def css(return_files=False,combine=True,array_only=False):
         from core.app import app
         if app.post.getfirst("ajax") is None:
             return ''
@@ -139,26 +139,26 @@ class view:
                     file.close()
                     locales = [{'url' : base_url+'resources/' + file, 'media' : 'all', 'defer' : True, 'is_content' : False}]
                 else:
-                    for l in locales:
+                    for key,l in locales.items():
                         locales[key]['url'] = base_url + functions.fecha_archivo(c['url'],False,c['url_tmp'])
-                    }
-                }
-            }
-        }
-        css = array_merge(no_combinados, locales, css);
+                    
+                
+            
+        
+        css = no_combinados + locales + css
 
-        if (array_only) {
-            return array(css, nuevo);
-        } else {
-            self::set('js', array());
-            self::set('is_css', true);
-            self::set('css', css);
+        if array_only:
+            return [css, nuevo]
+        else:
+            view.add('js', []);
+            view.add('is_css', True);
+            view.add('css', css);
 
-            if (return) {
-                theme        = self::get_theme();
-                template_url = theme . 'resources' . "." . self::EXTENSION_TEMPLATES;
-                content      = file_get_contents(template_url);
-                return self::render_template(self::data, content);
+            if (return_files):
+                template_url = theme + 'resources.'+ view.extension
+                with open(template_url, 'r') as f:
+                    content = view.content_url[template_url] = f.read()
+                return view.render_template(view.data, content)
             } else {
                 self::render('resources');
             }

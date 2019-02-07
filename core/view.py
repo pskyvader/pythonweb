@@ -133,11 +133,10 @@ class view:
                     for item in test:
                         if item.endswith(".css"):
                             os.remove(os.path.join(dir_resources, item))
-                    file = open(dir_resources+file, 'w')
-                    file.write(combine_files)
-                    file.close()
-                    locales = [{'url': base_url+'resources/' + file,
-                                'media': 'all', 'defer': True, 'is_content': False}]
+                    file_write = open(dir_resources+file, 'w')
+                    file_write.write(combine_files)
+                    file_write.close()
+                    locales = [{'url': base_url+'resources/' + file, 'media': 'all', 'defer': True, 'is_content': False}]
                 else:
                     for l in locales:
                         l['url'] = base_url + functions.fecha_archivo( l['url'], False, l['url_tmp'])

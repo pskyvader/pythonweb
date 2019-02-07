@@ -82,7 +82,6 @@ class functions():
         if only_fecha:
             return getmtime(ac) if my_file.is_file() else -1
         else:
-            print(archivo + c + str(getmtime(ac)))
             return archivo + c + str(getmtime(ac)) if my_file.is_file() else ""
 
     @staticmethod

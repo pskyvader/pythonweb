@@ -1,5 +1,6 @@
 from core.view import view
 from os.path import splitext
+from pathlib import Path
 
 
 def init(var):
@@ -13,7 +14,6 @@ class static:
     metadata = {'title': 'Home', 'modulo': 'home'}
 
     def index(self, var):
-        from pathlib import Path
         ret = {'body': ''}
         theme = view.get_theme()
         resource = '/'.join(var)

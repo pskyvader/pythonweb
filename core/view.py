@@ -95,6 +95,7 @@ class view:
                         locales.append(c)
                     else:
                         if os.path.getsize(c['url']) < 2000:
+                            print(c['url'])
                             c['content_css'] = open(c['url'], "r").read()
                             c['is_content'] = True
                         else:

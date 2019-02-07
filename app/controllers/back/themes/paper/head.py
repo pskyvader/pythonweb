@@ -60,9 +60,9 @@ class head:
         ret = {'headers': '', 'body': ''}
         if app.post.getfirst("ajax") is None:
             if app.post.getfirst("ajax_header") is None:
-                self.data['css'] = view.css()
-                print(self.data['css'])
-                view.add_array(self.data)
+                head.data['css'] = view.css()
+                print(head.data['css'])
+                view.add_array(head.data)
                 ret['body'] = view.render('head')
             else:
                 ret['headers'] = 'Content-Type: application/json'

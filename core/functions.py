@@ -20,13 +20,8 @@ class functions():
         c=cookies.SimpleCookie()
         #c=cookie.load(app.environ['HTTP_COOKIE'])
         directory=app.url['base_sub'] if app.front else  app.url['admin_sub']
-            if (!headers_sent()) {
-                setcookie($cookie, $value, $time, $path);
-            } else {
-                echo '<script>document.cookie = "' . $cookie . '=' . $value . '; expires=' . date('r', $time) . '; path=' . $path . ';";</script>';
-            }
-        }
-    }
+        c[cookie] = value
+        c[cookie]["path"] =directory
 
 
     @staticmethod

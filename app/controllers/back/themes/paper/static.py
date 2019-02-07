@@ -1,18 +1,7 @@
 
 def init(var):
     h = static()
-    if len(var) > 0:
-        if hasattr(h, var[0]) and callable(getattr(h, var[0])):
-            fun = var[0]
-            del var[0]
-            method=getattr(h, fun)
-            ret = method(var)
-        else:
-            ret = {
-                'error': 404,
-            }
-    else:
-        ret = h.index()
+    ret = h.index(var)
     return ret
 
 
@@ -21,7 +10,7 @@ class static:
     url = ['home']
     metadata = {'title': 'Home', 'modulo': 'home'}
 
-    def index(self):
+    def index(self,var):
         ret = {'body':''}
         url_return=functions.url_redirect(self.url)
         if url_return!='':
@@ -59,10 +48,4 @@ class static:
         ret_f=f.normal()
         ret['body']+=ret_f['body']
 
-        return ret
-
-    def ver(self,var):
-        ret = {}
-        view.add('title', 'ver')
-        ret['body'] = view.render('home')
         return ret

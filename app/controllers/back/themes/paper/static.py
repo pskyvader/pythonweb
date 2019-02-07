@@ -23,7 +23,7 @@ class static:
             ret = { 'error': 404 }
         else:
             ret['body'] = open(resource_url, "r").read()
-            file_extension =splitext(resource_url)[1]
+            file_extension =splitext(resource_url)[1][1:]
             ret['headers'] = 'Content-Type: text/'+file_extension
 
         return ret

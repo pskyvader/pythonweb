@@ -3,26 +3,27 @@ from pathlib import Path
 from urllib.parse import urlencode
 from os.path import getmtime
 
+
 class functions():
     @staticmethod
     def get_cookie(cookie):
         from http import cookies
-        c=cookies.SimpleCookie()
-        #c=cookie.load(app.environ['HTTP_COOKIE'])
+        c = cookies.SimpleCookie()
+        # c=cookie.load(app.environ['HTTP_COOKIE'])
         if cookie in c:
             return c[cookie].value
         else:
             return False
-    
-    @staticmethod
-    def set_cookie(cookie,value,time):
-        from http import cookies
-        c=cookies.SimpleCookie()
-        #c=cookie.load(app.environ['HTTP_COOKIE'])
-        directory=app.url['base_sub'] if app.front else  app.url['admin_sub']
-        c[cookie] = value
-        c[cookie]["path"] =directory
 
+    @staticmethod
+    def set_cookie(cookie, value, time):
+        from http import cookies
+        c = cookies.SimpleCookie()
+        # c=cookie.load(app.environ['HTTP_COOKIE'])
+        directory = app.url['base_sub'] if app.front else app.url['admin_sub']
+        c[cookie] = value
+        c[cookie]["path"] = directory
+        return True
 
     @staticmethod
     def url_redirect(url):
@@ -68,11 +69,11 @@ class functions():
         return url
 
     @staticmethod
-    def fecha_archivo(archivo, only_fecha=False,final_file=''):
+    def fecha_archivo(archivo, only_fecha=False, final_file=''):
         c = '?time=' if "?" not in archivo else '&time='
         ac = archivo.split('?', 2)
-        if final_file!='':
-            archivo=final_file
+        if final_file != '':
+            archivo = final_file
 
         ac = ac[0]
         my_file = Path(ac)

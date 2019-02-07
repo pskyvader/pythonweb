@@ -82,6 +82,7 @@ class app:
             response['headers'] = [
                 ('Content-Type', 'text/html; charset=utf-8')
             ]
+        
         if 'error' in response:
             if response['error'] == 301:
                 if config['debug']:

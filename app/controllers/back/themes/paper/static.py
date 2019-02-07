@@ -13,14 +13,13 @@ class static:
     url = ['home']
     metadata = {'title': 'Home', 'modulo': 'home'}
 
-
     def index(self, var):
         ret = {'body': ''}
         theme = view.get_theme()
         resource = '/'.join(var)
         resource_url = theme + resource
         file = Path(resource_url)
-        if not file.is_file() or len(var)==0:
+        if not file.is_file() or len(var) == 0:
             ret = {'error': 404}
         else:
             ret['body'] = open(resource_url, "r").read()

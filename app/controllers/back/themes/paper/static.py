@@ -22,5 +22,4 @@ class static:
             ret['body'] = open(resource_url, "r").read()
             file_extension = splitext(resource_url)[1][1:]
             ret['headers'] = 'Content-Type: text/'+file_extension
-
         return ret

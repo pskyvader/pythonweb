@@ -149,7 +149,6 @@ class view:
 
         css = no_combinados + locales + css
 
-        print (nuevo)
         if array_only:
             return [css, nuevo]
         else:

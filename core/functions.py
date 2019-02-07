@@ -73,11 +73,10 @@ class functions():
     @staticmethod
     def fecha_archivo(archivo, only_fecha=False, final_file=''):
         c = '?time=' if "?" not in archivo else '&time='
-        ac = archivo.split('?', 2)
+        ac = archivo.split('?', 2)[0]
         if final_file != '':
             archivo = final_file
-
-        ac = ac[0]
+        
         my_file = Path(ac)
 
         if only_fecha:

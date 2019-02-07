@@ -61,7 +61,7 @@ class view:
         return content
 
     @staticmethod
-    def css(combine=False, array_only=False):
+    def css(combine=True, array_only=False):
         from core.functions import functions
         from core.app import app
         if app.post.getfirst("ajax") is not None:

@@ -1,5 +1,4 @@
 from core.view import view
-from pathlib import Path
 from os.path import splitext
 
 
@@ -10,6 +9,7 @@ def init(var):
 
 
 class static:
+    from pathlib import Path
     url = ['home']
     metadata = {'title': 'Home', 'modulo': 'home'}
 

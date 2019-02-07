@@ -10,7 +10,7 @@
                 document.head.appendChild(element);
             </script> 
         {% else %}
-            {% if is_content %}
+            {% if c.is_content %}
                 {{ '<'+'style'+'>' + c.content_css + '</'+'style'+'>'}}
             {% else %}
                 <link rel="stylesheet" type="text/css" href="{{c.url}}" media="{{c.media}}">

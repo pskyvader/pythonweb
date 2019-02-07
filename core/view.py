@@ -110,7 +110,7 @@ class view:
 
         if combine and len(locales) > 0:
             dir_resources = directory+'resources/'
-            file = 'resources-' + nuevo + '-' + len(locales) + '.css'
+            file = 'resources-' + nuevo + '-' + str(len(locales)) + '.css'
             my_file = Path(dir_resources+file)
             if my_file.is_file():
                 if functions.get_cookie('loaded_css') != False:

@@ -125,6 +125,7 @@ class view:
                 # cache.delete_cache()
                 if functions.get_cookie('loaded_css') != False:
                     functions.set_cookie('loaded_css', True, (31536000))
+                    
                 if os.access(dir_resources, os.R_OK):
                     combine_files = ''
                     for l in locales:

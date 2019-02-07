@@ -9,7 +9,7 @@ class view:
     content_url = {}
     data = {}
     theme = ''
-    resources = ''
+    resources = []
     html = """
         <html>
             %(content)s
@@ -74,6 +74,7 @@ class view:
             with open(theme+'resources.json') as f:
                 view.resources = json.load(f)
 
+        print(view.resources)
         css = []
         locales = []
         no_combinados = []

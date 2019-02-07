@@ -74,7 +74,6 @@ class view:
             with open(theme+'resources.json') as f:
                 view.resources = json.load(f)
 
-        print(view.resources)
         css = []
         locales = []
         no_combinados = []

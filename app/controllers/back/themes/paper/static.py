@@ -23,9 +23,8 @@ class static:
         if not my_file.is_file():
             ret = {'error': 404}
         else:
-            from codecs import open
-            #ret['body'] = open(resource_url, "r",encoding = "ISO-8859-1").read()
-            ret['body'] = open(resource_url, encoding='utf-8').read()
+            ret['body'] = open(resource_url,'r', encoding='utf-8').read()
+            ret['body'] = ret['body'].encode('utf-8').decode('utf-8')
             file_extension = splitext(resource_url)[1][1:]
             ret['headers'] = [ ('Content-Type', 'text/'+file_extension) ]
         return ret

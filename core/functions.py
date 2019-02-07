@@ -2,7 +2,7 @@ from core.app import app
 from pathlib import Path
 from urllib.parse import urlencode
 from os.path import getmtime
-import requests
+import request
 
 class functions():
     @staticmethod

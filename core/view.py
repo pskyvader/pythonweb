@@ -3,6 +3,7 @@ from jinja2 import Template, Environment, select_autoescape
 from core.functions import functions
 from os.path import getsize
 import json
+import datetime
 
 class view:
     extension = 'html'

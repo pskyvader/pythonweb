@@ -83,7 +83,7 @@ class view:
         for c in view.resources['css']:
             c['is_content'] = False;
             if c['local']:
-                url_tmp=c['url']
+                c['url_tmp'] = c['url']
                 c['url'] = theme + c['url']
                 my_file = Path(c['url'])
                 if not my_file.is_file():
@@ -93,11 +93,11 @@ class view:
                             nuevo = fecha;
                         locales.append(c)
                     else:
-                        if path.getsize(c['url']) < 2000:
+                        if os.path.getsize(c['url']) < 2000:
                             c['content_css'] = open(c['url'], "r").read()
                             c['is_content']  = True;
                         else:
-                            c['url'] = base_url + functions.fecha_archivo(c['url'],False,url_tmp)
+                            c['url'] = base_url + functions.fecha_archivo(c['url'],False,c['url_tmp'])
 
                         no_combinados.append(c)
                 else:
@@ -125,22 +125,22 @@ class view:
                 #cache.delete_cache()
                 if functions.get_cookie('loaded_css')!=False:
                     functions.set_cookie('loaded_css', True, (31536000))
-                if access("myfile", os.R_OK):
-                if (is_writable(dir_resources)) {
-                    minifier = null;
-                    foreach (locales as key => l) {
-                        if (minifier == null) {
-                            minifier = new mini_files\CSS(l['url']);
-                        } else {
-                            minifier->add(l['url']);
-                        }
-                    }
-                    array_map('unlink', glob(dir . "/*.css"));
-                    minify  = minifier->minify(dir . '/' . file);
-                    locales = array(array('url' => app::_path . file, 'media' => 'all', 'defer' => true, 'is_content' => false));
-                } else {
-                    foreach (locales as key => l) {
-                        locales[key]['url'] = app::_path . functions::fecha_archivo(l['url']);
+                if os.access(dir_resources, os.R_OK):
+                    combine_files=''
+                    for l in locales:
+                        combine_files+= open(c['url'], "r").read()
+
+                    test = os.listdir(dir_resources)
+                    for item in test:
+                        if item.endswith(".css"):
+                            os.remove(os.path.join(dir_resources, item))
+                    file = open(dir_resources+file, 'w')
+                    file.write(combine_files)
+                    file.close()
+                    locales = [{'url' : base_url+'resources/' + file, 'media' : 'all', 'defer' : True, 'is_content' : False}]
+                else:
+                    for l in locales:
+                        locales[key]['url'] = base_url + functions.fecha_archivo(c['url'],False,c['url_tmp'])
                     }
                 }
             }

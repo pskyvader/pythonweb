@@ -65,6 +65,7 @@ class view:
     def css(combine=False, array_only=False):
         from core.functions import functions
         from core.app import app
+        print('resources:')
         if app.post.getfirst("ajax") is None:
             return ''
 

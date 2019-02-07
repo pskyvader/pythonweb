@@ -77,6 +77,7 @@ class view:
         no_combinados = [];
         nuevo         = 0;
 
+        directory=app.url['base'] + 'static/' if app.front else  app.url['admin'] + 'static/'
 
         for c in view.resources['css']:
             c['is_content'] = False;
@@ -95,10 +96,7 @@ class view:
                             c['content_css'] = open(c['url'], "r").read()
                             c['is_content']  = True;
                         else:
-                            if app.front:
-                                c['url'] = app.url['base'] + functions.fecha_archivo(c['url'],False,url_tmp)
-                            else:
-                                c['url'] = app.url['admin'] + functions.fecha_archivo(c['url'],False,url_tmp)
+                            c['url'] = directory + functions.fecha_archivo(c['url'],False,url_tmp)
 
                         no_combinados.append(c)
                 else:
@@ -111,9 +109,9 @@ class view:
         
 
         if combine and len(locales) > 0:
-            dir  = app::get_dir();
-            file = 'resources-' . nuevo . '-' . count(locales) . '.css';
-            if (file_exists(dir . '/' . file)) {
+            file = 'resources-' + nuevo + '-' + len(locales) + '.css';
+            my_file = Path(directory+'resources/'+file)
+            if my_file.is_file():
                 if (isset(_COOKIE['loaded_css']) && _COOKIE['loaded_css']) {
                     defer = false;
                 } else {

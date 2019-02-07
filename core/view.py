@@ -156,16 +156,10 @@ class view:
 
             if (return_files):
                 template_url = theme + 'resources.'+ view.extension
-                with open(template_url, 'r') as f:
-                    content = view.content_url[template_url] = f.read()
+                content = open(template_url, "r").read()
                 return view.render_template(view.data, content)
-            } else {
-                self::render('resources');
-            }
-        }
-    }
-
-
+            else:
+                view.render('resources')
 
 
 

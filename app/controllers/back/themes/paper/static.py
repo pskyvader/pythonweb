@@ -1,7 +1,6 @@
 from core.view import view
 from os.path import splitext
 from pathlib import Path
-import codecs
 
 def init(var):
     h = static()

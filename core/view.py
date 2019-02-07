@@ -4,12 +4,13 @@ from core.functions import functions
 import os
 import json
 
+
 class view:
     extension = 'html'
     content_url = {}
     data = {}
     theme = ''
-    resources=''
+    resources = ''
     html = """
         <html>
             %(content)s
@@ -41,8 +42,8 @@ class view:
         if template_url in view.content_url:
             content = view.content_url[template_url]
         else:
-            with open(template_url, 'r') as f:
-                content = view.content_url[template_url] = f.read()
+            content = view.content_url[template_url] = open(
+                template_url, "r").read()
 
         body = view.render_template(content)
 
@@ -55,49 +56,53 @@ class view:
     @staticmethod
     def render_template(content):
         env = Environment(autoescape=select_autoescape(
-            enabled_extensions=('html', 'xml'), default_for_string=True, ),trim_blocks=True,lstrip_blocks=True)
+            enabled_extensions=('html', 'xml'), default_for_string=True, ), trim_blocks=True, lstrip_blocks=True)
         #template = Template(content)
-        template=env.from_string(content)
+        template = env.from_string(content)
         content = template.render(view.data)
         return content
 
     @staticmethod
-    def css(return_files=False,combine=True,array_only=False):
+    def css(combine=True, array_only=False):
         from core.app import app
         if app.post.getfirst("ajax") is None:
             return ''
 
         theme = view.get_theme()
-        if(view.resources==''):
+        if(view.resources == ''):
             with open(theme+'resources.json') as f:
                 view.resources = json.load(f)
-        
-        css           = [];
-        locales       = [];
-        no_combinados = [];
-        nuevo         = 0;
 
-        base_url=app.url['base'] + 'static/' if app.front else  app.url['admin'] + 'static/'
-        directory = app.url['base_sub']+ 'static/' if app.front else app.url['admin_sub']+ 'static/'
+        css = []
+        locales = []
+        no_combinados = []
+        nuevo = 0
+
+        base_url = app.url['base'] + \
+            'static/' if app.front else app.url['admin'] + 'static/'
+        directory = app.url['base_sub'] + \
+            'static/' if app.front else app.url['admin_sub'] + 'static/'
 
         for c in view.resources['css']:
-            c['is_content'] = False;
+            c['is_content'] = False
             if c['local']:
                 c['url_tmp'] = c['url']
                 c['url'] = theme + c['url']
                 my_file = Path(c['url'])
                 if not my_file.is_file():
                     if combine and c['combine']:
-                        fecha = functions.fecha_archivo(c['url'],True)
+                        fecha = functions.fecha_archivo(c['url'], True)
                         if (fecha > nuevo):
-                            nuevo = fecha;
+                            nuevo = fecha
                         locales.append(c)
                     else:
                         if os.path.getsize(c['url']) < 2000:
                             c['content_css'] = open(c['url'], "r").read()
-                            c['is_content']  = True;
+                            c['is_content'] = True
                         else:
-                            c['url'] = base_url + functions.fecha_archivo(c['url'],False,c['url_tmp'])
+                            c['url'] = base_url + \
+                                functions.fecha_archivo(
+                                    c['url'], False, c['url_tmp'])
 
                         no_combinados.append(c)
                 else:
@@ -106,29 +111,28 @@ class view:
             else:
                 c['url'] = functions.ruta(c['url'])
                 css.append(c)
-            
-        
 
         if combine and len(locales) > 0:
-            dir_resources=directory+'resources/'
-            file = 'resources-' + nuevo + '-' + len(locales) + '.css';
+            dir_resources = directory+'resources/'
+            file = 'resources-' + nuevo + '-' + len(locales) + '.css'
             my_file = Path(dir_resources+file)
             if my_file.is_file():
-                if functions.get_cookie('loaded_css')!=False:
+                if functions.get_cookie('loaded_css') != False:
                     defer = False
                 else:
                     functions.set_cookie('loaded_css', True, (31536000))
                     defer = True
-                
-                locales = [{'url' : base_url+'resources/' + file, 'media' : 'all', 'defer' : defer, 'is_content' : False}]
+
+                locales = [{'url': base_url+'resources/' + file,
+                            'media': 'all', 'defer': defer, 'is_content': False}]
             else:
-                #cache.delete_cache()
-                if functions.get_cookie('loaded_css')!=False:
+                # cache.delete_cache()
+                if functions.get_cookie('loaded_css') != False:
                     functions.set_cookie('loaded_css', True, (31536000))
                 if os.access(dir_resources, os.R_OK):
-                    combine_files=''
+                    combine_files = ''
                     for l in locales:
-                        combine_files+= open(c['url'], "r").read()
+                        combine_files += open(c['url'], "r").read()
 
                     test = os.listdir(dir_resources)
                     for item in test:
@@ -137,43 +141,24 @@ class view:
                     file = open(dir_resources+file, 'w')
                     file.write(combine_files)
                     file.close()
-                    locales = [{'url' : base_url+'resources/' + file, 'media' : 'all', 'defer' : True, 'is_content' : False}]
+                    locales = [{'url': base_url+'resources/' + file,
+                                'media': 'all', 'defer': True, 'is_content': False}]
                 else:
-                    for key,l in locales.items():
-                        locales[key]['url'] = base_url + functions.fecha_archivo(c['url'],False,c['url_tmp'])
-                    
-                
-            
-        
+                    for key, l in locales.items():
+                        locales[key]['url'] = base_url + \
+                            functions.fecha_archivo(
+                                c['url'], False, c['url_tmp'])
+
         css = no_combinados + locales + css
 
         if array_only:
             return [css, nuevo]
         else:
-            view.add('js', []);
-            view.add('is_css', True);
-            view.add('css', css);
+            view.add('js', [])
+            view.add('is_css', True)
+            view.add('css', css)
 
-            if (return_files):
-                template_url = theme + 'resources.'+ view.extension
-                content = open(template_url, "r").read()
-                return view.render_template(view.data, content)
-            else:
-                view.render('resources')
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            return view.render('resources')
 
     @staticmethod
     def js(return_js=False):

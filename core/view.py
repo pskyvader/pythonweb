@@ -70,7 +70,7 @@ class view:
 
         print('resources:')
         theme = view.get_theme()
-        if(view.resources == ''):
+        if(len(view.resources)==0):
             with open(theme+'resources.json') as f:
                 view.resources = json.load(f)
 

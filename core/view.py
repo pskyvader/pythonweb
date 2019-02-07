@@ -95,7 +95,11 @@ class view:
                             c['content_css'] = open(c['url'], "r").read()
                             c['is_content']  = True;
                         else:
-                            c['url'] = app.path + functions.fecha_archivo(c['url'],False,url_tmp)
+                            if app.front:
+                                c['url'] = app.url['base'] + functions.fecha_archivo(c['url'],False,url_tmp)
+                            else:
+                                c['url'] = app.url['admin'] + functions.fecha_archivo(c['url'],False,url_tmp)
+
                         no_combinados.append(c)
                 else:
                     if app.config['debug']:

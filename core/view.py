@@ -127,13 +127,13 @@ class view:
                 if os.access(dir_resources, os.R_OK):
                     combine_files = ''
                     for l in locales:
-                        combine_files += open(l['url'], "r").read()
+                        combine_files += open(l['url'], "r", encoding='utf-8').read()
 
                     test = os.listdir(dir_resources)
                     for item in test:
                         if item.endswith(".css"):
                             os.remove(os.path.join(dir_resources, item))
-                    file_write = open(dir_resources+file, 'w')
+                    file_write = open(dir_resources+file, 'w', encoding='utf-8')
                     file_write.write(combine_files)
                     file_write.close()
                     locales = [{'url': base_url+'resources/' + file, 'media': 'all', 'defer': True, 'is_content': False}]

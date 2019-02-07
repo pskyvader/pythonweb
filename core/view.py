@@ -3,7 +3,7 @@ from jinja2 import Template, Environment, select_autoescape
 from core.functions import functions
 from os.path import getsize
 import json
-import datetime
+from datetime import datetime
 
 class view:
     extension = 'html'
@@ -116,7 +116,7 @@ class view:
                 if functions.get_cookie('loaded_css')!=False:
                     defer = False
                 else:
-                    functions.set_cookie('loaded_css', True, time() + (31536000));
+                    functions.set_cookie('loaded_css', True, datetime.now() + (31536000));
                     defer = True
                 
                 locales = array(array('url' => app::_path . file, 'media' => 'all', 'defer' => defer, 'is_content' => false));

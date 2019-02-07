@@ -48,7 +48,7 @@ class functions():
     @staticmethod
     def fecha_archivo(archivo, only_fecha =False):
         c  = '?time=' if "?" not in archivo else '&time='
-        ac = explode("?", archivo);
+        ac =archivo.split('?',)
         ac = ac[0];
         if (only_fecha) {
             return file_exists(ac) ? filemtime(ac) : false;

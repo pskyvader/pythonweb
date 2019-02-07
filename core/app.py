@@ -64,6 +64,9 @@ class app:
         app.url['base'] = app.path
         app.url['admin'] = app.path+config['admin']+'/'
 
+        app.url['base_sub'] = subdirectorio
+        app.url['admin_sub'] = subdirectorio + config['admin'] + '/'
+
         view.set_theme(app.root+app.view_dir)
 
         controller = app.controller_dir+url[0]
@@ -77,12 +80,11 @@ class app:
         else:
             response = {'error': 404}
 
-
         if 'headers' not in response:
             response['headers'] = [
                 ('Content-Type', 'text/html; charset=utf-8')
             ]
-        
+
         if 'error' in response:
             if response['error'] == 301:
                 if config['debug']:

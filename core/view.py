@@ -1,7 +1,7 @@
 from pathlib import Path
 from jinja2 import Template, Environment, select_autoescape
 from core.functions import functions
-from os.path import getsize
+import os
 import json
 
 class view:
@@ -77,7 +77,8 @@ class view:
         no_combinados = [];
         nuevo         = 0;
 
-        directory=app.url['base'] + 'static/' if app.front else  app.url['admin'] + 'static/'
+        base_url=app.url['base'] + 'static/' if app.front else  app.url['admin'] + 'static/'
+        directory = app.url['base_sub']+ 'static/' if app.front else app.url['admin_sub']+ 'static/'
 
         for c in view.resources['css']:
             c['is_content'] = False;
@@ -92,11 +93,11 @@ class view:
                             nuevo = fecha;
                         locales.append(c)
                     else:
-                        if getsize(c['url']) < 2000:
+                        if path.getsize(c['url']) < 2000:
                             c['content_css'] = open(c['url'], "r").read()
                             c['is_content']  = True;
                         else:
-                            c['url'] = directory + functions.fecha_archivo(c['url'],False,url_tmp)
+                            c['url'] = base_url + functions.fecha_archivo(c['url'],False,url_tmp)
 
                         no_combinados.append(c)
                 else:
@@ -109,22 +110,23 @@ class view:
         
 
         if combine and len(locales) > 0:
+            dir_resources=directory+'resources/'
             file = 'resources-' + nuevo + '-' + len(locales) + '.css';
-            my_file = Path(directory+'resources/'+file)
+            my_file = Path(dir_resources+file)
             if my_file.is_file():
                 if functions.get_cookie('loaded_css')!=False:
                     defer = False
                 else:
-                    functions.set_cookie('loaded_css', True, (31536000));
+                    functions.set_cookie('loaded_css', True, (31536000))
                     defer = True
                 
-                locales = array(array('url' => app::_path . file, 'media' => 'all', 'defer' => defer, 'is_content' => false));
-            } else {
-                cache::delete_cache();
-                if (isset(_COOKIE['loaded_css'])) {
-                    functions::set_cookie('loaded_css', false, time() + (31536000));
-                }
-                if (is_writable(dir)) {
+                locales = [{'url' : base_url+'resources/' + file, 'media' : 'all', 'defer' : defer, 'is_content' : False}]
+            else:
+                #cache.delete_cache()
+                if functions.get_cookie('loaded_css')!=False:
+                    functions.set_cookie('loaded_css', True, (31536000))
+                if access("myfile", os.R_OK):
+                if (is_writable(dir_resources)) {
                     minifier = null;
                     foreach (locales as key => l) {
                         if (minifier == null) {

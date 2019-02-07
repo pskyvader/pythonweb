@@ -127,6 +127,7 @@ class view:
                     functions.set_cookie('loaded_css', True, (31536000))
                 
                 print(dir_resources)
+                print(os.access(dir_resources, os.R_OK))
                 if os.access(dir_resources, os.R_OK):
                     combine_files = ''
                     for l in locales:

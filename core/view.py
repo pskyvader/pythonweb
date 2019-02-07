@@ -9,7 +9,7 @@ class view:
     content_url = {}
     data = {}
     theme = ''
-    resources = []
+    resources = {}
     html = """
         <html>
             %(content)s

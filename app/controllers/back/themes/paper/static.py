@@ -15,7 +15,7 @@ class static:
         theme = view.get_theme()
         resource = '/'.join(var)
         resource_url = theme + resource
-        file = ''#Path(resource_url)
+        file = Path(resource_url)
         if (not file.is_file() ) or (len(var) == 0):
             ret = {'error': 404}
         else:

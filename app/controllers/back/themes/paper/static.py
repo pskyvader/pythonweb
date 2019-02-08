@@ -35,10 +35,10 @@ class static:
             expiry_time = datetime.datetime.utcnow() + datetime.timedelta(100)
             ret['headers'] = [
                 ('Content-Type', mime+'; charset=utf-8'),
-                ('Expires', expiry_time.strftime( "%a, %d %b %Y %H:%M:%S GMT")),
+                ('Expires', expiry_time.strftime("%a, %d %b %Y %H:%M:%S GMT")),
                 ('Accept-encoding', 'gzip,deflate'),
                 ('Content-Encoding', 'gzip')
-            ])
+            ]
             cache_file = theme+'cache/' + \
                 str(functions.fecha_archivo(resource_url, True)) + \
                 '-'+resource.replace('/', '-')

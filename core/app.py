@@ -115,9 +115,8 @@ class app:
             url = ' '.join(url).split()
             if url[0] == 'manifest.js':
                 url[0] = 'manifest'
-            else:
-                if url[0] == 'sw.js':
-                    url[0] = 'sw'
+            elif url[0] == 'sw.js':
+                url[0] = 'sw'
         else:
             url = ['home']
         return url

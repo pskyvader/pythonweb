@@ -2,6 +2,7 @@ from core.view import view
 from os.path import splitext
 from pathlib import Path
 import mimetypes
+import gzip
 
 def init(var):
     h = static()
@@ -30,5 +31,5 @@ class static:
             with open(resource_url, "rb") as imageFile:
                 f = imageFile.read()
                 b = bytearray(f)
-            ret['body'] =bytes(b)
+            ret['body'] =gzip.compress(bytes(b))
         return ret

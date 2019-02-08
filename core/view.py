@@ -1,5 +1,4 @@
 from pathlib import Path
-from jinja2 import Template, Environment, select_autoescape
 import os
 import json
 
@@ -54,6 +53,7 @@ class view:
 
     @staticmethod
     def render_template(content):
+        from jinja2 import Environment
         env = Environment(trim_blocks=True, lstrip_blocks=True)
         #template = Template(content)
         template = env.from_string(content)

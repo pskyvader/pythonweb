@@ -30,6 +30,7 @@ function post_basic(url_post, info, mensaje_inicial, callback) {
     });
 }
 
+
 var xhr = null;
 
 function post(url_post, info, mensaje_inicial, importante, archivo, callback, extra) {

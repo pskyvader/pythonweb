@@ -151,9 +151,97 @@ class view:
             view.add('css', css)
             return view.render('resources')
 
+    
     @staticmethod
-    def js(return_js=False):
-        return ''
+    def js(combine=True, array_only=False):
+        from core.functions import functions
+        from core.app import app
+        if app.post.getfirst("ajax") is not None:
+            return ''
+
+        theme = view.get_theme()
+        if(len(view.resources)==0):
+            with open(theme+'resources.json') as f:
+                view.resources = json.load(f)
+        js = []
+        locales = []
+        no_combinados = []
+        nuevo = 0
+
+        base_url = app.url['base'] + \
+            'static/' if app.front else app.url['admin'] + 'static/'
+
+        for c in view.resources['js']:
+            c['is_content'] = False
+            if c['local']:
+                c['url_tmp'] = c['url']
+                c['url'] = theme + c['url']
+                my_file = Path(c['url'])
+                if my_file.is_file():
+                    if combine and c['combine']:
+                        fecha = functions.fecha_archivo(c['url'], True)
+                        if (fecha > nuevo):
+                            nuevo = fecha
+                        locales.append(c)
+                    else:
+                        if os.path.getsize(c['url']) < 2000:
+                            c['content_js'] = open(c['url'], "r").read()
+                            c['is_content'] = True
+                        else:
+                            c['url'] = base_url + functions.fecha_archivo( c['url'], False, c['url_tmp'])
+
+                        no_combinados.append(c)
+                else:
+                    if app.config['debug']:
+                        return "Recurso no existe:" + c['url']
+            else:
+                c['url'] = functions.ruta(c['url'])
+                js.append(c)
+
+        if combine and len(locales) > 0:
+            dir_resources = theme+'resources/'
+            file = 'resources-' + str(nuevo) + '-' + str(len(locales)) + '.js'
+            my_file = Path(dir_resources+file)
+            if my_file.is_file():
+                if functions.get_cookie('loaded_js') != False:
+                    defer = False
+                else:
+                    functions.set_cookie('loaded_js', True, (31536000))
+                    defer = True
+
+                locales = [{'url': base_url+'resources/' + file,
+                            'media': 'all', 'defer': defer, 'is_content': False}]
+            else:
+                # cache.delete_cache()
+                if functions.get_cookie('loaded_js') != False:
+                    functions.set_cookie('loaded_js', True, (31536000))
+                
+                if os.access(dir_resources, os.R_OK):
+                    combine_files = ''
+                    for l in locales:
+                        combine_files += open(l['url'], "r", encoding='utf-8').read()
+
+                    test = os.listdir(dir_resources)
+                    for item in test:
+                        if item.endswith(".js"):
+                            os.remove(os.path.join(dir_resources, item))
+                    file_write = open(dir_resources+file, 'w', encoding='utf-8')
+                    file_write.write(combine_files)
+                    file_write.close()
+                    locales = [{'url': base_url+'resources/' + file, 'media': 'all', 'defer': True, 'is_content': False}]
+                else:
+                    for l in locales:
+                        l['url'] = base_url + functions.fecha_archivo( l['url'], False, l['url_tmp'])
+
+        js = no_combinados + locales + js
+
+        if array_only:
+            return [js, nuevo]
+        else:
+            view.add('css', [])
+            view.add('is_css', False)
+            view.add('js', js)
+            return view.render('resources')
 
     @staticmethod
     def set_theme(theme):

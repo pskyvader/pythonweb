@@ -53,8 +53,10 @@ class static:
                     elif item.endswith(resource):
                         os.remove(os.path.join(theme+'cache/', item))
                 f = open(resource_url, "rb").read()
-                b = bytearray(f)
-                ret['body'] = gzip.compress(bytes(b))
+                #b = bytearray(f)
+                #ret['body'] = gzip.compress(bytes(b))
+                ret['body'] = gzip.compress(f)
+
                 file_write = open(cache_file, 'wb')
                 file_write.write(ret['body'])
                 file_write.close()

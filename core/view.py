@@ -128,7 +128,7 @@ class view:
                 if os.access(dir_resources, os.R_OK):
                     combine_files = ''
                     for l in locales:
-                        combine_files += open(l['url'],
+                        combine_files +='\n'+ open(l['url'],
                                               "r", encoding='utf-8').read()
 
                     test = os.listdir(dir_resources)

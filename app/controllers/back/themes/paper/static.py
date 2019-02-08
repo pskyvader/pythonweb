@@ -25,5 +25,5 @@ class static:
         else:
             ret['body'] = open(resource_url,'r', encoding='utf-8').read()
             file_extension = splitext(resource_url)[1][1:]
-            ret['headers'] = [ ('Content-Type', 'text/'+file_extension) ]
+            ret['headers'] = [ ('Content-Type', 'text/'+file_extension+'; charset=utf-8') ]
         return ret

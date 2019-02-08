@@ -1,7 +1,7 @@
 from core.view import view
 from os.path import splitext
 from pathlib import Path
-
+import mimetypes
 
 def init(var):
     h = static()
@@ -12,6 +12,7 @@ def init(var):
 
 
 class static:
+
     def index(self, var):
         if len(var) == 0:
             return {'error': 404}
@@ -24,13 +25,14 @@ class static:
         if not my_file.is_file():
             ret = {'error': 404}
         else:
+            print(mimetypes.guess_type(resource_url))
             file_extension = splitext(resource_url)[1][1:]
             if (file_extension == 'js' or file_extension == 'css'):
                 ret['headers'] = [
-                    ('Content-Type', 'text/'+file_extension+'; charset=utf-8')]
+                    ('Content-Type', 'image/'+file_extension+'; charset=utf-8')]
             else:
                 ret['headers'] = [
-                    ('Content-Type', 'image/'+file_extension+'; charset=utf-8')]
+                    ('Content-Type', 'text/'+file_extension+'; charset=utf-8')]
             with open(resource_url, "rb") as imageFile:
                 f = imageFile.read()
                 b = bytearray(f)

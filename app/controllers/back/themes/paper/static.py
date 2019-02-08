@@ -28,8 +28,8 @@ class static:
         else:
             mime=mimetypes.guess_type(resource_url)[0]
             ret['headers'] = [ ('Content-Type', mime+'; charset=utf-8'),('Accept-encoding', 'gzip,deflate'),('Content-Encoding','gzip')]
-            with open(resource_url, "rb") as imageFile:
-                f = imageFile.read()
+            with open(resource_url, "rb") as file:
+                f = file.read()
                 b = bytearray(f)
             ret['body'] =gzip.compress(bytes(b))
         return ret

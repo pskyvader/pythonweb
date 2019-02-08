@@ -33,7 +33,7 @@ class static:
             cache_file=theme+'cache/'+str(functions.fecha_archivo(resource_url, True))+'-'+resource.replace('/','-')
             my_file = Path(cache_file)
             if my_file.is_file():
-                ret['body']=open(resource_url, "r").read()
+                ret['body']=open(resource_url, "rb").read()
             else:
                 test = os.listdir(theme+'cache/')
                 for item in test:
@@ -42,7 +42,7 @@ class static:
                 f=open(resource_url, "rb").read()
                 b = bytearray(f)
                 ret['body'] =gzip.compress(bytes(b))
-                file_write = open(cache_file, 'w')
+                file_write = open(cache_file, 'wb')
                 file_write.write(ret['body'])
                 file_write.close()
         return ret

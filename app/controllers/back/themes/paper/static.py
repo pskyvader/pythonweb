@@ -30,6 +30,6 @@ class static:
             else:
                 from io import BytesIO
                 ret['headers'] = [ ('Content-Type', 'image/'+file_extension+'; charset=utf-8') ]
-                ret['body'] = str(BytesIO(open(resource_url,'rb').read()))
+                ret['body'] = str(BytesIO(open(resource_url,'r').read()))
                 print(ret['body'])
         return ret

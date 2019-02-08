@@ -24,7 +24,7 @@ class static:
             ret = {'error': 404}
         else:
             file_extension = splitext(resource_url)[1][1:]
-            if file_extension=='js' or 'css':
+            if file_extension=='js' or file_extension=='css':
                 ret['headers'] = [ ('Content-Type', 'text/'+file_extension+'; charset=utf-8') ]
                 ret['body'] = open(resource_url,'r', encoding='utf-8').read()
             else:

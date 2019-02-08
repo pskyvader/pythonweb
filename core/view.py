@@ -53,10 +53,10 @@ class view:
 
     @staticmethod
     def render_template(content):
-        from jinja2 import Environment
-        env = Environment(trim_blocks=True, lstrip_blocks=True)
-        #template = Template(content)
-        template = env.from_string(content)
+        from jinja2 import Template
+        #env = Environment(trim_blocks=True, lstrip_blocks=True)
+        template = Template(content)
+        #template = env.from_string(content)
         content = template.render(view.data)
         return content
 

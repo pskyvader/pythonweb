@@ -30,12 +30,10 @@ class static:
                     ('Content-Type', 'text/'+file_extension+'; charset=utf-8')]
                 ret['body'] = open(resource_url, 'r', encoding='utf-8').read()
             else:
-                from io import BytesIO
                 ret['headers'] = [
                     ('Content-Type', 'image/'+file_extension+'; charset=utf-8')]
                 with open(resource_url, "rb") as imageFile:
                     f = imageFile.read()
                     b = bytearray(f)
                 ret['body'] =bytes(b)
-                print(ret['body'])
         return ret

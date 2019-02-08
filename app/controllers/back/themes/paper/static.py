@@ -30,7 +30,7 @@ class static:
         else:
             mime=mimetypes.guess_type(resource_url)[0]
             ret['headers'] = [ ('Content-Type', mime+'; charset=utf-8'),('Accept-encoding', 'gzip,deflate'),('Content-Encoding','gzip')]
-            cache_file=theme+'cache/'+str(functions.fecha_archivo(resource_url, True))+'-'+resource
+            cache_file=theme+'cache/'+str(functions.fecha_archivo(resource_url, True))+'-'+resource.replace('/','-')
             my_file = Path(cache_file)
             if my_file.is_file():
                 ret['body']=open(resource_url, "r").read()

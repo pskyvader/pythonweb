@@ -29,6 +29,7 @@ class static:
             ret = {'error': 404}
         else:
             mime=mimetypes.guess_type(resource_url)[0]
+            extension=mimetypes.guess_extension(mime)
             ret['headers'] = [ ('Content-Type', mime+'; charset=utf-8'),('Accept-encoding', 'gzip,deflate'),('Content-Encoding','gzip')]
             cache_file=theme+'cache/'+str(functions.fecha_archivo(resource_url, True))+'-'+resource.replace('/','-')
             my_file = Path(cache_file)
@@ -37,7 +38,7 @@ class static:
             else:
                 test = os.listdir(theme+'cache/')
                 for item in test:
-                    if 'resources' in resource and item.endswith(mime):
+                    if 'resources' in resource and item.endswith(extension):
                         os.remove(os.path.join(theme+'cache/', item))
                     elif item.endswith(resource):
                         os.remove(os.path.join(theme+'cache/', item))

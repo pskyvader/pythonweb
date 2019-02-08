@@ -68,7 +68,7 @@ class view:
             return ''
 
         theme = view.get_theme()
-        if(len(view.resources)==0):
+        if(len(view.resources) == 0):
             with open(theme+'resources.json') as f:
                 view.resources = json.load(f)
         css = []
@@ -86,7 +86,7 @@ class view:
                 c['url'] = theme + c['url']
                 my_file = Path(c['url'])
                 if my_file.is_file():
-                    if combine and c['combine']:
+                    if combine and c['combine'] and not c['defer']:
                         fecha = functions.fecha_archivo(c['url'], True)
                         if (fecha > nuevo):
                             nuevo = fecha
@@ -96,8 +96,9 @@ class view:
                             c['content_css'] = open(c['url'], "r").read()
                             c['is_content'] = True
                         else:
-                            c['url'] = base_url + functions.fecha_archivo( c['url'], False, c['url_tmp'])
-
+                            c['url'] = base_url + \
+                                functions.fecha_archivo(
+                                    c['url'], False, c['url_tmp'])
                         no_combinados.append(c)
                 else:
                     if app.config['debug']:
@@ -123,23 +124,28 @@ class view:
                 # cache.delete_cache()
                 if functions.get_cookie('loaded_css') != False:
                     functions.set_cookie('loaded_css', True, (31536000))
-                
+
                 if os.access(dir_resources, os.R_OK):
                     combine_files = ''
                     for l in locales:
-                        combine_files += open(l['url'], "r", encoding='utf-8').read()
+                        combine_files += open(l['url'],
+                                              "r", encoding='utf-8').read()
 
                     test = os.listdir(dir_resources)
                     for item in test:
                         if item.endswith(".css"):
                             os.remove(os.path.join(dir_resources, item))
-                    file_write = open(dir_resources+file, 'w', encoding='utf-8')
+                    file_write = open(dir_resources+file,
+                                      'w', encoding='utf-8')
                     file_write.write(combine_files)
                     file_write.close()
-                    locales = [{'url': base_url+'resources/' + file, 'media': 'all', 'defer': True, 'is_content': False}]
+                    locales = [{'url': base_url+'resources/' + file,
+                                'media': 'all', 'defer': True, 'is_content': False}]
                 else:
                     for l in locales:
-                        l['url'] = base_url + functions.fecha_archivo( l['url'], False, l['url_tmp'])
+                        l['url'] = base_url + \
+                            functions.fecha_archivo(
+                                l['url'], False, l['url_tmp'])
 
         css = no_combinados + locales + css
 
@@ -151,7 +157,6 @@ class view:
             view.add('css', css)
             return view.render('resources')
 
-    
     @staticmethod
     def js(combine=True, array_only=False):
         from core.functions import functions
@@ -160,7 +165,7 @@ class view:
             return ''
 
         theme = view.get_theme()
-        if(len(view.resources)==0):
+        if(len(view.resources) == 0):
             with open(theme+'resources.json') as f:
                 view.resources = json.load(f)
         js = []
@@ -178,24 +183,23 @@ class view:
                 c['url'] = theme + c['url']
                 my_file = Path(c['url'])
                 if my_file.is_file():
-                    if combine and c['combine']:
+                    if combine and c['combine'] and not c['defer']:
                         fecha = functions.fecha_archivo(c['url'], True)
                         if (fecha > nuevo):
                             nuevo = fecha
                         locales.append(c)
                     else:
-                        if os.path.getsize(c['url']) < 2000:
-                            c['content_js'] = open(c['url'], "r").read()
-                            c['is_content'] = True
-                        else:
-                            c['url'] = base_url + functions.fecha_archivo( c['url'], False, c['url_tmp'])
-
+                        c['url'] = base_url + \
+                            functions.fecha_archivo(
+                                c['url'], False, c['url_tmp'])
+                        c['defer'] = 'async defer' if c['defer'] else ''
                         no_combinados.append(c)
                 else:
                     if app.config['debug']:
                         return "Recurso no existe:" + c['url']
             else:
                 c['url'] = functions.ruta(c['url'])
+                c['defer'] = 'async defer' if c['defer'] else ''
                 js.append(c)
 
         if combine and len(locales) > 0:
@@ -204,10 +208,10 @@ class view:
             my_file = Path(dir_resources+file)
             if my_file.is_file():
                 if functions.get_cookie('loaded_js') != False:
-                    defer = False
+                    defer = ''
                 else:
                     functions.set_cookie('loaded_js', True, (31536000))
-                    defer = True
+                    defer = 'async defer'
 
                 locales = [{'url': base_url+'resources/' + file,
                             'media': 'all', 'defer': defer, 'is_content': False}]
@@ -215,23 +219,28 @@ class view:
                 # cache.delete_cache()
                 if functions.get_cookie('loaded_js') != False:
                     functions.set_cookie('loaded_js', True, (31536000))
-                
+
                 if os.access(dir_resources, os.R_OK):
                     combine_files = ''
                     for l in locales:
-                        combine_files += open(l['url'], "r", encoding='utf-8').read()
+                        combine_files += open(l['url'],
+                                              "r", encoding='utf-8').read()
 
                     test = os.listdir(dir_resources)
                     for item in test:
                         if item.endswith(".js"):
                             os.remove(os.path.join(dir_resources, item))
-                    file_write = open(dir_resources+file, 'w', encoding='utf-8')
+                    file_write = open(dir_resources+file,
+                                      'w', encoding='utf-8')
                     file_write.write(combine_files)
                     file_write.close()
-                    locales = [{'url': base_url+'resources/' + file, 'media': 'all', 'defer': True, 'is_content': False}]
+                    locales = [{'url': base_url+'resources/' + file,
+                                'media': 'all', 'defer': 'async defer', 'is_content': False}]
                 else:
                     for l in locales:
-                        l['url'] = base_url + functions.fecha_archivo( l['url'], False, l['url_tmp'])
+                        l['url'] = base_url + \
+                            functions.fecha_archivo(
+                                l['url'], False, l['url_tmp'])
 
         js = no_combinados + locales + js
 

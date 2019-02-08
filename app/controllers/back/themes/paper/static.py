@@ -37,7 +37,9 @@ class static:
             else:
                 test = os.listdir(theme+'cache/')
                 for item in test:
-                    if item.endswith(resource):
+                    if 'resources' in resource and item.endswith(mime):
+                        os.remove(os.path.join(theme+'cache/', item))
+                    elif item.endswith(resource):
                         os.remove(os.path.join(theme+'cache/', item))
                 f=open(resource_url, "rb").read()
                 b = bytearray(f)

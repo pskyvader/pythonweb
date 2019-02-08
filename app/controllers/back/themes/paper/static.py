@@ -25,14 +25,8 @@ class static:
         if not my_file.is_file():
             ret = {'error': 404}
         else:
-            print(mimetypes.guess_type(resource_url))
-            file_extension = splitext(resource_url)[1][1:]
-            if (file_extension == 'js' or file_extension == 'css'):
-                ret['headers'] = [
-                    ('Content-Type', 'image/'+file_extension+'; charset=utf-8')]
-            else:
-                ret['headers'] = [
-                    ('Content-Type', 'text/'+file_extension+'; charset=utf-8')]
+            mime=mimetypes.guess_type(resource_url)
+            ret['headers'] = [ ('Content-Type', mime[0]+'; charset=utf-8')]
             with open(resource_url, "rb") as imageFile:
                 f = imageFile.read()
                 b = bytearray(f)

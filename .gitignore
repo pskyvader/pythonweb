@@ -111,11 +111,8 @@ sitemap.xml
 upload/files/*
 upload/images/*
 uploads/img/*
-!/uploads/img/index.php
 backup/*
-!/backup/index.php
 cache/*
-!/cache/index.php
 .autogit
 resources-*.js
 resources-*.css

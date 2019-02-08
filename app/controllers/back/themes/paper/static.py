@@ -1,6 +1,8 @@
 from core.view import view
 from os.path import splitext
+import os
 from pathlib import Path
+from core.functions import functions
 import mimetypes
 import gzip
 
@@ -28,8 +30,19 @@ class static:
         else:
             mime=mimetypes.guess_type(resource_url)[0]
             ret['headers'] = [ ('Content-Type', mime+'; charset=utf-8'),('Accept-encoding', 'gzip,deflate'),('Content-Encoding','gzip')]
-            with open(resource_url, "rb") as file:
-                f = file.read()
+            cache_file=theme+'cache/'+functions.fecha_archivo(resource_url, True)+'-'+resource
+            my_file = Path(cache_file)
+            if my_file.is_file():
+                ret['body']=open(resource_url, "r").read()
+            else:
+                test = os.listdir(theme+'cache/')
+                for item in test:
+                    if item.endswith(resource):
+                        os.remove(os.path.join(theme+'cache/', item))
+                f=open(resource_url, "rb").read()
                 b = bytearray(f)
-            ret['body'] =gzip.compress(bytes(b))
+                ret['body'] =gzip.compress(bytes(b))
+                file_write = open(cache_file, 'w')
+                file_write.write(ret['body'])
+                file_write.close()
         return ret

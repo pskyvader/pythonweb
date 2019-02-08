@@ -33,7 +33,7 @@ class static:
             cache_file=theme+'cache/'+str(functions.fecha_archivo(resource_url, True))+'-'+resource.replace('/','-')
             my_file = Path(cache_file)
             if my_file.is_file():
-                ret['body']=open(resource_url, "rb").read()
+                ret['body']=open(cache_file, "rb").read()
             else:
                 test = os.listdir(theme+'cache/')
                 for item in test:

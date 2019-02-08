@@ -27,7 +27,7 @@ class static:
             ret = {'error': 404}
         else:
             mime=mimetypes.guess_type(resource_url)[0]
-            ret['headers'] = [ ('Content-Type', mime+'; charset=utf-8'),('Accept-encoding', 'gzip,deflate')]
+            ret['headers'] = [ ('Content-Type', mime+'; charset=utf-8'),('Accept-encoding', 'gzip,deflate'),('Content-Encoding','gzip')]
             with open(resource_url, "rb") as imageFile:
                 f = imageFile.read()
                 b = bytearray(f)

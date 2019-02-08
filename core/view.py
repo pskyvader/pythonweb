@@ -53,6 +53,7 @@ class view:
 
     @staticmethod
     def render_template(content):
+        return content
         from jinja2 import Environment
         env = Environment(trim_blocks=True, lstrip_blocks=True)
         #template = Template(content)

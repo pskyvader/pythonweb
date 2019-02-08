@@ -25,13 +25,13 @@ class static:
             ret = {'error': 404}
         else:
             file_extension = splitext(resource_url)[1][1:]
-            if False and file_extension == 'js' or file_extension == 'css':
+            if False and (file_extension == 'js' or file_extension == 'css'):
                 ret['headers'] = [
                     ('Content-Type', 'text/'+file_extension+'; charset=utf-8')]
                 ret['body'] = open(resource_url, 'r', encoding='utf-8').read()
             else:
                 ret['headers'] = [
-                    ('Content-Type', 'image/'+file_extension+'; charset=utf-8')]
+                    ('Content-Type', 'text/'+file_extension+'; charset=utf-8')]
                 with open(resource_url, "rb") as imageFile:
                     f = imageFile.read()
                     b = bytearray(f)

@@ -28,6 +28,6 @@ class static:
                 ret['headers'] = [ ('Content-Type', 'text/'+file_extension+'; charset=utf-8') ]
                 ret['body'] = open(resource_url,'r', encoding='utf-8').read()
             else:
-                ret['headers'] = [ ('Content-Type', 'text/'+file_extension+'; charset=utf-8') ]
+                ret['headers'] = [ ('Content-Type', 'image/'+file_extension+'; charset=utf-8') ]
                 ret['body'] = open(resource_url,'r').read()
         return ret

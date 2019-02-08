@@ -36,4 +36,5 @@ class static:
                 with open(resource_url, "rb") as imageFile:
                     f = imageFile.read()
                 ret['body'] = bytearray(f)
+                print(ret['body'])
         return ret

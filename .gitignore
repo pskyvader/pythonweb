@@ -112,7 +112,6 @@ upload/files/*
 upload/images/*
 uploads/img/*
 backup/*
-cache/*
 .autogit
-resources-*.js
-resources-*.css
+**/cache/*
+**/resources/*

@@ -2,6 +2,7 @@ from core.view import view
 from os.path import splitext
 from pathlib import Path
 
+
 def init(var):
     h = static()
     if 0 in var:
@@ -14,7 +15,7 @@ class static:
     def index(self, var):
         if len(var) == 0:
             return {'error': 404}
-        
+
         ret = {'body': ''}
         theme = view.get_theme()
         resource = '/'.join(var)
@@ -24,12 +25,15 @@ class static:
             ret = {'error': 404}
         else:
             file_extension = splitext(resource_url)[1][1:]
-            if file_extension=='js' or file_extension=='css':
-                ret['headers'] = [ ('Content-Type', 'text/'+file_extension+'; charset=utf-8') ]
-                ret['body'] = open(resource_url,'r', encoding='utf-8').read()
+            if file_extension == 'js' or file_extension == 'css':
+                ret['headers'] = [
+                    ('Content-Type', 'text/'+file_extension+'; charset=utf-8')]
+                ret['body'] = open(resource_url, 'r', encoding='utf-8').read()
             else:
                 from io import BytesIO
-                ret['headers'] = [ ('Content-Type', 'image/'+file_extension+'; charset=utf-8') ]
-                ret['body'] = str(BytesIO(open(resource_url,'r').read()))
-                print(ret['body'])
+                ret['headers'] = [
+                    ('Content-Type', 'image/'+file_extension+'; charset=utf-8')]
+                with open(resource_url, "rb") as imageFile:
+                    f = imageFile.read()
+                    ret['body'] = bytearray(f)
         return ret

@@ -23,7 +23,14 @@ class static:
         if not my_file.is_file():
             ret = {'error': 404}
         else:
-            ret['body'] = open(resource_url,'r', encoding='utf-8').read()
             file_extension = splitext(resource_url)[1][1:]
-            ret['headers'] = [ ('Content-Type', 'text/'+file_extension+'; charset=utf-8') ]
+            if file_extension=='js' or 'css':
+                ret['headers'] = [ ('Content-Type', 'text/'+file_extension+'; charset=utf-8') ]
+                ret['body'] = open(resource_url,'r', encoding='utf-8').read()
+            else:
+                import Image
+                image = Image.open('image.jpg')
+                image.show()
+                ret['headers'] = [ ('Content-Type', 'text/'+file_extension+'; charset=utf-8') ]
+                ret['body'] = open(resource_url,'r', encoding='utf-8').read()
         return ret

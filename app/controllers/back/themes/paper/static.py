@@ -35,6 +35,7 @@ class static:
                     ('Content-Type', 'image/'+file_extension+'; charset=utf-8')]
                 with open(resource_url, "rb") as imageFile:
                     f = imageFile.read()
-                ret['body'] = bytearray(f)[0]
+                    b = bytearray(f)
+                ret['body'] = b[0]
                 print(ret['body'])
         return ret

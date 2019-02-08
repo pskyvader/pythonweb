@@ -28,9 +28,6 @@ class static:
                 ret['headers'] = [ ('Content-Type', 'text/'+file_extension+'; charset=utf-8') ]
                 ret['body'] = open(resource_url,'r', encoding='utf-8').read()
             else:
-                from PIL import Image
-                image = Image.open('image.jpg')
-                image.show()
                 ret['headers'] = [ ('Content-Type', 'text/'+file_extension+'; charset=utf-8') ]
-                ret['body'] = open(resource_url,'r', encoding='utf-8').read()
+                ret['body'] = open(resource_url,'r').read()
         return ret

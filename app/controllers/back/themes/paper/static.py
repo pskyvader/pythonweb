@@ -38,8 +38,7 @@ class static:
                 ('Expires', expiry_time.strftime( "%a, %d %b %Y %H:%M:%S GMT")),
                 ('Accept-encoding', 'gzip,deflate'),
                 ('Content-Encoding', 'gzip')
-            ]
-            print(expiry_time.strftime( "%a, %d %b %Y %H:%M:%S GMT"))
+            ])
             cache_file = theme+'cache/' + \
                 str(functions.fecha_archivo(resource_url, True)) + \
                 '-'+resource.replace('/', '-')

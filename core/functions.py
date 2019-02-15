@@ -12,7 +12,7 @@ class functions():
         c = cookies.SimpleCookie()
         c.load(app.environ['HTTP_COOKIE'])
         if find_cookie in c:
-            print(c[find_cookie])
+            print(c[find_cookie].value)
             return c[find_cookie].value
         else:
             return False

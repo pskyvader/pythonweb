@@ -19,6 +19,6 @@
     {% endfor %} 
 {% else %} 
     {% for j in js %} 
-        <script src="{{j.url}}" {{j.defer}}></script> 
+        <script src="{{j.url}}" {% if j.defer %} async defer {% endif %}></script> 
     {% endfor %} 
 {% endif %}

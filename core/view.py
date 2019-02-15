@@ -272,3 +272,4 @@ class view:
                     l['url'] = base_url + \
                         functions.fecha_archivo(
                             l['url'], False, l['url_tmp'])
+        return locales

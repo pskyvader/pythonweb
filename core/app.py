@@ -107,7 +107,8 @@ class app:
         data_return['response_body'] = response['body']
         data_return['headers'] = response['headers']
         from core.functions import functions
-        data_return['headers'].append(('Set-Cookie',functions.cookies))
+        for cookie in functions.cookies:
+            data_return['headers'].append(('Set-Cookie',cookie))
         return data_return
 
     @staticmethod

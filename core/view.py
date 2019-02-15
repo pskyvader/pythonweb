@@ -198,6 +198,7 @@ class view:
 
     @staticmethod
     def compress(combine_files,type_resource):
+        return combine_files
         if type_resource=='css':
             from css_html_js_minify import css_minify
             combine_files=css_minify(combine_files)

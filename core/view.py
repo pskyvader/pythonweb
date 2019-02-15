@@ -72,8 +72,8 @@ class view:
         css ,locales ,no_combinados ,nuevo = view.recorrer('css',combine,theme,base_url)
 
         if combine and len(locales) > 0:
-            locales=combine(locales,theme,base_url,nuevo)
-            
+            locales=view.combine(locales,theme,base_url,nuevo)
+
         css = no_combinados + locales + css
 
         if array_only:

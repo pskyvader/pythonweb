@@ -72,7 +72,7 @@ class view:
         css ,locales ,no_combinados ,nuevo = view.recorrer('css',combine,theme,base_url)
 
         if combine and len(locales) > 0:
-            locales=view.combine_resources(locales,theme,base_url,nuevo)
+            locales=view.combine_resources('css',locales,theme,base_url,nuevo)
 
         css = no_combinados + locales + css
 
@@ -96,7 +96,7 @@ class view:
         js ,locales ,no_combinados ,nuevo = view.recorrer('js',combine,theme,base_url)
 
         if combine and len(locales) > 0:
-            locales=view.combine_resources(locales,theme,base_url,nuevo)
+            locales=view.combine_resources('js',locales,theme,base_url,nuevo)
 
         js = no_combinados + locales + js
 
@@ -159,7 +159,7 @@ class view:
         return resource,locales,no_combinados,nuevo
 
     @staticmethod
-    def combine_resources(locales={},theme='',base_url='',nuevo=0):
+    def combine_resources(type_resource='css',locales={},theme='',base_url='',nuevo=0):
         from core.functions import functions
         dir_resources = theme+'resources/'
         file = 'resources-' + str(nuevo) + '-' + str(len(locales)) + '.js'

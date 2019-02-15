@@ -26,7 +26,7 @@ class functions():
         c[cookie] = value
         c[cookie]["path"] = directory
         c[cookie]["expires"] = time
-        functions.cookies.append(c)
+        functions.cookies.append(c.output())
         return True
 
     @staticmethod

@@ -173,7 +173,7 @@ class view:
         locales = []
         no_combinados = []
         nuevo = 0
-        recorrer(type_resource='css',combine=False)
+        view.recorrer(type_resource='css',combine=False)
 
         if combine and len(locales) > 0:
             dir_resources = theme+'resources/'

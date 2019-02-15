@@ -145,16 +145,12 @@ class view:
                             c['is_content'] = True
                         else:
                             c['url'] = base_url + functions.fecha_archivo( c['url'], False, c['url_tmp'])
-                            if type_resource=='js':
-                                c['defer'] = 'async defer' if c['defer'] else ''
                         no_combinados.append(c)
                 else:
                     if app.config['debug']:
                         return "Recurso no existe:" + c['url']
             else:
                 c['url'] = functions.ruta(c['url'])
-                if type_resource=='js':
-                    c['defer'] = 'async defer' if c['defer'] else ''
                 resource.append(c)
         return resource,locales,no_combinados,nuevo
 
@@ -162,21 +158,21 @@ class view:
     def combine_resources(type_resource='css',locales={},theme='',base_url='',nuevo=0):
         from core.functions import functions
         dir_resources = theme+'resources/'
-        file = 'resources-' + str(nuevo) + '-' + str(len(locales)) + '.js'
+        file = 'resources-' + str(nuevo) + '-' + str(len(locales)) + '.'+type_resource
         my_file = Path(dir_resources+file)
         if my_file.is_file():
-            if functions.get_cookie('loaded_js') != False:
-                defer = ''
+            if functions.get_cookie('loaded_'+type_resource) != False:
+                defer = False
             else:
-                functions.set_cookie('loaded_js', True, (31536000))
-                defer = 'async defer'
+                functions.set_cookie('loaded_'+type_resource, True, (31536000))
+                defer = True
 
             locales = [{'url': base_url+'resources/' + file,
                         'media': 'all', 'defer': defer, 'is_content': False}]
         else:
             # cache.delete_cache()
-            if functions.get_cookie('loaded_js') != False:
-                functions.set_cookie('loaded_js', True, (31536000))
+            if functions.get_cookie('loaded_'+type_resource) != False:
+                functions.set_cookie('loaded_'+type_resource, True, (31536000))
 
             if os.access(dir_resources, os.R_OK):
                 combine_files = ''
@@ -186,14 +182,14 @@ class view:
 
                 test = os.listdir(dir_resources)
                 for item in test:
-                    if item.endswith(".js"):
+                    if item.endswith("."+type_resource):
                         os.remove(os.path.join(dir_resources, item))
                 file_write = open(dir_resources+file,
                                     'w', encoding='utf-8')
                 file_write.write(combine_files)
                 file_write.close()
                 locales = [{'url': base_url+'resources/' + file,
-                            'media': 'all', 'defer': 'async defer', 'is_content': False}]
+                            'media': 'all', 'defer': True, 'is_content': False}]
             else:
                 for l in locales:
                     l['url'] = base_url + \

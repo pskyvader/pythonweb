@@ -26,9 +26,9 @@ class functions():
         c[cookie] = 'true' if value else 'false'
         c[cookie]["path"] = directory
         c[cookie]["expires"] = time
-        print(c)
+        print(c.output())
         c = cookies.SimpleCookie()
-        print(c)
+        print(c.output())
         return True
 
     @staticmethod

@@ -104,7 +104,7 @@ class app:
                     str(my_file) + '</body></html>'
         else:
             data_return['status'] = '200 OK'
-            response['body']=response['body']
+            response['body']=view.compress(response['body'],'html')
 
         data_return['response_body'] = response['body']
         data_return['headers'] = response['headers']

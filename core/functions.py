@@ -9,9 +9,9 @@ class functions():
     @staticmethod
     def get_cookie(cookie):
         from http import cookies
-        c = cookies.SimpleCookie()
+        cookie = cookies.SimpleCookie()
+        c=cookie.load(app.environ['HTTP_COOKIE'])
         print(c)
-        # c=cookie.load(app.environ['HTTP_COOKIE'])
         if cookie in c:
             return c[cookie].value
         else:

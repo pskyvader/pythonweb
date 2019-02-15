@@ -233,6 +233,7 @@ class view:
 
     @staticmethod
     def combine(theme='',nuevo=0):
+        from core.functions import functions
         dir_resources = theme+'resources/'
         file = 'resources-' + str(nuevo) + '-' + str(len(locales)) + '.js'
         my_file = Path(dir_resources+file)

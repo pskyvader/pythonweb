@@ -165,6 +165,7 @@ class view:
         if app.post.getfirst("ajax") is not None:
             return ''
 
+        theme = view.get_theme()
         js ,locales ,no_combinados ,nuevo = view.recorrer('css',False)
 
         if combine and len(locales) > 0:

@@ -20,12 +20,15 @@ class functions():
     def set_cookie(cookie, value, time):
         from http import cookies
         from datetime import datetime
+        import requests
+        
         c = cookies.SimpleCookie()
         # c=cookie.load(app.environ['HTTP_COOKIE'])
         directory = app.url['base_sub'] if app.front else app.url['admin_sub']
         c[cookie] = 'true' if value else 'false'
         c[cookie]["path"] = directory
         c[cookie]["expires"] = time
+        s = requests.Session()
         return True
 
     @staticmethod

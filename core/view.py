@@ -44,6 +44,7 @@ class view:
                 template_url, "r").read()
 
         body = view.render_template(content)
+        body=view.compress(body,'html')
 
         # if minify and not return_body and cache.is_cacheable():
         #    body = mini.html(body)

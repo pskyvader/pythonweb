@@ -11,7 +11,7 @@ class functions():
         from http import cookies
         coo = cookies.SimpleCookie()
         c=coo.load(app.environ['HTTP_COOKIE'])
-        print(c,app.environ)
+        print(c,app.environ['HTTP_COOKIE'])
         return False
         if cookie in c:
             return c[cookie].value

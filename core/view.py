@@ -161,7 +161,6 @@ class view:
         file = 'resources-' + str(nuevo) + '-' + str(len(locales)) + '.'+type_resource
         my_file = Path(dir_resources+file)
         if my_file.is_file():
-            print(functions.get_cookie('loaded_'+type_resource))
             if functions.get_cookie('loaded_'+type_resource) != False:
                 defer = False
             else:

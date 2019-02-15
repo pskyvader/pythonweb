@@ -106,6 +106,8 @@ class app:
 
         data_return['response_body'] = response['body']
         data_return['headers'] = response['headers']
+        
+        print(functions.cookies)
         return data_return
 
     @staticmethod

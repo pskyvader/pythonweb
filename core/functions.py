@@ -26,6 +26,7 @@ class functions():
         c[cookie] = 'true' if value else 'false'
         c[cookie]["path"] = directory
         c[cookie]["expires"] = time
+        print(c)
         return True
 
     @staticmethod

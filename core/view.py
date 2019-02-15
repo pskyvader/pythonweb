@@ -204,10 +204,9 @@ class view:
         elif type_resource=='js':
             from jsmin import jsmin
             combine_files=jsmin(combine_files)
-            #from css_html_js_minify import js_minify
-            #combine_files=js_minify(combine_files)
         elif type_resource=='html':
-            combine_files=combine_files
+            from htmlmin import minify
+            combine_files=minify(combine_files)
             #from css_html_js_minify import html_minify
             #combine_files=html_minify(combine_files)
         return combine_files

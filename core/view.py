@@ -285,8 +285,6 @@ class view:
                 c['url'] = theme + c['url']
                 my_file = Path(c['url'])
                 if my_file.is_file():
-
-
                     if combine and c['combine'] and ((type_resource=='js' and not c['defer']) or type_resource=='css'):
                         fecha = functions.fecha_archivo(c['url'], True)
                         if (fecha > nuevo):
@@ -301,53 +299,12 @@ class view:
                             if type_resource=='js':
                                 c['defer'] = 'async defer' if c['defer'] else ''
                         no_combinados.append(c)
-
-
-
-                    if combine and c['combine']:
-                        fecha = functions.fecha_archivo(c['url'], True)
-                        if (fecha > nuevo):
-                            nuevo = fecha
-                        locales.append(c)
-                    else:
-                        if os.path.getsize(c['url']) < 2000:
-                            c['content_css'] = open(c['url'], "r").read()
-                            c['is_content'] = True
-                        else:
-                            c['url'] = base_url + functions.fecha_archivo( c['url'], False, c['url_tmp'])
-                        no_combinados.append(c)
-
-
                 else:
                     if app.config['debug']:
                         return "Recurso no existe:" + c['url']
             else:
                 c['url'] = functions.ruta(c['url'])
-                resource.append(c)
-
-        for c in view.resources[type_resource]:
-            c['is_content'] = False
-            if c['local']:
-                c['url_tmp'] = c['url']
-                c['url'] = theme + c['url']
-                my_file = Path(c['url'])
-                if my_file.is_file():
-                    if combine and c['combine'] and not c['defer']:
-                        fecha = functions.fecha_archivo(c['url'], True)
-                        if (fecha > nuevo):
-                            nuevo = fecha
-                        locales.append(c)
-                    else:
-                        c['url'] = base_url + \
-                            functions.fecha_archivo(
-                                c['url'], False, c['url_tmp'])
-                        c['defer'] = 'async defer' if c['defer'] else ''
-                        no_combinados.append(c)
-                else:
-                    if app.config['debug']:
-                        return "Recurso no existe:" + c['url']
-            else:
-                c['url'] = functions.ruta(c['url'])
-                c['defer'] = 'async defer' if c['defer'] else ''
+                if type_resource=='js':
+                    c['defer'] = 'async defer' if c['defer'] else ''
                 resource.append(c)
         return resource,locales,no_combinados,nuevo

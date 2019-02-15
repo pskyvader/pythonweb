@@ -165,15 +165,7 @@ class view:
         if app.post.getfirst("ajax") is not None:
             return ''
 
-        theme = view.get_theme()
-        if(len(view.resources) == 0):
-            with open(theme+'resources.json') as f:
-                view.resources = json.load(f)
-        js = []
-        locales = []
-        no_combinados = []
-        nuevo = 0
-        view.recorrer(type_resource='css',combine=False)
+        js ,locales ,no_combinados ,nuevo = view.recorrer('css',False)
 
         if combine and len(locales) > 0:
             dir_resources = theme+'resources/'

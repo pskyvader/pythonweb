@@ -27,6 +27,8 @@ class functions():
         c[cookie]["path"] = directory
         c[cookie]["expires"] = time
         print(c)
+        c = cookies.SimpleCookie()
+        print(c)
         return True
 
     @staticmethod

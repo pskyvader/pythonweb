@@ -7,13 +7,13 @@ from os.path import getmtime
 class functions():
     cookies=[]
     @staticmethod
-    def get_cookie(cookie):
+    def get_cookie(find_cookie):
         from http import cookies
-        c = cookies.SimpleCookie()
-        c.load(app.environ['HTTP_COOKIE'])
+        cookie = cookies.SimpleCookie()
+        cookie.load(app.environ['HTTP_COOKIE'])
         print(c)
         if cookie in c:
-            return c[cookie].value
+            return c[find_cookie].value
         else:
             return False
 

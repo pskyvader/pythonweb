@@ -43,14 +43,13 @@ class app:
             subdirectorio = "/"
 
         if(url[0] == config['admin']):
-            app.path += subdirectorio + "/"
             app.front = False
             del url[0]
             if len(url) == 0:
                 url = ['home']
         else:
             app.front = True
-        
+
         app.url['base'] = app.path
         app.url['admin'] = app.path + config['admin'] + '/'
 
@@ -63,13 +62,11 @@ class app:
             app.view_dir = app.app_dir +  \
                 'views/front/themes/' + config['theme'] + '/'
         else:
-            app.path=app.url['admin']
+            app.path = app.url['admin']
             app.controller_dir = app.app_dir + 'controllers/' +  \
                 'back/themes/' + config['theme_back'] + '/'
             app.view_dir = app.app_dir + 'views/' +  \
                 'back/themes/' + config['theme_back'] + '/'
-
-        
 
         view.set_theme(app.root + app.view_dir)
 

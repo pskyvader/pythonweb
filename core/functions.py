@@ -21,7 +21,7 @@ class functions():
         from http import cookies
         from datetime import datetime
         import requests
-        
+
         c = cookies.SimpleCookie()
         # c=cookie.load(app.environ['HTTP_COOKIE'])
         directory = app.url['base_sub'] if app.front else app.url['admin_sub']

@@ -37,7 +37,7 @@ class app:
 
         app.path = https + www + site + "/"
         if subdirectorio != '':
-            self.path += subdirectorio + "/"
+            app.path += subdirectorio + "/"
             subdirectorio = "/" + subdirectorio + "/"
         else:
             subdirectorio = "/"

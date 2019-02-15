@@ -6,6 +6,6 @@ class footer:
     def normal(self):
         ret = {'body': ''}
         if app.post.getfirst("ajax") is None:
+            view.add('js',view.js())
             ret['body'] = view.render('footer')
-            ret['body']+=view.js()
         return ret

@@ -26,7 +26,7 @@
 # THE SOFTWARE.
 
 import sys, os, glob
-from .jsmin import JavascriptMinify
+from jsmin import JavascriptMinify
 
 for f in sys.argv[1:]:
     with open(f, 'r') as js:

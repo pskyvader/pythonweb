@@ -10,7 +10,7 @@ class functions():
         from http import cookies
         c = cookies.SimpleCookie()
         # c=cookie.load(app.environ['HTTP_COOKIE'])
-        print(c)
+        print(cookies)
         if cookie in c:
             return c[cookie].value
         else:

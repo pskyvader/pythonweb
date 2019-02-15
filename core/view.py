@@ -202,7 +202,8 @@ class view:
             from csscompressor import compress
             combine_files=compress(combine_files)
         elif type_resource=='js':
-            combine_files=combine_files
+            from jsmin import jsmin
+            combine_files=jsmin(combine_files)
             #from css_html_js_minify import js_minify
             #combine_files=js_minify(combine_files)
         elif type_resource=='html':

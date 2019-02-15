@@ -200,7 +200,7 @@ class view:
     def compress(combine_files,type_resource):
         if type_resource=='css':
             from css_html_js_minify import css_minify
-            combine_files=css_minify(combine_files, comments=False)
+            combine_files=css_minify(combine_files)
         elif type_resource=='js':
             from css_html_js_minify import js_minify
             combine_files=js_minify(combine_files)

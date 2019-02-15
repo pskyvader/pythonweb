@@ -25,7 +25,7 @@ function inicio_detail() {
     if (editor.length > 0) {
         //CKEDITOR.timestamp = timestamp;
         $(editor).each(function() {
-            CKEDITOR.replace($(this).prop('id'), config_editor);
+            CKEDITOR.replace($(this).prop('name'), config_editor);
         });
     }
     var iconos = $('select.icons');

@@ -1,6 +1,6 @@
 var is_online = true;
 var habilitado_online = true;
-var tiempo = 10000;
+var tiempo = 120000;
 var tiempo_offline = 2500;
 var timer_online = setTimeout(online, tiempo);
 

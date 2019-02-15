@@ -198,18 +198,13 @@ class view:
 
     @staticmethod
     def compress(combine_files,type_resource):
-        from css_html_js_minify import process_single_html_file, process_single_js_file, process_single_css_file, html_minify, js_minify, css_minify
-
-        process_single_html_file('test.htm', overwrite=False)
-        # 'test.html'
-        process_single_js_file('test.js', overwrite=False)
-        # 'test.min.js'
-        process_single_css_file('test.css', overwrite=False)
-        # 'test.min.css'
-
-        html_minify(' <p>yolo<a href="/" >o </a > <!-- hello --></p>')
-        # '<p>yolo<a href="/" >o </a > </p>'
-        js_minify('var i = 1; i += 2 ;\n alert( "hello " ); //hi')
-        # 'var i=1;i+=2;alert("hello ");'
-        css_minify('body {width: 50px;}\np {margin-top: 1em;/* hi */ }', comments=False)
-        # '@charset utf-8;body{width:50px}p{margin-top:1em}'
+        if type_resource=='css':
+            from css_html_js_minify import css_minify
+            combine_files=css_minify(combine_files, comments=False)
+        elif type_resource=='js':
+            from css_html_js_minify import js_minify
+            combine_files=js_minify(combine_files)
+        elif type_resource=='html':
+            from css_html_js_minify import html_minify
+            combine_files=html_minify(combine_files)
+        return combine_files

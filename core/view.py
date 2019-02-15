@@ -165,6 +165,7 @@ class view:
                 defer = False
             else:
                 functions.set_cookie('loaded_'+type_resource, True, (31536000))
+                print(functions.cookies)
                 defer = True
 
             locales = [{'url': base_url+'resources/' + file,

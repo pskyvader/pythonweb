@@ -1,5 +1,4 @@
 var last_preview=null;
-
 function inicio_image() {
     $('.image_multiple').each(function() {
         inicio_image_multiple($(this));

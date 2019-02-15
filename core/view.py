@@ -216,5 +216,5 @@ class view:
             combine_files = jsmin(combine_files)
         elif type_resource == 'html':
             from htmlmin import minify
-            combine_files = minify(combine_files)
+            combine_files = minify(combine_files,True)
         return combine_files

@@ -184,8 +184,7 @@ class view:
                     if item.endswith("."+type_resource):
                         os.remove(os.path.join(dir_resources, item))
                 combine_files=view.compress(combine_files,type_resource)
-                file_write = open(dir_resources+file,
-                                    'w', encoding='utf-8')
+                file_write = open(dir_resources+file, 'w', encoding='utf-8')
                 file_write.write(combine_files)
                 file_write.close()
                 locales = [{'url': base_url+'resources/' + file,

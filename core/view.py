@@ -166,7 +166,7 @@ class view:
             return ''
 
         theme = view.get_theme()
-        js ,locales ,no_combinados ,nuevo = view.recorrer('css',False)
+        js ,locales ,no_combinados ,nuevo = view.recorrer('css',False,theme)
 
         if combine and len(locales) > 0:
             dir_resources = theme+'resources/'
@@ -227,10 +227,9 @@ class view:
         return view.theme
     
     @staticmethod
-    def recorrer(type_resource='css',combine=False):
+    def recorrer(type_resource='css',combine=False,theme):
         from core.functions import functions
         from core.app import app
-        theme = view.get_theme()
         if(len(view.resources) == 0):
             with open(theme+'resources.json') as f:
                 view.resources = json.load(f)

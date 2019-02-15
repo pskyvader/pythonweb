@@ -68,45 +68,8 @@ class view:
             return ''
 
         theme = view.get_theme()
-        if(len(view.resources) == 0):
-            with open(theme+'resources.json') as f:
-                view.resources = json.load(f)
-
-        css = []
-        locales = []
-        no_combinados = []
-        nuevo = 0
-
-        base_url = app.url['base'] + \
-            'static/' if app.front else app.url['admin'] + 'static/'
-
-        for c in view.resources['css']:
-            c['is_content'] = False
-            if c['local']:
-                c['url_tmp'] = c['url']
-                c['url'] = theme + c['url']
-                my_file = Path(c['url'])
-                if my_file.is_file():
-                    if combine and c['combine']:
-                        fecha = functions.fecha_archivo(c['url'], True)
-                        if (fecha > nuevo):
-                            nuevo = fecha
-                        locales.append(c)
-                    else:
-                        if os.path.getsize(c['url']) < 2000:
-                            c['content_css'] = open(c['url'], "r").read()
-                            c['is_content'] = True
-                        else:
-                            c['url'] = base_url + \
-                                functions.fecha_archivo(
-                                    c['url'], False, c['url_tmp'])
-                        no_combinados.append(c)
-                else:
-                    if app.config['debug']:
-                        return "Recurso no existe:" + c['url']
-            else:
-                c['url'] = functions.ruta(c['url'])
-                css.append(c)
+        base_url = app.url['base'] + 'static/' if app.front else app.url['admin'] + 'static/'
+        css ,locales ,no_combinados ,nuevo = view.recorrer('css',False,theme,base_url)
 
         if combine and len(locales) > 0:
             dir_resources = theme+'resources/'

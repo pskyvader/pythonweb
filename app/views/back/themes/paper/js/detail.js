@@ -15,7 +15,6 @@ function inicio_detail() {
     }
     if ($('div.form-group.file').length > 0) {
         inicio_file();
-        
     }
     url_list = $('form#formulario').data('list');
     token = $('input.token-campo');

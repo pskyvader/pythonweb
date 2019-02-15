@@ -119,6 +119,7 @@ class view:
     @staticmethod
     def recorrer(type_resource='css',combine=False,theme='',base_url=''):
         from core.functions import functions
+        from core.app import app
         if(len(view.resources) == 0):
             with open(theme+'resources.json') as f:
                 view.resources = json.load(f)

@@ -24,6 +24,7 @@ class app:
         app.root = root + '/'
 
     def init(self, environ):
+        from core.functions import functions
         app.environ = environ
         data_return = {}
         app.get = self.parse_get()
@@ -103,10 +104,10 @@ class app:
                     str(my_file) + '</body></html>'
         else:
             data_return['status'] = '200 OK'
+            response['body']=response['body']
 
         data_return['response_body'] = response['body']
         data_return['headers'] = response['headers']
-        from core.functions import functions
         for cookie in functions.cookies:
             data_return['headers'].append(('Set-Cookie',cookie))
         return data_return

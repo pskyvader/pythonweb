@@ -173,35 +173,7 @@ class view:
         locales = []
         no_combinados = []
         nuevo = 0
-
-        base_url = app.url['base'] + \
-            'static/' if app.front else app.url['admin'] + 'static/'
-
-        for c in view.resources['js']:
-            c['is_content'] = False
-            if c['local']:
-                c['url_tmp'] = c['url']
-                c['url'] = theme + c['url']
-                my_file = Path(c['url'])
-                if my_file.is_file():
-                    if combine and c['combine'] and not c['defer']:
-                        fecha = functions.fecha_archivo(c['url'], True)
-                        if (fecha > nuevo):
-                            nuevo = fecha
-                        locales.append(c)
-                    else:
-                        c['url'] = base_url + \
-                            functions.fecha_archivo(
-                                c['url'], False, c['url_tmp'])
-                        c['defer'] = 'async defer' if c['defer'] else ''
-                        no_combinados.append(c)
-                else:
-                    if app.config['debug']:
-                        return "Recurso no existe:" + c['url']
-            else:
-                c['url'] = functions.ruta(c['url'])
-                c['defer'] = 'async defer' if c['defer'] else ''
-                js.append(c)
+        recorrer(type_resource='css',combine=False)
 
         if combine and len(locales) > 0:
             dir_resources = theme+'resources/'

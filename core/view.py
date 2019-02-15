@@ -232,7 +232,7 @@ class view:
         return resource,locales,no_combinados,nuevo
 
     @staticmethod
-    def combine(theme='',nuevo=0):
+    def combine(locales={},theme='',base_url='',nuevo=0):
         from core.functions import functions
         dir_resources = theme+'resources/'
         file = 'resources-' + str(nuevo) + '-' + str(len(locales)) + '.js'

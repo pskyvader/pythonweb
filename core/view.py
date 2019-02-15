@@ -193,7 +193,6 @@ class view:
     @staticmethod
     def recorrer(type_resource='css',combine=False,theme='',base_url=''):
         from core.functions import functions
-        from core.app import app
         if(len(view.resources) == 0):
             with open(theme+'resources.json') as f:
                 view.resources = json.load(f)
@@ -231,3 +230,44 @@ class view:
                     c['defer'] = 'async defer' if c['defer'] else ''
                 resource.append(c)
         return resource,locales,no_combinados,nuevo
+
+    @staticmethod
+    def combine(theme='',nuevo=0):
+        dir_resources = theme+'resources/'
+        file = 'resources-' + str(nuevo) + '-' + str(len(locales)) + '.js'
+        my_file = Path(dir_resources+file)
+        if my_file.is_file():
+            if functions.get_cookie('loaded_js') != False:
+                defer = ''
+            else:
+                functions.set_cookie('loaded_js', True, (31536000))
+                defer = 'async defer'
+
+            locales = [{'url': base_url+'resources/' + file,
+                        'media': 'all', 'defer': defer, 'is_content': False}]
+        else:
+            # cache.delete_cache()
+            if functions.get_cookie('loaded_js') != False:
+                functions.set_cookie('loaded_js', True, (31536000))
+
+            if os.access(dir_resources, os.R_OK):
+                combine_files = ''
+                for l in locales:
+                    combine_files += '\n' + open(l['url'],
+                                                    "r", encoding='utf-8').read()
+
+                test = os.listdir(dir_resources)
+                for item in test:
+                    if item.endswith(".js"):
+                        os.remove(os.path.join(dir_resources, item))
+                file_write = open(dir_resources+file,
+                                    'w', encoding='utf-8')
+                file_write.write(combine_files)
+                file_write.close()
+                locales = [{'url': base_url+'resources/' + file,
+                            'media': 'all', 'defer': 'async defer', 'is_content': False}]
+            else:
+                for l in locales:
+                    l['url'] = base_url + \
+                        functions.fecha_archivo(
+                            l['url'], False, l['url_tmp'])

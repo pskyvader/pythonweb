@@ -25,7 +25,7 @@ class functions():
         c[cookie] = value
         c[cookie]["path"] = directory
         c[cookie]["expires"] = time
-        return True
+        return c
 
     @staticmethod
     def url_redirect(url):

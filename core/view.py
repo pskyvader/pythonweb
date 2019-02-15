@@ -168,8 +168,7 @@ class view:
                 functions.set_cookie('loaded_'+type_resource, True, (31536000))
                 defer = True
 
-            locales = [{'url': base_url+'resources/' + file,
-                        'media': 'all', 'defer': defer, 'is_content': False}]
+            locales = [{'url': base_url+'resources/' + file, 'media': 'all', 'defer': defer, 'is_content': False}]
         else:
             # cache.delete_cache()
             if functions.get_cookie('loaded_'+type_resource) != False:

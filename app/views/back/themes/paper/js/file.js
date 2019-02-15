@@ -11,7 +11,7 @@ function inicio_file() {
                     notificacion('Oh no!', "Tamaño de archivo demasiado grande.<br/>Tamaño de archivo maximo " + max_size_format, 'error');
                     habilitar(true);
                 } else {
-                post(create_url(modulo, 'upload_file'), {}, "Subiendo Archivo", !1, e.target.files, after_guardar_file, t);
+                    post(create_url(modulo, 'upload_file'), {}, "Subiendo Archivo", !1, e.target.files, after_guardar_file, t);
                 }
             }
         });

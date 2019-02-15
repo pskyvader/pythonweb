@@ -44,7 +44,7 @@ class view:
                 template_url, "r").read()
 
         body = view.render_template(content)
-        body=view.compress(body,'html')
+        body = view.compress(body, 'html')
 
         # if minify and not return_body and cache.is_cacheable():
         #    body = mini.html(body)
@@ -69,11 +69,14 @@ class view:
             return ''
 
         theme = view.get_theme()
-        base_url = app.url['base'] + 'static/' if app.front else app.url['admin'] + 'static/'
-        css ,locales ,no_combinados ,nuevo = view.recorrer('css',combine,theme,base_url)
+        base_url = app.url['base'] + \
+            'static/' if app.front else app.url['admin'] + 'static/'
+        css, locales, no_combinados, nuevo = view.recorrer(
+            'css', combine, theme, base_url)
 
         if combine and len(locales) > 0:
-            locales=view.combine_resources('css',locales,theme,base_url,nuevo)
+            locales = view.combine_resources(
+                'css', locales, theme, base_url, nuevo)
 
         css = no_combinados + locales + css
 
@@ -93,11 +96,14 @@ class view:
             return ''
 
         theme = view.get_theme()
-        base_url = app.url['base'] + 'static/' if app.front else app.url['admin'] + 'static/'
-        js ,locales ,no_combinados ,nuevo = view.recorrer('js',combine,theme,base_url)
+        base_url = app.url['base'] + \
+            'static/' if app.front else app.url['admin'] + 'static/'
+        js, locales, no_combinados, nuevo = view.recorrer(
+            'js', combine, theme, base_url)
 
         if combine and len(locales) > 0:
-            locales=view.combine_resources('js',locales,theme,base_url,nuevo)
+            locales = view.combine_resources(
+                'js', locales, theme, base_url, nuevo)
 
         js = no_combinados + locales + js
 
@@ -116,9 +122,9 @@ class view:
     @staticmethod
     def get_theme():
         return view.theme
-    
+
     @staticmethod
-    def recorrer(type_resource='css',combine=False,theme='',base_url=''):
+    def recorrer(type_resource='css', combine=False, theme='', base_url=''):
         from core.functions import functions
         from core.app import app
         if(len(view.resources) == 0):
@@ -135,17 +141,19 @@ class view:
                 c['url'] = theme + c['url']
                 my_file = Path(c['url'])
                 if my_file.is_file():
-                    if combine and c['combine'] and ((type_resource=='js' and not c['defer']) or type_resource=='css'):
+                    if combine and c['combine'] and ((type_resource == 'js' and not c['defer']) or type_resource == 'css'):
                         fecha = functions.fecha_archivo(c['url'], True)
                         if (fecha > nuevo):
                             nuevo = fecha
                         locales.append(c)
                     else:
-                        if type_resource=='css' and os.path.getsize(c['url']) < 2000:
+                        if type_resource == 'css' and os.path.getsize(c['url']) < 2000:
                             c['content_css'] = open(c['url'], "r").read()
                             c['is_content'] = True
                         else:
-                            c['url'] = base_url + functions.fecha_archivo( c['url'], False, c['url_tmp'])
+                            c['url'] = base_url + \
+                                functions.fecha_archivo(
+                                    c['url'], False, c['url_tmp'])
                         no_combinados.append(c)
                 else:
                     if app.config['debug']:
@@ -153,13 +161,14 @@ class view:
             else:
                 c['url'] = functions.ruta(c['url'])
                 resource.append(c)
-        return resource,locales,no_combinados,nuevo
+        return resource, locales, no_combinados, nuevo
 
     @staticmethod
-    def combine_resources(type_resource='css',locales={},theme='',base_url='',nuevo=0):
+    def combine_resources(type_resource='css', locales={}, theme='', base_url='', nuevo=0):
         from core.functions import functions
         dir_resources = theme+'resources/'
-        file = 'resources-' + str(nuevo) + '-' + str(len(locales)) + '.'+type_resource
+        file = 'resources-' + str(nuevo) + '-' + \
+            str(len(locales)) + '.'+type_resource
         my_file = Path(dir_resources+file)
         if my_file.is_file():
             if functions.get_cookie('loaded_'+type_resource) != False:
@@ -168,7 +177,8 @@ class view:
                 functions.set_cookie('loaded_'+type_resource, True, (31536000))
                 defer = True
 
-            locales = [{'url': base_url+'resources/' + file, 'media': 'all', 'defer': defer, 'is_content': False}]
+            locales = [{'url': base_url+'resources/' + file,
+                        'media': 'all', 'defer': defer, 'is_content': False}]
         else:
             # cache.delete_cache()
             if functions.get_cookie('loaded_'+type_resource) != False:
@@ -177,7 +187,7 @@ class view:
             if os.access(dir_resources, os.R_OK):
                 combine_files = ''
                 for l in locales:
-                    tmp=open(l['url'], "r", encoding='utf-8').read()
+                    tmp = open(l['url'], "r", encoding='utf-8').read()
                     combine_files += '\n' + tmp
 
                 test = os.listdir(dir_resources)
@@ -185,26 +195,26 @@ class view:
                     if item.endswith("."+type_resource):
                         os.remove(os.path.join(dir_resources, item))
                 file_write = open(dir_resources+file, 'w', encoding='utf-8')
-                combine_files=view.compress(combine_files,type_resource)
+                combine_files = view.compress(combine_files, type_resource)
                 file_write.write(combine_files)
                 file_write.close()
                 locales = [{'url': base_url+'resources/' + file,
                             'media': 'all', 'defer': True, 'is_content': False}]
             else:
                 for l in locales:
-                    l['url'] = base_url + functions.fecha_archivo( l['url'], False, l['url_tmp'])
+                    l['url'] = base_url + \
+                        functions.fecha_archivo(l['url'], False, l['url_tmp'])
         return locales
 
-
     @staticmethod
-    def compress(combine_files,type_resource):
-        if type_resource=='css':
+    def compress(combine_files, type_resource):
+        if type_resource == 'css':
             from csscompressor import compress
-            combine_files=compress(combine_files)
-        elif type_resource=='js':
+            combine_files = compress(combine_files)
+        elif type_resource == 'js':
             from jsmin import jsmin
-            combine_files=jsmin(combine_files)
-        elif type_resource=='html':
+            combine_files = jsmin(combine_files)
+        elif type_resource == 'html':
             from htmlmin import minify
-            combine_files=minify(combine_files)
+            combine_files = minify(combine_files)
         return combine_files

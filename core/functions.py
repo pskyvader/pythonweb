@@ -5,6 +5,7 @@ from os.path import getmtime
 
 
 class functions():
+    cookies=[]
     @staticmethod
     def get_cookie(cookie):
         from http import cookies
@@ -25,7 +26,8 @@ class functions():
         c[cookie] = value
         c[cookie]["path"] = directory
         c[cookie]["expires"] = time
-        return c
+        functions.cookies.append(c)
+        return True
 
     @staticmethod
     def url_redirect(url):

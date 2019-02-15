@@ -72,45 +72,8 @@ class view:
         css ,locales ,no_combinados ,nuevo = view.recorrer('css',combine,theme,base_url)
 
         if combine and len(locales) > 0:
-            dir_resources = theme+'resources/'
-            file = 'resources-' + str(nuevo) + '-' + str(len(locales)) + '.css'
-            my_file = Path(dir_resources+file)
-            if my_file.is_file():
-                if functions.get_cookie('loaded_css') != False:
-                    defer = False
-                else:
-                    functions.set_cookie('loaded_css', True, (31536000))
-                    defer = True
-
-                locales = [{'url': base_url+'resources/' + file,
-                            'media': 'all', 'defer': defer, 'is_content': False}]
-            else:
-                # cache.delete_cache()
-                if functions.get_cookie('loaded_css') != False:
-                    functions.set_cookie('loaded_css', True, (31536000))
-
-                if os.access(dir_resources, os.R_OK):
-                    combine_files = ''
-                    for l in locales:
-                        combine_files += '\n' + open(l['url'],
-                                                     "r", encoding='utf-8').read()
-
-                    test = os.listdir(dir_resources)
-                    for item in test:
-                        if item.endswith(".css"):
-                            os.remove(os.path.join(dir_resources, item))
-                    file_write = open(dir_resources+file,
-                                      'w', encoding='utf-8')
-                    file_write.write(combine_files)
-                    file_write.close()
-                    locales = [{'url': base_url+'resources/' + file,
-                                'media': 'all', 'defer': True, 'is_content': False}]
-                else:
-                    for l in locales:
-                        l['url'] = base_url + \
-                            functions.fecha_archivo(
-                                l['url'], False, l['url_tmp'])
-
+            locales=combine(locales,theme,base_url,nuevo)
+            
         css = no_combinados + locales + css
 
         if array_only:
@@ -133,44 +96,7 @@ class view:
         js ,locales ,no_combinados ,nuevo = view.recorrer('js',combine,theme,base_url)
 
         if combine and len(locales) > 0:
-            dir_resources = theme+'resources/'
-            file = 'resources-' + str(nuevo) + '-' + str(len(locales)) + '.js'
-            my_file = Path(dir_resources+file)
-            if my_file.is_file():
-                if functions.get_cookie('loaded_js') != False:
-                    defer = ''
-                else:
-                    functions.set_cookie('loaded_js', True, (31536000))
-                    defer = 'async defer'
-
-                locales = [{'url': base_url+'resources/' + file,
-                            'media': 'all', 'defer': defer, 'is_content': False}]
-            else:
-                # cache.delete_cache()
-                if functions.get_cookie('loaded_js') != False:
-                    functions.set_cookie('loaded_js', True, (31536000))
-
-                if os.access(dir_resources, os.R_OK):
-                    combine_files = ''
-                    for l in locales:
-                        combine_files += '\n' + open(l['url'],
-                                                     "r", encoding='utf-8').read()
-
-                    test = os.listdir(dir_resources)
-                    for item in test:
-                        if item.endswith(".js"):
-                            os.remove(os.path.join(dir_resources, item))
-                    file_write = open(dir_resources+file,
-                                      'w', encoding='utf-8')
-                    file_write.write(combine_files)
-                    file_write.close()
-                    locales = [{'url': base_url+'resources/' + file,
-                                'media': 'all', 'defer': 'async defer', 'is_content': False}]
-                else:
-                    for l in locales:
-                        l['url'] = base_url + \
-                            functions.fecha_archivo(
-                                l['url'], False, l['url_tmp'])
+            locales=combine(locales,theme,base_url,nuevo)
 
         js = no_combinados + locales + js
 

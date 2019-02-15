@@ -14,6 +14,7 @@ function inicio_detail() {
         inicio_image();
     }
     if ($('div.form-group.file').length > 0) {
+        
         inicio_file();
     }
     url_list = $('form#formulario').data('list');

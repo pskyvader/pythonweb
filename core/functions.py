@@ -12,10 +12,6 @@ class functions():
         coo = cookies.SimpleCookie()
         c=coo.load(app.environ['HTTP_COOKIE'])
         print(c)
-        if cookie in c:
-            return c[cookie].value
-        else:
-            return False
 
     @staticmethod
     def set_cookie(cookie, value, time):

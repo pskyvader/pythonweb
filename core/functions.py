@@ -26,6 +26,7 @@ class functions():
         c[cookie] = value
         c[cookie]["path"] = directory
         c[cookie]["expires"] = datetime.now().timestamp() + time
+        print('set cookie:')
         print(c)
         return True
 

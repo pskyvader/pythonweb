@@ -25,7 +25,7 @@ class functions():
         directory = app.url['base_sub'] if app.front else app.url['admin_sub']
         c[cookie] = value
         c[cookie]["path"] = directory
-        c[cookie]["expires"] = int(datetime.now().timestamp() + time)
+        c[cookie]["max-age"] = int(datetime.now().timestamp() + time)
         print('set cookie:')
         print(c)
         return True

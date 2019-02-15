@@ -207,6 +207,4 @@ class view:
         elif type_resource=='html':
             from htmlmin import minify
             combine_files=minify(combine_files)
-            #from css_html_js_minify import html_minify
-            #combine_files=html_minify(combine_files)
         return combine_files

@@ -167,7 +167,7 @@ class view:
 
         theme = view.get_theme()
         base_url = app.url['base'] + 'static/' if app.front else app.url['admin'] + 'static/'
-        js ,locales ,no_combinados ,nuevo = view.recorrer('css',False,theme,base_url)
+        js ,locales ,no_combinados ,nuevo = view.recorrer('js',False,theme,base_url)
 
         if combine and len(locales) > 0:
             dir_resources = theme+'resources/'

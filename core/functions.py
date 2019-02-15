@@ -23,7 +23,7 @@ class functions():
         c = cookies.SimpleCookie()
         # c=cookie.load(app.environ['HTTP_COOKIE'])
         directory = app.url['base_sub'] if app.front else app.url['admin_sub']
-        c[cookie] = 'true' if value else 'false'
+        c[cookie] = value
         c[cookie]["path"] = directory
         c[cookie]["expires"] = time
         return True

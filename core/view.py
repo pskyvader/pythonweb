@@ -75,12 +75,10 @@ class view:
         theme = view.get_theme()
         base_url = app.url['base'] + \
             'static/' if app.front else app.url['admin'] + 'static/'
-        css, locales, no_combinados, nuevo = view.recorrer(
-            'css', combine, theme, base_url)
+        css, locales, no_combinados, nuevo = view.recorrer('css', combine, theme, base_url)
 
         if combine and len(locales) > 0:
-            locales = view.combine_resources(
-                'css', locales, theme, base_url, nuevo)
+            locales = view.combine_resources( 'css', locales, theme, base_url, nuevo)
 
         css = no_combinados + locales + css
 

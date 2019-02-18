@@ -47,7 +47,7 @@ class database():
                 rows = cursor.fetchall()
                 for r in rows:
                     k=0
-                    for v in list(r.values()).items():
+                    for v in list(r.values()):
                         r[k] = v
                         k=k+1
             # else:

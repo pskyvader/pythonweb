@@ -2,7 +2,6 @@ function inicio_file() {
     $('.file_multiple').each(function() {
         inicio_file_multiple($(this));
     });
-    
     $('.file_individual').each(function() {
         var t = $(this);
         $(t).on('change', 'input[name="..."]', function(e) {

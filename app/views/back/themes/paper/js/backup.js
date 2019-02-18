@@ -6,6 +6,7 @@ $('body').on('click', 'button.new_respaldo', function() {
     });
 });
 
+
 $('body').on('click', 'button.new_respaldo_lento', function() {
     tiempo_promedio = parseInt($('input[name=tiempo_lento]').val());
     tipo_backup = 'lento';

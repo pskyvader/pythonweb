@@ -26,10 +26,11 @@ class database():
             self.conect()
         except:
             print('error DB connection')
-            self._errors='Error DB connection '+ self._dbHost+ self._dbUser+ self._dbPassword+ self._dbName
+            self._errors = 'Error DB connection ' + self._dbHost + ',' + self._dbUser + ','+self._dbPassword + ','+self._dbName
 
     def conect(self):
-        self._connection = pymysql.connect( self._dbHost, self._dbUser, self._dbPassword, self._dbName)
+        self._connection = pymysql.connect(
+            self._dbHost, self._dbUser, self._dbPassword, self._dbName)
 
     def prepare(self):
         cursor = self._connection.cursor()

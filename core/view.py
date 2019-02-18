@@ -152,20 +152,19 @@ class view:
                 url_complete = theme + c['url']
                 my_file = Path(url_complete)
                 if my_file.is_file():
-                    c['url']=url_complete
                     if combine and c['combine'] and ((type_resource == 'js' and not c['defer']) or type_resource == 'css'):
                         fecha = functions.fecha_archivo(url_complete, True)
                         if (fecha > nuevo):
                             nuevo = fecha
+                        c['url']=url_complete
                         locales.append(c)
                     else:
                         if type_resource == 'css' and os.path.getsize(url_complete) < 5000:
                             c['content_css'] = open(url_complete, "r").read()
                             c['is_content'] = True
                         else:
-                            url_complete = base_url + \
-                                functions.fecha_archivo(
-                                    url_complete, False, c['url_tmp'])
+                            url_complete = base_url + functions.fecha_archivo( url_complete, False, c['url_tmp'])
+                            c['url']=url_complete
                         no_combinados.append(c)
                 else:
                     if app.config['debug']:

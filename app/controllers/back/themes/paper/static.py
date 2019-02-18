@@ -1,5 +1,4 @@
 from core.view import view
-from os.path import splitext
 import os
 from pathlib import Path
 from core.functions import functions

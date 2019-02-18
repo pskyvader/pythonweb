@@ -46,7 +46,7 @@ class database():
             if return_query:
                 rows = cursor.fetchall()
                 for r in rows:
-                    for k,v in list(r.values()):
+                    for k,v in list(r.values()).items():
                         print(k,v)
                         r[k] = v
             # else:

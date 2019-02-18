@@ -131,6 +131,7 @@ class view:
 
     @staticmethod
     def get_theme():
+        print(view.theme)
         return view.theme
 
     @staticmethod

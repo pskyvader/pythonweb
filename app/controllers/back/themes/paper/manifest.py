@@ -19,7 +19,7 @@ class manifest:
         manifest = {
             'short_name': config['short_title'],
             'name': config['title'],
-            'icons': {
+            'icons': [
                 {
                     'src': functions.generar_url(logo['foto'][0], 'icono50'),
                     'type': 'image/png',
@@ -37,7 +37,7 @@ class manifest:
                     'type': 'image/png',
                     'sizes': '600x600'
                 }
-            },
+            ],
             "start_url": functions.generar_url(["application", "index", version_application], False),
             "background_color": config['color_secundario'],
             "display": "standalone",

@@ -12,14 +12,14 @@ class database():
 
     def __init__(self):
         try {
-            $config            = app.get_config
-            $this->_dbHost     = $config["host"];
-            $this->_dbUser     = $config["user"];
-            $this->_dbPassword = $config["password"];
-            $this->_dbName     = $config["database"];
-            self::$_prefix     = $config["prefix"] . "_";
-            $this->conect();
-        } catch (\PDOException $e) {
-            throw new \Exception("Error {$e->getMessage()}", 1);
+            config            = app.get_config
+            this->_dbHost     = config["host"];
+            this->_dbUser     = config["user"];
+            this->_dbPassword = config["password"];
+            this->_dbName     = config["database"];
+            self::_prefix     = config["prefix"] . "_";
+            this->conect();
+        } catch (\PDOException e) {
+            throw new \Exception("Error {e->getMessage()}", 1);
             die();
         }

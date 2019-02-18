@@ -23,3 +23,8 @@ class database():
         except expression as identifier:
             throw new \Exception("Error {e.getMessage()}", 1)
             die()
+        
+    def conect(self):
+        self._connection = new \PDO('mysql:host=' . self._dbHost . '; dbname=' . self._dbName, self._dbUser, self._dbPassword);
+        self._connection->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+        self._connection->exec("SET CHARACTER SET utf8");

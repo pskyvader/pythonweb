@@ -47,6 +47,7 @@ class database():
                 rows = cursor.fetchall()
                 for r in rows:
                     for k,v in list(r.values()):
+                        print(k,v)
                         r[k] = v
             # else:
                 # if delete_cache:

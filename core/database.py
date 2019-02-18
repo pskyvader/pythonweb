@@ -48,7 +48,6 @@ class database():
                 for r in rows:
                     k=0
                     for v in list(r.values()):
-                        print(k,v)
                         r[k] = v
                         k=k+1
             # else:

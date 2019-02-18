@@ -151,7 +151,7 @@ class view:
                             nuevo = fecha
                         locales.append(c)
                     else:
-                        if type_resource == 'css' and os.path.getsize(c['url']) < 2000:
+                        if type_resource == 'css' and os.path.getsize(c['url']) < 5000:
                             c['content_css'] = open(c['url'], "r").read()
                             c['is_content'] = True
                         else:

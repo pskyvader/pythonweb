@@ -1,5 +1,5 @@
 def init(var):
-    h = home()
+    h = manifest()
     if len(var) > 0:
         if hasattr(h, var[0]) and callable(getattr(h, var[0])):
             fun = var[0]

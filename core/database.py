@@ -20,9 +20,38 @@ class database():
             self._dbName     = config["database"]
             self._prefix     = config["prefix"] + "_"
             self.conect()
-        except expression as identifier:
-            throw new \Exception("Error {e.getMessage()}", 1)
-            die()
+        except:
+            return False
         
     def conect(self):
         self._connection = PyMySQL.connect(self._dbHost,self._dbUser,self._dbPassword,self._dbName )
+    def prepare(self,sql):
+        return self._connection.cursor()
+    def consulta(self,sql, return_query, delete_cache = true):
+        try {
+            query = this->prepare(sql)
+            query->execute()
+            if (return_query) {
+                rows = query->fetchAll()
+            } else {
+                if (delete_cache) {
+                    cache::delete_cache()
+                }
+            }
+
+        } catch (\PDOException e) {
+            if (error_reporting()) {
+                echo "Consulta: " . sql . "<br>"
+                print "Error!: " . e->getMessage()
+            }
+        }
+
+        if (!isset(rows)) {
+            if (return_query) {
+                rows = array()
+            } else {
+                rows = true
+            }
+        }
+
+        return rows

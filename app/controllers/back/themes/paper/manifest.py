@@ -11,7 +11,7 @@ def init(var):
 
 class manifest:
     def index(self):
-        ret = {'body': ''}
+        ret = {'headers': 'Content-Type: application/json', 'body': ''}
         version_application = 1
         config = app.get_config()
         #logo = logo_model.getById(7)
@@ -43,6 +43,5 @@ class manifest:
             "display": "standalone",
             "theme_color": config['color_primario'],
         }
-        ret['headers'] = 'Content-Type: application/json'
         ret['body'] = json.dumps(manifest)
         return ret

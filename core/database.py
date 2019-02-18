@@ -61,4 +61,7 @@ class database():
     def instance():
         if database._instance is None:
             database._instance = database()
-        return database._instance;
+        if database._errors!='':
+            return database._errors
+        else:
+            return database._instance

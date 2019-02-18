@@ -6,5 +6,5 @@ class administrador:
         if connection._errors!='':
             return connection._errors
         else:
-            row = connection.consulta('select * from seo_administrador',False)
+            row = connection.consulta('select * from seo_administrador',True)
         return row

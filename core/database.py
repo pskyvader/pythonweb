@@ -17,7 +17,7 @@ class database():
 
     def __init__(self):
         try:
-            config = app.get_config
+            config = app.get_config()
             self._dbHost = config["host"]
             self._dbUser = config["user"]
             self._dbPassword = config["password"]

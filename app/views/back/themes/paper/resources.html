@@ -10,7 +10,6 @@
                 document.head.appendChild(element);
             </script> 
         {% else %}
-            {{c.defer}}
             {% if c.is_content %}
                 <style type="text/css"> {{ c.content_css }} </style>
             {% else %}

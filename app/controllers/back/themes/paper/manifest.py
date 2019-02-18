@@ -1,4 +1,4 @@
-from core.app import app
+
 from core.functions import functions
 import json
 
@@ -11,6 +11,7 @@ def init(var):
 
 class manifest:
     def index(self):
+        from core.app import app
         ret = {'body': ''}
         version_application = 1
         config = app.get_config
@@ -44,5 +45,5 @@ class manifest:
             "theme_color": config['color_primario'],
         }
         ret['headers'] = 'Content-Type: application/json'
-        ret['body'] = json.dumps(self.data)
+        ret['body'] = json.dumps(manifest)
         return ret

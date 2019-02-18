@@ -8,7 +8,7 @@ class database():
     _dbHost = ''
     _dbName = ''
 
-    _connection = ''
+    _connection = None
     _instance = None
 
     _prefix = ''

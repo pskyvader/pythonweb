@@ -21,6 +21,7 @@ class database():
             self._prefix     = config["prefix"] + "_"
             self.conect()
         except:
+            print('error DB')
             return False
         
     def conect(self):

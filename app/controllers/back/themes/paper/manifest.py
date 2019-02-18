@@ -7,9 +7,9 @@ def init(var):
 class manifest:
     def index(self):
         ret = {'body':''}
-        version_application=1;
-        config=app.getConfig();
-        logo=logo_model.getById(7);
+        version_application=1
+        config=app.get_config
+        logo=logo_model.getById(7)
         manifest = array(
             'short_name' => config['short_title'],
             'name' => config['title'],
@@ -36,8 +36,8 @@ class manifest:
             "background_color" => config['color_secundario'],
             "display" => "standalone",
             "theme_color" => config['color_primario'],
-        );
-        header('Content-Type: application/json');
-        echo functions.encode_json(manifest);
+        )
+        header('Content-Type: application/json')
+        echo functions.encode_json(manifest)
 
         return ret

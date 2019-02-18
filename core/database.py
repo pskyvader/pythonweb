@@ -1,4 +1,5 @@
 from core.app import app
+import PyMySQL
 class database():
     _dbUser=''
     _dbPassword=''

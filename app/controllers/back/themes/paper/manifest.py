@@ -1,4 +1,4 @@
-
+from core.app import app
 from core.functions import functions
 import json
 
@@ -11,7 +11,6 @@ def init(var):
 
 class manifest:
     def index(self):
-        from core.app import app
         ret = {'body': ''}
         version_application = 1
         config = app.get_config

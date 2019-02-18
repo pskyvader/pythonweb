@@ -6,6 +6,6 @@ def init(var):
     return ret
 
 class manifest:
-    def index(self):
+    def index(self,var):
         ret = {'body':''}
         return ret

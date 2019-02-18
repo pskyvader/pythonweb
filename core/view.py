@@ -44,10 +44,9 @@ class view:
                 template_url, "r").read()
 
         body = view.render_template(content)
-        body = view.compress(body, 'html')
 
-        # if minify and not return_body and cache.is_cacheable():
-        #    body = mini.html(body)
+        if minify:  # and not return_body and cache.is_cacheable():
+            body = view.compress(body, 'html')
 
         view.reset()
         return body
@@ -216,5 +215,5 @@ class view:
             combine_files = jsmin(combine_files)
         elif type_resource == 'html':
             from htmlmin import minify
-            combine_files = minify(combine_files,True,True,True)
+            combine_files = minify(combine_files, True, True, True)
         return combine_files

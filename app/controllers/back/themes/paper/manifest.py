@@ -15,7 +15,7 @@ class manifest:
         version_application = 1
         config = app.get_config()
         #logo = logo_model.getById(7)
-        logo = {'foto':['aaa']}
+        logo = {'foto': ['aaa']}
         manifest = {
             'short_name': config['short_title'],
             'name': config['title'],
@@ -23,19 +23,19 @@ class manifest:
                 {
                     'src': functions.generar_url(logo['foto'][0], 'icono50'),
                     'type': 'image/png',
-                    'sizes': '50x50',
+                    'sizes': '50x50'
                 }, {
                     'src': functions.generar_url(logo['foto'][0], 'icono100'),
                     'type': 'image/png',
-                    'sizes': '100x100',
+                    'sizes': '100x100'
                 }, {
                     'src': functions.generar_url(logo['foto'][0], 'icono200'),
                     'type': 'image/png',
-                    'sizes': '200x200',
+                    'sizes': '200x200'
                 }, {
                     'src': functions.generar_url(logo['foto'][0], 'icono600'),
                     'type': 'image/png',
-                    'sizes': '600x600',
+                    'sizes': '600x600'
                 }
             },
             "start_url": functions.generar_url(["application", "index", version_application], False),

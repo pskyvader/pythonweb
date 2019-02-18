@@ -45,13 +45,10 @@ class database():
             self._connection.rollback()
             print('error DB query')
 
-
-        if (!isset(rows)) {
-            if (return_query) {
-                rows = array()
-            } else {
-                rows = true
-            }
-        }
+        if rows is None:
+            if return_query:
+                rows = {}
+            else:
+                rows = True
 
         return rows

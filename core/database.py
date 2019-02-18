@@ -25,6 +25,4 @@ class database():
             die()
         
     def conect(self):
-        self._connection = new \PDO('mysql:host=' . self._dbHost . '; dbname=' . self._dbName, self._dbUser, self._dbPassword);
-        self._connection->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-        self._connection->exec("SET CHARACTER SET utf8");
+        self._connection = PyMySQL.connect(self._dbHost,self._dbUser,self._dbPassword,self._dbName )

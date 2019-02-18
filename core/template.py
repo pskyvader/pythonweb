@@ -56,7 +56,7 @@ class TemplateSyntaxError(TemplateError):
 def eval_expression(expr):
     try:
         return 'literal', ast.literal_eval(expr)
-    except ValueError, SyntaxError:
+    except ValueError:
         return 'name', expr
 
 

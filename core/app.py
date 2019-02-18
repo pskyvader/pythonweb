@@ -122,11 +122,15 @@ class app:
                     url[0] = 'manifest'
                 elif url[0] == 'sw.js':
                     url[0] = 'sw'
+                elif url[0] == 'favicon.ico':
+                    url[0] = 'favicon'
                 elif len(url)>1:
                     if url[1] == 'manifest.js':
                         url[1] = 'manifest'
                     elif url[1] == 'sw.js':
                         url[1] = 'sw'
+                    elif url[1] == 'favicon.ico':
+                        url[1] = 'favicon'
             
         else:
             url = ['home']

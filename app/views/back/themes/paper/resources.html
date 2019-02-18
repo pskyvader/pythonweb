@@ -11,7 +11,7 @@
             </script> 
         {% else %}
             {% if c.is_content %}
-                <{{'style'}}> {{ c.content_css }} {{'</style>'}}
+                <style> {{ c.content_css }} {{'</style>'}}
             {% else %}
                 <link rel="stylesheet" type="text/css" href="{{c.url}}" media="{{c.media}}">
             {% endif %}

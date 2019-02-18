@@ -31,7 +31,6 @@ class LoggingMiddleware:
 
         def _start_response(status, headers, *args):
             if errors!="":
-                print(errors)
                 #pprint.pprint(('RESPONSE', status, headers), stream=errors)
             return start_response(status, headers, *args)
 

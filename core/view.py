@@ -152,6 +152,7 @@ class view:
                 url_complete = theme + c['url']
                 my_file = Path(url_complete)
                 if my_file.is_file():
+                    c['url']=url_complete
                     if combine and c['combine'] and ((type_resource == 'js' and not c['defer']) or type_resource == 'css'):
                         fecha = functions.fecha_archivo(url_complete, True)
                         if (fecha > nuevo):
@@ -164,7 +165,7 @@ class view:
                         else:
                             url_complete = base_url + \
                                 functions.fecha_archivo(
-                                    url_complete, False, c['url'])
+                                    url_complete, False, c['url_tmp'])
                         no_combinados.append(c)
                 else:
                     if app.config['debug']:

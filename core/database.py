@@ -49,7 +49,7 @@ class database():
                     k=0
                     for v in list(r.values()):
                         r[k] = v
-                        k=k+1
+                        k+=1
             # else:
                 # if delete_cache:
                 # cache.delete_cache()

@@ -52,14 +52,14 @@ class view:
         return body
 
     @staticmethod
-    def render_template(content):
+    def render_template2(content):
         from jinja2 import Template
         template = Template(content)
         content = template.render(view.data)
         return content
 
     @staticmethod
-    def render_template2(content):
+    def render_template(content):
         import ibis
         template = ibis.Template(content)
         content = template.render(view.data)

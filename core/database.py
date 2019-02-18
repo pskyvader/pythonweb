@@ -26,18 +26,19 @@ class database():
             self.conect()
         except:
             print('error DB connection')
-            self._errors = 'Error DB connection ' + self._dbHost + ',' + self._dbUser + ','+self._dbPassword + ','+self._dbName
+            self._errors = 'Error DB connection ' + self._dbHost + ',' + \
+                self._dbUser + ','+self._dbPassword + ','+self._dbName
 
     def conect(self):
         self._connection = pymysql.connect(
-            self._dbHost, self._dbUser, self._dbPassword, self._dbName, charset='utf8mb4',cursorclass=pymysql.cursors.DictCursor)
+            self._dbHost, self._dbUser, self._dbPassword, self._dbName, charset='utf8mb4', cursorclass=pymysql.cursors.DictCursor)
 
     def prepare(self):
         cursor = self._connection.cursor()
         return cursor
 
     def consulta(self, sql, return_query, delete_cache=True):
-        rows=None
+        rows = None
         try:
             cursor = self.prepare()
             cursor.execute(sql)
@@ -45,8 +46,8 @@ class database():
             if return_query:
                 rows = cursor.fetchall()
                 for r in rows:
-                    for k,v in list(r.values()).items():
-                        r[k]=v
+                    for k, v in list(r.values()).items():
+                        r[k] = v
             # else:
                 # if delete_cache:
                 # cache.delete_cache()

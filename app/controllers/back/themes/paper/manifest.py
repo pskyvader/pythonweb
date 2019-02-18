@@ -15,7 +15,7 @@ class manifest:
         version_application = 1
         config = app.get_config()
         #logo = logo_model.getById(7)
-        logo=[]
+        logo = []
         manifest = {
             'short_name': config['short_title'],
             'name': config['title'],

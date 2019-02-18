@@ -46,9 +46,11 @@ class database():
             if return_query:
                 rows = cursor.fetchall()
                 for r in rows:
+                    k=0
                     for v in list(r.values()):
                         print(k,v)
                         r[k] = v
+                        k++
             # else:
                 # if delete_cache:
                 # cache.delete_cache()

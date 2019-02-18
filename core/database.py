@@ -26,16 +26,15 @@ class database():
             print('error DB')
 
     def conect(self):
-        self._connection = PyMySQL.connect(
-            self._dbHost, self._dbUser, self._dbPassword, self._dbName)
+        self._connection = PyMySQL.connect( self._dbHost, self._dbUser, self._dbPassword, self._dbName)
 
-    def prepare(self, sql):
+    def prepare(self):
         cursor = self._connection.cursor()
         return cursor
 
     def consulta(self, sql, return_query, delete_cache=True):
         try:
-            cursor = self.prepare(sql)
+            cursor = self.prepare()
             cursor.execute(sql)
             self._connection.commit()
             if return_query:

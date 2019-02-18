@@ -3,5 +3,5 @@ class administrador:
     @staticmethod
     def get_all():
         connection = database.instance()
-        row = connection.consultaget('select * from seo_administrador')
+        row = connection.consulta('select * from seo_administrador')
         return row

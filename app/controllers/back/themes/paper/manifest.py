@@ -11,7 +11,7 @@ def init(var):
 
 class manifest:
     def index(self):
-        ret = {'headers': 'Content-Type: application/json', 'body': ''}
+        ret = {'headers': [ ('Content-Type', 'application/json; charset=utf-8') ], 'body': ''}
         version_application = 1
         config = app.get_config()
         #logo = logo_model.getById(7)

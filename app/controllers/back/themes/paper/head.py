@@ -64,6 +64,6 @@ class head:
                 view.add_array(head.data)
                 ret['body'] = view.render('head')
             else:
-                ret['headers'] = 'Content-Type: application/json'
+                ret['headers'] = [ ('Content-Type', 'application/json; charset=utf-8') ]
                 ret['body'] = json.dumps(self.data)
         return ret

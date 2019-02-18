@@ -117,14 +117,16 @@ class app:
         if url != '':
             url = url.split('/')
             url = ' '.join(url).split()
-            if url[0] == 'manifest.js':
-                url[0] = 'manifest'
-            elif url[0] == 'sw.js':
-                url[0] = 'sw'
-            elif url[1] == 'manifest.js':
-                url[1] = 'manifest'
-            elif url[1] == 'sw.js':
-                url[1] = 'sw'
+            if len(url)>0:
+                if url[0] == 'manifest.js':
+                    url[0] = 'manifest'
+                elif url[0] == 'sw.js':
+                    url[0] = 'sw'
+                elif len(url)>1:
+                    if url[1] == 'manifest.js':
+                        url[1] = 'manifest'
+                    elif url[1] == 'sw.js':
+                        url[1] = 'sw'
             
         else:
             url = ['home']

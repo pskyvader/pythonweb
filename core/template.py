@@ -204,7 +204,7 @@ class _Call(_Node):
             bits = WHITESPACE.split(fragment)
             self.callable = bits[1]
             self.args, self.kwargs = self._parse_params(bits[2:])
-        except ValueError, IndexError:
+        except ValueError:
             raise TemplateSyntaxError(fragment)
 
     def _parse_params(self, params):

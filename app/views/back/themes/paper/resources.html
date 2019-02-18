@@ -1,6 +1,6 @@
 {% if is_css %}
     {% for c in css %} 
-        {% if defer %}
+        {% if c.defer %}
             <script>
                 var element = document.createElement('link');
                 element.rel = 'stylesheet';

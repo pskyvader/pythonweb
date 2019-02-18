@@ -13,7 +13,7 @@ class manifest:
     def index(self):
         ret = {'body': ''}
         version_application = 1
-        config = app.get_config
+        config = app.get_config()
         #logo = logo_model.getById(7)
         logo=[]
         manifest = {

@@ -147,6 +147,7 @@ class view:
         error = ""
         current_resource=(view.resources[type_resource]).copy()
         for c in current_resource:
+            print(c)
             c['is_content'] = False
             if c['local']:
                 c['url_tmp'] = c['url']

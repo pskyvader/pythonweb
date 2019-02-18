@@ -1,14 +1,14 @@
 from core.app import app
 class database():
-    _dbUser
-    _dbPassword
-    _dbHost
-    _dbName
+    _dbUser=''
+    _dbPassword=''
+    _dbHost=''
+    _dbName=''
 
-    _connection
-    _instance
+    _connection=''
+    _instance=''
 
-    _prefix
+    _prefix=''
 
     def __init__(self):
         try:

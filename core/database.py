@@ -11,15 +11,14 @@ class database():
     _prefix
 
     def __init__(self):
-        try {
+        try:
             config            = app.get_config
-            this->_dbHost     = config["host"];
-            this->_dbUser     = config["user"];
-            this->_dbPassword = config["password"];
-            this->_dbName     = config["database"];
-            self::_prefix     = config["prefix"] . "_";
-            this->conect();
-        } catch (\PDOException e) {
-            throw new \Exception("Error {e->getMessage()}", 1);
-            die();
-        }
+            self._dbHost     = config["host"]
+            self._dbUser     = config["user"]
+            self._dbPassword = config["password"]
+            self._dbName     = config["database"]
+            self._prefix     = config["prefix"] + "_"
+            self.conect()
+        except expression as identifier:
+            throw new \Exception("Error {e.getMessage()}", 1)
+            die()

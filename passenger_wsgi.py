@@ -27,11 +27,12 @@ class LoggingMiddleware:
         errors = environ['wsgi.errors']
         if errors!="":
             print(errors)
-            pprint.pprint(('REQUEST', environ), stream=errors)
+            #pprint.pprint(('REQUEST', environ), stream=errors)
 
         def _start_response(status, headers, *args):
             if errors!="":
-                pprint.pprint(('RESPONSE', status, headers), stream=errors)
+                print(errors)
+                #pprint.pprint(('RESPONSE', status, headers), stream=errors)
             return start_response(status, headers, *args)
 
         return self.__application(environ, _start_response)

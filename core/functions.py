@@ -10,9 +10,12 @@ class functions():
     def get_cookie(find_cookie):
         from http import cookies
         c = cookies.SimpleCookie()
-        c.load(app.environ['HTTP_COOKIE'])
-        if find_cookie in c:
-            return c[find_cookie].value
+        if 'HTTP_COOKIE' in app.environ:
+            c.load(app.environ['HTTP_COOKIE'])
+            if find_cookie in c:
+                return c[find_cookie].value
+            else:
+                return False
         else:
             return False
 

@@ -26,6 +26,7 @@ class LoggingMiddleware:
     def __call__(self, environ, start_response):
         errors = environ['wsgi.errors']
         if errors!="":
+            print(type(errors))
             print(errors)
             #pprint.pprint(('REQUEST', environ), stream=errors)
 

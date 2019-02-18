@@ -149,26 +149,26 @@ class view:
             c['is_content'] = False
             if c['local']:
                 c['url_tmp'] = c['url']
-                c['url'] = theme + c['url']
-                my_file = Path(c['url'])
+                url_complete = theme + c['url']
+                my_file = Path(url_complete)
                 if my_file.is_file():
                     if combine and c['combine'] and ((type_resource == 'js' and not c['defer']) or type_resource == 'css'):
-                        fecha = functions.fecha_archivo(c['url'], True)
+                        fecha = functions.fecha_archivo(url_complete, True)
                         if (fecha > nuevo):
                             nuevo = fecha
                         locales.append(c)
                     else:
-                        if type_resource == 'css' and os.path.getsize(c['url']) < 5000:
-                            c['content_css'] = open(c['url'], "r").read()
+                        if type_resource == 'css' and os.path.getsize(url_complete) < 5000:
+                            c['content_css'] = open(url_complete, "r").read()
                             c['is_content'] = True
                         else:
-                            c['url'] = base_url + \
+                            url_complete = base_url + \
                                 functions.fecha_archivo(
-                                    c['url'], False, c['url_tmp'])
+                                    url_complete, False, c['url'])
                         no_combinados.append(c)
                 else:
                     if app.config['debug']:
-                        error = "Recurso no existe:" + c['url']
+                        error = "Recurso no existe:" + url_complete
             else:
                 c['url'] = functions.ruta(c['url'])
                 resource.append(c)

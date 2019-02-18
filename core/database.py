@@ -44,6 +44,8 @@ class database():
             self._connection.commit()
             if return_query:
                 rows = cursor.fetchall()
+                for r in rows:
+                    r[0]=list(r.values())[0]
             # else:
                 # if delete_cache:
                 # cache.delete_cache()

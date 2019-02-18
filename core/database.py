@@ -22,7 +22,6 @@ class database():
             self.conect()
         except:
             print('error DB')
-            return False
         
     def conect(self):
         self._connection = PyMySQL.connect(self._dbHost,self._dbUser,self._dbPassword,self._dbName )

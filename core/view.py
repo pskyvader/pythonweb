@@ -62,7 +62,7 @@ class view:
     def render_template(content):
         import ibis
         template = ibis.Template(content)
-        content=template.render(view.data)
+        content = template.render(view.data)
         return content
 
     @staticmethod
@@ -75,10 +75,15 @@ class view:
         theme = view.get_theme()
         base_url = app.url['base'] + \
             'static/' if app.front else app.url['admin'] + 'static/'
-        css, locales, no_combinados, nuevo = view.recorrer('css', combine, theme, base_url)
+        css, locales, no_combinados, nuevo, error = view.recorrer(
+            'css', combine, theme, base_url)
+
+        if error != '':
+            return error
 
         if combine and len(locales) > 0:
-            locales = view.combine_resources( 'css', locales, theme, base_url, nuevo)
+            locales = view.combine_resources(
+                'css', locales, theme, base_url, nuevo)
 
         css = no_combinados + locales + css
 
@@ -100,8 +105,11 @@ class view:
         theme = view.get_theme()
         base_url = app.url['base'] + \
             'static/' if app.front else app.url['admin'] + 'static/'
-        js, locales, no_combinados, nuevo = view.recorrer(
+        js, locales, no_combinados, nuevo, error = view.recorrer(
             'js', combine, theme, base_url)
+
+        if error != '':
+            return error
 
         if combine and len(locales) > 0:
             locales = view.combine_resources(
@@ -136,6 +144,7 @@ class view:
         locales = []
         no_combinados = []
         nuevo = 0
+        error = ""
         for c in view.resources[type_resource]:
             c['is_content'] = False
             if c['local']:
@@ -159,11 +168,11 @@ class view:
                         no_combinados.append(c)
                 else:
                     if app.config['debug']:
-                        return "Recurso no existe:" + c['url']
+                        error = "Recurso no existe:" + c['url']
             else:
                 c['url'] = functions.ruta(c['url'])
                 resource.append(c)
-        return resource, locales, no_combinados, nuevo
+        return resource, locales, no_combinados, nuevo, error
 
     @staticmethod
     def combine_resources(type_resource='css', locales={}, theme='', base_url='', nuevo=0):

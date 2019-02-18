@@ -27,7 +27,7 @@ class database():
             print('error DB')
 
     def conect(self):
-        self._connection = PyMySQL.connect( self._dbHost, self._dbUser, self._dbPassword, self._dbName)
+        self._connection = pymysql.connect( self._dbHost, self._dbUser, self._dbPassword, self._dbName)
 
     def prepare(self):
         cursor = self._connection.cursor()

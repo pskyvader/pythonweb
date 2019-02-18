@@ -37,6 +37,7 @@ class database():
         return cursor
 
     def consulta(self, sql, return_query, delete_cache=True):
+        rows=None
         try:
             cursor = self.prepare()
             cursor.execute(sql)

@@ -168,7 +168,7 @@ class view:
                         no_combinados.append(c)
                 else:
                     if app.config['debug']:
-                        error = "Recurso no existe:" + theme
+                        error = "Recurso no existe:" + c['url']
             else:
                 c['url'] = functions.ruta(c['url'])
                 resource.append(c)

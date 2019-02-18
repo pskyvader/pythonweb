@@ -5,6 +5,7 @@ from .head import head
 from .header import header
 from .aside import aside
 from .footer import footer
+from core.models.administrador import administrador
 
 def init(var):
     h = home()
@@ -23,6 +24,7 @@ def init(var):
     return ret
 
 class home:
+
     url = ['home']
     metadata = {'title': 'Home', 'modulo': 'home'}
 

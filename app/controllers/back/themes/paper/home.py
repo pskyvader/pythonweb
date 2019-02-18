@@ -52,7 +52,7 @@ class home:
 
 
         view.add('title', 'index')
-        view.add('var', str(registros[0][0]))
+        view.add('var', str(registros[0]))
         breadcrumb=[
             {'active':'active','url':'aaaa','title':'titulo'},
             {'active':'','url':'bbb','title':'titulo2'},

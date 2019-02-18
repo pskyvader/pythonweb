@@ -4,7 +4,6 @@ import os
 from pathlib import Path
 from core.functions import functions
 import mimetypes
-import gzip
 import datetime
 
 
@@ -46,6 +45,7 @@ class static:
             if my_file.is_file():
                 ret['body'] = open(cache_file, "rb").read()
             else:
+                import gzip
                 test = os.listdir(theme+'cache/')
                 for item in test:
                     if 'resources' in resource and item.endswith(extension):
@@ -53,8 +53,6 @@ class static:
                     elif item.endswith(resource):
                         os.remove(os.path.join(theme+'cache/', item))
                 f = open(resource_url, "rb").read()
-                #b = bytearray(f)
-                #ret['body'] = gzip.compress(bytes(b))
                 ret['body'] = gzip.compress(f)
 
                 file_write = open(cache_file, 'wb')

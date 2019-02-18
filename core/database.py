@@ -53,7 +53,7 @@ class database():
                 rows = True
 
         return rows
-
+    @staticmethod
     def instance():
         if database._instance is None:
             database._instance = database()

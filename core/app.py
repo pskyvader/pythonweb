@@ -121,7 +121,7 @@ class app:
                 url[0] = 'manifest'
             elif url[0] == 'sw.js':
                 url[0] = 'sw'
-            if url[1] == 'manifest.js':
+            elif url[1] == 'manifest.js':
                 url[1] = 'manifest'
             elif url[1] == 'sw.js':
                 url[1] = 'sw'

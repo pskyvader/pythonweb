@@ -9,7 +9,7 @@ class database():
     _dbName = ''
 
     _connection = ''
-    _instance = ''
+    _instance = None
 
     _prefix = ''
 
@@ -53,3 +53,8 @@ class database():
                 rows = True
 
         return rows
+
+    def instance():
+        if self._instance is None:
+            self._instance = database()
+        return self._instance;

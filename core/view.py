@@ -145,9 +145,8 @@ class view:
         no_combinados = []
         nuevo = 0
         error = ""
-        current_resource=(view.resources[type_resource]).copy()
-        for c in current_resource:
-            print(c)
+        for res in view.resources[type_resource]:
+            c=res.copy()
             c['is_content'] = False
             if c['local']:
                 c['url_tmp'] = c['url']

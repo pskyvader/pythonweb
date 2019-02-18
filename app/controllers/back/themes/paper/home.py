@@ -24,11 +24,11 @@ def init(var):
     return ret
 
 class home:
-
     url = ['home']
     metadata = {'title': 'Home', 'modulo': 'home'}
 
     def index(self):
+        registros=administrador.get_all()
         ret = {'body':''}
         url_return=functions.url_redirect(self.url)
         if url_return!='':
@@ -52,7 +52,7 @@ class home:
 
 
         view.add('title', 'index')
-        view.add('var', str(app.post.getfirst("ajax")))
+        view.add('var', str(registros))
         breadcrumb=[
             {'active':'active','url':'aaaa','title':'titulo'},
             {'active':'','url':'bbb','title':'titulo2'},

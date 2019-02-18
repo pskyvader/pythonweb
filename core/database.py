@@ -1,5 +1,6 @@
 from core.app import app
-import PyMySQL
+#import PyMySQL
+import pymysql
 
 
 class database():

@@ -60,8 +60,8 @@ class view:
 
     @staticmethod
     def render_template(content):
-        import ibis
-        template = ibis.Template(content)
+        from ibis import Template
+        template = Template(content)
         content = template.render(view.data)
         return content
 

@@ -30,7 +30,7 @@ class database():
 
     def conect(self):
         self._connection = pymysql.connect(
-            self._dbHost, self._dbUser, self._dbPassword, self._dbName)
+            self._dbHost, self._dbUser, self._dbPassword, self._dbName, charset='utf8mb4')
 
     def prepare(self):
         cursor = self._connection.cursor()

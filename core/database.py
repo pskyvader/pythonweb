@@ -26,26 +26,25 @@ class database():
         
     def conect(self):
         self._connection = PyMySQL.connect(self._dbHost,self._dbUser,self._dbPassword,self._dbName )
-    def prepare(self,sql):
-        return self._connection.cursor()
-    def consulta(self,sql, return_query, delete_cache = true):
-        try {
-            query = this->prepare(sql)
-            query->execute()
-            if (return_query) {
-                rows = query->fetchAll()
-            } else {
-                if (delete_cache) {
-                    cache::delete_cache()
-                }
-            }
 
-        } catch (\PDOException e) {
-            if (error_reporting()) {
-                echo "Consulta: " . sql . "<br>"
-                print "Error!: " . e->getMessage()
-            }
-        }
+    def prepare(self,sql):
+        cursor=self._connection.cursor()
+        return cursor
+        
+    def consulta(self,sql, return_query, delete_cache = True):
+        try:
+            cursor=self.prepare(sql)
+            cursor.execute(sql)
+            self._connection.commit()
+            if return_query:
+                rows = cursor.fetchall()
+            #else:
+                #if delete_cache:
+                    #cache.delete_cache()
+        except:
+            self._connection.rollback()
+            print('error DB query')
+
 
         if (!isset(rows)) {
             if (return_query) {

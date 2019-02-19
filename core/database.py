@@ -245,6 +245,14 @@ class database():
         row = self.consulta(sql, False)
         return row
 
+    def truncate(self, tables):
+        sql = ""
+        for key, table in tables.items():
+            sql += "TRUNCATE TABLE " + self._prefix + table + " "
+
+        row = self.consulta(sql, False)
+        return row
+
     @staticmethod
     def instance():
         if database._instance is None:

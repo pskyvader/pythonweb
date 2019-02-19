@@ -75,7 +75,7 @@ class database():
         sql = "SELECT " + select + " FROM " + self._prefix + table
         sql += " WHERE (TRUE"
         for key, value in where.items():
-            sql += " AND " + key + "='" + value + "'"
+            sql += " AND " + key + "='" + str(value) + "'"
         sql += ") "
 
         if 'buscar' in condiciones and isinstance(condiciones['buscar'], dict):

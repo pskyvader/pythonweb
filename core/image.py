@@ -44,14 +44,15 @@ class image:
         name = file.split('.')
         if ('' == extension):
             extension = (name.pop()).lower()
-        else 
-            array_pop(name)
-                if (remove) 
-            name = explode('-', implode(name, ''))
-            if (count(name) > 1) 
-                array_pop(name)
+        else:
+            name.pop()
+        
+        if remove:
+            name = (''.join(name)).split('-')
+            if len(name) > 1:
+                name.pop()
                     
-        name = functions::url_amigable(implode(name, ''))
+        name = functions.url_amigable(implode(name, ''))
         if ('' != tag) 
             return name . '-' . tag . '.' . extension
         else 

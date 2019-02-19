@@ -61,25 +61,25 @@ class base_model:
                 select = ''
 
         row = connection.get(cls.table, cls.idname, where, condiciones, select)
-        print(row[0])
-        for key,value in enumerate(row):
-            if 'idpadre' in row[key]:
-                row[key]['idpadre'] = json.loads(row[key]['idpadre'])
-                if idpadre!=None and idpadre not in row[key]['idpadre']:
-                    del row[key]
+        deleted=False
+        for r in row:
+            deleted=False
+            if 'idpadre' in r:
+                r['idpadre'] = json.loads(r['idpadre'])
+                if idpadre!=None and idpadre not in r['idpadre']:
+                    del r
 
             if return_total==None:
                 if key in row:
                     print('key in row')
-                if key in row and 'foto' in row[key]:
-                    row[key]['foto'] = json.loads(row[key]['foto'])
+                if key in row and 'foto' in r:
+                    r['foto'] = json.loads(r['foto'])
                 else:
                     print('no foto')
 
-                if key in row and 'archivo' in row[key]:
-                    row[key]['archivo'] = json.loads( row[key]['archivo'])
+                if key in row and 'archivo' in r:
+                    r['archivo'] = json.loads( r['archivo'])
         
-        print(row[0])
         if limit!=None:
             if limit2 == 0:
                 row=row[0:limit]

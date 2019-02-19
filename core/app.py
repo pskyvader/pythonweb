@@ -2,7 +2,7 @@
 # cgitb.enable()
 import sys
 import os
-from core.view import view
+from .view import view
 import json
 from pathlib import Path
 import importlib

@@ -1,4 +1,4 @@
-from core.app import app
+from .app import app
 from pathlib import Path
 from urllib.parse import urlencode
 from os.path import getmtime

@@ -15,9 +15,9 @@ class file(image):
             if my_file.is_dir():
                 shutil.rmtree(url)
         else:
-            if ('' != subfolder) {
-                subfolder .= '/'
-            }
+            if '' != subfolder:
+                subfolder += '/'
+            
             if ('' != sub) {
                 sub .= '/'
             }

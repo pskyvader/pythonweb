@@ -141,17 +141,13 @@ class image:
     @staticmethod
     def delete_temp():
         from os import listdir
-        from os.path import isfile, join
         from datetime import datetime
-        now        = now()
+        now        = datetime.now()
         horas      = 1
 
-        for archivo in listdir():
+        carpeta    = image.get_upload_dir() + 'tmp/'#ruta actual
+        for archivo in listdir(carpeta):  #obtenemos un archivo y luego otro sucesivamente
 
-
-        directorio = opendir(carpeta) #ruta actual
-        while (archivo = readdir(directorio)) #obtenemos un archivo y luego otro sucesivamente
-        
             if (!is_dir(carpeta . archivo)) #verificamos si es o no un directorio
             
                 if (file_exists(carpeta . archivo)) 

@@ -411,30 +411,26 @@ class database():
                     f = image.move(f, table, key, id_image)
                 
                 ids[key][f['id']] = f['url']
-                if (f['portada'] == 'true') {
-                    if (portada) {
+                if f['portada'] == 'true':
+                    if portada:
                         f['portada'] = 'false'
-                    } else {
-                        portada = true
-                    }
-                }
+                    else:
+                        portada = True
                 f['parent'] = id_image
                 f['folder'] = table
                 row[k]     = f
-            }
-            if (!portada) {
+            
+            if not portada:
                 row[0]['portada'] = 'true'
-            }
+            data[key] = json.dumps(row)
+        
 
-            data[key] = functions::encode_json(row)
-        }
-
-        row = this->get(table, idname, array(idname => id_image), array('limit' => 1))
-        this->update(table, idname, data, array(idname => id_image))
-        foreach (ids as key => value) {
+        row = self.get(table, idname, {'idname' : id_image}, {'limit' : 1})
+        self.update(table, idname, data, array(idname : id_image))
+        foreach (ids as key : value) {
             images = json_decode(html_entity_decode(row[0][key]), true)
             if (is_array(images)) {
-                foreach (images as k => file) {
+                foreach (images as k : file) {
                     if (!isset(value[file['id']]) || value[file['id']] != file['url']) {
                         image::delete(table, file, id_image, key)
                     }

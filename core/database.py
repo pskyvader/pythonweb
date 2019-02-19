@@ -350,6 +350,11 @@ class database():
         return respuesta
 
     @staticmethod
+    def encript(password):
+        salt = sha1(password)
+        p    = crypt(password, salt)
+        return salt . sha1(p)
+    @staticmethod
     def instance():
         if database._instance is None:
             database._instance = database()

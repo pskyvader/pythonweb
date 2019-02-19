@@ -67,17 +67,16 @@ class base_model:
             if 'idpadre' in r:
                 r['idpadre'] = json.loads(r['idpadre'])
                 if idpadre!=None and idpadre not in r['idpadre']:
+                    deleted=True
                     del r
 
             if return_total==None:
-                if not deleted:
-                    print('key in row')
-                if key in row and 'foto' in r:
+                if not deleted and 'foto' in r:
                     r['foto'] = json.loads(r['foto'])
                 else:
                     print('no foto')
 
-                if key in row and 'archivo' in r:
+                if not deleted and 'archivo' in r:
                     r['archivo'] = json.loads( r['archivo'])
         
         if limit!=None:

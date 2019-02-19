@@ -97,7 +97,7 @@ class database():
             sql += " LIMIT " + str(condiciones['limit'])
             if 'limit2' in condiciones:
                 sql += " , " + str(condiciones['limit2'])
-
+        print(sql)
         row = self.consulta(sql, True)
         return row
 

@@ -1,100 +1,85 @@
 from core.database import database
+from core.app import app
+import json
+
+
 class base_model:
     idname = ''
-    table                = ''
+    table = ''
 
-    @staticmethod
-    def getAll(dict where = {}, dict condiciones = {}, str select = ""):
-    
-        connection = database::instance();
-        fields     = table::getByname(static::table);
-        if (!isset(where['estado']) && app::_front && isset(fields['estado'])) {
-            where['estado'] = true;
-        }
+    @classmethod
+    def getAll(cls,where={}, condiciones={}, select=""):
+        limit = None
+        idpadre = None
+        connection = database.instance()
+        # fields     = table.getByname(cls.table)
+        fields = {}
+        if 'estado' not in where and app.front and 'estado' in fields:
+            where['estado'] = True
 
-        if (isset(where['idpadre'])) {
-            idpadre = where['idpadre'];
-            unset(where['idpadre']);
-            if (isset(condiciones['limit'])) {
-                limit  = condiciones['limit'];
-                limit2 = 0;
-                unset(condiciones['limit']);
-            }
-            if (isset(condiciones['limit2'])) {
-                if (!isset(limit)) {
-                    limit = 0;
-                }
+        if 'idpadre' in where:
+            idpadre = where['idpadre']
+            del where['idpadre']
+            if 'limit' in condiciones:
+                limit = condiciones['limit']
+                limit2 = 0
+                del condiciones['limit']
 
-                limit2 = condiciones['limit2'];
-                unset(condiciones['limit2']);
-            }
-        }
+            if 'limit2' in condiciones:
+                if limit == None:
+                    limit = 0
+                limit2 = condiciones['limit2']
+                del condiciones['limit2']
 
-        if (!isset(condiciones['order']) && isset(fields['orden'])) {
-            condiciones['order'] = 'orden ASC';
-        }
+        if 'order' not in condiciones and 'orden' in fields:
+            condiciones['order'] = 'orden ASC'
 
-        if (isset(condiciones['palabra'])) {
-            condiciones['buscar'] = array();
-            if (isset(fields['titulo'])) {
-                condiciones['buscar']['titulo'] = condiciones['palabra'];
-            }
+        if 'palabra' in condiciones:
+            condiciones['buscar'] = {}
+            if 'titulo' in fields:
+                condiciones['buscar']['titulo'] = condiciones['palabra']
 
-            if (isset(fields['keywords'])) {
-                condiciones['buscar']['keywords'] = condiciones['palabra'];
-            }
+            if 'keywords' in fields:
+                condiciones['buscar']['keywords'] = condiciones['palabra']
 
-            if (isset(fields['descripcion'])) {
-                condiciones['buscar']['descripcion'] = condiciones['palabra'];
-            }
+            if 'descripcion' in fields:
+                condiciones['buscar']['descripcion'] = condiciones['palabra']
 
-            if (isset(fields['metadescripcion'])) {
-                condiciones['buscar']['metadescripcion'] = condiciones['palabra'];
-            }
-            
-            if (isset(fields['cookie_pedido'])) {
-                condiciones['buscar']['cookie_pedido'] = condiciones['palabra'];
-            }
+            if 'metadescripcion' in fields:
+                condiciones['buscar']['metadescripcion'] = condiciones['palabra']
 
-            if (count(condiciones['buscar']) == 0) {
-                unset(condiciones['buscar']);
-            }
+            if 'cookie_pedido' in fields:
+                condiciones['buscar']['cookie_pedido'] = condiciones['palabra']
 
-        }
-        if (select == 'total') {
-            return_total = true;
-            if (isset(idpadre)) {
-                select = '';
-            }
-        }
-        row = connection->get(static::table, static::idname, where, condiciones, select);
-        foreach (row as key => value) {
-            if (isset(row[key]['idpadre'])) {
-                row[key]['idpadre'] = functions::decode_json(row[key]['idpadre']);
-                if (isset(idpadre) && !in_array(idpadre, row[key]['idpadre'])) {
-                    unset(row[key]);
-                }
-            }
-            if (isset(row[key]['foto'])) {
-                row[key]['foto'] = functions::decode_json(row[key]['foto']);
-            }
-            if (isset(row[key]['archivo'])) {
-                row[key]['archivo'] = functions::decode_json(row[key]['archivo']);
-            }
-        }
-        if (isset(idpadre)) {
-            row = array_values(row);
-        }
+            if len(condiciones['buscar']) == 0:
+                del condiciones['buscar']
 
-        if (isset(limit)) {
-            if (limit2 == 0) {
-                row = array_slice(row, limit2, limit);
+        if select == 'total':
+            return_total = True
+            if idpadre != None:
+                select = ''
+
+        row = connection.get(cls.table, cls.idname, where, condiciones, select)
+        for key,value in row.items():
+            if 'idpadre' in row[key]:
+                row[key]['idpadre'] = json.loads(row[key]['idpadre'])
+                if idpadre!=None and idpadre not in row[key]['idpadre']:
+                    del row[key]
+            if key in row and 'foto' in row[key]:
+                row[key]['foto'] = json.loads(row[key]['foto'])
+
+            if key in row and 'archivo' in row[key]:
+                row[key]['archivo'] = json.loads( row[key]['archivo'])
+        
+        if limit!=None:
+            if limit2 == 0:
+                row=row[:limit]
             } else {
-                row = array_slice(row, limit, limit2);
+                row = array_slice(row, limit, limit2)
             }
         }
         if (isset(return_total)) {
-            return count(row);
+            return count(row)
         }
-        return row;
+        return row
     }

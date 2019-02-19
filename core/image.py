@@ -24,14 +24,13 @@ class image:
         recortes.append({'tag' : 'zoom', 'titulo' : 'Zoom', 'ancho' : 600, 'alto' : 600, 'calidad' : 90, 'tipo' : 'centrar'})
         recortes.append({'tag' : 'color', 'titulo' : 'Color', 'ancho' : 30, 'alto' : None, 'calidad' : 99, 'tipo' : 'recortar'})
 
-        if (isset(modulo[0]['recortes'])) {
-            foreach (modulo[0]['recortes'] as key => recorte) {
-                recorte['ancho']   = (int) recorte['ancho']
-                recorte['alto']    = (int) recorte['alto']
-                recorte['calidad'] = (int) recorte['calidad']
-                if (recorte['calidad'] > 100) {
+        if 0 in modulo and 'recortes' in modulo[0]:
+            for recorte in modulo[0]['recortes']:
+                recorte['ancho']   = int(recorte['ancho'])
+                recorte['alto']    = int(recorte['alto'])
+                recorte['calidad'] = int(recorte['calidad'])
+                if recorte['calidad'] > 100:
                     recorte['calidad'] = 100
-                }
 
                 if (recorte['calidad'] < 0) {
                     recorte['calidad'] = 0

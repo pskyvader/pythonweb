@@ -26,12 +26,9 @@ class image:
         my_file = Path(folder)
         if not my_file.is_dir():
             makedirs(folder,777)
-            functions.protection_template(base_folder)
-            functions.protection_template(base_folder + '/' + name_final)
-            functions.protection_template(folder)
 
-        name      = explode(".", file['tmp'])
-        extension = strtolower(array_pop(name))
+        name      = file['tmp'].split('.')
+        extension = (name.pop()).lower()
 
         file['url'] = file['id'] . '.' . extension
         rename(folder_tmp . '/' . file['tmp'], folder . '/' . file['url'])

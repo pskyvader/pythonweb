@@ -94,9 +94,9 @@ class database():
             sql += " GROUP BY " + condiciones['group']
 
         if 'limit' in condiciones:
-            sql += " LIMIT " + condiciones['limit']
+            sql += " LIMIT " + str(condiciones['limit'])
             if 'limit2' in condiciones:
-                sql += " , " + condiciones['limit2']
+                sql += " , " + str(condiciones['limit2'])
 
         row = self.consulta(sql, True)
         return row

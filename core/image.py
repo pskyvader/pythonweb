@@ -9,6 +9,7 @@ class image:
     upload_url = ''
     @staticmethod
     def delete(folder, file = '', subfolder = '', sub = ''):
+        import shutil
         if "" == file and '' != subfolder:
             url = image.get_upload_dir() + folder + '/' +subfolder +'/'
             my_file = Path(url)

@@ -12,6 +12,43 @@ class image:
     upload_dir = ''
     upload_url = ''
 
+
+
+    #mover archivo (normalmente) desde la carpeta temporal a la definitiva
+    @staticmethod
+    def move(file, folder, subfolder, name_final, folder_tmp = 'tmp'):
+        recortes    = image.get_recortes(folder)
+        folder_tmp  = image.get_upload_dir() . folder_tmp
+        base_folder = image.get_upload_dir() . folder
+        folder      = base_folder . '/' . name_final . '/' . subfolder
+
+        if (!file_exists(folder)) {
+            if (!mkdir(folder, 0777, true)) {
+                echo "Error al crear directorio " . folder
+                exit()
+            }
+            functions.protection_template(base_folder)
+            functions.protection_template(base_folder . '/' . name_final)
+            functions.protection_template(folder)
+        }
+
+        name      = explode(".", file['tmp'])
+        extension = strtolower(array_pop(name))
+
+        file['url'] = file['id'] . '.' . extension
+        rename(folder_tmp . '/' . file['tmp'], folder . '/' . file['url'])
+
+        foreach (recortes as key => recorte) {
+            rename(folder_tmp . '/' . image.nombre_archivo(file['tmp'], recorte['tag']), folder . '/' . image.nombre_archivo(file['url'], recorte['tag']))
+            if (file_exists(folder_tmp . '/' . image.nombre_archivo(file['tmp'], recorte['tag'], 'webp'))) {
+                rename(folder_tmp . '/' . image.nombre_archivo(file['tmp'], recorte['tag'], 'webp'), folder . '/' . image.nombre_archivo(file['url'], recorte['tag'], 'webp'))
+            }
+        }
+        unset(file['tmp'])
+        file['subfolder'] = subfolder
+        return file
+    }
+
     @staticmethod
     def get_recortes(modulo):
         #moduloconfiguracion = moduloconfiguracion_model.getByModulo(modulo)

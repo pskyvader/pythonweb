@@ -182,6 +182,7 @@ class database():
             return False
 
     def delete(self, table, idname, where, delete_cache=True):
+        from core.image import image
         sql = "DELETE FROM " + self._prefix + table
 
         sql += " WHERE (TRUE"

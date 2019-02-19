@@ -32,16 +32,11 @@ class image:
                 if recorte['calidad'] > 100:
                     recorte['calidad'] = 100
 
-                if (recorte['calidad'] < 0) {
+                if recorte['calidad'] < 0:
                     recorte['calidad'] = 0
-                }
-
-                recortes[] = recorte
-            }
-        }
-
+                
+                recortes.append(recorte)
         return recortes
-    }
 
     @staticmethod
     def delete(folder, file='', subfolder='', sub=''):

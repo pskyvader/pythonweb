@@ -1,5 +1,5 @@
 from pathlib import Path
-from os import remove
+from os import rename
 from os import makedirs
 from core.app import app
 from core.functions import functions

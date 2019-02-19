@@ -46,7 +46,7 @@ class database():
             if return_query:
                 rows = cursor.fetchall()
                 for r in rows:
-                    for k,v in enumerate(list(r.values())):
+                    for k, v in enumerate(list(r.values())):
                         r[k] = v
             # else:
                 # if delete_cache:
@@ -66,48 +66,40 @@ class database():
     def get_last_insert_id(self):
         return self._connection.insert_id()
 
-    def get(self,table, idname, where, condiciones = {}, select = ""):
+    def get(self, table, idname, where, condiciones={}, select=""):
         if select == "":
             select = "*"
         elif select == 'total':
             select = idname
-        
+
         sql = "SELECT " + select + " FROM " + self._prefix + table
         sql += " WHERE (TRUE"
-        for key,value in where.items():
+        for key, value in where.items():
             sql += " AND " + key + "='" + value + "'"
-        
         sql += ") "
 
-        if 'buscar' in condiciones and isinstance(condiciones['buscar'],dict):
+        if 'buscar' in condiciones and isinstance(condiciones['buscar'], dict):
             sql += " AND ("
             count = 0
-            for key,value in condiciones['buscar']:
-                count+=1
+            for key, value in condiciones['buscar']:
+                count += 1
                 sql += key + " LIKE '%" + value + "%'"
                 sql += " OR " if (count < len(condiciones['buscar'])) else ""
-            
             sql += ") "
-        
 
-        if (isset(condiciones['order'])) {
-            sql .= " ORDER BY " . condiciones['order']
-        }
+        if 'order' in condiciones:
+            sql += " ORDER BY " + condiciones['order']
 
-        if (isset(condiciones['group'])) {
-            sql .= " GROUP BY " . condiciones['group']
-        }
+        if 'group' in condiciones:
+            sql += " GROUP BY " + condiciones['group']
 
-        if (isset(condiciones['limit'])) {
-            sql .= " LIMIT " . condiciones['limit']
-            if (isset(condiciones['limit2'])) {
-                sql .= " , " . condiciones['limit2']
-            }
-        }
-        row = this->consulta(sql, true)
+        if 'limit' in condiciones:
+            sql += " LIMIT " + condiciones['limit']
+            if 'limit2' in condiciones:
+                sql += " , " + condiciones['limit2']
+
+        row = self.consulta(sql, True)
         return row
-    }
-    
 
     @staticmethod
     def instance():

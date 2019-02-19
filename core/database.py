@@ -400,7 +400,7 @@ class database():
             del data['multiple']
         return data
 
-    def process_image(self,image, table, idname, id_image):
+    def process_image(self,image_list, table, idname, id_image):
         data = {}
         ids  = {}
         for key,img in image.items():

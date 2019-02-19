@@ -15,50 +15,54 @@ class image:
     @staticmethod
     def get_recortes(modulo):
         #moduloconfiguracion = moduloconfiguracion_model.getByModulo(modulo)
-        moduloconfiguracion=[1]
-        var                 = {'idmoduloconfiguracion' : moduloconfiguracion[0]}
+        moduloconfiguracion = [1]
+        var = {'idmoduloconfiguracion': moduloconfiguracion[0]}
         if 'tipo' in app.get:
             var['tipo'] = app.get['tipo']
 
         #modulo     = modulo_model.getAll(var, {'limit':1})
-        modulo={}
-        recortes   = []
-        recortes.append({'tag' : 'thumb', 'titulo' : 'Thumb', 'ancho' : 200, 'alto' : 200, 'calidad' : 90, 'tipo' : 'centrar'})
-        recortes.append({'tag' : 'zoom', 'titulo' : 'Zoom', 'ancho' : 600, 'alto' : 600, 'calidad' : 90, 'tipo' : 'centrar'})
-        recortes.append({'tag' : 'color', 'titulo' : 'Color', 'ancho' : 30, 'alto' : None, 'calidad' : 99, 'tipo' : 'recortar'})
+        modulo = {}
+        recortes = []
+        recortes.append({'tag': 'thumb', 'titulo': 'Thumb', 'ancho': 200,
+                         'alto': 200, 'calidad': 90, 'tipo': 'centrar'})
+        recortes.append({'tag': 'zoom', 'titulo': 'Zoom', 'ancho': 600,
+                         'alto': 600, 'calidad': 90, 'tipo': 'centrar'})
+        recortes.append({'tag': 'color', 'titulo': 'Color', 'ancho': 30,
+                         'alto': None, 'calidad': 99, 'tipo': 'recortar'})
 
         if 0 in modulo and 'recortes' in modulo[0]:
             for recorte in modulo[0]['recortes']:
-                recorte['ancho']   = int(recorte['ancho'])
-                recorte['alto']    = int(recorte['alto'])
+                recorte['ancho'] = int(recorte['ancho'])
+                recorte['alto'] = int(recorte['alto'])
                 recorte['calidad'] = int(recorte['calidad'])
                 if recorte['calidad'] > 100:
                     recorte['calidad'] = 100
 
                 if recorte['calidad'] < 0:
                     recorte['calidad'] = 0
-                
+
                 recortes.append(recorte)
         return recortes
+
     @staticmethod
-    def nombre_archivo(file, tag = '', extension = '', remove = False):
+    def nombre_archivo(file, tag='', extension='', remove=False):
         name = file.split('.')
         if ('' == extension):
             extension = (name.pop()).lower()
         else:
             name.pop()
-        
+
         if remove:
             name = (''.join(name)).split('-')
             if len(name) > 1:
                 name.pop()
-                    
+
         name = functions.url_amigable(''.join(name))
-        if ('' != tag) 
-            return name . '-' . tag . '.' . extension
-        else 
-            return name . '.' . extension
-            
+        if '' != tag:
+            return name + '-' + tag + '.' + extension
+        else:
+            return name + '.' + extension
+
     @staticmethod
     def delete(folder, file='', subfolder='', sub=''):
         import shutil
@@ -100,10 +104,8 @@ class image:
 
                     my_file.unlink()
 
-
     @staticmethod
     def get_upload_dir():
         if ('' == image.upload_dir):
             image.upload_dir = app.get_dir(True) + 'uploads/img/'
         return image.upload_dir
-    

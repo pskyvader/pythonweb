@@ -352,6 +352,7 @@ class database():
     @staticmethod
     def encript(password):
         import hashlib
+        from crypt import crypt
         salt = hashlib.sha1(password)
         p    = crypt(password, salt)
         return salt + hashlib.sha1(p)

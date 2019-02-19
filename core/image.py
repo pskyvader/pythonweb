@@ -139,6 +139,23 @@ class image:
                     my_file.unlink()
 
     @staticmethod
+    def delete_temp():
+        carpeta    = image.get_upload_dir() + 'tmp/'
+        directorio = opendir(carpeta) #ruta actual
+        now        = time()
+        horas      = 1
+        while (archivo = readdir(directorio)) #obtenemos un archivo y luego otro sucesivamente
+        
+            if (!is_dir(carpeta . archivo)) #verificamos si es o no un directorio
+            
+                if (file_exists(carpeta . archivo)) 
+                    if ((now - filemtime(carpeta . archivo)) / 3600 > horas)
+                        #si el archivo fue creado hace más de horas, borrar
+                        unlink(carpeta . archivo)
+                    
+    
+
+    @staticmethod
     def get_upload_dir():
         if ('' == image.upload_dir):
             image.upload_dir = app.get_dir(True) + 'uploads/img/'

@@ -1,5 +1,5 @@
 from core.app import app
-#import PyMySQL
+# import PyMySQL
 import pymysql
 
 
@@ -95,10 +95,46 @@ class database():
 
         if 'limit' in condiciones:
             sql += " LIMIT " + str(condiciones['limit'])
-            if 'limit2' in condiciones and condiciones['limit2']>0:
+            if 'limit2' in condiciones and condiciones['limit2'] > 0:
                 sql += " , " + str(condiciones['limit2'])
         row = self.consulta(sql, True)
         return row
+
+    def insert(self, table, idname, insert, delete_cache=True):
+        valor_primario = ""
+        image = []
+        if 'image' in insert:
+            image = insert['image']
+            del insert['image']
+
+        file = []
+        if 'file' in insert:
+            file = insert['file']
+            del insert['file']
+
+        sql = "INSERT INTO " + self._prefix + table
+        sql += "(" + idname
+
+        for key, value in insert.items():
+            sql += "," + key
+
+        sql += ") VALUES ('" + valor_primario + "'"
+
+        for key, value in insert.items():
+            sql += ","
+            sql += value if (value == "true" or value == "false") else "'" + str(value).replace("'", "\\'") + "'"
+
+        sql += ")"
+        row = self.consulta(sql, False, delete_cache)
+        if (row):
+            last_id = self.get_last_insert_id()
+            if len(image) > 0:
+                self.process_image(image, table, idname, last_id)
+            if len(file) > 0:
+                self.process_file(file, table, idname, last_id)
+            return last_id
+        else:
+            return row
 
     @staticmethod
     def instance():

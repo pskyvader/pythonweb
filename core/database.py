@@ -292,11 +292,11 @@ class database():
 
                 campos = self.consulta("SELECT COLUMN_NAME,COLUMN_TYPE FROM information_schema.columns WHERE table_schema='" + self._dbName + "' AND table_name='" + table + "'", True)
 
-                for (b in range(numBatches+1):
+                for b in range(numBatches+1):
                     query         = 'SELECT * FROM `' + table + '` LIMIT ' + (b * self.batchSize - self.batchSize) + ',' + self.batchSize
                     row           = self.consulta(query, True)
-                    realBatchSize = count(row) 
-                    numFields     = count(campos)
+                    realBatchSize = len(row) 
+                    numFields     = len(campos)
                     if (realBatchSize !== 0) {
                         sql .= 'INSERT INTO `' . table . '` VALUES '
                         foreach (row as key => fila) {

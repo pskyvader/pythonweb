@@ -267,9 +267,9 @@ class database():
         self.disableForeignKeyChecks = True;
         self.batchSize               = 1000;
         try {
-            if (tables == '*') {
-                tables = array();
-                row    = self.consulta('SHOW TABLES', True);
+            if tables == '*':
+                tables = []
+                row    = self.consulta('SHOW TABLES', True)
                 foreach (row as key => value) {
                     tables[] = value[0];
                 }

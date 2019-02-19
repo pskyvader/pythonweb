@@ -442,6 +442,7 @@ class database():
 
     def process_file(self, file_list, table, idname, id_file):
         import json
+        from core.file import file
         data = {}
         ids = {}
         for key, archivo in file_list.items():

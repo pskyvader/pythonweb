@@ -208,6 +208,28 @@ class database():
         row = self.consulta(sql, False)
         return row
 
+    def add(self, table, column, type_var, after='', primary=False):
+        valor_primario = ""
+        sql = "ALTER TABLE " + self._prefix + table
+        sql += " ADD " + column + " " + type_var + " NOT NULL "
+        if type_var == 'tinyint(1)':
+            sql += " DEFAULT '1' "
+
+        if primary:
+            sql += " AUTO_INCREMENT "
+
+        if after != '':
+            sql += " AFTER " + after
+        else:
+            sql += " FIRST"
+
+        if primary:
+            sql += ", ADD PRIMARY KEY ('" + column + "')"
+
+        row = self.consulta(sql, False)
+        return row
+    
+
     @staticmethod
     def instance():
         if database._instance is None:

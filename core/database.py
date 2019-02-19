@@ -136,6 +136,53 @@ class database():
         else: 
             return row
             
+    def update(self, table, idname, set, where, delete_cache = True)
+        set   = self.process_multiple(set)
+        image = array()
+        if (isset(set['image'])) {
+            image = set['image']
+            unset(set['image'])
+        }
+        file = array()
+        if (isset(set['file'])) {
+            file = set['file']
+            unset(set['file'])
+        }
+        if (isset(set['...'])) {
+            unset(set['...'])
+        }
+        sql = "UPDATE " . self._prefix . table
+        sql .= " SET "
+        count = 0
+        foreach (set as key => value) {
+            count++
+            sql .= key . "="
+            sql .= (value == "true" || value == "false") ? value : "'" . str_replace("'", "\\'", value) . "'"
+            sql .= (count < count(set)) ? ", " : ""
+        }
+        sql .= ""
+        sql .= " WHERE (TRUE"
+        foreach (where as key => value) {
+            sql .= " AND " . key . "='" . value . "'"
+        }
+        sql .= ") "
+        if (count(where) > 0) {
+            row = this->consulta(sql, false, delete_cache)
+            if (row) {
+                if (count(image) > 0) {
+                    this->process_image(image, table, idname, where[idname])
+                }
+                if (count(file) > 0) {
+                    this->process_file(file, table, idname, where[idname])
+                }
+            }
+            return row
+        } else {
+            echo "error cantidad de condiciones"
+            return false
+        }
+    }
+
 
     @staticmethod
     def instance():

@@ -288,7 +288,7 @@ class database():
                 row     = self.consulta('SELECT COUNT(*) FROM `' + table + '`', True)
                 numRows = row[0][0]
                 
-                numBatches = intval(numRows / self.batchSize) + 1 
+                numBatches = int(numRows / self.batchSize) + 1 
 
                 campos = self.consulta("SELECT COLUMN_NAME,COLUMN_TYPE FROM information_schema.columns WHERE table_schema='" . self._dbName . "' AND table_name='" . table . "'", True)
 

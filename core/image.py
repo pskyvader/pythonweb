@@ -1,5 +1,6 @@
 from pathlib import Path
 
+
 class image:
     types = ["image/webp", "image/bmp", "image/gif", "image/pjpeg", "image/jpeg", "image/svg+xml", "image/png", "video/webm", "video/mp4", "application/zip", "application/x-zip-compressed", "application/octet-stream", "application/postscript", "application/msword", "application/vnd.ms-excel", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.openxmlformats-officedocument.spreadsheetml.template", "application/vnd.openxmlformats-officedocument.presentationml.template",
              "application/vnd.openxmlformats-officedocument.presentationml.slideshow", "application/vnd.openxmlformats-officedocument.presentationml.presentation", "application/vnd.openxmlformats-officedocument.presentationml.slide", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/vnd.openxmlformats-officedocument.wordprocessingml.template", "application/vnd.ms-excel.addin.macroEnabled.12", "application/vnd.ms-excel.sheet.binary.macroEnabled.12", "application/pdf", "application/download"]
@@ -8,10 +9,10 @@ class image:
     upload_dir = ''
     upload_url = ''
     @staticmethod
-    def delete(folder, file = '', subfolder = '', sub = ''):
+    def delete(folder, file='', subfolder='', sub=''):
         import shutil
         if "" == file and '' != subfolder:
-            url = image.get_upload_dir() + folder + '/' +subfolder +'/'
+            url = image.get_upload_dir() + folder + '/' + subfolder + '/'
             my_file = Path(url)
             if my_file.is_file():
                 shutil.rmtree(url)
@@ -26,23 +27,22 @@ class image:
                 subfolder += '/'
             if '' != sub:
                 sub += '/'
-            url = image.get_upload_dir() + folder + '/' + subfolder + sub + file['url']
+            url = image.get_upload_dir() + folder + '/' + \
+                subfolder + sub + file['url']
             my_file = Path(url)
             if my_file.is_file():
                 shutil.rmtree(url)
-            
+
             for recorte in recortes:
-                url = image.get_upload_dir() + folder + '/' + subfolder + sub + image.nombre_archivo(file['url'], recorte['tag'])
+                url = image.get_upload_dir() + folder + '/' + subfolder + sub + \
+                    image.nombre_archivo(file['url'], recorte['tag'])
                 my_file = Path(url)
                 if my_file.is_file():
                     shutil.rmtree(url)
 
-                url = image.get_upload_dir() + folder + '/' + subfolder + sub + image.nombre_archivo(file['url'], recorte['tag'], 'webp')
+                url = image.get_upload_dir() + folder + '/' + subfolder + sub + \
+                    image.nombre_archivo(file['url'], recorte['tag'], 'webp')
 
-                if (file_exists(url)) {
-                    unlink(url)
-                }
-
-            }
-        }
-    }
+                my_file = Path(url)
+                if my_file.is_file():
+                    shutil.rmtree(url)

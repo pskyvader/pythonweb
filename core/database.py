@@ -136,20 +136,20 @@ class database():
         else: 
             return row
             
-    def update(self, table, idname, set, where, delete_cache = True)
-        set   = self.process_multiple(set)
+    def update(self, table, idname, set_query, where, delete_cache = True)
+        set   = self.process_multiple(set_query)
         image = array()
-        if (isset(set['image'])) {
-            image = set['image']
-            unset(set['image'])
+        if (isset(set_query['image'])) {
+            image = set_query['image']
+            unset(set_query['image'])
         }
         file = array()
-        if (isset(set['file'])) {
-            file = set['file']
-            unset(set['file'])
+        if (isset(set_query['file'])) {
+            file = set_query['file']
+            unset(set_query['file'])
         }
-        if (isset(set['...'])) {
-            unset(set['...'])
+        if (isset(set_query['...'])) {
+            unset(set_query['...'])
         }
         sql = "UPDATE " . self._prefix . table
         sql .= " SET "

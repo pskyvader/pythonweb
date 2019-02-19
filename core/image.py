@@ -39,11 +39,13 @@ class image:
                     image.nombre_archivo(file['url'], recorte['tag'])
                 my_file = Path(url)
                 if my_file.is_file():
-                    shutil.rmtree(url)
+
+                    my_file.unlink()
 
                 url = image.get_upload_dir() + folder + '/' + subfolder + sub + \
                     image.nombre_archivo(file['url'], recorte['tag'], 'webp')
 
                 my_file = Path(url)
                 if my_file.is_file():
-                    shutil.rmtree(url)
+
+                    my_file.unlink()

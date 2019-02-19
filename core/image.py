@@ -30,8 +30,8 @@ class image:
         name      = file['tmp'].split('.')
         extension = (name.pop()).lower()
 
-        file['url'] = file['id'] . '.' . extension
-        rename(folder_tmp . '/' . file['tmp'], folder . '/' . file['url'])
+        file['url'] = file['id'] + '.' + extension
+        rename(folder_tmp + '/' + file['tmp'], folder + '/' + file['url'])
 
         foreach (recortes as key => recorte) {
             rename(folder_tmp . '/' . image.nombre_archivo(file['tmp'], recorte['tag']), folder . '/' . image.nombre_archivo(file['url'], recorte['tag']))

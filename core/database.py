@@ -400,17 +400,17 @@ class database():
             del data['multiple']
         return data
 
-    def process_image(self,image_list, table, idname, id_image):
+    def process_image(self, image_list, table, idname, id_image):
         import json
         data = {}
-        ids  = {}
-        for key,img in image_list.items():
-            row     = {}
+        ids = {}
+        for key, img in image_list.items():
+            row = {}
             portada = False
-            for k,f in img.items():
-                if 'tmp' in f and f['tmp']!='':
+            for k, f in img.items():
+                if 'tmp' in f and f['tmp'] != '':
                     f = image.move(f, table, key, id_image)
-                
+
                 ids[key][f['id']] = f['url']
                 if f['portada'] == 'true':
                     if portada:
@@ -419,26 +419,52 @@ class database():
                         portada = True
                 f['parent'] = id_image
                 f['folder'] = table
-                row[k]     = f
-            
+                row[k] = f
+
             if not portada:
                 row[0]['portada'] = 'true'
             data[key] = json.dumps(row)
-        
 
-        row = self.get(table, idname, {'idname' : id_image}, {'limit' : 1})
-        self.update(table, idname, data, {'idname' : id_image})
-        for key,value in ids.items():
+        row = self.get(table, idname, {'idname': id_image}, {'limit': 1})
+        self.update(table, idname, data, {'idname': id_image})
+        for key, value in ids.items():
             images = json.loads(row[0][key])
-            if isinstance(images,list):
-                for k,file in enumerate(images):
+            if isinstance(images, list):
+                for file in images:
                     if file['id'] in value or value[file['id']] != file['url']:
                         image.delete(table, file, id_image, key)
-                    
+
         image.delete_temp()
         return data
-    
 
+    def process_file(self, file_list, table, idname, id_file):
+        import json
+        data = {}
+        ids = {}
+        for key, archivo in file_list.items():
+            row = {}
+            for k, f in archivo.items():
+                if 'tmp' in f and f['tmp'] != '':
+                    f = file.move(f, table, key, id_file)
+
+                ids[key][f['id']] = f['url']
+                f['parent'] = id_file
+                f['folder'] = table
+                row[k] = f
+
+            data[key] = json.dumps(row)
+
+        row = self.get(table, idname, {'idname': id_file}, {'limit': 1})
+        self.update(table, idname, data, {'idname': id_file})
+        for key, value in ids.items():
+            files = json.loads(row[0][key])
+            if isinstance(files, list):
+                for file in files:
+                    if file['id'] in value or value[file['id']] != file['url']:
+                        file.delete(table, file, id_file, key)
+
+        file.delete_temp()
+        return data
 
     @staticmethod
     def instance():

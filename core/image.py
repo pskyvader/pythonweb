@@ -14,32 +14,30 @@ class image:
             url = image.get_upload_dir() + folder + '/' +subfolder +'/'
             my_file = Path(url)
             if my_file.is_file():
-                image.removeDirectory(url)
+                shutil.rmtree(url)
         elif '' == file and '' == subfolder:
-            url = image.get_upload_dir() . folder . '/'
-            if (file_exists(url)) {
-                image.removeDirectory(url)
-            }
-        } else {
+            url = image.get_upload_dir() + folder + '/'
+            my_file = Path(url)
+            if my_file.is_file():
+                shutil.rmtree(url)
+        else:
             recortes = image.get_recortes(folder)
-            if ('' != subfolder) {
-                subfolder .= '/'
-            }
-            if ('' != sub) {
-                sub .= '/'
-            }
-            url = image.get_upload_dir() . folder . '/' . subfolder . sub . file['url']
-            if (file_exists(url)) {
-                unlink(url)
-            }
+            if '' != subfolder:
+                subfolder += '/'
+            if '' != sub:
+                sub += '/'
+            url = image.get_upload_dir() + folder + '/' + subfolder + sub + file['url']
+            my_file = Path(url)
+            if my_file.is_file():
+                shutil.rmtree(url)
+            
+            for recorte in recortes:
+                url = image.get_upload_dir() + folder + '/' + subfolder + sub + image.nombre_archivo(file['url'], recorte['tag'])
+                my_file = Path(url)
+                if my_file.is_file():
+                    shutil.rmtree(url)
 
-            foreach (recortes as key => recorte) {
-                url = image.get_upload_dir() . folder . '/' . subfolder . sub . image.nombre_archivo(file['url'], recorte['tag'])
-                if (file_exists(url)) {
-                    unlink(url)
-                }
-
-                url = image.get_upload_dir() . folder . '/' . subfolder . sub . image.nombre_archivo(file['url'], recorte['tag'], 'webp')
+                url = image.get_upload_dir() + folder + '/' + subfolder + sub + image.nombre_archivo(file['url'], recorte['tag'], 'webp')
 
                 if (file_exists(url)) {
                     unlink(url)

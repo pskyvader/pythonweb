@@ -1,6 +1,7 @@
 from pathlib import Path
 from os import remove
 from core.app import app
+from core.functions import functions
 
 
 class image:

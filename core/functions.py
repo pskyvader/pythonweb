@@ -76,6 +76,32 @@ class functions():
         return url
 
     @staticmethod
+    def url_amigable(url=""):
+        url=url.replace
+        $url = str_replace(array('á', 'à', 'â', 'ã', 'ª', 'ä'), "a", $url);
+        $url = str_replace(array('Á', 'À', 'Â', 'Ã', 'Ä'), "A", $url);
+        $url = str_replace(array('Í', 'Ì', 'Î', 'Ï'), "I", $url);
+        $url = str_replace(array('í', 'ì', 'î', 'ï'), "i", $url);
+        $url = str_replace(array('é', 'è', 'ê', 'ë'), "e", $url);
+        $url = str_replace(array('É', 'È', 'Ê', 'Ë'), "E", $url);
+        $url = str_replace(array('ó', 'ò', 'ô', 'õ', 'ö'), "o", $url);
+        $url = str_replace(array('Ó', 'Ò', 'Ô', 'Õ', 'Ö'), "O", $url);
+        $url = str_replace(array('ú', 'ù', 'û', 'ü'), "u", $url);
+        $url = str_replace(array('Ú', 'Ù', 'Û', 'Ü'), "U", $url);
+        $url = str_replace(array('[', '^', '´', '`', '¨', '~', ']', ' ', '/', '°', 'º'), "-", $url);
+        $url = str_replace("ç", "c", $url);
+        $url = str_replace("Ç", "C", $url);
+        $url = str_replace("ñ", "n", $url);
+        $url = str_replace("Ñ", "N", $url);
+        $url = str_replace("Ý", "Y", $url);
+        $url = str_replace("ý", "y", $url);
+        $url = explode('-', $url);
+        $url = implode('-', array_filter($url));
+        $url = strtolower($url);
+        return $url;
+    }
+
+    @staticmethod
     def fecha_archivo(archivo, only_fecha=False, final_file=''):
         c = '?time=' if "?" not in archivo else '&time='
         ac = archivo.split('?', 2)[0]

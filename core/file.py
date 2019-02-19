@@ -11,7 +11,7 @@ class file(image):
                 shutil.rmtree(url)
         elif '' == file and '' == subfolder:
             url = cls.get_upload_dir() + folder + '/'
-             my_file = Path(url)
+            my_file = Path(url)
             if my_file.is_dir():
                 shutil.rmtree(url)
         else:

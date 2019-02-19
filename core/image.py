@@ -20,7 +20,7 @@ class image:
             var['tipo'] = app.get['tipo']
 
         #modulo     = modulo_model.getAll(var, {'limit':1})
-        modulo=[]
+        modulo={}
         recortes   = []
         recortes.append({'tag' : 'thumb', 'titulo' : 'Thumb', 'ancho' : 200, 'alto' : 200, 'calidad' : 90, 'tipo' : 'centrar'})
         recortes.append({'tag' : 'zoom', 'titulo' : 'Zoom', 'ancho' : 600, 'alto' : 600, 'calidad' : 90, 'tipo' : 'centrar'})

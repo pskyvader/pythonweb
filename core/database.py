@@ -247,7 +247,7 @@ class database():
 
     def truncate(self, tables):
         sql = ""
-        for key, table in tables.items():
+        for table in tables:
             sql += "TRUNCATE TABLE " + self._prefix + table + " "
 
         row = self.consulta(sql, False)
@@ -263,7 +263,7 @@ class database():
 
     def backup(self, tables='*'):
         respuesta = {'exito': False,
-            'mensaje': 'Error al respaldar base de datos', 'sql': []}
+                     'mensaje': 'Error al respaldar base de datos', 'sql': []}
         self.disableForeignKeyChecks = True
         self.batchSize = 1000
         try:
@@ -298,7 +298,7 @@ class database():
                 for b in range(numBatches+1):
                     query = 'SELECT * FROM `' + table + '` LIMIT ' + \
                         (b * self.batchSize - self.batchSize) + \
-                         ',' + self.batchSize
+                        ',' + self.batchSize
                     row = self.consulta(query, True)
                     realBatchSize = len(row)
                     numFields = len(campos)
@@ -336,20 +336,18 @@ class database():
 
                     respuesta['sql'].append(sql)
                     sql = ''
-                    
+
                 sql += "\n\n"
-            
+
             if self.disableForeignKeyChecks:
                 sql += "SET foreign_key_checks = 1\n"
-            
 
             respuesta['sql'].append(sql)
             respuesta['exito'] = True
         except Exception as e:
             respuesta['mensaje'] = e
-        
+
         return respuesta
-    
 
     @staticmethod
     def instance():

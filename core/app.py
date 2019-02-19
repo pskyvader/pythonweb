@@ -54,6 +54,9 @@ class app:
         app.url['base'] = app.path
         app.url['admin'] = app.path + config['admin'] + '/'
 
+        app.url['base_dir'] = app.root+'/'
+        app.url['admin_dir'] = app.root+'/' + config['admin'] + '/'
+
         app.url['base_sub'] = subdirectorio
         app.url['admin_sub'] = subdirectorio + config['admin'] + '/'
 
@@ -108,7 +111,7 @@ class app:
         data_return['response_body'] = response['body']
         data_return['headers'] = response['headers']
         for cookie in functions.cookies:
-            data_return['headers'].append(('Set-Cookie',cookie))
+            data_return['headers'].append(('Set-Cookie', cookie))
         return data_return
 
     @staticmethod
@@ -117,21 +120,21 @@ class app:
         if url != '':
             url = url.split('/')
             url = ' '.join(url).split()
-            if len(url)>0:
+            if len(url) > 0:
                 if url[0] == 'manifest.js':
                     url[0] = 'manifest'
                 elif url[0] == 'sw.js':
                     url[0] = 'sw'
                 elif url[0] == 'favicon.ico':
                     url[0] = 'favicon'
-                elif len(url)>1:
+                elif len(url) > 1:
                     if url[1] == 'manifest.js':
                         url[1] = 'manifest'
                     elif url[1] == 'sw.js':
                         url[1] = 'sw'
                     elif url[1] == 'favicon.ico':
                         url[1] = 'favicon'
-            
+
         else:
             url = ['home']
         return url

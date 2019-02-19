@@ -86,7 +86,7 @@ class base_model:
             else:
                 print(row)
                 print(limit,limit2)
-                row = row[limit:limit2]
+                row = row[limit:limit2+1]
                 print(row)
 
         if return_total != None:

@@ -1,4 +1,5 @@
 from pathlib import Path
+from os import remove
 
 
 class image:
@@ -14,12 +15,12 @@ class image:
         if "" == file and '' != subfolder:
             url = image.get_upload_dir() + folder + '/' + subfolder + '/'
             my_file = Path(url)
-            if my_file.is_file():
+            if my_file.is_dir():
                 shutil.rmtree(url)
         elif '' == file and '' == subfolder:
             url = image.get_upload_dir() + folder + '/'
             my_file = Path(url)
-            if my_file.is_file():
+            if my_file.is_dir():
                 shutil.rmtree(url)
         else:
             recortes = image.get_recortes(folder)
@@ -31,7 +32,7 @@ class image:
                 subfolder + sub + file['url']
             my_file = Path(url)
             if my_file.is_file():
-                shutil.rmtree(url)
+                my_file.unlink()
 
             for recorte in recortes:
                 url = image.get_upload_dir() + folder + '/' + subfolder + sub + \

@@ -133,8 +133,9 @@ class database():
             if len(file) > 0:
                 self.process_file(file, table, idname, last_id)
             return last_id
-        else:
+        else: 
             return row
+            
 
     @staticmethod
     def instance():

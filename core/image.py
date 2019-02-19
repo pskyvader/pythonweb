@@ -1,5 +1,6 @@
 from pathlib import Path
 from os import remove
+from os import makedirs
 from core.app import app
 from core.functions import functions
 
@@ -22,15 +23,12 @@ class image:
         base_folder = image.get_upload_dir() + folder
         folder      = base_folder + '/' + name_final + '/' + subfolder
 
-        if (!file_exists(folder)) {
-            if (!mkdir(folder, 0777, true)) {
-                echo "Error al crear directorio " . folder
-                exit()
-            }
+        my_file = Path(folder)
+        if not my_file.is_dir():
+            makedirs(folder,777)
             functions.protection_template(base_folder)
-            functions.protection_template(base_folder . '/' . name_final)
+            functions.protection_template(base_folder + '/' + name_final)
             functions.protection_template(folder)
-        }
 
         name      = explode(".", file['tmp'])
         extension = strtolower(array_pop(name))

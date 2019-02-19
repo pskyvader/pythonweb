@@ -255,8 +255,8 @@ class database():
 
 
     def restore_backup(self,backup):
-        sql   = file_get_contents(backup)
-        exito = this.consulta(sql, False)
+        sql=open( backup, "r").read()
+        exito = self.consulta(sql, False)
         if exito:
             unlink(backup)
         return exito

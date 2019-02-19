@@ -62,6 +62,7 @@ class base_model:
 
         row = connection.get(cls.table, cls.idname, where, condiciones, select)
         for key,value in enumerate(row):
+            print(key,value)
             if 'idpadre' in row[key]:
                 row[key]['idpadre'] = json.loads(row[key]['idpadre'])
                 if idpadre!=None and idpadre not in row[key]['idpadre']:

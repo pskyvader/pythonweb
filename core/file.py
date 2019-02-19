@@ -3,7 +3,7 @@ class file(image):
     @classmethod
     def delete(cls,folder, file = '', subfolder = '', sub = ''):
         if "" == file and '' != subfolder:
-            url = cls.get_upload_dir() . folder . '/' . subfolder . '/'
+            url = cls.get_upload_dir() + folder + '/' + subfolder + '/'
             if (file_exists(url)) {
                 cls.removeDirectory(url)
             }

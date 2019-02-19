@@ -53,7 +53,7 @@ class image:
             if len(name) > 1:
                 name.pop()
                     
-        name = functions.url_amigable(implode(name, ''))
+        name = functions.url_amigable(''.join(name))
         if ('' != tag) 
             return name . '-' . tag . '.' . extension
         else 

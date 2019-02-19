@@ -5,7 +5,7 @@ from os.path import getmtime
 
 
 class functions():
-    cookies=[]
+    cookies = []
     @staticmethod
     def get_cookie(find_cookie):
         from http import cookies
@@ -77,35 +77,35 @@ class functions():
 
     @staticmethod
     def url_amigable(url=""):
-        url=functions.replaceMultiple(url,['á', 'à', 'â', 'ã', 'ª', 'ä'],'a')
-        url=functions.replaceMultiple(url,['Á', 'À', 'Â', 'Ã', 'Ä'], "A")
-        url=functions.replaceMultiple(url,['Í', 'Ì', 'Î', 'Ï'], "I")
-        url=functions.replaceMultiple(url,['í', 'ì', 'î', 'ï'], "i")
-        url=functions.replaceMultiple(url,['é', 'è', 'ê', 'ë'], "e")
-        url=functions.replaceMultiple(url,['É', 'È', 'Ê', 'Ë'], "E")
-        url=functions.replaceMultiple(url,['ó', 'ò', 'ô', 'õ', 'ö'], "o")
-        url=functions.replaceMultiple(url,['Ó', 'Ò', 'Ô', 'Õ', 'Ö'], "O")
-        url=functions.replaceMultiple(url,['ú', 'ù', 'û', 'ü'], "u")
-        url=functions.replaceMultiple(url,['Ú', 'Ù', 'Û', 'Ü'], "U")
-        url=functions.replaceMultiple(url,['[', '^', '´', '`', '¨', '~', ']', ' ', '/', '°', 'º'], "-")
-        url=url.replace("ç", "c")
-        url=url.replace("Ç", "C")
-        url=url.replace("ñ", "n")
-        url=url.replace("Ñ", "N")
-        url=url.replace("Ý", "Y")
-        url=url.replace("ý", "y")
-        url=url.lower()
+        url = functions.replaceMultiple( url, ['á', 'à', 'â', 'ã', 'ª', 'ä'], 'a')
+        url = functions.replaceMultiple(url, ['Á', 'À', 'Â', 'Ã', 'Ä'], "A")
+        url = functions.replaceMultiple(url, ['Í', 'Ì', 'Î', 'Ï'], "I")
+        url = functions.replaceMultiple(url, ['í', 'ì', 'î', 'ï'], "i")
+        url = functions.replaceMultiple(url, ['é', 'è', 'ê', 'ë'], "e")
+        url = functions.replaceMultiple(url, ['É', 'È', 'Ê', 'Ë'], "E")
+        url = functions.replaceMultiple(url, ['ó', 'ò', 'ô', 'õ', 'ö'], "o")
+        url = functions.replaceMultiple(url, ['Ó', 'Ò', 'Ô', 'Õ', 'Ö'], "O")
+        url = functions.replaceMultiple(url, ['ú', 'ù', 'û', 'ü'], "u")
+        url = functions.replaceMultiple(url, ['Ú', 'Ù', 'Û', 'Ü'], "U")
+        url = functions.replaceMultiple( url, ['[', '^', '´', '`', '¨', '~', ']', ' ', '/', '°', 'º'], "-")
+        url = url.replace("ç", "c")
+        url = url.replace("Ç", "C")
+        url = url.replace("ñ", "n")
+        url = url.replace("Ñ", "N")
+        url = url.replace("Ý", "Y")
+        url = url.replace("ý", "y")
+        url = url.lower()
         return url
 
     @staticmethod
     def replaceMultiple(mainString, toBeReplaces, newString):
         # Iterate over the strings to be replaced
-        for elem in toBeReplaces :
+        for elem in toBeReplaces:
             # Check if string is in the main string
-            if elem in mainString :
+            if elem in mainString:
                 # Replace the string
                 mainString = mainString.replace(elem, newString)
-        return  mainString
+        return mainString
 
     @staticmethod
     def fecha_archivo(archivo, only_fecha=False, final_file=''):
@@ -113,7 +113,7 @@ class functions():
         ac = archivo.split('?', 2)[0]
         if final_file != '':
             archivo = final_file
-        
+
         my_file = Path(ac)
 
         if only_fecha:

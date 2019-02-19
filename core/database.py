@@ -427,20 +427,17 @@ class database():
         
 
         row = self.get(table, idname, {'idname' : id_image}, {'limit' : 1})
-        self.update(table, idname, data, array(idname : id_image))
-        foreach (ids as key : value) {
-            images = json_decode(html_entity_decode(row[0][key]), true)
-            if (is_array(images)) {
-                foreach (images as k : file) {
-                    if (!isset(value[file['id']]) || value[file['id']] != file['url']) {
-                        image::delete(table, file, id_image, key)
-                    }
-                }
-            }
-        }
-        image::delete_temp()
+        self.update(table, idname, data, {'idname' : id_image})
+        for key,value in ids.items():
+            images = json.loads(row[0][key])
+            if isinstance(images,list):
+                for k,file in enumerate(images):
+                    if file['id'] in value or value[file['id']] != file['url']:
+                        image.delete(table, file, id_image, key)
+                    
+        image.delete_temp()
         return data
-    }
+    
 
 
     @staticmethod

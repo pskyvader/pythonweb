@@ -138,34 +138,33 @@ class database():
             
     def update(self, table, idname, set_query, where, delete_cache = True):
         set_query   = self.process_multiple(set_query)
-        image = array()
-        if (isset(set_query['image'])) {
+        image = []
+        if 'image' in set_query:
             image = set_query['image']
-            unset(set_query['image'])
-        }
-        file = array()
-        if (isset(set_query['file'])) {
+            del set_query['image']
+
+        file = []
+        if 'file' in set_query:
             file = set_query['file']
-            unset(set_query['file'])
-        }
-        if (isset(set_query['...'])) {
-            unset(set_query['...'])
-        }
-        sql = "UPDATE " . self._prefix . table
-        sql .= " SET "
+            del set_query['file']
+        if '...' in set_query:
+            del set_query['...']
+        
+        sql = "UPDATE " + self._prefix + table
+        sql += " SET "
         count = 0
-        foreach (set as key => value) {
-            count++
-            sql .= key . "="
-            sql .= (value == "true" || value == "false") ? value : "'" . str_replace("'", "\\'", value) . "'"
-            sql .= (count < count(set)) ? ", " : ""
-        }
-        sql .= ""
-        sql .= " WHERE (TRUE"
+        for key, value in set_query.items():
+            count+=1
+            sql += key + "="
+            sql += value if (value == "true" or value == "false") else "'" + str(value).replace("'", "\\'") + "'"
+            sql += ", " if (count < len(set_query)) else ""
+
+            
+        sql += " WHERE (TRUE"
         foreach (where as key => value) {
-            sql .= " AND " . key . "='" . value . "'"
+            sql += " AND " + key + "='" + value + "'"
         }
-        sql .= ") "
+        sql += ") "
         if (count(where) > 0) {
             row = this->consulta(sql, false, delete_cache)
             if (row) {

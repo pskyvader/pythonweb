@@ -356,11 +356,12 @@ class database():
         salt = hashlib.sha1(password)
         p = crypt(password, salt)
         return salt + hashlib.sha1(p)
+
     @staticmethod
     def create_data(model, data):
         data = database.process_multiple(data)
-        m    = {}
-        for key,value in model.items():
+        m = {}
+        for key, value in model.items():
             if key in data:
                 m[key] = data[key]
             else:
@@ -370,10 +371,35 @@ class database():
                     m[key] = ''
         if 'image' in data:
             m['image'] = data['image']
-        
+
         if 'file' in data:
             m['file'] = data['file']
         return m
+
+    @staticmethod
+    def process_multiple(data):
+        import json
+        if 'multiple' in data:
+            for key, multiple in data['multiple'].items():
+                row = {}
+                for k, e in multiple.items():
+                    if isinstance(e, list):
+                        for a, f in e.items():
+                            if key == "image" or key == "file":
+                                for ke, va in f.items():
+                                    row[k][ke][a] = va
+                            else:
+                                row[a][k] = f
+                    else:
+                        row[k] = e
+
+                if key != "image" and key != "file":
+                    data[key] = json.dumps(row)
+                else:
+                    data[key] = row
+            del data['multiple']
+
+        return data
 
     @staticmethod
     def instance():

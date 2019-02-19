@@ -33,12 +33,13 @@ class image:
         file['url'] = file['id'] + '.' + extension
         rename(folder_tmp + '/' + file['tmp'], folder + '/' + file['url'])
 
-        foreach (recortes as key => recorte) {
-            rename(folder_tmp . '/' . image.nombre_archivo(file['tmp'], recorte['tag']), folder . '/' . image.nombre_archivo(file['url'], recorte['tag']))
-            if (file_exists(folder_tmp . '/' . image.nombre_archivo(file['tmp'], recorte['tag'], 'webp'))) {
-                rename(folder_tmp . '/' . image.nombre_archivo(file['tmp'], recorte['tag'], 'webp'), folder . '/' . image.nombre_archivo(file['url'], recorte['tag'], 'webp'))
-            }
-        }
+        for recorte in recortes:
+            rename(folder_tmp + '/' + image.nombre_archivo(file['tmp'], recorte['tag']), folder + '/' + image.nombre_archivo(file['url'], recorte['tag']))
+            my_file = Path(folder_tmp + '/' + image.nombre_archivo(file['tmp'], recorte['tag'], 'webp'))
+            if not my_file.is_dir():
+                rename(folder_tmp + '/' + image.nombre_archivo(file['tmp'], recorte['tag'], 'webp'), folder + '/' + image.nombre_archivo(file['url'], recorte['tag'], 'webp'))
+            
+        
         unset(file['tmp'])
         file['subfolder'] = subfolder
         return file

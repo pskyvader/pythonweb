@@ -18,9 +18,9 @@ class image:
     @staticmethod
     def move(file, folder, subfolder, name_final, folder_tmp = 'tmp'):
         recortes    = image.get_recortes(folder)
-        folder_tmp  = image.get_upload_dir() . folder_tmp
-        base_folder = image.get_upload_dir() . folder
-        folder      = base_folder . '/' . name_final . '/' . subfolder
+        folder_tmp  = image.get_upload_dir() + folder_tmp
+        base_folder = image.get_upload_dir() + folder
+        folder      = base_folder + '/' + name_final + '/' + subfolder
 
         if (!file_exists(folder)) {
             if (!mkdir(folder, 0777, true)) {

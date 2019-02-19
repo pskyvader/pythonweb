@@ -167,6 +167,13 @@ class app:
         return app.config
 
     @staticmethod
+    def get_dir(front=False):
+        if app.front or front:
+            return app.url['base_dir']
+        else:
+            return app.url['admin_dir']
+
+    @staticmethod
     def get_url(front=False):
         if (app.front or front):
             return app.url['base']

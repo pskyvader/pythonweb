@@ -55,6 +55,6 @@ class image:
     @staticmethod
     def get_upload_dir():
         if ('' == image.upload_dir):
-            image.upload_dir = app.get_dir(true) + 'uploads/img/'
+            image.upload_dir = app.get_dir(True) + 'uploads/img/'
         return image.upload_dir;
     

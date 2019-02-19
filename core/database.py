@@ -122,7 +122,8 @@ class database():
 
         for key, value in insert.items():
             sql += ","
-            sql += value if (value == "true" or value == "false") else "'" + str(value).replace("'", "\\'") + "'"
+            sql += value if (value == "true" or value ==
+                             "false") else "'" + str(value).replace("'", "\\'") + "'"
 
         sql += ")"
         row = self.consulta(sql, False, delete_cache)
@@ -133,11 +134,11 @@ class database():
             if len(file) > 0:
                 self.process_file(file, table, idname, last_id)
             return last_id
-        else: 
+        else:
             return row
-            
-    def update(self, table, idname, set_query, where, delete_cache = True):
-        set_query   = self.process_multiple(set_query)
+
+    def update(self, table, idname, set_query, where, delete_cache=True):
+        set_query = self.process_multiple(set_query)
         image = []
         if 'image' in set_query:
             image = set_query['image']
@@ -149,15 +150,16 @@ class database():
             del set_query['file']
         if '...' in set_query:
             del set_query['...']
-        
+
         sql = "UPDATE " + self._prefix + table
         sql += " SET "
         count = 0
 
         for key, value in set_query.items():
-            count+=1
+            count += 1
             sql += key + "="
-            sql += value if (value == "true" or value == "false") else "'" + str(value).replace("'", "\\'") + "'"
+            sql += value if (value == "true" or value ==
+                             "false") else "'" + str(value).replace("'", "\\'") + "'"
             sql += ", " if (count < len(set_query)) else ""
 
         sql += " WHERE (TRUE"
@@ -167,20 +169,17 @@ class database():
 
         if len(where) > 0:
             row = self.consulta(sql, False, delete_cache)
-            if (row) 
+            if (row):
                 if len(image) > 0:
                     self.process_image(image, table, idname, where[idname])
-                
+
                 if len(file) > 0:
                     self.process_file(file, table, idname, where[idname])
-                
-            
+
             return row
         else:
             print("error cantidad de condiciones")
             return False
-            
-
 
     @staticmethod
     def instance():

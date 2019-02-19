@@ -1,5 +1,5 @@
 from core.database import database
-from . import base_model
+from .base_model import base_model
 class administrador(base_model):
     @staticmethod
     def get_all():

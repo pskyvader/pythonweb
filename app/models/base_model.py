@@ -18,19 +18,22 @@ class base_model:
         if 'estado' not in where and app.front and 'estado' in fields:
             where['estado'] = True
 
-        if 'idpadre' in where and 'idpadre' in fields:
-            idpadre = where['idpadre']
-            del where['idpadre']
-            if 'limit' in condiciones:
-                limit = condiciones['limit']
-                limit2 = 0
-                del condiciones['limit']
+        if 'idpadre' in where:
+            if 'idpadre' in fields:
+                idpadre = where['idpadre']
+                if 'limit' in condiciones:
+                    limit = condiciones['limit']
+                    limit2 = 0
+                    del condiciones['limit']
 
-            if 'limit2' in condiciones:
-                if limit == None:
-                    limit = 0
-                limit2 = condiciones['limit2']
-                del condiciones['limit2']
+                if 'limit2' in condiciones:
+                    if limit == None:
+                        limit = 0
+                    limit2 = condiciones['limit2']
+                    del condiciones['limit2']
+            
+            del where['idpadre']
+        
 
         if 'order' not in condiciones and 'orden' in fields:
             condiciones['order'] = 'orden ASC'

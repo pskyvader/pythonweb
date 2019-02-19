@@ -153,34 +153,33 @@ class database():
         sql = "UPDATE " + self._prefix + table
         sql += " SET "
         count = 0
+
         for key, value in set_query.items():
             count+=1
             sql += key + "="
             sql += value if (value == "true" or value == "false") else "'" + str(value).replace("'", "\\'") + "'"
             sql += ", " if (count < len(set_query)) else ""
 
-            
         sql += " WHERE (TRUE"
-        foreach (where as key => value) {
-            sql += " AND " + key + "='" + value + "'"
-        }
+        for key, value in where.items():
+            sql += " AND " + key + "='" + str(value) + "'"
         sql += ") "
-        if (count(where) > 0) {
-            row = this->consulta(sql, false, delete_cache)
-            if (row) {
-                if (count(image) > 0) {
-                    this->process_image(image, table, idname, where[idname])
-                }
-                if (count(file) > 0) {
-                    this->process_file(file, table, idname, where[idname])
-                }
-            }
+
+        if len(where) > 0:
+            row = self.consulta(sql, False, delete_cache)
+            if (row) 
+                if len(image) > 0:
+                    self.process_image(image, table, idname, where[idname])
+                
+                if len(file) > 0:
+                    self.process_file(file, table, idname, where[idname])
+                
+            
             return row
-        } else {
-            echo "error cantidad de condiciones"
-            return false
-        }
-    }
+        else:
+            print("error cantidad de condiciones")
+            return False
+            
 
 
     @staticmethod

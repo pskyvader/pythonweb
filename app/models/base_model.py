@@ -19,6 +19,7 @@ class base_model:
             where['estado'] = True
 
         if 'idpadre' in where:
+        #if 'idpadre' in where and 'idpadre' in fields:
             idpadre = where['idpadre']
             del where['idpadre']
             if 'limit' in condiciones:

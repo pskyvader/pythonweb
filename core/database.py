@@ -253,6 +253,14 @@ class database():
         row = self.consulta(sql, False)
         return row
 
+
+    def restore_backup(self,backup):
+        sql   = file_get_contents(backup)
+        exito = this.consulta(sql, False)
+        if exito:
+            unlink(backup)
+        return exito
+
     @staticmethod
     def instance():
         if database._instance is None:

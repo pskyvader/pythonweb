@@ -141,7 +141,7 @@ class image:
     @staticmethod
     def delete_temp():
         from os import listdir
-from os.path import isfile, join
+        from os.path import isfile, join
         carpeta    = image.get_upload_dir() + 'tmp/'
         
         onlyfiles = [f for f in listdir(carpeta) if isfile(join(carpeta, f))]

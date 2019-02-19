@@ -61,6 +61,7 @@ class base_model:
                 select = ''
 
         row = connection.get(cls.table, cls.idname, where, condiciones, select)
+        print(row)
         for key,value in enumerate(row):
             if 'idpadre' in row[key]:
                 row[key]['idpadre'] = json.loads(row[key]['idpadre'])
@@ -74,6 +75,7 @@ class base_model:
                 if key in row and 'archivo' in row[key]:
                     row[key]['archivo'] = json.loads( row[key]['archivo'])
         
+        print(row)
         if limit!=None:
             if limit2 == 0:
                 row=row[0:limit]

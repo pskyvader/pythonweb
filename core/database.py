@@ -181,6 +181,26 @@ class database():
             print("error cantidad de condiciones")
             return False
 
+
+    def delete(self,table, idname, where, delete_cache = True):
+        sql = "DELETE FROM " + self._prefix + table
+
+        sql += " WHERE (TRUE"
+        for key, value in where.items():
+            sql += " AND " + key + "='" + str(value) + "'"
+        sql += ") "
+
+        if len(where) > 0:
+            row = self.consulta(sql, False, delete_cache)
+            image.delete(table, '', where[idname])
+            file.delete(table, '', where[idname])
+            return row
+        else:
+            print("error cantidad de condiciones")
+            return False
+    
+
+
     @staticmethod
     def instance():
         if database._instance is None:

@@ -28,7 +28,7 @@ class home:
     metadata = {'title': 'Home', 'modulo': 'home'}
 
     def index(self):
-        registros=administrador.get_all()
+        registros=administrador.getAll()
         ret = {'body':''}
         url_return=functions.url_redirect(self.url)
         if url_return!='':

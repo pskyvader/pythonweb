@@ -142,13 +142,14 @@ class image:
     def delete_temp():
         from os import listdir
         from os.path import isfile, join
-        
+        from datetime import datetime
+        now        = now()
+        horas      = 1
+
         for archivo in listdir():
 
 
         directorio = opendir(carpeta) #ruta actual
-        now        = time()
-        horas      = 1
         while (archivo = readdir(directorio)) #obtenemos un archivo y luego otro sucesivamente
         
             if (!is_dir(carpeta . archivo)) #verificamos si es o no un directorio

@@ -18,9 +18,9 @@ class file(image):
             if '' != subfolder:
                 subfolder += '/'
             
-            if ('' != sub) {
-                sub .= '/'
-            }
-            url = cls.get_upload_dir() . folder . '/' . subfolder . sub . file['url']
+            if '' != sub:
+                sub += '/'
+            
+            url = cls.get_upload_dir() + folder + '/' + subfolder + sub + file['url']
             if (file_exists(url)) {
                 unlink(url)

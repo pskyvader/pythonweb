@@ -63,6 +63,10 @@ class database():
 
         return rows
 
+    def get_last_insert_id(self):
+        return self._connection.insert_id()
+    
+
     @staticmethod
     def instance():
         if database._instance is None:

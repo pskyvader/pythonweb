@@ -199,7 +199,6 @@ class database():
             return False
 
     def modify(self, table, column, type_var):
-        valor_primario = ""
         sql = "ALTER TABLE " + self._prefix + table
         sql += " MODIFY " + column + " " + type_var + " NOT NULL "
         if type_var == 'tinyint(1)':
@@ -209,7 +208,6 @@ class database():
         return row
 
     def add(self, table, column, type_var, after='', primary=False):
-        valor_primario = ""
         sql = "ALTER TABLE " + self._prefix + table
         sql += " ADD " + column + " " + type_var + " NOT NULL "
         if type_var == 'tinyint(1)':

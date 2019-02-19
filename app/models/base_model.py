@@ -71,6 +71,8 @@ class base_model:
             if return_total==None:
                 if key in row and 'foto' in row[key]:
                     row[key]['foto'] = json.loads(row[key]['foto'])
+                else:
+                    print('no foto')
 
                 if key in row and 'archivo' in row[key]:
                     row[key]['archivo'] = json.loads( row[key]['archivo'])

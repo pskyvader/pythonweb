@@ -398,8 +398,53 @@ class database():
                 else:
                     data[key] = row
             del data['multiple']
-
         return data
+
+    def process_image(self,image, table, idname, id_image):
+        data = {}
+        ids  = {}
+        for key,img in image.items():
+            row     = {}
+            portada = False
+            for k,f in img.items():
+                if 'tmp' in f and f['tmp']!='':
+                    f = image.move(f, table, key, id_image)
+                
+                ids[key][f['id']] = f['url']
+                if (f['portada'] == 'true') {
+                    if (portada) {
+                        f['portada'] = 'false'
+                    } else {
+                        portada = true
+                    }
+                }
+                f['parent'] = id_image
+                f['folder'] = table
+                row[k]     = f
+            }
+            if (!portada) {
+                row[0]['portada'] = 'true'
+            }
+
+            data[key] = functions::encode_json(row)
+        }
+
+        row = this->get(table, idname, array(idname => id_image), array('limit' => 1))
+        this->update(table, idname, data, array(idname => id_image))
+        foreach (ids as key => value) {
+            images = json_decode(html_entity_decode(row[0][key]), true)
+            if (is_array(images)) {
+                foreach (images as k => file) {
+                    if (!isset(value[file['id']]) || value[file['id']] != file['url']) {
+                        image::delete(table, file, id_image, key)
+                    }
+                }
+            }
+        }
+        image::delete_temp()
+        return data
+    }
+
 
     @staticmethod
     def instance():

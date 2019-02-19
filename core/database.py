@@ -266,7 +266,7 @@ class database():
         respuesta                     = {'exito' : False, 'mensaje' : 'Error al respaldar base de datos', 'sql' : []}
         self.disableForeignKeyChecks = True;
         self.batchSize               = 1000;
-        try
+        try:
             if tables == '*':
                 tables = []
                 row    = self.consulta('SHOW TABLES', True)

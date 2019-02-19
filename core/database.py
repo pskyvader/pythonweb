@@ -253,133 +253,100 @@ class database():
         row = self.consulta(sql, False)
         return row
 
-
-    def restore_backup(self,backup):
+    def restore_backup(self, backup):
         import os
-        sql=open( backup, "r").read()
+        sql = open(backup, "r").read()
         exito = self.consulta(sql, False)
         if exito:
             os.remove(backup)
         return exito
 
-    def backup(self,tables = '*'):
-        respuesta                     = {'exito' : False, 'mensaje' : 'Error al respaldar base de datos', 'sql' : []}
+    def backup(self, tables='*'):
+        respuesta = {'exito': False,
+            'mensaje': 'Error al respaldar base de datos', 'sql': []}
         self.disableForeignKeyChecks = True
-        self.batchSize               = 1000
+        self.batchSize = 1000
         try:
             if tables == '*':
                 tables = []
-                row    = self.consulta('SHOW TABLES', True)
+                row = self.consulta('SHOW TABLES', True)
                 for value in row:
                     tables.append(value[0])
             else:
-                tables = tables if isinstance(tables,list) else (tables.replace(' ', '')).split(',')
-            
+                tables = tables if isinstance(tables, list) else (
+                    tables.replace(' ', '')).split(',')
+
             sql = ""
-            
+
             if self.disableForeignKeyChecks == True:
                 sql += "SET foreign_key_checks = 0\n\n"
-            
+
             for table in tables:
                 sql += 'DROP TABLE IF EXISTS `' + table + '`'
                 row = self.consulta('SHOW CREATE TABLE `' + table + '`', True)
                 sql += "\n\n" + row[0][1] + "\n\n"
 
-                row     = self.consulta('SELECT COUNT(*) FROM `' + table + '`', True)
+                row = self.consulta(
+                    'SELECT COUNT(*) FROM `' + table + '`', True)
                 numRows = row[0][0]
-                
-                numBatches = int(numRows / self.batchSize) + 1 
 
-                campos = self.consulta("SELECT COLUMN_NAME,COLUMN_TYPE FROM information_schema.columns WHERE table_schema='" + self._dbName + "' AND table_name='" + table + "'", True)
+                numBatches = int(numRows / self.batchSize) + 1
+
+                campos = self.consulta("SELECT COLUMN_NAME,COLUMN_TYPE FROM information_schema.columns WHERE table_schema='" +
+                                       self._dbName + "' AND table_name='" + table + "'", True)
 
                 for b in range(numBatches+1):
-                    query         = 'SELECT * FROM `' + table + '` LIMIT ' + (b * self.batchSize - self.batchSize) + ',' + self.batchSize
-                    row           = self.consulta(query, True)
-                    realBatchSize = len(row) 
-                    numFields     = len(campos)
-                    if (realBatchSize !== 0) {
-                        sql .= 'INSERT INTO `' . table . '` VALUES '
-                        foreach (row as key => fila) {
+                    query = 'SELECT * FROM `' + table + '` LIMIT ' + \
+                        (b * self.batchSize - self.batchSize) + \
+                         ',' + self.batchSize
+                    row = self.consulta(query, True)
+                    realBatchSize = len(row)
+                    numFields = len(campos)
+                    if realBatchSize != 0:
+                        sql += 'INSERT INTO `' + table + '` VALUES '
+                        for key, fila in row.items():
                             rowCount = key + 1
-                            sql .= '('
+                            sql += '('
 
-                            foreach (campos as k => v) {
+                            for k, v in campos.items():
                                 j = v[0]
-                                if (isset(fila[j])) {
-                                    fila[j] = addslashes(fila[j])
-                                    fila[j] = str_replace("\n", "\\n", fila[j])
-                                    fila[j] = str_replace("\r", "\\r", fila[j])
-                                    fila[j] = str_replace("\f", "\\f", fila[j])
-                                    fila[j] = str_replace("\t", "\\t", fila[j])
-                                    fila[j] = str_replace("\v", "\\v", fila[j])
-                                    fila[j] = str_replace("\a", "\\a", fila[j])
-                                    fila[j] = str_replace("\b", "\\b", fila[j])
-                                    sql .= '"' . fila[j] . '"'
-                                } else {
-                                    sql .= 'NULL'
-                                }
+                                if j in fila:
+                                    fila[j] = self._connection.escape_string(
+                                        fila[j])
+                                    fila[j] = fila[j].replace("\n", "\\n")
+                                    fila[j] = fila[j].replace("\r", "\\r")
+                                    fila[j] = fila[j].replace("\f", "\\f")
+                                    fila[j] = fila[j].replace("\t", "\\t")
+                                    fila[j] = fila[j].replace("\v", "\\v")
+                                    fila[j] = fila[j].replace("\a", "\\a")
+                                    fila[j] = fila[j].replace("\b", "\\b")
+                                    sql += '"' + fila[j] + '"'
+                                else:
+                                    sql += 'NULL'
 
-                                if (k < (numFields - 1)) {
-                                    sql .= ','
-                                }
-                            }
-
-                            if (rowCount == realBatchSize) {
+                                if k < (numFields - 1):
+                                    sql += ','
+                            if rowCount == realBatchSize:
                                 rowCount = 0
-                                sql .= ")\n" 
-                            } else {
-                                sql .= "),\n" 
-                            }
+                                sql += ")\n"
+                            else:
+                                sql += "),\n"
 
-                            rowCount++
+                            rowCount += 1
 
-                        }
+                    respuesta['sql'].append(sql)
+                    sql = ''
+                    
+                sql += "\n\n"
+            
+            if self.disableForeignKeyChecks:
+                sql += "SET foreign_key_checks = 1\n"
+            
 
-                        respuesta['sql'][] = sql
-                        sql                = ''
-                    } else {
-                        respuesta['sql'][] = sql
-                        sql                = ''
-                    }
-                }
-
-                /**
-                 * CREATE TRIGGER
-                 */
-                
-                /*query = "SHOW TRIGGERS LIKE '" . table . "%'"
-                result = mysqli_query (self.conn, query)
-                if (result) {
-                triggers = array()
-                while (trigger = mysqli_fetch_row (result)) {
-                triggers[] = trigger[0]
-                }
-
-                
-                foreach ( triggers as trigger ) {
-                query= 'SHOW CREATE TRIGGER `' . trigger . '`'
-                result = mysqli_fetch_array (mysqli_query (self.conn, query))
-                sql.= "\nDROP TRIGGER IF EXISTS `" . trigger . "`\n"
-                sql.= "DELIMITER \n" . result[2] . "\n\nDELIMITER \n"
-                }
-                sql.= "\n"
-                self.saveFile(sql)
-                sql = ''
-                }*/
-
-                sql .= "\n\n"
-            }
-            /**
-             * Re-enable foreign key checks
-             */
-            if (self.disableForeignKeyChecks === true) {
-                sql .= "SET foreign_key_checks = 1\n"
-            }
-
-            respuesta['sql'][] = sql
-            respuesta['exito'] = true
-        } catch (Exception e) {
-            respuesta['mensaje'] = e->getMessage()
+            respuesta['sql'].append(sql)
+            respuesta['exito'] = True
+        except Exception, e:
+            respuesta['mensaje'] = e
         }
         return respuesta
     }

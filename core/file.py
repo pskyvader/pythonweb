@@ -10,11 +10,11 @@ class file(image):
             if my_file.is_dir():
                 shutil.rmtree(url)
         elif '' == file and '' == subfolder:
-            url = cls.get_upload_dir() . folder . '/'
-            if (file_exists(url)) {
-                cls.removeDirectory(url)
-            }
-        } else {
+            url = cls.get_upload_dir() + folder + '/'
+             my_file = Path(url)
+            if my_file.is_dir():
+                shutil.rmtree(url)
+        else:
             if ('' != subfolder) {
                 subfolder .= '/'
             }

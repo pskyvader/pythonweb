@@ -66,11 +66,13 @@ class base_model:
                 row[key]['idpadre'] = json.loads(row[key]['idpadre'])
                 if idpadre!=None and idpadre not in row[key]['idpadre']:
                     del row[key]
-            if key in row and 'foto' in row[key]:
-                row[key]['foto'] = json.loads(row[key]['foto'])
 
-            if key in row and 'archivo' in row[key]:
-                row[key]['archivo'] = json.loads( row[key]['archivo'])
+            if return_total==None:
+                if key in row and 'foto' in row[key]:
+                    row[key]['foto'] = json.loads(row[key]['foto'])
+
+                if key in row and 'archivo' in row[key]:
+                    row[key]['archivo'] = json.loads( row[key]['archivo'])
         
         if limit!=None:
             if limit2 == 0:

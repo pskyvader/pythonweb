@@ -38,7 +38,8 @@ class image:
                 folder_tmp + '/' + image.nombre_archivo(file['tmp'], recorte['tag'], 'webp'))
             if not my_file.is_dir():
                 rename(
-                    folder_tmp + '/' + image.nombre_archivo(file['tmp'], recorte['tag'], 'webp'), 
+                    folder_tmp + '/' +
+                    image.nombre_archivo(file['tmp'], recorte['tag'], 'webp'),
                     folder + '/' + image.nombre_archivo(file['url'], recorte['tag'], 'webp'))
 
         del file['tmp']

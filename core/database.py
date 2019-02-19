@@ -137,7 +137,7 @@ class database():
             return row
             
     def update(self, table, idname, set_query, where, delete_cache = True)
-        set   = self.process_multiple(set_query)
+        set_query   = self.process_multiple(set_query)
         image = array()
         if (isset(set_query['image'])) {
             image = set_query['image']

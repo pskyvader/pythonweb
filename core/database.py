@@ -255,10 +255,11 @@ class database():
 
 
     def restore_backup(self,backup):
+        import os
         sql=open( backup, "r").read()
         exito = self.consulta(sql, False)
         if exito:
-            unlink(backup)
+            os.remove(backup)
         return exito
 
     @staticmethod

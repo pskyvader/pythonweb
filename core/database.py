@@ -264,139 +264,124 @@ class database():
 
     def backup(self,tables = '*'):
         respuesta                     = {'exito' : False, 'mensaje' : 'Error al respaldar base de datos', 'sql' : []}
-        self.disableForeignKeyChecks = True;
-        self.batchSize               = 1000;
+        self.disableForeignKeyChecks = True
+        self.batchSize               = 1000
         try:
             if tables == '*':
                 tables = []
                 row    = self.consulta('SHOW TABLES', True)
-                foreach (row as key => value) {
-                    tables[] = value[0];
-                }
-            } else {
-                tables = is_array(tables) ? tables : explode(',', str_replace(' ', '', tables));
-            }
-            sql = "";
-            //sql .= "CREATE DATABASE IF NOT EXISTS `" . self._dbName . "`;\n\n";
-            //sql .= 'USE `' . self._dbName . "`;\n\n";
-            /**
-             * Disable foreign key checks
-             */
-            if (self.disableForeignKeyChecks === True) {
-                sql .= "SET foreign_key_checks = 0;\n\n";
-            }
+                for value in row:
+                    tables.append(value[0])
+            else:
+                tables = tables if isinstance(tables,list) else (tables.replace(' ', '')).split(',')
+            
+            sql = ""
+            
+            if self.disableForeignKeyChecks == True:
+                sql += "SET foreign_key_checks = 0\n\n"
+            
+            for table in tables:
+                sql += 'DROP TABLE IF EXISTS `' + table + '`'
+                row = self.consulta('SHOW CREATE TABLE `' + table + '`', True)
+                sql += "\n\n" + row[0][1] + "\n\n"
 
-            /**
-             * Iterate tables
-             */
-            foreach (tables as table) {
-                /**
-                 * CREATE TABLE
-                 */
-                sql .= 'DROP TABLE IF EXISTS `' . table . '`;';
-                row = self.consulta('SHOW CREATE TABLE `' . table . '`', True);
-                sql .= "\n\n" . row[0][1] . ";\n\n";
+                row     = self.consulta('SELECT COUNT(*) FROM `' + table + '`', True)
+                numRows = row[0][0]
+                
+                numBatches = intval(numRows / self.batchSize) + 1 
 
-                /**
-                 * INSERT INTO
-                 */
-                row     = self.consulta('SELECT COUNT(*) FROM `' . table . '`', True);
-                numRows = row[0][0];
-                // Split table in batches in order to not exhaust system memory
-                numBatches = intval(numRows / self.batchSize) + 1; // Number of while-loop calls to perform
+                campos = self.consulta("SELECT COLUMN_NAME,COLUMN_TYPE FROM information_schema.columns WHERE table_schema='" . self._dbName . "' AND table_name='" . table . "'", True)
 
-                campos = self.consulta("SELECT COLUMN_NAME,COLUMN_TYPE FROM information_schema.columns WHERE table_schema='" . self._dbName . "' AND table_name='" . table . "'", True);
-
-                for (b = 1; b <= numBatches; b++) {
-                    query         = 'SELECT * FROM `' . table . '` LIMIT ' . (b * self.batchSize - self.batchSize) . ',' . self.batchSize;
-                    row           = self.consulta(query, True);
-                    realBatchSize = count(row); // Last batch size can be different from self.batchSize
-                    numFields     = count(campos);
+                for (b = 1 b <= numBatches b++) {
+                    query         = 'SELECT * FROM `' . table . '` LIMIT ' . (b * self.batchSize - self.batchSize) . ',' . self.batchSize
+                    row           = self.consulta(query, True)
+                    realBatchSize = count(row) 
+                    numFields     = count(campos)
                     if (realBatchSize !== 0) {
-                        sql .= 'INSERT INTO `' . table . '` VALUES ';
+                        sql .= 'INSERT INTO `' . table . '` VALUES '
                         foreach (row as key => fila) {
-                            rowCount = key + 1;
-                            sql .= '(';
+                            rowCount = key + 1
+                            sql .= '('
 
                             foreach (campos as k => v) {
-                                j = v[0];
+                                j = v[0]
                                 if (isset(fila[j])) {
-                                    fila[j] = addslashes(fila[j]);
-                                    fila[j] = str_replace("\n", "\\n", fila[j]);
-                                    fila[j] = str_replace("\r", "\\r", fila[j]);
-                                    fila[j] = str_replace("\f", "\\f", fila[j]);
-                                    fila[j] = str_replace("\t", "\\t", fila[j]);
-                                    fila[j] = str_replace("\v", "\\v", fila[j]);
-                                    fila[j] = str_replace("\a", "\\a", fila[j]);
-                                    fila[j] = str_replace("\b", "\\b", fila[j]);
-                                    sql .= '"' . fila[j] . '"';
+                                    fila[j] = addslashes(fila[j])
+                                    fila[j] = str_replace("\n", "\\n", fila[j])
+                                    fila[j] = str_replace("\r", "\\r", fila[j])
+                                    fila[j] = str_replace("\f", "\\f", fila[j])
+                                    fila[j] = str_replace("\t", "\\t", fila[j])
+                                    fila[j] = str_replace("\v", "\\v", fila[j])
+                                    fila[j] = str_replace("\a", "\\a", fila[j])
+                                    fila[j] = str_replace("\b", "\\b", fila[j])
+                                    sql .= '"' . fila[j] . '"'
                                 } else {
-                                    sql .= 'NULL';
+                                    sql .= 'NULL'
                                 }
 
                                 if (k < (numFields - 1)) {
-                                    sql .= ',';
+                                    sql .= ','
                                 }
                             }
 
                             if (rowCount == realBatchSize) {
-                                rowCount = 0;
-                                sql .= ");\n"; //close the insert statement
+                                rowCount = 0
+                                sql .= ")\n" 
                             } else {
-                                sql .= "),\n"; //close the row
+                                sql .= "),\n" 
                             }
 
-                            rowCount++;
+                            rowCount++
 
                         }
 
-                        respuesta['sql'][] = sql;
-                        sql                = '';
+                        respuesta['sql'][] = sql
+                        sql                = ''
                     } else {
-                        respuesta['sql'][] = sql;
-                        sql                = '';
+                        respuesta['sql'][] = sql
+                        sql                = ''
                     }
                 }
 
                 /**
                  * CREATE TRIGGER
                  */
-                // Check if there are some TRIGGERS associated to the table
-                /*query = "SHOW TRIGGERS LIKE '" . table . "%'";
-                result = mysqli_query (self.conn, query);
+                
+                /*query = "SHOW TRIGGERS LIKE '" . table . "%'"
+                result = mysqli_query (self.conn, query)
                 if (result) {
-                triggers = array();
+                triggers = array()
                 while (trigger = mysqli_fetch_row (result)) {
-                triggers[] = trigger[0];
+                triggers[] = trigger[0]
                 }
 
-                // Iterate through triggers of the table
+                
                 foreach ( triggers as trigger ) {
-                query= 'SHOW CREATE TRIGGER `' . trigger . '`';
-                result = mysqli_fetch_array (mysqli_query (self.conn, query));
-                sql.= "\nDROP TRIGGER IF EXISTS `" . trigger . "`;\n";
-                sql.= "DELIMITER \n" . result[2] . "\n\nDELIMITER ;\n";
+                query= 'SHOW CREATE TRIGGER `' . trigger . '`'
+                result = mysqli_fetch_array (mysqli_query (self.conn, query))
+                sql.= "\nDROP TRIGGER IF EXISTS `" . trigger . "`\n"
+                sql.= "DELIMITER \n" . result[2] . "\n\nDELIMITER \n"
                 }
-                sql.= "\n";
-                self.saveFile(sql);
-                sql = '';
+                sql.= "\n"
+                self.saveFile(sql)
+                sql = ''
                 }*/
 
-                sql .= "\n\n";
+                sql .= "\n\n"
             }
             /**
              * Re-enable foreign key checks
              */
             if (self.disableForeignKeyChecks === true) {
-                sql .= "SET foreign_key_checks = 1;\n";
+                sql .= "SET foreign_key_checks = 1\n"
             }
 
-            respuesta['sql'][] = sql;
-            respuesta['exito'] = true;
+            respuesta['sql'][] = sql
+            respuesta['exito'] = true
         } catch (Exception e) {
-            respuesta['mensaje'] = e->getMessage();
+            respuesta['mensaje'] = e->getMessage()
         }
-        return respuesta;
+        return respuesta
     }
 
     @staticmethod

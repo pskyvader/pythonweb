@@ -226,7 +226,24 @@ class database():
 
         row = self.consulta(sql, False)
         return row
-    
+
+    def create(self, table, columns):
+        sql = "CREATE TABLE " + self._prefix + table + " ("
+        for key, column in columns.items():
+            if key > 0:
+                sql += ","
+
+            sql += column['titulo'] + " " + column['tipo'] + " NOT NULL "
+
+            if column['tipo'] == 'tinyint(1)':
+                sql += " DEFAULT '1' "
+
+            if column['primary']:
+                sql += " AUTO_INCREMENT PRIMARY KEY "
+
+        sql += " )"
+        row = self.consulta(sql, False)
+        return row
 
     @staticmethod
     def instance():

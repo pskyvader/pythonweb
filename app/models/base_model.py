@@ -11,6 +11,7 @@ class base_model:
     def getAll(cls,where={}, condiciones={}, select=""):
         limit = None
         idpadre = None
+        return_total = None
         connection = database.instance()
         # fields     = table.getByname(cls.table)
         fields = {}
@@ -73,13 +74,11 @@ class base_model:
         
         if limit!=None:
             if limit2 == 0:
-                row=row[:limit]
-            } else {
-                row = array_slice(row, limit, limit2)
-            }
-        }
-        if (isset(return_total)) {
-            return count(row)
-        }
-        return row
-    }
+                row=row[0:limit]
+            else:
+                row=row[limit:limit2]
+
+        if return_total!=None:
+            return len(row)
+        else:
+            return row

@@ -78,27 +78,26 @@ class functions():
     @staticmethod
     def url_amigable(url=""):
         url=functions.replaceMultiple(url,['á', 'à', 'â', 'ã', 'ª', 'ä'],'a')
-        $url = str_replace(array('á', 'à', 'â', 'ã', 'ª', 'ä'), "a", $url);
-        $url = str_replace(array('Á', 'À', 'Â', 'Ã', 'Ä'), "A", $url);
-        $url = str_replace(array('Í', 'Ì', 'Î', 'Ï'), "I", $url);
-        $url = str_replace(array('í', 'ì', 'î', 'ï'), "i", $url);
-        $url = str_replace(array('é', 'è', 'ê', 'ë'), "e", $url);
-        $url = str_replace(array('É', 'È', 'Ê', 'Ë'), "E", $url);
-        $url = str_replace(array('ó', 'ò', 'ô', 'õ', 'ö'), "o", $url);
-        $url = str_replace(array('Ó', 'Ò', 'Ô', 'Õ', 'Ö'), "O", $url);
-        $url = str_replace(array('ú', 'ù', 'û', 'ü'), "u", $url);
-        $url = str_replace(array('Ú', 'Ù', 'Û', 'Ü'), "U", $url);
-        $url = str_replace(array('[', '^', '´', '`', '¨', '~', ']', ' ', '/', '°', 'º'), "-", $url);
-        $url = str_replace("ç", "c", $url);
-        $url = str_replace("Ç", "C", $url);
-        $url = str_replace("ñ", "n", $url);
-        $url = str_replace("Ñ", "N", $url);
-        $url = str_replace("Ý", "Y", $url);
-        $url = str_replace("ý", "y", $url);
-        $url = explode('-', $url);
-        $url = implode('-', array_filter($url));
-        $url = strtolower($url);
-        return $url;
+        url=functions.replaceMultiple(url,['Á', 'À', 'Â', 'Ã', 'Ä'], "A")
+        url=functions.replaceMultiple(url,['Í', 'Ì', 'Î', 'Ï'], "I")
+        url=functions.replaceMultiple(url,['í', 'ì', 'î', 'ï'], "i")
+        url=functions.replaceMultiple(url,['é', 'è', 'ê', 'ë'], "e")
+        url=functions.replaceMultiple(url,['É', 'È', 'Ê', 'Ë'], "E")
+        url=functions.replaceMultiple(url,['ó', 'ò', 'ô', 'õ', 'ö'], "o")
+        url=functions.replaceMultiple(url,['Ó', 'Ò', 'Ô', 'Õ', 'Ö'], "O")
+        url=functions.replaceMultiple(url,['ú', 'ù', 'û', 'ü'], "u")
+        url=functions.replaceMultiple(url,['Ú', 'Ù', 'Û', 'Ü'], "U")
+        url=functions.replaceMultiple(url,['[', '^', '´', '`', '¨', '~', ']', ' ', '/', '°', 'º'], "-")
+        $url = str_replace("ç", "c", $url)
+        $url = str_replace("Ç", "C", $url)
+        $url = str_replace("ñ", "n", $url)
+        $url = str_replace("Ñ", "N", $url)
+        $url = str_replace("Ý", "Y", $url)
+        $url = str_replace("ý", "y", $url)
+        $url = explode('-', $url)
+        $url = implode('-', array_filter($url))
+        $url = strtolower($url)
+        return $url
 
     @staticmethod
     def replaceMultiple(mainString, toBeReplaces, newString):

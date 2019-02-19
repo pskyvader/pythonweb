@@ -19,10 +19,10 @@ class image:
             var['tipo'] = app.get['tipo']
 
         modulo     = modulo_model.getAll(var, {'limit':1})
-        recortes   = array()
-        recortes[] = array('tag' => 'thumb', 'titulo' => 'Thumb', 'ancho' => 200, 'alto' => 200, 'calidad' => 90, 'tipo' => 'centrar')
-        recortes[] = array('tag' => 'zoom', 'titulo' => 'Zoom', 'ancho' => 600, 'alto' => 600, 'calidad' => 90, 'tipo' => 'centrar')
-        recortes[] = array('tag' => 'color', 'titulo' => 'Color', 'ancho' => 30, 'alto' => null, 'calidad' => 99, 'tipo' => 'recortar')
+        recortes   = []
+        recortes.append({'tag' : 'thumb', 'titulo' : 'Thumb', 'ancho' : 200, 'alto' : 200, 'calidad' : 90, 'tipo' : 'centrar'})
+        recortes.append({'tag' : 'zoom', 'titulo' : 'Zoom', 'ancho' : 600, 'alto' : 600, 'calidad' : 90, 'tipo' : 'centrar'})
+        recortes.append({'tag' : 'color', 'titulo' : 'Color', 'ancho' : 30, 'alto' : None, 'calidad' : 99, 'tipo' : 'recortar'})
 
         if (isset(modulo[0]['recortes'])) {
             foreach (modulo[0]['recortes'] as key => recorte) {

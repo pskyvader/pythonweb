@@ -31,7 +31,6 @@ class base_model:
                         limit = 0
                     limit2 = condiciones['limit2']
                     del condiciones['limit2']
-            
             del where['idpadre']
         
 

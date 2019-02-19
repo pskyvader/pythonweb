@@ -430,9 +430,9 @@ class database():
         for key, value in ids.items():
             images = json.loads(row[0][key])
             if isinstance(images, list):
-                for file in images:
-                    if file['id'] in value or value[file['id']] != file['url']:
-                        image.delete(table, file, id_image, key)
+                for img in images:
+                    if img['id'] in value or value[img['id']] != img['url']:
+                        image.delete(table, img, id_image, key)
 
         image.delete_temp()
         return data
@@ -459,9 +459,9 @@ class database():
         for key, value in ids.items():
             files = json.loads(row[0][key])
             if isinstance(files, list):
-                for file in files:
-                    if file['id'] in value or value[file['id']] != file['url']:
-                        file.delete(table, file, id_file, key)
+                for fi in files:
+                    if fi['id'] in value or value[fi['id']] != fi['url']:
+                        file.delete(table, fi, id_file, key)
 
         file.delete_temp()
         return data

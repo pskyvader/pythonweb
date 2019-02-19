@@ -13,37 +13,36 @@ class image:
     upload_dir = ''
     upload_url = ''
 
-
-
-    #mover archivo (normalmente) desde la carpeta temporal a la definitiva
+    # mover archivo (normalmente) desde la carpeta temporal a la definitiva
     @staticmethod
-    def move(file, folder, subfolder, name_final, folder_tmp = 'tmp'):
-        recortes    = image.get_recortes(folder)
-        folder_tmp  = image.get_upload_dir() + folder_tmp
+    def move(file, folder, subfolder, name_final, folder_tmp='tmp'):
+        recortes = image.get_recortes(folder)
+        folder_tmp = image.get_upload_dir() + folder_tmp
         base_folder = image.get_upload_dir() + folder
-        folder      = base_folder + '/' + name_final + '/' + subfolder
+        folder = base_folder + '/' + name_final + '/' + subfolder
 
         my_file = Path(folder)
         if not my_file.is_dir():
-            makedirs(folder,777)
+            makedirs(folder, 777)
 
-        name      = file['tmp'].split('.')
+        name = file['tmp'].split('.')
         extension = (name.pop()).lower()
 
         file['url'] = file['id'] + '.' + extension
         rename(folder_tmp + '/' + file['tmp'], folder + '/' + file['url'])
 
         for recorte in recortes:
-            rename(folder_tmp + '/' + image.nombre_archivo(file['tmp'], recorte['tag']), folder + '/' + image.nombre_archivo(file['url'], recorte['tag']))
-            my_file = Path(folder_tmp + '/' + image.nombre_archivo(file['tmp'], recorte['tag'], 'webp'))
+            rename(folder_tmp + '/' + image.nombre_archivo(
+                file['tmp'], recorte['tag']), folder + '/' + image.nombre_archivo(file['url'], recorte['tag']))
+            my_file = Path(
+                folder_tmp + '/' + image.nombre_archivo(file['tmp'], recorte['tag'], 'webp'))
             if not my_file.is_dir():
-                rename(folder_tmp + '/' + image.nombre_archivo(file['tmp'], recorte['tag'], 'webp'), folder + '/' + image.nombre_archivo(file['url'], recorte['tag'], 'webp'))
-            
-        
-        unset(file['tmp'])
+                rename(folder_tmp + '/' + image.nombre_archivo(
+                    file['tmp'], recorte['tag'], 'webp'), folder + '/' + image.nombre_archivo(file['url'], recorte['tag'], 'webp'))
+
+        del file['tmp']
         file['subfolder'] = subfolder
         return file
-    }
 
     @staticmethod
     def get_recortes(modulo):

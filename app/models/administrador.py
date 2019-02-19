@@ -1,5 +1,5 @@
 from core.database import database
-class administrador:
+class administrador(base_model):
     @staticmethod
     def get_all():
         connection = database.instance()

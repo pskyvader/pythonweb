@@ -10,6 +10,40 @@ class image:
                   "docx", "dotx", "xls", "xlsx", "xltx", "xlam", "xlsb", "ppt", "pptx", "potx", "ppsx", "sldx", "pdf"]
     upload_dir = ''
     upload_url = ''
+
+    @staticmethod
+    def get_recortes(modulo):
+        moduloconfiguracion = moduloconfiguracion_model.getByModulo(modulo)
+        var                 = {'idmoduloconfiguracion' : moduloconfiguracion[0]}
+        if 'tipo' in app.get:
+            var['tipo'] = app.get['tipo']
+
+        modulo     = modulo_model.getAll(var, {'limit':1})
+        recortes   = array()
+        recortes[] = array('tag' => 'thumb', 'titulo' => 'Thumb', 'ancho' => 200, 'alto' => 200, 'calidad' => 90, 'tipo' => 'centrar')
+        recortes[] = array('tag' => 'zoom', 'titulo' => 'Zoom', 'ancho' => 600, 'alto' => 600, 'calidad' => 90, 'tipo' => 'centrar')
+        recortes[] = array('tag' => 'color', 'titulo' => 'Color', 'ancho' => 30, 'alto' => null, 'calidad' => 99, 'tipo' => 'recortar')
+
+        if (isset(modulo[0]['recortes'])) {
+            foreach (modulo[0]['recortes'] as key => recorte) {
+                recorte['ancho']   = (int) recorte['ancho']
+                recorte['alto']    = (int) recorte['alto']
+                recorte['calidad'] = (int) recorte['calidad']
+                if (recorte['calidad'] > 100) {
+                    recorte['calidad'] = 100
+                }
+
+                if (recorte['calidad'] < 0) {
+                    recorte['calidad'] = 0
+                }
+
+                recortes[] = recorte
+            }
+        }
+
+        return recortes
+    }
+
     @staticmethod
     def delete(folder, file='', subfolder='', sub=''):
         import shutil
@@ -56,5 +90,5 @@ class image:
     def get_upload_dir():
         if ('' == image.upload_dir):
             image.upload_dir = app.get_dir(True) + 'uploads/img/'
-        return image.upload_dir;
+        return image.upload_dir
     

@@ -354,7 +354,7 @@ class database():
         import hashlib
         salt = hashlib.sha1(password)
         p    = crypt(password, salt)
-        return salt . sha1(p)
+        return salt + hashlib.sha1(p)
     @staticmethod
     def instance():
         if database._instance is None:

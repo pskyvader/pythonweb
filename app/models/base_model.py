@@ -8,7 +8,7 @@ class base_model:
     table = ''
 
     @classmethod
-    def getAll(cls,where={}, condiciones={}, select=""):
+    def getAll(cls, where={}, condiciones={}, select=""):
         limit = None
         idpadre = None
         return_total = None
@@ -61,31 +61,31 @@ class base_model:
                 select = ''
 
         row = connection.get(cls.table, cls.idname, where, condiciones, select)
-        deleted=False
+        deleted = False
         for r in row:
-            deleted=False
+            deleted = False
             if 'idpadre' in r:
                 r['idpadre'] = json.loads(r['idpadre'])
-                if idpadre!=None and idpadre not in r['idpadre']:
-                    deleted=True
+                if idpadre != None and idpadre not in r['idpadre']:
+                    deleted = True
                     del r
 
-            if return_total==None:
+            if return_total == None:
                 if not deleted and 'foto' in r:
                     r['foto'] = json.loads(r['foto'])
                 else:
                     print('no foto')
 
                 if not deleted and 'archivo' in r:
-                    r['archivo'] = json.loads( r['archivo'])
-        
-        if limit!=None:
-            if limit2 == 0:
-                row=row[0:limit]
-            else:
-                row=row[limit:limit2]
+                    r['archivo'] = json.loads(r['archivo'])
 
-        if return_total!=None:
+        if limit != None:
+            if limit2 == 0:
+                row = row[0:limit]
+            else:
+                row = row[limit:limit2]
+
+        if return_total != None:
             return len(row)
         else:
             return row

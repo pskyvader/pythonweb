@@ -70,7 +70,7 @@ class base_model:
                     del r
 
             if return_total==None:
-                if key in row:
+                if not deleted:
                     print('key in row')
                 if key in row and 'foto' in r:
                     r['foto'] = json.loads(r['foto'])

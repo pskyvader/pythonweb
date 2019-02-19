@@ -77,7 +77,7 @@ class functions():
 
     @staticmethod
     def url_amigable(url=""):
-        url=url.replace(['á', 'à', 'â', 'ã', 'ª', 'ä'],'a')
+        url=functions.replaceMultiple(url,['á', 'à', 'â', 'ã', 'ª', 'ä'],'a')
         $url = str_replace(array('á', 'à', 'â', 'ã', 'ª', 'ä'), "a", $url);
         $url = str_replace(array('Á', 'À', 'Â', 'Ã', 'Ä'), "A", $url);
         $url = str_replace(array('Í', 'Ì', 'Î', 'Ï'), "I", $url);
@@ -99,7 +99,8 @@ class functions():
         $url = implode('-', array_filter($url));
         $url = strtolower($url);
         return $url;
-    
+
+    @staticmethod
     def replaceMultiple(mainString, toBeReplaces, newString):
         # Iterate over the strings to be replaced
         for elem in toBeReplaces :

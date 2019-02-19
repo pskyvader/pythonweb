@@ -1,2 +1,2 @@
 
-class file:
+class file(image):

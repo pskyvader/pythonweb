@@ -88,16 +88,14 @@ class functions():
         url=functions.replaceMultiple(url,['ú', 'ù', 'û', 'ü'], "u")
         url=functions.replaceMultiple(url,['Ú', 'Ù', 'Û', 'Ü'], "U")
         url=functions.replaceMultiple(url,['[', '^', '´', '`', '¨', '~', ']', ' ', '/', '°', 'º'], "-")
-        $url = str_replace("ç", "c", $url)
-        $url = str_replace("Ç", "C", $url)
-        $url = str_replace("ñ", "n", $url)
-        $url = str_replace("Ñ", "N", $url)
-        $url = str_replace("Ý", "Y", $url)
-        $url = str_replace("ý", "y", $url)
-        $url = explode('-', $url)
-        $url = implode('-', array_filter($url))
-        $url = strtolower($url)
-        return $url
+        url=url.replace("ç", "c")
+        url=url.replace("Ç", "C")
+        url=url.replace("ñ", "n")
+        url=url.replace("Ñ", "N")
+        url=url.replace("Ý", "Y")
+        url=url.replace("ý", "y")
+        url=url.lower()
+        return url
 
     @staticmethod
     def replaceMultiple(mainString, toBeReplaces, newString):

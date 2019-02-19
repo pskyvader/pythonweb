@@ -403,6 +403,7 @@ class database():
 
     def process_image(self, image_list, table, idname, id_image):
         import json
+        from core.image import image
         data = {}
         ids = {}
         for key, img in image_list.items():

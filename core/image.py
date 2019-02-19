@@ -1,8 +1,8 @@
 from pathlib import Path
 from os import rename
 from os import makedirs
-from core.app import app
-from core.functions import functions
+from .app import app
+from .functions import functions
 
 
 class image:

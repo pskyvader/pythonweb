@@ -199,7 +199,16 @@ class database():
             print("error cantidad de condiciones")
             return False
     
-
+    def modify(self,table, column, type_var):
+        valor_primario = ""
+        sql            = "ALTER TABLE " + self._prefix + table
+        sql += " MODIFY " + column + " " + type_var + " NOT NULL "
+        if type_var == 'tinyint(1)':
+            sql += " DEFAULT '1' "
+        
+        row = self.consulta(sql, False)
+        return row
+    
 
     @staticmethod
     def instance():

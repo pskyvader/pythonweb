@@ -1,5 +1,4 @@
-from core.app import app
-# import PyMySQL
+from .app import app
 import pymysql
 
 

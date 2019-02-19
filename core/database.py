@@ -401,6 +401,7 @@ class database():
         return data
 
     def process_image(self,image_list, table, idname, id_image):
+        import json
         data = {}
         ids  = {}
         for key,img in image_list.items():

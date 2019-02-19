@@ -39,7 +39,24 @@ class image:
                 
                 recortes.append(recorte)
         return recortes
-
+    @staticmethod
+    def nombre_archivo(file, tag = '', extension = '', remove = False):
+        name = file.split('.')
+        if ('' == extension):
+            extension = (name.pop()).lower()
+        else 
+            array_pop(name)
+                if (remove) 
+            name = explode('-', implode(name, ''))
+            if (count(name) > 1) 
+                array_pop(name)
+                    
+        name = functions::url_amigable(implode(name, ''))
+        if ('' != tag) 
+            return name . '-' . tag . '.' . extension
+        else 
+            return name . '.' . extension
+            
     @staticmethod
     def delete(folder, file='', subfolder='', sub=''):
         import shutil

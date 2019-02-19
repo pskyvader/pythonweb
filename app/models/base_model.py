@@ -69,6 +69,8 @@ class base_model:
                     del row[key]
 
             if return_total==None:
+                if key in row:
+                    print('key in row')
                 if key in row and 'foto' in row[key]:
                     row[key]['foto'] = json.loads(row[key]['foto'])
                 else:

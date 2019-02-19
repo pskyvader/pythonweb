@@ -290,7 +290,7 @@ class database():
                 
                 numBatches = int(numRows / self.batchSize) + 1 
 
-                campos = self.consulta("SELECT COLUMN_NAME,COLUMN_TYPE FROM information_schema.columns WHERE table_schema='" . self._dbName . "' AND table_name='" . table . "'", True)
+                campos = self.consulta("SELECT COLUMN_NAME,COLUMN_TYPE FROM information_schema.columns WHERE table_schema='" + self._dbName + "' AND table_name='" + table + "'", True)
 
                 for (b = 1 b <= numBatches b++) {
                     query         = 'SELECT * FROM `' . table . '` LIMIT ' . (b * self.batchSize - self.batchSize) . ',' . self.batchSize

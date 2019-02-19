@@ -84,6 +84,7 @@ class base_model:
             if limit2 == 0:
                 row = row[0:limit]
             else:
+                print(limit,limit2)
                 row = row[limit:limit2]
 
         if return_total != None:

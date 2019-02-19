@@ -127,7 +127,6 @@ class image:
                     image.nombre_archivo(file['url'], recorte['tag'])
                 my_file = Path(url)
                 if my_file.is_file():
-
                     my_file.unlink()
 
                 url = image.get_upload_dir() + folder + '/' + subfolder + sub + \
@@ -141,21 +140,19 @@ class image:
     @staticmethod
     def delete_temp():
         from os import listdir
+        from os.path import getmtime
         from datetime import datetime
-        now        = datetime.now()
-        horas      = 1
+        now = datetime.now()
+        horas = 1
 
-        carpeta    = image.get_upload_dir() + 'tmp/'#ruta actual
-        for archivo in listdir(carpeta):  #obtenemos un archivo y luego otro sucesivamente
-
-            if (!is_dir(carpeta . archivo)) #verificamos si es o no un directorio
-            
-                if (file_exists(carpeta . archivo)) 
-                    if ((now - filemtime(carpeta . archivo)) / 3600 > horas)
-                        #si el archivo fue creado hace más de horas, borrar
-                        unlink(carpeta . archivo)
-                    
-    
+        carpeta = image.get_upload_dir() + 'tmp/'  # ruta actual
+        # obtenemos un archivo y luego otro sucesivamente
+        for archivo in listdir(carpeta):
+            my_file = Path(carpeta + archivo)
+            if my_file.is_file():  # verificamos si es o no un archivo
+                # si el archivo fue creado hace más de horas, borrar
+                if ((now - getmtime(carpeta + archivo)) / 3600 > horas):
+                    my_file.unlink()
 
     @staticmethod
     def get_upload_dir():

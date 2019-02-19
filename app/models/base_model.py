@@ -18,8 +18,7 @@ class base_model:
         if 'estado' not in where and app.front and 'estado' in fields:
             where['estado'] = True
 
-        if 'idpadre' in where:
-        #if 'idpadre' in where and 'idpadre' in fields:
+        if 'idpadre' in where and 'idpadre' in fields:
             idpadre = where['idpadre']
             del where['idpadre']
             if 'limit' in condiciones:

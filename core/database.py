@@ -403,7 +403,7 @@ class database():
     def process_image(self,image_list, table, idname, id_image):
         data = {}
         ids  = {}
-        for key,img in image.items():
+        for key,img in image_list.items():
             row     = {}
             portada = False
             for k,f in img.items():

@@ -138,8 +138,8 @@ class image:
 
                     my_file.unlink()
 
-    @staticmethod
-    def get_upload_dir():
+    @classmethod
+    def get_upload_dir(cls):
         if ('' == image.upload_dir):
             image.upload_dir = app.get_dir(True) + 'uploads/img/'
         return image.upload_dir

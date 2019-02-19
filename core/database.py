@@ -345,11 +345,11 @@ class database():
 
             respuesta['sql'].append(sql)
             respuesta['exito'] = True
-        except Exception, e:
+        except Exception as e:
             respuesta['mensaje'] = e
-        }
+        
         return respuesta
-    }
+    
 
     @staticmethod
     def instance():

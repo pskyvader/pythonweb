@@ -354,8 +354,27 @@ class database():
         import hashlib
         from crypt import crypt
         salt = hashlib.sha1(password)
-        p    = crypt(password, salt)
+        p = crypt(password, salt)
         return salt + hashlib.sha1(p)
+    @staticmethod
+    def create_data(model, data):
+        data = database.process_multiple(data)
+        m    = {}
+        for key,value in model.items():
+            if key in data:
+                m[key] = data[key]
+            else:
+                if value['tipo'] == 'tinyint(1)':
+                    m[key] = 'true'
+                else:
+                    m[key] = ''
+        if 'image' in data:
+            m['image'] = data['image']
+        
+        if 'file' in data:
+            m['file'] = data['file']
+        return m
+
     @staticmethod
     def instance():
         if database._instance is None:

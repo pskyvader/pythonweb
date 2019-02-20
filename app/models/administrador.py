@@ -76,27 +76,63 @@ class administrador(base_model):
     @staticmethod
     def login_cookie(cookie):
         prefix_site = app.prefix_site
-        where       = {'cookie' : cookie}
-        condiciones = {'limit' : 1}
-        row         = administrador.getAll(where, condiciones)
+        where = {'cookie': cookie}
+        condiciones = {'limit': 1}
+        row = administrador.getAll(where, condiciones)
 
         if len(row) == 1:
             admin = row[0]
             if admin['estado']:
                 profile = profile.getByTipo(admin['tipo'])
-                if 'tipo' in profile and profile['tipo']>0:
-                    session=app.session
+                if 'tipo' in profile and profile['tipo'] > 0:
+                    session = app.session
                     session[administrador.idname + prefix_site] = admin[0]
-                    session["email" + prefix_site]         = admin['email']
-                    session["nombre" + prefix_site]        = admin['nombre']
-                    session["estado" + prefix_site]        = admin['estado']
-                    session["tipo" + prefix_site]          = admin['tipo']
-                    session['prefix_site']                  = prefix_site
+                    session["email" + prefix_site] = admin['email']
+                    session["nombre" + prefix_site] = admin['nombre']
+                    session["estado" + prefix_site] = admin['estado']
+                    session["tipo" + prefix_site] = admin['tipo']
+                    session['prefix_site'] = prefix_site
                     session.save()
                     #log.insert_log(administrador.table, administrador.idname, administrador, admin)
                     return True
         functions.set_cookie(cookie, 'aaa', (31536000))
         return False
+
+    @staticmethod
+    def login(email, password, recordar):
+        connection = database.instance()
+        prefix_site = app.prefix_site
+        if email == '' or password == '':
+            return False
+
+        where = {'email': email.lower(), 'pass': database.encript(password)}
+        condiciones = {'limit': 1}
+        row = administrador.getAll(where, condiciones)
+
+        if len(row) != 1:
+            return False
+        else:
+            admin = row[0]
+            if not admin['estado']:
+                return False
+            else:
+                profile = profile.getByTipo(admin['tipo'])
+                if not 'tipo' in profile or profile['tipo'] <= 0:
+                    return False
+                else:
+                    session = app.session
+                    session[administrador.idname . prefix_site] = admin[0]
+                    session["email" . prefix_site] = admin['email']
+                    session["nombre" . prefix_site] = admin['nombre']
+                    session["estado" . prefix_site] = admin['estado']
+                    session["tipo" . prefix_site] = admin['tipo']
+                    session['prefix_site'] = prefix_site
+                    session.save()
+                    #log.insert_log(administrador.table, administrador.idname, administrador, admin)
+                    if recordar == 'on':
+                        return administrador.update_cookie(admin[0])
+                    else:
+                        return True
 
     @staticmethod
     def verificar_sesion():

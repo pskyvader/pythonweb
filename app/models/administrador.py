@@ -1,5 +1,6 @@
 from core.database import database
 from .base_model import base_model
+from core.app import app
 
 
 class administrador(base_model):
@@ -70,3 +71,32 @@ class administrador(base_model):
         if isinstance(row, bool) and row:
             row = where[cls.idname]
         return row
+
+    @classmethod
+    def login_cookie(cookie):
+        prefix_site = app.prefix_site
+        where       = {'cookie' => cookie)
+        condiciones = array('limit' => 1)
+        row         = administrador::getAll(where, condiciones)
+
+        if (count(row) == 1) {
+            admin = row[0]
+            if (admin['estado']) {
+
+                profile = profile::getByTipo(admin['tipo'])
+                if (isset(profile['tipo']) && profile['tipo'] > 0) {
+
+                    _SESSION[administrador.idname . prefix_site] = admin[0]
+                    _SESSION["email" . prefix_site]         = admin['email']
+                    _SESSION["nombre" . prefix_site]        = admin['nombre']
+                    _SESSION["estado" . prefix_site]        = admin['estado']
+                    _SESSION["tipo" . prefix_site]          = admin['tipo']
+                    _SESSION['prefix_site']                  = prefix_site
+                    log::insert_log(administrador.table, administrador.idname, __FUNCTION__, admin)
+                    return true
+                }
+            }
+        }
+        functions::set_cookie(cookie, 'aaa', time() + (31536000))
+        return false
+    }

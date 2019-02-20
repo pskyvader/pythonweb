@@ -448,6 +448,25 @@ class image:
         return archivo
 
     @staticmethod
+    def generar_dir(file, tag='thumb', extension="", folder="", subfolder=""):
+        if '' == folder:
+            folder = file['folder']
+        if '' != subfolder:
+            subfolder += '/'
+        elif file['parent'] != '':
+            subfolder = file['parent'] + '/'
+            if file['subfolder'] != '':
+                subfolder += file['subfolder'] + '/'
+
+        url = folder + '/' + subfolder + \
+            (image.nombre_archivo(file['url'], tag, extension))
+        archivo = image.get_upload_dir() + url
+        my_file = Path(archivo)
+        if not my_file.is_file():
+            archivo = ''
+        return archivo
+
+    @staticmethod
     def delete(folder, file='', subfolder='', sub=''):
         import shutil
         if "" == file and '' != subfolder:

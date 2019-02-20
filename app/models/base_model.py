@@ -32,7 +32,6 @@ class base_model:
                     limit2 = condiciones['limit2']
                     del condiciones['limit2']
             del where['idpadre']
-        
 
         if 'order' not in condiciones and 'orden' in fields:
             condiciones['order'] = 'orden ASC'
@@ -93,20 +92,35 @@ class base_model:
             return row
 
     @classmethod
-    def getById(cls,id):
-        where = {cls.idname : id}
+    def getById(cls, id):
+        where = {cls.idname: id}
         if app.front:
             # fields     = table.getByname(cls.table)
             fields = {}
             if 'estado' in fields:
                 where['estado'] = True
-            
-        
+
         connection = database.instance()
-        row        = connection.et(cls.table, cls.idname, where)
+        row = connection.et(cls.table, cls.idname, where)
         if len(row) == 1:
             if 'foto' in row[0]:
                 row[0]['foto'] = json.loads(row[0]['foto'])
             if 'archivo' in row[0]:
                 row[0]['archivo'] = json.loads(row[0]['archivo'])
         return row[0] if len(row) == 1 else row
+
+    @classmethod
+    def insert(cls, data,  loggging=True):
+        # fields     = table.getByname(cls.table)
+        fields = {}
+        insert = database.create_data(fields, data)
+        connection = database.instance()
+        row = connection.insert(cls.table, cls.idname, insert)
+        if isinstance(row, int) and row > 0:
+            last_id = row
+            if loggging:
+                #log.insert_log(cls.table, cls.idname, cls, insert)
+                pass
+            return last_id
+        else:
+            return row

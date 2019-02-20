@@ -21,6 +21,10 @@ class functions():
                 coo={}
                 for key,cookie in c.items():
                     coo[key]=cookie.value
+                    if coo[key]=='True' or coo[key]=='true':
+                        coo[key]==True
+                    elif coo[key]=='False' or coo[key]=='false':
+                        coo[key]==False
                 
                 print(coo)
                 return coo

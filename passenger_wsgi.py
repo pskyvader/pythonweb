@@ -12,11 +12,11 @@ def application2(environ, start_response):
     ret = main_data['response_body']
 
     if isinstance(ret, str):
-        #import gzip
         ret=bytes(ret, 'utf-8')
+        #import gzip
         #ret = gzip.compress(ret)
-        main_data['headers'].append(('Accept-encoding', 'gzip,deflate'))
-        main_data['headers'].append(('Content-Encoding', 'gzip'))
+        #main_data['headers'].append(('Accept-encoding', 'gzip,deflate'))
+        #main_data['headers'].append(('Content-Encoding', 'gzip'))
         
     start_response(main_data['status'], main_data['headers'])
     return [ret]

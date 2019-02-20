@@ -8,8 +8,43 @@ class file(image):
     extensions = ["zip", "doc", "docx", "dotx", "xls", "xlsx", "xltx",
                   "xlam", "xlsb", "ppt", "pptx", "potx", "ppsx", "sldx", "pdf"]
 
-    @classmethod
-    def delete(cls, folder, file='', subfolder='', sub=''):
+
+    public static function upload_tmp($modulo = '')
+    {
+        $respuesta = array('exito' => false, 'mensaje' => '');
+        if (isset($_FILES)) {
+            $archivos = array();
+
+            if (isset($_FILES['file'])) {
+                $file_ary = functions::reArrayFiles($_FILES['file']);
+            } else {
+                $file_ary = $_FILES;
+            }
+
+            foreach ($file_ary as $key => $files) {
+                $archivo            = self::upload($files, 'tmp');
+                $respuesta['exito'] = $archivo['exito'];
+                if (!$archivo['exito']) {
+                    $respuesta['mensaje'] = $archivo['mensaje'];
+                    break;
+                } else {
+                    $name           = self::nombre_archivo($archivo['name'], '');
+                    $archivo['url'] = self::get_upload_url() . $archivo['folder'] . '/' . $name;
+                    $respuesta['mensaje'] .= $archivo['original_name'] . ' <br/>';
+                    $archivos[] = $archivo;
+
+                }
+            }
+            $respuesta['archivos'] = $archivos;
+        } else {
+            $respuesta['mensaje'] = 'No se encuentran archivos a subir';
+        }
+
+        return $respuesta;
+    }
+
+    @staticmethod
+    def delete(cls, folder, file_name='', subfolder='', sub=''):
         import shutil
         if "" == file and '' != subfolder:
             url = cls.get_upload_dir() + folder + '/' + subfolder + '/'

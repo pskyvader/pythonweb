@@ -348,14 +348,14 @@ class image:
 
         ruta_imagen = ruta + '/' + foto
         my_file = Path(ruta_imagen)
-            if not my_file.is_file():
-                respuesta['mensaje'] = 'Archivo ' . ruta_imagen . ' no existe'
-                return respuesta
-        
-        info_imagen = getimagesize(ruta_imagen)
-        ancho       = info_imagen[0]
-        alto        = info_imagen[1]
-        imagen_tipo = info_imagen['mime']
+        if not my_file.is_file():
+            respuesta['mensaje'] = 'Archivo ' . ruta_imagen . ' no existe'
+            return respuesta
+
+
+        im = Image.open(ruta_imagen)
+        ancho, alto = im.size
+        imagen_tipo = im.format
 
         proporcion_imagen = ancho / alto
         if (null == ancho_maximo || 0 == ancho_maximo) {

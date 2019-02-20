@@ -22,7 +22,7 @@ class image:
             archivos = []
 
             if 'file' in files:
-                file_ary =files # functions.reArrayFiles(files['file'])
+                file_ary = files  # functions.reArrayFiles(files['file'])
             else:
                 file_ary = files
 
@@ -39,7 +39,8 @@ class image:
                         break
                     else:
                         name = cls.nombre_archivo(archivo['name'], 'thumb')
-                        archivo['url'] = cls.get_upload_url() + archivo['folder'] + '/' + name
+                        archivo['url'] = cls.get_upload_url(
+                        ) + archivo['folder'] + '/' + name
                         respuesta['mensaje'] += archivo['original_name'] + ' <br/>'
                         archivos.append(archivo)
             respuesta['archivos'] = archivos
@@ -52,19 +53,19 @@ class image:
         '''regenerar imagenes ya guardadas'''
         from glob import glob
         from os import remove
-        recortes       = image.get_recortes(file['folder'])
-        file['name']   = file['url']
-        file['folder'] = file['folder'] + '/' + file['parent'] + '/' + file['subfolder']
+        recortes = image.get_recortes(file['folder'])
+        file['name'] = file['url']
+        file['folder'] = file['folder'] + '/' + \
+            file['parent'] + '/' + file['subfolder']
         for fl in glob(image.get_upload_dir() + file['folder'] + "/" + file['id'] + "-*.*"):
             remove(fl)
         respuesta = image.recortes_foto(file, recortes)
         return respuesta
-    
 
     @staticmethod
     def move(file, folder, subfolder, name_final, folder_tmp='tmp'):
         '''mover archivo (normalmente) desde la carpeta temporal a la definitiva'''
-        
+
         from os import rename
         recortes = image.get_recortes(folder)
         folder_tmp = image.get_upload_dir() + folder_tmp
@@ -95,44 +96,46 @@ class image:
         del file['tmp']
         file['subfolder'] = subfolder
         return file
+
     @staticmethod
-    def copy(original_file, id_final, folder, subfolder = "", name_final = "", tag = 'thumb'):
+    def copy(original_file, id_final, folder, subfolder="", name_final="", tag='thumb'):
         """Copia un archivo y retorna la informacion del archivo nuevo """
         import os
-        respuesta = {'exito' : False, 'mensaje' : ''}
+        from shutil import copyfile
+        respuesta = {'exito': False, 'mensaje': ''}
 
-        name      = original_file['url'].split('.')
+        name = original_file['url'].split('.')
         extension = (name.pop()).lower()
 
-        new_file = {'portada': True, 'id': 1, 'url': id_final + '.' + extension, 'parent': name_final, 'folder': folder, 'subfolder': subfolder, 'tmp': ''}
-        original = image.generar_dir(original_file, tag);
+        new_file = {'portada': True, 'id': 1, 'url': id_final + '.' + extension,
+                    'parent': name_final, 'folder': folder, 'subfolder': subfolder, 'tmp': ''}
+        original = image.generar_dir(original_file, tag)
 
         if original != '':
             base_folder = image.get_upload_dir() + folder
-            folder      = base_folder;
+            folder = base_folder
             if name_final != '':
                 folder += '/' + name_final
-            
+
             if subfolder != '':
-                folder += '/' + subfolder;
-            
+                folder += '/' + subfolder
+
             my_file = Path(folder)
             if not my_file.is_dir():
                 makedirs(folder, 777)
-                
-            destino = folder + '/' + new_file['url'];
+
+            destino = folder + '/' + new_file['url']
             if os.access(folder, os.R_OK):
-                copy(original, destino);
-                respuesta['exito'] = true;
-                respuesta['file']  = array(new_file);
+                copyfile(original, destino)
+                respuesta['exito'] = True
+                respuesta['file'] = [new_file]
             else:
-                respuesta['mensaje'] = 'La carpeta ' . folder . ' no tiene permisos de escritura';
-            }
-        } else {
-            respuesta['mensaje'] = 'El archivo original no existe';
-        }
-        return respuesta;
-    }
+                respuesta['mensaje'] = 'La carpeta ' + \
+                    folder + ' no tiene permisos de escritura'
+        else:
+            respuesta['mensaje'] = 'El archivo original no existe'
+
+        return respuesta
 
     @staticmethod
     def get_recortes(modulo):

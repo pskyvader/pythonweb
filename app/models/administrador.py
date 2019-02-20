@@ -189,14 +189,14 @@ class administrador(base_model):
     @staticmethod
     def recuperar(email):
         """recuperar contraseña"""
+        from core.view import view
         nombre_sitio = app.title
         if email == '':
             return False
-        
 
-        where       = {'email' : email.lower()}
-        condiciones = {'limit' : 1}
-        row         = administrador.getAll(where, condiciones)
+        where = {'email': email.lower()}
+        condiciones = {'limit': 1}
+        row = administrador.getAll(where, condiciones)
 
         if len(row) != 1:
             return False
@@ -206,26 +206,23 @@ class administrador(base_model):
                 return False
             else:
                 password = functions.generar_pass()
-                data = {'id' : admin[0], 'pass' : password, 'pass_repetir' : password}
-                row  = administrador.update(data)
+                data = {'id': admin[0], 'pass': password,
+                        'pass_repetir': password}
+                row = administrador.update(data)
 
                 if row:
-                    body_email = array(
-                        'body'          : view.get_theme() . 'mail/recuperar_password.html',
-                        'titulo'        : "Recuperación de contraseña",
-                        'cabecera'      : "Estimado " . usuario["nombre"] . ", se ha solicitado la recuperación de contraseña en " . nombre_sitio,
-                        'campos'        : array('Contraseña (sin espacios)' : password),
-                        'campos_largos' : array(),
-                    )
-                    body      = email.body_email(body_email)
-                    respuesta = email.enviar_email(array(email), 'Recuperación de contraseña', body)
+                    body_email = {
+                        'body': view.get_theme() + 'mail/recuperar_password.html',
+                        'titulo': "Recuperación de contraseña",
+                        'cabecera': "Estimado " + usuario["nombre"] + ", se ha solicitado la recuperación de contraseña en " . nombre_sitio,
+                        'campos': {'Contraseña (sin espacios)': password},
+                        'campos_largos': {},
+                    }
+                    body = email.body_email(body_email)
+                    respuesta = email.enviar_email(
+                        [email], 'Recuperación de contraseña', body)
 
-                    log.insert_log(administrador.table, administrador.idname, __FUNCTION__, admin)
+                    #log.insert_log(administrador.table, administrador.idname, administrador, admin)
                     return respuesta
                 else:
                     return False
-                }
-
-            }
-        }
-    }

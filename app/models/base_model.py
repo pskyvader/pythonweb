@@ -91,3 +91,22 @@ class base_model:
             return len(row)
         else:
             return row
+
+    @classmethod
+    def getById(cls,id):
+        where = {cls.idname : id}
+        if app.front:
+            # fields     = table.getByname(cls.table)
+            fields = {}
+            if 'estado' in fields:
+                where['estado'] = True
+            
+        
+        connection = database.instance()
+        row        = connection.et(cls.table, cls.idname, where)
+        if len(row) == 1:
+            if 'foto' in row[0]:
+                row[0]['foto'] = json.loads(row[0]['foto'])
+            if 'archivo' in row[0]:
+                row[0]['archivo'] = json.loads(row[0]['archivo'])
+        return row[0] if len(row) == 1 else row

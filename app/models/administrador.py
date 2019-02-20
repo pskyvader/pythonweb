@@ -31,7 +31,7 @@ class administrador(base_model):
         if isinstance(row, int) and row > 0:
             last_id = row
             if loggging:
-                #log.insert_log(cls.table, cls.idname, cls, insert)
+                # log.insert_log(cls.table, cls.idname, cls, insert)
                 pass
             return last_id
         else:
@@ -67,7 +67,7 @@ class administrador(base_model):
         connection = database.instance()
         row = connection.update(cls.table, cls.idname, set_query, where)
         if loggging:
-            #log.insert_log(cls.table, cls.idname, cls, (set_query+where))
+            # log.insert_log(cls.table, cls.idname, cls, (set_query+where))
             pass
         if isinstance(row, bool) and row:
             row = where[cls.idname]
@@ -93,14 +93,14 @@ class administrador(base_model):
                     session["tipo" + prefix_site] = admin['tipo']
                     session['prefix_site'] = prefix_site
                     session.save()
-                    #log.insert_log(administrador.table, administrador.idname, administrador, admin)
+                    # log.insert_log(administrador.table, administrador.idname, administrador, admin)
                     return True
         functions.set_cookie(cookie, 'aaa', (31536000))
         return False
 
     @staticmethod
     def login(email, password, recordar):
-        connection = database.instance()
+        # connection = database.instance()
         prefix_site = app.prefix_site
         if email == '' or password == '':
             return False
@@ -116,8 +116,8 @@ class administrador(base_model):
             if not admin['estado']:
                 return False
             else:
-                #profile = profile.getByTipo(admin['tipo'])
-                profile={'tipo':1}
+                # profile = profile.getByTipo(admin['tipo'])
+                profile = {'tipo': 1}
                 if not 'tipo' in profile or profile['tipo'] <= 0:
                     return False
                 else:
@@ -129,12 +129,24 @@ class administrador(base_model):
                     session["tipo" + prefix_site] = admin['tipo']
                     session['prefix_site'] = prefix_site
                     session.save()
-                    #log.insert_log(administrador.table, administrador.idname, administrador, admin)
+                    # log.insert_log(administrador.table, administrador.idname, administrador, admin)
                     if recordar == 'on':
                         return administrador.update_cookie(admin[0])
                     else:
                         return True
 
+    @staticmethod
+    def update_cookie(id_cookie):
+        import uuid
+        cookie = str(uuid.UUID)
+        data = {'id': id_cookie, 'cookie': cookie}
+        exito = administrador.update(data)
+        if exito:
+            functions.set_cookie(
+                'cookieadmin' + app.prefix_site, cookie, (31536000))
+
+        return exito
+    }
     @staticmethod
     def verificar_sesion():
         return True

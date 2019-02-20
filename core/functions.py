@@ -19,8 +19,8 @@ class functions():
                     return False
             else:
                 coo={}
-                for key,value in c.items():
-                    coo[key]=value
+                for key,cookie in c.items():
+                    coo[key]=cookie.value
                 
                 print(coo)
                 return coo

@@ -53,10 +53,30 @@ class functions():
 
 
     @staticmethod
-    def get_idseccion(url:str) -> int:
+    def get_idseccion(url:str):
         url = url.split('-',2)
         return int(url[0])
 
+    @staticmethod
+    def url_seccion(array url_base, seccion, return = false, extra_variables = false)
+    {
+        url   = url_base
+        extra = ""
+        if (isset(seccion[0])) {
+            extra .= seccion[0]
+            if (isset(seccion['url'])) {
+                extra .= "-" . seccion['url']
+            } elseif (isset(seccion['titulo'])) {
+                extra .= "-" . self::url_amigable(seccion['titulo'])
+            }
+        }
+        url[] = extra
+        if (return) {
+            return url
+        } else {
+            return self::generar_url(url, extra_variables)
+        }
+    }
     @staticmethod
     def generar_url(url, extra={}, front_auto=True, front=True):
         url = '/'.join(map(str, url))

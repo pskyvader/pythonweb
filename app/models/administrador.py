@@ -167,11 +167,11 @@ class administrador(base_model):
                 return False
             elif admin['email'] != session["email" + prefix_site]:
                 return False
-            elif admin['estado'] != session["estado" + prefix_site] or !session["estado" + prefix_site]:
+            elif admin['estado'] != session["estado" + prefix_site] or not session["estado" + prefix_site]:
                 return False
-            elif admin['tipo'] != session["tipo" + prefix_site] or !session["tipo" + prefix_site]:
+            elif admin['tipo'] != session["tipo" + prefix_site] or not session["tipo" + prefix_site]:
                 return False
-            else {
+            else:
                 profile = profile.getByTipo(admin['tipo'])
                 if !isset(profile['tipo']) or profile['tipo'] <= 0:
                     return False

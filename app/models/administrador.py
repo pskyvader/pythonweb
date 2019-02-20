@@ -146,7 +146,20 @@ class administrador(base_model):
                 'cookieadmin' + app.prefix_site, cookie, (31536000))
 
         return exito
-    }
+    
+    @staticmethod
+    def logout():
+        prefix_site = app.prefix_site
+        session = app.session
+        del session[static.idname + prefix_site]
+        del session["email" + prefix_site]
+        del session["nombre" + prefix_site]
+        del session["estado" + prefix_site]
+        del session["tipo" + prefix_site]
+        del session['prefix_site']
+        functions.set_cookie('cookieadmin' + prefix_site, 'aaa', (31536000))
+    
+
     @staticmethod
     def verificar_sesion():
         return True

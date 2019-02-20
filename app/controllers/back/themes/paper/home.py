@@ -29,8 +29,8 @@ class home:
 
     def index(self):
         ret = {'body':''}
-        #if not administrador_model.verificar_sesion():
-         #   self.url = ['login', 'index', 'home']
+        if not administrador_model.verificar_sesion():
+            self.url = ['login', 'index', 'home']
         
         url_return=functions.url_redirect(self.url)
         if url_return!='':

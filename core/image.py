@@ -13,9 +13,12 @@ class image:
     upload_dir = ''
     upload_url = ''
 
-    # mover archivo (normalmente) desde la carpeta temporal a la definitiva
+    
+
+    
     @staticmethod
     def move(file, folder, subfolder, name_final, folder_tmp='tmp'):
+        # mover archivo (normalmente) desde la carpeta temporal a la definitiva
         recortes = image.get_recortes(folder)
         folder_tmp = image.get_upload_dir() + folder_tmp
         base_folder = image.get_upload_dir() + folder

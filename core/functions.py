@@ -56,7 +56,7 @@ class functions():
         return int(url[0])
 
     @staticmethod
-    def url_seccion(url_base:list, seccion=dict, return_url=False, extra_variables=False):
+    def url_seccion(url_base: list, seccion=dict, return_url=False, extra_variables=False):
         url = url_base
         extra = ""
         if 0 in seccion:

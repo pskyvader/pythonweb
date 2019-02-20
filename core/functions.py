@@ -7,17 +7,26 @@ from os.path import getmtime
 class functions():
     cookies = []
     @staticmethod
-    def get_cookie(find_cookie):
+    def get_cookie(find_cookie=''):
         from http import cookies
         c = cookies.SimpleCookie()
         if 'HTTP_COOKIE' in app.environ:
             c.load(app.environ['HTTP_COOKIE'])
-            if find_cookie in c:
-                return c[find_cookie].value
+            print(c)
+            if find_cookie!='':
+                if find_cookie in c:
+                    return c[find_cookie].value
+                else:
+                    return False
             else:
-                return False
+                coo={}
+                for co in c:
+                    coo[co.key]=co.value
         else:
-            return False
+            if find_cookie!='':
+                return False
+            else:
+                return {}
 
     @staticmethod
     def set_cookie(cookie, value, time):

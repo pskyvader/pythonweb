@@ -19,6 +19,7 @@ class app:
     root = ''
     environ = {}
     get = {}
+    session = {}
 
     def __init__(self, root):
         app.root = root + '/'
@@ -149,10 +150,10 @@ class app:
 
     @staticmethod
     def parse_post():
-        import cgi
+        from cgi import FieldStorage
         post_env = app.environ.copy()
         post_env['QUERY_STRING'] = ''
-        post = cgi.FieldStorage(
+        post = FieldStorage(
             fp=app.environ['wsgi.input'],
             environ=post_env,
             keep_blank_values=True

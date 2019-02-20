@@ -13,8 +13,46 @@ class image:
     upload_dir = ''
     upload_url = ''
 
-    
+    @staticmethod
+    def upload_tmp(modulo):
+        '''Subir a carpeta temporal, durante la creacion de la seccion. al guardar el archivo se mueve a la carpeta definitiva'''
+        respuesta = {'exito' : False, 'mensaje' : ''}
+        if (isset(_FILES)) {
+            recortes = self::get_recortes(modulo)
+            archivos = array()
 
+            if (isset(_FILES['file'])) {
+                file_ary = functions::reArrayFiles(_FILES['file'])
+            } else {
+                file_ary = _FILES
+            }
+
+            foreach (file_ary as key : files) {
+                archivo            = self::upload(files, 'tmp')
+                respuesta['exito'] = archivo['exito']
+                if (!archivo['exito']) {
+                    respuesta['mensaje'] = archivo['mensaje']
+                    break
+                } else {
+                    recorte = self::recortes_foto(archivo, recortes)
+                    if (!recorte['exito']) {
+                        respuesta['mensaje'] = recorte['mensaje']
+                        break
+                    } else {
+                        name           = self::nombre_archivo(archivo['name'], 'thumb')
+                        archivo['url'] = self::get_upload_url() . archivo['folder'] . '/' . name
+                        respuesta['mensaje'] .= archivo['original_name'] . ' <br/>'
+                        archivos[] = archivo
+                    }
+                }
+            }
+            respuesta['archivos'] = archivos
+        } else {
+            respuesta['mensaje'] = 'No se encuentran archivos a subir'
+        }
+
+        return respuesta
+    }
     
     @staticmethod
     def move(file, folder, subfolder, name_final, folder_tmp='tmp'):

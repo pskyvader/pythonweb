@@ -13,47 +13,41 @@ class image:
     upload_dir = ''
     upload_url = ''
 
-    @staticmethod
-    def upload_tmp(modulo):
+    @classmethod
+    def upload_tmp(cls, modulo):
         '''Subir a carpeta temporal, durante la creacion de la seccion. al guardar el archivo se mueve a la carpeta definitiva'''
-        respuesta = {'exito' : False, 'mensaje' : ''}
-        if (isset(_FILES)) {
-            recortes = self::get_recortes(modulo)
-            archivos = array()
+        respuesta = {'exito': False, 'mensaje': ''}
+        if 'file' in app.post:
+            files = app.post['files']
+            recortes = cls.get_recortes(modulo)
+            archivos = []
 
-            if (isset(_FILES['file'])) {
-                file_ary = functions::reArrayFiles(_FILES['file'])
-            } else {
-                file_ary = _FILES
-            }
+            if 'file' in files:
+                file_ary = functions.reArrayFiles(files['file'])
+            else:
+                file_ary = files
 
-            foreach (file_ary as key : files) {
-                archivo            = self::upload(files, 'tmp')
+            for files in file_ary:
+                archivo = cls.upload(files, 'tmp')
                 respuesta['exito'] = archivo['exito']
-                if (!archivo['exito']) {
+                if not archivo['exito']:
                     respuesta['mensaje'] = archivo['mensaje']
                     break
-                } else {
-                    recorte = self::recortes_foto(archivo, recortes)
-                    if (!recorte['exito']) {
+                else:
+                    recorte = cls.recortes_foto(archivo, recortes)
+                    if not recorte['exito']:
                         respuesta['mensaje'] = recorte['mensaje']
                         break
-                    } else {
-                        name           = self::nombre_archivo(archivo['name'], 'thumb')
-                        archivo['url'] = self::get_upload_url() . archivo['folder'] . '/' . name
-                        respuesta['mensaje'] .= archivo['original_name'] . ' <br/>'
-                        archivos[] = archivo
-                    }
-                }
-            }
+                    else:
+                        name = cls.nombre_archivo(archivo['name'], 'thumb')
+                        archivo['url'] = cls.get_upload_url() + archivo['folder'] + '/' + name
+                        respuesta['mensaje'] += archivo['original_name'] + ' <br/>'
+                        archivos.append(archivo)
             respuesta['archivos'] = archivos
-        } else {
+        else:
             respuesta['mensaje'] = 'No se encuentran archivos a subir'
-        }
-
         return respuesta
-    }
-    
+
     @staticmethod
     def move(file, folder, subfolder, name_final, folder_tmp='tmp'):
         '''mover archivo (normalmente) desde la carpeta temporal a la definitiva'''

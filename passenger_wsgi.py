@@ -1,9 +1,8 @@
 import sys
 import os
 from core.app import app
-import linecache
-from wsgiref.simple_server import make_server
 import pprint
+from beaker.middleware import SessionMiddleware
 
 sys.path.insert(0, os.path.dirname(__file__))
 

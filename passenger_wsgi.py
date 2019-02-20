@@ -33,4 +33,11 @@ class LoggingMiddleware:
         return self.__application(environ, _start_response)
 
 
-application = LoggingMiddleware(application2)
+#application = LoggingMiddleware(application2)
+
+session_opts = {
+    'session.cookie_expires': True
+}
+
+app = LoggingMiddleware(application2)
+application = SessionMiddleware(app, session_opts)

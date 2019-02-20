@@ -53,7 +53,7 @@ class functions():
 
 
     @staticmethod
-    def get_idseccion(url:str):
+    def get_idseccion(url:str) -> str:
         url = url.split('-',2)
         return (int) url[0]
     }

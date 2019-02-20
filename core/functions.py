@@ -20,8 +20,8 @@ class functions():
                     return False
             else:
                 coo={}
-                for co in c:
-                    coo[co.key]=co.value
+                for key,value in c.items():
+                    coo[key]=value
                 return coo
         else:
             if find_cookie!='':

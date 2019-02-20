@@ -97,3 +97,7 @@ class administrador(base_model):
                     return True
         functions.set_cookie(cookie, 'aaa', (31536000))
         return False
+
+    @staticmethod
+    def verificar_sesion():
+        return True

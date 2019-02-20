@@ -110,7 +110,7 @@ class functions():
     def generar_pass(length = 8):
         import uuid
         import hashlib
-        password = str(hashlib.sha1(str(uuid.UUID)))[-10,length].upper()
+        password = str(hashlib._hashlib.openssl_md5(str(uuid.UUID)))[-10,length].upper()
         return password
     
     @staticmethod

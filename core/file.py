@@ -45,6 +45,7 @@ class file(image):
 
     @staticmethod
     def move(file, folder, subfolder, name_final, folder_tmp='tmp'):
+        '''mover archivo (normalmente) desde la carpeta temporal a la definitiva'''
         folder_tmp = file.get_upload_dir() + folder_tmp
         base_folder = file.get_upload_dir() + folder
         folder = base_folder + '/' + name_final + '/' + subfolder

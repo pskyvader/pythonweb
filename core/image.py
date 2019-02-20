@@ -341,7 +341,7 @@ class image:
         respuesta = {'exito': False, 'mensaje': 'error al recortar imagen'}
         ancho_maximo = recorte['ancho']
         alto_maximo = recorte['alto']
-        ruta = image.get_upload_dir() . datos['folder']
+        ruta = image.get_upload_dir() + datos['folder']
         foto = datos['name']
         etiqueta = recorte['tag']
         tipo = recorte['tipo']

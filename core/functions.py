@@ -12,24 +12,18 @@ class functions():
         c = cookies.SimpleCookie()
         if 'HTTP_COOKIE' in app.environ:
             c.load(app.environ['HTTP_COOKIE'])
-            if find_cookie!='':
+            if find_cookie != '':
                 if find_cookie in c:
                     return c[find_cookie].value
                 else:
                     return False
             else:
-                coo={}
-                for key,cookie in c.items():
-                    coo[key]=cookie.value
-                    if coo[key]=='True' or coo[key]=='true':
-                        coo[key]==True
-                    elif coo[key]=='False' or coo[key]=='false':
-                        coo[key]==False
-                
-                print(coo)
+                coo = {}
+                for key, cookie in c.items():
+                    coo[key] = cookie.value
                 return coo
         else:
-            if find_cookie!='':
+            if find_cookie != '':
                 return False
             else:
                 return {}
@@ -92,7 +86,8 @@ class functions():
 
     @staticmethod
     def url_amigable(url=""):
-        url = functions.replaceMultiple( url, ['á', 'à', 'â', 'ã', 'ª', 'ä'], 'a')
+        url = functions.replaceMultiple(
+            url, ['á', 'à', 'â', 'ã', 'ª', 'ä'], 'a')
         url = functions.replaceMultiple(url, ['Á', 'À', 'Â', 'Ã', 'Ä'], "A")
         url = functions.replaceMultiple(url, ['Í', 'Ì', 'Î', 'Ï'], "I")
         url = functions.replaceMultiple(url, ['í', 'ì', 'î', 'ï'], "i")
@@ -102,7 +97,8 @@ class functions():
         url = functions.replaceMultiple(url, ['Ó', 'Ò', 'Ô', 'Õ', 'Ö'], "O")
         url = functions.replaceMultiple(url, ['ú', 'ù', 'û', 'ü'], "u")
         url = functions.replaceMultiple(url, ['Ú', 'Ù', 'Û', 'Ü'], "U")
-        url = functions.replaceMultiple( url, ['[', '^', '´', '`', '¨', '~', ']', ' ', '/', '°', 'º'], "-")
+        url = functions.replaceMultiple(
+            url, ['[', '^', '´', '`', '¨', '~', ']', ' ', '/', '°', 'º'], "-")
         url = url.replace("ç", "c")
         url = url.replace("Ç", "C")
         url = url.replace("ñ", "n")

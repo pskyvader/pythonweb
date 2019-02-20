@@ -156,7 +156,6 @@ class administrador(base_model):
         del session["tipo" + prefix_site]
         del session['prefix_site']
         functions.set_cookie('cookieadmin' + prefix_site, 'aaa', (31536000))
-    
 
     @staticmethod
     def verificar_sesion():

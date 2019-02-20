@@ -50,32 +50,28 @@ class functions():
         else:
             return ""
 
-
-
     @staticmethod
-    def get_idseccion(url:str):
-        url = url.split('-',2)
+    def get_idseccion(url: str):
+        url = url.split('-', 2)
         return int(url[0])
 
     @staticmethod
-    def url_seccion(url_base, seccion, return = False, extra_variables = False):
-        url   = url_base
+    def url_seccion(url_base:list, seccion, return_url=False, extra_variables=False):
+        url = url_base
         extra = ""
-        if (isset(seccion[0])) {
-            extra .= seccion[0]
-            if (isset(seccion['url'])) {
-                extra .= "-" . seccion['url']
-            } elseif (isset(seccion['titulo'])) {
-                extra .= "-" . self::url_amigable(seccion['titulo'])
-            }
-        }
-        url[] = extra
-        if (return) {
+        if 0 in seccion:
+            extra += seccion[0]
+            if 'url' in seccion:
+                extra += "-" + seccion['url']
+            elif 'titulo' in seccion:
+                extra += "-" + functions.url_amigable(seccion['titulo'])
+
+        url.append(extra)
+        if return_url:
             return url
-        } else {
-            return self::generar_url(url, extra_variables)
-        }
-    }
+        else:
+            return functions.generar_url(url, extra_variables)
+
     @staticmethod
     def generar_url(url, extra={}, front_auto=True, front=True):
         url = '/'.join(map(str, url))

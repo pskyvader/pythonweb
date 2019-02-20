@@ -258,13 +258,15 @@ class image:
         # si es valido, se crea una imagen intermedia para acelerar el proceso de recorte de las demas imagenes
         if (alto > (alto_valido * 1.5) and alto_valido > 0) or (ancho > (ancho_valido * 1.5) and ancho_valido > 0):
             # alto proporcional segun mayor ancho valido
-            alto_final = (alto / ancho) * ancho_valido
+            #alto_final = (alto / ancho) * ancho_valido
             # ancho proporcional segun mayor alto valido
             ancho_final = (ancho / alto) * alto_valido
             if ancho_final >= ancho_valido:
-                respuesta = image.recortar_foto( {'tag': 'recorte_previo', 'ancho': None, 'alto': alto_valido, 'calidad': 100, 'tipo': 'recortar'}, archivo)
+                respuesta = image.recortar_foto(
+                    {'tag': 'recorte_previo', 'ancho': None, 'alto': alto_valido, 'calidad': 100, 'tipo': 'recortar'}, archivo)
             else:
-                respuesta = image.recortar_foto( {'tag': 'recorte_previo', 'ancho': ancho_valido, 'alto': None, 'calidad': 100, 'tipo': 'recortar'}, archivo)
+                respuesta = image.recortar_foto(
+                    {'tag': 'recorte_previo', 'ancho': ancho_valido, 'alto': None, 'calidad': 100, 'tipo': 'recortar'}, archivo)
 
             if not respuesta['exito']:
                 return respuesta
@@ -290,9 +292,51 @@ class image:
         return respuesta
 
     @staticmethod
+    def proporcion_foto(ancho_maximo, alto_maximo, ancho, alto, tipo):
+        proporcion_imagen = ancho / alto
+        proporcion_miniatura = ancho_maximo / alto_maximo
+        miniatura_ancho = ancho_maximo
+        miniatura_alto = alto_maximo
+
+        if tipo == 'recortar':
+            if proporcion_imagen > proporcion_miniatura:
+                miniatura_ancho = alto_maximo * proporcion_imagen
+            elif proporcion_imagen < proporcion_miniatura:
+                miniatura_alto = ancho_maximo / proporcion_imagen
+
+            x = (miniatura_ancho - ancho_maximo) / 2
+            y = (miniatura_alto - alto_maximo) / 2
+        else:
+            if proporcion_imagen > proporcion_miniatura:
+                if ancho > alto:
+                    miniatura_alto = ancho_maximo / proporcion_imagen
+                else:
+                    if ancho_maximo > alto_maximo:
+                        miniatura_alto = alto_maximo * proporcion_imagen
+                    else:
+                        miniatura_alto = ancho_maximo / proporcion_imagen
+
+            elif proporcion_imagen < proporcion_miniatura:
+                if ancho_maximo > alto_maximo:
+                    miniatura_ancho = alto_maximo * proporcion_imagen
+                elif ancho_maximo < alto_maximo:
+                    miniatura_ancho = ancho_maximo * proporcion_miniatura
+                else:
+                    miniatura_ancho = ancho_maximo * proporcion_imagen
+
+            if tipo == 'centrar' and ancho < miniatura_ancho and alto < miniatura_alto:
+                x = (ancho_maximo - ancho) / 2
+                y = (alto_maximo - alto) / 2
+            else:
+                x = (ancho_maximo - miniatura_ancho) / 2
+                y = (alto_maximo - miniatura_alto) / 2
+
+        return x, y, miniatura_ancho,  miniatura_alto
+
+    @staticmethod
     def nombre_archivo(file, tag='', extension='', remove=False):
         name = file.split('.')
-        if ('' == extension):
+        if'' == extension:
             extension = (name.pop()).lower()
         else:
             name.pop()

@@ -145,3 +145,40 @@ class base_model:
         row = connection.delete(cls.table, cls.idname, where)
         #log.insert_log(cls.table, cls.idname, cls, where)
         return row
+
+    @classmethod
+    def copy(cls, id):
+        from core.image import image
+        row = cls.getById(id)
+
+        if 'foto' in row:
+            foto_copy = row['foto']
+            del row['foto']
+        else:
+            foto_copy = None
+
+        if 'archivo' in row:
+            del row['archivo']
+
+        # fields     = table.getByname(cls.table)
+        fields = {}
+        insert = database.create_data(fields, row)
+        connection = database.instance()
+        row = connection.insert(cls.table, cls.idname, insert)
+        if isinstance(row, int) and row > 0:
+            last_id = row
+            if foto_copy is not None:
+                new_fotos = []
+                for foto in foto_copy:
+                    copiar = image.copy(
+                        foto, last_id, foto['folder'], foto['subfolder'], last_id, '')
+                    new_fotos.append(copiar['file'][0])
+                    image.regenerar(copiar['file'][0])
+
+                update = {'id': last_id, 'foto': json.dumps(new_fotos)}
+                cls.update(update)
+
+            #log.insert_log(cls.table, cls.idname, cls, insert)
+            return last_id
+        else:
+            return row

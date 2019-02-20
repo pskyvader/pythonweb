@@ -187,8 +187,8 @@ class image:
                 name_final = functions.url_amigable(''.join(name_final))
 
             name = file['name'].split('.')
-            extension = '.'+(name_final.pop()).lower()
-            name = functions.url_amigable(''.join(name_final))
+            extension = '.'+(name.pop()).lower()
+            name = functions.url_amigable(''.join(name))
             my_file = Path(folder)
             if not my_file.is_dir():
                 makedirs(folder, 777)

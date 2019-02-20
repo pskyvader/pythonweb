@@ -50,9 +50,9 @@ class image:
 
     @staticmethod
     def regenerar(file):
+        '''regenerar imagenes ya guardadas'''
         from glob import glob
         from os import remove
-        '''regenerar imagenes ya guardadas'''
         recortes       = image.get_recortes(file['folder'])
         file['name']   = file['url']
         file['folder'] = file['folder'] + '/' + file['parent'] + '/' + file['subfolder']

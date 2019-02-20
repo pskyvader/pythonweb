@@ -110,10 +110,10 @@ class base_model:
         return row[0] if len(row) == 1 else row
 
     @classmethod
-    def insert(cls, data,  loggging=True):
+    def insert(cls, set_query,  loggging=True):
         # fields     = table.getByname(cls.table)
         fields = {}
-        insert = database.create_data(fields, data)
+        insert = database.create_data(fields, set_query)
         connection = database.instance()
         row = connection.insert(cls.table, cls.idname, insert)
         if isinstance(row, int) and row > 0:

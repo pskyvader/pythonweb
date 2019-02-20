@@ -161,6 +161,11 @@ class app:
         return post
 
     @staticmethod
+    def parse_session():
+        session = app.environ['beaker.session']
+        return session
+
+    @staticmethod
     def get_config():
         if len(app.config) == 0:
             with open(app.app_dir + 'config/config.json') as f:

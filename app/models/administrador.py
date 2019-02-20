@@ -162,8 +162,7 @@ class administrador(base_model):
         prefix_site = app.prefix_site
         session = app.session
         if (administrador.idname+prefix_site) in session and session[administrador.idname + prefix_site] != '':
-            admin = administrador.getById(
-                session[administrador.idname + prefix_site])
+            admin = administrador.getById( session[administrador.idname + prefix_site])
             if 0 in admin and admin[0] != session[administrador.idname + prefix_site]:
                 return False
             elif admin['email'] != session["email" + prefix_site]:

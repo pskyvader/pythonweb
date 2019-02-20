@@ -21,7 +21,7 @@ class app:
     root = ''
     environ = {}
     get = {}
-    session = None
+    session = {}
 
     def __init__(self, root):
         app.root = root + '/'
@@ -120,6 +120,8 @@ class app:
         data_return['headers'] = response['headers']
         for cookie in functions.cookies:
             data_return['headers'].append(('Set-Cookie', cookie))
+        
+        app.session.save()
         return data_return
 
     @staticmethod

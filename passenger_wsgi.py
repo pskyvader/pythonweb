@@ -39,5 +39,5 @@ session_opts = {
     'session.cookie_expires': True
 }
 
-#app = LoggingMiddleware(application2)
-application = SessionMiddleware(application2, session_opts)
+app2 = LoggingMiddleware(application2)
+application = SessionMiddleware(app2, session_opts)

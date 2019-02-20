@@ -293,6 +293,7 @@ class image:
 
     @staticmethod
     def proporcion_foto(ancho_maximo, alto_maximo, ancho, alto, tipo):
+        """Obtener proporciones de foto final"""
         proporcion_imagen = ancho / alto
         proporcion_miniatura = ancho_maximo / alto_maximo
         miniatura_ancho = ancho_maximo
@@ -332,6 +333,116 @@ class image:
                 y = (alto_maximo - miniatura_alto) / 2
 
         return x, y, miniatura_ancho,  miniatura_alto
+
+    @staticmethod
+    def recortar_foto(recorte, datos):
+        """Recorta una foto"""
+        from PIL import Image
+        respuesta    = {'exito' : False, 'mensaje' : 'error al recortar imagen'}
+        ancho_maximo = recorte['ancho']
+        alto_maximo  = recorte['alto']
+        ruta         = image.get_upload_dir() . datos['folder']
+        foto         = datos['name']
+        etiqueta     = recorte['tag']
+        tipo         = recorte['tipo']
+
+        ini_set('memory_limit', '-1')
+        ruta_imagen = ruta . '/' . foto
+        if (!file_exists(ruta_imagen)) {
+            respuesta['mensaje'] = 'Archivo ' . ruta_imagen . ' no existe'
+            return respuesta
+        }
+        info_imagen = getimagesize(ruta_imagen)
+        ancho       = info_imagen[0]
+        alto        = info_imagen[1]
+        imagen_tipo = info_imagen['mime']
+
+        proporcion_imagen = ancho / alto
+        if (null == ancho_maximo || 0 == ancho_maximo) {
+            ancho_maximo = (float) alto_maximo * proporcion_imagen
+        }
+        if (null == alto_maximo || 0 == alto_maximo) {
+            alto_maximo = (float) ancho_maximo / proporcion_imagen
+        }
+
+        tamano_final    = image.proporcion_foto(ancho_maximo, alto_maximo, ancho, alto, tipo)
+        x               = tamano_final['x']
+        y               = tamano_final['y']
+        miniatura_ancho = tamano_final['miniatura_ancho']
+        miniatura_alto  = tamano_final['miniatura_alto']
+
+        switch (imagen_tipo) {
+            case "image/jpg":
+            case "image/jpeg":
+                imagen = imagecreatefromjpeg(ruta_imagen)
+                break
+            case "image/png":
+                imagen = imagecreatefrompng(ruta_imagen)
+                break
+            case "image/gif":
+                imagen = imagecreatefromgif(ruta_imagen)
+                break
+        }
+
+        lienzo = imagecreatetruecolor(ancho_maximo, alto_maximo)
+        if ("recortar" == tipo) {
+            lienzo_temporal = imagecreatetruecolor(miniatura_ancho, miniatura_alto)
+        }
+
+        if ("image/png" == imagen_tipo) {
+            imagecolortransparent(lienzo, imagecolorallocatealpha(imagen, 0, 0, 0, 127))
+            imagealphablending(lienzo, False)
+            imagesavealpha(lienzo, true)
+            imagefill(lienzo, 0, 0, imagecolorallocatealpha(imagen, 0, 0, 0, 127))
+
+            if ("recortar" == tipo) {
+                imagecolortransparent(lienzo_temporal, imagecolorallocatealpha(lienzo_temporal, 0, 0, 0, 127))
+                imagealphablending(lienzo_temporal, False)
+                imagesavealpha(lienzo_temporal, true)
+            }
+        } else {
+            blanco = imagecolorallocate(imagen, 255, 255, 255)
+            imagefill(lienzo, 0, 0, blanco)
+
+            if ("recortar" == tipo) {
+                imagefill(lienzo_temporal, 0, 0, blanco)
+            }
+        }
+
+        if ("recortar" == tipo) {
+            imagecopyresampled(lienzo_temporal, imagen, 0, 0, 0, 0, miniatura_ancho, miniatura_alto, ancho, alto)
+            imagecopy(lienzo, lienzo_temporal, 0, 0, x, y, ancho_maximo, alto_maximo)
+        } elseif ("rellenar" == tipo) {
+            imagecopyresampled(lienzo, imagen, x, y, 0, 0, miniatura_ancho, miniatura_alto, ancho, alto)
+        } else {
+            if (ancho >= miniatura_ancho || alto >= miniatura_alto) {
+                imagecopyresampled(lienzo, imagen, x, y, 0, 0, miniatura_ancho, miniatura_alto, ancho, alto)
+            } else {
+                imagecopyresampled(lienzo, imagen, x, y, 0, 0, ancho, alto, ancho, alto)
+
+            }
+        }
+
+        foto_recorte = image.nombre_archivo(foto, etiqueta, '', true)
+        foto_webp    = image.nombre_archivo(foto, etiqueta, 'webp', true)
+        if (file_exists(ruta . foto_recorte)) {
+            unlink(ruta . foto_recorte)
+        }
+        if (file_exists(ruta . foto_webp)) {
+            unlink(ruta . foto_webp)
+        }
+
+        if ("image/png" == imagen_tipo) {
+            imagepng(lienzo, ruta . '/' . foto_recorte, 8)
+        } else {
+            imagejpeg(lienzo, ruta . '/' . foto_recorte, recorte['calidad'])
+            imagewebp(lienzo, ruta . '/' . foto_webp, recorte['calidad'])
+        }
+
+        respuesta['exito'] = true
+
+        return respuesta
+    }
 
     @staticmethod
     def nombre_archivo(file, tag='', extension='', remove=False):

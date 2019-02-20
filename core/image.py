@@ -173,6 +173,8 @@ class image:
     def upload(cls,file, folder_upload = 'tmp', name_final = ''):
         """subir archivo"""
         import uuid
+        import stat
+        import os
         folder = cls.get_upload_dir() + folder_upload
 
         respuesta = cls.validate(file)
@@ -193,9 +195,9 @@ class image:
             
             #respuesta['exito'] = move_uploaded_file(file['tmp_name'], folder + '/' + name_final + extension)
             respuesta['exito'] = rename(file['tmp_name'], folder + '/' + name_final + extension)
-            if (!respuesta['exito']) {
-                respuesta['mensaje'] = "Error al mover archivo. Permisos: " . substr(sprintf('%o', fileperms(folder)), -4) . ", carpeta: " . folder
-            } else {
+            if not respuesta['exito']:
+                respuesta['mensaje'] = "Error al mover archivo. Permisos: " +oct(stat.S_IMODE(os.lstat(folder).st_mode))+ ", carpeta: " + folder
+            else {
                 respuesta['name']          = name_final . extension
                 respuesta['folder']        = folder_upload
                 respuesta['original_name'] = file['name']

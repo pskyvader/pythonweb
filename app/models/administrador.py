@@ -116,7 +116,8 @@ class administrador(base_model):
             if not admin['estado']:
                 return False
             else:
-                profile = profile.getByTipo(admin['tipo'])
+                #profile = profile.getByTipo(admin['tipo'])
+                profile={'tipo':1}
                 if not 'tipo' in profile or profile['tipo'] <= 0:
                     return False
                 else:

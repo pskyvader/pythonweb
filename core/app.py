@@ -170,7 +170,9 @@ class app:
     @staticmethod
     def parse_session():
         print(app.environ)
-        return {}
+        #session = app.environ['beaker.session']
+        session={}
+        return session
 
     @staticmethod
     def get_config():

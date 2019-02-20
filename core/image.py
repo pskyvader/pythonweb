@@ -346,12 +346,12 @@ class image:
         etiqueta     = recorte['tag']
         tipo         = recorte['tipo']
 
-        ini_set('memory_limit', '-1')
-        ruta_imagen = ruta . '/' . foto
-        if (!file_exists(ruta_imagen)) {
-            respuesta['mensaje'] = 'Archivo ' . ruta_imagen . ' no existe'
-            return respuesta
-        }
+        ruta_imagen = ruta + '/' + foto
+        my_file = Path(ruta_imagen)
+            if not my_file.is_file():
+                respuesta['mensaje'] = 'Archivo ' . ruta_imagen . ' no existe'
+                return respuesta
+        
         info_imagen = getimagesize(ruta_imagen)
         ancho       = info_imagen[0]
         alto        = info_imagen[1]

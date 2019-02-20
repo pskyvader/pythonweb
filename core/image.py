@@ -1,5 +1,4 @@
 from pathlib import Path
-from os import rename
 from os import makedirs
 from .app import app
 from .functions import functions
@@ -65,6 +64,8 @@ class image:
     @staticmethod
     def move(file, folder, subfolder, name_final, folder_tmp='tmp'):
         '''mover archivo (normalmente) desde la carpeta temporal a la definitiva'''
+        
+        from os import rename
         recortes = image.get_recortes(folder)
         folder_tmp = image.get_upload_dir() + folder_tmp
         base_folder = image.get_upload_dir() + folder
@@ -120,12 +121,11 @@ class image:
                 makedirs(folder, 777)
                 
             destino = folder + '/' + new_file['url'];
-            if os.access(dir_resources, os.R_OK):
-            if (is_writable(folder)) {
+            if os.access(folder, os.R_OK):
                 copy(original, destino);
                 respuesta['exito'] = true;
                 respuesta['file']  = array(new_file);
-            } else {
+            else:
                 respuesta['mensaje'] = 'La carpeta ' . folder . ' no tiene permisos de escritura';
             }
         } else {

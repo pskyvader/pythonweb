@@ -169,15 +169,15 @@ class image:
                 recortes.append(recorte)
         return recortes
 
-    @classmethod
-    def upload(cls, file, folder_upload='tmp', name_final=''):
+    @staticmethod
+    def upload(file, folder_upload='tmp', name_final=''):
         """subir archivo"""
         import uuid
         import stat
         import os
-        folder = cls.get_upload_dir() + folder_upload
+        folder = image.get_upload_dir() + folder_upload
 
-        respuesta = cls.validate(file)
+        respuesta = image.validate(file)
         if respuesta['exito']:
             if '' == name_final:
                 name_final = str(uuid.UUID)
@@ -208,24 +208,20 @@ class image:
                     file['name'] + " Subida correctamente"
         return respuesta
 
-    @staticmethod
-    def validate(file):
-    {
-        $name      = explode(".", $file['name']);
-        $extension = strtolower(array_pop($name));
-        $respuesta = array('exito' => false, 'mensaje' => 'Error: formato no valido');
-        if (0 != $file['error']) {
-            $respuesta['mensaje'] = 'Error al subir archivo: ' . $file['error'];
-        } elseif (!in_array($file['type'], static::$types)) {
-            $respuesta['mensaje'] .= '. Extension: ' . $file['type'];
-        } elseif (!in_array($extension, static::$extensions)) {
-            $respuesta['mensaje'] .= '.<br/> Extension de archivo: ' . $extension;
-        } else {
-            $respuesta['exito'] = true;
-        }
-        return $respuesta;
-    }
-
+    @classmethod
+    def validate(cls, file):
+        name = file['name'].split('.')
+        extension = '.'+(name.pop()).lower()
+        respuesta = {'exito': False, 'mensaje': 'Error: formato no valido'}
+        if 0 != file['error']:
+            respuesta['mensaje'] = 'Error al subir archivo: ' + file['error']
+        elif file['type'] not in cls.types:
+            respuesta['mensaje'] += '. Extension: ' + file['type']
+        elif extension not in cls.extensions:
+            respuesta['mensaje'] += '.<br/> Extension de archivo: ' + extension
+        else:
+            respuesta['exito'] = True
+        return respuesta
 
     @staticmethod
     def nombre_archivo(file, tag='', extension='', remove=False):

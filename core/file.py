@@ -1,8 +1,9 @@
 from pathlib import Path
 from os import makedirs
-from .image import image
+from os import rename
 from .app import app
 from .functions import functions
+from .image import image
 
 
 class file(image):
@@ -58,8 +59,8 @@ class file(image):
         nombre_final.pop()
         nombre_final = functions.url_amigable(''.join(nombre_final))
 
-        file['url'] = file['id'] . '-' . nombre_final . '.' . extension
-        rename(folder_tmp . '/' . file['tmp'], folder . '/' . file['url'])
+        file['url'] = file['id'] + '-' + nombre_final + '.' + extension
+        rename(folder_tmp + '/' + file['tmp'], folder + '/' + file['url'])
         unset(file['original_name'],file['tmp'])
         file['subfolder'] = subfolder
         return file

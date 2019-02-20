@@ -222,6 +222,77 @@ class image:
         else:
             respuesta['exito'] = True
         return respuesta
+    @staticmethod
+    def recortes_foto(archivo, recortes_foto):
+        respuesta   = {'exito' : False}
+        ruta        = image.get_upload_dir() +archivo['folder']
+        foto        = archivo['name']
+        ruta_imagen = ruta + '/' + foto
+        my_file = Path(ruta_imagen)
+        if not my_file.is_file():
+            respuesta['mensaje'] = 'Archivo ' + ruta_imagen + ' no existe'
+            return respuesta
+        
+        info_imagen = getimagesize(ruta_imagen)
+        ancho       = info_imagen[0]
+        alto        = info_imagen[1]
+
+        ancho_maximo = 0
+        alto_maximo  = 0
+        ancho_valido = 0
+        alto_valido  = 0
+
+        foreach (recortes_foto as recorte) {
+            if (recorte['ancho'] > ancho_maximo) {
+                ancho_maximo = recorte['ancho']
+                if (ancho_maximo > ancho_valido && ancho_maximo <= ancho) {
+                    ancho_valido = ancho_maximo
+                }
+            }
+            if (recorte['alto'] > alto_maximo) {
+                alto_maximo = recorte['alto']
+                if (alto_maximo > alto_valido && alto_maximo <= alto) {
+                    alto_valido = alto_maximo
+                }
+            }
+
+        }
+
+        // si es valido, se crea una imagen intermedia para acelerar el proceso de recorte de las demas imagenes
+        if ((alto > (alto_valido * 1.5) && alto_valido > 0) || (ancho > (ancho_valido * 1.5) && ancho_valido > 0)) {
+            alto_final  = (alto / ancho) * ancho_valido //alto proporcional segun mayor ancho valido
+            ancho_final = (ancho / alto) * alto_valido //ancho proporcional segun mayor alto valido
+            if (ancho_final >= ancho_valido) {
+                respuesta = self::recortar_foto(array('tag' : 'recorte_previo', 'ancho' : null, 'alto' : alto_valido, 'calidad' : 100, 'tipo' : 'recortar'), archivo)
+            } else {
+                respuesta = self::recortar_foto(array('tag' : 'recorte_previo', 'ancho' : ancho_valido, 'alto' : null, 'calidad' : 100, 'tipo' : 'recortar'), archivo)
+            }
+            if (!respuesta['exito']) {
+                return respuesta
+            }
+            archivo_recorte         = archivo
+            archivo_recorte['name'] = self::nombre_archivo(archivo_recorte['name'], 'recorte_previo')
+            foreach (recortes_foto as recorte) {
+                if (recorte['ancho'] <= ancho_valido && recorte['alto'] <= alto_valido) {
+                    respuesta = self::recortar_foto(recorte, archivo_recorte)
+                } else {
+                    respuesta = self::recortar_foto(recorte, archivo)
+                }
+                if (!respuesta['exito']) {
+                    return respuesta
+                }
+            }
+        } else {
+            foreach (recortes_foto as recorte) {
+                respuesta = self::recortar_foto(recorte, archivo)
+                if (!respuesta['exito']) {
+                    return respuesta
+                }
+            }
+        }
+
+        return respuesta
+    }
 
     @staticmethod
     def nombre_archivo(file, tag='', extension='', remove=False):

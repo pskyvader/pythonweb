@@ -539,3 +539,9 @@ class image:
         if ('' == image.upload_dir):
             image.upload_dir = app.get_dir(True) + 'uploads/img/'
         return image.upload_dir
+
+    @staticmethod
+    def get_upload_url():
+        if ('' == image.upload_url):
+            image.upload_url = app.get_url(True) + 'uploads/img/'
+        return image.upload_url

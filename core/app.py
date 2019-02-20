@@ -19,7 +19,7 @@ class app:
     root = ''
     environ = {}
     get = {}
-    session = {}
+    session = None
 
     def __init__(self, root):
         app.root = root + '/'

@@ -167,7 +167,7 @@ class base_model:
         row = connection.insert(cls.table, cls.idname, insert)
         if isinstance(row, int) and row > 0:
             last_id = row
-            if foto_copy is not None:
+            if foto_copy != None:
                 new_fotos = []
                 for foto in foto_copy:
                     copiar = image.copy(

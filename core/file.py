@@ -46,12 +46,12 @@ class file(image):
     @staticmethod
     def delete(cls, folder, file_name='', subfolder='', sub=''):
         import shutil
-        if "" == file and '' != subfolder:
+        if "" == file_name and '' != subfolder:
             url = cls.get_upload_dir() + folder + '/' + subfolder + '/'
             my_file = Path(url)
             if my_file.is_dir():
                 shutil.rmtree(url)
-        elif '' == file and '' == subfolder:
+        elif '' == file_name and '' == subfolder:
             url = cls.get_upload_dir() + folder + '/'
             my_file = Path(url)
             if my_file.is_dir():
@@ -64,7 +64,7 @@ class file(image):
                 sub += '/'
 
             url = cls.get_upload_dir() + folder + '/' + \
-                subfolder + sub + file['url']
+                subfolder + sub + file_name['url']
             my_file = Path(url)
             if my_file.is_file():
                 my_file.unlink()

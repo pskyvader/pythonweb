@@ -185,3 +185,47 @@ class administrador(base_model):
             return administrador.login_cookie(cookie['cookieadmin' + prefix_site])
 
         return False
+
+    @staticmethod
+    def recuperar(email):
+        """recuperar contraseña"""
+        nombre_sitio = app.title
+        if email == '':
+            return False
+        
+
+        where       = {'email' : email.lower()}
+        condiciones = {'limit' : 1}
+        row         = administrador.getAll(where, condiciones)
+
+        if len(row) != 1:
+            return False
+        else:
+            admin = row[0]
+            if not admin['estado']:
+                return False
+            else:
+                password = functions.generar_pass()
+                data = array('id' : admin[0], 'pass' : password, 'pass_repetir' : password)
+                row  = administrador.update(data)
+
+                if row:
+                    body_email = array(
+                        'body'          : view.get_theme() . 'mail/recuperar_password.html',
+                        'titulo'        : "Recuperación de contraseña",
+                        'cabecera'      : "Estimado " . usuario["nombre"] . ", se ha solicitado la recuperación de contraseña en " . nombre_sitio,
+                        'campos'        : array('Contraseña (sin espacios)' : password),
+                        'campos_largos' : array(),
+                    )
+                    body      = email.body_email(body_email)
+                    respuesta = email.enviar_email(array(email), 'Recuperación de contraseña', body)
+
+                    log.insert_log(administrador.table, administrador.idname, __FUNCTION__, admin)
+                    return respuesta
+                else:
+                    return False
+                }
+
+            }
+        }
+    }

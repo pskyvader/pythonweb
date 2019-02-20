@@ -94,6 +94,52 @@ class image:
         del file['tmp']
         file['subfolder'] = subfolder
         return file
+    @staticmethod
+    def copy(original_file, id_final, folder, subfolder = "", name_final = "", tag = 'thumb'):
+        """Copia un archivo y retorna la informacion del archivo nuevo """
+        respuesta = {'exito' : false, 'mensaje' : ''}
+
+        name      = original_file['url'].split('.')
+        extension = (name.pop()).lower()
+
+        new_file = array('portada' => true, 'id' => 1, 'url' => id_final . '.' . extension, 'parent' => name_final, 'folder' => folder, 'subfolder' => subfolder, 'tmp' => '');
+        original = self::generar_dir(original_file, tag);
+        if (original != '') {
+            base_folder = self::get_upload_dir() . folder;
+            folder      = base_folder;
+            if (name_final != '') {
+                folder .= '/' . name_final;
+            }
+            if (subfolder != '') {
+                folder .= '/' . subfolder;
+            }
+
+            if (!file_exists(folder)) {
+                if (!mkdir(folder, 0777, true)) {
+                    respuesta['mensaje'] = "Error al crear directorio " . folder;
+                    return respuesta;
+                }
+                functions::protection_template(base_folder);
+                if (name_final != '') {
+                    functions::protection_template(base_folder . '/' . name_final);
+                    if (subfolder != '') {
+                        functions::protection_template(folder);
+                    }
+                }
+            }
+            destino = folder . '/' . new_file['url'];
+            if (is_writable(folder)) {
+                copy(original, destino);
+                respuesta['exito'] = true;
+                respuesta['file']  = array(new_file);
+            } else {
+                respuesta['mensaje'] = 'La carpeta ' . folder . ' no tiene permisos de escritura';
+            }
+        } else {
+            respuesta['mensaje'] = 'El archivo original no existe';
+        }
+        return respuesta;
+    }
 
     @staticmethod
     def get_recortes(modulo):

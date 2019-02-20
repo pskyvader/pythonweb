@@ -467,6 +467,17 @@ class image:
         return archivo
 
     @staticmethod
+    def portada(fotos):
+        portada = {}
+        if len(fotos) > 0:
+            portada = fotos[0]
+            for f in fotos:
+                if 'true' == f['portada']:
+                    portada = f
+                    break
+        return portada
+
+    @staticmethod
     def delete(folder, file='', subfolder='', sub=''):
         import shutil
         if "" == file and '' != subfolder:

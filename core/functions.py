@@ -58,8 +58,7 @@ class functions():
         return int(url[0])
 
     @staticmethod
-    def url_seccion(array url_base, seccion, return = false, extra_variables = false)
-    {
+    def url_seccion(url_base, seccion, return = False, extra_variables = False):
         url   = url_base
         extra = ""
         if (isset(seccion[0])) {

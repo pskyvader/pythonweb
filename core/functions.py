@@ -107,6 +107,13 @@ class functions():
         return url
 
     @staticmethod
+    def generar_pass(length = 8):
+        import uuid
+        import hashlib
+        password = str(hashlib.sha1(str(uuid.UUID)))[-10,length].upper()
+        return password
+    
+    @staticmethod
     def url_amigable(url=""):
         url = functions.replaceMultiple(
             url, ['á', 'à', 'â', 'ã', 'ª', 'ä'], 'a')

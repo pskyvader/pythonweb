@@ -122,11 +122,11 @@ class administrador(base_model):
                     return False
                 else:
                     session = app.session
-                    session[administrador.idname . prefix_site] = admin[0]
-                    session["email" . prefix_site] = admin['email']
-                    session["nombre" . prefix_site] = admin['nombre']
-                    session["estado" . prefix_site] = admin['estado']
-                    session["tipo" . prefix_site] = admin['tipo']
+                    session[administrador.idname + prefix_site] = admin[0]
+                    session["email" + prefix_site] = admin['email']
+                    session["nombre" + prefix_site] = admin['nombre']
+                    session["estado" + prefix_site] = admin['estado']
+                    session["tipo" + prefix_site] = admin['tipo']
                     session['prefix_site'] = prefix_site
                     session.save()
                     #log.insert_log(administrador.table, administrador.idname, administrador, admin)

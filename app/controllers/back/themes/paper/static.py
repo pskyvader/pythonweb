@@ -29,7 +29,6 @@ class static:
             ret = {'error': 404}
         else:
             mime = mimetypes.guess_type(resource_url,False)[0]
-            print(resource_url)
             if mime==None:
                 mime='text/plain'
                 print('text',resource_url)

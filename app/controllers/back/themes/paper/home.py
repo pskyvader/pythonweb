@@ -28,7 +28,6 @@ class home:
     metadata = {'title': 'Home', 'modulo': 'home'}
 
     def index(self):
-        registros=administrador.getAll(where={'idpadre':1},condiciones={'limit':1,'limit2':0})
         ret = {'body':''}
         url_return=functions.url_redirect(self.url)
         if url_return!='':
@@ -36,6 +35,7 @@ class home:
             ret['redirect']=url_return
             return ret
         
+        registros=administrador.getAll(where={'idpadre':1},condiciones={'limit':1,'limit2':0})
         h = head(self.metadata)
         ret_head=h.normal()
         if ret_head['headers']!='':

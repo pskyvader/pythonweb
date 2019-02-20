@@ -2,6 +2,7 @@ from pathlib import Path
 from os import makedirs
 from .image import image
 from .app import app
+from .functions import functions
 
 
 class file(image):
@@ -45,15 +46,17 @@ class file(image):
         folder_tmp = file.get_upload_dir() + folder_tmp
         base_folder= file.get_upload_dir() + folder
         folder     = base_folder + '/' + name_final + '/' + subfolder
+
         my_file = Path(folder)
         if not my_file.is_dir():
             makedirs(folder, 777)
-        name      = explode(".", file['tmp'])
-        extension = strtolower(array_pop(name))
 
-        nombre_final = explode(".", file['original_name'])
-        array_pop(nombre_final)
-        nombre_final = functions::url_amigable(implode(nombre_final, ''))
+        name = file['tmp'].split('.')
+        extension = (name.pop()).lower()
+
+        nombre_final = file['original_name'].split('.')
+        nombre_final.pop()
+        nombre_final = functions.url_amigable(''.join(nombre_final))
 
         file['url'] = file['id'] . '-' . nombre_final . '.' . extension
         rename(folder_tmp . '/' . file['tmp'], folder . '/' . file['url'])

@@ -30,6 +30,7 @@ class app:
         data_return = {}
         app.get = self.parse_get()
         app.post = self.parse_post()
+        app.session = self.parse_session()
         url = self.parse_url(environ['PATH_INFO'])
         config = self.get_config()
         site = environ['SERVER_NAME']

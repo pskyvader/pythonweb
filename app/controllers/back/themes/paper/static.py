@@ -42,7 +42,9 @@ class static:
                 '-'+resource.replace('/', '-')
             my_file = Path(cache_file)
             if my_file.is_file():
-                ret['body'] = open(cache_file, "rb").read()
+                file_read=open(cache_file, "rb")
+                ret['body'] = file_read.read()
+                file_read.close()
             else:
                 import gzip
                 test = os.listdir(theme+'cache/')

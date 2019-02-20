@@ -170,8 +170,7 @@ class base_model:
             if foto_copy != None:
                 new_fotos = []
                 for foto in foto_copy:
-                    copiar = image.copy(
-                        foto, last_id, foto['folder'], foto['subfolder'], last_id, '')
+                    copiar = image.copy( foto, last_id, foto['folder'], foto['subfolder'], last_id, '')
                     new_fotos.append(copiar['file'][0])
                     image.regenerar(copiar['file'][0])
 

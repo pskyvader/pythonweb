@@ -172,10 +172,6 @@ class app:
     @staticmethod
     def parse_session():
         session = app.environ['beaker.session']
-        session.httponly = True
-        session.cookie_expires = True
-        #session.secure = True
-        print(session)
         return session
 
     @staticmethod

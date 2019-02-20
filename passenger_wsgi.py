@@ -36,7 +36,9 @@ class LoggingMiddleware:
 #application = LoggingMiddleware(application2)
 
 session_opts = {
-    'session.cookie_expires': True
+    'session.cookie_expires': True,
+    'session.httponly': True,
+    #'session.secure': True
 }
 
 app2 = LoggingMiddleware(application2)

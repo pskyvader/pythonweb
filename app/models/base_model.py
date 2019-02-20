@@ -124,3 +124,15 @@ class base_model:
             return last_id
         else:
             return row
+
+    @classmethod  
+    def update(cls,set_query, loggging = True):
+        where = {cls.idname : set_query['id']}
+        del set_query['id']
+        connection = database.instance()
+        row        = connection.update(cls.table, cls.idname, set_query, where)
+        if loggging:
+            #log.insert_log(cls.table, cls.idname, cls, (set_query+where))
+        if isinstance(row, bool) and row:
+            row = where[cls.idname]
+        return row

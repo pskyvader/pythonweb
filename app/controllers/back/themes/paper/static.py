@@ -37,14 +37,14 @@ class static:
             ret['headers'] = [
                 ('Content-Type', mime+'; charset=utf-8'),
                 ('Expires', expiry_time.strftime("%a, %d %b %Y %H:%M:%S GMT")),
-                ('Accept-encoding', 'gzip,deflate'),
-                ('Content-Encoding', 'gzip')
+                #('Accept-encoding', 'gzip,deflate'),
+                #('Content-Encoding', 'gzip')
             ]
             cache_file = theme+'cache/' + \
                 str(functions.fecha_archivo(resource_url, True)) + \
                 '-'+resource.replace('/', '-')
             my_file = Path(cache_file)
-            if my_file.is_file():
+            if False and my_file.is_file():
                 file_read=open(cache_file, "rb")
                 ret['body'] = file_read.read()
                 file_read.close()
@@ -58,9 +58,9 @@ class static:
                         os.remove(os.path.join(theme+'cache/', item))
                 f = open(resource_url, "rb").read()
                 ret['body'] = f
-                ret['body'] = gzip.compress(ret['body'])
+                #ret['body'] = gzip.compress(ret['body'])
 
-                file_write = open(cache_file, 'wb')
-                file_write.write(ret['body'])
-                file_write.close()
+                #file_write = open(cache_file, 'wb')
+                #file_write.write(ret['body'])
+                #file_write.close()
         return ret

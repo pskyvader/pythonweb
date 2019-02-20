@@ -5,7 +5,7 @@ from .head import head
 from .header import header
 from .aside import aside
 from .footer import footer
-from app.models.administrador import administrador
+from app.models.administrador import administrador as administrador_model
 
 def init(var):
     h = home()
@@ -35,7 +35,7 @@ class home:
             ret['redirect']=url_return
             return ret
         
-        registros=administrador.getAll(where={'idpadre':1},condiciones={'limit':1,'limit2':0})
+        registros=administrador_model.getAll(where={'idpadre':1},condiciones={'limit':1,'limit2':0})
         h = head(self.metadata)
         ret_head=h.normal()
         if ret_head['headers']!='':

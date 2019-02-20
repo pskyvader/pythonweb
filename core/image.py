@@ -97,15 +97,16 @@ class image:
     @staticmethod
     def copy(original_file, id_final, folder, subfolder = "", name_final = "", tag = 'thumb'):
         """Copia un archivo y retorna la informacion del archivo nuevo """
-        respuesta = {'exito' : false, 'mensaje' : ''}
+        respuesta = {'exito' : False, 'mensaje' : ''}
 
         name      = original_file['url'].split('.')
         extension = (name.pop()).lower()
 
-        new_file = array('portada' => true, 'id' => 1, 'url' => id_final . '.' . extension, 'parent' => name_final, 'folder' => folder, 'subfolder' => subfolder, 'tmp' => '');
-        original = self::generar_dir(original_file, tag);
-        if (original != '') {
-            base_folder = self::get_upload_dir() . folder;
+        new_file = {'portada': True, 'id': 1, 'url': id_final + '.' + extension, 'parent': name_final, 'folder': folder, 'subfolder': subfolder, 'tmp': ''}
+        original = image.generar_dir(original_file, tag);
+
+        if original != '':
+            base_folder = self.get_upload_dir() . folder;
             folder      = base_folder;
             if (name_final != '') {
                 folder .= '/' . name_final;
@@ -119,11 +120,11 @@ class image:
                     respuesta['mensaje'] = "Error al crear directorio " . folder;
                     return respuesta;
                 }
-                functions::protection_template(base_folder);
+                functions.protection_template(base_folder);
                 if (name_final != '') {
-                    functions::protection_template(base_folder . '/' . name_final);
+                    functions.protection_template(base_folder . '/' . name_final);
                     if (subfolder != '') {
-                        functions::protection_template(folder);
+                        functions.protection_template(folder);
                     }
                 }
             }

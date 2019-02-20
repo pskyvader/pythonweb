@@ -28,6 +28,7 @@ class static:
         if not my_file.is_file():
             ret = {'error': 404}
         else:
+            print('resource_url',resource_url)
             mime = mimetypes.guess_type(resource_url)[0]
             print('mime',mime)
             extension = mimetypes.guess_extension(mime)

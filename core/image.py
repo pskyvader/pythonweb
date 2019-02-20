@@ -170,7 +170,7 @@ class image:
         return recortes
 
     @classmethod
-    def upload(cls,file, folder_upload = 'tmp', name_final = ''):
+    def upload(cls, file, folder_upload='tmp', name_final=''):
         """subir archivo"""
         import uuid
         import stat
@@ -182,31 +182,31 @@ class image:
             if '' == name_final:
                 name_final = str(uuid.UUID)
             else:
-                name_final =name_final.split('.')
-                extension  = '.'+(name_final.pop()).lower()
+                name_final = name_final.split('.')
+                extension = '.'+(name_final.pop()).lower()
                 name_final = functions.url_amigable(''.join(name_final))
-            
-            name      = file['name'].split('.')
-            extension  = '.'+(name_final.pop()).lower()
+
+            name = file['name'].split('.')
+            extension = '.'+(name_final.pop()).lower()
             name = functions.url_amigable(''.join(name_final))
             my_file = Path(folder)
             if not my_file.is_dir():
                 makedirs(folder, 777)
-            
-            #respuesta['exito'] = move_uploaded_file(file['tmp_name'], folder + '/' + name_final + extension)
-            respuesta['exito'] = rename(file['tmp_name'], folder + '/' + name_final + extension)
-            if not respuesta['exito']:
-                respuesta['mensaje'] = "Error al mover archivo. Permisos: " +oct(stat.S_IMODE(os.lstat(folder).st_mode))+ ", carpeta: " + folder
-            else {
-                respuesta['name']          = name_final . extension
-                respuesta['folder']        = folder_upload
-                respuesta['original_name'] = file['name']
-                respuesta['mensaje']       = "Imagen " . file['name'] . " Subida correctamente"
-            }
-        }
-        return respuesta
-    }
 
+            #respuesta['exito'] = move_uploaded_file(file['tmp_name'], folder + '/' + name_final + extension)
+            respuesta['exito'] = rename(
+                file['tmp_name'], folder + '/' + name_final + extension)
+            if not respuesta['exito']:
+                respuesta['mensaje'] = "Error al mover archivo. Permisos: " + \
+                    oct(stat.S_IMODE(os.lstat(folder).st_mode)) + \
+                    ", carpeta: " + folder
+            else:
+                respuesta['name'] = name_final + extension
+                respuesta['folder'] = folder_upload
+                respuesta['original_name'] = file['name']
+                respuesta['mensaje'] = "Imagen " + \
+                    file['name'] + " Subida correctamente"
+        return respuesta
 
     @staticmethod
     def nombre_archivo(file, tag='', extension='', remove=False):

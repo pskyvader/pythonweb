@@ -125,14 +125,23 @@ class base_model:
         else:
             return row
 
-    @classmethod  
-    def update(cls,set_query, loggging = True):
-        where = {cls.idname : set_query['id']}
+    @classmethod
+    def update(cls, set_query, loggging=True):
+        where = {cls.idname: set_query['id']}
         del set_query['id']
         connection = database.instance()
-        row        = connection.update(cls.table, cls.idname, set_query, where)
+        row = connection.update(cls.table, cls.idname, set_query, where)
         if loggging:
             #log.insert_log(cls.table, cls.idname, cls, (set_query+where))
+            pass
         if isinstance(row, bool) and row:
             row = where[cls.idname]
+        return row
+
+    @classmethod
+    def delete(cls, id):
+        where = {cls.idname: id}
+        connection = database.instance()
+        row = connection.delete(cls.table, cls.idname, where)
+        #log.insert_log(cls.table, cls.idname, cls, where)
         return row

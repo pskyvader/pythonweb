@@ -49,7 +49,7 @@ class static:
                 ret['body'] = file_read.read()
                 file_read.close()
             else:
-                import gzip
+                from gzip import compress
                 test = os.listdir(theme+'cache/')
                 for item in test:
                     if 'resources' in resource and item.endswith(extension):
@@ -58,7 +58,7 @@ class static:
                         os.remove(os.path.join(theme+'cache/', item))
                 f = open(resource_url, "rb").read()
                 ret['body'] = f
-                ret['body'] = gzip.compress(ret['body'])
+                ret['body'] = compress(ret['body'])
 
                 file_write = open(cache_file, 'wb')
                 file_write.write(ret['body'])

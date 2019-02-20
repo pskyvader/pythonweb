@@ -23,7 +23,7 @@ class image:
             archivos = []
 
             if 'file' in files:
-                file_ary = functions.reArrayFiles(files['file'])
+                file_ary =files # functions.reArrayFiles(files['file'])
             else:
                 file_ary = files
 

@@ -10,6 +10,7 @@ def application2(environ, start_response):
     app_web = app(os.path.dirname(__file__))
     main_data = app_web.init(environ)
     start_response(main_data['status'], main_data['headers'])
+    print(main_data['headers'])
     ret = main_data['response_body']
     if isinstance(ret, str):
         return [bytes(ret, 'utf-8')]

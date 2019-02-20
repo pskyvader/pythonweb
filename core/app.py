@@ -13,6 +13,8 @@ class app:
     app_dir = 'app/'
     controller_dir = app_dir + 'controllers/'
     view_dir = app_dir + 'views/'
+    title       = ""
+    prefix_site  = ""
     url = {}
     front = True
     path = ''
@@ -32,7 +34,11 @@ class app:
         app.post = self.parse_post()
         app.session = self.parse_session()
         url = self.parse_url(environ['PATH_INFO'])
+
         config = self.get_config()
+        app.title      = config['title']
+        app.prefix_site = functions.url_amigable(app.title)
+
         site = environ['SERVER_NAME']
         subdirectorio = config['dir']
         https = "https://" if config['https'] else "http://"

@@ -49,6 +49,20 @@ class image:
         return respuesta
 
     @staticmethod
+    def regenerar(file):
+        from glob import glob
+        from os import remove
+        '''regenerar imagenes ya guardadas'''
+        recortes       = image.get_recortes(file['folder'])
+        file['name']   = file['url']
+        file['folder'] = file['folder'] + '/' + file['parent'] + '/' + file['subfolder']
+        for fl in glob(image.get_upload_dir() + file['folder'] + "/" + file['id'] + "-*.*"):
+            remove(fl)
+        respuesta = image.recortes_foto(file, recortes)
+        return respuesta
+    
+
+    @staticmethod
     def move(file, folder, subfolder, name_final, folder_tmp='tmp'):
         '''mover archivo (normalmente) desde la carpeta temporal a la definitiva'''
         recortes = image.get_recortes(folder)

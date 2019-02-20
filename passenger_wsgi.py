@@ -9,10 +9,15 @@ sys.path.insert(0, os.path.dirname(__file__))
 def application2(environ, start_response):
     app_web = app(os.path.dirname(__file__))
     main_data = app_web.init(environ)
+
+    if isinstance(ret, str):
+        import gzip
+        ret=bytes(ret, 'utf-8')
+
     start_response(main_data['status'], main_data['headers'])
-    encodint=[item for item in main_data['headers'] if 'Content-Encoding' in item]
     ret = main_data['response_body']
     if isinstance(ret, str):
+        import gzip
         return [bytes(ret, 'utf-8')]
     else:
         return [ret]

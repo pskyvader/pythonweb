@@ -92,7 +92,6 @@ class administrador(base_model):
                     session["estado" + prefix_site] = admin['estado']
                     session["tipo" + prefix_site] = admin['tipo']
                     session['prefix_site'] = prefix_site
-                    session.save()
                     # log.insert_log(administrador.table, administrador.idname, administrador, admin)
                     return True
         functions.set_cookie(cookie, 'aaa', (31536000))
@@ -128,7 +127,6 @@ class administrador(base_model):
                     session["estado" + prefix_site] = admin['estado']
                     session["tipo" + prefix_site] = admin['tipo']
                     session['prefix_site'] = prefix_site
-                    session.save()
                     # log.insert_log(administrador.table, administrador.idname, administrador, admin)
                     if recordar == 'on':
                         return administrador.update_cookie(admin[0])

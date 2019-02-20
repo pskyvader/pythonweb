@@ -173,7 +173,7 @@ class app:
     def parse_session():
         session = app.environ['beaker.session']
         session.httponly = True
-        session.secure = True
+        #session.secure = True
         print(session)
         return session
 

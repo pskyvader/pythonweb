@@ -214,7 +214,7 @@ class administrador(base_model):
                     body_email = {
                         'body': view.get_theme() + 'mail/recuperar_password.html',
                         'titulo': "Recuperación de contraseña",
-                        'cabecera': "Estimado " + usuario["nombre"] + ", se ha solicitado la recuperación de contraseña en " . nombre_sitio,
+                        'cabecera': "Estimado " + usuario["nombre"] + ", se ha solicitado la recuperación de contraseña en " + nombre_sitio,
                         'campos': {'Contraseña (sin espacios)': password},
                         'campos_largos': {},
                     }

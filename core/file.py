@@ -42,11 +42,12 @@ class file(image):
         else:
             respuesta['mensaje'] = 'No se encuentran archivos a subir'
         return respuesta
+
     @staticmethod
-    def move(file, folder, subfolder, name_final, folder_tmp = 'tmp'):
+    def move(file, folder, subfolder, name_final, folder_tmp='tmp'):
         folder_tmp = file.get_upload_dir() + folder_tmp
-        base_folder= file.get_upload_dir() + folder
-        folder     = base_folder + '/' + name_final + '/' + subfolder
+        base_folder = file.get_upload_dir() + folder
+        folder = base_folder + '/' + name_final + '/' + subfolder
 
         my_file = Path(folder)
         if not my_file.is_dir():
@@ -61,11 +62,9 @@ class file(image):
 
         file['url'] = file['id'] + '-' + nombre_final + '.' + extension
         rename(folder_tmp + '/' + file['tmp'], folder + '/' + file['url'])
-        unset(file['original_name'],file['tmp'])
+        del file['original_name'], file['tmp']
         file['subfolder'] = subfolder
         return file
-    
-
 
     @staticmethod
     def delete(folder, file_name='', subfolder='', sub=''):

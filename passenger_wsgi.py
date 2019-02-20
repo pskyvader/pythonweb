@@ -11,7 +11,7 @@ def application2(environ, start_response):
     main_data = app_web.init(environ)
     start_response(main_data['status'], main_data['headers'])
     print(main_data['headers'])
-    print([item for item in main_data['headers'] if 'Content-Encoding' in item])
+    print(item for item in main_data['headers'] if 'Content-Encoding' in item)
     ret = main_data['response_body']
     if isinstance(ret, str):
         return [bytes(ret, 'utf-8')]

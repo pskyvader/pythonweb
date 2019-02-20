@@ -19,7 +19,6 @@ def application2(environ, start_response):
         main_data['headers'].append(('Content-Encoding', 'gzip'))
         
     start_response(main_data['status'], main_data['headers'])
-
     return [ret]
 
 

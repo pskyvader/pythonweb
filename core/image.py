@@ -13,13 +13,13 @@ class image:
     upload_dir = ''
     upload_url = ''
 
-    @classmethod
-    def upload_tmp(cls, modulo):
+    @staticmethod
+    def upload_tmp( modulo):
         '''Subir a carpeta temporal, durante la creacion de la seccion. al guardar el archivo se mueve a la carpeta definitiva'''
         respuesta = {'exito': False, 'mensaje': ''}
         if 'file' in app.post:
             files = app.post['files']
-            recortes = cls.get_recortes(modulo)
+            recortes = image.get_recortes(modulo)
             archivos = []
 
             if 'file' in files:
@@ -28,19 +28,19 @@ class image:
                 file_ary = files
 
             for files in file_ary:
-                archivo = cls.upload(files, 'tmp')
+                archivo = image.upload(files, 'tmp')
                 respuesta['exito'] = archivo['exito']
                 if not archivo['exito']:
                     respuesta['mensaje'] = archivo['mensaje']
                     break
                 else:
-                    recorte = cls.recortes_foto(archivo, recortes)
+                    recorte = image.recortes_foto(archivo, recortes)
                     if not recorte['exito']:
                         respuesta['mensaje'] = recorte['mensaje']
                         break
                     else:
-                        name = cls.nombre_archivo(archivo['name'], 'thumb')
-                        archivo['url'] = cls.get_upload_url(
+                        name = image.nombre_archivo(archivo['name'], 'thumb')
+                        archivo['url'] = image.get_upload_url(
                         ) + archivo['folder'] + '/' + name
                         respuesta['mensaje'] += archivo['original_name'] + ' <br/>'
                         archivos.append(archivo)
@@ -207,6 +207,25 @@ class image:
                 respuesta['mensaje'] = "Imagen " + \
                     file['name'] + " Subida correctamente"
         return respuesta
+
+    @staticmethod
+    def validate(file):
+    {
+        $name      = explode(".", $file['name']);
+        $extension = strtolower(array_pop($name));
+        $respuesta = array('exito' => false, 'mensaje' => 'Error: formato no valido');
+        if (0 != $file['error']) {
+            $respuesta['mensaje'] = 'Error al subir archivo: ' . $file['error'];
+        } elseif (!in_array($file['type'], static::$types)) {
+            $respuesta['mensaje'] .= '. Extension: ' . $file['type'];
+        } elseif (!in_array($extension, static::$extensions)) {
+            $respuesta['mensaje'] .= '.<br/> Extension de archivo: ' . $extension;
+        } else {
+            $respuesta['exito'] = true;
+        }
+        return $respuesta;
+    }
+
 
     @staticmethod
     def nombre_archivo(file, tag='', extension='', remove=False):

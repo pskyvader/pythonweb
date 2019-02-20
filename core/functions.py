@@ -12,7 +12,6 @@ class functions():
         c = cookies.SimpleCookie()
         if 'HTTP_COOKIE' in app.environ:
             c.load(app.environ['HTTP_COOKIE'])
-            print(c)
             if find_cookie!='':
                 if find_cookie in c:
                     return c[find_cookie].value
@@ -22,6 +21,8 @@ class functions():
                 coo={}
                 for key,value in c.items():
                     coo[key]=value
+                
+                print(coo)
                 return coo
         else:
             if find_cookie!='':

@@ -1,4 +1,5 @@
 from pathlib import Path
+from os import makedirs
 from .image import image
 from .app import app
 
@@ -39,6 +40,28 @@ class file(image):
         else:
             respuesta['mensaje'] = 'No se encuentran archivos a subir'
         return respuesta
+    @staticmethod
+    def move(file, folder, subfolder, name_final, folder_tmp = 'tmp'):
+        folder_tmp = file.get_upload_dir() + folder_tmp
+        base_folder= file.get_upload_dir() + folder
+        folder     = base_folder + '/' + name_final + '/' + subfolder
+        my_file = Path(folder)
+        if not my_file.is_dir():
+            makedirs(folder, 777)
+        name      = explode(".", file['tmp'])
+        extension = strtolower(array_pop(name))
+
+        nombre_final = explode(".", file['original_name'])
+        array_pop(nombre_final)
+        nombre_final = functions::url_amigable(implode(nombre_final, ''))
+
+        file['url'] = file['id'] . '-' . nombre_final . '.' . extension
+        rename(folder_tmp . '/' . file['tmp'], folder . '/' . file['url'])
+        unset(file['original_name'],file['tmp'])
+        file['subfolder'] = subfolder
+        return file
+    
+
 
     @staticmethod
     def delete(folder, file_name='', subfolder='', sub=''):

@@ -22,6 +22,7 @@ class functions():
                 coo={}
                 for co in c:
                     coo[co.key]=co.value
+                return coo
         else:
             if find_cookie!='':
                 return False

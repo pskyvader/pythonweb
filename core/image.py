@@ -224,6 +224,7 @@ class image:
         return respuesta
     @staticmethod
     def recortes_foto(archivo, recortes_foto):
+        import PIL
         respuesta   = {'exito' : False}
         ruta        = image.get_upload_dir() +archivo['folder']
         foto        = archivo['name']

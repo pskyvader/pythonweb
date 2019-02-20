@@ -28,10 +28,11 @@ class static:
         if not my_file.is_file():
             ret = {'error': 404}
         else:
-            mime = mimetypes.guess_type(resource_url)[0]
+            mime = mimetypes.guess_type(resource_url,False)[0]
+            print(resource_url)
             if mime==None:
                 mime='text/plain'
-                print(resource_url)
+                print('text',resource_url)
             extension = mimetypes.guess_extension(mime)
             expiry_time = datetime.datetime.utcnow() + datetime.timedelta(100)
             ret['headers'] = [

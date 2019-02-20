@@ -1,5 +1,6 @@
 from pathlib import Path
 from os import makedirs
+from os import rename
 from .app import app
 from .functions import functions
 
@@ -66,7 +67,6 @@ class image:
     def move(file, folder, subfolder, name_final, folder_tmp='tmp'):
         '''mover archivo (normalmente) desde la carpeta temporal a la definitiva'''
 
-        from os import rename
         recortes = image.get_recortes(folder)
         folder_tmp = image.get_upload_dir() + folder_tmp
         base_folder = image.get_upload_dir() + folder
@@ -168,6 +168,43 @@ class image:
 
                 recortes.append(recorte)
         return recortes
+
+    @classmethod
+    def upload(cls,file, folder_upload = 'tmp', name_final = ''):
+        """subir archivo"""
+        import uuid
+        folder = cls.get_upload_dir() + folder_upload
+
+        respuesta = cls.validate(file)
+        if respuesta['exito']:
+            if '' == name_final:
+                name_final = str(uuid.UUID)
+            else:
+                name_final =name_final.split('.')
+                extension  = '.'+(name_final.pop()).lower()
+                name_final = functions.url_amigable(''.join(name_final))
+            
+            name      = file['name'].split('.')
+            extension  = '.'+(name_final.pop()).lower()
+            name = functions.url_amigable(''.join(name_final))
+            my_file = Path(folder)
+            if not my_file.is_dir():
+                makedirs(folder, 777)
+            
+            #respuesta['exito'] = move_uploaded_file(file['tmp_name'], folder + '/' + name_final + extension)
+            respuesta['exito'] = rename(file['tmp_name'], folder + '/' + name_final + extension)
+            if (!respuesta['exito']) {
+                respuesta['mensaje'] = "Error al mover archivo. Permisos: " . substr(sprintf('%o', fileperms(folder)), -4) . ", carpeta: " . folder
+            } else {
+                respuesta['name']          = name_final . extension
+                respuesta['folder']        = folder_upload
+                respuesta['original_name'] = file['name']
+                respuesta['mensaje']       = "Imagen " . file['name'] . " Subida correctamente"
+            }
+        }
+        return respuesta
+    }
+
 
     @staticmethod
     def nombre_archivo(file, tag='', extension='', remove=False):

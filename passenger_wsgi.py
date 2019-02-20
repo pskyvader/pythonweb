@@ -13,8 +13,8 @@ def application2(environ, start_response):
 
     if isinstance(ret, str):
         ret=bytes(ret, 'utf-8')
-        import gzip
-        ret = gzip.compress(ret)
+        from gzip import compress
+        ret = compress(ret)
         main_data['headers'].append(('Accept-encoding', 'gzip,deflate'))
         main_data['headers'].append(('Content-Encoding', 'gzip'))
         

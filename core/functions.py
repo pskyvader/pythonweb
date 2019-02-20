@@ -53,10 +53,10 @@ class functions():
 
 
     @staticmethod
-    def get_idseccion(url:str) -> str:
+    def get_idseccion(url:str) -> int:
         url = url.split('-',2)
-        return (int) url[0]
-    }
+        return int(url[0])
+    
     public static function url_seccion(array url_base, seccion, return = false, extra_variables = false)
     {
         url   = url_base

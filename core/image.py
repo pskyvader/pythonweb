@@ -338,111 +338,71 @@ class image:
     def recortar_foto(recorte, datos):
         """Recorta una foto"""
         from PIL import Image
-        respuesta    = {'exito' : False, 'mensaje' : 'error al recortar imagen'}
+        respuesta = {'exito': False, 'mensaje': 'error al recortar imagen'}
         ancho_maximo = recorte['ancho']
-        alto_maximo  = recorte['alto']
-        ruta         = image.get_upload_dir() . datos['folder']
-        foto         = datos['name']
-        etiqueta     = recorte['tag']
-        tipo         = recorte['tipo']
+        alto_maximo = recorte['alto']
+        ruta = image.get_upload_dir() . datos['folder']
+        foto = datos['name']
+        etiqueta = recorte['tag']
+        tipo = recorte['tipo']
 
         ruta_imagen = ruta + '/' + foto
         my_file = Path(ruta_imagen)
         if not my_file.is_file():
-            respuesta['mensaje'] = 'Archivo ' . ruta_imagen . ' no existe'
+            respuesta['mensaje'] = 'Archivo ' + ruta_imagen + ' no existe'
             return respuesta
-
 
         im = Image.open(ruta_imagen)
         ancho, alto = im.size
         imagen_tipo = im.format
 
         proporcion_imagen = ancho / alto
-        if (null == ancho_maximo || 0 == ancho_maximo) {
-            ancho_maximo = (float) alto_maximo * proporcion_imagen
-        }
-        if (null == alto_maximo || 0 == alto_maximo) {
-            alto_maximo = (float) ancho_maximo / proporcion_imagen
-        }
+        if None == ancho_maximo or 0 == ancho_maximo:
+            ancho_maximo = float(alto_maximo * proporcion_imagen)
+        if None == alto_maximo or 0 == alto_maximo:
+            alto_maximo = float(ancho_maximo / proporcion_imagen)
 
-        tamano_final    = image.proporcion_foto(ancho_maximo, alto_maximo, ancho, alto, tipo)
-        x               = tamano_final['x']
-        y               = tamano_final['y']
-        miniatura_ancho = tamano_final['miniatura_ancho']
-        miniatura_alto  = tamano_final['miniatura_alto']
+        x, y, miniatura_ancho, miniatura_alto = image.proporcion_foto(
+            ancho_maximo, alto_maximo, ancho, alto, tipo)
 
-        switch (imagen_tipo) {
-            case "image/jpg":
-            case "image/jpeg":
-                imagen = imagecreatefromjpeg(ruta_imagen)
-                break
-            case "image/png":
-                imagen = imagecreatefrompng(ruta_imagen)
-                break
-            case "image/gif":
-                imagen = imagecreatefromgif(ruta_imagen)
-                break
-        }
+        if tipo == "recortar":
+            box = (x, y, ancho_maximo-x, alto_maximo-y)
+            im = im.crop(box)
+            new_im = im.thumbnail((miniatura_ancho, miniatura_alto))
+        elif "rellenar" == tipo:
+            new_im = Image.new(
+                'RGBA', (miniatura_ancho, miniatura_alto), (255, 255, 255, 0))
+            box = (x, y)
+            new_im.paste(im, (box))
+        else:
+            if ancho >= miniatura_ancho or alto >= miniatura_alto:
+                new_im = Image.new(
+                    'RGBA', (miniatura_ancho, miniatura_alto), (255, 255, 255, 0))
+                box = (x, y)
+                new_im.paste(im, (box))
+            else:
+                new_im = Image.new(
+                    'RGBA', (ancho_maximo, alto_maximo), (255, 255, 255, 0))
+                box = (x, y, miniatura_ancho-x, miniatura_alto-y)
+                new_im.paste(im, (box))
 
-        lienzo = imagecreatetruecolor(ancho_maximo, alto_maximo)
-        if ("recortar" == tipo) {
-            lienzo_temporal = imagecreatetruecolor(miniatura_ancho, miniatura_alto)
-        }
+        foto_recorte = image.nombre_archivo(foto, etiqueta, '', True)
+        foto_webp = image.nombre_archivo(foto, etiqueta, 'webp', True)
 
-        if ("image/png" == imagen_tipo) {
-            imagecolortransparent(lienzo, imagecolorallocatealpha(imagen, 0, 0, 0, 127))
-            imagealphablending(lienzo, False)
-            imagesavealpha(lienzo, true)
-            imagefill(lienzo, 0, 0, imagecolorallocatealpha(imagen, 0, 0, 0, 127))
+        my_file = Path(ruta + foto_recorte)
+        if my_file.is_file():
+            my_file.unlink()
+        my_file = Path(ruta + foto_webp)
+        if my_file.is_file():
+            my_file.unlink()
 
-            if ("recortar" == tipo) {
-                imagecolortransparent(lienzo_temporal, imagecolorallocatealpha(lienzo_temporal, 0, 0, 0, 127))
-                imagealphablending(lienzo_temporal, False)
-                imagesavealpha(lienzo_temporal, true)
-            }
-        } else {
-            blanco = imagecolorallocate(imagen, 255, 255, 255)
-            imagefill(lienzo, 0, 0, blanco)
+        new_im.save(ruta + foto_recorte)
+        if "png" != imagen_tipo:
+            new_im.save(ruta + foto_webp)
 
-            if ("recortar" == tipo) {
-                imagefill(lienzo_temporal, 0, 0, blanco)
-            }
-        }
-
-        if ("recortar" == tipo) {
-            imagecopyresampled(lienzo_temporal, imagen, 0, 0, 0, 0, miniatura_ancho, miniatura_alto, ancho, alto)
-            imagecopy(lienzo, lienzo_temporal, 0, 0, x, y, ancho_maximo, alto_maximo)
-        } elseif ("rellenar" == tipo) {
-            imagecopyresampled(lienzo, imagen, x, y, 0, 0, miniatura_ancho, miniatura_alto, ancho, alto)
-        } else {
-            if (ancho >= miniatura_ancho || alto >= miniatura_alto) {
-                imagecopyresampled(lienzo, imagen, x, y, 0, 0, miniatura_ancho, miniatura_alto, ancho, alto)
-            } else {
-                imagecopyresampled(lienzo, imagen, x, y, 0, 0, ancho, alto, ancho, alto)
-
-            }
-        }
-
-        foto_recorte = image.nombre_archivo(foto, etiqueta, '', true)
-        foto_webp    = image.nombre_archivo(foto, etiqueta, 'webp', true)
-        if (file_exists(ruta . foto_recorte)) {
-            unlink(ruta . foto_recorte)
-        }
-        if (file_exists(ruta . foto_webp)) {
-            unlink(ruta . foto_webp)
-        }
-
-        if ("image/png" == imagen_tipo) {
-            imagepng(lienzo, ruta . '/' . foto_recorte, 8)
-        } else {
-            imagejpeg(lienzo, ruta . '/' . foto_recorte, recorte['calidad'])
-            imagewebp(lienzo, ruta . '/' . foto_webp, recorte['calidad'])
-        }
-
-        respuesta['exito'] = true
+        respuesta['exito'] = True
 
         return respuesta
-    }
 
     @staticmethod
     def nombre_archivo(file, tag='', extension='', remove=False):

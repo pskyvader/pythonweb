@@ -97,6 +97,7 @@ class image:
     @staticmethod
     def copy(original_file, id_final, folder, subfolder = "", name_final = "", tag = 'thumb'):
         """Copia un archivo y retorna la informacion del archivo nuevo """
+        import os
         respuesta = {'exito' : False, 'mensaje' : ''}
 
         name      = original_file['url'].split('.')
@@ -106,29 +107,20 @@ class image:
         original = image.generar_dir(original_file, tag);
 
         if original != '':
-            base_folder = self.get_upload_dir() . folder;
+            base_folder = image.get_upload_dir() + folder
             folder      = base_folder;
-            if (name_final != '') {
-                folder .= '/' . name_final;
-            }
-            if (subfolder != '') {
-                folder .= '/' . subfolder;
-            }
-
-            if (!file_exists(folder)) {
-                if (!mkdir(folder, 0777, true)) {
-                    respuesta['mensaje'] = "Error al crear directorio " . folder;
-                    return respuesta;
-                }
-                functions.protection_template(base_folder);
-                if (name_final != '') {
-                    functions.protection_template(base_folder . '/' . name_final);
-                    if (subfolder != '') {
-                        functions.protection_template(folder);
-                    }
-                }
-            }
-            destino = folder . '/' . new_file['url'];
+            if name_final != '':
+                folder += '/' + name_final
+            
+            if subfolder != '':
+                folder += '/' + subfolder;
+            
+            my_file = Path(folder)
+            if not my_file.is_dir():
+                makedirs(folder, 777)
+                
+            destino = folder + '/' + new_file['url'];
+            if os.access(dir_resources, os.R_OK):
             if (is_writable(folder)) {
                 copy(original, destino);
                 respuesta['exito'] = true;

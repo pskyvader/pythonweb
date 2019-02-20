@@ -38,6 +38,7 @@ class functions():
         c[cookie] = value
         c[cookie]["path"] = directory
         c[cookie]["expires"] = time
+        c[cookie]["httponly"] = True
         functions.cookies.append(c[cookie].OutputString())
         return True
 

@@ -29,6 +29,7 @@ class static:
             ret = {'error': 404}
         else:
             mime = mimetypes.guess_type(resource_url)[0]
+            print('mime',mime)
             extension = mimetypes.guess_extension(mime)
             expiry_time = datetime.datetime.utcnow() + datetime.timedelta(100)
             ret['headers'] = [

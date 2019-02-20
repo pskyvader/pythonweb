@@ -3,6 +3,11 @@ from .image import image
 
 
 class file(image):
+    types = ["application/zip", "application/x-zip-compressed", "application/octet-stream", "application/postscript", "application/msword", "application/vnd.ms-excel", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.openxmlformats-officedocument.spreadsheetml.template", "application/vnd.openxmlformats-officedocument.presentationml.template", "application/vnd.openxmlformats-officedocument.presentationml.slideshow",
+             "application/vnd.openxmlformats-officedocument.presentationml.presentation", "application/vnd.openxmlformats-officedocument.presentationml.slide", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/vnd.openxmlformats-officedocument.wordprocessingml.template", "application/vnd.ms-excel.addin.macroEnabled.12", "application/vnd.ms-excel.sheet.binary.macroEnabled.12", "application/pdf", "application/download"]
+    extensions = ["zip", "doc", "docx", "dotx", "xls", "xlsx", "xltx",
+                  "xlam", "xlsb", "ppt", "pptx", "potx", "ppsx", "sldx", "pdf"]
+
     @classmethod
     def delete(cls, folder, file='', subfolder='', sub=''):
         import shutil

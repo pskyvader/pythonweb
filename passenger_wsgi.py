@@ -6,7 +6,7 @@ from beaker.middleware import SessionMiddleware
 
 sys.path.insert(0, os.path.dirname(__file__))
 
-def application2(environ, start_response):
+def app(environ, start_response):
     app_web = app(os.path.dirname(__file__))
     main_data = app_web.init(environ)
     start_response(main_data['status'], main_data['headers'])
@@ -33,11 +33,10 @@ class LoggingMiddleware:
         return self.__application(environ, _start_response)
 
 
-#application = LoggingMiddleware(application2)
+#application = LoggingMiddleware(app)
 
 session_opts = {
     'session.cookie_expires': True
 }
 
-#app = LoggingMiddleware(application2)
-application = SessionMiddleware(application2, session_opts)
+application = SessionMiddleware(app, session_opts)

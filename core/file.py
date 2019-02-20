@@ -1,5 +1,6 @@
 from pathlib import Path
 from .image import image
+from .app import app
 
 
 class file(image):
@@ -8,40 +9,36 @@ class file(image):
     extensions = ["zip", "doc", "docx", "dotx", "xls", "xlsx", "xltx",
                   "xlam", "xlsb", "ppt", "pptx", "potx", "ppsx", "sldx", "pdf"]
 
+    @staticmethod
+    def upload_tmp(modulo):
+        '''Subir a carpeta temporal, durante la creacion de la seccion. al guardar el archivo se mueve a la carpeta definitiva'''
+        respuesta = {'exito': False, 'mensaje': ''}
 
-    public static function upload_tmp($modulo = '')
-    {
-        $respuesta = array('exito' => false, 'mensaje' => '');
-        if (isset($_FILES)) {
-            $archivos = array();
+        if 'file' in app.post:
+            files = app.post['files']
+            archivos = []
 
-            if (isset($_FILES['file'])) {
-                $file_ary = functions::reArrayFiles($_FILES['file']);
-            } else {
-                $file_ary = $_FILES;
-            }
+            if 'file' in files:
+                file_ary = files  # functions.reArrayFiles(files['file'])
+            else:
+                file_ary = files
 
-            foreach ($file_ary as $key => $files) {
-                $archivo            = self::upload($files, 'tmp');
-                $respuesta['exito'] = $archivo['exito'];
-                if (!$archivo['exito']) {
-                    $respuesta['mensaje'] = $archivo['mensaje'];
-                    break;
-                } else {
-                    $name           = self::nombre_archivo($archivo['name'], '');
-                    $archivo['url'] = self::get_upload_url() . $archivo['folder'] . '/' . $name;
-                    $respuesta['mensaje'] .= $archivo['original_name'] . ' <br/>';
-                    $archivos[] = $archivo;
-
-                }
-            }
-            $respuesta['archivos'] = $archivos;
-        } else {
-            $respuesta['mensaje'] = 'No se encuentran archivos a subir';
-        }
-
-        return $respuesta;
-    }
+            for files in file_ary:
+                archivo = file.upload(files, 'tmp')
+                respuesta['exito'] = archivo['exito']
+                if not archivo['exito']:
+                    respuesta['mensaje'] = archivo['mensaje']
+                    break
+                else:
+                    name = file.nombre_archivo(archivo['name'], '')
+                    archivo['url'] = file.get_upload_url(
+                    ) + archivo['folder'] + '/' + name
+                    respuesta['mensaje'] += archivo['original_name'] + ' <br/>'
+                    archivos.append(archivo)
+            respuesta['archivos'] = archivos
+        else:
+            respuesta['mensaje'] = 'No se encuentran archivos a subir'
+        return respuesta
 
     @staticmethod
     def delete(folder, file_name='', subfolder='', sub=''):

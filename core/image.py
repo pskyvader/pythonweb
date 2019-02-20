@@ -424,6 +424,32 @@ class image:
             return name + '.' + extension
 
     @staticmethod
+    def generar_url(file, tag = 'thumb', extension = "", folder = "", subfolder = ""):
+        if len(file)==0:
+            return ''
+        
+
+        if ('' == folder) {
+            folder = file['folder']
+        }
+        if ('' != subfolder) {
+            subfolder .= '/'
+        } elseif (file['parent'] != '') {
+            subfolder = file['parent'] . '/'
+            if (file['subfolder'] != '') {
+                subfolder .= file['subfolder'] . '/'
+            }
+        }
+
+        url = folder . '/' . subfolder . (self::nombre_archivo(file['url'], tag, extension))
+        time = functions::fecha_archivo(self::get_upload_dir() . url, true)
+        if (false != time) {
+            archivo = self::get_upload_url() . url . '?time=' . time
+        } else { archivo = ''}
+        return archivo
+    }
+
+    @staticmethod
     def delete(folder, file='', subfolder='', sub=''):
         import shutil
         if "" == file and '' != subfolder:

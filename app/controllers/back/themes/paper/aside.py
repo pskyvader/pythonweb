@@ -7,7 +7,7 @@ class aside:
 
     def normal(self):
         ret = {'body': ''}
-        if app.post.getfirst("ajax") is None:
+        if 'ajax' not in app.post:
             #administrador = administrador_model.getById( _SESSION[administrador_model.idname . app.prefix_site])
             administrador = {0:1,'nombre':'Pablo','email':'pablo.rain.contreras@gmail.com','tipo': 1}
             tipo_admin = administrador["tipo"]

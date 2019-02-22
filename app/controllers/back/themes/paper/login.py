@@ -47,13 +47,16 @@ class login:
             return ret
 
         if 'intento_administrador' in app.session and int(app.session['intento_administrador']) % 5 == 0:
-            app.session['bloqueo_administrador'] = time() + 60*int(app.session['intento_administrador'])
+            app.session['bloqueo_administrador'] = time(
+            ) + 60*int(app.session['intento_administrador'])
             # if app.session['intento_administrador']>=15) bloquear_ip(getRealIP())
-            app.session['intento_administrador'] +=1
+            app.session['intento_administrador'] += 1
 
         error_login = False
         if 'email' in app.post and 'pass' in app.post and 'token' in app.post:
-            print(app.session['login_token'])
+            print(app.session)
+            if 'login_token' in app.session:
+                print(app.session['login_token'])
             if 'login_token' in app.session and app.session['login_token']['token'] == app.post['token']:
                 if time()-int(app.session['login_token']['time']) <= 120:
                     if not 'recordar' in app.post:

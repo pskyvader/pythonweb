@@ -63,11 +63,10 @@ class LoggingMiddleware:
 
 
 session_opts = {
-    'session.cookie_expires': True,
-    'session.httponly': False,
-    # 'session.secure': True
-    'session.auto': True,
-    'session.use_cookies ': False,
+    'session.type': 'file',
+    'session.cookie_expires': 300,
+    'session.data_dir': './data',
+    'session.auto': True
 }
 
 app2 = LoggingMiddleware(application2)

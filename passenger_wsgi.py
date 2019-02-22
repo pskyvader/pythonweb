@@ -66,7 +66,6 @@ session_opts = {
     'session.cookie_expires': True,
     'session.httponly': False,
     # 'session.secure': True
-    'session.type': 'memory',
     'session.auto': True
 }
 

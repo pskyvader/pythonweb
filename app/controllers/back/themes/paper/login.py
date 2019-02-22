@@ -1,6 +1,7 @@
 from core.functions import functions
 from core.app import app
 from app.models.administrador import administrador as administrador_model
+from .head import head
 
 def init(var):
     h = login()
@@ -82,6 +83,22 @@ class login:
             ret['redirect']=url_return
             return ret
         
+
+        token = sha1(uniqid(microtime(), true));
+        app.session['login_token'] = {'token' : token, 'time' : time()}
+        head = new head(this->metadata);
+        head->normal();
+        view::set('logo', '');
+        view::set('error_login', error_login);
+        view::set('token', token);
+        view::set('url_recuperar', functions::generar_url(array("recuperar")));
+        logo=logo_model::getById(2);
+        view::set('logo', image::generar_url(logo['foto'][0], 'login'));
+        view::render('login');
+        
+        footer = new footer();
+        footer->normal();
+
         h = head(self.metadata)
         ret_head=h.normal()
         if ret_head['headers']!='':

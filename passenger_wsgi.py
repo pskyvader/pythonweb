@@ -63,8 +63,8 @@ class LoggingMiddleware:
 
 
 session_opts = {
-    'session.cookie_expires': True,
-    'session.httponly': True,
+    'session.cookie_expires': False,
+    'session.httponly': False,
     # 'session.secure': True
 }
 

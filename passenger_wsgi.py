@@ -17,7 +17,7 @@ def application2(environ, start_response):
 
     ret = main_data['response_body']
 
-    if isinstance(ret, str):
+    if isinstance(ret, str) and len(ret)>0:
         ret=bytes(ret, 'utf-8')
         from gzip import compress
         ret = compress(ret)

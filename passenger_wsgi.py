@@ -11,6 +11,7 @@ def application2(environ, start_response):
     main_data = app_web.init(environ)
 
     if 'is_file' in main_data:
+        print('is file',main_data['file'])
         f = open(main_data['file'], 'rb')
         return environ['wsgi.file_wrapper'](f, 32768)
 

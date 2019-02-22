@@ -7,8 +7,8 @@ sys.path.insert(0, os.path.dirname(__file__))
 
 
 def application2(environ, start_response):
-    from datetime import datetime
-    init_time = datetime.now()
+    #from datetime import datetime
+    #init_time = datetime.now()
     app_web = app(os.path.dirname(__file__))
     main_data = app_web.init(environ)
     ret = main_data['response_body']
@@ -30,7 +30,7 @@ def application2(environ, start_response):
             print('no filewrapper')
             return file_wrapper(f, 1024*64)
     else:
-        print('total', (datetime.now()-init_time).microseconds/1000)
+        #print('total', (datetime.now()-init_time).microseconds/1000)
         return [ret]
 
 

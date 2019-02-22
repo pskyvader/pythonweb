@@ -19,7 +19,7 @@ def init(var):
                 'error': 404,
             }
     else:
-        ret = h.index({})
+        ret = h.index([])
     return ret
 
 

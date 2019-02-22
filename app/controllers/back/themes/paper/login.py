@@ -87,8 +87,7 @@ class login:
             ret['redirect'] = url_return
             return ret
 
-        token = functions.generar_pass(10)
-        print(token)
+        token = functions.generar_pass(20)
         app.session['login_token'] = {'token': token, 'time': time()}
         h = head(self.metadata)
         ret_head = h.normal()

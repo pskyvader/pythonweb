@@ -50,6 +50,7 @@ class login:
             #app.session['intento_administrador'] += 1
 
         error_login = False
+        print(app.session)
         if 'email' in app.post and 'pass' in app.post and 'token' in app.post:
             if 'login_token' in app.session:
                 if app.session['login_token']['token'] == app.post['token']:

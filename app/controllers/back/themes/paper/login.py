@@ -16,21 +16,18 @@ def init(var):
 
 
 class login:
-    url = ['login']
+    url = ['login','index']
     metadata = {'title': 'login', 'modulo': 'login'}
 
-    def index(self):
+    def index(self,url):
         ret = {'body':''}
-        if not administrador_model.verificar_sesion():
-            self.url = ['login', 'index', 'login']
-        
+        self.url=self.url+url
         url_return=functions.url_redirect(self.url)
         if url_return!='':
             ret['error']=301
             ret['redirect']=url_return
             return ret
         
-        registros=administrador_model.getAll(where={'idpadre':1},condiciones={'limit':1,'limit2':0})
         h = head(self.metadata)
         ret_head=h.normal()
         if ret_head['headers']!='':

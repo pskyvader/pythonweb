@@ -360,7 +360,7 @@ class database():
         print(p)
         salt_tmp = hashlib.md5()
         salt_tmp.update(p.encode('utf-8'))
-        print(salt_tmp)
+        print(salt_tmp.hexdigest())
 
         salt2=hashlib.sha1()
         salt2.update(p.encode('utf-8'))

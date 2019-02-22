@@ -358,7 +358,7 @@ class database():
         part2=hashlib.sha256()
         part2.update(part1.hexdigest().encode('utf-8'))
         password= part1.hexdigest() + part2.hexdigest()
-        print(password)
+        print(password,len(password))
         return password
 
     @staticmethod

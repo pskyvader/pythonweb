@@ -41,7 +41,7 @@ def file_wrapper(fileobj, block_size=1024):
             data = fileobj.read(block_size)
     finally:
         fileobj.close()
-        
+
 class LoggingMiddleware:
     
     def __init__(self, application):
@@ -56,9 +56,6 @@ class LoggingMiddleware:
             return start_response(status, headers, *args)
 
         return self.__application(environ, _start_response)
-
-
-#application = LoggingMiddleware(application2)
 
 session_opts = {
     'session.cookie_expires': True,

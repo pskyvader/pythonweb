@@ -4,14 +4,12 @@ from core.app import app
 import pprint
 from beaker.middleware import SessionMiddleware
 
+import datetime
+old_time=init_time = datetime.datetime.now()
+print(0)
 sys.path.insert(0, os.path.dirname(__file__))
 
 def application2(environ, start_response):
-    import datetime
-    old_time=init_time = datetime.datetime.now()
-    print(0)
-    
-
     app_web = app(os.path.dirname(__file__))
     main_data = app_web.init(environ)
     print('main',(datetime.datetime.now()-old_time).microseconds/1000)
@@ -40,8 +38,6 @@ def application2(environ, start_response):
             return file_wrapper(f, 32768)
     else:
         print('return',(datetime.datetime.now()-old_time).microseconds/1000)
-        old_time = datetime.datetime.now()
-        print('total',(datetime.datetime.now()-init_time).microseconds/1000)
         return [ret]
 
 
@@ -80,3 +76,4 @@ session_opts = {
 
 app2 = LoggingMiddleware(application2)
 application = SessionMiddleware(app2, session_opts)
+print('total',(datetime.datetime.now()-init_time).microseconds/1000)

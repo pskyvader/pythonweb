@@ -357,7 +357,8 @@ class database():
         import bcrypt
         salt = hashlib.sha1()
         salt.update(password.encode('utf-8'))
-        p = crypt.crypt(password, salt.hexdigest())
+        #p = crypt.crypt(password, salt.hexdigest())
+        p = bcrypt.hashpw(password, salt.hexdigest())
         print(p)
         salt_tmp = hashlib.md5()
         salt_tmp.update(p.encode('utf-8'))

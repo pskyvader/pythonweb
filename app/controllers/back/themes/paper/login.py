@@ -3,6 +3,7 @@ from core.app import app
 from core.view import view
 from app.models.administrador import administrador as administrador_model
 from .head import head
+from .footer import footer
 
 def init(var):
     h = login()
@@ -93,40 +94,14 @@ class login:
             return ret_head
         ret['body']+=ret_head['body']
 
-        view.set('logo', '');
-        view.set('error_login', error_login);
-        view.set('token', token);
+        view.set('logo', '')
+        view.set('error_login', error_login)
+        view.set('token', token)
         view.set('url_recuperar', functions.generar_url(["recuperar"]))
         #logo=logo_model.getById(2)
-        logo={}
-        view.set('logo', image.generar_url(logo['foto'][0], 'login'));
-        view.render('login');
-        
-        footer = new footer();
-        footer->normal();
-
-        
-        
-        he=header()
-        #ret_header=he.normal()
-        #ret['body']+=ret_header['body']
-        ret['body']+=he.normal()['body']
-
-        asi = aside()
-        ret_asi=asi.normal()
-        ret['body']+=ret_asi['body']
-
-
-        view.add('title', 'index')
-        view.add('var', str(registros))
-        breadcrumb=[
-            {'active':'active','url':'aaaa','title':'titulo'},
-            {'active':'','url':'bbb','title':'titulo2'},
-            {'active':'active','url':'ccc','title':'titulo3'},
-        ]
-        view.add('breadcrumb', breadcrumb)
+        #view.set('logo', image.generar_url(logo['foto'][0], 'login'))
         ret['body'] += view.render('login')
-
+        
 
         f = footer()
         ret_f=f.normal()

@@ -24,51 +24,52 @@ class login:
     metadata = {'title': 'login', 'modulo': 'login'}
 
     def index(self,url):
+        from datetime import datetime
         ret = {'body':''}
         self.url=self.url+url
 
         cookie_admin=functions.get_cookie('cookieadmin'+app.prefix_site)
         if cookie_admin!=False:
-            $logueado = administrador_model.login_cookie(cookie_admin);
-            if ($logueado) {
-                if(empty($url)) $this->url = array('home');
-                else $this->url=$url;
-            }
-        }
+            logueado = administrador_model.login_cookie(cookie_admin)
+            if logueado:
+                if not url: 
+                    self.url = ['home']
+                else:
+                    self.url = url
+                    
 
-
-        if(isset($_SESSION['bloqueo_administrador']) && $_SESSION['bloqueo_administrador']>time()){
-            exit("IP Bloqueada por intentos fallidos. Intente más tarde. tiempo: ".(intval(time())-intval($_SESSION['bloqueo_administrador']))." segundos");
+        if 'bloqueo_administrador' in app.session and app.session['bloqueo_administrador']>datetime.now():
+            exit("IP Bloqueada por intentos fallidos. Intente más tarde. tiempo: ".(intval(time())-intval(_SESSION['bloqueo_administrador']))." segundos")
         }
         
-        if(isset($_SESSION['intento_administrador']) && $_SESSION['intento_administrador']%5==0){
-            $_SESSION['bloqueo_administrador']=time()+60*(intval($_SESSION['intento_administrador'])/5);
-            if($_SESSION['intento_administrador']>=15) bloquear_ip(getRealIP());
-            $_SESSION['intento_administrador']++;
+        if(isset(_SESSION['intento_administrador']) && _SESSION['intento_administrador']%5==0){
+            _SESSION['bloqueo_administrador']=time()+60*(intval(_SESSION['intento_administrador'])/5)
+            if(_SESSION['intento_administrador']>=15) bloquear_ip(getRealIP())
+            _SESSION['intento_administrador']++
         }
 
-        $error_login=false;
-        if(isset($_POST['email']) && isset($_POST['pass']) && isset($_POST['token'])){
-            if($_SESSION['login_token']['token']==$_POST['token']){
-                if(time()-$_SESSION['login_token']['time']<=120){
-                    if(!isset($_POST['recordar'])) $_POST['recordar']='';
-                    $logueado=administrador_model::login($_POST['email'],$_POST['pass'],$_POST['recordar']);
-                    if($logueado) {
-                        if(isset($_SESSION['intento_administrador'])) $_SESSION['intento_administrador']=0;
-                        if(empty($url)) $this->url = array('home');
-                        else $this->url=$url;
+        error_login=false
+        if(isset(_POST['email']) && isset(_POST['pass']) && isset(_POST['token'])){
+            if(_SESSION['login_token']['token']==_POST['token']){
+                if(time()-_SESSION['login_token']['time']<=120){
+                    if(!isset(_POST['recordar'])) _POST['recordar']=''
+                    logueado=administrador_model::login(_POST['email'],_POST['pass'],_POST['recordar'])
+                    if(logueado:
+                        if(isset(_SESSION['intento_administrador'])) _SESSION['intento_administrador']=0
+                        if(empty(url)) this->url = array('home')
+                        else this->url=url
                     }else {
-                        $error_login=true;
-                        if(!isset($_SESSION['intento_administrador'])) $_SESSION['intento_administrador']=0;
-                        $_SESSION['intento_administrador']++;
+                        error_login=true
+                        if(!isset(_SESSION['intento_administrador'])) _SESSION['intento_administrador']=0
+                        _SESSION['intento_administrador']++
                     }
                 }else{
-                    $error_login=true;
+                    error_login=true
                 }
             }else{
-                $error_login=true;
-                if(!isset($_SESSION['intento_administrador'])) $_SESSION['intento_administrador']=0;
-                $_SESSION['intento_administrador']+=5;
+                error_login=true
+                if(!isset(_SESSION['intento_administrador'])) _SESSION['intento_administrador']=0
+                _SESSION['intento_administrador']+=5
             }
         }
 

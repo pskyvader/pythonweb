@@ -7,6 +7,7 @@ from beaker.middleware import SessionMiddleware
 sys.path.insert(0, os.path.dirname(__file__))
 
 def application2(environ, start_response):
+    print(environ)
     app_web = app(os.path.dirname(__file__))
     main_data = app_web.init(environ)
     ret = main_data['response_body']

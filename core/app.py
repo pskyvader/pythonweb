@@ -125,7 +125,6 @@ class app:
         for cookie in functions.cookies:
             data_return['headers'].append(('Set-Cookie', cookie))
 
-        print('save',app.session)
         return data_return
 
     @staticmethod

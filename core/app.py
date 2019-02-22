@@ -127,6 +127,7 @@ class app:
 
         print('save',app.session)
         app.session.persist()
+        app.session.save()
         return data_return
 
     @staticmethod

@@ -175,6 +175,7 @@ class app:
         post = {}
         for key in p.keys():
             post[key] = p[key].value
+        print(post)
         return post
 
     @staticmethod

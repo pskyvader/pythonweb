@@ -23,9 +23,22 @@ def application2(environ, start_response):
     start_response(main_data['status'], main_data['headers'])
 
     if 'is_file' in main_data:
-        print('is file',main_data['file'])
         f = open(main_data['file'], 'rb')
-        return environ['wsgi.file_wrapper'](f, 32768)
+        if 'wsgi.file_wrapper' in environ:
+            return environ['wsgi.file_wrapper'](f , 1024) 
+        else:
+            print('no filewrapper')
+            def file_wrapper(fileobj, block_size=1024):
+                try:
+                    data = fileobj.read(block_size)
+                    while data:
+                        yield data
+                        data = fileobj.read(block_size)
+                finally:
+                    fileobj.close()
+            return file_wrapper(f, 1024)
+
+
     else:
         return [ret]
 

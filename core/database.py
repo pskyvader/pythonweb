@@ -354,7 +354,6 @@ class database():
     def encript(password):
         import hashlib
         import crypt
-        from hashlib.hash import md5_crypt as md5
         salt = hashlib.sha1()
         salt.update(password.encode('utf-8'))
         p = crypt.crypt(password, salt.hexdigest())

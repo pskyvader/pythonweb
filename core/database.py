@@ -355,9 +355,12 @@ class database():
         import hashlib
         import crypt
         print(password)
-        salt = hashlib.sha1(password.encode('utf-8'))
-        p = crypt.crypt(password, salt)
-        password= salt + hashlib.sha1(p)
+        salt = hashlib.sha1()
+        salt.update(password)
+        p = crypt.crypt(password, salt.hexdigest())
+        salt2=hashlib.sha1(p)
+        salt.update(p)
+        password= salt + salt.hexdigest()
         print(password)
         return password
 

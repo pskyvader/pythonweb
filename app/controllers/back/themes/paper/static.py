@@ -1,11 +1,10 @@
 from core.view import view
-from core.functions import functions
-from core.app import app
 import os
 from pathlib import Path
+from core.functions import functions
 import mimetypes
 import datetime
-
+import socket
 
 def init(var):
     h = static()
@@ -17,7 +16,30 @@ def init(var):
 
 class static:
 
-    def index(self, var):
+    def index(self,var):
+        if len(var) == 0:
+            return {'error': 404}
+
+        ret = {'body': ''}
+        theme = view.get_theme()
+        resource = '/'.join(var)
+        resource_url = theme + resource
+        my_file = Path(resource_url)
+        if not my_file.is_file():
+            ret = {'error': 404}
+        else:
+            server_socket = socket.socket()
+            server_socket.bind(('localhost', 80))
+            server_socket.listen(5)
+            while True:
+                client_socket, addr = server_socket.accept()
+                with open(resource_url, 'rb') as f:
+                    client_socket.sendfile(f, 0)
+                client_socket.close()
+
+
+
+    def index2(self, var):
         if len(var) == 0:
             return {'error': 404}
 
@@ -64,13 +86,4 @@ class static:
                 file_write = open(cache_file, 'wb')
                 file_write.write(ret['body'])
                 file_write.close()
-
-
-        f = open(resource_url, "rb")
-        if 'wsgi.file_wrapper' in app.environ:
-            # Return env[wsgi.fw](file, block size)
-            return app.environ['wsgi.file_wrapper'](f , 1024) 
-        else: 
-            return iter(lambda: f.read(1024), '')
-
         return ret

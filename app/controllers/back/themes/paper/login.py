@@ -79,7 +79,7 @@ class login:
                 error_login = True
                 if 'intento_administrador' in app.session:
                     app.session['intento_administrador'] = 0
-                app.session['intento_administrador'] += 5
+                app.session['intento_administrador'] =int(app.session['intento_administrador'])+ 5
 
         url_return = functions.url_redirect(self.url)
         if url_return != '':

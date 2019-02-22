@@ -8,7 +8,6 @@ sys.path.insert(0, os.path.dirname(__file__))
 
 def application2(environ, start_response):
     from datetime import datetime
-    print(environ)
     init_time = datetime.now()
     app_web = app(os.path.dirname(__file__))
     main_data = app_web.init(environ)
@@ -64,7 +63,11 @@ class LoggingMiddleware:
 
 
 session_opts = {
-    'session.httponly': False
+    'session.cookie_expires': True,
+    'session.httponly': False,
+    # 'session.secure': True
+    'session.auto': True,
+    'session.use_cookies ': False,
 }
 
 app2 = LoggingMiddleware(application2)

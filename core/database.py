@@ -355,7 +355,7 @@ class database():
         import hashlib
         import crypt
         print(password)
-        salt = hashlib.sha1(password)
+        salt = hashlib.sha1(password.encode('utf-8'))
         p = crypt.crypt(password, salt)
         password= salt + hashlib.sha1(p)
         print(password)

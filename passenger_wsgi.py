@@ -8,6 +8,7 @@ sys.path.insert(0, os.path.dirname(__file__))
 
 def application2(environ, start_response):
     from datetime import datetime
+    print(environ)
     init_time = datetime.now()
     app_web = app(os.path.dirname(__file__))
     main_data = app_web.init(environ)

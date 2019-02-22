@@ -111,8 +111,8 @@ class functions():
     def generar_pass(length = 8):
         import string
         import random
-        password=''.join(random.choices(string.ascii_uppercase + string.digits, k=N))
-        password = str(password)[-10,length+1].upper()
+        password=''.join(random.choices(string.ascii_uppercase + string.digits, k=length))
+        password = str(password).upper()
         return password
     
     @staticmethod

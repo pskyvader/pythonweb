@@ -354,9 +354,12 @@ class database():
     def encript(password):
         import hashlib
         from crypt import crypt
+        print(password)
         salt = hashlib.sha1(password)
         p = crypt(password, salt)
-        return salt + hashlib.sha1(p)
+        password= salt + hashlib.sha1(p)
+        print(password)
+        return password
 
     @staticmethod
     def create_data(model, data):

@@ -353,7 +353,7 @@ class database():
     @staticmethod
     def encript(password):
         import hashlib
-        import crypt
+        #import crypt
         import bcrypt
         salt = hashlib.sha1()
         salt.update(password.encode('utf-8'))

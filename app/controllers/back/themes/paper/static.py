@@ -36,6 +36,7 @@ class static:
             while True:
                 print('accept')
                 client_socket, addr = server_socket.accept()
+                print('accepted')
                 with open(resource_url, 'rb') as f:
                     print('send')
                     client_socket.sendfile(f, 0)

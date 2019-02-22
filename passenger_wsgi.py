@@ -6,7 +6,6 @@ from beaker.middleware import SessionMiddleware
 
 import datetime
 init_time = datetime.datetime.now()
-print(0)
 sys.path.insert(0, os.path.dirname(__file__))
 
 
@@ -69,6 +68,7 @@ class LoggingMiddleware:
                 pprint.pprint(('RESPONSE', status), stream=errors)
             return start_response(status, headers, *args)
 
+        print('total', (datetime.datetime.now()-init_time).microseconds/1000)
         return self.__application(environ, _start_response)
 
 
@@ -80,4 +80,3 @@ session_opts = {
 
 app2 = LoggingMiddleware(application2)
 application = SessionMiddleware(app2, session_opts)
-print('total', (datetime.datetime.now()-init_time).microseconds/1000)

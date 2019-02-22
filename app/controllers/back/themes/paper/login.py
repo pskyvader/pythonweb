@@ -96,9 +96,9 @@ class login:
         view.set('logo', '');
         view.set('error_login', error_login);
         view.set('token', token);
-        view.set('url_recuperar', functions.generar_url(["recuperar"])
-        #logo2=logo_model.getById(2)
-        logo2={}
+        view.set('url_recuperar', functions.generar_url(["recuperar"]))
+        #logo=logo_model.getById(2)
+        logo={}
         view.set('logo', image.generar_url(logo['foto'][0], 'login'));
         view.render('login');
         

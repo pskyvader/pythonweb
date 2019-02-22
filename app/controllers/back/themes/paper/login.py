@@ -25,7 +25,6 @@ class login:
 
     def index(self,url):
         import time
-        time.time()
         ret = {'body':''}
         self.url=self.url+url
 
@@ -40,11 +39,12 @@ class login:
                     
 
         if 'bloqueo_administrador' in app.session and app.session['bloqueo_administrador']>time.time():
-            ret['body'] = "IP Bloqueada por intentos fallidos. Intente más tarde. tiempo: "+time.time()- datetime.strptime(app.session['bloqueo_administrador'], '%Y-%m-%d %H:%M:%S')+" "
+            ret['body'] = "IP Bloqueada por intentos fallidos. Intente más tarde. tiempo: "+time.time()-app.session['bloqueo_administrador']+" segundos"
+            return ret
         
         
         if 'intento_administrador' in app.session and app.session['intento_administrador']%5==0:
-            app.session['bloqueo_administrador']= str(time.time() + timedelta(seconds=60*int(app.session['intento_administrador'])))
+            app.session['bloqueo_administrador']= time.time() + 60*int(app.session['intento_administrador'])
             #if(app.session['intento_administrador']>=15) bloquear_ip(getRealIP())
             app.session['intento_administrador']+=1
             

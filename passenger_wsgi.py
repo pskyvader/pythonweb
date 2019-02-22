@@ -63,9 +63,9 @@ class LoggingMiddleware:
 
 
 session_opts = {
-    'session.type': 'file',
+    #'session.type': 'file',
     'session.cookie_expires': 300,
-    'session.data_dir': './session_data',
+    #'session.data_dir': './session_data',
     'session.auto': True
 }
 

@@ -109,9 +109,9 @@ class functions():
 
     @staticmethod
     def generar_pass(length = 8):
-        import uuid
-        import hashlib
-        password=hashlib.md5(str(uuid.UUID))
+        import string
+        import random
+        password=''.join(random.choices(string.ascii_uppercase + string.digits, k=N))
         password = str(password)[-10,length+1].upper()
         return password
     

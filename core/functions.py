@@ -112,7 +112,6 @@ class functions():
         import string
         import random
         password=''.join(random.choices(string.ascii_uppercase + string.digits, k=length))
-        #password = str(password).upper()
         return password
     
     @staticmethod

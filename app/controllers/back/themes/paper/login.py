@@ -62,7 +62,7 @@ class login:
                     logueado = administrador_model.login(
                         app.post['email'], app.post['pass'], app.post['recordar'])
                     if logueado:
-                        if 'intento_administrador' in app.session['intento_administrador']:
+                        if 'intento_administrador' in app.session:
                             app.session['intento_administrador'] = 0
                         if not url:
                             self.url = ['home']
@@ -70,14 +70,14 @@ class login:
                             self.url = url
                     else:
                         error_login = True
-                        if 'intento_administrador' in app.session['intento_administrador']:
+                        if 'intento_administrador' in app.session:
                             app.session['intento_administrador'] = 0
                         app.session['intento_administrador'] += 1
                 else:
                     error_login = True
             else:
                 error_login = True
-                if 'intento_administrador' in app.session['intento_administrador']:
+                if 'intento_administrador' in app.session:
                     app.session['intento_administrador'] = 0
                 app.session['intento_administrador'] += 5
 

@@ -111,7 +111,8 @@ class functions():
     def generar_pass(length = 8):
         import uuid
         import hashlib
-        password = str(hashlib.md5(str(uuid.UUID)))[-10,length+1].upper()
+        password=hashlib.md5(str(uuid.UUID))
+        password = str(password)[-10,length+1].upper()
         return password
     
     @staticmethod

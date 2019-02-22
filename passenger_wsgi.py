@@ -41,6 +41,7 @@ def application2(environ, start_response):
     else:
         print('return',(datetime.datetime.now()-old_time).microseconds/1000)
         old_time = datetime.datetime.now()
+        print('total',(datetime.datetime.now()-init_time).microseconds/1000)
         return [ret]
 
 

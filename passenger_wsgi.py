@@ -5,39 +5,41 @@ import pprint
 from beaker.middleware import SessionMiddleware
 
 import datetime
-old_time=init_time = datetime.datetime.now()
+init_time = datetime.datetime.now()
 print(0)
 sys.path.insert(0, os.path.dirname(__file__))
 
+
 def application2(environ, start_response):
+    old_time = datetime.datetime.now()
     app_web = app(os.path.dirname(__file__))
     main_data = app_web.init(environ)
-    print('main',(datetime.datetime.now()-old_time).microseconds/1000)
+    print('main', (datetime.datetime.now()-old_time).microseconds/1000)
     old_time = datetime.datetime.now()
     ret = main_data['response_body']
 
-    if isinstance(ret, str) and ret!='':
-        print('is str',(datetime.datetime.now()-old_time).microseconds/1000)
+    if isinstance(ret, str) and ret != '':
+        print('is str', (datetime.datetime.now()-old_time).microseconds/1000)
         old_time = datetime.datetime.now()
-        ret=bytes(ret, 'utf-8')
+        ret = bytes(ret, 'utf-8')
         from gzip import compress
         ret = compress(ret)
         main_data['headers'].append(('Accept-encoding', 'gzip,deflate'))
         main_data['headers'].append(('Content-Encoding', 'gzip'))
-        print('compress',(datetime.datetime.now()-old_time).microseconds/1000)
+        print('compress', (datetime.datetime.now()-old_time).microseconds/1000)
         old_time = datetime.datetime.now()
-        
+
     start_response(main_data['status'], main_data['headers'])
 
     if 'is_file' in main_data and main_data['is_file']:
         f = open(main_data['file'], 'rb')
         if 'wsgi.file_wrapper' in environ:
-            return environ['wsgi.file_wrapper'](f , 32768) 
+            return environ['wsgi.file_wrapper'](f, 32768)
         else:
             print('no filewrapper')
             return file_wrapper(f, 32768)
     else:
-        print('return',(datetime.datetime.now()-old_time).microseconds/1000)
+        print('return', (datetime.datetime.now()-old_time).microseconds/1000)
         return [ret]
 
 
@@ -50,8 +52,9 @@ def file_wrapper(fileobj, block_size=1024):
     finally:
         fileobj.close()
 
+
 class LoggingMiddleware:
-    
+
     def __init__(self, application):
         self.__application = application
 
@@ -59,7 +62,7 @@ class LoggingMiddleware:
         errors = environ['wsgi.errors']
 
         def _start_response(status, headers, *args):
-            if status!="200 OK":
+            if status != "200 OK":
                 #pprint.pprint(('REQUEST', environ), stream=errors)
                 pprint.pprint(('REQUEST', environ['PATH_INFO']), stream=errors)
                 #pprint.pprint(('RESPONSE', status, headers), stream=errors)
@@ -68,12 +71,13 @@ class LoggingMiddleware:
 
         return self.__application(environ, _start_response)
 
+
 session_opts = {
     'session.cookie_expires': True,
     'session.httponly': True,
-    #'session.secure': True
+    # 'session.secure': True
 }
 
 app2 = LoggingMiddleware(application2)
 application = SessionMiddleware(app2, session_opts)
-print('total',(datetime.datetime.now()-init_time).microseconds/1000)
+print('total', (datetime.datetime.now()-init_time).microseconds/1000)

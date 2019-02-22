@@ -110,8 +110,8 @@ class functions():
     @staticmethod
     def generar_pass(length=8):
         import string
-        import random
-        password = ''.join(random.choices( string.ascii_uppercase + string.digits, k=length))
+        import secrets
+        password = ''.join(secrets.choice(string.ascii_uppercase + string.digits) for _ in range(length))
         return password
 
     @staticmethod

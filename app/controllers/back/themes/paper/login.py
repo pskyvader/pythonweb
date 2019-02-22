@@ -84,7 +84,7 @@ class login:
             return ret
         
 
-        token = sha1(uniqid(microtime(), true));
+        token = functions.generar_pass(20)
         app.session['login_token'] = {'token' : token, 'time' : time()}
         head = new head(this->metadata);
         head->normal();

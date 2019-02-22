@@ -46,7 +46,7 @@ class login:
             return ret
 
         if 'intento_administrador' in app.session and int(app.session['intento_administrador']) % 5 == 0:
-            app.session['bloqueo_administrador'] = time( ) + 60*int(app.session['intento_administrador'])
+            app.session['bloqueo_administrador'] = time() + 60*int(app.session['intento_administrador'])
             # if app.session['intento_administrador']>=15) bloquear_ip(getRealIP())
             app.session['intento_administrador'] += 1
 
@@ -72,17 +72,15 @@ class login:
                                 app.session['intento_administrador'] = 1
                             app.session['intento_administrador'] += 1
                     else:
-                        print('no token time')
                         error_login = True
                 else:
-                    print('no token igual',app.session['login_token']['token'], app.post['token'])
                     error_login = True
             else:
                 print('no token')
                 error_login = True
                 if not 'intento_administrador' in app.session:
                     app.session['intento_administrador'] = 0
-                app.session['intento_administrador'] += 5
+                app.session['intento_administrador'] += 1
 
         url_return = functions.url_redirect(self.url)
         if url_return != '':

@@ -39,8 +39,8 @@ def application2(environ, start_response):
             print('no filewrapper')
             return file_wrapper(f, 32768)
     else:
-        old_time = old_time - datetime.datetime.now()
-        print(old_time)
+        print(old_time - datetime.datetime.now())
+        old_time = datetime.datetime.now()
         return [ret]
 
 

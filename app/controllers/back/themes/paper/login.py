@@ -57,8 +57,7 @@ class login:
                     if time()-int(app.session['login_token']['time']) <= 120:
                         if not 'recordar' in app.post:
                             app.post['recordar'] = ''
-                        logueado = administrador_model.login(
-                            app.post['email'], app.post['pass'], app.post['recordar'])
+                        logueado = administrador_model.login( app.post['email'], app.post['pass'], app.post['recordar'])
                         if logueado:
                             if 'intento_administrador' in app.session:
                                 app.session['intento_administrador'] = 0

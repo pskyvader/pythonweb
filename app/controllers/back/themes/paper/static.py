@@ -67,8 +67,8 @@ class static:
 
         if 'wsgi.file_wrapper' in app.environ:
             # Return env[wsgi.fw](file, block size)
-            return app.environ['wsgi.file_wrapper'](the_file , 1024) 
+            return app.environ['wsgi.file_wrapper'](resource_url , 1024) 
         else: 
-            return iter(lambda: the_file.read(1024), '')
+            return iter(lambda: resource_url.read(1024), '')
 
         return ret

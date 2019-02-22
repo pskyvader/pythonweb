@@ -182,6 +182,7 @@ class app:
     @staticmethod
     def parse_session():
         session = app.environ['beaker.session']
+        session.save()
         return session
 
     @staticmethod

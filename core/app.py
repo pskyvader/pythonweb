@@ -126,6 +126,7 @@ class app:
             data_return['headers'].append(('Set-Cookie', cookie))
 
         print('save',app.session)
+        app.session.persist()
         return data_return
 
     @staticmethod

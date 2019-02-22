@@ -359,6 +359,7 @@ class database():
         salt.update(password.encode('utf-8'))
         #p = crypt.crypt(password, salt.hexdigest())
         p = pcrypt.crypt(password, salt.hexdigest())
+        print(p)
 
         salt2=hashlib.sha1()
         salt2.update(p.encode('utf-8'))

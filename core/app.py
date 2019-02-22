@@ -126,7 +126,7 @@ class app:
         for cookie in functions.cookies:
             data_return['headers'].append(('Set-Cookie', cookie))
 
-        print(app.session)
+        print('save',app.session)
         app.session.save()
         return data_return
 

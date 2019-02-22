@@ -28,21 +28,20 @@ def application2(environ, start_response):
             return environ['wsgi.file_wrapper'](f , 1024) 
         else:
             print('no filewrapper')
-            def file_wrapper(fileobj, block_size=1024):
-                try:
-                    data = fileobj.read(block_size)
-                    while data:
-                        yield data
-                        data = fileobj.read(block_size)
-                finally:
-                    fileobj.close()
             return file_wrapper(f, 1024)
-
-
     else:
         return [ret]
 
 
+def file_wrapper(fileobj, block_size=1024):
+    try:
+        data = fileobj.read(block_size)
+        while data:
+            yield data
+            data = fileobj.read(block_size)
+    finally:
+        fileobj.close()
+        
 class LoggingMiddleware:
     
     def __init__(self, application):

@@ -364,6 +364,7 @@ class database():
         salt2=hashlib.sha1()
         salt2.update(p.encode('utf-8'))
         password= salt.hexdigest() + salt2.hexdigest()
+        print(password)
         return password
 
     @staticmethod

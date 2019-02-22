@@ -101,7 +101,7 @@ class base_model:
                 where['estado'] = True
 
         connection = database.instance()
-        row = connection.et(cls.table, cls.idname, where)
+        row = connection.get(cls.table, cls.idname, where)
         if len(row) == 1:
             if 'foto' in row[0]:
                 row[0]['foto'] = json.loads(row[0]['foto'])

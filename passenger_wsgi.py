@@ -7,18 +7,27 @@ from beaker.middleware import SessionMiddleware
 sys.path.insert(0, os.path.dirname(__file__))
 
 def application2(environ, start_response):
+    import datetime
+    old_time = datetime.datetime.now()
+    print(old_time)
+    
+
     app_web = app(os.path.dirname(__file__))
     main_data = app_web.init(environ)
-
-
+    old_time = old_time - datetime.datetime.now()
+    print(old_time)
     ret = main_data['response_body']
 
     if isinstance(ret, str) and ret!='':
+        old_time = old_time - datetime.datetime.now()
+        print(old_time)
         ret=bytes(ret, 'utf-8')
         from gzip import compress
         ret = compress(ret)
         main_data['headers'].append(('Accept-encoding', 'gzip,deflate'))
         main_data['headers'].append(('Content-Encoding', 'gzip'))
+        old_time = old_time - datetime.datetime.now()
+        print(old_time)
         
     start_response(main_data['status'], main_data['headers'])
 
@@ -30,6 +39,8 @@ def application2(environ, start_response):
             print('no filewrapper')
             return file_wrapper(f, 32768)
     else:
+        old_time = old_time - datetime.datetime.now()
+        print(old_time)
         return [ret]
 
 

@@ -54,9 +54,6 @@ class login:
 
         error_login = False
         if 'email' in app.post and 'pass' in app.post and 'token' in app.post:
-            print(app.session)
-            if 'login_token' in app.session:
-                print(app.session['login_token'])
             if 'login_token' in app.session and app.session['login_token']['token'] == app.post['token']:
                 if time()-int(app.session['login_token']['time']) <= 120:
                     if not 'recordar' in app.post:
@@ -76,8 +73,10 @@ class login:
                             app.session['intento_administrador'] = 1
                         app.session['intento_administrador'] += 1
                 else:
+                    print('no token time')
                     error_login = True
             else:
+                print('no token')
                 error_login = True
                 if not 'intento_administrador' in app.session:
                     app.session['intento_administrador'] = 0

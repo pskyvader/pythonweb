@@ -67,9 +67,7 @@ session_opts = {
     'session.httponly': False,
     # 'session.secure': True
     'session.auto': True,
-    'cache.type': 'file',
-    'cache.data_dir': '/tmp/cache/data',
-    'cache.lock_dir': '/tmp/cache/lock'
+    'session.use_cookies ': False,
 }
 
 app2 = LoggingMiddleware(application2)

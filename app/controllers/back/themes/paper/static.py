@@ -16,34 +16,7 @@ def init(var):
 
 
 class static:
-
     def index(self, var):
-        if len(var) == 0:
-            return {'error': 404}
-
-        ret = {'body': ''}
-        theme = view.get_theme()
-        resource = '/'.join(var)
-        resource_url = theme + resource
-        my_file = Path(resource_url)
-        if not my_file.is_file():
-            ret = {'error': 404}
-            return ret
-        else:
-            server_socket = socket.socket()
-            server_socket.bind(('localhost', 12345))
-            server_socket.listen(5)
-            while True:
-                print('accept')
-                client_socket, addr = server_socket.accept()
-                print('accepted')
-                with open(resource_url, 'rb') as f:
-                    print('send')
-                    client_socket.sendfile(f, 0)
-                print('close')
-                client_socket.close()
-
-    def index2(self, var):
         if len(var) == 0:
             return {'error': 404}
 

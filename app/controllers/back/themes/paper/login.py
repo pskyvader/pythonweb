@@ -40,7 +40,6 @@ class login:
                     self.url = ['home']
                 else:
                     self.url = url
-        print(app.session)
         if 'bloqueo_administrador' in app.session and app.session['bloqueo_administrador'] > time():
             ret['body'] = "IP Bloqueada por intentos fallidos. Intente más tarde. tiempo: " +  str(int(app.session['bloqueo_administrador']-time()))+" segundos"
             return ret

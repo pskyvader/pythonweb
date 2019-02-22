@@ -116,7 +116,6 @@ class app:
         else:
             data_return['status'] = '200 OK'
 
-
         if 'is_file' in response:
             data_return['is_file'] = response['is_file']
         if 'file' in response:
@@ -126,7 +125,7 @@ class app:
         data_return['headers'] = response['headers']
         for cookie in functions.cookies:
             data_return['headers'].append(('Set-Cookie', cookie))
-        
+
         app.session.save()
         return data_return
 
@@ -168,11 +167,14 @@ class app:
         from cgi import FieldStorage
         post_env = app.environ.copy()
         post_env['QUERY_STRING'] = ''
-        post = FieldStorage(
+        p = FieldStorage(
             fp=app.environ['wsgi.input'],
             environ=post_env,
             keep_blank_values=True
         )
+        post = {}
+        for key in p.keys():
+            post[key] = p[key].value
         return post
 
     @staticmethod

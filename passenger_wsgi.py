@@ -3,17 +3,14 @@ import os
 from core.app import app
 import pprint
 from beaker.middleware import SessionMiddleware
-
-import datetime
 sys.path.insert(0, os.path.dirname(__file__))
 
 
 def application2(environ, start_response):
-    old_time = init_time = datetime.datetime.now()
+    import datetime
+    init_time = datetime.datetime.now()
     app_web = app(os.path.dirname(__file__))
     main_data = app_web.init(environ)
-    print('main', (datetime.datetime.now()-old_time).microseconds/1000)
-    old_time = datetime.datetime.now()
     ret = main_data['response_body']
 
     if isinstance(ret, str) and ret != '':
@@ -22,8 +19,6 @@ def application2(environ, start_response):
         ret = compress(ret)
         main_data['headers'].append(('Accept-encoding', 'gzip,deflate'))
         main_data['headers'].append(('Content-Encoding', 'gzip'))
-        print('compress', (datetime.datetime.now()-old_time).microseconds/1000)
-        old_time = datetime.datetime.now()
 
     start_response(main_data['status'], main_data['headers'])
 

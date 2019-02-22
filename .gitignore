@@ -107,7 +107,7 @@ venv.bak/
 .vscode
 server.py
 app/config/config.json
-data
+session_data
 sitemap.xml
 upload/files/*
 upload/images/*

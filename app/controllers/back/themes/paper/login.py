@@ -24,7 +24,7 @@ class login:
     metadata = {'title': 'login', 'modulo': 'login'}
 
     def index(self,url):
-        import time
+        from time import time
         ret = {'body':''}
         self.url=self.url+url
 
@@ -38,21 +38,21 @@ class login:
                     self.url = url
                     
 
-        if 'bloqueo_administrador' in app.session and app.session['bloqueo_administrador']>time.time():
-            ret['body'] = "IP Bloqueada por intentos fallidos. Intente más tarde. tiempo: "+time.time()-app.session['bloqueo_administrador']+" segundos"
+        if 'bloqueo_administrador' in app.session and app.session['bloqueo_administrador']>time():
+            ret['body'] = "IP Bloqueada por intentos fallidos. Intente más tarde. tiempo: "+time()-app.session['bloqueo_administrador']+" segundos"
             return ret
         
         
-        if 'intento_administrador' in app.session and app.session['intento_administrador']%5==0:
-            app.session['bloqueo_administrador']= time.time() + 60*int(app.session['intento_administrador'])
+        if 'intento_administrador' in app.session and int(app.session['intento_administrador'])%5==0:
+            app.session['bloqueo_administrador']= time() + 60*int(app.session['intento_administrador'])
             #if(app.session['intento_administrador']>=15) bloquear_ip(getRealIP())
-            app.session['intento_administrador']+=1
+            app.session['intento_administrador']=int(app.session['intento_administrador'])+1
             
 
         error_login=False
         if 'email' in app.post and 'pass' in app.post and 'token' in app.post:
             if app.session['login_token']['token']==app.post['token']:
-                if (time()-app.session['login_token']['time']<=120:
+                if time()-int(app.session['login_token']['time'])<=120:
                     if(!isset(app.post['recordar'])) app.post['recordar']=''
                     logueado=administrador_model::login(app.post['email'],app.post['pass'],app.post['recordar'])
                     if(logueado:

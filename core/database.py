@@ -353,13 +353,10 @@ class database():
     @staticmethod
     def encript(password):
         import hashlib
-        #import crypt
-        import bcrypt
+        import crypt
         salt = hashlib.sha1()
         salt.update(password.encode('utf-8'))
-        #p = crypt.crypt(password, salt.hexdigest())
-        p=bcrypt.kdf(password.encode('utf-8'),str(salt.hexdigest()).encode('utf-8'),desired_key_bytes=32,rounds=100)
-        print(p)
+        p = crypt.crypt(password, salt.hexdigest())
         salt_tmp = hashlib.md5()
         salt_tmp.update(p.encode('utf-8'))
         print(salt_tmp.hexdigest())

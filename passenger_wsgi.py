@@ -30,7 +30,7 @@ def application2(environ, start_response):
             print('no filewrapper')
             return file_wrapper(f, 1024)
     else:
-        print('total', (datetime.now()-init_time))
+        #print('total', (datetime.now()-init_time))
         return [ret]
 
 

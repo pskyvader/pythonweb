@@ -18,7 +18,6 @@ def init(var):
 class static:
 
     def index(self, var):
-        print('static')
         if len(var) == 0:
             return {'error': 404}
 
@@ -32,15 +31,15 @@ class static:
             return ret
         else:
             server_socket = socket.socket()
-            print('socket')
             server_socket.bind(('localhost', 12345))
-            print('bind')
             server_socket.listen(5)
-            print('listen')
             while True:
+                print('accept')
                 client_socket, addr = server_socket.accept()
                 with open(resource_url, 'rb') as f:
+                    print('send')
                     client_socket.sendfile(f, 0)
+                print('close')
                 client_socket.close()
 
     def index2(self, var):

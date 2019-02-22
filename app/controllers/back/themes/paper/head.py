@@ -58,7 +58,7 @@ class head:
 
     def normal(self):
         ret = {'headers': '', 'body': ''}
-        if app.post.getfirst("ajax") is None:
+        if 'ajax' not in app.post:
             if app.post.getfirst("ajax_header") is None:
                 head.data['css'] = view.css()
                 view.add_array(head.data)

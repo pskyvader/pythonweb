@@ -9,7 +9,7 @@ class header:
 
     def normal(self):
         ret = {'body': ''}
-        if app.post.getfirst("ajax") is None:
+        if 'ajax' not in app.post:
             #logo = logo_model.getById(3);
             #self.data['logo_max'] = image.generar_url(logo['foto'][0], 'panel_max');
             #logo = logo_model.getById(4);

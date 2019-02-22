@@ -56,8 +56,10 @@ class administrador(base_model):
             else:
                 return {'exito': False, 'mensaje': 'Contraseña no existe'}
         else:
-            if 'pass' in set_query: del set_query['pass'] 
-            del set_query['pass_repetir']
+            if 'pass' in set_query:
+                del set_query['pass']
+            if 'pass_repetir' in set_query:
+                del set_query['pass_repetir']
 
         if 'email' in set_query:
             set_query['email'] = set_query['email'].lower()

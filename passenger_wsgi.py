@@ -10,10 +10,6 @@ def application2(environ, start_response):
     app_web = app(os.path.dirname(__file__))
     main_data = app_web.init(environ)
 
-    if 'is_file' in main_data:
-        print('is file',main_data['file'])
-        f = open(main_data['file'], 'rb')
-        return environ['wsgi.file_wrapper'](f, 32768)
 
     ret = main_data['response_body']
 
@@ -25,6 +21,12 @@ def application2(environ, start_response):
         main_data['headers'].append(('Content-Encoding', 'gzip'))
         
     start_response(main_data['status'], main_data['headers'])
+
+    if 'is_file' in main_data:
+        print('is file',main_data['file'])
+        f = open(main_data['file'], 'rb')
+        return environ['wsgi.file_wrapper'](f, 32768)
+
     return [ret]
 
 

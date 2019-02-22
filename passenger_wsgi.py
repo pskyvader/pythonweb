@@ -67,8 +67,6 @@ class LoggingMiddleware:
                 #pprint.pprint(('RESPONSE', status, headers), stream=errors)
                 pprint.pprint(('RESPONSE', status), stream=errors)
             return start_response(status, headers, *args)
-
-        print('total', (datetime.datetime.now()-init_time).microseconds/1000)
         return self.__application(environ, _start_response)
 
 

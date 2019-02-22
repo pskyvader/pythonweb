@@ -45,7 +45,7 @@ class login:
         
         if 'intento_administrador' in app.session and int(app.session['intento_administrador'])%5==0:
             app.session['bloqueo_administrador']= time() + 60*int(app.session['intento_administrador'])
-            #if(app.session['intento_administrador']>=15) bloquear_ip(getRealIP())
+            #if app.session['intento_administrador']>=15) bloquear_ip(getRealIP())
             app.session['intento_administrador']=int(app.session['intento_administrador'])+1
             
 
@@ -53,27 +53,29 @@ class login:
         if 'email' in app.post and 'pass' in app.post and 'token' in app.post:
             if app.session['login_token']['token']==app.post['token']:
                 if time()-int(app.session['login_token']['time'])<=120:
-                    if(!isset(app.post['recordar'])) app.post['recordar']=''
-                    logueado=administrador_model::login(app.post['email'],app.post['pass'],app.post['recordar'])
-                    if(logueado:
-                        if(isset(app.session['intento_administrador'])) app.session['intento_administrador']=0
-                        if(empty(url)) this->url = array('home')
-                        else this->url=url
-                    }else {
-                        error_login=true
-                        if(!isset(app.session['intento_administrador'])) app.session['intento_administrador']=0
-                        app.session['intento_administrador']++
-                    }
-                }else{
-                    error_login=true
-                }
-            }else{
-                error_login=true
-                if(!isset(app.session['intento_administrador'])) app.session['intento_administrador']=0
+                    if not 'recorda' in app.post:
+                        app.post['recordar']=''
+                    logueado=administrador_model.login(app.post['email'],app.post['pass'],app.post['recordar'])
+                    if logueado:
+                        if 'intento_administrador' in app.session['intento_administrador']:
+                            app.session['intento_administrador']=0
+                        if not url: 
+                            self.url = ['home']
+                        else:
+                            self.url=url
+                    else:
+                        error_login=True
+                        if 'intento_administrador' in app.session['intento_administrador']:
+                            app.session['intento_administrador']=0
+                        app.session['intento_administrador']+=1
+                else:
+                    error_login=True
+            else:
+                error_login=True
+                if 'intento_administrador' in app.session['intento_administrador']:
+                    app.session['intento_administrador']=0
                 app.session['intento_administrador']+=5
-            }
-        }
-
+                
         url_return=functions.url_redirect(self.url)
         if url_return!='':
             ret['error']=301

@@ -88,7 +88,7 @@ class login:
             return ret
 
         token = functions.generar_pass(20)
-        app.session['login_token'] = {'token': token, 'time': time()}
+        app.session['login_token'] = "{'token': token, 'time': time()}"
         h = head(self.metadata)
         ret_head = h.normal()
         if ret_head['headers'] != '':

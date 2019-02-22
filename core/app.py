@@ -116,6 +116,15 @@ class app:
         else:
             data_return['status'] = '200 OK'
 
+
+        if 'is_file' in response:
+            data_return['is_file'] = response['is_file']
+        if 'file' in response:
+            data_return['file'] = response['file']
+
+        data_return['headers'] = response['headers']
+
+
         data_return['response_body'] = response['body']
         data_return['headers'] = response['headers']
         for cookie in functions.cookies:

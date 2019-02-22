@@ -25,10 +25,10 @@ def application2(environ, start_response):
     if 'is_file' in main_data and main_data['is_file']:
         f = open(main_data['file'], 'rb')
         if 'wsgi.file_wrapper' in environ:
-            return environ['wsgi.file_wrapper'](f, 1024*1024)
+            return environ['wsgi.file_wrapper'](f, 1024*1)
         else:
             print('no filewrapper')
-            return file_wrapper(f, 1024*1024)
+            return file_wrapper(f, 1024*1)
     else:
         #print('total', (datetime.now()-init_time).microseconds/1000)
         return [ret]

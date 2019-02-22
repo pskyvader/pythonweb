@@ -22,7 +22,7 @@ def application2(environ, start_response):
         
     start_response(main_data['status'], main_data['headers'])
 
-    if 'is_file' in main_data:
+    if 'is_file' in main_data and not main_data['is_file']:
         f = open(main_data['file'], 'rb')
         if 'wsgi.file_wrapper' in environ:
             return environ['wsgi.file_wrapper'](f , 1024) 

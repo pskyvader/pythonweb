@@ -17,8 +17,6 @@ def application2(environ, start_response):
     ret = main_data['response_body']
 
     if isinstance(ret, str) and ret != '':
-        print('is str', (datetime.datetime.now()-old_time).microseconds/1000)
-        old_time = datetime.datetime.now()
         ret = bytes(ret, 'utf-8')
         from gzip import compress
         ret = compress(ret)

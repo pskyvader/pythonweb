@@ -353,11 +353,12 @@ class database():
     @staticmethod
     def encript(password):
         import hashlib
-        part = hashlib.sha256()
-        part.update(password.encode('utf-8'))
+        part1 = hashlib.sha256()
+        part1.update(password.encode('utf-8'))
         part2=hashlib.sha256()
-        part2.update(part.hexdigest().encode('utf-8'))
-        password= part.hexdigest() + part2.hexdigest()
+        part2.update(part1.hexdigest().encode('utf-8'))
+        password= part1.hexdigest() + part2.hexdigest()
+        print(password)
         return password
 
     @staticmethod

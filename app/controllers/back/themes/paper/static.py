@@ -28,6 +28,7 @@ class static:
         if not my_file.is_file():
             ret = {'error': 404}
         else:
+            ret['is_file'] = True
             mime = mimetypes.guess_type(resource_url, False)[0]
             if mime == None:
                 mime = 'text/plain'
@@ -45,9 +46,10 @@ class static:
                 '-'+resource.replace('/', '-')
             my_file = Path(cache_file)
             if my_file.is_file():
-                file_read = open(cache_file, "rb")
-                ret['body'] = file_read.read()
-                file_read.close()
+                ret['file']=cache_file
+                #file_read = open(cache_file, "rb")
+                #ret['body'] = file_read.read()
+                #file_read.close()
             else:
                 from gzip import compress
                 test = os.listdir(theme+'cache/')
@@ -57,10 +59,11 @@ class static:
                     elif item.endswith(resource):
                         os.remove(os.path.join(theme+'cache/', item))
                 f = open(resource_url, "rb").read()
-                ret['body'] = f
-                ret['body'] = compress(ret['body'])
+                f = compress(f)
 
                 file_write = open(cache_file, 'wb')
-                file_write.write(ret['body'])
+                file_write.write(f)
                 file_write.close()
+                #ret['body'] = f
+                ret['file']=cache_file
         return ret

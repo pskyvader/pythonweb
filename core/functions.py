@@ -108,12 +108,12 @@ class functions():
         return url
 
     @staticmethod
-    def generar_pass(length = 8):
+    def generar_pass(length=8):
         import string
         import random
-        password=''.join(random.choices(string.ascii_uppercase + string.digits, k=length))
+        password = ''.join(random.choices( string.ascii_uppercase + string.digits, k=length))
         return password
-    
+
     @staticmethod
     def url_amigable(url=""):
         url = functions.replaceMultiple(

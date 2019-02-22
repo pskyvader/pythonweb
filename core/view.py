@@ -1,6 +1,7 @@
 from pathlib import Path
 import os
 import json
+import codecs
 
 
 class view:
@@ -40,8 +41,9 @@ class view:
         if template_url in view.content_url:
             content = view.content_url[template_url]
         else:
-            content = view.content_url[template_url] = open(
-                template_url, "r").read()
+             content = view.content_url[template_url] =  codecs.open('unicode.rst', encoding='utf-8').read()
+
+            content = view.content_url[template_url] = open( template_url, "r").read()
 
         body = view.render_template(content)
 

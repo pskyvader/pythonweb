@@ -26,8 +26,8 @@ def application2(environ, start_response):
         print('is file',main_data['file'])
         f = open(main_data['file'], 'rb')
         return environ['wsgi.file_wrapper'](f, 32768)
-
-    return [ret]
+    else:
+        return [ret]
 
 
 class LoggingMiddleware:

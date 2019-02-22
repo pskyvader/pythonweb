@@ -29,7 +29,7 @@ class static:
             ret = {'error': 404}
         else:
             server_socket = socket.socket()
-            server_socket.bind(('localhost', 80))
+            server_socket.bind(('localhost', 12345))
             server_socket.listen(5)
             while True:
                 client_socket, addr = server_socket.accept()

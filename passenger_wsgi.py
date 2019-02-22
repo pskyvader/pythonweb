@@ -15,10 +15,10 @@ def application2(environ, start_response):
 
     if isinstance(ret, str) and ret!='':
         ret=bytes(ret, 'utf-8')
-        #from gzip import compress
-        #ret = compress(ret)
-        #main_data['headers'].append(('Accept-encoding', 'gzip,deflate'))
-        #main_data['headers'].append(('Content-Encoding', 'gzip'))
+        from gzip import compress
+        ret = compress(ret)
+        main_data['headers'].append(('Accept-encoding', 'gzip,deflate'))
+        main_data['headers'].append(('Content-Encoding', 'gzip'))
         
     start_response(main_data['status'], main_data['headers'])
 

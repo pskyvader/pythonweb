@@ -70,7 +70,7 @@ class view:
     def css(combine=True, array_only=False):
         from core.functions import functions
         from core.app import app
-        if app.post.getfirst("ajax") is not None:
+        if 'ajax' in app.post:
             return ''
 
         theme = view.get_theme()

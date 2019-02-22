@@ -32,7 +32,6 @@ class static:
             mime = mimetypes.guess_type(resource_url, False)[0]
             if mime == None:
                 mime = 'text/plain'
-                print('text', resource_url)
             extension = mimetypes.guess_extension(mime)
             expiry_time = datetime.datetime.utcnow() + datetime.timedelta(100)
             ret['headers'] = [

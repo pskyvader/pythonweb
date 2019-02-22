@@ -1,7 +1,8 @@
 from core.view import view
+from core.functions import functions
+from core.app import app
 import os
 from pathlib import Path
-from core.functions import functions
 import mimetypes
 import datetime
 
@@ -63,4 +64,11 @@ class static:
                 file_write = open(cache_file, 'wb')
                 file_write.write(ret['body'])
                 file_write.close()
+
+        if 'wsgi.file_wrapper' in app.environ:
+            # Return env[wsgi.fw](file, block size)
+            return app.environ['wsgi.file_wrapper'](the_file , 1024) 
+        else: 
+            return iter(lambda: the_file.read(1024), '')
+
         return ret

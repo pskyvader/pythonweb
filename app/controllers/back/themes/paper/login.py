@@ -24,7 +24,8 @@ class login:
     metadata = {'title': 'login', 'modulo': 'login'}
 
     def index(self,url):
-        from datetime import datetime
+        import time
+        time.time()
         ret = {'body':''}
         self.url=self.url+url
 
@@ -38,38 +39,38 @@ class login:
                     self.url = url
                     
 
-        if 'bloqueo_administrador' in app.session and app.session['bloqueo_administrador']>datetime.now():
-            exit("IP Bloqueada por intentos fallidos. Intente más tarde. tiempo: ".(intval(time())-intval(_SESSION['bloqueo_administrador']))." segundos")
-        }
+        if 'bloqueo_administrador' in app.session and app.session['bloqueo_administrador']>time.time():
+            ret['body'] = "IP Bloqueada por intentos fallidos. Intente más tarde. tiempo: "+time.time()- datetime.strptime(app.session['bloqueo_administrador'], '%Y-%m-%d %H:%M:%S')+" "
         
-        if(isset(_SESSION['intento_administrador']) && _SESSION['intento_administrador']%5==0){
-            _SESSION['bloqueo_administrador']=time()+60*(intval(_SESSION['intento_administrador'])/5)
-            if(_SESSION['intento_administrador']>=15) bloquear_ip(getRealIP())
-            _SESSION['intento_administrador']++
-        }
+        
+        if 'intento_administrador' in app.session and app.session['intento_administrador']%5==0:
+            app.session['bloqueo_administrador']= str(time.time() + timedelta(seconds=60*int(app.session['intento_administrador'])))
+            #if(app.session['intento_administrador']>=15) bloquear_ip(getRealIP())
+            app.session['intento_administrador']+=1
+            
 
-        error_login=false
-        if(isset(_POST['email']) && isset(_POST['pass']) && isset(_POST['token'])){
-            if(_SESSION['login_token']['token']==_POST['token']){
-                if(time()-_SESSION['login_token']['time']<=120){
-                    if(!isset(_POST['recordar'])) _POST['recordar']=''
-                    logueado=administrador_model::login(_POST['email'],_POST['pass'],_POST['recordar'])
+        error_login=False
+        if 'email' in app.post and 'pass' in app.post and 'token' in app.post:
+            if app.session['login_token']['token']==app.post['token']:
+                if (time()-app.session['login_token']['time']<=120:
+                    if(!isset(app.post['recordar'])) app.post['recordar']=''
+                    logueado=administrador_model::login(app.post['email'],app.post['pass'],app.post['recordar'])
                     if(logueado:
-                        if(isset(_SESSION['intento_administrador'])) _SESSION['intento_administrador']=0
+                        if(isset(app.session['intento_administrador'])) app.session['intento_administrador']=0
                         if(empty(url)) this->url = array('home')
                         else this->url=url
                     }else {
                         error_login=true
-                        if(!isset(_SESSION['intento_administrador'])) _SESSION['intento_administrador']=0
-                        _SESSION['intento_administrador']++
+                        if(!isset(app.session['intento_administrador'])) app.session['intento_administrador']=0
+                        app.session['intento_administrador']++
                     }
                 }else{
                     error_login=true
                 }
             }else{
                 error_login=true
-                if(!isset(_SESSION['intento_administrador'])) _SESSION['intento_administrador']=0
-                _SESSION['intento_administrador']+=5
+                if(!isset(app.session['intento_administrador'])) app.session['intento_administrador']=0
+                app.session['intento_administrador']+=5
             }
         }
 

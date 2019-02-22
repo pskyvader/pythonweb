@@ -66,6 +66,7 @@ session_opts = {
     'session.cookie_expires': False,
     'session.httponly': False,
     # 'session.secure': True
+    'session.type': 'ext:memcached',
 }
 
 app2 = LoggingMiddleware(application2)

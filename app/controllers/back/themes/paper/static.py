@@ -29,6 +29,7 @@ class static:
         my_file = Path(resource_url)
         if not my_file.is_file():
             ret = {'error': 404}
+            return ret
         else:
             server_socket = socket.socket()
             print('socket')

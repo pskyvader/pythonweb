@@ -21,7 +21,6 @@ class app:
     root = ''
     environ = {}
     get = {}
-    session = {}
 
     def __init__(self, root):
         app.root = root + '/'

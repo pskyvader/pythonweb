@@ -77,7 +77,7 @@ class login:
                         print('no token time')
                         error_login = True
                 else:
-                    print('no token igual')
+                    print('no token igual',app.session['login_token']['token'], app.post['token'])
                     error_login = True
             else:
                 print('no token')

@@ -14,19 +14,19 @@ def application2(environ, start_response):
 
     app_web = app(os.path.dirname(__file__))
     main_data = app_web.init(environ)
-    print('main',datetime.datetime.now()-old_time)
+    print('main',(datetime.datetime.now()-old_time).microseconds*1000)
     old_time = datetime.datetime.now()
     ret = main_data['response_body']
 
     if isinstance(ret, str) and ret!='':
-        print('is str',datetime.datetime.now()-old_time)
+        print('is str',(datetime.datetime.now()-old_time).microseconds*1000)
         old_time = datetime.datetime.now()
         ret=bytes(ret, 'utf-8')
         from gzip import compress
         ret = compress(ret)
         main_data['headers'].append(('Accept-encoding', 'gzip,deflate'))
         main_data['headers'].append(('Content-Encoding', 'gzip'))
-        print('compress',datetime.datetime.now()-old_time)
+        print('compress',(datetime.datetime.now()-old_time).microseconds*1000)
         old_time = datetime.datetime.now()
         
     start_response(main_data['status'], main_data['headers'])
@@ -39,7 +39,7 @@ def application2(environ, start_response):
             print('no filewrapper')
             return file_wrapper(f, 32768)
     else:
-        print('return',datetime.datetime.now()-old_time)
+        print('return',(datetime.datetime.now()-old_time).microseconds*1000)
         old_time = datetime.datetime.now()
         return [ret]
 

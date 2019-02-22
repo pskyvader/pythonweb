@@ -360,7 +360,7 @@ class database():
         p = crypt.crypt(password, salt.hexdigest())
         salt2=hashlib.sha1(p.encode('utf-8'))
         salt2.update(p.encode('utf-8'))
-        password= salt + salt2.hexdigest()
+        password= salt.hexdigest() + salt2.hexdigest()
         print(password)
         return password
 

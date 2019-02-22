@@ -55,7 +55,7 @@ class login:
         if 'email' in app.post and 'pass' in app.post and 'token' in app.post:
             if 'login_token' in app.session and app.session['login_token']['token'] == app.post['token']:
                 if time()-int(app.session['login_token']['time']) <= 120:
-                    if not 'recorda' in app.post:
+                    if not 'recordar' in app.post:
                         app.post['recordar'] = ''
                     logueado = administrador_model.login(
                         app.post['email'], app.post['pass'], app.post['recordar'])

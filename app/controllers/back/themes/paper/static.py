@@ -6,6 +6,7 @@ import mimetypes
 import datetime
 import socket
 
+
 def init(var):
     h = static()
     if 0 in var:
@@ -16,7 +17,8 @@ def init(var):
 
 class static:
 
-    def index(self,var):
+    def index(self, var):
+        print('static')
         if len(var) == 0:
             return {'error': 404}
 
@@ -29,15 +31,16 @@ class static:
             ret = {'error': 404}
         else:
             server_socket = socket.socket()
+            print('socket')
             server_socket.bind(('localhost', 12345))
+            print('bind')
             server_socket.listen(5)
+            print('listen')
             while True:
                 client_socket, addr = server_socket.accept()
                 with open(resource_url, 'rb') as f:
                     client_socket.sendfile(f, 0)
                 client_socket.close()
-
-
 
     def index2(self, var):
         if len(var) == 0:
@@ -51,10 +54,10 @@ class static:
         if not my_file.is_file():
             ret = {'error': 404}
         else:
-            mime = mimetypes.guess_type(resource_url,False)[0]
-            if mime==None:
-                mime='text/plain'
-                print('text',resource_url)
+            mime = mimetypes.guess_type(resource_url, False)[0]
+            if mime == None:
+                mime = 'text/plain'
+                print('text', resource_url)
             extension = mimetypes.guess_extension(mime)
             expiry_time = datetime.datetime.utcnow() + datetime.timedelta(100)
             ret['headers'] = [
@@ -68,7 +71,7 @@ class static:
                 '-'+resource.replace('/', '-')
             my_file = Path(cache_file)
             if my_file.is_file():
-                file_read=open(cache_file, "rb")
+                file_read = open(cache_file, "rb")
                 ret['body'] = file_read.read()
                 file_read.close()
             else:

@@ -128,7 +128,6 @@ class app:
 
         print(app.session)
         app.session.save()
-        print(app.session)
         return data_return
 
     @staticmethod
@@ -182,7 +181,6 @@ class app:
     @staticmethod
     def parse_session():
         session = app.environ['beaker.session']
-        session.save()
         return session
 
     @staticmethod

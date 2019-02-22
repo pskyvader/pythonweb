@@ -48,7 +48,7 @@ class login:
         if 'intento_administrador' in app.session and int(app.session['intento_administrador']) % 5 == 0:
             app.session['bloqueo_administrador'] = time() + 60*int(app.session['intento_administrador'])
             # if app.session['intento_administrador']>=15) bloquear_ip(getRealIP())
-            app.session['intento_administrador'] += 1
+            #app.session['intento_administrador'] += 1
 
         error_login = False
         if 'email' in app.post and 'pass' in app.post and 'token' in app.post:

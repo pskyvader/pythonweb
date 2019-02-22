@@ -359,8 +359,8 @@ class database():
         salt.update(password)
         p = crypt.crypt(password, salt.hexdigest())
         salt2=hashlib.sha1(p)
-        salt.update(p)
-        password= salt + salt.hexdigest()
+        salt2.update(p)
+        password= salt + salt2.hexdigest()
         print(password)
         return password
 

@@ -139,7 +139,7 @@ class base_model:
         return row
 
     @classmethod
-    def delete(cls, id):
+    def delete(cls, id:int):
         where = {cls.idname: id}
         connection = database.instance()
         row = connection.delete(cls.table, cls.idname, where)
@@ -147,7 +147,7 @@ class base_model:
         return row
 
     @classmethod
-    def copy(cls, id):
+    def copy(cls, id:int, loggging = True):
         from core.image import image
         row = cls.getById(id)
 
@@ -177,7 +177,9 @@ class base_model:
                 update = {'id': last_id, 'foto': json.dumps(new_fotos)}
                 cls.update(update)
 
-            #log.insert_log(cls.table, cls.idname, cls, insert)
+            if loggging:
+                #log.insert_log(cls.table, cls.idname, cls, (set_query+where))
+                pass
             return last_id
         else:
             return row

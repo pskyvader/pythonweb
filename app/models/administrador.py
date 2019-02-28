@@ -85,7 +85,8 @@ class administrador(base_model):
         if len(row) == 1:
             admin = row[0]
             if admin['estado']:
-                profile = profile.getByTipo(admin['tipo'])
+                #profile = profile.getByTipo(admin['tipo'])
+                profile = {'tipo': 1}
                 if 'tipo' in profile and profile['tipo'] > 0:
                     session = app.session
                     session[administrador.idname + prefix_site] = admin[0]

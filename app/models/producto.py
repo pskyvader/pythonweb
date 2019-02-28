@@ -153,10 +153,10 @@ class producto(base_model):
                 if row[0]['descuento'] != 0:
                     descuento = row[0]['descuento']
                     fechas    = row[0]['descuento_fecha']
-                } elseif (isset(categorias[row[0]['idproductocategoria'][0]]) && categorias[row[0]['idproductocategoria'][0]]['descuento'] != 0) {
+                elif row[0]['idproductocategoria'][0] in categorias and categorias[row[0]['idproductocategoria'][0]]['descuento'] != 0:
                     descuento = categorias[row[0]['idproductocategoria'][0]]['descuento']
                     fechas    = categorias[row[0]['idproductocategoria'][0]]['descuento_fecha']
-                }
+                
 
                 if (descuento > 0 && descuento < 100) {
                     fechas = explode(' - ', fechas)

@@ -103,7 +103,6 @@ class administrador(base_model):
 
     @staticmethod
     def login(email, password, recordar):
-        # connection = database.instance()
         prefix_site = app.prefix_site
         if email == '' or password == '':
             return False
@@ -131,6 +130,7 @@ class administrador(base_model):
                     session["tipo" + prefix_site] = admin['tipo']
                     session['prefix_site'] = prefix_site
                     log.insert_log(administrador.table, administrador.idname, administrador, admin)
+                    print(recordar)
                     if recordar == 'on':
                         return administrador.update_cookie(admin[0])
                     else:

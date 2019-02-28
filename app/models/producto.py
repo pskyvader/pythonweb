@@ -112,11 +112,11 @@ class producto(base_model):
                     
 
                     if descuento > 0 and descuento < 100:
-                        fechas = explode(' - ', fechas)
-                        fecha1 = strtotime(str_replace('/', '-', fechas[0]))
-                        fecha2 = strtotime(str_replace('/', '-', fechas[1]))
-                        now    = time()
-                        if (fecha1 < now && now < fecha2) {
+                        fechas = fechas.split(' - ')
+                        fecha1 = datetime.datetime.strptime(fechas[0],'%d/%m/%Y %H:%M')
+                        fecha2 = datetime.datetime.strptime(fechas[1],'%d/%m/%Y %H:%M')
+                        now    = datetime.datetime.now()
+                        if fecha1 < now and now < fecha2:
                             precio_descuento = ((v['precio']) * descuento) / 100
                             precio_final     = v['precio'] - precio_descuento
                             if (precio_final < 1) {

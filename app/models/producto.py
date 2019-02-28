@@ -14,7 +14,7 @@ class producto(base_model):
     @classmethod
     def getAll(cls, where={}, condiciones={}, select=""):
         limit = None
-        idpadre = None
+        idproductocategoria = None
         return_total = None
         connection = database.instance()
         # fields     = table.getByname(cls.table)

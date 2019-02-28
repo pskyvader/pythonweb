@@ -99,9 +99,9 @@ class producto(base_model):
             for c in cat:
                 categorias[c[0]] = {'descuento' : c['descuento'], 'descuento_fecha' : c['descuento_fecha']}
 
-            foreach (row as key => v) {
-                if (isset(row[key]['precio'])) {
-                    row[key]['precio_final'] = row[key]['precio']
+            for v in row:
+                if 'precio' in v:
+                    v['precio_final'] = v['precio']
                     descuento                 = 0
                     if (v['descuento'] != 0) {
                         descuento = v['descuento']
@@ -117,13 +117,13 @@ class producto(base_model):
                         fecha2 = strtotime(str_replace('/', '-', fechas[1]))
                         now    = time()
                         if (fecha1 < now && now < fecha2) {
-                            precio_descuento = ((row[key]['precio']) * descuento) / 100
-                            precio_final     = row[key]['precio'] - precio_descuento
+                            precio_descuento = ((v['precio']) * descuento) / 100
+                            precio_final     = v['precio'] - precio_descuento
                             if (precio_final < 1) {
                                 precio_final = 1
                             }
 
-                            row[key]['precio_final'] = (int) precio_final
+                            v['precio_final'] = (int) precio_final
                         }
                     }
                 }

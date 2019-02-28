@@ -40,7 +40,7 @@ class log(base_model):
             return row
 
     @classmethod
-    def insert(cls, set_query,  loggging=True):
+    def insert(cls, set_query:dict,  loggging=True):
         # fields     = table.getByname(cls.table)
         fields = {}
         insert = database.create_data(fields, set_query)

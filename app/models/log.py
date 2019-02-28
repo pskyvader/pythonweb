@@ -1,3 +1,4 @@
+from .app import app
 from core.database import database
 from .base_model import base_model
 
@@ -54,7 +55,7 @@ class log(base_model):
             return row
     @classmethod
     def insert_log(cls,tabla:str, idname:str, funcion:str, row:dict):
-        if (tabla != cls.table and !app._front:
+        if (tabla != cls.table and not app._front:
             administrador = _SESSION['nombre' . app.prefix_site] . ' (' . _SESSION['email' . app.prefix_site] . ')'
 
             accion = 'metodo: ' . funcion

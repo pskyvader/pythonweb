@@ -74,10 +74,8 @@ class database():
         sql = "SELECT " + select + " FROM " + self._prefix + table
         sql += " WHERE (TRUE"
         for key, value in where.items():
-            if value==True:
-                sql += " AND " + key + "=true"
-            elif value==False:
-                sql += " AND " + key + "=false"
+            if isinstance(value,bool):
+                sql += " AND " + key + "='" + str(value).lower() + "'"
             else:
                 sql += " AND " + key + "='" + str(value) + "'"
         sql += ") "

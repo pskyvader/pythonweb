@@ -95,10 +95,9 @@ class producto(base_model):
             if 'tipo' in where:
                 variables['tipo'] = where['tipo']
             cat        = productocategoria.getAll(variables)
-            categorias = array()
-            foreach (cat as key => c) {
-                categorias[c[0]] = array('descuento' => c['descuento'], 'descuento_fecha' => c['descuento_fecha'])
-            }
+            categorias = {}
+            for c in cat:
+                categorias[c[0]] = {'descuento' : c['descuento'], 'descuento_fecha' : c['descuento_fecha']}
 
             foreach (row as key => v) {
                 if (isset(row[key]['precio'])) {

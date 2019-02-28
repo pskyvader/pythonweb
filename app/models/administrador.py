@@ -226,7 +226,7 @@ class administrador(base_model):
                     respuesta = email.enviar_email(
                         [email], 'Recuperación de contraseña', body)
 
-                    #log.insert_log(administrador.table, administrador.idname, administrador, admin)
+                    log.insert_log(administrador.table, administrador.idname, administrador, admin)
                     return respuesta
                 else:
                     return False

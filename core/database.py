@@ -74,7 +74,12 @@ class database():
         sql = "SELECT " + select + " FROM " + self._prefix + table
         sql += " WHERE (TRUE"
         for key, value in where.items():
-            sql += " AND " + key + "='" + str(value) + "'"
+            if value==True:
+                sql += " AND " + key + "=true"
+            elif value==False:
+                sql += " AND " + key + "=false"
+            else:
+                sql += " AND " + key + "='" + str(value) + "'"
         sql += ") "
 
         if 'buscar' in condiciones and isinstance(condiciones['buscar'], dict):
@@ -122,8 +127,7 @@ class database():
 
         for key, value in insert.items():
             sql += ","
-            sql += value if (value == "true" or value ==
-                             "false") else "'" + str(value).replace("'", "\\'") + "'"
+            sql += value if (value == "true" or value == "false") else "'" + str(value).replace("'", "\\'") + "'"
 
         sql += ")"
         row = self.consulta(sql, False, delete_cache)

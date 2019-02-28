@@ -172,68 +172,8 @@ class producto(base_model):
 
         return row[0] if len(row) == 1 else row
 
-    public static function getById(int $id)
-    {
-        $where = array(static.$idname => $id)
-        if (app.$_front) {
-            $fields = table::getByname(static::$table);
-            if (isset($fields['estado'])) {
-                $where['estado'] = true;
-            }
 
-        }
-        $connection = database::instance();
-        $row        = $connection->get(static::$table, static::$idname, $where);
-        if (count($row) == 1) {
-            $row[0]['idproductocategoria'] = functions::decode_json($row[0]['idproductocategoria']);
-            if (isset($idproductocategoria) && !in_array($idproductocategoria, $row[0]['idproductocategoria'])) {
-                unset($row[0]);
-            }
-            if (isset($row[0]) && isset($row[0]['foto'])) {
-                $row[0]['foto'] = functions::decode_json($row[0]['foto']);
-            }
-            if (isset($row[0]) && isset($row[0]['archivo'])) {
-                $row[0]['archivo'] = functions::decode_json($row[0]['archivo']);
-            }
 
-            if (isset($row[0]) && isset($row[0]['precio'])) {
-
-                $cat        = productocategoria::getById($row[0]['idproductocategoria'][0]);
-                $categorias = array();
-                if (count($cat) > 0) {
-                    $categorias[$cat[0]] = array('descuento' => $cat['descuento'], 'descuento_fecha' => $cat['descuento_fecha']);
-                }
-
-                $row[0]['precio_final'] = $row[0]['precio'];
-                $descuento              = 0;
-                if ($row[0]['descuento'] != 0) {
-                    $descuento = $row[0]['descuento'];
-                    $fechas    = $row[0]['descuento_fecha'];
-                } elseif (isset($categorias[$row[0]['idproductocategoria'][0]]) && $categorias[$row[0]['idproductocategoria'][0]]['descuento'] != 0) {
-                    $descuento = $categorias[$row[0]['idproductocategoria'][0]]['descuento'];
-                    $fechas    = $categorias[$row[0]['idproductocategoria'][0]]['descuento_fecha'];
-                }
-
-                if ($descuento > 0 && $descuento < 100) {
-                    $fechas = explode(' - ', $fechas);
-                    $fecha1 = strtotime(str_replace('/', '-', $fechas[0]));
-                    $fecha2 = strtotime(str_replace('/', '-', $fechas[1]));
-                    $now    = time();
-                    if ($fecha1 < $now && $now < $fecha2) {
-                        $precio_descuento = (($row[0]['precio']) * $descuento) / 100;
-                        $precio_final     = $row[0]['precio'] - $precio_descuento;
-                        if ($precio_final < 1) {
-                            $precio_final = 1;
-                        }
-
-                        $row[0]['precio_final'] = (int) $precio_final;
-                    }
-                }
-            }
-
-        }
-        return (count($row) == 1) ? $row[0] : $row;
-    }
 
     public static function update(array $set, bool $log = true)
     {

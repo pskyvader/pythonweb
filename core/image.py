@@ -180,7 +180,7 @@ class image:
         respuesta = image.validate(file)
         if respuesta['exito']:
             if '' == name_final:
-                name_final = str(uuid.UUID)
+                name_final = uuid.uuid4().hex
             else:
                 name_final = name_final.split('.')
                 extension = '.'+(name_final.pop()).lower()

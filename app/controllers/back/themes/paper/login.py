@@ -32,7 +32,7 @@ class login:
         ret = {'body': ''}
         self.url = self.url+url
 
-        cookie_admin = str(functions.get_cookie('cookieadmin'+app.prefix_site))
+        cookie_admin = functions.get_cookie('cookieadmin'+app.prefix_site)
         if cookie_admin != False:
             logueado = administrador_model.login_cookie(cookie_admin)
             if logueado:

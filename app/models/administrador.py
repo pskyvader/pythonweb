@@ -119,6 +119,7 @@ class administrador(base_model):
                 return False
             else:
                 profile = profile_model.getByTipo(admin['tipo'])
+                print(recordar,profile['tipo'])
                 if not 'tipo' in profile or int(profile['tipo']) <= 0:
                     return False
                 else:
@@ -130,7 +131,6 @@ class administrador(base_model):
                     session["tipo" + prefix_site] = admin['tipo']
                     session['prefix_site'] = prefix_site
                     log.insert_log(administrador.table, administrador.idname, administrador, admin)
-                    print(recordar)
                     if recordar == 'on':
                         return administrador.update_cookie(admin[0])
                     else:

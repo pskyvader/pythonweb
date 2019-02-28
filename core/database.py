@@ -75,7 +75,7 @@ class database():
         sql += " WHERE (TRUE"
         for key, value in where.items():
             if isinstance(value,bool):
-                sql += " AND " + key + "='" + str(value).lower() + "'"
+                sql += " AND " + key + "=" + str(value).lower()
             else:
                 sql += " AND " + key + "='" + str(value) + "'"
         sql += ") "

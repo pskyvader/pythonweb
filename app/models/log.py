@@ -42,7 +42,12 @@ class log(base_model):
     @classmethod
     def insert(cls, set_query: dict,  loggging=True):
         # fields     = table.getByname(cls.table)
-        fields = {}
+        fields = {
+            'tablename' : {'titulo': 'tablename', 'tipo' : 'char(255)',
+            'idname'    : {'titulo': 'idname', 'tipo' : 'char(255)',
+            'fields'    : {'titulo': 'fields', 'tipo' : 'longtext',
+            'truncate'  : {'titulo': 'truncate', 'tipo' : 'tinyint(1)',
+        }
         insert = database.create_data(fields, set_query)
         connection = database.instance()
         row = connection.insert(cls.table, cls.idname,
@@ -80,5 +85,4 @@ class log(base_model):
                 'accion': accion,
                 'fecha': datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
             }
-            print(data)
             cls.insert(data)

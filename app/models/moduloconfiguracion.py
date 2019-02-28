@@ -32,7 +32,6 @@ class moduloconfiguracion(base_model):
             return_total = True
 
         row = connection.get(cls.table, cls.idname, where, condiciones, select)
-        deleted = False
         for r in row:
             r['mostrar'] = json.loads(r['mostrar'])
             r['detalle'] = json.loads(r['detalle'])

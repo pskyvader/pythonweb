@@ -24,7 +24,7 @@ class pedido(base_model):
         if isinstance(row, int) and row > 0:
             last_id = row
             if loggging:
-                #log.insert_log(cls.table, cls.idname, cls, insert)
+                log.insert_log(cls.table, cls.idname, cls, insert)
                 pass
             return last_id
         else:
@@ -38,7 +38,7 @@ class pedido(base_model):
         row = connection.update(cls.table, cls.idname,
                                 set_query, where, cls.delete_cache)
         if loggging:
-            #log.insert_log(cls.table, cls.idname, cls, (set_query+where))
+            log.insert_log(cls.table, cls.idname, cls, (set_query+where))
             pass
         if isinstance(row, bool) and row:
             row = where[cls.idname]
@@ -49,7 +49,7 @@ class pedido(base_model):
         where = {cls.idname: id}
         connection = database.instance()
         row = connection.delete(cls.table, cls.idname, where, cls.delete_cache)
-        #log.insert_log(cls.table, cls.idname, cls, where)
+        log.insert_log(cls.table, cls.idname, cls, where)
         return row
 
     @classmethod
@@ -86,7 +86,7 @@ class pedido(base_model):
                 cls.update(update)
 
             if loggging:
-                #log.insert_log(cls.table, cls.idname, cls, (set_query+where))
+                log.insert_log(cls.table, cls.idname, cls, (set_query+where))
                 pass
             return last_id
         else:

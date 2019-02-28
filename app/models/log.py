@@ -40,7 +40,7 @@ class log(base_model):
             return row
 
     @classmethod
-    def insert(cls, set_query:dict,  loggging=True):
+    def insert(cls, set_query: dict,  loggging=True):
         # fields     = table.getByname(cls.table)
         fields = {}
         insert = database.create_data(fields, set_query)
@@ -61,11 +61,7 @@ class log(base_model):
         if tabla != cls.table and not app.front:
             administrador = app.session['nombre' + app.prefix_site] + \
                 ' (' + app.session['email' + app.prefix_site] + ')'
-            print(funcion)
-            print(funcion.__name__)
-            print(funcion.__class__)
-            print(funcion.__class__.__name__)
-            accion = 'metodo: ' + funcion.__class__.__name__
+            accion = 'metodo: ' + funcion.__name__
             if 'titulo' in row:
                 accion += ', titulo: ' + row['titulo']
             elif 'nombre' in row:

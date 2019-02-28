@@ -45,7 +45,7 @@ class modulo(base_model):
             return row
 
     @classmethod
-    def getById(cls, id):
+    def getById(cls, id:int):
         where = {cls.idname: id}
         connection = database.instance()
         row = connection.get(cls.table, cls.idname, where)

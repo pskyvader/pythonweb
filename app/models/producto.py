@@ -164,14 +164,11 @@ class producto(base_model):
                         fecha2 = datetime.datetime.strptime(fechas[1],'%d/%m/%Y %H:%M')
                         now    = datetime.datetime.now()
                         if fecha1 < now and now < fecha2:
-                            precio_descuento = ((v['precio']) * descuento) / 100
-                            precio_final     = v['precio'] - precio_descuento
+                            precio_descuento = ((row[0]['precio']) * descuento) / 100
+                            precio_final     = row[0]['precio'] - precio_descuento
                             if precio_final < 1:
                                 precio_final = 1
-                            v['precio_final'] = int(precio_final)
-                    }
-                }
-            }
+                            row[0]['precio_final'] = int(precio_final)
 
         return row[0] if len(row) == 1 else row
 

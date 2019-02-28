@@ -43,15 +43,15 @@ class log(base_model):
     def insert(cls, set_query: dict,  loggging=True):
         # fields     = table.getByname(cls.table)
         fields = {
-            'tablename' : {'titulo': 'tablename', 'tipo' : 'char(255)'},
-            'idname'    : {'titulo': 'idname', 'tipo' : 'char(255)'},
-            'fields'    : {'titulo': 'fields', 'tipo' : 'longtext'},
-            'truncate'  : {'titulo': 'truncate', 'tipo' : 'tinyint(1)'},
+            'administrador' : {'titulo': 'administrador', 'tipo' : 'char(255)'},
+            'tabla'    : {'titulo': 'tabla', 'tipo' : 'char(255)'},
+            'accion'    : {'titulo': 'accion', 'tipo' : 'char(255)'},
+            'fecha'  : {'titulo': 'fecha', 'tipo' : 'datetime'},
         }
+
         insert = database.create_data(fields, set_query)
         connection = database.instance()
-        row = connection.insert(cls.table, cls.idname,
-                                insert, cls.delete_cache)
+        row = connection.insert(cls.table, cls.idname, insert, cls.delete_cache)
         if isinstance(row, int) and row > 0:
             last_id = row
             if loggging:

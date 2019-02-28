@@ -70,9 +70,9 @@ class log(base_model):
                 accion += ', Tabla: ' + row['tablename']
 
             if idname in row:
-                accion += ', ID: ' + row[idname]
+                accion += ', ID: ' + str(row[idname])
             elif 'id' in row:
-                accion += ', ID: ' + row['id']
+                accion += ', ID: ' + str(row['id'])
 
             data = {
                 'administrador': administrador,

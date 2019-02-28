@@ -37,3 +37,46 @@ class log(base_model):
         else:
             return row
 
+    @classmethod
+    def insert(cls, set_query,  loggging=True):
+        # fields     = table.getByname(cls.table)
+        fields = {}
+        insert = database.create_data(fields, set_query)
+        connection = database.instance()
+        row = connection.insert(cls.table, cls.idname, insert,cls.delete_cache)
+        if isinstance(row, int) and row > 0:
+            last_id = row
+            if loggging:
+                #log.insert_log(cls.table, cls.idname, cls, insert)
+                pass
+            return last_id
+        else:
+            return row
+    @classmethod
+    def insert_log(tabla:str, idname:str, funcion:str, row:{}):
+        if (tabla != static::table && !app::_front) {
+            administrador = _SESSION['nombre' . app::prefix_site] . ' (' . _SESSION['email' . app::prefix_site] . ')'
+
+            accion = 'metodo: ' . funcion
+            if (isset(row['titulo'])) {
+                accion .= ', titulo: ' . row['titulo']
+            } elseif (isset(row['nombre'])) {
+                accion .= ', nombre: ' . row['nombre']
+            } elseif (isset(row['tablename'])) {
+                accion .= ', Tabla: ' . row['tablename']
+            }
+            if (isset(row[idname])) {
+                accion .= ', ID: ' . row[idname]
+            } elseif (isset(row['id'])) {
+                accion .= ', ID: ' . row['id']
+            }
+
+            data = array(
+                'administrador' => administrador,
+                'tabla'         => tabla,
+                'accion'        => accion,
+                'fecha'         => date('Y-m-d H:i:s'),
+            )
+            static::insert(data)
+        }
+    }

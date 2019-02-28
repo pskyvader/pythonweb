@@ -175,8 +175,7 @@ class administrador(base_model):
             elif admin['tipo'] != session["tipo" + prefix_site] or not session["tipo" + prefix_site]:
                 return False
             else:
-                # profile = profile.getByTipo(admin['tipo'])
-                profile = {'tipo': 1}
+                profile = profile_model.getByTipo(admin['tipo'])
                 if not 'tipo' in profile or profile['tipo'] <= 0:
                     return False
                 else:

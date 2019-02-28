@@ -1,4 +1,4 @@
-from .app import app
+from core.app import app
 from core.database import database
 from .base_model import base_model
 
@@ -56,7 +56,7 @@ class log(base_model):
     @classmethod
     def insert_log(cls,tabla:str, idname:str, funcion:str, row:dict):
         if tabla != cls.table and not app._front:
-            administrador = app.session['nombre' . app.prefix_site] . ' (' . app.session['email' . app.prefix_site] . ')'
+            administrador = app.session['nombre' . app.prefix_site] + ' (' + app.session['email' + app.prefix_site] + ')'
 
             accion = 'metodo: ' . funcion
             if (isset(row['titulo'])) {

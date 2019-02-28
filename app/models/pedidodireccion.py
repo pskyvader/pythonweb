@@ -1,5 +1,6 @@
 from core.database import database
 from .base_model import base_model
+from .log import log
 import json
 
 
@@ -20,7 +21,7 @@ class pedidodireccion(base_model):
         if isinstance(row, int) and row > 0:
             last_id = row
             if loggging:
-                #log.insert_log(cls.table, cls.idname, cls, insert)
+                log.insert_log(cls.table, cls.idname, cls, insert)
                 pass
             return last_id
         else:
@@ -33,7 +34,7 @@ class pedidodireccion(base_model):
         connection = database.instance()
         row = connection.update(cls.table, cls.idname, set_query, where,cls.delete_cache)
         if loggging:
-            #log.insert_log(cls.table, cls.idname, cls, (set_query+where))
+            log.insert_log(cls.table, cls.idname, cls, (set_query+where))
             pass
         if isinstance(row, bool) and row:
             row = where[cls.idname]
@@ -44,7 +45,7 @@ class pedidodireccion(base_model):
         where = {cls.idname: id}
         connection = database.instance()
         row = connection.delete(cls.table, cls.idname, where,cls.delete_cache)
-        #log.insert_log(cls.table, cls.idname, cls, where)
+        log.insert_log(cls.table, cls.idname, cls, where)
         return row
 
     @classmethod
@@ -80,7 +81,7 @@ class pedidodireccion(base_model):
                 cls.update(update)
 
             if loggging:
-                #log.insert_log(cls.table, cls.idname, cls, (set_query+where))
+                log.insert_log(cls.table, cls.idname, cls, (set_query+where))
                 pass
             return last_id
         else:

@@ -110,8 +110,6 @@ class producto(base_model):
                     elif v['idproductocategoria'][0] in categorias and categorias[v['idproductocategoria'][0]]['descuento'] != 0:
                         descuento = categorias[v['idproductocategoria'][0]]['descuento']
                         fechas    = categorias[v['idproductocategoria'][0]]['descuento_fecha']
-                    
-
                     if descuento > 0 and descuento < 100:
                         fechas = fechas.split(' - ')
                         fecha1 = datetime.datetime.strptime(fechas[0],'%d/%m/%Y %H:%M')
@@ -125,6 +123,59 @@ class producto(base_model):
                             v['precio_final'] = int(precio_final)
             return row
     
+    @classmethod
+    def getById(cls, id: int):
+        where = {cls.idname: id}
+        if app.front:
+            # fields     = table.getByname(cls.table)
+            fields = {}
+            if 'estado' in fields:
+                where['estado'] = True
+
+        connection = database.instance()
+        row = connection.get(cls.table, cls.idname, where)
+        if len(row) == 1:
+            row[0]['idproductocategoria'] = json.loads(row[0]['idproductocategoria'])
+            if 'foto' in row[0]:
+                row[0]['foto'] = json.loads(row[0]['foto'])
+            if 'archivo' in row[0]:
+                row[0]['archivo'] = json.loads(row[0]['archivo'])
+
+
+            if 'precio' in row[0]:
+                cat        = productocategoria.getById(row[0]['idproductocategoria'][0])
+                categorias = {}
+                if len(cat) > 0:
+                    categorias[cat[0]] = {'descuento' : cat['descuento'], 'descuento_fecha' : cat['descuento_fecha']}
+                
+                row[0]['precio_final'] = row[0]['precio']
+                descuento              = 0
+                if row[0]['descuento'] != 0:
+                    descuento = row[0]['descuento']
+                    fechas    = row[0]['descuento_fecha']
+                } elseif (isset(categorias[row[0]['idproductocategoria'][0]]) && categorias[row[0]['idproductocategoria'][0]]['descuento'] != 0) {
+                    descuento = categorias[row[0]['idproductocategoria'][0]]['descuento']
+                    fechas    = categorias[row[0]['idproductocategoria'][0]]['descuento_fecha']
+                }
+
+                if (descuento > 0 && descuento < 100) {
+                    fechas = explode(' - ', fechas)
+                    fecha1 = strtotime(str_replace('/', '-', fechas[0]))
+                    fecha2 = strtotime(str_replace('/', '-', fechas[1]))
+                    now    = time()
+                    if (fecha1 < now && now < fecha2) {
+                        precio_descuento = ((row[0]['precio']) * descuento) / 100
+                        precio_final     = row[0]['precio'] - precio_descuento
+                        if (precio_final < 1) {
+                            precio_final = 1
+                        }
+
+                        row[0]['precio_final'] = (int) precio_final
+                    }
+                }
+            }
+
+        return row[0] if len(row) == 1 else row
 
     public static function getById(int $id)
     {

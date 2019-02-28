@@ -158,12 +158,12 @@ class producto(base_model):
                     fechas    = categorias[row[0]['idproductocategoria'][0]]['descuento_fecha']
                 
 
-                if (descuento > 0 && descuento < 100) {
+                if descuento > 0 and descuento < 100:
                     fechas = explode(' - ', fechas)
                     fecha1 = strtotime(str_replace('/', '-', fechas[0]))
                     fecha2 = strtotime(str_replace('/', '-', fechas[1]))
                     now    = time()
-                    if (fecha1 < now && now < fecha2) {
+                    if (fecha1 < now and now < fecha2) {
                         precio_descuento = ((row[0]['precio']) * descuento) / 100
                         precio_final     = row[0]['precio'] - precio_descuento
                         if (precio_final < 1) {

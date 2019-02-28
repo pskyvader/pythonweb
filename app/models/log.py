@@ -1,6 +1,7 @@
 from core.app import app
 from core.database import database
 from .base_model import base_model
+import datetime
 
 
 class log(base_model):
@@ -58,7 +59,7 @@ class log(base_model):
     @classmethod
     def insert_log(cls, tabla: str, idname: str, funcion: str, row: dict):
         if tabla != cls.table and not app.front:
-            administrador = app.session['nombre' . app.prefix_site] + \
+            administrador = app.session['nombre' + app.prefix_site] + \
                 ' (' + app.session['email' + app.prefix_site] + ')'
 
             accion = 'metodo: ' + funcion
@@ -78,6 +79,6 @@ class log(base_model):
                 'administrador': administrador,
                 'tabla': tabla,
                 'accion': accion,
-                'fecha': date('Y-m-d H:i:s'),
+                'fecha': datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
             }
             cls.insert(data)

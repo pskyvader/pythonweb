@@ -53,9 +53,9 @@ class log(base_model):
         else:
             return row
     @classmethod
-    def insert_log(tabla:str, idname:str, funcion:str, row:{}):
-        if (tabla != static::table && !app::_front) {
-            administrador = _SESSION['nombre' . app::prefix_site] . ' (' . _SESSION['email' . app::prefix_site] . ')'
+    def insert_log(cls,tabla:str, idname:str, funcion:str, row:dict):
+        if (tabla != cls.table and !app._front:
+            administrador = _SESSION['nombre' . app.prefix_site] . ' (' . _SESSION['email' . app.prefix_site] . ')'
 
             accion = 'metodo: ' . funcion
             if (isset(row['titulo'])) {
@@ -77,6 +77,6 @@ class log(base_model):
                 'accion'        => accion,
                 'fecha'         => date('Y-m-d H:i:s'),
             )
-            static::insert(data)
+            cls.insert(data)
         }
     }

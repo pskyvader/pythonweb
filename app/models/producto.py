@@ -103,15 +103,15 @@ class producto(base_model):
                 if 'precio' in v:
                     v['precio_final'] = v['precio']
                     descuento                 = 0
-                    if (v['descuento'] != 0) {
+                    if v['descuento'] != 0:
                         descuento = v['descuento']
                         fechas    = v['descuento_fecha']
-                    } elseif (isset(categorias[v['idproductocategoria'][0]]) && categorias[v['idproductocategoria'][0]]['descuento'] != 0) {
+                    elif v['idproductocategoria'][0] in categorias and categorias[v['idproductocategoria'][0]]['descuento'] != 0:
                         descuento = categorias[v['idproductocategoria'][0]]['descuento']
                         fechas    = categorias[v['idproductocategoria'][0]]['descuento_fecha']
-                    }
+                    
 
-                    if (descuento > 0 && descuento < 100) {
+                    if descuento > 0 and descuento < 100:
                         fechas = explode(' - ', fechas)
                         fecha1 = strtotime(str_replace('/', '-', fechas[0]))
                         fecha2 = strtotime(str_replace('/', '-', fechas[1]))

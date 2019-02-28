@@ -1,7 +1,6 @@
 from core.app import app
 from core.database import database
 from .base_model import base_model
-from .log import log
 import datetime
 
 

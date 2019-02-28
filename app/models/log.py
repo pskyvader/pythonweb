@@ -55,8 +55,8 @@ class log(base_model):
             return row
     @classmethod
     def insert_log(cls,tabla:str, idname:str, funcion:str, row:dict):
-        if (tabla != cls.table and not app._front:
-            administrador = _SESSION['nombre' . app.prefix_site] . ' (' . _SESSION['email' . app.prefix_site] . ')'
+        if tabla != cls.table and not app._front:
+            administrador = app.session['nombre' . app.prefix_site] . ' (' . app.session['email' . app.prefix_site] . ')'
 
             accion = 'metodo: ' . funcion
             if (isset(row['titulo'])) {

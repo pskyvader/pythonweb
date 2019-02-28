@@ -58,19 +58,18 @@ class log(base_model):
         if tabla != cls.table and not app._front:
             administrador = app.session['nombre' . app.prefix_site] + ' (' + app.session['email' + app.prefix_site] + ')'
 
-            accion = 'metodo: ' . funcion
-            if (isset(row['titulo'])) {
-                accion .= ', titulo: ' . row['titulo']
-            } elseif (isset(row['nombre'])) {
-                accion .= ', nombre: ' . row['nombre']
-            } elseif (isset(row['tablename'])) {
-                accion .= ', Tabla: ' . row['tablename']
-            }
-            if (isset(row[idname])) {
-                accion .= ', ID: ' . row[idname]
-            } elseif (isset(row['id'])) {
-                accion .= ', ID: ' . row['id']
-            }
+            accion = 'metodo: ' + funcion
+            if 'titulo' in row:
+                accion += ', titulo: ' + row['titulo']
+            elif 'nombre' in row:
+                accion += ', nombre: ' + row['nombre']
+            elif 'tablename' in row:
+                accion += ', Tabla: ' + row['tablename']
+
+            if idname in row:
+                accion += ', ID: ' + row[idname]
+            elif 'id' in row:
+                accion += ', ID: ' + row['id']
 
             data = array(
                 'administrador' => administrador,

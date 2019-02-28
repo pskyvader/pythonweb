@@ -5,9 +5,9 @@ from .log import log
 import json
 
 
-class producto(base_model):
-    idname = 'idproducto'
-    table = 'producto'
+class productocategoria(base_model):
+    idname = 'idproductocategoria'
+    table = 'productocategoria'
 
     @classmethod
     def getById(cls, id: int):

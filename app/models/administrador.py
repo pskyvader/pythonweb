@@ -88,7 +88,7 @@ class administrador(base_model):
             admin = row[0]
             if admin['estado']:
                 profile = profile_model.getByTipo(admin['tipo'])
-                if 'tipo' in profile and profile['tipo'] > 0:
+                if 'tipo' in profile and int(profile['tipo']) > 0:
                     session = app.session
                     session[administrador.idname + prefix_site] = admin[0]
                     session["email" + prefix_site] = admin['email']
@@ -119,7 +119,7 @@ class administrador(base_model):
                 return False
             else:
                 profile = profile_model.getByTipo(admin['tipo'])
-                if not 'tipo' in profile or profile['tipo'] <= 0:
+                if not 'tipo' in profile or int(profile['tipo']) <= 0:
                     return False
                 else:
                     session = app.session
@@ -176,7 +176,7 @@ class administrador(base_model):
                 return False
             else:
                 profile = profile_model.getByTipo(admin['tipo'])
-                if not 'tipo' in profile or profile['tipo'] <= 0:
+                if not 'tipo' in profile or int(profile['tipo']) <= 0:
                     return False
                 else:
                     return True

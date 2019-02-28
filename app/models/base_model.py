@@ -111,6 +111,7 @@ class base_model:
 
     @classmethod
     def insert(cls, set_query: dict,  loggging=True):
+        from .log import log
         # fields     = table.getByname(cls.table)
         fields = {}
         insert = database.create_data(fields, set_query)
@@ -127,6 +128,7 @@ class base_model:
 
     @classmethod
     def update(cls, set_query: dict, loggging=True):
+        from .log import log
         where = {cls.idname: set_query['id']}
         del set_query['id']
         connection = database.instance()
@@ -140,6 +142,7 @@ class base_model:
 
     @classmethod
     def delete(cls, id: int):
+        from .log import log
         where = {cls.idname: id}
         connection = database.instance()
         row = connection.delete(cls.table, cls.idname, where)
@@ -148,6 +151,7 @@ class base_model:
 
     @classmethod
     def copy(cls, id: int, loggging=True):
+        from .log import log
         from core.image import image
         row = cls.getById(id)
 

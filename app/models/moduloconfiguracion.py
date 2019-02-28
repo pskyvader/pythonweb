@@ -8,32 +8,14 @@ class moduloconfiguracion(base_model):
     idname = 'idmoduloconfiguracion'
     table = 'moduloconfiguracion'
 
-
     @classmethod
     def getAll(cls, where={}, condiciones={}, select=""):
-        limit = None
-        idpadre = None
         return_total = None
         connection = database.instance()
         # fields     = table.getByname(cls.table)
         fields = {}
         if 'estado' not in where and app.front and 'estado' in fields:
             where['estado'] = True
-
-        if 'idpadre' in where:
-            if 'idpadre' in fields:
-                idpadre = where['idpadre']
-                if 'limit' in condiciones:
-                    limit = condiciones['limit']
-                    limit2 = 0
-                    del condiciones['limit']
-
-                if 'limit2' in condiciones:
-                    if limit == None:
-                        limit = 0
-                    limit2 = condiciones['limit2']
-                    del condiciones['limit2']
-            del where['idpadre']
 
         if 'order' not in condiciones and 'orden' in fields:
             condiciones['order'] = 'orden ASC'
@@ -43,110 +25,62 @@ class moduloconfiguracion(base_model):
             if 'titulo' in fields:
                 condiciones['buscar']['titulo'] = condiciones['palabra']
 
-            if 'keywords' in fields:
-                condiciones['buscar']['keywords'] = condiciones['palabra']
-
-            if 'descripcion' in fields:
-                condiciones['buscar']['descripcion'] = condiciones['palabra']
-
-            if 'metadescripcion' in fields:
-                condiciones['buscar']['metadescripcion'] = condiciones['palabra']
-
-            if 'cookie_pedido' in fields:
-                condiciones['buscar']['cookie_pedido'] = condiciones['palabra']
-
             if len(condiciones['buscar']) == 0:
                 del condiciones['buscar']
 
         if select == 'total':
             return_total = True
-            if idpadre != None:
-                select = ''
 
         row = connection.get(cls.table, cls.idname, where, condiciones, select)
         deleted = False
         for r in row:
-            deleted = False
-            if 'idpadre' in r:
-                r['idpadre'] = json.loads(r['idpadre'])
-                if idpadre != None and idpadre not in r['idpadre']:
-                    deleted = True
-                    del r
-
-            if return_total == None:
-                if not deleted and 'foto' in r:
-                    r['foto'] = json.loads(r['foto'])
-                else:
-                    print('no foto')
-
-                if not deleted and 'archivo' in r:
-                    r['archivo'] = json.loads(r['archivo'])
-
-        if limit != None:
-            if limit2 == 0:
-                row = row[0:limit]
-            else:
-                row = row[limit:limit2+1]
+            r['mostrar'] = json.loads(r['mostrar'])
+            r['detalle'] = json.loads(r['detalle'])
 
         if return_total != None:
             return len(row)
         else:
             return row
 
-    public static function getAll(array $where= array(), array $condiciones = array(), string $select = "")
-    {        $connection = database::instance()
-        if (!isset($where['estado']) & & app::$_front) {
-            $where['estado'] = true;         }
+    @classmethod
+    def getById(cls, id: int):
+        where = {cls.idname: id}
 
-        if (!isset($condiciones['order'])) {            $condiciones['order'] = 'orden ASC';         }
+        connection = database.instance()
+        row = connection.get(cls.table, cls.idname, where)
+        if len(row) == 1:
+            row[0]['mostrar'] = json.loads(row[0]['mostrar'])
+            row[0]['detalle'] = json.loads(row[0]['detalle'])
+        return row[0] if len(row) == 1 else row
 
-        if (isset($condiciones['palabra'])) {            $condiciones['buscar'] = array(
-                'titulo' = > $condiciones['palabra'],
-            );         }
+    @classmethod
+    def getByModulo(cls, modulo: str):
+        where = {'module': modulo}
+        connection = database.instance()
+        row = connection.get(cls.table, cls.idname, where)
+        if len(row) == 1:
+            row[0]['mostrar'] = json.loads(row[0]['mostrar'])
+            row[0]['detalle'] = json.loads(row[0]['detalle'])
+        return row[0] if len(row) == 1 else row
 
-        if ($select == 'total') {            $return_total = true;         }
-        $row = $connection ->get(static::$table, static::$idname, $where, $condiciones, $select);
-        foreach ($row as $key = > $value) {
-            if (isset($row[$key]['mostrar'])) {                $row[$key]['mostrar'] = functions: :decode_json($row[$key]['mostrar']);
-            }
-            if (isset($row[$key]['detalle'])) {                $row[$key]['detalle'] = functions: :decode_json($row[$key]['detalle']);
-            }
-        }
+    @classmethod
+    def copy(cls, id: int, loggging=True):
+        from core.image import image
+        row = cls.getById(id)
 
-        if (isset($return_total)) {
-            return count($row);         }
-        return $row;     }
+        row['mostrar'] = json.dumps(row['mostrar'])
+        row['detalle'] = json.dumps(row['detalle'])
 
-    public static function getById(int $id)
-    {        $where      = array(static::$idname => $id)
-        $connection = database: :instance();
-        $row        = $connection ->get(static::$table, static::$idname, $where);
-        if (count($row) == 1) {            $row[0]['mostrar'] = functions: :decode_json($row[0]['mostrar']);
-            $row[0]['detalle'] = functions: :decode_json($row[0]['detalle']);
-        }
-        return (count($row) == 1) ? $row[0] : $row;     }
-
-    public static function getByModulo(string $modulo)
-    {        $where      = array('module' => $modulo)
-        $connection = database: :instance();
-        $row        = $connection ->get(static::$table, static::$idname, $where);
-        if (count($row) == 1) {            $row[0]['mostrar'] = functions: :decode_json($row[0]['mostrar']);
-            $row[0]['detalle'] = functions: :decode_json($row[0]['detalle']);
-        }
-        return (count($row) == 1) ? $row[0] : $row;     }
-    public static function copy(int $id)
-    {        $row            = static::getById($id)
-        $row['mostrar'] = functions: :encode_json($row['mostrar']);
-        $row['detalle'] = functions: :encode_json($row['detalle']);
-        $fields         = table: :getByname(static::$table);
-        $insert         = database: :create_data($fields, $row);
-        $connection     = database: :instance();
-        $row            = $connection ->insert(static::$table, static::$idname, $insert);
-        if (is_int($row) & & $row>0) {
-            $last_id = $row;
-            if ($log) {
-                log: :insert_log(static::$table, static::$idname, __FUNCTION__, $insert);
-            }
-            return $last_id;         } else {
-            return $row;         }
-    }
+        # fields     = table.getByname(cls.table)
+        fields = {}
+        insert = database.create_data(fields, row)
+        connection = database.instance()
+        row = connection.insert(cls.table, cls.idname, insert)
+        if isinstance(row, int) and row > 0:
+            last_id = row
+            if loggging:
+                #log.insert_log(cls.table, cls.idname, cls, (set_query+where))
+                pass
+            return last_id
+        else:
+            return row

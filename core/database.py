@@ -100,7 +100,6 @@ class database():
             if 'limit2' in condiciones and condiciones['limit2'] > 0:
                 sql += " , " + str(condiciones['limit2'])
         row = self.consulta(sql, True)
-        print(sql)
         return row
 
     def insert(self, table, idname, insert, delete_cache=True):

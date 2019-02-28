@@ -1,6 +1,7 @@
 from core.app import app
 from core.database import database
 from .base_model import base_model
+from .log import log
 from .productocategoria import productocategoria
 import datetime
 import json
@@ -174,6 +175,22 @@ class producto(base_model):
 
 
 
+    @classmethod
+    def update(cls, set_query: dict, loggging=True):
+        where = {cls.idname: set_query['id']}
+        del set_query['id']
+        connection = database.instance()
+        if app.front:
+            row = connection.update(cls.table, cls.idname, set_query, where,cls.delete_cache)
+        else:
+            row = connection.update(cls.table, cls.idname, set_query, where)
+        
+        if loggging:
+            log.insert_log(cls.table, cls.idname, cls, (set_query+where))
+            pass
+        if isinstance(row, bool) and row:
+            row = where[cls.idname]
+        return row
 
     public static function update(array $set, bool $log = true)
     {

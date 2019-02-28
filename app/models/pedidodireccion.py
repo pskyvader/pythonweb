@@ -1,8 +1,6 @@
-from core.app import app
 from core.database import database
 from .base_model import base_model
 import json
-import datetime
 
 
 class pedidodireccion(base_model):

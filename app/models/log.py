@@ -62,6 +62,7 @@ class log(base_model):
             administrador = app.session['nombre' + app.prefix_site] + \
                 ' (' + app.session['email' + app.prefix_site] + ')'
             print(funcion)
+            print(funcion.__name__)
             print(funcion.__class__)
             print(funcion.__class__.__name__)
             accion = 'metodo: ' + funcion.__class__.__name__

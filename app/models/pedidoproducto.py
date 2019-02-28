@@ -1,5 +1,6 @@
 from core.database import database
 from .base_model import base_model
+from .log import log
 import json
 
 class pedidoproducto(base_model):
@@ -18,7 +19,7 @@ class pedidoproducto(base_model):
         if isinstance(row, int) and row > 0:
             last_id = row
             if loggging:
-                #log.insert_log(cls.table, cls.idname, cls, insert)
+                log.insert_log(cls.table, cls.idname, cls, insert)
                 pass
             return last_id
         else:

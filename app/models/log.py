@@ -61,7 +61,7 @@ class log(base_model):
         if tabla != cls.table and not app.front:
             administrador = app.session['nombre' + app.prefix_site] + \
                 ' (' + app.session['email' + app.prefix_site] + ')'
-
+            print(funcion)
             accion = 'metodo: ' + funcion
             if 'titulo' in row:
                 accion += ', titulo: ' + row['titulo']

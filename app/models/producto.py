@@ -217,7 +217,6 @@ class producto(base_model):
         if 'archivo' in row:
             del row['archivo']
 
-        row['idproductocategoria'] = json.dump(row['idproductocategoria'])
         # fields     = table.getByname(cls.table)
         fields = {}
         insert = database.create_data(fields, row)

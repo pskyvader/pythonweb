@@ -92,7 +92,7 @@ class base_model:
             return row
 
     @classmethod
-    def getById(cls, id:int):
+    def getById(cls, id: int):
         where = {cls.idname: id}
         if app.front:
             # fields     = table.getByname(cls.table)
@@ -110,7 +110,7 @@ class base_model:
         return row[0] if len(row) == 1 else row
 
     @classmethod
-    def insert(cls, set_query:dict,  loggging=True):
+    def insert(cls, set_query: dict,  loggging=True):
         # fields     = table.getByname(cls.table)
         fields = {}
         insert = database.create_data(fields, set_query)
@@ -126,7 +126,7 @@ class base_model:
             return row
 
     @classmethod
-    def update(cls, set_query:dict, loggging=True):
+    def update(cls, set_query: dict, loggging=True):
         where = {cls.idname: set_query['id']}
         del set_query['id']
         connection = database.instance()
@@ -139,7 +139,7 @@ class base_model:
         return row
 
     @classmethod
-    def delete(cls, id:int):
+    def delete(cls, id: int):
         where = {cls.idname: id}
         connection = database.instance()
         row = connection.delete(cls.table, cls.idname, where)
@@ -147,7 +147,7 @@ class base_model:
         return row
 
     @classmethod
-    def copy(cls, id:int, loggging = True):
+    def copy(cls, id: int, loggging=True):
         from core.image import image
         row = cls.getById(id)
 
@@ -170,7 +170,8 @@ class base_model:
             if foto_copy != None:
                 new_fotos = []
                 for foto in foto_copy:
-                    copiar = image.copy( foto, last_id, foto['folder'], foto['subfolder'], last_id, '')
+                    copiar = image.copy(
+                        foto, last_id, foto['folder'], foto['subfolder'], last_id, '')
                     new_fotos.append(copiar['file'][0])
                     image.regenerar(copiar['file'][0])
 

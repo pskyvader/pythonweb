@@ -79,7 +79,7 @@ class moduloconfiguracion(base_model):
         if isinstance(row, int) and row > 0:
             last_id = row
             if loggging:
-                log.insert_log(cls.table, cls.idname, cls, (set_query+where))
+                log.insert_log(cls.table, cls.idname, cls, insert)
                 pass
             return last_id
         else:

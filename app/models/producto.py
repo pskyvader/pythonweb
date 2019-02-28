@@ -1,6 +1,7 @@
 from core.app import app
 from core.database import database
 from .base_model import base_model
+from .productocategoria import productocategoria
 import datetime
 import json
 
@@ -119,15 +120,9 @@ class producto(base_model):
                         if fecha1 < now and now < fecha2:
                             precio_descuento = ((v['precio']) * descuento) / 100
                             precio_final     = v['precio'] - precio_descuento
-                            if (precio_final < 1) {
+                            if precio_final < 1:
                                 precio_final = 1
-                            }
-
-                            v['precio_final'] = (int) precio_final
-                        }
-                    }
-                }
-            }
+                            v['precio_final'] = int(precio_final)
             return row
     
 

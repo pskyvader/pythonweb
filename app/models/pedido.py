@@ -86,7 +86,7 @@ class pedido(base_model):
                 cls.update(update)
 
             if loggging:
-                log.insert_log(cls.table, cls.idname, cls, (set_query+where))
+                log.insert_log(cls.table, cls.idname, cls, insert)
                 pass
             return last_id
         else:

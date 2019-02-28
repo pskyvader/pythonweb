@@ -119,8 +119,7 @@ class administrador(base_model):
             if not admin['estado']:
                 return False
             else:
-                # profile = profile.getByTipo(admin['tipo'])
-                profile = {'tipo': 1}
+                profile = profile.getByTipo(admin['tipo'])
                 if not 'tipo' in profile or profile['tipo'] <= 0:
                     return False
                 else:
@@ -144,8 +143,7 @@ class administrador(base_model):
         data = {'id': id_cookie, 'cookie': cookie}
         exito = administrador.update(data)
         if exito:
-            functions.set_cookie(
-                'cookieadmin' + app.prefix_site, cookie, (31536000))
+            functions.set_cookie('cookieadmin' + app.prefix_site, cookie, (31536000))
 
         return exito
 

@@ -1,5 +1,6 @@
 from core.database import database
 from .base_model import base_model
+from .log import log
 from core.app import app
 from core.functions import functions
 
@@ -31,7 +32,7 @@ class administrador(base_model):
         if isinstance(row, int) and row > 0:
             last_id = row
             if loggging:
-                # log.insert_log(cls.table, cls.idname, cls, insert)
+                log.insert_log(cls.table, cls.idname, cls, insert)
                 pass
             return last_id
         else:
@@ -69,7 +70,7 @@ class administrador(base_model):
         connection = database.instance()
         row = connection.update(cls.table, cls.idname, set_query, where)
         if loggging:
-            # log.insert_log(cls.table, cls.idname, cls, (set_query+where))
+            log.insert_log(cls.table, cls.idname, cls, (set_query+where))
             pass
         if isinstance(row, bool) and row:
             row = where[cls.idname]
@@ -95,7 +96,7 @@ class administrador(base_model):
                     session["estado" + prefix_site] = admin['estado']
                     session["tipo" + prefix_site] = admin['tipo']
                     session['prefix_site'] = prefix_site
-                    # log.insert_log(administrador.table, administrador.idname, administrador, admin)
+                    log.insert_log(administrador.table, administrador.idname, administrador, admin)
                     return True
         functions.set_cookie(cookie, 'aaa', (31536000))
         return False
@@ -130,7 +131,7 @@ class administrador(base_model):
                     session["estado" + prefix_site] = admin['estado']
                     session["tipo" + prefix_site] = admin['tipo']
                     session['prefix_site'] = prefix_site
-                    # log.insert_log(administrador.table, administrador.idname, administrador, admin)
+                    log.insert_log(administrador.table, administrador.idname, administrador, admin)
                     if recordar == 'on':
                         return administrador.update_cookie(admin[0])
                     else:

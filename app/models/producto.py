@@ -12,7 +12,6 @@ class producto(base_model):
     table = 'producto'
     delete_cache = False
 
-
     @classmethod
     def getAll(cls, where={}, condiciones={}, select=""):
         limit = None
@@ -96,34 +95,40 @@ class producto(base_model):
             variables = {}
             if 'tipo' in where:
                 variables['tipo'] = where['tipo']
-            cat        = productocategoria.getAll(variables)
+            cat = productocategoria.getAll(variables)
             categorias = {}
             for c in cat:
-                categorias[c[0]] = {'descuento' : c['descuento'], 'descuento_fecha' : c['descuento_fecha']}
+                categorias[c[0]] = {'descuento': c['descuento'],
+                                    'descuento_fecha': c['descuento_fecha']}
 
             for v in row:
                 if 'precio' in v:
                     v['precio_final'] = v['precio']
-                    descuento                 = 0
+                    descuento = 0
                     if v['descuento'] != 0:
                         descuento = v['descuento']
-                        fechas    = v['descuento_fecha']
+                        fechas = v['descuento_fecha']
                     elif v['idproductocategoria'][0] in categorias and categorias[v['idproductocategoria'][0]]['descuento'] != 0:
-                        descuento = categorias[v['idproductocategoria'][0]]['descuento']
-                        fechas    = categorias[v['idproductocategoria'][0]]['descuento_fecha']
+                        descuento = categorias[v['idproductocategoria']
+                                               [0]]['descuento']
+                        fechas = categorias[v['idproductocategoria']
+                                            [0]]['descuento_fecha']
                     if descuento > 0 and descuento < 100:
                         fechas = fechas.split(' - ')
-                        fecha1 = datetime.datetime.strptime(fechas[0],'%d/%m/%Y %H:%M')
-                        fecha2 = datetime.datetime.strptime(fechas[1],'%d/%m/%Y %H:%M')
-                        now    = datetime.datetime.now()
+                        fecha1 = datetime.datetime.strptime(
+                            fechas[0], '%d/%m/%Y %H:%M')
+                        fecha2 = datetime.datetime.strptime(
+                            fechas[1], '%d/%m/%Y %H:%M')
+                        now = datetime.datetime.now()
                         if fecha1 < now and now < fecha2:
-                            precio_descuento = ((v['precio']) * descuento) / 100
-                            precio_final     = v['precio'] - precio_descuento
+                            precio_descuento = (
+                                (v['precio']) * descuento) / 100
+                            precio_final = v['precio'] - precio_descuento
                             if precio_final < 1:
                                 precio_final = 1
                             v['precio_final'] = int(precio_final)
             return row
-    
+
     @classmethod
     def getById(cls, id: int):
         where = {cls.idname: id}
@@ -136,44 +141,48 @@ class producto(base_model):
         connection = database.instance()
         row = connection.get(cls.table, cls.idname, where)
         if len(row) == 1:
-            row[0]['idproductocategoria'] = json.loads(row[0]['idproductocategoria'])
+            row[0]['idproductocategoria'] = json.loads(
+                row[0]['idproductocategoria'])
             if 'foto' in row[0]:
                 row[0]['foto'] = json.loads(row[0]['foto'])
             if 'archivo' in row[0]:
                 row[0]['archivo'] = json.loads(row[0]['archivo'])
 
-
             if 'precio' in row[0]:
-                cat        = productocategoria.getById(row[0]['idproductocategoria'][0])
+                cat = productocategoria.getById(
+                    row[0]['idproductocategoria'][0])
                 categorias = {}
                 if len(cat) > 0:
-                    categorias[cat[0]] = {'descuento' : cat['descuento'], 'descuento_fecha' : cat['descuento_fecha']}
-                
+                    categorias[cat[0]] = {
+                        'descuento': cat['descuento'], 'descuento_fecha': cat['descuento_fecha']}
+
                 row[0]['precio_final'] = row[0]['precio']
-                descuento              = 0
+                descuento = 0
                 if row[0]['descuento'] != 0:
                     descuento = row[0]['descuento']
-                    fechas    = row[0]['descuento_fecha']
+                    fechas = row[0]['descuento_fecha']
                 elif row[0]['idproductocategoria'][0] in categorias and categorias[row[0]['idproductocategoria'][0]]['descuento'] != 0:
-                    descuento = categorias[row[0]['idproductocategoria'][0]]['descuento']
-                    fechas    = categorias[row[0]['idproductocategoria'][0]]['descuento_fecha']
-                
+                    descuento = categorias[row[0]
+                                           ['idproductocategoria'][0]]['descuento']
+                    fechas = categorias[row[0]
+                                        ['idproductocategoria'][0]]['descuento_fecha']
 
                 if descuento > 0 and descuento < 100:
-                        fechas = fechas.split(' - ')
-                        fecha1 = datetime.datetime.strptime(fechas[0],'%d/%m/%Y %H:%M')
-                        fecha2 = datetime.datetime.strptime(fechas[1],'%d/%m/%Y %H:%M')
-                        now    = datetime.datetime.now()
-                        if fecha1 < now and now < fecha2:
-                            precio_descuento = ((row[0]['precio']) * descuento) / 100
-                            precio_final     = row[0]['precio'] - precio_descuento
-                            if precio_final < 1:
-                                precio_final = 1
-                            row[0]['precio_final'] = int(precio_final)
+                    fechas = fechas.split(' - ')
+                    fecha1 = datetime.datetime.strptime(
+                        fechas[0], '%d/%m/%Y %H:%M')
+                    fecha2 = datetime.datetime.strptime(
+                        fechas[1], '%d/%m/%Y %H:%M')
+                    now = datetime.datetime.now()
+                    if fecha1 < now and now < fecha2:
+                        precio_descuento = (
+                            (row[0]['precio']) * descuento) / 100
+                        precio_final = row[0]['precio'] - precio_descuento
+                        if precio_final < 1:
+                            precio_final = 1
+                        row[0]['precio_final'] = int(precio_final)
 
         return row[0] if len(row) == 1 else row
-
-
 
     @classmethod
     def update(cls, set_query: dict, loggging=True):
@@ -181,10 +190,11 @@ class producto(base_model):
         del set_query['id']
         connection = database.instance()
         if app.front:
-            row = connection.update(cls.table, cls.idname, set_query, where,cls.delete_cache)
+            row = connection.update(
+                cls.table, cls.idname, set_query, where, cls.delete_cache)
         else:
             row = connection.update(cls.table, cls.idname, set_query, where)
-        
+
         if loggging:
             log.insert_log(cls.table, cls.idname, cls, (set_query+where))
             pass
@@ -192,58 +202,43 @@ class producto(base_model):
             row = where[cls.idname]
         return row
 
-    public static function update(array $set, bool $log = true)
-    {
-        $where = array(static::$idname => $set['id']);
-        unset($set['id']);
-        $connection = database::instance();
-        if (app::$_front) {
-            $row = $connection->update(static::$table, static::$idname, $set, $where, self::$delete_cache);
-        } else {
-            $row = $connection->update(static::$table, static::$idname, $set, $where);
-        }
-        if ($log) {
-            log::insert_log(static::$table, static::$idname, __FUNCTION__, array_merge($set, $where));
-        }
-        if (is_bool($row) && $row) {
-            $row = $where[static::$idname];
-        }
+    @classmethod
+    def copy(cls, id: int, loggging=True):
+        from .log import log
+        from core.image import image
+        row = cls.getById(id)
 
-        return $row;
-    }
+        if 'foto' in row:
+            foto_copy = row['foto']
+            del row['foto']
+        else:
+            foto_copy = None
 
-    public static function copy(int $id)
-    {
-        $row = static::getById($id);
-        if (isset($row['foto'])) {
-            $foto_copy = $row['foto'];
-            unset($row['foto']);
-        }
-        if (isset($row['archivo'])) {
-            unset($row['archivo']);
-        }
-        $row['idproductocategoria'] = functions::encode_json($row['idproductocategoria']);
-        $fields                     = table::getByname(static::$table);
-        $insert                     = database::create_data($fields, $row);
-        $connection                 = database::instance();
-        $row                        = $connection->insert(static::$table, static::$idname, $insert);
-        if (is_int($row) && $row > 0) {
-            $last_id = $row;
-            if (isset($foto_copy)) {
-                $new_fotos = array();
-                foreach ($foto_copy as $key => $foto) {
-                    $copiar      = image::copy($foto, $last_id, $foto['folder'], $foto['subfolder'], $last_id, '');
-                    $new_fotos[] = $copiar['file'][0];
-                    image::regenerar($copiar['file'][0]);
-                }
-                $update = array('id' => $last_id, 'foto' => functions::encode_json($new_fotos));
-                static::update($update);
-            }
-            log::insert_log(static::$table, static::$idname, __FUNCTION__, $insert);
-            return $last_id;
-        } else {
-            return $row;
-        }
-    }
+        if 'archivo' in row:
+            del row['archivo']
 
-}
+        row['idproductocategoria'] = json.dump(row['idproductocategoria'])
+        # fields     = table.getByname(cls.table)
+        fields = {}
+        insert = database.create_data(fields, row)
+        connection = database.instance()
+        row = connection.insert(cls.table, cls.idname, insert)
+        if isinstance(row, int) and row > 0:
+            last_id = row
+            if foto_copy != None:
+                new_fotos = []
+                for foto in foto_copy:
+                    copiar = image.copy(
+                        foto, last_id, foto['folder'], foto['subfolder'], last_id, '')
+                    new_fotos.append(copiar['file'][0])
+                    image.regenerar(copiar['file'][0])
+
+                update = {'id': last_id, 'foto': json.dumps(new_fotos)}
+                cls.update(update)
+
+            if loggging:
+                log.insert_log(cls.table, cls.idname, cls, (insert))
+                pass
+            return last_id
+        else:
+            return row

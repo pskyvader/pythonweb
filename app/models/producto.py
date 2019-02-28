@@ -62,16 +62,16 @@ class producto(base_model):
 
         if select == 'total':
             return_total = True
-            if idpadre != None:
+            if idproductocategoria != None:
                 select = ''
 
         row = connection.get(cls.table, cls.idname, where, condiciones, select)
         deleted = False
         for r in row:
             deleted = False
-            if 'idpadre' in r:
-                r['idpadre'] = json.loads(r['idpadre'])
-                if idpadre != None and idpadre not in r['idpadre']:
+            if 'idproductocategoria' in r:
+                r['idproductocategoria'] = json.loads(r['idproductocategoria'])
+                if idproductocategoria != None and idproductocategoria not in r['idproductocategoria']:
                     deleted = True
                     del r
 
@@ -91,140 +91,51 @@ class producto(base_model):
         if return_total != None:
             return len(row)
         else:
-            return row
-    
-    public static function getAll(array $where = array(), array $condiciones = array(), string $select = "")
-    {
-        $connection = database::instance();
-        if (!isset($where['estado']) && app::$_front) {
-            $where['estado'] = true;
-        }
-        if (isset($where['idproductocategoria'])) {
-            $idproductocategoria = $where['idproductocategoria'];
-            unset($where['idproductocategoria']);
-            if (isset($condiciones['limit'])) {
-                $limit  = $condiciones['limit'];
-                $limit2 = 0;
-                unset($condiciones['limit']);
-            }
-            if (isset($condiciones['limit2'])) {
-                if (!isset($limit)) {
-                    $limit = 0;
-                }
-
-                $limit2 = $condiciones['limit2'];
-                unset($condiciones['limit2']);
-            }
-        }
-
-        if (!isset($condiciones['order'])) {
-            $condiciones['order'] = 'orden ASC';
-        }
-
-        if (isset($condiciones['palabra'])) {
-            $fields                = table::getByname(static::$table);
-            $condiciones['buscar'] = array();
-            if (isset($fields['titulo'])) {
-                $condiciones['buscar']['titulo'] = $condiciones['palabra'];
+            variables = {}
+            if 'tipo' in where:
+                variables['tipo'] = where['tipo']
+            cat        = productocategoria.getAll(variables)
+            categorias = array()
+            foreach (cat as key => c) {
+                categorias[c[0]] = array('descuento' => c['descuento'], 'descuento_fecha' => c['descuento_fecha'])
             }
 
-            if (isset($fields['keywords'])) {
-                $condiciones['buscar']['keywords'] = $condiciones['palabra'];
-            }
+            foreach (row as key => v) {
+                if (isset(row[key]['precio'])) {
+                    row[key]['precio_final'] = row[key]['precio']
+                    descuento                 = 0
+                    if (v['descuento'] != 0) {
+                        descuento = v['descuento']
+                        fechas    = v['descuento_fecha']
+                    } elseif (isset(categorias[v['idproductocategoria'][0]]) && categorias[v['idproductocategoria'][0]]['descuento'] != 0) {
+                        descuento = categorias[v['idproductocategoria'][0]]['descuento']
+                        fechas    = categorias[v['idproductocategoria'][0]]['descuento_fecha']
+                    }
 
-            if (isset($fields['descripcion'])) {
-                $condiciones['buscar']['descripcion'] = $condiciones['palabra'];
-            }
+                    if (descuento > 0 && descuento < 100) {
+                        fechas = explode(' - ', fechas)
+                        fecha1 = strtotime(str_replace('/', '-', fechas[0]))
+                        fecha2 = strtotime(str_replace('/', '-', fechas[1]))
+                        now    = time()
+                        if (fecha1 < now && now < fecha2) {
+                            precio_descuento = ((row[key]['precio']) * descuento) / 100
+                            precio_final     = row[key]['precio'] - precio_descuento
+                            if (precio_final < 1) {
+                                precio_final = 1
+                            }
 
-            if (isset($fields['metadescripcion'])) {
-                $condiciones['buscar']['metadescripcion'] = $condiciones['palabra'];
-            }
-
-        }
-
-        if ($select == 'total') {
-            $return_total = true;
-            if (isset($idproductocategoria)) {
-                $select = '';
-            }
-        }
-        $row = $connection->get(static::$table, static::$idname, $where, $condiciones, $select);
-        foreach ($row as $key => $value) {
-            if (isset($row[$key]['idproductocategoria'])) {
-                $row[$key]['idproductocategoria'] = functions::decode_json($row[$key]['idproductocategoria']);
-                if (isset($idproductocategoria) && !in_array($idproductocategoria, $row[$key]['idproductocategoria'])) {
-                    unset($row[$key]);
-                }
-            }
-            if (isset($row[$key]) && isset($row[$key]['foto'])) {
-                $row[$key]['foto'] = functions::decode_json($row[$key]['foto']);
-            }
-            if (isset($row[$key]) && isset($row[$key]['archivo'])) {
-                $row[$key]['archivo'] = functions::decode_json($row[$key]['archivo']);
-            }
-        }
-
-        if (isset($idproductocategoria)) {
-            $row = array_values($row);
-        }
-
-        if (isset($limit)) {
-            if ($limit2 == 0) {
-                $row = array_slice($row, $limit2, $limit);
-            } else {
-                $row = array_slice($row, $limit, $limit2);
-            }
-        }
-        if (isset($return_total)) {
-            return count($row);
-        }
-
-        $variables = array();
-        if (isset($where['tipo'])) {
-            $variables['tipo'] = $where['tipo'];
-        }
-        $cat        = productocategoria::getAll($variables);
-        $categorias = array();
-        foreach ($cat as $key => $c) {
-            $categorias[$c[0]] = array('descuento' => $c['descuento'], 'descuento_fecha' => $c['descuento_fecha']);
-        }
-
-        foreach ($row as $key => $v) {
-            if (isset($row[$key]['precio'])) {
-                $row[$key]['precio_final'] = $row[$key]['precio'];
-                $descuento                 = 0;
-                if ($v['descuento'] != 0) {
-                    $descuento = $v['descuento'];
-                    $fechas    = $v['descuento_fecha'];
-                } elseif (isset($categorias[$v['idproductocategoria'][0]]) && $categorias[$v['idproductocategoria'][0]]['descuento'] != 0) {
-                    $descuento = $categorias[$v['idproductocategoria'][0]]['descuento'];
-                    $fechas    = $categorias[$v['idproductocategoria'][0]]['descuento_fecha'];
-                }
-
-                if ($descuento > 0 && $descuento < 100) {
-                    $fechas = explode(' - ', $fechas);
-                    $fecha1 = strtotime(str_replace('/', '-', $fechas[0]));
-                    $fecha2 = strtotime(str_replace('/', '-', $fechas[1]));
-                    $now    = time();
-                    if ($fecha1 < $now && $now < $fecha2) {
-                        $precio_descuento = (($row[$key]['precio']) * $descuento) / 100;
-                        $precio_final     = $row[$key]['precio'] - $precio_descuento;
-                        if ($precio_final < 1) {
-                            $precio_final = 1;
+                            row[key]['precio_final'] = (int) precio_final
                         }
-
-                        $row[$key]['precio_final'] = (int) $precio_final;
                     }
                 }
             }
-        }
-        return $row;
-    }
+            return row
+    
 
     public static function getById(int $id)
     {
-        $where = array(static::$idname => $id);
-        if (app::$_front) {
+        $where = array(static.$idname => $id)
+        if (app.$_front) {
             $fields = table::getByname(static::$table);
             if (isset($fields['estado'])) {
                 $where['estado'] = true;

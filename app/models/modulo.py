@@ -28,7 +28,6 @@ class modulo(base_model):
             return_total = True
 
         row = connection.get(cls.table, cls.idname, where, condiciones, select)
-        deleted = False
         for r in row:
                 r['menu'] = json.loads(r['menu'])
 
@@ -74,42 +73,9 @@ class modulo(base_model):
         row = connection.insert(cls.table, cls.idname, insert)
         if isinstance(row, int) and row > 0:
             last_id = row
-            if foto_copy != None:
-                new_fotos = []
-                for foto in foto_copy:
-                    copiar = image.copy(
-                        foto, last_id, foto['folder'], foto['subfolder'], last_id, '')
-                    new_fotos.append(copiar['file'][0])
-                    image.regenerar(copiar['file'][0])
-
-                update = {'id': last_id, 'foto': json.dumps(new_fotos)}
-                cls.update(update)
-
             if loggging:
                 # log.insert_log(cls.table, cls.idname, cls, (set_query+where))
                 pass
             return last_id
         else:
             return row
-
-    public static function copy(int $id)
-    {$row             = static:: getById($id)
-        $row['menu']     = functions: : encode_json($row['menu'])
-        $row['mostrar']  = functions: : encode_json($row['mostrar'])
-        $row['detalle']  = functions: : encode_json($row['detalle'])
-        $row['recortes'] = functions: : encode_json($row['recortes'])
-        $row['estado']   = functions: : encode_json($row['estado'])
-
-        $fields          = table: : getByname(static: : $table)
-        $insert          = database: : create_data($fields, $row)
-        $connection      = database: : instance()
-        $row             = $connection -> insert(static: : $table, static: : $idname, $insert)
-        if is_int($row) & & $row > 0) {$last_id= $row
-            if $log) {
-                log: : insert_log(static: : $table, static: : $idname, __FUNCTION__, $insert)
-            }
-            return $last_id
-        } else {
-            return $row
-        }
-    }

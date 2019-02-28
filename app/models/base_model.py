@@ -92,7 +92,7 @@ class base_model:
             return row
 
     @classmethod
-    def getById(cls, id):
+    def getById(cls, id=int):
         where = {cls.idname: id}
         if app.front:
             # fields     = table.getByname(cls.table)
@@ -110,7 +110,7 @@ class base_model:
         return row[0] if len(row) == 1 else row
 
     @classmethod
-    def insert(cls, set_query,  loggging=True):
+    def insert(cls, set_query=dict,  loggging=True):
         # fields     = table.getByname(cls.table)
         fields = {}
         insert = database.create_data(fields, set_query)
@@ -126,7 +126,7 @@ class base_model:
             return row
 
     @classmethod
-    def update(cls, set_query, loggging=True):
+    def update(cls, set_query=dict, loggging=True):
         where = {cls.idname: set_query['id']}
         del set_query['id']
         connection = database.instance()

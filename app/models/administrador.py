@@ -1,7 +1,7 @@
 from core.database import database
 from .base_model import base_model
 from .log import log
-from .profile import profile
+from .profile import profile as profile_model
 from core.app import app
 from core.functions import functions
 

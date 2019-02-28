@@ -77,6 +77,7 @@ class administrador(base_model):
 
     @staticmethod
     def login_cookie(cookie):
+        print(cookie)
         prefix_site = app.prefix_site
         where = {'cookie': cookie}
         condiciones = {'limit': 1}

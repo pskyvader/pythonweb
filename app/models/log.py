@@ -80,4 +80,5 @@ class log(base_model):
                 'accion': accion,
                 'fecha': datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
             }
+            print(data)
             cls.insert(data)

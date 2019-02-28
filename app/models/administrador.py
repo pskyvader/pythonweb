@@ -77,7 +77,6 @@ class administrador(base_model):
 
     @staticmethod
     def login_cookie(cookie):
-        print(cookie)
         prefix_site = app.prefix_site
         where = {'cookie': cookie}
         condiciones = {'limit': 1}
@@ -140,6 +139,7 @@ class administrador(base_model):
     def update_cookie(id_cookie):
         import uuid
         cookie = str(uuid.UUID)
+        print(cookie)
         data = {'id': id_cookie, 'cookie': cookie}
         exito = administrador.update(data)
         if exito:

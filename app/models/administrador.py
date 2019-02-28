@@ -138,7 +138,7 @@ class administrador(base_model):
     @staticmethod
     def update_cookie(id_cookie):
         import uuid
-        cookie = uuid.UUID.hex
+        cookie = uuid.uuid4().hex
         print('cookie',cookie,'.....')
         data = {'id': id_cookie, 'cookie': cookie}
         exito = administrador.update(data)

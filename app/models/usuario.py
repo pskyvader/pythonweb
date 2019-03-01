@@ -7,10 +7,9 @@ from core.app import app
 from core.functions import functions
 
 
-class administrador(base_model):
-    idname = 'idadministrador'
-    table = 'administrador'
-    cookie = ''
+class usuario(base_model):
+    idname = 'idusuario'
+    table = 'usuario'
 
     @classmethod
     def insert(cls, set_query,  loggging=True):
@@ -82,7 +81,7 @@ class administrador(base_model):
         prefix_site = app.prefix_site
         where = {'cookie': cookie}
         condiciones = {'limit': 1}
-        row = administrador.getAll(where, condiciones)
+        row = usuario.getAll(where, condiciones)
 
         if len(row) == 1:
             admin = row[0]
@@ -90,13 +89,13 @@ class administrador(base_model):
                 profile = profile_model.getByTipo(admin['tipo'])
                 if 'tipo' in profile and int(profile['tipo']) > 0:
                     session = app.session
-                    session[administrador.idname + prefix_site] = admin[0]
+                    session[usuario.idname + prefix_site] = admin[0]
                     session["email" + prefix_site] = admin['email']
                     session["nombre" + prefix_site] = admin['nombre']
                     session["estado" + prefix_site] = admin['estado']
                     session["tipo" + prefix_site] = admin['tipo']
                     session['prefix_site'] = prefix_site
-                    log.insert_log(administrador.table, administrador.idname, administrador, admin)
+                    log.insert_log(usuario.table, usuario.idname, usuario, admin)
                     return True
         functions.set_cookie(cookie, 'aaa', (31536000))
         return False
@@ -109,7 +108,7 @@ class administrador(base_model):
 
         where = {'email': email.lower(), 'pass': database.encript(password)}
         condiciones = {'limit': 1}
-        row = administrador.getAll(where, condiciones)
+        row = usuario.getAll(where, condiciones)
 
         if len(row) != 1:
             return False
@@ -123,15 +122,15 @@ class administrador(base_model):
                     return False
                 else:
                     session = app.session
-                    session[administrador.idname + prefix_site] = admin[0]
+                    session[usuario.idname + prefix_site] = admin[0]
                     session["email" + prefix_site] = admin['email']
                     session["nombre" + prefix_site] = admin['nombre']
                     session["estado" + prefix_site] = admin['estado']
                     session["tipo" + prefix_site] = admin['tipo']
                     session['prefix_site'] = prefix_site
-                    log.insert_log(administrador.table, administrador.idname, administrador, admin)
+                    log.insert_log(usuario.table, usuario.idname, usuario, admin)
                     if recordar == 'on':
-                        return administrador.update_cookie(admin[0])
+                        return usuario.update_cookie(admin[0])
                     else:
                         return True
 
@@ -140,7 +139,7 @@ class administrador(base_model):
         import uuid
         cookie = uuid.uuid4().hex
         data = {'id': id_cookie, 'cookie': cookie}
-        exito = administrador.update(data)
+        exito = usuario.update(data)
         if exito:
             functions.set_cookie('cookieadmin' + app.prefix_site, cookie, (31536000))
 
@@ -150,7 +149,7 @@ class administrador(base_model):
     def logout():
         prefix_site = app.prefix_site
         session = app.session
-        del session[administrador.idname + prefix_site]
+        del session[usuario.idname + prefix_site]
         del session["email" + prefix_site]
         del session["nombre" + prefix_site]
         del session["estado" + prefix_site]
@@ -162,10 +161,10 @@ class administrador(base_model):
     def verificar_sesion():
         prefix_site = app.prefix_site
         session = app.session
-        if (administrador.idname+prefix_site) in session and session[administrador.idname + prefix_site] != '':
-            admin = administrador.getById(
-                session[administrador.idname + prefix_site])
-            if 0 in admin and admin[0] != session[administrador.idname + prefix_site]:
+        if (usuario.idname+prefix_site) in session and session[usuario.idname + prefix_site] != '':
+            admin = usuario.getById(
+                session[usuario.idname + prefix_site])
+            if 0 in admin and admin[0] != session[usuario.idname + prefix_site]:
                 return False
             elif admin['email'] != session["email" + prefix_site]:
                 return False
@@ -182,7 +181,7 @@ class administrador(base_model):
 
         cookie = functions.get_cookie()
         if ('cookieadmin' + prefix_site) in cookie and cookie['cookieadmin' + prefix_site] != '' and cookie['cookieadmin' + prefix_site] != 'aaa':
-            return administrador.login_cookie(cookie['cookieadmin' + prefix_site])
+            return usuario.login_cookie(cookie['cookieadmin' + prefix_site])
 
         return False
 
@@ -196,7 +195,7 @@ class administrador(base_model):
 
         where = {'email': email.lower()}
         condiciones = {'limit': 1}
-        row = administrador.getAll(where, condiciones)
+        row = usuario.getAll(where, condiciones)
 
         if len(row) != 1:
             return False
@@ -208,7 +207,7 @@ class administrador(base_model):
                 password = functions.generar_pass()
                 data = {'id': admin[0], 'pass': password,
                         'pass_repetir': password}
-                row = administrador.update(data)
+                row = usuario.update(data)
 
                 if row:
                     body_email = {
@@ -222,7 +221,7 @@ class administrador(base_model):
                     respuesta = email.enviar_email(
                         [email], 'Recuperación de contraseña', body)
 
-                    log.insert_log(administrador.table, administrador.idname, administrador, admin)
+                    log.insert_log(usuario.table, usuario.idname, usuario, admin)
                     return respuesta
                 else:
                     return False

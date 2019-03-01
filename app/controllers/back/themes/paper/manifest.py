@@ -1,6 +1,7 @@
 from core.app import app
 from core.functions import functions
 from .base import base
+from app.models.logo import logo as logo_model
 import json
 
 

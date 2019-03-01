@@ -38,7 +38,7 @@ class pedido(base_model):
         row = connection.update(cls.table, cls.idname,
                                 set_query, where, cls.delete_cache)
         if loggging:
-            log.insert_log(cls.table, cls.idname, cls, (set_query+where))
+            log.insert_log(cls.table, cls.idname, cls, set_query.update(where))
             pass
         if isinstance(row, bool) and row:
             row = where[cls.idname]

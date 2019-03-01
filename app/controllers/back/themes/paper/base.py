@@ -7,7 +7,7 @@ import importlib
 
 class base:
     url = []
-    metadata = {'modulo':''}
+    metadata = {'title':'','modulo':''}
     class_name = None
     breadcrumb = []
     contiene_tipos = False

@@ -75,7 +75,6 @@ class table(base_model):
         row['fields'] = json.dumps(row['fields'])
 
         fields     = table.getByname(cls.table)
-        fields = {}
         insert = database.create_data(fields, row)
         connection = database.instance()
         row = connection.insert(cls.table, cls.idname, insert)

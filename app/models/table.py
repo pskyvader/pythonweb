@@ -2,7 +2,6 @@ from .base_model import base_model
 from core.database import database
 from core.app import app
 import json
-from .log import log
 from .table import table
 
 

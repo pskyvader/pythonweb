@@ -235,8 +235,8 @@ class table(base_model):
         log.insert_log(cls.table, cls.idname, cls, row)
         return respuesta
 
-    @classmethod
-    def truncate(cls, tables: list):
+    @staticmethod
+    def truncate(tables: list):
         from core.image import image
         respuesta = {'exito': True, 'mensaje': []}
         for table in tables:

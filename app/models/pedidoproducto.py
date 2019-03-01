@@ -1,6 +1,7 @@
 from core.database import database
 from .base_model import base_model
 from .log import log
+from .table import table
 import json
 
 class pedidoproducto(base_model):
@@ -11,7 +12,7 @@ class pedidoproducto(base_model):
 
     @classmethod
     def insert(cls, set_query: dict,  loggging=True):
-        # fields     = table.getByname(cls.table)
+        fields     = table.getByname(cls.table)
         fields = {}
         insert = database.create_data(fields, set_query)
         connection = database.instance()
@@ -60,7 +61,7 @@ class pedidoproducto(base_model):
         if 'archivo' in row:
             del row['archivo']
 
-        # fields     = table.getByname(cls.table)
+        fields     = table.getByname(cls.table)
         fields = {}
         insert = database.create_data(fields, row)
         connection = database.instance()

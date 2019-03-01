@@ -108,8 +108,7 @@ class aside:
                 me['submenu'].append(
                     {'url': url, 'sub_title': 'TODOS', 'active': active})
 
-                # mc=moduloconfiguracion_model.getAll()
-                mc = {}
+                mc=moduloconfiguracion_model.getAll()
                 for m in mc:
                     url = functions.generar_url(
                         ['modulo'], {'idmoduloconfiguracion': m[0]})
@@ -135,7 +134,7 @@ class aside:
             view.add('name', administrador["nombre"])
             view.add('email', administrador["email"])
             view.add('url_admin', functions.generar_url( ["administrador", "detail", administrador[0], 'profile'], {'tipo': tipo_admin}))
-            #view.add('img_admin', image.generar_url( administrador["foto"][0], 'profile'))
+            view.add('img_admin', image.generar_url( administrador["foto"][0], 'profile'))
             view.add('img_admin', '')
 
             ret['body'] = view.render('aside')

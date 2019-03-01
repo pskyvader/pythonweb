@@ -241,7 +241,6 @@ class table(base_model):
         respuesta = {'exito': True, 'mensaje': []}
         for table in tables:
             respuesta['mensaje'].append('Tabla ' + table + ' vaciada')
-
         connection = database.instance()
         respuesta['exito'] = connection.truncate(tables)
         if respuesta['exito']:
@@ -249,5 +248,4 @@ class table(base_model):
                 image.delete(table)
         else:
             respuesta['mensaje'] = 'Error al vaciar tablas'
-
         return respuesta

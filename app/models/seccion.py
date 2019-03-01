@@ -1,6 +1,7 @@
 from .base_model import base_model
 from core.database import database
 from core.app import app
+from .table import table
 import json
 
 
@@ -14,7 +15,7 @@ class seccion(base_model):
         idseccioncategoria = None
         return_total = None
         connection = database.instance()
-        # fields     = table.getByname(cls.table)
+        fields     = table.getByname(cls.table)
         fields = {}
         if 'estado' not in where and app.front and 'estado' in fields:
             where['estado'] = True
@@ -96,7 +97,7 @@ class seccion(base_model):
     def getById(cls, id: int):
         where = {cls.idname: id}
         if app.front:
-            # fields     = table.getByname(cls.table)
+            fields     = table.getByname(cls.table)
             fields = {}
             if 'estado' in fields:
                 where['estado'] = True
@@ -127,7 +128,7 @@ class seccion(base_model):
         if 'archivo' in row:
             del row['archivo']
         row['idseccioncategoria']=json.dumps(row['idseccioncategoria'])
-        # fields     = table.getByname(cls.table)
+        fields     = table.getByname(cls.table)
         fields = {}
         insert = database.create_data(fields, row)
         connection = database.instance()

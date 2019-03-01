@@ -156,7 +156,8 @@ class base_model:
         from .log import log
         from core.image import image
         row = cls.getById(id)
-
+        if 'idpadre' in row:
+            row['idpadre'] = json.dumps(row['idpadre'])
         if 'foto' in row:
             foto_copy = row['foto']
             del row['foto']

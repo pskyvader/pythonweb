@@ -83,7 +83,7 @@ class app:
         view.set_theme(app.root + app.view_dir)
 
         controller = app.controller_dir
-        my_file = Path(app.root + controller + '.py')
+        my_file = Path(app.root + controller + url[0]+'.py')
         if my_file.is_file():
             current_module = importlib.import_module(url[0]+'.'+url[0] , controller.replace("/", "."))
             del url[0]

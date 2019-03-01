@@ -442,7 +442,7 @@ class image:
             image.nombre_archivo(file['url'], tag, extension)
         time = functions.fecha_archivo(image.get_upload_dir() + url, True)
         if time != False:
-            archivo = image.get_upload_url() + url + '?time=' + time
+            archivo = image.get_upload_url() + url + '?time=' + str(time)
         else:
             archivo = ''
         return archivo

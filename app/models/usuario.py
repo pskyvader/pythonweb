@@ -204,7 +204,7 @@ class usuario(base_model):
         return exito
 
     @classmethod
-    def logout():
+    def logout(cls):
         prefix_site = app.prefix_site
         session = app.session
         del session[usuario.idname + prefix_site]
@@ -218,7 +218,7 @@ class usuario(base_model):
     def verificar_sesion():
         prefix_site = app.prefix_site
         session = app.session
-        if usuario.idname+prefix_site) in session and session[usuario.idname + prefix_site] != '':
+        if (usuario.idname+prefix_site) in session and session[usuario.idname + prefix_site] != '':
             usuario = usuario.getById(
                 session[usuario.idname + prefix_site])
             if 0 in usuario and usuario[0] != session[usuario.idname + prefix_site]:
@@ -237,7 +237,7 @@ class usuario(base_model):
                     return True
 
         cookie = functions.get_cookie()
-        if 'cookieusuario' + prefix_site) in cookie and cookie['cookieusuario' + prefix_site] != '' and cookie['cookieusuario' + prefix_site] != 'aaa':
+        if ('cookieusuario' + prefix_site) in cookie and cookie['cookieusuario' + prefix_site] != '' and cookie['cookieusuario' + prefix_site] != 'aaa':
             return usuario.login_cookie(cookie['cookieusuario' + prefix_site])
 
         return False

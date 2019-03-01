@@ -173,8 +173,8 @@ class table(base_model):
         table       = 'information_schema.tables'
         where       = {'table_schema': config["database"], 'table_name': prefix + tablename}
         condiciones = {}
-        select      = 'count(*) as count'
-        row         = connection.get(table, cls.idname, where, condiciones, select:select)
+        s      = 'count(*) as count'
+        row         = connection.get(table, cls.idname, where, condiciones, select:s)
         connection.set_prefix(prefix)
         return (row[0]['count'] == 1)
     }

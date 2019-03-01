@@ -52,8 +52,7 @@ class aside:
                 elif len(mod[cm[0]]) == 1:
                     modulo = mod[cm[0]][0]
                     estados = modulo['estado'][0]['estado']
-                    print(estados)
-                    if estados[tipo_admin] == 'true':
+                    if estados[str(tipo_admin)] == 'true':
                         extra = {}
                         if cm['tipos']:
                             extra['tipo'] = modulo['tipo']

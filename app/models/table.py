@@ -236,7 +236,7 @@ class table(base_model):
         return respuesta
 
     @classmethod
-    def truncate(tables: []):
+    def truncate(tables=[]):
         from core.image import image
         respuesta = {'exito': True, 'mensaje': []}
         for table in tables:

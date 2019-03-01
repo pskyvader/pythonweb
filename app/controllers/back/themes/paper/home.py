@@ -11,10 +11,8 @@ from app.models.administrador import administrador as administrador_model
 class home:
     url = ['home']
     metadata = {'title': 'Home', 'modulo': 'home'}
-    
 
-    @staticmethod
-    def init(var):
+    def init(self,var):
         h = home()
         if len(var) > 0:
             if hasattr(h, var[0]) and callable(getattr(h, var[0])):

@@ -73,7 +73,6 @@ class administrador(base_model):
             log_register=set_query
             log_register.update(where)
             log.insert_log(cls.table, cls.idname, cls, log_register)
-            pass
         if isinstance(row, bool) and row:
             row = where[cls.idname]
         return row

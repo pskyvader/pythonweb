@@ -1,6 +1,7 @@
 from .base_model import base_model
 from core.database import database
 from core.app import app
+from .table import table
 import json
 
 
@@ -14,7 +15,7 @@ class texto(base_model):
         idpadre = None
         return_total = None
         connection = database.instance()
-        # fields     = table.getByname(cls.table)
+        fields     = table.getByname(cls.table)
         fields = {}
         if 'estado' not in where and app.front and 'estado' in fields:
             where['estado'] = True
@@ -95,7 +96,7 @@ class texto(base_model):
     def getById(cls, id: int):
         where = {cls.idname: id}
         if app.front:
-            # fields     = table.getByname(cls.table)
+            fields     = table.getByname(cls.table)
             fields = {}
             if 'estado' in fields:
                 where['estado'] = True

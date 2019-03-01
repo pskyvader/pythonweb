@@ -25,10 +25,8 @@ class sitemap(base_model):
     @classmethod
     def truncate(cls):
         respuesta = {'exito': True, 'mensaje': []}
-
         connection = database.instance()
         respuesta['exito'] = connection.truncate([cls.table])
         if not respuesta['exito']:
             respuesta['mensaje'] = 'Error al vaciar tablas'
-
         return respuesta

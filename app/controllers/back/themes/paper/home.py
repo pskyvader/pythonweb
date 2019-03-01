@@ -1,6 +1,7 @@
 from core.app import app
 from core.view import view
 from core.functions import functions
+from .base import base
 from .head import head
 from .header import header
 from .aside import aside

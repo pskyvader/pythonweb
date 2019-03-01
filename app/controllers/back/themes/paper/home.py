@@ -9,7 +9,7 @@ from .footer import footer
 from app.models.administrador import administrador as administrador_model
 
 
-class home:
+class home(base):
     url = ['home']
     metadata = {'title': 'Home', 'modulo': 'home'}
 

@@ -14,7 +14,7 @@ class home(base):
     metadata = {'title': 'Home', 'modulo': 'home'}
 
     def __init__(self):
-        super().__init__(None)
+        super().__init__()
 
     @classmethod
     def index(cls):

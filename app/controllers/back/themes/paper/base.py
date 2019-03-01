@@ -13,7 +13,7 @@ class base:
     contiene_tipos = False
     contiene_hijos = False
 
-    def __init__(self, class_name):
+    def __init__(self, class_name=None):
         moduloconfiguracion = moduloconfiguracion_model.getByModulo(
             self.metadata['modulo'])
         if 0 in moduloconfiguracion:

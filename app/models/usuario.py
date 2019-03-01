@@ -71,7 +71,6 @@ class usuario(base_model):
         row = connection.update(cls.table, cls.idname, set_query, where)
         if loggging:
             log.insert_log(cls.table, cls.idname, cls, (set_query+where))
-            pass
         if isinstance(row, bool) and row:
             row = where[cls.idname]
         return row
@@ -169,18 +168,18 @@ class usuario(base_model):
         usuario     = cls.getById(app.session[cls.idname + app.prefix_site])
 
         if usuario['email'] != datos['email']:
-            where = array(
-                'email' : strtolower(datos['email']),
-            )
-            condiciones = array('limit' : 1)
+            where = {
+                'email' : datos['email'].lower(),
+            }
+            condiciones = {'limit' : 1}
             row         = cls.getAll(where, condiciones)
             if len(row) > 0:
                 respuesta['mensaje'] = "Este email ya existe. No puedes modificar tu email."
                 return respuesta
             else:
                 respuesta['redirect'] = True
-            }
-        }
+            
+        
         datos['id'] = usuario[0]
         id          = cls.update(datos)
         if isset(id['exito']):

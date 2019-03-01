@@ -1,4 +1,6 @@
 from app.models.moduloconfiguracion import moduloconfiguracion as moduloconfiguracion_model
+from app.models.modulo import modulo as modulo_model
+from core.app import app
 
 class base:
     url            = []
@@ -11,25 +13,25 @@ class base:
     def __init__(self, class_name):
         moduloconfiguracion = moduloconfiguracion_model.getByModulo(base.metadata['modulo'])
         if 0 in moduloconfiguracion:
-            base.contiene_tipos = (isset(moduloconfiguracion['tipos'])) ? moduloconfiguracion['tipos'] : false
-            base.sub            = (isset(moduloconfiguracion['sub'])) ? moduloconfiguracion['sub'] : ''
-            base.padre          = (isset(moduloconfiguracion['padre'])) ? moduloconfiguracion['padre'] : ''
-            if (base.contiene_tipos && isset(_GET['tipo'])) {
-                tipo = _GET['tipo']
-            } else {
+            base.contiene_tipos =moduloconfiguracion['tipos'] if 'tipos' in moduloconfiguracion else False
+            base.sub =moduloconfiguracion['sub'] if 'sub' in moduloconfiguracion else ''
+            base.padre =moduloconfiguracion['padre'] if 'padre' in moduloconfiguracion else ''
+            
+            if base.contiene_tipos and 'tipo' in app.get:
+                tipo = app.get['tipo']
+            else:
                 tipo = 0
-            }
 
 
-            modulo                  = modulo_model.getAll(array('idmoduloconfiguracion' => moduloconfiguracion[0], 'tipo' => tipo))
+            modulo                  = modulo_model.getAll({'idmoduloconfiguracion' : moduloconfiguracion[0], 'tipo' : tipo})
             base.contiene_hijos    = (isset(modulo[0]['hijos'])) ? modulo[0]['hijos'] : false
             base.metadata['title'] = modulo[0]['titulo']
             
             if (base.padre != '') {
                 parent             = '\app\models\\' . base.padre
                 base.class_parent = new parent()
-                if (isset(_GET[base.class_parent.idname])) {
-                    p=base.class_parent.getById(_GET[base.class_parent.idname])
+                if (isset(app.get[base.class_parent.idname])) {
+                    p=base.class_parent.getById(app.get[base.class_parent.idname])
                     if(count(p>0)){
                         if(isset(p['titulo']) && p['titulo']!=''){
                             base.metadata['title'].=' - '.p['titulo']
@@ -112,12 +114,12 @@ class base
                 foreach ($respuesta['row'] as $k => $v) {
                     $respuesta['row'][$k]['url_children'] = functions.generar_url($this->url, array('idpadre' => $v[0], 'tipo' => $_GET['tipo']));
                 }
-            } else {
+            else:
                 foreach ($respuesta['row'] as $k => $v) {
                     $respuesta['row'][$k]['url_children'] = functions.generar_url($this->url, array('idpadre' => $v[0]));
                 }
             }
-        } else {
+        else:
             unset($configuracion['th']['url_children']);
         }
 
@@ -126,12 +128,12 @@ class base
                 foreach ($respuesta['row'] as $k => $v) {
                     $respuesta['row'][$k]['url_sub'] = functions.generar_url(array($this->sub), array($class.$idname => $v[0], 'tipo' => $_GET['tipo']));
                 }
-            } else {
+            else:
                 foreach ($respuesta['row'] as $k => $v) {
                     $respuesta['row'][$k]['url_sub'] = functions.generar_url(array($this->sub), array($class.$idname => $v[0]));
                 }
             }
-        } else {
+        else:
             unset($configuracion['th']['url_sub']);
         }
 
@@ -156,7 +158,7 @@ class base
             $id                      = (int) $var[0];
             $this->url[]             = $id;
             $this->metadata['title'] = 'Editar ' . $this->metadata['title'];
-        } else {
+        else:
             $id                      = 0;
             $this->metadata['title'] = 'Nuevo ' . $this->metadata['title'];
         }
@@ -196,11 +198,11 @@ class base
             if ($id == 0) {
                 if (isset($_GET['idpadre'])) {
                     $row['idpadre'] = functions.encode_json(array((string) $_GET['idpadre']));
-                } else {
+                else:
                     $row['idpadre'] = functions.encode_json(array('0'));
                 }
             }
-        } else {
+        else:
             unset($configuracion['campos']['idpadre']);
         }
 
@@ -217,30 +219,30 @@ class base
                 $categorias = $class_parent.getAll();
                 if ($is_array) {
                     $configuracion['campos'][$idparent]['parent'] = functions.crear_arbol($categorias);
-                } else {
+                else:
                     $configuracion['campos'][$idparent]['parent'] = $categorias;
                 }
-            } else {
+            else:
                 $configuracion['campos'][$idparent] = array('title_field' => $idparent, 'field' => $idparent, 'type' => 'hidden', 'required' => true);
                 if ($id == 0) {
                     if (isset($_GET[$idparent])) {
                         if ($is_array) {
                             $row[$idparent] = functions.encode_json(array((string) $_GET[$idparent]));
-                        } else {
+                        else:
                             $row[$idparent] = (int) $_GET[$idparent];
                         }
 
-                    } else {
+                    else:
                         if ($is_array) {
                             $row[$idparent] = functions.encode_json(array('0'));
-                        } else {
+                        else:
                             $row[$idparent] = 0;
                         }
                     }
-                } else {
+                else:
                     if ($is_array) {
                         $row[$idparent] = functions.encode_json($row[$idparent]);
-                    } else {
+                    else:
                         $row[$idparent] = $row[$idparent];
                     }
                 }

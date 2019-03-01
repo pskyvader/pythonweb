@@ -1,5 +1,6 @@
 from .base_model import base_model
 from core.database import database
+from core.app import app
 import json
 
 class table(base_model):
@@ -89,6 +90,7 @@ class table(base_model):
 
     @classmethod
     def validate(cls,id:int, loggging = True):
+        from .log import log
         respuesta = {"exito":True,"mensaje":[]}
         table_validate       = cls.getById(id)
         idname    = table_validate['idname']
@@ -131,46 +133,39 @@ class table(base_model):
             for column in row:            
                 columns[column['COLUMN_NAME']] = column
 
-            for key,field in fields
-            foreach (fields as key: field) {
-                field['after'] = (key > 0) ? fields[key - 1]['titulo'] : ''
+            for key,field in fields.items():
+                field['after'] = fields[key - 1]['titulo'] if (key > 0) else ''
 
-                if (isset(columns[field['titulo']])) {
-                    if (columns[field['titulo']]['COLUMN_TYPE'] == field['tipo']) {
-                        respuesta['mensaje'][] = 'Columna <b>"' . field['titulo'] . '"</b> correcta'
-                    } else {
-                        respuesta['mensaje'][] = 'Columna <b>"' . field['titulo'] . '"</b> incorrecta, Modificada'
+                if field['titulo'] in columns:
+                    if columns[field['titulo']]['COLUMN_TYPE'] == field['tipo']:
+                        respuesta['mensaje'].append('Columna <b>"' + field['titulo'] + '"</b> correcta')
+                    else:
+                        respuesta['mensaje'].append('Columna <b>"' + field['titulo'] + '"</b> incorrecta, Modificada')
                         respuesta['exito']     = connection.modify(tablename, field['titulo'], field['tipo'])
-                        if (!respuesta['exito']) {
-                            respuesta['mensaje'][] = 'ERROR AL MODIFICAR campo ' . field['titulo']
+                        if not respuesta['exito']:
+                            respuesta['mensaje'].append('ERROR AL MODIFICAR campo ' + field['titulo'])
                             return respuesta
-                        }
-                    }
-                } else {
-                    respuesta['mensaje'][] = 'Columna <b>"' . field['titulo'] . '"</b> No existe, Creada'
+                        
+                    
+                else:
+                    respuesta['mensaje'].append('Columna <b>"' + field['titulo'] + '"</b> No existe, Creada')
                     respuesta['exito']     = connection.add(tablename, field['titulo'], field['tipo'], field['after'], field['primary'])
-                    if (!respuesta['exito']) {
-                        respuesta['mensaje'][] = 'ERROR AL AGREGAR CAMPO ' . field['titulo']
+                    if not respuesta['exito']:
+                        respuesta['mensaje'].append('ERROR AL AGREGAR CAMPO ' + field['titulo'])
                         return respuesta
-                    }
-                }
-            }
-        } else {
-            respuesta['mensaje'][] = 'Tabla <b>"' . tablename . '"</b> No existe, Creada'
+                        
+        else:
+            respuesta['mensaje'].append('Tabla <b>"' + tablename + '"</b> No existe, Creada')
             respuesta['exito']     = connection.create(tablename, fields)
-            if (!respuesta['exito']) {
-                respuesta['mensaje'][] = 'ERROR AL CREAR TABLA ' . tablename
-            }
-        }
-        if (loggging) {
-            log.insert_log(cls.table, cls.idname, __FUNCTION__, table_validate)
-        }
-
+            if not respuesta['exito']:
+                respuesta['mensaje'].append('ERROR AL CREAR TABLA ' + tablename)
+                
+        if loggging:
+            log.insert_log(cls.table, cls.idname, cls, table_validate)
         return respuesta
-    }
 
-    public static function table_exists(string tablename)
-    {
+    @classmethod
+    def table_exists(tablename:str):
         config     = app.getConfig()
         connection = database.instance()
         prefix     = connection.get_prefix()

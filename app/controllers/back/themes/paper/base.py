@@ -10,7 +10,8 @@ class base:
     breadcrumb     = []
     contiene_tipos = False
     contiene_hijos = False
-
+    
+    @classmethod
     def __init__(self, class_name):
         moduloconfiguracion = moduloconfiguracion_model.getByModulo(base.metadata['modulo'])
         if 0 in moduloconfiguracion:
@@ -32,26 +33,21 @@ class base:
                 parent             = 'app.models.' + base.padre
                 base.class_parent = importlib.import_module(parent)()
 
-                if (isset(app.get[base.class_parent.idname])) {
+                if base.class_parent.idname in app.get:
                     p=base.class_parent.getById(app.get[base.class_parent.idname])
-                    if(count(p>0)){
-                        if(isset(p['titulo']) && p['titulo']!=''){
-                            base.metadata['title'].=' - '.p['titulo']
-                        }elseif(isset(p['nombre']) && p['nombre']!=''){
-                            base.metadata['title'].=' - '.p['nombre']
-                        }
-                    }
-
-                }
-            }
-        }
+                    if len(p)>0:
+                        if 'titulo' in p and p['titulo']!='':
+                            base.metadata['title']+=' - '+p['titulo']
+                        elif 'nombre' in p and p['nombre']!='':
+                            base.metadata['title']+=' - '+p['nombre']
+                        
 
         base.class_name      = class_name
-        base.breadcrumb = array(
-            array('url' => functions.generar_url(array("home")), 'title' => 'Home', 'active' => ''),
-            array('url' => functions.generar_url(base.url), 'title' => (base.metadata['title']), 'active' => 'active'),
-        )
-    }
+        base.breadcrumb = [
+            {'url' : functions.generar_url(["home"]), 'title' : 'Home', 'active' : ''},
+            {'url' : functions.generar_url(base.url), 'title' : (base.metadata['title']), 'active' : 'active'},
+        ]
+        
 
 
 

@@ -65,7 +65,7 @@ class database():
     def get_last_insert_id(self):
         return self._connection.insert_id()
 
-    def get(self, table, idname, where, condiciones={}, select=""):
+    def get(self, table:str, idname:str, where:dict, condiciones={}, select=""):
         if select == "":
             select = "*"
         elif select == 'total':

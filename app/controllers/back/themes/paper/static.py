@@ -7,15 +7,13 @@ import datetime
 import socket
 
 
-def init(var):
-    h = static()
-    if 0 in var:
-        del var[0]
-    ret = h.index(var)
-    return ret
-
-
 class static:
+    def init(var):
+        h = static()
+        if 0 in var:
+            del var[0]
+        ret = h.index(var)
+        return ret
     def index(self, var):
         if len(var) == 0:
             return {'error': 404}

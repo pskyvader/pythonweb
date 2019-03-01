@@ -13,39 +13,39 @@ class base:
 
     @classmethod
     def __init__(cls, class_name):
-        moduloconfiguracion = moduloconfiguracion_model.getByModulo(base.metadata['modulo'])
+        moduloconfiguracion = moduloconfiguracion_model.getByModulo(cls.metadata['modulo'])
         if 0 in moduloconfiguracion:
-            base.contiene_tipos =moduloconfiguracion['tipos'] if 'tipos' in moduloconfiguracion else False
-            base.sub =moduloconfiguracion['sub'] if 'sub' in moduloconfiguracion else ''
-            base.padre =moduloconfiguracion['padre'] if 'padre' in moduloconfiguracion else ''
+            cls.contiene_tipos =moduloconfiguracion['tipos'] if 'tipos' in moduloconfiguracion else False
+            cls.sub =moduloconfiguracion['sub'] if 'sub' in moduloconfiguracion else ''
+            cls.padre =moduloconfiguracion['padre'] if 'padre' in moduloconfiguracion else ''
             
-            if base.contiene_tipos and 'tipo' in app.get:
+            if cls.contiene_tipos and 'tipo' in app.get:
                 tipo = app.get['tipo']
             else:
                 tipo = 0
 
 
             modulo                  = modulo_model.getAll({'idmoduloconfiguracion' : moduloconfiguracion[0], 'tipo' : tipo})
-            base.contiene_hijos    = (isset(modulo[0]['hijos'])) ? modulo[0]['hijos'] : false
-            base.metadata['title'] = modulo[0]['titulo']
+            cls.contiene_hijos    = (isset(modulo[0]['hijos'])) ? modulo[0]['hijos'] : false
+            cls.metadata['title'] = modulo[0]['titulo']
             
-            if base.padre != '':
-                parent             = 'app.models.' + base.padre
-                base.class_parent = importlib.import_module(parent)()
+            if cls.padre != '':
+                parent             = 'app.models.' + cls.padre
+                cls.class_parent = importlib.import_module(parent)()
 
-                if base.class_parent.idname in app.get:
-                    p=base.class_parent.getById(app.get[base.class_parent.idname])
+                if cls.class_parent.idname in app.get:
+                    p=cls.class_parent.getById(app.get[cls.class_parent.idname])
                     if len(p)>0:
                         if 'titulo' in p and p['titulo']!='':
-                            base.metadata['title']+=' - '+p['titulo']
+                            cls.metadata['title']+=' - '+p['titulo']
                         elif 'nombre' in p and p['nombre']!='':
-                            base.metadata['title']+=' - '+p['nombre']
+                            cls.metadata['title']+=' - '+p['nombre']
                         
 
-        base.class_name      = class_name
-        base.breadcrumb = [
+        cls.class_name      = class_name
+        cls.breadcrumb = [
             {'url' : functions.generar_url(["home"]), 'title' : 'Home', 'active' : ''},
-            {'url' : functions.generar_url(base.url), 'title' : (base.metadata['title']), 'active' : 'active'},
+            {'url' : functions.generar_url(cls.url), 'title' : (cls.metadata['title']), 'active' : 'active'},
         ]
         
 

@@ -13,6 +13,10 @@ class home(base):
     url = ['home']
     metadata = {'title': 'Home', 'modulo': 'home'}
 
+    def __init__(cls):
+        print(cls.__name__)
+        return super().__init__(cls.__name__)
+
     @classmethod
     def init(cls,var):
         if len(var) > 0:

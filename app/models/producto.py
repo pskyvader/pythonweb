@@ -20,7 +20,6 @@ class producto(base_model):
         return_total = None
         connection = database.instance()
         fields     = table.getByname(cls.table)
-        fields = {}
         if 'estado' not in where and app.front and 'estado' in fields:
             where['estado'] = True
 
@@ -135,7 +134,6 @@ class producto(base_model):
         where = {cls.idname: id}
         if app.front:
             fields     = table.getByname(cls.table)
-            fields = {}
             if 'estado' in fields:
                 where['estado'] = True
 
@@ -220,7 +218,6 @@ class producto(base_model):
 
         row['idproductocategoria'] = json.dumps(row['idproductocategoria'])
         fields     = table.getByname(cls.table)
-        fields = {}
         insert = database.create_data(fields, row)
         connection = database.instance()
         row = connection.insert(cls.table, cls.idname, insert)

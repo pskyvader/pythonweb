@@ -13,8 +13,8 @@ class home(base):
     url = ['home']
     metadata = {'title': 'Home', 'modulo': 'home'}
 
-    def __init__():
-        super().__init__(None)
+    def __init__(self):
+        super().__init__(self,None)
 
     @classmethod
     def init(cls,var):

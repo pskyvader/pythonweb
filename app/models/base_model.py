@@ -1,6 +1,5 @@
 from core.app import app
 from core.database import database
-from .table import table
 import json
 
 
@@ -10,6 +9,7 @@ class base_model:
 
     @classmethod
     def getAll(cls, where={}, condiciones={}, select=""):
+        from .table import table
         limit = None
         idpadre = None
         return_total = None

@@ -9,7 +9,7 @@ def init(var):
     return ret
 
 
-class manifest:
+class manifest(base):
     def index(self):
         ret = {'headers': [ ('Content-Type', 'application/json; charset=utf-8') ], 'body': ''}
         version_application = 1

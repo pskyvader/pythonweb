@@ -33,7 +33,8 @@ class modulo(base_model):
             r['menu'] = json.loads(r['menu'])
             r['mostrar'] = json.loads(r['mostrar'])
             r['detalle'] = json.loads(r['detalle'])
-            print(r['recortes'])
+            print('modulo:',r['titulo'])
+            print('recortes:',r['recortes'])
             r['recortes'] = json.loads(r['recortes'])
             r['estado'] = json.loads(r['estado'])
 

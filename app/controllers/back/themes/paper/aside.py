@@ -20,6 +20,8 @@ class aside:
 
             mod = {}
             for m in modulo:
+                if not m['idmoduloconfiguracion'] in mod:
+                    mod[m['idmoduloconfiguracion']]=[]
                 mod[m['idmoduloconfiguracion']].append(m)
 
             current_url = functions.current_url()

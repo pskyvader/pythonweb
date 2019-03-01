@@ -1,4 +1,5 @@
 from core.app import app
+from core.functions import functions
 from app.models.moduloconfiguracion import moduloconfiguracion as moduloconfiguracion_model
 from app.models.modulo import modulo as modulo_model
 import importlib

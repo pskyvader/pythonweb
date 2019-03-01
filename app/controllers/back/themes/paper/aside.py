@@ -1,6 +1,7 @@
 from core.functions import functions
 from core.view import view
 from core.app import app
+from core.image import image
 from app.models.administrador import administrador as administrador_model
 from app.models.moduloconfiguracion import moduloconfiguracion as moduloconfiguracion_model
 from app.models.modulo import modulo as modulo_model

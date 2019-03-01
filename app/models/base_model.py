@@ -103,12 +103,12 @@ class base_model:
         connection = database.instance()
         row = connection.get(cls.table, cls.idname, where)
         if len(row) == 1:
+            if 'idpadre' in row[0]:
+                row[0]['idpadre'] = json.loads(row[0]['idpadre'])
             if 'foto' in row[0]:
                 row[0]['foto'] = json.loads(row[0]['foto'])
             if 'archivo' in row[0]:
                 row[0]['archivo'] = json.loads(row[0]['archivo'])
-            if 'idpadre' in row[0]:
-                row[0]['idpadre'] = json.loads(row[0]['idpadre'])
         return row[0] if len(row) == 1 else row
 
     @classmethod

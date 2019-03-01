@@ -1,6 +1,8 @@
 from core.app import app
 from core.functions import functions
 from core.view import view
+from core.image import image
+from app.models.logo import logo as logo_model
 import json
 
 
@@ -45,14 +47,14 @@ class head:
 
         head.data['title'] = titulo
 
-        # if (isset(metadata['image'])) {
-        #   head.data['image'] = metadata['image']
-        # }else{
-        # logo = logo_model::getById(3)
-        # head.data['image']=image::generar_url(logo['foto'][0], 'panel_max')
-        # }
-        # logo = logo_model::getById(1)
-        # head.data['favicon'] = image::generar_url(logo['foto'][0], 'favicon')
+        if 'image' in metadata:
+          head.data['image'] = metadata['image']
+        else:
+            logo = logo_model.getById(3)
+            head.data['image']=image.generar_url(logo['foto'][0], 'panel_max')
+        
+        logo = logo_model.getById(1)
+        head.data['favicon'] = image.generar_url(logo['foto'][0], 'favicon')
 
         head.data['manifest_url'] = app.get_url() + 'manifest.js'
 

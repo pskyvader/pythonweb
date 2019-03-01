@@ -89,6 +89,7 @@ class table(base_model):
 
     @classmethod
     def validate(cls, id: int, loggging=True):
+        from .log import log
         respuesta = {"exito": True, "mensaje": []}
         table_validate = cls.getById(id)
         idname = table_validate['idname']

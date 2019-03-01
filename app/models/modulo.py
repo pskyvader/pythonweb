@@ -13,7 +13,6 @@ class modulo(base_model):
         return_total = None
         connection = database.instance()
         fields     = table.getByname(cls.table)
-        fields = {}
 
         if 'order' not in condiciones and 'orden' in fields:
             condiciones['order'] = 'orden ASC'

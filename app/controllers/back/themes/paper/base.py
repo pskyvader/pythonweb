@@ -14,8 +14,7 @@ class base:
     contiene_hijos = False
 
     def __init__(self, class_name=None):
-        moduloconfiguracion = moduloconfiguracion_model.getByModulo(
-            self.metadata['modulo'])
+        moduloconfiguracion = moduloconfiguracion_model.getByModulo(self.metadata['modulo'])
         if 0 in moduloconfiguracion:
             self.contiene_tipos = moduloconfiguracion['tipos'] if 'tipos' in moduloconfiguracion else False
             self.sub = moduloconfiguracion['sub'] if 'sub' in moduloconfiguracion else ''

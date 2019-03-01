@@ -3,6 +3,8 @@ from app.models.moduloconfiguracion import moduloconfiguracion as moduloconfigur
 from app.models.modulo import modulo as modulo_model
 import importlib
 
+
+
 class base:
     url            = []
     metadata       = {}
@@ -49,20 +51,7 @@ class base:
         ]
         
 
-
-
-
-class base
-{
-    protected $url            = array();
-    protected $metadata       = array();
-    protected $class          = null;
-    protected $breadcrumb     = array();
-    protected $contiene_tipos = false;
-    protected $contiene_hijos = false;
-    
-    public function index()
-    {
+    def index():
         $class = $this->class; // Clase para enviar a controlador de lista
         if ($this->contiene_tipos && !isset($_GET['tipo'])) {
             $this->url = array('home');

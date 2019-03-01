@@ -75,7 +75,7 @@ class usuario(base_model):
             row = where[cls.idname]
         return row
 
-    @clsmethod
+    @classmethod
     def login_cookie(cookie):
         prefix_site = app.prefix_site
         where = {'cookie': cookie}

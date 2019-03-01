@@ -25,7 +25,7 @@ class home:
                     'error': 404,
                 }
         else:
-            ret = cls.index()
+            ret = cls.index(cls)
         return ret
 
     def index(self):

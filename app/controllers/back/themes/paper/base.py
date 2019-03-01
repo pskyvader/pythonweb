@@ -55,7 +55,7 @@ class base:
     @classmethod
     def init(cls, var):
         if len(var)==0:
-            var[0]='index'
+            var=['index']
 
         if hasattr(cls, var[0]) and callable(getattr(cls, var[0])):
             fun = var[0]

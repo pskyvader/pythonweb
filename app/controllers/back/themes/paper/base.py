@@ -1,6 +1,6 @@
+from core.app import app
 from app.models.moduloconfiguracion import moduloconfiguracion as moduloconfiguracion_model
 from app.models.modulo import modulo as modulo_model
-from core.app import app
 
 class base:
     url            = []

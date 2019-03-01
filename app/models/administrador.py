@@ -178,7 +178,7 @@ class administrador(base_model):
                     return True
 
         cookie = functions.get_cookie()
-        if ('cookieadmin' + prefix_site) in cookie and cookie['cookieadmin' + prefix_site] != '' and cookie['cookieadmin' + prefix_site] != 'aaa':
+        if 'cookieadmin' + prefix_site in cookie and cookie['cookieadmin' + prefix_site] != '' and cookie['cookieadmin' + prefix_site] != 'aaa':
             return administrador.login_cookie(cookie['cookieadmin' + prefix_site])
 
         return False

@@ -28,6 +28,7 @@ class home(base):
         else:
             ret = cls.index()
         return ret
+
     @classmethod
     def index(cls):
         ret = {'body':''}

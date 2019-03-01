@@ -2,6 +2,7 @@ from core.app import app
 from core.database import database
 from .base_model import base_model
 from .log import log
+from .table import table
 import json
 
 
@@ -13,7 +14,7 @@ class moduloconfiguracion(base_model):
     def getAll(cls, where={}, condiciones={}, select=""):
         return_total = None
         connection = database.instance()
-        # fields     = table.getByname(cls.table)
+        fields     = table.getByname(cls.table)
         fields = {}
         if 'estado' not in where and app.front and 'estado' in fields:
             where['estado'] = True
@@ -71,7 +72,7 @@ class moduloconfiguracion(base_model):
         row['mostrar'] = json.dumps(row['mostrar'])
         row['detalle'] = json.dumps(row['detalle'])
 
-        # fields     = table.getByname(cls.table)
+        fields     = table.getByname(cls.table)
         fields = {}
         insert = database.create_data(fields, row)
         connection = database.instance()

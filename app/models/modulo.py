@@ -1,6 +1,7 @@
 from core.database import database
 from .base_model import base_model
 from .log import log
+from .table import table
 import json
 
 
@@ -11,7 +12,7 @@ class modulo(base_model):
     def getAll(cls, where={}, condiciones={}, select=""):
         return_total = None
         connection = database.instance()
-        # fields     = table.getByname(cls.table)
+        fields     = table.getByname(cls.table)
         fields = {}
 
         if 'order' not in condiciones and 'orden' in fields:
@@ -63,7 +64,7 @@ class modulo(base_model):
         row['recortes'] = json.dumps(row['recortes'])
         row['estado'] = json.dumps(row['estado'])
 
-        # fields     = table.getByname(cls.table)
+        fields     = table.getByname(cls.table)
         fields = {}
         insert = database.create_data(fields, row)
         connection = database.instance()

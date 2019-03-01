@@ -74,9 +74,6 @@ class base_model:
             if return_total == None:
                 if not deleted and 'foto' in r:
                     r['foto'] = json.loads(r['foto'])
-                else:
-                    print('no foto')
-
                 if not deleted and 'archivo' in r:
                     r['archivo'] = json.loads(r['archivo'])
 

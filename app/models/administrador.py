@@ -10,7 +10,6 @@ from core.functions import functions
 class administrador(base_model):
     idname = 'idadministrador'
     table = 'administrador'
-    cookie = ''
 
     @classmethod
     def insert(cls, set_query,  loggging=True):

@@ -54,22 +54,16 @@ class base:
 
     @classmethod
     def init(cls, var):
-        if len(var) > 0:
-            if hasattr(cls, var[0]) and callable(getattr(cls, var[0])):
-                fun = var[0]
-                del var[0]
-                method = getattr(cls, fun)
-                ret = method(var)
-            else:
-                ret = {
-                    'error': 404
-                }
+        if len(var)==0:
+            var[0]='index'
+
+        if hasattr(cls, var[0]) and callable(getattr(cls, var[0])):
+            fun = var[0]
+            del var[0]
+            method = getattr(cls, fun)
+            ret = method(var)
         else:
-            if hasattr(cls, 'index') and callable(getattr(cls, 'index')):
-            try:
-                ret = cls.index()
-            except:
-                ret = {
-                    'error': 404
-                }
+            ret = {
+                'error': 404
+            }
         return ret

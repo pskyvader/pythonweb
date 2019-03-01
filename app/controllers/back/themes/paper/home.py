@@ -17,22 +17,6 @@ class home(base):
         super().__init__(None)
 
     @classmethod
-    def init(cls,var):
-        if len(var) > 0:
-            if hasattr(cls, var[0]) and callable(getattr(cls, var[0])):
-                fun = var[0]
-                del var[0]
-                method=getattr(cls, fun)
-                ret = method(var)
-            else:
-                ret = {
-                    'error': 404,
-                }
-        else:
-            ret = cls.index()
-        return ret
-
-    @classmethod
     def index(cls):
         ret = {'body':''}
         if not administrador_model.verificar_sesion():

@@ -87,6 +87,7 @@ class app:
         if my_file.is_file():
             current_module = importlib.import_module(controller.replace("/", "."))
             current_module = getattr(current_module, url[0])
+            current_module = current_module()
             del url[0]
             # returns {'body':str,'headers':str} or {'error':int,...'redirect':str}
             response = current_module.init(url)

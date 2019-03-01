@@ -77,7 +77,7 @@ class aside:
                     for m in mod[cm[0]]:
                         modulo = m
                         estados = modulo['estado'][0]['estado']
-                        if estados[tipo_admin] == 'true':
+                        if estados[str(tipo_admin)] == 'true':
                             extra = {}
                             if cm['tipos']:
                                 extra['tipo'] = modulo['tipo']

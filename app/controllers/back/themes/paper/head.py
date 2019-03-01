@@ -48,7 +48,7 @@ class head:
         head.data['title'] = titulo
 
         if 'image' in metadata:
-          head.data['image'] = metadata['image']
+            head.data['image'] = metadata['image']
         else:
             logo = logo_model.getById(3)
             head.data['image']=image.generar_url(logo['foto'][0], 'panel_max')

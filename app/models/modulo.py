@@ -33,9 +33,10 @@ class modulo(base_model):
             r['menu'] = json.loads(r['menu'])
             r['mostrar'] = json.loads(r['mostrar'])
             r['detalle'] = json.loads(r['detalle'])
-            print('modulo:',r['titulo'])
-            print('recortes:',r['recortes'])
-            r['recortes'] = json.loads(r['recortes'])
+            if r['recortes']!='':
+                r['recortes'] = json.loads(r['recortes'])
+            else:
+                r['recortes']=[]
             r['estado'] = json.loads(r['estado'])
 
         if return_total != None:
@@ -52,7 +53,10 @@ class modulo(base_model):
             row[0]['menu'] = json.loads(row[0]['menu'])
             row[0]['mostrar'] = json.loads(row[0]['mostrar'])
             row[0]['detalle'] = json.loads(row[0]['detalle'])
-            row[0]['recortes'] = json.loads(row[0]['recortes'])
+            if row[0]['recortes']!='':
+                row[0]['recortes'] = json.loads(row[0]['recortes'])
+            else:
+                row[0]['recortes']=[]
             row[0]['estado'] = json.loads(row[0]['estado'])
         return row[0] if len(row) == 1 else row
 

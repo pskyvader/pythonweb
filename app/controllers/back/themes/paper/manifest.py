@@ -1,12 +1,7 @@
 from core.app import app
 from core.functions import functions
+from .base import base
 import json
-
-
-def init(var):
-    h = manifest()
-    ret = h.index()
-    return ret
 
 
 class manifest(base):

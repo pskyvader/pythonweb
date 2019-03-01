@@ -76,7 +76,7 @@ class usuario(base_model):
             row = where[cls.idname]
         return row
 
-    @staticmethod
+    @clsmethod
     def login_cookie(cookie):
         prefix_site = app.prefix_site
         where = {'cookie': cookie}
@@ -99,7 +99,7 @@ class usuario(base_model):
         functions.set_cookie(cookie, 'aaa', (31536000))
         return False
 
-    @staticmethod
+    @clsmethod
     def login(email, password, recordar):
         prefix_site = app.prefix_site
         if email == '' or password == '':
@@ -134,68 +134,66 @@ class usuario(base_model):
 
 
     @classmethod
-    def registro(nombre:str, telefono:str, email:str, pass:str, pass_repetir:str):
-        respuesta = array('exito' => false, 'mensaje' => '')
-        if (nombre == "" || email == "" || pass == "" || pass_repetir == "") {
+    def registro(cls,nombre:str, telefono:str, email:str, password:str, password_repetir:str):
+        respuesta = {'exito' : False, 'mensaje' : ''}
+        if nombre == "" or email == "" or password == "" or password_repetir == "":
             respuesta['mensaje'] = "Todos los datos son obligatorios"
             return respuesta
+        
+
+        where = {
+            'email' : email.lower(),
         }
+        condiciones = {'limit' : 1}
+        row         = cls.getAll(where, condiciones)
 
-        where = array(
-            'email' => strtolower(email),
-        )
-        condiciones = array('limit' => 1)
-        row         = static::getAll(where, condiciones)
-
-        if (count(row) > 0) {
+        if len(row) > 0:
             respuesta['mensaje'] = "Este email ya existe. Puede recuperar la contraseña en el boton correspondiente"
-        } else {
-            data = array('nombre' => nombre, 'telefono' => telefono, 'email' => email, 'pass' => pass, 'pass_repetir' => pass_repetir, 'tipo' => 1, 'estado' => true)
-            id   = self::insert(data)
-            if (!is_array(id)) {
-                respuesta['exito'] = true
-            } else {
+        else:
+            data = {'nombre' : nombre, 'telefono' : telefono, 'email' : email, 'pass' : password, 'pass_repetir' : password_repetir, 'tipo' : 1, 'estado' : True}
+            id   = cls.insert(data)
+            if not isinstance(id,list):
+                respuesta['exito'] = True
+            else:
                 respuesta = id
-            }
-        }
+                
         return respuesta
-    }
-
-    public static function actualizar(array datos)
-    {
-        respuesta = array('exito' => false, 'mensaje' => '')
-        if (datos['nombre'] == "" || datos['telefono'] == "" || datos['email'] == "") {
+    
+    @classmethod
+    def actualizar(cls,datos:dict):
+        respuesta = {'exito' : False, 'mensaje' : ''}
+        if datos['nombre'] == "" or datos['telefono'] == "" or datos['email'] == "":
             respuesta['mensaje'] = "Todos los datos son obligatorios"
             return respuesta
-        }
-        usuario     = static::getById(_SESSION[static::idname . app::prefix_site])
+        
+        usuario     = cls.getById(app.session[cls.idname . app.prefix_site])
 
-        if (usuario['email'] != datos['email']) {
+        if usuario['email'] != datos['email']:
             where = array(
-                'email' => strtolower(datos['email']),
+                'email' : strtolower(datos['email']),
             )
-            condiciones = array('limit' => 1)
-            row         = static::getAll(where, condiciones)
-            if (count(row) > 0) {
+            condiciones = array('limit' : 1)
+            row         = cls.getAll(where, condiciones)
+            if len(row) > 0:
                 respuesta['mensaje'] = "Este email ya existe. No puedes modificar tu email."
                 return respuesta
-            } else {
-                respuesta['redirect'] = true
+            else:
+                respuesta['redirect'] = True
             }
         }
         datos['id'] = usuario[0]
-        id          = self::update(datos)
-        if (isset(id['exito'])) {
+        id          = cls.update(datos)
+        if isset(id['exito']):
             respuesta = id
-        } else {
-            respuesta['exito'] = true
+        else:
+            respuesta['exito'] = True
         }
         return respuesta
     }
 
 
 
-    @staticmethod
+    @clsmethod
     def update_cookie(id_cookie):
         import uuid
         cookie = uuid.uuid4().hex
@@ -206,7 +204,7 @@ class usuario(base_model):
 
         return exito
 
-    @staticmethod
+    @clsmethod
     def logout():
         prefix_site = app.prefix_site
         session = app.session
@@ -217,11 +215,11 @@ class usuario(base_model):
         del session["tipo" + prefix_site]
         functions.set_cookie('cookieusuario' + prefix_site, 'aaa', (31536000))
 
-    @staticmethod
+    @clsmethod
     def verificar_sesion():
         prefix_site = app.prefix_site
         session = app.session
-        if (usuario.idname+prefix_site) in session and session[usuario.idname + prefix_site] != '':
+        if usuario.idname+prefix_site) in session and session[usuario.idname + prefix_site] != '':
             usuario = usuario.getById(
                 session[usuario.idname + prefix_site])
             if 0 in usuario and usuario[0] != session[usuario.idname + prefix_site]:
@@ -240,12 +238,12 @@ class usuario(base_model):
                     return True
 
         cookie = functions.get_cookie()
-        if ('cookieusuario' + prefix_site) in cookie and cookie['cookieusuario' + prefix_site] != '' and cookie['cookieusuario' + prefix_site] != 'aaa':
+        if 'cookieusuario' + prefix_site) in cookie and cookie['cookieusuario' + prefix_site] != '' and cookie['cookieusuario' + prefix_site] != 'aaa':
             return usuario.login_cookie(cookie['cookieusuario' + prefix_site])
 
         return False
 
-    @staticmethod
+    @clsmethod
     def recuperar(email):
         """recuperar contraseña"""
         from core.view import view

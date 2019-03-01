@@ -88,12 +88,12 @@ class usuario(base_model):
                 profile = profile_model.getByTipo(user['tipo'])
                 if 'tipo' in profile and int(profile['tipo']) > 0:
                     session = app.session
-                    session[user.idname + prefix_site] = user[0]
+                    session[usuario.idname + prefix_site] = user[0]
                     session["emailusuario" + prefix_site] = user['email']
                     session["nombreusuario" + prefix_site] = user['nombre']
                     session["estadousuario" + prefix_site] = user['estado']
                     session["tipousuario" + prefix_site] = user['tipo']
-                    log.insert_log(user.table, user.idname, usuario, user)
+                    log.insert_log(usuario.table, usuario.idname, usuario, user)
                     return True
         functions.set_cookie(cookie, 'aaa', (31536000))
         return False
@@ -120,12 +120,12 @@ class usuario(base_model):
                     return False
                 else:
                     session = app.session
-                    session[user.idname + prefix_site] = user[0]
+                    session[usuario.idname + prefix_site] = user[0]
                     session["emailusuario" + prefix_site] = user['email']
                     session["nombreusuario" + prefix_site] = user['nombre']
                     session["estadousuario" + prefix_site] = user['estado']
                     session["tipousuario" + prefix_site] = user['tipo']
-                    log.insert_log(user.table, user.idname, usuario, user)
+                    log.insert_log(usuario.table, usuario.idname, usuario, user)
                     if recordar == 'on':
                         return usuario.update_cookie(user[0])
                     else:
@@ -208,10 +208,11 @@ class usuario(base_model):
         prefix_site = app.prefix_site
         session = app.session
         del session[usuario.idname + prefix_site]
-        del session["email" + prefix_site]
-        del session["nombre" + prefix_site]
-        del session["estado" + prefix_site]
-        del session["tipo" + prefix_site]
+        del session["emailusuario" + prefix_site]
+        del session["nombreusuario" + prefix_site]
+        del session["estadousuario" + prefix_site]
+        del session["tipousuario" + prefix_site]
+        del session["cookie_pedido" + prefix_site]
         functions.set_cookie('cookieusuario' + prefix_site, 'aaa', (31536000))
 
     @staticmethod
@@ -219,25 +220,20 @@ class usuario(base_model):
         prefix_site = app.prefix_site
         session = app.session
         if (usuario.idname+prefix_site) in session and session[usuario.idname + prefix_site] != '':
-            usuario = usuario.getById(
-                session[usuario.idname + prefix_site])
-            if 0 in usuario and usuario[0] != session[usuario.idname + prefix_site]:
+            user = usuario.getById( session[usuario.idname + prefix_site])
+            if 0 in user and user[0] != session[usuario.idname + prefix_site]:
                 return False
-            elif usuario['email'] != session["email" + prefix_site]:
+            elif user['email'] != session["emailusuario" + prefix_site]:
                 return False
-            elif usuario['estado'] != session["estado" + prefix_site] or not session["estado" + prefix_site]:
+            elif user['estado'] != session["estadousuario" + prefix_site] or not session["estadousuario" + prefix_site]:
                 return False
-            elif usuario['tipo'] != session["tipo" + prefix_site] or not session["tipo" + prefix_site]:
+            elif user['tipo'] != session["tipousuario" + prefix_site] or not session["tipousuario" + prefix_site]:
                 return False
             else:
-                profile = profile_model.getByTipo(usuario['tipo'])
-                if not 'tipo' in profile or int(profile['tipo']) <= 0:
-                    return False
-                else:
-                    return True
+                return True
 
         cookie = functions.get_cookie()
-        if ('cookieusuario' + prefix_site) in cookie and cookie['cookieusuario' + prefix_site] != '' and cookie['cookieusuario' + prefix_site] != 'aaa':
+        if 'cookieusuario' + prefix_site in cookie and cookie['cookieusuario' + prefix_site] != '' and cookie['cookieusuario' + prefix_site] != 'aaa':
             return usuario.login_cookie(cookie['cookieusuario' + prefix_site])
 
         return False
@@ -246,39 +242,41 @@ class usuario(base_model):
     def recuperar(email):
         """recuperar contraseña"""
         from core.view import view
+        respuesta    = {'exito' : False, 'mensaje' : ''}
         nombre_sitio = app.title
         if email == '':
-            return False
-
+            respuesta['mensaje'] = 'Debes llenar tu email'
+            return respuesta
+        
         where = {'email': email.lower()}
         condiciones = {'limit': 1}
         row = usuario.getAll(where, condiciones)
 
-        if len(row) != 1:
-            return False
+        if len(row) < 1:
+            respuesta['mensaje'] = 'Este email no existe, puedes registrarte en el link correspondiente'
+            return respuesta
         else:
-            usuario = row[0]
-            if not usuario['estado']:
-                return False
+            user = row[0]
+            if not user['estado']:
+                respuesta['mensaje'] = 'Tu usuario existe pero ha sido desactivado. Por favor envia un mensaje en el formulario de contacto.'
+                return respuesta
             else:
                 password = functions.generar_pass()
-                data = {'id': usuario[0], 'pass': password,
-                        'pass_repetir': password}
+                data = {'id': user[0], 'pass': password, 'pass_repetir': password}
                 row = usuario.update(data)
 
                 if row:
                     body_email = {
                         'body': view.get_theme() + 'mail/recuperar_password.html',
                         'titulo': "Recuperación de contraseña",
-                        'cabecera': "Estimado " + usuario["nombre"] + ", se ha solicitado la recuperación de contraseña en " + nombre_sitio,
+                        'cabecera': "Estimado " + user["nombre"] + ", se ha solicitado la recuperación de contraseña en " + nombre_sitio,
                         'campos': {'Contraseña (sin espacios)': password},
                         'campos_largos': {},
                     }
                     body = email.body_email(body_email)
-                    respuesta = email.enviar_email(
-                        [email], 'Recuperación de contraseña', body)
+                    respuesta = email.enviar_email( [email], 'Recuperación de contraseña', body)
 
-                    log.insert_log(usuario.table, usuario.idname, usuario, usuario)
+                    log.insert_log(usuario.table, usuario.idname, usuario, user)
                     return respuesta
                 else:
                     return False

@@ -2,6 +2,9 @@ from core.functions import functions
 from core.view import view
 from core.app import app
 from app.models.administrador import administrador as administrador_model
+from app.models.moduloconfiguracion import moduloconfiguracion as moduloconfiguracion_model
+from app.models.modulo import modulo as modulo_model
+from app.models.pedidoestado import pedidoestado as pedidoestado_model
 
 
 class aside:
@@ -11,10 +14,8 @@ class aside:
         if 'ajax' not in app.post:
             administrador = administrador_model.getById( app.session[administrador_model.idname + app.prefix_site])
             tipo_admin = administrador["tipo"]
-            #moduloconfiguracion = moduloconfiguracion_model.getAll( {'estado': True, 'aside': True})
-            moduloconfiguracion = {}
-            #modulo = modulo_model.getAll({'aside': True})
-            modulo = {}
+            moduloconfiguracion = moduloconfiguracion_model.getAll( {'estado': True, 'aside': True})
+            modulo = modulo_model.getAll({'aside': True})
 
             mod = {}
             for m in modulo:
@@ -30,8 +31,7 @@ class aside:
 
             for cm in moduloconfiguracion:
                 if cm['module'] == "pedido":
-                    #pedidoestado = pedidoestado_model.getAll( {'tipo': 1}, {'order': 'orden ASC'})
-                    pedidoestado = {}
+                    pedidoestado = pedidoestado_model.getAll( {'tipo': 1}, {'order': 'orden ASC'})
                     tmp = mod[cm[0]]
                     mod[cm[0]] = {}
                     for t in tmp:

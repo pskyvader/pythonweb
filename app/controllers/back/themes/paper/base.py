@@ -65,5 +65,8 @@ class base:
                     'error': 404,
                 }
         else:
-            ret = cls.index()
+            try:
+                ret = cls.index()
+            except:
+                pass
         return ret

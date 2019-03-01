@@ -62,11 +62,13 @@ class base:
                 ret = method(var)
             else:
                 ret = {
-                    'error': 404,
+                    'error': 404
                 }
         else:
             try:
                 ret = cls.index()
             except:
-                pass
+                ret = {
+                    'error': 404
+                }
         return ret

@@ -71,9 +71,7 @@ class administrador(base_model):
         row = connection.update(cls.table, cls.idname, set_query, where)
         if loggging:
             log_register=set_query
-            print(log_register)
             log_register.update(where)
-            print(log_register)
             log.insert_log(cls.table, cls.idname, cls, log_register)
             pass
         if isinstance(row, bool) and row:

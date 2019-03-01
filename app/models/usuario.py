@@ -98,7 +98,7 @@ class usuario(base_model):
         functions.set_cookie(cookie, 'aaa', (31536000))
         return False
 
-    @classmethod
+    @staticmethod
     def login(email, password, recordar):
         prefix_site = app.prefix_site
         if email == '' or password == '':
@@ -192,7 +192,7 @@ class usuario(base_model):
 
 
 
-    @classmethod
+    @staticmethod
     def update_cookie(id_cookie):
         import uuid
         cookie = uuid.uuid4().hex
@@ -203,8 +203,8 @@ class usuario(base_model):
 
         return exito
 
-    @classmethod
-    def logout(cls):
+    @staticmethod
+    def logout():
         prefix_site = app.prefix_site
         session = app.session
         del session[usuario.idname + prefix_site]
@@ -214,7 +214,7 @@ class usuario(base_model):
         del session["tipo" + prefix_site]
         functions.set_cookie('cookieusuario' + prefix_site, 'aaa', (31536000))
 
-    @classmethod
+    @staticmethod
     def verificar_sesion():
         prefix_site = app.prefix_site
         session = app.session
@@ -242,7 +242,7 @@ class usuario(base_model):
 
         return False
 
-    @classmethod
+    @staticmethod
     def recuperar(email):
         """recuperar contraseña"""
         from core.view import view

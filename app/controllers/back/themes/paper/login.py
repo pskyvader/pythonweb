@@ -1,7 +1,9 @@
 from core.functions import functions
 from core.app import app
 from core.view import view
+from core.image import image
 from app.models.administrador import administrador as administrador_model
+from app.models.logo import logo as logo_model
 from .head import head
 from .footer import footer
 from .base import base
@@ -11,19 +13,20 @@ class login(base):
     url = ['login', 'index']
     metadata = {'title': 'login', 'modulo': 'login'}
 
-    def index(self, url):
+    @classmethod
+    def index(cls, url):
         from time import time
         ret = {'body': ''}
-        self.url = self.url+url
+        cls.url = cls.url+url
 
         cookie_admin = functions.get_cookie('cookieadmin'+app.prefix_site)
         if cookie_admin != False:
             logueado = administrador_model.login_cookie(cookie_admin)
             if logueado:
                 if not url:
-                    self.url = ['home']
+                    cls.url = ['home']
                 else:
-                    self.url = url
+                    cls.url = url
         if 'bloqueo_administrador' in app.session and app.session['bloqueo_administrador'] > time():
             ret['body'] = "IP Bloqueada por intentos fallidos. Intente más tarde. tiempo: " +  str(int(app.session['bloqueo_administrador']-time()))+" segundos"
             return ret
@@ -45,9 +48,9 @@ class login(base):
                             if 'intento_administrador' in app.session:
                                 app.session['intento_administrador'] = 0
                             if not url:
-                                self.url = ['home']
+                                cls.url = ['home']
                             else:
-                                self.url = url
+                                cls.url = url
                         else:
                             error_login = True
                             if not 'intento_administrador' in app.session:
@@ -64,7 +67,7 @@ class login(base):
                     app.session['intento_administrador'] = 0
                 app.session['intento_administrador'] += 1
 
-        url_return = functions.url_redirect(self.url)
+        url_return = functions.url_redirect(cls.url)
         if url_return != '':
             ret['error'] = 301
             ret['redirect'] = url_return
@@ -72,7 +75,7 @@ class login(base):
 
         token = functions.generar_pass(20)
         app.session['login_token'] = {'token': token, 'time': time()}
-        h = head(self.metadata)
+        h = head(cls.metadata)
         ret_head = h.normal()
         if ret_head['headers'] != '':
             return ret_head
@@ -82,8 +85,8 @@ class login(base):
         view.add('error_login', error_login)
         view.add('token', token)
         view.add('url_recuperar', functions.generar_url(["recuperar"]))
-        # logo=logo_model.getById(2)
-        #view.add('logo', image.generar_url(logo['foto'][0], 'login'))
+        logo=logo_model.getById(2)
+        view.add('logo', image.generar_url(logo['foto'][0], 'login'))
         ret['body'] += view.render('login')
 
         f = footer()

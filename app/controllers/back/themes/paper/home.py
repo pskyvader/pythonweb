@@ -15,7 +15,7 @@ class home(base):
 
     def __init__(self):
         print(self.__class__.__name__)
-        return super().__init__(self.__class__)
+        super().__init__(self.__class__.__name__)
 
     @classmethod
     def init(cls,var):

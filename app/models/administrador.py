@@ -24,7 +24,6 @@ class administrador(base_model):
             return {'exito': False, 'mensaje': 'Contraseña no existe'}
 
         fields     = table.getByname(cls.table)
-        fields = {}
         insert = database.create_data(fields, set_query)
         insert['pass'] = database.encript(insert['pass'])
         insert['email'] = insert['email'].lower()

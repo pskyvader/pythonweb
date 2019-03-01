@@ -1,6 +1,7 @@
 from core.functions import functions
 from core.view import view
 from core.app import app
+from app.models.administrador import administrador as administrador_model
 
 
 class aside:
@@ -8,8 +9,7 @@ class aside:
     def normal(self):
         ret = {'body': ''}
         if 'ajax' not in app.post:
-            #administrador = administrador_model.getById( _SESSION[administrador_model.idname . app.prefix_site])
-            administrador = {0:1,'nombre':'Pablo','email':'pablo.rain.contreras@gmail.com','tipo': 1}
+            administrador = administrador_model.getById( app.session[administrador_model.idname + app.prefix_site])
             tipo_admin = administrador["tipo"]
             #moduloconfiguracion = moduloconfiguracion_model.getAll( {'estado': True, 'aside': True})
             moduloconfiguracion = {}

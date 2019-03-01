@@ -14,7 +14,7 @@ class base_model:
         idpadre = None
         return_total = None
         connection = database.instance()
-        # fields     = table.getByname(cls.table)
+        fields     = table.getByname(cls.table)
         fields = {}
         if 'estado' not in where and app.front and 'estado' in fields:
             where['estado'] = True
@@ -93,7 +93,7 @@ class base_model:
     def getById(cls, id: int):
         where = {cls.idname: id}
         if app.front:
-            # fields     = table.getByname(cls.table)
+            fields     = table.getByname(cls.table)
             fields = {}
             if 'estado' in fields:
                 where['estado'] = True
@@ -112,7 +112,7 @@ class base_model:
     @classmethod
     def insert(cls, set_query: dict,  loggging=True):
         from .log import log
-        # fields     = table.getByname(cls.table)
+        fields     = table.getByname(cls.table)
         fields = {}
         insert = database.create_data(fields, set_query)
         connection = database.instance()
@@ -165,7 +165,7 @@ class base_model:
         if 'archivo' in row:
             del row['archivo']
 
-        # fields     = table.getByname(cls.table)
+        fields     = table.getByname(cls.table)
         fields = {}
         insert = database.create_data(fields, row)
         connection = database.instance()

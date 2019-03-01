@@ -151,6 +151,7 @@ class base_model:
     @classmethod
     def copy(cls, id: int, loggging=True):
         from .log import log
+        from .table import table
         from core.image import image
         row = cls.getById(id)
         if 'idpadre' in row:

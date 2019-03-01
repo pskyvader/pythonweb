@@ -10,9 +10,9 @@ class base:
     breadcrumb     = []
     contiene_tipos = False
     contiene_hijos = False
-    
+
     @classmethod
-    def __init__(self, class_name):
+    def __init__(cls, class_name):
         moduloconfiguracion = moduloconfiguracion_model.getByModulo(base.metadata['modulo'])
         if 0 in moduloconfiguracion:
             base.contiene_tipos =moduloconfiguracion['tipos'] if 'tipos' in moduloconfiguracion else False

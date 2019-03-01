@@ -13,19 +13,18 @@ class home:
     metadata = {'title': 'Home', 'modulo': 'home'}
 
     def init(self,var):
-        h = home()
         if len(var) > 0:
-            if hasattr(h, var[0]) and callable(getattr(h, var[0])):
+            if hasattr(self, var[0]) and callable(getattr(self, var[0])):
                 fun = var[0]
                 del var[0]
-                method=getattr(h, fun)
+                method=getattr(self, fun)
                 ret = method(var)
             else:
                 ret = {
                     'error': 404,
                 }
         else:
-            ret = h.index()
+            ret = self.index()
         return ret
 
     def index(self):

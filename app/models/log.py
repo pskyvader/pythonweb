@@ -1,6 +1,7 @@
 from core.app import app
 from core.database import database
 from .base_model import base_model
+from .table import table
 import datetime
 
 
@@ -12,7 +13,7 @@ class log(base_model):
     def getAll(cls, where={}, condiciones={}, select=""):
         return_total = None
         connection = database.instance()
-        # fields     = table.getByname(cls.table)
+        fields     = table.getByname(cls.table)
         fields = {}
 
         if 'order' not in condiciones and 'orden' in fields:
@@ -41,7 +42,7 @@ class log(base_model):
 
     @classmethod
     def insert(cls, set_query: dict,  loggging=True):
-        # fields     = table.getByname(cls.table)
+        fields     = table.getByname(cls.table)
         fields = {
             'administrador' : {'titulo': 'administrador', 'tipo' : 'char(255)'},
             'tabla'    : {'titulo': 'tabla', 'tipo' : 'char(255)'},

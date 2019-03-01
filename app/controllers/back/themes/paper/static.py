@@ -8,13 +8,10 @@ import socket
 
 
 class static:
-    def init(var):
-        h = static()
+    def init(self, var):
         if 0 in var:
             del var[0]
-        ret = h.index(var)
-        return ret
-    def index(self, var):
+
         if len(var) == 0:
             return {'error': 404}
 

@@ -166,7 +166,7 @@ class usuario(base_model):
             respuesta['mensaje'] = "Todos los datos son obligatorios"
             return respuesta
         
-        usuario     = cls.getById(app.session[cls.idname . app.prefix_site])
+        usuario     = cls.getById(app.session[cls.idname + app.prefix_site])
 
         if usuario['email'] != datos['email']:
             where = array(

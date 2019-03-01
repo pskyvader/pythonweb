@@ -14,7 +14,6 @@ class pedido(base_model):
     @classmethod
     def insert(cls, set_query: dict,  loggging=True):
         fields     = table.getByname(cls.table)
-        fields = {}
         if not 'fecha_creacion' in set_query:
             set_query['fecha_creacion'] = datetime.datetime.now().strftime(
                 "%Y-%m-%d %H:%M:%S")

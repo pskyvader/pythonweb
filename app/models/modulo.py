@@ -64,7 +64,6 @@ class modulo(base_model):
         row['estado'] = json.dumps(row['estado'])
 
         fields     = table.getByname(cls.table)
-        fields = {}
         insert = database.create_data(fields, row)
         connection = database.instance()
         row = connection.insert(cls.table, cls.idname, insert)

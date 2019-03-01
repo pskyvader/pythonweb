@@ -15,7 +15,6 @@ class moduloconfiguracion(base_model):
         return_total = None
         connection = database.instance()
         fields     = table.getByname(cls.table)
-        fields = {}
         if 'estado' not in where and app.front and 'estado' in fields:
             where['estado'] = True
 
@@ -73,7 +72,6 @@ class moduloconfiguracion(base_model):
         row['detalle'] = json.dumps(row['detalle'])
 
         fields     = table.getByname(cls.table)
-        fields = {}
         insert = database.create_data(fields, row)
         connection = database.instance()
         row = connection.insert(cls.table, cls.idname, insert)

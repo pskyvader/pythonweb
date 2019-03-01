@@ -16,7 +16,6 @@ class texto(base_model):
         return_total = None
         connection = database.instance()
         fields     = table.getByname(cls.table)
-        fields = {}
         if 'estado' not in where and app.front and 'estado' in fields:
             where['estado'] = True
 
@@ -97,7 +96,6 @@ class texto(base_model):
         where = {cls.idname: id}
         if app.front:
             fields     = table.getByname(cls.table)
-            fields = {}
             if 'estado' in fields:
                 where['estado'] = True
 

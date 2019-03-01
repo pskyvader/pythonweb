@@ -30,11 +30,16 @@ class modulo(base_model):
 
         row = connection.get(cls.table, cls.idname, where, condiciones, select)
         for r in row:
-            r['menu'] = json.loads(r['menu'])
-            r['mostrar'] = json.loads(r['mostrar'])
-            r['detalle'] = json.loads(r['detalle'])
-            r['recortes'] = json.loads(r['recortes'])
-            r['estado'] = json.loads(r['estado'])
+            if 'menu' in r:
+                r['menu'] = json.loads(r['menu'])
+            if 'mostrar' in r:
+                r['mostrar'] = json.loads(r['mostrar'])
+            if 'detalle' in r:
+                r['detalle'] = json.loads(r['detalle'])
+            if 'recortes' in r:
+                r['recortes'] = json.loads(r['recortes'])
+            if 'estado' in r:
+                r['estado'] = json.loads(r['estado'])
 
         if return_total != None:
             return len(row)

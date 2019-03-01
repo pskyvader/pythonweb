@@ -26,22 +26,22 @@ class home(base):
                     'error': 404,
                 }
         else:
-            ret = cls.index(cls)
+            ret = cls.index()
         return ret
-
-    def index(self):
+    @classmethod
+    def index(cls):
         ret = {'body':''}
         if not administrador_model.verificar_sesion():
-            self.url = ['login', 'index', 'home']
+            cls.url = ['login', 'index', 'home']
         
-        url_return=functions.url_redirect(self.url)
+        url_return=functions.url_redirect(cls.url)
         if url_return!='':
             ret['error']=301
             ret['redirect']=url_return
             return ret
         
         registros=administrador_model.getAll(where={'idpadre':1},condiciones={'limit':1,'limit2':0})
-        h = head(self.metadata)
+        h = head(cls.metadata)
         ret_head=h.normal()
         if ret_head['headers']!='':
             return ret_head

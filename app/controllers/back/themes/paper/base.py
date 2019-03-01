@@ -23,7 +23,7 @@ class base:
                 tipo = 0
 
 
-            modulo                  = modulo_model.getAll({'idmoduloconfiguracion' : moduloconfiguracion[0], 'tipo' : tipo})
+            modulo                  = modulo_model.getAll(where={'idmoduloconfiguracion' : moduloconfiguracion[0], 'tipo' : tipo})
             base.contiene_hijos    = (isset(modulo[0]['hijos'])) ? modulo[0]['hijos'] : false
             base.metadata['title'] = modulo[0]['titulo']
             

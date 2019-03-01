@@ -84,6 +84,11 @@ class app:
         controller = app.controller_dir + url[0]
         my_file = Path(app.root + controller + '.py')
         if my_file.is_file():
+            spec = importlib.util.find_spec(url[0], package=controller.replace("/", "."))
+            print('Loader:', spec.loader)
+
+            m = spec.loader.load_module()
+            print('Module:', m)
             current_module = importlib.import_module(controller.replace("/", "."))
             del url[0]
             print(current_module)

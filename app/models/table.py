@@ -206,8 +206,8 @@ class table(base_model):
                 'Controlador ' + tablename + ' ya existe')
         else:
             controller_url = dir + 'app/templates/controllers/back/controller.tpl'
-            controller_template = view.render_template(
-                {'name': tablename, 'theme': config['theme_back']}, codecs.open(controller_url, encoding='utf-8').read())
+            view.add_array({'name': tablename, 'theme': config['theme_back']})
+            controller_template = view.render_template(  codecs.open(controller_url, encoding='utf-8').read())
             respuesta['mensaje'].append(
                 'Controlador ' + tablename + ' no existe, creado')
             file_write = open(destino, 'w', encoding='utf-8')
@@ -220,8 +220,7 @@ class table(base_model):
             respuesta['mensaje'].append('Modelo ' + tablename + ' ya existe')
         else:
             model_url = dir + 'app/templates/models/back/model.tpl'
-            model_template = view.render_template(
-                {'class': tablename, 'table': tablename, 'idname': idname}, codecs.open(model_url, encoding='utf-8').read())
+            model_template = view.render_template( {'class': tablename, 'table': tablename, 'idname': idname}, codecs.open(model_url, encoding='utf-8').read())
             respuesta['mensaje'].append(
                 'Modelo ' + tablename + ' no existe, creado')
             file_write = open(destino, 'w', encoding='utf-8')

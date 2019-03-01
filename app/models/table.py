@@ -3,6 +3,7 @@ from core.database import database
 from core.app import app
 import json
 from .log import log
+from .table import table
 
 
 class table(base_model):
@@ -32,7 +33,6 @@ class table(base_model):
 
         row = connection.get(cls.table, cls.idname, where, condiciones, select)
         for r in row:
-            deleted = False
             if 'fields' in r:
                 r['fields'] = json.loads(r['fields'])
         if return_total != None:
@@ -74,7 +74,7 @@ class table(base_model):
         row = cls.getById(id)
         row['fields'] = json.dumps(row['fields'])
 
-        # fields     = table.getByname(cls.table)
+        fields     = table.getByname(cls.table)
         fields = {}
         insert = database.create_data(fields, row)
         connection = database.instance()

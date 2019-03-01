@@ -3,6 +3,7 @@ from core.database import database
 from .base_model import base_model
 from .log import log
 from .productocategoria import productocategoria
+from .table import table
 import datetime
 import json
 
@@ -18,7 +19,7 @@ class producto(base_model):
         idproductocategoria = None
         return_total = None
         connection = database.instance()
-        # fields     = table.getByname(cls.table)
+        fields     = table.getByname(cls.table)
         fields = {}
         if 'estado' not in where and app.front and 'estado' in fields:
             where['estado'] = True
@@ -133,7 +134,7 @@ class producto(base_model):
     def getById(cls, id: int):
         where = {cls.idname: id}
         if app.front:
-            # fields     = table.getByname(cls.table)
+            fields     = table.getByname(cls.table)
             fields = {}
             if 'estado' in fields:
                 where['estado'] = True
@@ -218,7 +219,7 @@ class producto(base_model):
             del row['archivo']
 
         row['idproductocategoria'] = json.dumps(row['idproductocategoria'])
-        # fields     = table.getByname(cls.table)
+        fields     = table.getByname(cls.table)
         fields = {}
         insert = database.create_data(fields, row)
         connection = database.instance()

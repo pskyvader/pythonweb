@@ -236,7 +236,7 @@ class table(base_model):
         return respuesta
 
     @classmethod
-    def truncate(tables: list):
+    def truncate(tables: []):
         from core.image import image
         respuesta = {'exito': True, 'mensaje': []}
         for table in tables:
@@ -247,7 +247,6 @@ class table(base_model):
         if respuesta['exito']:
             for table in tables:
                 image.delete(table)
-
         else:
             respuesta['mensaje'] = 'Error al vaciar tablas'
 

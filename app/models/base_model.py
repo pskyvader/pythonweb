@@ -1,5 +1,6 @@
 from core.app import app
 from core.database import database
+from .table import table
 import json
 
 

@@ -90,6 +90,7 @@ class base_model:
 
     @classmethod
     def getById(cls, id: int):
+        from .table import table
         where = {cls.idname: id}
         if app.front:
             fields     = table.getByname(cls.table)
@@ -110,6 +111,7 @@ class base_model:
     @classmethod
     def insert(cls, set_query: dict,  loggging=True):
         from .log import log
+        from .table import table
         fields     = table.getByname(cls.table)
         insert = database.create_data(fields, set_query)
         connection = database.instance()

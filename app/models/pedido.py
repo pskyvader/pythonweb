@@ -67,7 +67,6 @@ class pedido(base_model):
             del row['archivo']
 
         fields     = table.getByname(cls.table)
-        fields = {}
         insert = database.create_data(fields, row)
         connection = database.instance()
         row = connection.insert(cls.table, cls.idname,

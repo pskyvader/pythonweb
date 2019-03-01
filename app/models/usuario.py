@@ -111,23 +111,23 @@ class usuario(base_model):
         if len(row) != 1:
             return False
         else:
-            usuario = row[0]
-            if not usuario['estado']:
+            user = row[0]
+            if not user['estado']:
                 return False
             else:
-                profile = profile_model.getByTipo(usuario['tipo'])
+                profile = profile_model.getByTipo(user['tipo'])
                 if not 'tipo' in profile or int(profile['tipo']) <= 0:
                     return False
                 else:
                     session = app.session
-                    session[usuario.idname + prefix_site] = usuario[0]
-                    session["emailusuario" + prefix_site] = usuario['email']
-                    session["nombreusuario" + prefix_site] = usuario['nombre']
-                    session["estadousuario" + prefix_site] = usuario['estado']
-                    session["tipousuario" + prefix_site] = usuario['tipo']
-                    log.insert_log(usuario.table, usuario.idname, usuario, usuario)
+                    session[user.idname + prefix_site] = user[0]
+                    session["emailusuario" + prefix_site] = user['email']
+                    session["nombreusuario" + prefix_site] = user['nombre']
+                    session["estadousuario" + prefix_site] = user['estado']
+                    session["tipousuario" + prefix_site] = user['tipo']
+                    log.insert_log(user.table, user.idname, usuario, user)
                     if recordar == 'on':
-                        return usuario.update_cookie(usuario[0])
+                        return usuario.update_cookie(user[0])
                     else:
                         return True
 

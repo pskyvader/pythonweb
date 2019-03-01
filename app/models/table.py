@@ -2,6 +2,7 @@ from .base_model import base_model
 from core.database import database
 from core.app import app
 import json
+from .log import log
 
 class table(base_model):
     idname = 'idtable'
@@ -70,7 +71,6 @@ class table(base_model):
 
     @classmethod
     def copy(cls, id: int, loggging=True):
-        from .log import log
         row = cls.getById(id)
         row['fields'] = json.dumps(row['fields'])
 
@@ -181,6 +181,8 @@ class table(base_model):
     @classmethod
     def generar(cls,id:int):
         from pathlib import Path
+        from core.view import view
+        import codecs
         config    = app.get_config()
         respuesta = {'exito': True, 'mensaje': []}
         row       = cls.getById(id)
@@ -193,23 +195,28 @@ class table(base_model):
             respuesta['mensaje'].append('Controlador ' + tablename + ' ya existe')
         else:
             controller_url         = dir + 'app/templates/controllers/back/controller.tpl'
-            controller_template    = view.render_template(array('name': tablename, 'theme': config['theme_back']), file_get_contents(controller_url))
-            respuesta['mensaje'][] = 'Controlador ' . tablename . ' no existe, creado'
-            file_put_contents(destino, controller_template)
-        }
+            controller_template    = view.render_template({'name': tablename, 'theme': config['theme_back']}, codecs.open(controller_url, encoding='utf-8').read())
+            respuesta['mensaje'].append('Controlador ' + tablename + ' no existe, creado')
+            file_write = open(destino, 'w', encoding='utf-8')
+            file_write.write(controller_template)
+            file_write.close()
+        
 
-        destino = dir . 'app\models\\' . tablename . '.php'
-        if (file_exists(destino)) {
-            respuesta['mensaje'][] = 'Modelo ' . tablename . ' ya existe'
-        } else {
-            model_url              = dir . 'app\templates\models\back\model.tpl'
-            model_template         = view.render_template(array('class': tablename, 'table': tablename, 'idname': idname), file_get_contents(model_url))
-            respuesta['mensaje'][] = 'Modelo ' . tablename . ' no existe, creado'
-            file_put_contents(destino, model_template)
-        }
-        log.insert_log(cls.table, cls.idname, __FUNCTION__, row)
+        destino = dir + 'app/models/' + tablename + '.py'
+        my_file = Path(destino)
+        if my_file.is_file():
+            respuesta['mensaje'].append('Modelo ' + tablename + ' ya existe')
+        else:
+            model_url              = dir + 'app/templates/models/back/model.tpl'
+            model_template         = view.render_template({'class': tablename, 'table': tablename, 'idname': idname}, codecs.open(model_url, encoding='utf-8').read() )
+            respuesta['mensaje'].append('Modelo ' + tablename + ' no existe, creado')
+            file_write = open(destino, 'w', encoding='utf-8')
+            file_write.write(model_template)
+            file_write.close()
+        
+        log.insert_log(cls.table, cls.idname, cls, row)
         return respuesta
-    }
+    
 
     public static function truncate(array tables)
     {

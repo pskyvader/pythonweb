@@ -70,6 +70,7 @@ class table(base_model):
 
     @classmethod
     def copy(cls, id: int, loggging=True):
+        from .log import log
         row = cls.getById(id)
         row['fields'] = json.dumps(row['fields'])
 

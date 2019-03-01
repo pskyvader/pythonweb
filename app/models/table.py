@@ -192,6 +192,7 @@ class table(base_model):
     def generar(cls, id: int):
         from pathlib import Path
         from core.view import view
+        from .log import log
         import codecs
         config = app.get_config()
         respuesta = {'exito': True, 'mensaje': []}

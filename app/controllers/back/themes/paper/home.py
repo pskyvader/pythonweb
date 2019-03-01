@@ -12,19 +12,20 @@ class home:
     url = ['home']
     metadata = {'title': 'Home', 'modulo': 'home'}
 
-    def init(self,var):
+    @classmethod
+    def init(cls,var):
         if len(var) > 0:
-            if hasattr(self, var[0]) and callable(getattr(self, var[0])):
+            if hasattr(cls, var[0]) and callable(getattr(cls, var[0])):
                 fun = var[0]
                 del var[0]
-                method=getattr(self, fun)
+                method=getattr(cls, fun)
                 ret = method(var)
             else:
                 ret = {
                     'error': 404,
                 }
         else:
-            ret = self.index()
+            ret = cls.index()
         return ret
 
     def index(self):

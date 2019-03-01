@@ -13,6 +13,9 @@ class home(base):
     url = ['home']
     metadata = {'title': 'Home', 'modulo': 'home'}
 
+    def __init__(self):
+        super().__init__(None)
+
     @classmethod
     def index(cls):
         ret = {'body':''}

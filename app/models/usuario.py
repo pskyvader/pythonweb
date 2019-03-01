@@ -83,17 +83,17 @@ class usuario(base_model):
         row = usuario.getAll(where, condiciones)
 
         if len(row) == 1:
-            usuario = row[0]
-            if usuario['estado']:
-                profile = profile_model.getByTipo(usuario['tipo'])
+            user = row[0]
+            if user['estado']:
+                profile = profile_model.getByTipo(user['tipo'])
                 if 'tipo' in profile and int(profile['tipo']) > 0:
                     session = app.session
-                    session[usuario.idname + prefix_site] = usuario[0]
-                    session["emailusuario" + prefix_site] = usuario['email']
-                    session["nombreusuario" + prefix_site] = usuario['nombre']
-                    session["estadousuario" + prefix_site] = usuario['estado']
-                    session["tipousuario" + prefix_site] = usuario['tipo']
-                    log.insert_log(usuario.table, usuario.idname, usuario, usuario)
+                    session[user.idname + prefix_site] = user[0]
+                    session["emailusuario" + prefix_site] = user['email']
+                    session["nombreusuario" + prefix_site] = user['nombre']
+                    session["estadousuario" + prefix_site] = user['estado']
+                    session["tipousuario" + prefix_site] = user['tipo']
+                    log.insert_log(user.table, user.idname, usuario, user)
                     return True
         functions.set_cookie(cookie, 'aaa', (31536000))
         return False

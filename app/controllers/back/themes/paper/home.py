@@ -13,9 +13,9 @@ class home(base):
     url = ['home']
     metadata = {'title': 'Home', 'modulo': 'home'}
 
-    def __init__(cls):
-        print(cls.__class__)
-        return super().__init__(cls.__class__)
+    def __init__(self):
+        print(self.__class__)
+        return super().__init__(self.__class__)
 
     @classmethod
     def init(cls,var):

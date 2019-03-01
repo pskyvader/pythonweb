@@ -54,6 +54,8 @@ class base:
 
     @classmethod
     def init(cls, var):
+        from inspect import signature
+
         if len(var)==0:
             var=['index']
 
@@ -61,7 +63,12 @@ class base:
             fun = var[0]
             del var[0]
             method = getattr(cls, fun)
-            ret = method(var)
+            sig = signature(method)
+            params = sig.parameters 
+            if len(params)>1:
+                ret = method(var)
+            else:
+                ret=method()
         else:
             ret = {
                 'error': 404

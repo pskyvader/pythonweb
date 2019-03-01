@@ -177,21 +177,22 @@ class table(base_model):
         row         = connection.get(table, cls.idname, where, condiciones, select)
         connection.set_prefix(prefix)
         return (row[0]['count'] == 1)
-    }
-
-    public static function generar(id)
-    {
+        
+    @classmethod
+    def generar(cls,id:int):
+        from pathlib import Path
         config    = app.get_config()
-        respuesta = array('exito': true, 'mensaje': array())
+        respuesta = {'exito': True, 'mensaje': []}
         row       = cls.getById(id)
         idname    = row['idname']
         tablename = row['tablename']
-        dir       = app.get_dir(true)
-        destino   = dir . app.NAMESPACE_BACK . config['theme_back'] . '\\' . tablename . '.php'
-        if (file_exists(destino)) {
-            respuesta['mensaje'][] = 'Controlador ' . tablename . ' ya existe'
-        } else {
-            controller_url         = dir . 'app\templates\controllers\back\controller.tpl'
+        dir       = app.get_dir(True)
+        destino   = dir + app.controller_dir + tablename + '.py'
+        my_file = Path(destino)
+        if my_file.is_file():
+            respuesta['mensaje'].append('Controlador ' + tablename + ' ya existe')
+        else:
+            controller_url         = dir + 'app/templates/controllers/back/controller.tpl'
             controller_template    = view.render_template(array('name': tablename, 'theme': config['theme_back']), file_get_contents(controller_url))
             respuesta['mensaje'][] = 'Controlador ' . tablename . ' no existe, creado'
             file_put_contents(destino, controller_template)

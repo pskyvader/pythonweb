@@ -91,123 +91,81 @@ class seo(base_model):
         else:
             return row
 
+    @classmethod
+    def getById(cls, id: int):
+        where = {cls.idname: id}
+        if app.front:
+            # fields     = table.getByname(cls.table)
+            fields = {}
+            if 'estado' in fields:
+                where['estado'] = True
 
+        connection = database.instance()
+        row = connection.get(cls.table, cls.idname, where)
+        if len(row) == 1:
+            if 'idpadre' in row[0]:
+                row[0]['idpadre'] = json.loads(row[0]['idpadre'])
+            if 'foto' in row[0]:
+                row[0]['foto'] = json.loads(row[0]['foto'])
+            if 'banner' in row[0]:
+                row[0]['banner'] = json.loads(row[0]['banner'])
+            if 'archivo' in row[0]:
+                row[0]['archivo'] = json.loads(row[0]['archivo'])
+        return row[0] if len(row) == 1 else row
 
-    public static function getAll(array $where = array(),array  $condiciones = array(), string $select = "")
-    {
-        $connection = database::instance();
-        if (!isset($where['estado']) && app::$_front) {
-            $where['estado'] = true;
-        }
+    @classmethod
+    def copy(cls, id: int, loggging=True):
+        from .log import log
+        from core.image import image
+        row = cls.getById(id)
+        if 'idpadre' in row:
+            row['idpadre'] = json.dumps(row['idpadre'])
+        if 'foto' in row:
+            foto_copy = row['foto']
+            del row['foto']
+        else:
+            foto_copy = None
+        if 'banner' in row:
+            banner_copy = row['banner']
+            del row['banner']
+        else:
+            banner_copy = None
 
-        if (!isset($condiciones['order'])) {
-            $condiciones['order'] = 'orden ASC';
-        }
+        if 'archivo' in row:
+            del row['archivo']
 
-        if (isset($condiciones['palabra'])) {
-            $fields = table::getByname(static::$table);
-            $condiciones['buscar'] = array();
-            if (isset($fields['titulo'])) {
-                $condiciones['buscar']['titulo'] = $condiciones['palabra'];
-            }
+        # fields     = table.getByname(cls.table)
+        fields = {}
+        insert = database.create_data(fields, row)
+        connection = database.instance()
+        row = connection.insert(cls.table, cls.idname, insert)
+        if isinstance(row, int) and row > 0:
+            last_id = row
+            if foto_copy != None:
+                new_fotos = []
+                for foto in foto_copy:
+                    copiar = image.copy(
+                        foto, last_id, foto['folder'], foto['subfolder'], last_id, '')
+                    new_fotos.append(copiar['file'][0])
+                    image.regenerar(copiar['file'][0])
 
-            if (isset($fields['keywords'])) {
-                $condiciones['buscar']['keywords'] = $condiciones['palabra'];
-            }
+                update = {'id': last_id, 'foto': json.dumps(new_fotos)}
+                cls.update(update)
 
-            if (isset($fields['descripcion'])) {
-                $condiciones['buscar']['descripcion'] = $condiciones['palabra'];
-            }
+            if banner_copy != None:
+                new_banners = []
+                for banner in banner_copy:
+                    copiar = image.copy(
+                        banner, last_id, banner['folder'], banner['subfolder'], last_id, '')
+                    new_banners.append(copiar['file'][0])
+                    image.regenerar(copiar['file'][0])
 
-            if (isset($fields['metadescripcion'])) {
-                $condiciones['buscar']['metadescripcion'] = $condiciones['palabra'];
-            }
+                update = {'id': last_id, 'banner': json.dumps(new_banners)}
+                cls.update(update)
 
-        }
-
-        if($select=='total'){
-            $return_total=true;
-        }
-        $row = $connection->get(static::$table, static::$idname, $where, $condiciones, $select);
-        if ($select == '') {
-            foreach ($row as $key => $value) {
-                if (isset($row[$key]['foto'])) {
-                    $row[$key]['foto'] = functions::decode_json($row[$key]['foto']);
-                }
-                if (isset($row[$key]['banner'])) {
-                    $row[$key]['banner'] = functions::decode_json($row[$key]['banner']);
-                }
-            }
-        }
-        if(isset($return_total)){
-            return count($row);
-        }
-        return $row;
-    }
-
-    public static function getById(int $id)
-    {
-        $where = array(static::$idname => $id);
-        if (app::$_front) {
-            $fields = table::getByname(static::$table);
-            if(isset($fields['estado'])) $where['estado'] = true;
-        }
-        $connection = database::instance();
-        $row = $connection->get(static::$table, static::$idname, $where);
-        if (count($row) == 1) {
-            if (isset($row[0]['foto'])) {
-                $row[0]['foto'] = functions::decode_json($row[0]['foto']);
-            }
-            if (isset($row[0]['banner'])) {
-                $row[0]['banner'] = functions::decode_json($row[0]['banner']);
-            }
-        }
-        return (count($row) == 1) ? $row[0] : $row;
-    }
-
-    public static function copy(int $id)
-    {
-        $row = static::getById($id);
-        if (isset($row['banner'])) {
-            $banner_copy=$row['banner'];
-            unset($row['banner']);
-        }
-        if (isset($row['foto'])) {
-            $foto_copy=$row['foto'];
-            unset($row['foto']);
-        }
-        if (isset($row['archivo'])) {
-            unset($row['archivo']);
-        }
-        $fields     = table::getByname(static::$table);
-        $insert     = database::create_data($fields, $row);
-        $connection = database::instance();
-        $row        = $connection->insert(static::$table, static::$idname, $insert);
-        if (is_int($row) && $row>0) {
-            $last_id = $row;
-            if(isset($foto_copy)){
-                $new_fotos=array();
-                foreach ($foto_copy as $key => $foto) {
-                    $copiar = image::copy($foto, $last_id, $foto['folder'], $foto['subfolder'], $last_id, '');
-                    $new_fotos[]=$copiar['file'][0];
-                    image::regenerar($copiar['file'][0]);
-                }
-                $update=array('id'=>$last_id,'foto'=>functions::encode_json($new_fotos));
-                static::update($update);
-            }
-            if(isset($banner_copy)){
-                $new_banners=array();
-                foreach ($banner_copy as $key => $banner) {
-                    $copiar = image::copy($banner, $last_id, $banner['folder'], $banner['subfolder'], $last_id, '');
-                    $new_banners[]=$copiar['file'][0];
-                    image::regenerar($copiar['file'][0]);
-                }
-                $update=array('id'=>$last_id,'banner'=>functions::encode_json($new_banners));
-                static::update($update);
-            }
-            log::insert_log(static::$table, static::$idname, __FUNCTION__, $insert);
-            return $last_id;
-        } else {
-            return $row;
-        }
-    }
+            if loggging:
+                log.insert_log(cls.table, cls.idname, cls, (insert))
+                pass
+            return last_id
+        else:
+            return row

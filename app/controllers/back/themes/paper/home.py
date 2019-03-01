@@ -11,6 +11,7 @@ from app.models.administrador import administrador as administrador_model
 class home:
     url = ['home']
     metadata = {'title': 'Home', 'modulo': 'home'}
+    
 
     @staticmethod
     def init(var):

@@ -65,6 +65,7 @@ class base:
                     'error': 404
                 }
         else:
+            if hasattr(cls, 'index') and callable(getattr(cls, 'index')):
             try:
                 ret = cls.index()
             except:

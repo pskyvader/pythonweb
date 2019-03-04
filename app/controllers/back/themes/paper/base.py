@@ -87,7 +87,7 @@ class base:
         '''Controlador de lista de elementos base, puede ser sobreescrito en el controlador de cada modulo'''
         ret = {'body': ''}
         # Clase para enviar a controlador de lista
-        class_name = cls.class_name_name
+        class_name = cls.class_name
         get = app.get
         if cls.contiene_tipos and not 'tipo' in get:
             cls.url = ['home']
@@ -176,7 +176,7 @@ class base:
         '''Controlador de detalle de elementos base, puede ser sobreescrito en el controlador de cada modulo'''
         ret = {'body': ''}
         # Clase para enviar a controlador de detalle
-        class_name = cls.class_name_name
+        class_name = cls.class_name
         get = app.get
         url_save = url_list = cls.url
         url_save.append('guardar')

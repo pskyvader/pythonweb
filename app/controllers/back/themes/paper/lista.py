@@ -214,6 +214,7 @@ class lista:
 
         modulo = modulo[0]
         estados = modulo['estado'][0]['estado']
+        print(estados)
         if 'true' != estados[tipo_admin]:
             return {'error': 301, 'redirect': functions.url_redirect(['home'])}
 

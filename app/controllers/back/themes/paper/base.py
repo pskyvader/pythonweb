@@ -8,6 +8,7 @@ from app.models.administrador import administrador as administrador_model
 from app.models.table import table
 
 from .lista import lista
+from .detalle import detalle
 
 import importlib
 import json

@@ -213,7 +213,7 @@ class lista:
         modulo  = modulo[0]
         estados = modulo['estado'][0]['estado']
         if 'true' != estados[tipo_admin]:
-            functions.url_redirect(['home'])
+            return {'error':301,'redirect':functions.url_redirect(['home'])}
 
         th = []
         for m in modulo['mostrar']:

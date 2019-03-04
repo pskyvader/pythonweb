@@ -1,3 +1,4 @@
+from core.app import app
 from core.view import view
 from .head import head
 from .header import header
@@ -54,3 +55,42 @@ class lista:
 
         f = footer()
         ret['body'] += f.normal()['body']
+
+
+    def get_row(self,class_name, where:dict, condiciones:dict, urledit:str):
+        get=app.get
+        limit  = (isset(_GET['limit'])) ? (int) _GET['limit'] : 10;
+        page   = (isset(_GET['page'])) ? (int) _GET['page'] : 1;
+        search = (isset(_GET['search'])) ? _GET['search'] : '';
+
+        if ('' != search) {
+            condiciones['palabra'] = search;
+        }
+
+        count = class_name::getAll(where, condiciones, 'total');
+        count = count;
+        total = (int) (count / limit);
+        if (total < (count / limit)) {
+            total++;
+        }
+
+        condiciones['limit'] = limit;
+        if (page > 1) {
+            condiciones['limit']  = ((page - 1) * limit);
+            condiciones['limit2'] = (limit);
+        }
+        inicio = (limit * (page - 1)) + 1;
+        fin    = (limit * (page));
+        if (fin > count) {
+            fin = count;
+        }
+
+        row = class_name::getAll(where, condiciones);
+        foreach (row as k => v) {
+            urltmp                 = urledit;
+            urltmp[]               = v[0];
+            row[k]['url_detalle'] = functions::generar_url(urltmp);
+        }
+
+        return array('row' => row, 'page' => page, 'total' => total, 'limit' => limit, 'search' => search, 'count' => count, 'inicio' => inicio, 'fin' => fin);
+    }

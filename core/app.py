@@ -162,11 +162,11 @@ class app:
             del url['url']
         for k,u in url.items():
             print(k,u)
-            print('len:',len(u))
             if len(u)==1:
+                print('len:',len(u))
                 u=next(iter(u))
+                print(u)
         
-        print(url)
         return url
 
     @staticmethod

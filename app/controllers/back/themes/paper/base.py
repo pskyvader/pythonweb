@@ -300,55 +300,53 @@ class base:
 
         detalle_class.normal(data, class_name)
 
-    @classmethod
-    def orden(cls):
+    def orden(self):
         respuesta = {'body': ''}
-        respuesta['body'] = json.dumps(lista.orden(cls.class_name))
+        respuesta['body'] = json.dumps(lista.orden(self.class_name))
         return respuesta
 
-    @classmethod
-    def estado(cls):
+    def estado(self):
         respuesta = {'body': ''}
-        respuesta['body'] = json.dumps(lista.estado(cls.class_name))
+        respuesta['body'] = json.dumps(lista.estado(self.class_name))
         return respuesta
 
-    def eliminar(cls):
+    def eliminar(self):
         respuesta = {'body': ''}
-        respuesta['body'] = json.dumps(lista.eliminar(cls.class_name))
+        respuesta['body'] = json.dumps(lista.eliminar(self.class_name))
         return respuesta
 
-    def copy(cls):
+    def copy(self):
         respuesta = {'body': ''}
-        respuesta['body'] = json.dumps(lista.copy(cls.class_name))
+        respuesta['body'] = json.dumps(lista.copy(self.class_name))
         return respuesta
 
-    def excel(cls):
+    def excel(self):
         get=app.get
         respuesta = {'body': ''}
         respuesta['body'] = {'exito': False, 'mensaje' : 'Debes recargar la pagina'}
-        if cls.contiene_tipos and 'tipo' not in get:
+        if self.contiene_tipos and 'tipo' not in get:
             respuesta['body']=json.dumps(respuesta['body'])
             return respuesta
         
-        if cls.contiene_hijos and 'idpadre' not in get:
+        if self.contiene_hijos and 'idpadre' not in get:
             respuesta['body']=json.dumps(respuesta['body'])
             return respuesta
         
         where = {}
-        if cls.contiene_tipos:
+        if self.contiene_tipos:
             where['tipo'] = get['tipo']
         
-        if cls.contiene_hijos:
+        if self.contiene_hijos:
             where['idpadre'] = get['idpadre']
         
-        if cls.class_parent!=None:
-            class_parent = cls.class_parent
+        if self.class_parent!=None:
+            class_parent = self.class_parent
             if class_parent.idname in get:
                 where[class_parent.idname] = get[class_parent.idname]
             
         
         select = ""
-        respuesta['body'] = json.dumps(lista.excel(cls.class_name, where, select, cls.metadata['title']))
+        respuesta['body'] = json.dumps(lista.excel(self.class_name, where, select, self.metadata['title']))
         return respuesta
 
     def get_all(self):

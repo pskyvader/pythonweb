@@ -88,7 +88,6 @@ class base:
     def index(cls):
         '''Controlador de lista_class de elementos base, puede ser sobreescrito en el controlador de cada modulo'''
         ret = {'body': ''}
-        print(ret)
         # Clase para enviar a controlador de lista_class
         class_name = cls.class_name
         get = app.get
@@ -179,6 +178,7 @@ class base:
         data.update(respuesta)
         data.update(configuracion['menu'])
         ret = lista.normal(data)
+        return ret
 
     @classmethod
     def detail(cls, var={}):

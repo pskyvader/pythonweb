@@ -128,7 +128,7 @@ class base:
                 where[class_parent.idname] = get[class_parent.idname]
 
         condiciones = {}
-        url_detalle = cls.url
+        url_detalle = cls.url.copy()
         url_detalle.append('detail')
         # obtener unicamente elementos de la pagina actual
         respuesta = lista.get_row(class_name, where, condiciones, url_detalle)

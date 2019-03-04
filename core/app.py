@@ -165,6 +165,7 @@ class app:
             if len(u)==1:
                 print('len:',len(u))
                 u=next(iter(u))
+                url[k]=u[0]
                 print(u)
         print(url)
         return url

@@ -54,7 +54,7 @@ class detalle:
         ret['body'] += f.normal()['body']
 
     @staticmethod
-    def configuracion(self, modulo, force=False):
+    def configuracion(modulo:str, force=False):
         tipo_admin = app.session["tipo" + app.prefix_site]
         moduloconfiguracion = moduloconfiguracion_model.getByModulo(modulo)
         var = {'idmoduloconfiguracion': moduloconfiguracion[0]}

@@ -21,12 +21,12 @@ class lista:
     def normal(self, data: dict):
         ret = {'body': ''}
         th = data['th']
-        print(th)
         row_data = data['row']
         row = []
         even = False
         for fila in row_data:
             td = []
+            print(th)
             for v in th:
                 content = self.field(v, fila)
                 td.append({'content': content, 'content_field': v['field']})

@@ -177,7 +177,7 @@ class base:
 
         data.update(respuesta)
         data.update(configuracion['menu'])
-        ret = lista_class.normal(data)
+        ret = lista.normal(data)
 
     @classmethod
     def detail(cls, var={}):

@@ -57,40 +57,34 @@ class lista:
         f = footer()
         ret['body'] += f.normal()['body']
 
+    def get_row(self, class_name, where: dict, condiciones: dict, urledit: str):
+        get = app.get
+        limit = int(get['limit']) if 'limit' in get else 10
+        page = int(get['page']) if 'page' in get else 1
+        search = str(get['search']) if 'search' in get else ''
 
-    def get_row(self,class_name, where:dict, condiciones:dict, urledit:str):
-        get=app.get
-        limit  = int(get['limit']) if 'limit' in get else 10
-        page  = int(get['page']) if 'page' in get else 1
-        search  = str(get['search']) if 'search' in get else ''
-
-        if search!='':
+        if search != '':
             condiciones['palabra'] = search
-        
 
         count = class_name.getAll(where, condiciones, 'total')
         total = int(count / limit)
         if total < (count / limit):
-            total+=1
-        
+            total += 1
 
         condiciones['limit'] = limit
         if page > 1:
-            condiciones['limit']  = ((page - 1) * limit)
+            condiciones['limit'] = ((page - 1) * limit)
             condiciones['limit2'] = (limit)
-        
+
         inicio = (limit * (page - 1)) + 1
-        fin    = (limit * (page))
+        fin = (limit * (page))
         if fin > count:
             fin = count
-        
 
         row = class_name.getAll(where, condiciones)
         for v in row:
-            urltmp                 = urledit
+            urltmp = urledit
             urltmp.append(v[0])
             v['url_detalle'] = functions.generar_url(urltmp)
-        }
 
-        return array('row' => row, 'page' => page, 'total' => total, 'limit' => limit, 'search' => search, 'count' => count, 'inicio' => inicio, 'fin' => fin)
-    }
+        return {'row': row, 'page': page, 'total': total, 'limit': limit, 'search': search, 'count': count, 'inicio': inicio, 'fin': fin}

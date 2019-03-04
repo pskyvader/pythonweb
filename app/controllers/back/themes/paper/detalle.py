@@ -52,6 +52,7 @@ class detalle:
 
         f = footer()
         ret['body'] += f.normal()['body']
+        return ret
 
     @staticmethod
     def configuracion(modulo:str, force=False):

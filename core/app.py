@@ -160,10 +160,11 @@ class app:
         url = dict(parse_qs(app.environ['QUERY_STRING']))
         if 'url' in url:
             del url['url']
-        print(url)
-        for u in url:
+        for k,u in url.items():
             if len(u)==1:
-                u=u[0]
+                u=next(iter(u))
+        
+        print(url)
         return url
 
     @staticmethod

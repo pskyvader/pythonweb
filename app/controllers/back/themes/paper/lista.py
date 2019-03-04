@@ -8,6 +8,7 @@ from .aside import aside
 from .footer import footer
 
 from app.models.moduloconfiguracion import moduloconfiguracion as moduloconfiguracion_model
+from app.models.modulo import modulo as modulo_model
 
 
 class lista:
@@ -202,32 +203,29 @@ class lista:
     @staticmethod
     def configuracion(modulo:str):
         session=app.session
-        tipo_admin          = session["tipo" + app.prefix_site];
-        moduloconfiguracion = moduloconfiguracion_model.getByModulo(modulo);
-        var                 = array('idmoduloconfiguracion' => moduloconfiguracion[0]);
-        if (isset(_GET['tipo'])) {
-            var['tipo'] = _GET['tipo'];
-        }
-        modulo  = modulo_model.getAll(var, array('limit' => 1));
-        modulo  = modulo[0];
-        estados = modulo['estado'][0]['estado'];
-        if ('true' != estados[tipo_admin]) {
-            functions.url_redirect(array('home'));
-        }
-        th = array();
-        foreach (modulo['mostrar'] as key => m) {
-            if ('true' == m['estado'][tipo_admin]) {
-                th[m['field']] = array('title_th' => m['titulo'], 'field' => m['field'], 'type' => m['tipo']);
+        get=app.get
+        tipo_admin          = session["tipo" + app.prefix_site]
+        moduloconfiguracion = moduloconfiguracion_model.getByModulo(modulo)
+        var                 = {'idmoduloconfiguracion' : moduloconfiguracion[0]}
+        if 'tipo' in get:
+            var['tipo'] = get['tipo']
+        modulo  = modulo_model.getAll(var, array('limit' : 1))
+        modulo  = modulo[0]
+        estados = modulo['estado'][0]['estado']
+        if 'true' != estados[tipo_admin]:
+            functions.url_redirect(array('home'))
+        th = array()
+        foreach (modulo['mostrar'] as key : m:
+            if 'true' == m['estado'][tipo_admin]:
+                th[m['field']] = array('title_th' : m['titulo'], 'field' : m['field'], 'type' : m['tipo'])
             }
-        }
 
-        menu = array();
-        foreach (modulo['menu'] as key => m) {
-            if ('true' == m['estado'][tipo_admin]) {
-                menu[m['field']] = true;
+        menu = array()
+        foreach (modulo['menu'] as key : m:
+            if 'true' == m['estado'][tipo_admin]:
+                menu[m['field']] = true
             } else {
-                menu[m['field']] = false;
+                menu[m['field']] = false
             }
-        }
-        return array('menu' => menu, 'th' => th);
+        return array('menu' : menu, 'th' : th)
     }

@@ -160,8 +160,8 @@ class app:
         url = dict(parse_qs(app.environ['QUERY_STRING']))
         if 'url' in url:
             del url['url']
-        for u in url:
-            print(u)
+        for k,u in url.items():
+            print(k,u)
             if len(u)==1:
                 u=next(iter(u))
         

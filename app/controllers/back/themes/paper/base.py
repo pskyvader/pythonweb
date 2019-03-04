@@ -391,7 +391,7 @@ class base:
 
     def guardar(cls):
         respuesta = {'body': ''}
-        respuesta['body'] = json.dumps(detalle.guardar(cls.class_name))
+        respuesta['body'] = json.dumps(detalle_class.guardar(cls.class_name))
         return respuesta
 
     def upload(cls):

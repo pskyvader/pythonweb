@@ -11,11 +11,12 @@ from .footer import footer
 from app.models.moduloconfiguracion import moduloconfiguracion as moduloconfiguracion_model
 from app.models.modulo import modulo as modulo_model
 
+
 class detalle:
-    metadata   = {'title' : ''}
+    metadata = {'title': ''}
     max_upload = "Ilimitado"
 
-    def __init__(self,metadata):
+    def __init__(self, metadata):
         for key, value in metadata.items():
             self.metadata[key] = value
 
@@ -27,7 +28,8 @@ class detalle:
 
         for v in campos:
             content = self.field(v, row_data)
-            row.append({'content' : content, 'content_field' : v['field'], 'class' : 'hidden' if 'hidden' == v['type'] else ''})
+            row.append(
+                {'content': content, 'content_field': v['field'], 'class': 'hidden' if 'hidden' == v['type'] else ''})
 
         data['row'] = row
         data['title'] = self.metadata['title']
@@ -51,117 +53,120 @@ class detalle:
         ret['body'] += f.normal()['body']
 
     @staticmethod
-    def configuracion(self,modulo, force = False):
-        tipo_admin          = app.session["tipo" + app.prefix_site]
+    def configuracion(self, modulo, force=False):
+        tipo_admin = app.session["tipo" + app.prefix_site]
         moduloconfiguracion = moduloconfiguracion_model.getByModulo(modulo)
-        var                 = {'idmoduloconfiguracion' : moduloconfiguracion[0]}
+        var = {'idmoduloconfiguracion': moduloconfiguracion[0]}
         if 'tipo' in app.get:
             var['tipo'] = app.get['tipo']
-        
-        modulo  = modulo_model.getAll(var, {'limit' : 1})
-        modulo  = modulo[0]
+
+        modulo = modulo_model.getAll(var, {'limit': 1})
+        modulo = modulo[0]
         estados = modulo['estado'][0]['estado']
         if 'True' != estados[tipo_admin] and not force:
             return {'error': 301, 'redirect': functions.url_redirect(['home'])}
-        
+
         campos = {}
         for m in modulo['detalle']:
             if 'True' == m['estado'][tipo_admin]:
-                campos[m['field']] = {'title_field' : m['titulo'], 'field' : m['field'], 'type' : m['tipo'], 'required' : ('True' == m['required']), 'help' : m['texto_ayuda']}
-           
+                campos[m['field']] = {'title_field': m['titulo'], 'field': m['field'], 'type': m['tipo'], 'required': (
+                    'True' == m['required']), 'help': m['texto_ayuda']}
 
-        return {'campos' : campos}
+        return {'campos': campos}
 
-
-
-
-    def field(self,campos, fila, parent = '', idparent = 0, level = 0):
+    def field(self, campos, fila, parent='', idparent=0, level=0):
         import datetime
         editor_count = 0
-        if campos['type']=='active':
+        if campos['type'] == 'active':
             data = {
-                'title_field' : campos['title_field'],
-                'field'       : campos['field'],
-                'required' : campos['required'],
-                'active'      : fila[campos['field']] if campos['field'] in fila else '' ,
-                'class'       : ('btn-success' if fila[campos['field']] else 'btn-danger') if campos['field'] in fila else 'btn-default',
-                'icon'       : ('fa-check' if fila[campos['field']] else 'fa-close') if campos['field'] in fila else 'fa-question-circle',
+                'title_field': campos['title_field'],
+                'field': campos['field'],
+                'required': campos['required'],
+                'active': fila[campos['field']] if campos['field'] in fila else '',
+                'class': ('btn-success' if fila[campos['field']] else 'btn-danger') if campos['field'] in fila else 'btn-default',
+                'icon': ('fa-check' if fila[campos['field']] else 'fa-close') if campos['field'] in fila else 'fa-question-circle',
             }
-        elif campos['type']=='color':
+        elif campos['type'] == 'color':
             data = {
-                'title_field' : campos['title_field'],
-                'field'       : campos['field'],
-                'required' : campos['required'],
-                'help'      : fila[campos['help']] if campos['help'] in fila else '' ,
-                'value'      : fila[campos['field']] if campos['field'] in fila else '' ,
+                'title_field': campos['title_field'],
+                'field': campos['field'],
+                'required': campos['required'],
+                'help': fila[campos['help']] if campos['help'] in fila else '',
+                'value': fila[campos['field']] if campos['field'] in fila else '',
             }
-        elif campos['type']=='date':
+        elif campos['type'] == 'date':
             data = {
-                'title_field' : campos['title_field'],
-                'field'       : campos['field'],
-                'required' : campos['required'],
-                'help'      : fila[campos['help']] if campos['help'] in fila else '' ,
-                'value'      : fila[campos['field']] if campos['field'] in fila else '' ,
+                'title_field': campos['title_field'],
+                'field': campos['field'],
+                'required': campos['required'],
+                'help': fila[campos['help']] if campos['help'] in fila else '',
+                'value': fila[campos['field']] if campos['field'] in fila else '',
             }
-        elif campos['type']=='daterange':
+        elif campos['type'] == 'daterange':
             data = {
-                'title_field' : campos['title_field'],
-                'field'       : campos['field'],
-                'required' : campos['required'],
-                'help'      : fila[campos['help']] if campos['help'] in fila else '' ,
-                'value'      : fila[campos['field']] if campos['field'] in fila else '' ,
+                'title_field': campos['title_field'],
+                'field': campos['field'],
+                'required': campos['required'],
+                'help': fila[campos['help']] if campos['help'] in fila else '',
+                'value': fila[campos['field']] if campos['field'] in fila else '',
             }
-        elif campos['type']=='editor':
+        elif campos['type'] == 'editor':
             data = {
-                'title_field' : campos['title_field'],
-                'field'       : campos['field'],
-                'required' : campos['required'],
-                'help'      : fila[campos['help']] if campos['help'] in fila else '' ,
-                'value'      : fila[campos['field']] if campos['field'] in fila else '' ,
+                'title_field': campos['title_field'],
+                'field': campos['field'],
+                'required': campos['required'],
+                'help': fila[campos['help']] if campos['help'] in fila else '',
+                'value': fila[campos['field']] if campos['field'] in fila else '',
             }
-            data['help'] += " (Tamaño máximo de archivo " +self.max_upload + ")"
+            data['help'] += " (Tamaño máximo de archivo " + \
+                               self.max_upload + ")"
             if 0 == editor_count:
-                theme           = app.get_url() + view.get_theme() + 'assets/ckeditor/'
-                t               = '?t=I8BG'
+                theme = app.get_url() + view.get_theme() + 'assets/ckeditor/'
+                t = '?t=I8BG'
                 data['preload'] = [
-                    {'url' : 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css', 'type' : 'style'},
-                    {'url' : 'https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css', 'type' : 'style'},
-                    {'url' : 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js', 'type' : 'script'},
-                    {'url' : 'https://code.jquery.com/jquery-1.11.3.min.js', 'type' : 'script'},
+                    {'url': 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css', 'type': 'style'},
+                    {'url': 'https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css', 'type': 'style'},
+                    {'url': 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js', 'type': 'script'},
+                    {'url': 'https://code.jquery.com/jquery-1.11.3.min.js',
+                        'type': 'script'},
 
-                    {'url' : theme + 'contents.css', 'type' : 'style'},
-                    {'url' : theme + 'plugins/btgrid/styles/editor.css', 'type' : 'style'},
-                    {'url' : theme + 'plugins/tableselection/styles/tableselection.css', 'type' : 'style'},
-                    {'url' : theme + 'plugins/balloontoolbar/skins/default.css', 'type' : 'style'},
-                    {'url' : theme + 'plugins/balloontoolbar/skins/moono-lisa/balloontoolbar.css', 'type' : 'style'},
-                    {'url' : theme + 'plugins/balloonpanel/skins/moono-lisa/balloonpanel.css', 'type' : 'style'},
+                    {'url': theme + 'contents.css', 'type': 'style'},
+                    {'url': theme + 'plugins/btgrid/styles/editor.css', 'type': 'style'},
+                    {'url': theme + 'plugins/tableselection/styles/tableselection.css',
+                        'type': 'style'},
+                    {'url': theme + 'plugins/balloontoolbar/skins/default.css',
+                        'type': 'style'},
+                    {'url': theme + 'plugins/balloontoolbar/skins/moono-lisa/balloontoolbar.css', 'type': 'style'},
+                    {'url': theme + 'plugins/balloonpanel/skins/moono-lisa/balloonpanel.css', 'type': 'style'},
 
-                    {'url' : theme + 'skins/moono-lisa/editor.css' . t, 'type' : 'style'},
-                    {'url' : theme + 'plugins/basewidget/css/style.css' . t, 'type' : 'style'},
-                    {'url' : theme + 'plugins/layoutmanager/css/style.css' . t, 'type' : 'style'},
+                    {'url': theme + 'skins/moono-lisa/editor.css' . t, 'type': 'style'},
+                    {'url': theme + 'plugins/basewidget/css/style.css' . t,
+                        'type': 'style'},
+                    {'url': theme + 'plugins/layoutmanager/css/style.css' . t,
+                        'type': 'style'},
                 ]
 
             else:
                 data['preload'] = []
-            
-            editor_count+=1
-            
-        elif campos['type']=='grupo_pedido':
-            folder      = self.metadata['modulo']
+
+            editor_count += 1
+
+        elif campos['type'] == 'grupo_pedido':
+            folder = self.metadata['modulo']
             direcciones = []
             if campos['field'] in fila:
                 count = count(fila[campos['field']])
                 for campo in fila[campos['field']]:
-                    field                = campo
+                    field = campo
                     field['title_field'] = campos['title_field']
-                    field['field']       = campos['field']
+                    field['field'] = campos['field']
                     direcciones.append(field)
-                
+
             else:
                 count = 0
-            
+
             for d in direcciones:
-                d['lista_productos']   = campos['lista_productos']
+                d['lista_productos'] = campos['lista_productos']
                 d['direccion_entrega'] = campos['direccion_entrega']
                 for e in d['direccion_entrega']:
                     if e['idusuariodireccion'] == d['idusuariodireccion']:
@@ -169,261 +174,272 @@ class detalle:
                     else:
                         e['selected'] = ''
 
-                for p in d['productos'] :
+                for p in d['productos']:
                     p['lista_atributos'] = campos['lista_atributos']
                     for e in p['lista_atributos']:
                         if e['idproducto'] == p['idproductoatributo']:
                             e['selected'] = 'selected=""'
                         else:
                             e['selected'] = ''
-                            
+
             data = {
-                'title_field'       : campos['title_field'],
-                'field'             : campos['field'],
-                'required'       : campos['required'],
-                'help'              : campos['help'],
-                'direcciones'       : direcciones,
-                'direccion_entrega' : campos['direccion_entrega'],
-                'lista_productos'   : campos['lista_productos'],
-                'lista_atributos'   : campos['lista_atributos'],
-                'fecha'             : datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-                'count'             : str(count) if count > 0 else '',
+                'title_field': campos['title_field'],
+                'field': campos['field'],
+                'required': campos['required'],
+                'help': campos['help'],
+                'direcciones': direcciones,
+                'direccion_entrega': campos['direccion_entrega'],
+                'lista_productos': campos['lista_productos'],
+                'lista_atributos': campos['lista_atributos'],
+                'fecha': datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                'count': str(count) if count > 0 else '',
             }
 
-        elif campos['type']=='multiple':
+        elif campos['type'] == 'multiple':
             fields = []
-            count  =  len(fila[campos['field']]) if campos['field'] in fila and isinstance(fila[campos['field']], dict) else 0
+            count = len(fila[campos['field']]) if campos['field'] in fila and isinstance(
+                fila[campos['field']], dict) else 0
             if count > 0:
                 for f in fila[campos['field']]:
                     td = []
                     for v in campos['columnas']:
                         content = self.field(v, f, campos['field'], key)
-                        td.append({'content' : content, 'content_field' : v['field']})
-                    
-                    linea    = {'columna' : td}
+                        td.append(
+                            {'content': content, 'content_field': v['field']})
+
+                    linea = {'columna': td}
                     fields.append(linea)
-                
+
                 new_field = False
             else:
                 new_field = True
-            
+
             new_line = []
             for v in campos['columnas']:
-                content    = self.field(v, {}, campos['field'])
-                new_line.append({'content' : content, 'content_field' : v['field']})
-            
+                content = self.field(v, {}, campos['field'])
+                new_line.append(
+                    {'content': content, 'content_field': v['field']})
 
             data = {
-                'fields'      : fields,
-                'count'       : count,
-                'new_field'   : new_field,
-                'new_line'    : new_line,
-                'title_field' : campos['title_field'],
-                'field'       : campos['field'],
-                'required' : campos['required'],
+                'fields': fields,
+                'count': count,
+                'new_field': new_field,
+                'new_line': new_line,
+                'title_field': campos['title_field'],
+                'field': campos['field'],
+                'required': campos['required'],
             }
-        elif campos['type']=='multiple_text':
+        elif campos['type'] == 'multiple_text':
             data = {
-                'title_field' : campos['title_field'],
-                'field'       : campos['field'],
-                'parent'      : parent,
-                'col'         : campos['col'],
-                'required' : campos['required'],
-                'value'      : fila[campos['field']] if campos['field'] in fila else '' ,
+                'title_field': campos['title_field'],
+                'field': campos['field'],
+                'parent': parent,
+                'col': campos['col'],
+                'required': campos['required'],
+                'value': fila[campos['field']] if campos['field'] in fila else '',
             }
-        elif campos['type']=='multiple_number':
+        elif campos['type'] == 'multiple_number':
             data = {
-                'title_field' : campos['title_field'],
-                'field'       : campos['field'],
-                'parent'      : parent,
-                'col'         : campos['col'],
-                'max'         : campos['max'],
-                'required' : campos['required'],
-                'value'       : fila[campos['field']] if campos['field'] in fila else campos['default'],
+                'title_field': campos['title_field'],
+                'field': campos['field'],
+                'parent': parent,
+                'col': campos['col'],
+                'max': campos['max'],
+                'required': campos['required'],
+                'value': fila[campos['field']] if campos['field'] in fila else campos['default'],
             }
-        elif campos['type']=='multiple_label':
+        elif campos['type'] == 'multiple_label':
             data = {
-                'title_field' : campos['title_field'],
-                'field'       : campos['field'],
-                'parent'      : parent,
-                'col'         : campos['col'],
-                'required' : campos['required'],
-                'value'      : fila[campos['field']] if campos['field'] in fila else '' ,
+                'title_field': campos['title_field'],
+                'field': campos['field'],
+                'parent': parent,
+                'col': campos['col'],
+                'required': campos['required'],
+                'value': fila[campos['field']] if campos['field'] in fila else '',
             }
-        
-        elif campos['type']=='multiple_hidden':
+
+        elif campos['type'] == 'multiple_hidden':
             data = {
-                'field'    : campos['field'],
-                'parent'   : parent,
-                'required' : campos['required'],
-                'value'      : fila[campos['field']] if campos['field'] in fila else '' ,
+                'field': campos['field'],
+                'parent': parent,
+                'required': campos['required'],
+                'value': fila[campos['field']] if campos['field'] in fila else '',
             }
-        elif campos['type']=='multiple_select':
+        elif campos['type'] == 'multiple_select':
             for option in campos['option']:
-                option['selected'] = 'selected="selected"' if campos['field'] in fila and fila[campos['field']] == option['value'] else ''
-            
+                option['selected'] = 'selected="selected"' if campos['field'] in fila and fila[campos['field']
+                    ] == option['value'] else ''
+
             data = {
-                'title_field' : campos['title_field'],
-                'field'       : campos['field'],
-                'parent'      : parent,
-                'col'         : campos['col'],
-                'option'      : campos['option'],
-                'required' : campos['required'],
+                'title_field': campos['title_field'],
+                'field': campos['field'],
+                'parent': parent,
+                'col': campos['col'],
+                'option': campos['option'],
+                'required': campos['required'],
             }
-        elif campos['type']=='multiple_button':
+        elif campos['type'] == 'multiple_button':
             data = {
-                'col' : campos['col'],
+                'col': campos['col'],
             }
-        elif campos['type']=='multiple_order':
+        elif campos['type'] == 'multiple_order':
             data = {
-                'col' : campos['col'],
+                'col': campos['col'],
             }
-        elif campos['type']=='multiple_active':
+        elif campos['type'] == 'multiple_active':
             data = {
-                'title_field' : campos['title_field'],
-                'field'       : campos['field'],
-                'parent'      : parent,
-                'col'         : campos['col'],
-                'required' : campos['required'],
-                'active'      : str(fila[campos['field']]) if campos['field'] in fila else '' ,
-                'class'       : ('btn-success' if fila[campos['field']]=='true' else 'btn-danger') if campos['field'] in fila else 'btn-default',
-                'icon'       : ('fa-check' if fila[campos['field']]=='true' else 'fa-close') if campos['field'] in fila else 'fa-question-circle',
+                'title_field': campos['title_field'],
+                'field': campos['field'],
+                'parent': parent,
+                'col': campos['col'],
+                'required': campos['required'],
+                'active': str(fila[campos['field']]) if campos['field'] in fila else '',
+                'class': ('btn-success' if fila[campos['field']] == 'true' else 'btn-danger') if campos['field'] in fila else 'btn-default',
+                'icon': ('fa-check' if fila[campos['field']] == 'true' else 'fa-close') if campos['field'] in fila else 'fa-question-circle',
             }
-        elif campos['type']=='multiple_active_array':
+        elif campos['type'] == 'multiple_active_array':
             for value in campos['array']:
-                value['active'] = str(fila[campos['field']]) if campos['field'] in fila else 'true',
-                value['class']  = ('btn-success' if fila[campos['field']]=='true' else 'btn-danger') if campos['field'] in fila else 'btn-success',
-                value['icon']   = ('fa-check' if fila[campos['field']]=='true' else 'fa-close') if campos['field'] in fila else 'fa-check',
-            
+                value['active'] = str(
+                    fila[campos['field']]) if campos['field'] in fila else 'true',
+                value['class'] = ('btn-success' if fila[campos['field']] ==
+                                  'true' else 'btn-danger') if campos['field'] in fila else 'btn-success',
+                value['icon'] = ('fa-check' if fila[campos['field']] ==
+                                 'true' else 'fa-close') if campos['field'] in fila else 'fa-check',
+
             data = {
-                'title_field' : campos['title_field'],
-                'array'       : campos['array'],
-                'field'       : campos['field'],
-                'idparent'    : idparent,
-                'parent'      : parent,
-                'col'         : campos['col'],
-                'required' : campos['required'],
+                'title_field': campos['title_field'],
+                'array': campos['array'],
+                'field': campos['field'],
+                'idparent': idparent,
+                'parent': parent,
+                'col': campos['col'],
+                'required': campos['required'],
             }
-        elif campos['type']=='image':
-            folder    = self.metadata['modulo']
-            image_url = image.generar_url(fila[campos['field']][0], 'thumb') if campos['field'] in fila and 0 in fila[campos['field']] else ''
-            data      = {
-                'title_field'       : campos['title_field'],
-                'field'             : campos['field'],
-                'required'       : campos['required'],
-                'image'             : image_url,
-                'is_image'          : '' != image_url,
-                'url'               :  fila[campos['field']][0]['url'] if '' != image_url else '',
-                'parent'            :  fila[campos['field']][0]['parent'] if '' != image_url else '',
-                'folder'            :  fila[campos['field']][0]['folder'] if '' != image_url else '',
-                'subfolder'         :  fila[campos['field']][0]['subfolder'] if '' != image_url else '',
-                'help'              : campos['help'] if 'help' in campos else '',
+        elif campos['type'] == 'image':
+            folder = self.metadata['modulo']
+            image_url = image.generar_url(
+                fila[campos['field']][0], 'thumb') if campos['field'] in fila and 0 in fila[campos['field']] else ''
+            data = {
+                'title_field': campos['title_field'],
+                'field': campos['field'],
+                'required': campos['required'],
+                'image': image_url,
+                'is_image': '' != image_url,
+                'url':  fila[campos['field']][0]['url'] if '' != image_url else '',
+                'parent':  fila[campos['field']][0]['parent'] if '' != image_url else '',
+                'folder':  fila[campos['field']][0]['folder'] if '' != image_url else '',
+                'subfolder':  fila[campos['field']][0]['subfolder'] if '' != image_url else '',
+                'help': campos['help'] if 'help' in campos else '',
             }
-            data['help'] += " (Tamaño máximo de archivo " + self.max_upload + ")"
-            
-        elif campos['type']=='multiple_image':
+            data['help'] += " (Tamaño máximo de archivo " + \
+                               self.max_upload + ")"
+
+        elif campos['type'] == 'multiple_image':
             folder = self.metadata['modulo']
             fields = []
             if campos['field'] in fila:
                 count = len(fila[campos['field']])
                 for campo in fila[campos['field']]:
-                    field                = campo
+                    field = campo
                     field['title_field'] = campos['title_field']
-                    field['field']       = campos['field']
-                    field['image']       = image.generar_url(campo, 'thumb')
-                    field['active']      = campo['portada']
-                    field['class']       ='btn-success' if 'true' == campo['portada'] else 'btn-danger'
-                    field['icon']        = 'fa-check' if 'true' == campo['portada'] else 'fa-close'
+                    field['field'] = campos['field']
+                    field['image'] = image.generar_url(campo, 'thumb')
+                    field['active'] = campo['portada']
+                    field['class'] = 'btn-success' if 'true' == campo['portada'] else 'btn-danger'
+                    field['icon'] = 'fa-check' if 'true' == campo['portada'] else 'fa-close'
                     fields.append(field)
             else:
                 count = 0
 
             data = {
-                'title_field' : campos['title_field'],
-                'field'       : campos['field'],
-                'required' : campos['required'],
-                'help'        : campos['help'],
-                'fields'      : fields,
-                'count'       : count if count>0 else ''
+                'title_field': campos['title_field'],
+                'field': campos['field'],
+                'required': campos['required'],
+                'help': campos['help'],
+                'fields': fields,
+                'count': count if count > 0 else ''
             }
-        elif campos['type']=='file':
-            folder   = self.metadata['modulo']
-            file_url = file.generar_url(fila[campos['field']][0], '') if campos['field'] in fila and 0 in fila[campos['field']] else ''
-            data     = {
-                'title_field'       : campos['title_field'],
-                'field'             : campos['field'],
-                'required'       : campos['required'],
-                'file'              : file_url,
-                'is_file'           : '' != file_url,
-                'url'               :  fila[campos['field']][0]['url'] if '' != file_url else '',
-                'parent'            :  fila[campos['field']][0]['parent'] if '' != file_url else '',
-                'folder'            :  fila[campos['field']][0]['folder'] if '' != file_url else '',
-                'subfolder'         :  fila[campos['field']][0]['subfolder'] if '' != file_url else '',
-                'help'              : campos['help'] if 'help' in campos else '',
+        elif campos['type'] == 'file':
+            folder = self.metadata['modulo']
+            file_url = file.generar_url(
+                fila[campos['field']][0], '') if campos['field'] in fila and 0 in fila[campos['field']] else ''
+            data = {
+                'title_field': campos['title_field'],
+                'field': campos['field'],
+                'required': campos['required'],
+                'file': file_url,
+                'is_file': '' != file_url,
+                'url':  fila[campos['field']][0]['url'] if '' != file_url else '',
+                'parent':  fila[campos['field']][0]['parent'] if '' != file_url else '',
+                'folder':  fila[campos['field']][0]['folder'] if '' != file_url else '',
+                'subfolder':  fila[campos['field']][0]['subfolder'] if '' != file_url else '',
+                'help': campos['help'] if 'help' in campos else '',
             }
-            data['help'] += " (Tamaño máximo de archivo " + self.max_upload + ")"
-            
-        elif campos['type']=='multiple_file':
+            data['help'] += " (Tamaño máximo de archivo " + \
+                               self.max_upload + ")"
+
+        elif campos['type'] == 'multiple_file':
             folder = self.metadata['modulo']
             fields = []
             if campos['field'] in fila:
                 for campo in fila[campos['field']]:
-                    field                = campo
+                    field = campo
                     field['title_field'] = campos['title_field']
-                    field['field']       = campos['field']
-                    field['file']        = file.generar_url(campo, '')
-                    
+                    field['field'] = campos['field']
+                    field['file'] = file.generar_url(campo, '')
+
                     fields.append(field)
 
             data = {
-                'title_field' : campos['title_field'],
-                'field'       : campos['field'],
-                'required' : campos['required'],
-                'help'              : campos['help'] if 'help' in campos else '',
-                'fields'      : fields,
+                'title_field': campos['title_field'],
+                'field': campos['field'],
+                'required': campos['required'],
+                'help': campos['help'] if 'help' in campos else '',
+                'fields': fields,
             }
-            data['help'] += " (Tamaño máximo de archivo " + self.max_upload + ")"
+            data['help'] += " (Tamaño máximo de archivo " + \
+                               self.max_upload + ")"
 
-        elif campos['type']=='number':
+        elif campos['type'] == 'number':
             data = {
-                'title_field' : campos['title_field'],
-                'field'       : campos['field'],
-                'required' : campos['required'],
-                'value'      : fila[campos['field']] if campos['field'] in fila else '' ,
-                'help'              : campos['help'] if 'help' in campos else '',
+                'title_field': campos['title_field'],
+                'field': campos['field'],
+                'required': campos['required'],
+                'value': fila[campos['field']] if campos['field'] in fila else '',
+                'help': campos['help'] if 'help' in campos else '',
             }
-        elif campos['type']=='email':
+        elif campos['type'] == 'email':
             data = {
-                'title_field' : campos['title_field'],
-                'field'       : campos['field'],
-                'required' : campos['required'],
-                'value'      : fila[campos['field']] if campos['field'] in fila else '' ,
+                'title_field': campos['title_field'],
+                'field': campos['field'],
+                'required': campos['required'],
+                'value': fila[campos['field']] if campos['field'] in fila else '',
             }
-        elif campos['type']=='password':
+        elif campos['type'] == 'password':
             data = {
-                'title_field' : campos['title_field'],
-                'field'       : campos['field'],
-                'required' : campos['required'],
+                'title_field': campos['title_field'],
+                'field': campos['field'],
+                'required': campos['required'],
             }
-        
-        elif campos['type']=='token':
+
+        elif campos['type'] == 'token':
             data = {
-                'title_field' : campos['title_field'],
-                'field'       : campos['field'],
-                'required' : campos['required'],
-                'value'      : fila[campos['field']] if campos['field'] in fila else '' ,
+                'title_field': campos['title_field'],
+                'field': campos['field'],
+                'required': campos['required'],
+                'value': fila[campos['field']] if campos['field'] in fila else '',
             }
-        elif campos['type']=='map':
+        elif campos['type'] == 'map':
             data = {
-                'title_field' : campos['title_field'],
-                'field'       : campos['field'],
-                'required' : campos['required'],
-                'direccion'   :fila[campos['field']]['direccion'] if  campos['field'] in fila  else '',
-                'lat'         :  fila[campos['field']]['lat'] if campos['field'] in fila  else '',
-                'lng'         : fila[campos['field']]['lng'] if campos['field'] in fila  else '',
+                'title_field': campos['title_field'],
+                'field': campos['field'],
+                'required': campos['required'],
+                'direccion': fila[campos['field']]['direccion'] if campos['field'] in fila else '',
+                'lat':  fila[campos['field']]['lat'] if campos['field'] in fila else '',
+                'lng': fila[campos['field']]['lng'] if campos['field'] in fila else '',
             }
-        
-        elif campos['type']=='recursive_checkbox' or campos['type']=='recursive_radio' :
+
+        elif campos['type'] == 'recursive_checkbox' or campos['type'] == 'recursive_radio':
             if 0 == level:
                 if campos['field'] in fila:
                     count = count(fila[campos['field']])
@@ -433,50 +449,51 @@ class detalle:
                     else:
                         count = 0
                 data = {
-                    'is_children' : False,
-                    'title_field' : campos['title_field'],
-                    'field'       : campos['field'],
-                    'required' : campos['required'],
-                    'children'    : '',
-                    'count'       : count if count >0 else '',
+                    'is_children': False,
+                    'title_field': campos['title_field'],
+                    'field': campos['field'],
+                    'required': campos['required'],
+                    'children': '',
+                    'count': count if count > 0 else '',
                 }
                 for children in campos['parent']:
-                    data['children'] += self.field(campos, fila, '', children[0], 1)
-                
+                    data['children'] += self.field(campos,
+                                                   fila, '', children[0], 1)
+
             else:
-                parent  = campos['parent']
-                checked ='checked="checked"' if 0 == idparent else ''
+                parent = campos['parent']
+                checked = 'checked="checked"' if 0 == idparent else ''
                 if campos['field'] not in fila:
                     if campos['field'] in app.get:
                         checked = 'checked="checked"' if idparent == app.get[campos['field']] else ''
-                    
+
                 else:
                     checked = 'checked="checked"' if idparent in fila[campos['field']] else ''
-                
+
                 data = {
-                    'is_children' : True,
-                    'field'       : campos['field'],
-                    'value'       : idparent,
-                    'title'       : parent[idparent]['titulo'] if idparent in parent else '',
-                    'checked'     : checked,
-                    'required'    : campos['required'],
-                    'level'       : (level - 1) * 20,
-                    'children'    : '',
+                    'is_children': True,
+                    'field': campos['field'],
+                    'value': idparent,
+                    'title': parent[idparent]['titulo'] if idparent in parent else '',
+                    'checked': checked,
+                    'required': campos['required'],
+                    'level': (level - 1) * 20,
+                    'children': '',
                 }
                 if idparent in parent:
                     campos['parent'] = parent[idparent]['children']
 
                     for children in campos['parent']:
-                        data['children'] += self.field(campos, fila, '', children[0], level + 1)
-                    
-                    
-        elif campos['type']=='select':
+                        data['children'] += self.field(campos,
+                                                       fila, '', children[0], level + 1)
+
+        elif campos['type'] == 'select':
             data = {
-                'title_field' : campos['title_field'],
-                'field'       : campos['field'],
-                'required' : campos['required'],
-                'help'              : campos['help'] if 'help' in campos else '',
-                'option'      : [],
+                'title_field': campos['title_field'],
+                'field': campos['field'],
+                'required': campos['required'],
+                'help': campos['help'] if 'help' in campos else '',
+                'option': [],
             }
             for children in campos['parent']:
                 selected = 'selected="selected"' if 0 == children[0] else ''
@@ -486,55 +503,53 @@ class detalle:
 
                 else:
                     selected = 'selected="selected"' if children[0] == fila[campos['field']] else ''
-                
 
-                data['option'].append({('value' : children[0], 'selected' : selected, 'text' : children['titulo']})
-            
-        elif campos['type']=='textarea':
-            data = {
-                'title_field' : campos['title_field'],
-                'field'       : campos['field'],
-                'required' : campos['required'],
-                'value'      : fila[campos['field']] if campos['field'] in fila else '' ,
+                data['option'].append({'value': children[0], 'selected': selected, 'text': children['titulo']})
+
+        elif campos['type'] == 'textarea':
+            data={
+                'title_field': campos['title_field'],
+                'field': campos['field'],
+                'required': campos['required'],
+                'value': fila[campos['field']] if campos['field'] in fila else '',
             }
-        elif campos['type']=='text':
-            data = {
-                'title_field' : campos['title_field'],
-                'field'       : campos['field'],
-                'required' : campos['required'],
-                'value'      : fila[campos['field']] if campos['field'] in fila else '' ,
-                'help'              : campos['help'] if 'help' in campos else '',
+        elif campos['type'] == 'text':
+            data={
+                'title_field': campos['title_field'],
+                'field': campos['field'],
+                'required': campos['required'],
+                'value': fila[campos['field']] if campos['field'] in fila else '',
+                'help': campos['help'] if 'help' in campos else '',
             }
-        
+
         else:
-            data = {
-                'title_field' : campos['title_field'],
-                'field'       : campos['field'],
-                'required' : campos['required'],
-                'value'      : fila[campos['field']] if campos['field'] in fila else '' ,
-                'help'              : campos['help'] if 'help' in campos else '',
+            data={
+                'title_field': campos['title_field'],
+                'field': campos['field'],
+                'required': campos['required'],
+                'value': fila[campos['field']] if campos['field'] in fila else '',
+                'help': campos['help'] if 'help' in campos else '',
             }
-        
 
-        
+
+
         view.add_array(data)
         content=view.render('detail/'+campos['type'], False)
         return content
-        
+
     @staticmethod
     def guardar(class_name):
-        campos    = app.post['campos']
-        respuesta = {'exito' : False, 'mensaje' : ''}
+        campos=app.post['campos']
+        respuesta={'exito': False, 'mensaje': ''}
 
         if '' == campos['id']:
-            respuesta['id']      = class_name.insert(campos)
-            respuesta['mensaje'] = "Creado correctamente"
+            respuesta['id']=class_name.insert(campos)
+            respuesta['mensaje']="Creado correctamente"
         else:
-            respuesta['id']      = class_name.update(campos)
-            respuesta['mensaje'] = "Actualizado correctamente"
-        
-        respuesta['exito'] = True
-        if isinstance(respuesta['id'],dict):
+            respuesta['id']=class_name.update(campos)
+            respuesta['mensaje']="Actualizado correctamente"
+
+        respuesta['exito']=True
+        if isinstance(respuesta['id'], dict):
             return respuesta['id']
         return respuesta
-    

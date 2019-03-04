@@ -60,6 +60,7 @@ class lista:
 
         f = footer()
         ret['body'] += f.normal()['body']
+        return ret
 
     def get_row(self, class_name, where: dict, condiciones: dict, urledit: str):
         get = app.get

@@ -217,11 +217,10 @@ class lista:
         if 'true' != estados[tipo_admin]:
             return {'error': 301, 'redirect': functions.url_redirect(['home'])}
 
-        th = []
+        th = {}
         for m in modulo['mostrar']:
             if 'true' == m['estado'][tipo_admin]:
-                th[m['field']] = {'title_th': m['titulo'],
-                                  'field': m['field'], 'type': m['tipo']}
+                th[m['field']] = {'title_th': m['titulo'], 'field': m['field'], 'type': m['tipo']}
 
         menu = {}
         for m in modulo['menu']:

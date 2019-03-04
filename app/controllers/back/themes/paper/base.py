@@ -312,94 +312,94 @@ class base:
         respuesta['body'] = json.dumps(lista.estado(cls.class_name))
         return respuesta
     @classmethod
-    def eliminar(self):
+    def eliminar(cls):
         respuesta = {'body': ''}
-        respuesta['body'] = json.dumps(lista.eliminar(self.class_name))
+        respuesta['body'] = json.dumps(lista.eliminar(cls.class_name))
         return respuesta
     @classmethod
-    def copy(self):
+    def copy(cls):
         respuesta = {'body': ''}
-        respuesta['body'] = json.dumps(lista.copy(self.class_name))
+        respuesta['body'] = json.dumps(lista.copy(cls.class_name))
         return respuesta
     @classmethod
-    def excel(self):
+    def excel(cls):
         get=app.get
         respuesta = {'body': ''}
         respuesta['body'] = {'exito': False, 'mensaje' : 'Debes recargar la pagina'}
-        if self.contiene_tipos and 'tipo' not in get:
+        if cls.contiene_tipos and 'tipo' not in get:
             respuesta['body']=json.dumps(respuesta['body'])
             return respuesta
         
-        if self.contiene_hijos and 'idpadre' not in get:
+        if cls.contiene_hijos and 'idpadre' not in get:
             respuesta['body']=json.dumps(respuesta['body'])
             return respuesta
         
         where = {}
-        if self.contiene_tipos:
+        if cls.contiene_tipos:
             where['tipo'] = get['tipo']
         
-        if self.contiene_hijos:
+        if cls.contiene_hijos:
             where['idpadre'] = get['idpadre']
         
-        if self.class_parent!=None:
-            class_parent = self.class_parent
+        if cls.class_parent!=None:
+            class_parent = cls.class_parent
             if class_parent.idname in get:
                 where[class_parent.idname] = get[class_parent.idname]
             
         
         select = ""
-        respuesta['body'] = json.dumps(lista.excel(self.class_name, where, select, self.metadata['title']))
+        respuesta['body'] = json.dumps(lista.excel(cls.class_name, where, select, cls.metadata['title']))
         return respuesta
     @classmethod
-    def get_all(self):
+    def get_all(cls):
         get=app.get
         respuesta = {'body': ''}
         respuesta['body'] = {'exito': False, 'mensaje' : 'Debes recargar la pagina'}
-        if self.contiene_tipos and 'tipo' not in get:
+        if cls.contiene_tipos and 'tipo' not in get:
             respuesta['body']=json.dumps(respuesta['body'])
             return
         
-        if self.contiene_hijos and 'idpadre' not in get:
+        if cls.contiene_hijos and 'idpadre' not in get:
             respuesta['body']=json.dumps(respuesta['body'])
             return
         
         where = {}
-        if self.contiene_tipos:
+        if cls.contiene_tipos:
             where['tipo'] = get['tipo']
         
-        if self.contiene_hijos:
+        if cls.contiene_hijos:
             where['idpadre'] = get['idpadre']
         
-        if self.class_parent!= None:
-            class_parent = self.class_parent
+        if cls.class_parent!= None:
+            class_parent = cls.class_parent
             if class_parent.idname in get:
                 where[class_parent.idname] = get[class_parent.idname]
             
         
         condiciones = {}
         select = ""
-        class_name = self.class_name
+        class_name = cls.class_name
         row = class_name.getAll(where, condiciones, select)
         
         respuesta['body']=json.dumps(row)
         return respuesta
     @classmethod
-    def regenerar(self):
+    def regenerar(cls):
         respuesta = {'body': ''}
         respuesta['body'] = json.dumps(image.regenerar(app.post))
         return respuesta
     @classmethod
-    def guardar(self):
+    def guardar(cls):
         respuesta = {'body': ''}
-        respuesta['body'] = json.dumps(detalle_class.guardar(self.class_name))
+        respuesta['body'] = json.dumps(detalle_class.guardar(cls.class_name))
         return respuesta
     @classmethod
-    def upload(self):
+    def upload(cls):
         respuesta = {'body': ''}
-        respuesta['body'] = json.dumps(image.upload_tmp(self.metadata['modulo']))
+        respuesta['body'] = json.dumps(image.upload_tmp(cls.metadata['modulo']))
         return respuesta
     @classmethod
-    def upload_file(self):
+    def upload_file(cls):
         respuesta = {'body': ''}
         respuesta['body'] = json.dumps(file.upload_tmp())
         return respuesta

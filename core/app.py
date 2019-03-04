@@ -161,6 +161,7 @@ class app:
         if 'url' in url:
             del url['url']
         for u in url:
+            print(u)
             if len(u)==1:
                 u=next(iter(u))
         

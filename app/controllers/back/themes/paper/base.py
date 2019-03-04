@@ -129,6 +129,7 @@ class base:
                 where[class_parent.idname] = get[class_parent.idname]
 
         condiciones = {}
+        print(cls.url)
         url_detalle = cls.url
         url_detalle.append('detail')
         # obtener unicamente elementos de la pagina actual

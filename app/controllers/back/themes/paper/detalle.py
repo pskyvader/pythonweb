@@ -1,3 +1,11 @@
+from core.app import app
+from core.functions import functions
+from core.image import image
+from core.view import view
+from .head import head
+from .header import header
+from .aside import aside
+from .footer import footer
 
 class detalle:
     metadata   = {'title' : ''}

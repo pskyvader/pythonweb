@@ -132,7 +132,7 @@ class base:
         url_detalle = cls.url
         url_detalle.append('detail')
         # obtener unicamente elementos de la pagina actual
-        respuesta = list.get_row(class_name, where, condiciones, url_detalle)
+        respuesta = lista.get_row(class_name, where, condiciones, url_detalle)
 
         if 'copy' in configuracion['th']:
             configuracion['th']['copy']['action'] = configuracion['th']['copy']['field']
@@ -177,7 +177,7 @@ class base:
 
         data.update(respuesta)
         data.update(configuracion['menu'])
-        ret = list.normal(data)
+        ret = lista_class.normal(data)
 
     @classmethod
     def detail(cls, var={}):

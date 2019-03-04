@@ -534,7 +534,7 @@ class detalle:
             respuesta['mensaje'] = "Actualizado correctamente"
         
         respuesta['exito'] = True
-        if isinstance(respuesta['id'],list):
+        if isinstance(respuesta['id'],dict):
             return respuesta['id']
         return respuesta
     

@@ -68,10 +68,10 @@ class lista:
         
 
         count = class_name.getAll(where, condiciones, 'total')
-        total = (int) (count / limit)
-        if (total < (count / limit)) {
+        total = int(count / limit)
+        if total < (count / limit):
             total++
-        }
+        
 
         condiciones['limit'] = limit
         if (page > 1) {

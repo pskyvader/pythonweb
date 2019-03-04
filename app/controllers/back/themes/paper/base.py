@@ -215,8 +215,8 @@ class base:
         # titulo,campo de la tabla a usar, tipo (ver archivo detalle.py funcion "field")
 
         # controlador de detalle
-        detail = detalle(cls.metadata)
-        configuracion = detail.configuracion(cls.metadata['modulo'])
+        detalle = detalle_class(cls.metadata)
+        configuracion = detalle.configuracion(cls.metadata['modulo'])
         
         if 'error' in configuracion:
             ret['error']=configuracion['error']
@@ -298,7 +298,7 @@ class base:
             'list_url': functions.generar_url(url_list),
         }
 
-        detail.normal(data, class_name)
+        detalle.normal(data, class_name)
 
     @classmethod
     def orden(cls):

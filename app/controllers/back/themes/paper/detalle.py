@@ -200,7 +200,7 @@ class detalle:
             count = len(fila[campos['field']]) if campos['field'] in fila and isinstance(
                 fila[campos['field']], dict) else 0
             if count > 0:
-                for f in fila[campos['field']]:
+                for key,f in fila[campos['field']].items():
                     td = []
                     for v in campos['columnas']:
                         content = self.field(v, f, campos['field'], key)

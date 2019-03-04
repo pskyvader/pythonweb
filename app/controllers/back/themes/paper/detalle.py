@@ -153,7 +153,6 @@ class detalle:
             editor_count += 1
 
         elif campos['type'] == 'grupo_pedido':
-            folder = self.metadata['modulo']
             direcciones = []
             if campos['field'] in fila:
                 count = count(fila[campos['field']])

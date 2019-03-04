@@ -200,26 +200,27 @@ class lista:
         view.add_array(data)
         content = view.render('list/'+th['type'], False)
         return content
+
     @staticmethod
-    def configuracion(modulo:str):
-        session=app.session
-        get=app.get
-        tipo_admin          = session["tipo" + app.prefix_site]
+    def configuracion(modulo: str):
+        session = app.session
+        get = app.get
+        tipo_admin = session["tipo" + app.prefix_site]
         moduloconfiguracion = moduloconfiguracion_model.getByModulo(modulo)
-        var                 = {'idmoduloconfiguracion' : moduloconfiguracion[0]}
+        var = {'idmoduloconfiguracion': moduloconfiguracion[0]}
         if 'tipo' in get:
             var['tipo'] = get['tipo']
-        modulo  = modulo_model.getAll(var, {'limit' : 1})
-        modulo  = modulo[0]
+        modulo = modulo_model.getAll(var, {'limit': 1})
+        modulo = modulo[0]
         estados = modulo['estado'][0]['estado']
         if 'true' != estados[tipo_admin]:
-            return {'error':301,'redirect':functions.url_redirect(['home'])}
+            return {'error': 301, 'redirect': functions.url_redirect(['home'])}
 
         th = []
         for m in modulo['mostrar']:
             if 'true' == m['estado'][tipo_admin]:
-                th[m['field']] = {'title_th' : m['titulo'], 'field' : m['field'], 'type' : m['tipo']}
-            
+                th[m['field']] = {'title_th': m['titulo'],
+                                  'field': m['field'], 'type': m['tipo']}
 
         menu = []
         for m in modulo['menu']:
@@ -227,5 +228,5 @@ class lista:
                 menu[m['field']] = True
             else:
                 menu[m['field']] = False
-            
-        return {'menu' : menu, 'th' : th}
+
+        return {'menu': menu, 'th': th}

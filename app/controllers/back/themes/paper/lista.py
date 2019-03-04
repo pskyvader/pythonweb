@@ -88,3 +88,60 @@ class lista:
             v['url_detalle'] = functions.generar_url(urltmp)
 
         return {'row': row, 'page': page, 'total': total, 'limit': limit, 'search': search, 'count': count, 'inicio': inicio, 'fin': fin}
+
+    def pagination(self,data: dict):
+        import urllib.parse
+        get = app.get
+        limits = {
+            10: {'value': 10, 'text': 10, 'active': ''},
+            25: {'value': 25, 'text': 25, 'active': ''},
+            100: {'value': 100, 'text': 100, 'active': ''},
+            500: {'value': 500, 'text': 500, 'active': ''},
+            1000: {'value': 1000, 'text': 1000, 'active': ''},
+            1000000: {'value': 1000000, 'text': 'Todos', 'active': ''},
+        }
+        if data['limit'] in limits:
+            limits[data['limit']]['active'] = 'selected'
+
+        data['limits'] = limits
+
+        pagination = []
+        rango = 5
+        min = 1
+        max = data['total']
+        sw = False
+        while ((max - min) + 1) > rango:
+            if sw:
+                if min != data['page'] and min + 1 != data['page']:
+                    min += 1
+
+            else:
+                if max != data['page'] and max - 1 != data['page']:
+                    max -= 1
+
+            sw = not sw
+
+        get['page'] = data['page'] - 1
+        pagination.append({
+            'class_page': 'previous ' + ('' if data['page'] > 1 else 'disabled'),
+            'url_page': "?" + urllib.parse.urlencode(get),
+            'text_page': '<i class="fa fa-angle-left"> </i> Anterior',
+        })
+
+        for i in range(min, max+1):
+            get['page'] = i
+            pagination.append({
+                'class_page': 'active' if data['page'] == i else '',
+                'url_page': "?" + urllib.parse.urlencode(get),
+                'text_page': i,
+            })
+
+        get['page'] = data['page'] + 1
+        pagination.append({
+            'class_page': 'next ' + ('' if data['page'] < data['total'] else 'disabled'),
+            'url_page': "?" + urllib.parse.urlencode(get),
+            'text_page': 'Siguiente <i class="fa fa-angle-right"> </i> ',
+        })
+
+        data['pagination'] = pagination
+        return data

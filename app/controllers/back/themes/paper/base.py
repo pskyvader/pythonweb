@@ -149,7 +149,8 @@ class base:
                         cls.url, {'idpadre': v[0]})
 
         else:
-            del configuracion['th']['url_children']
+            if 'url_children' in configuracion['th']:
+                del configuracion['th']['url_children']
 
         if cls.sub != '':
             if cls.contiene_tipos:

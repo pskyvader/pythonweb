@@ -147,61 +147,53 @@ class lista:
         return data
 
     def field(self,th:dict, fila:dict):
-
-        opts={
-            'active': lambda: if 1==1: return 'a'
-        }
-        if (th['type']=='active'):
-
-        switch ($th['type']) {
-            case 'active':
-                $data = array(
-                    'field'  => $th['field'],
-                    'active' => $fila[$th['field']],
-                    'id'     => $fila[0],
-                    'class'  => ($fila[$th['field']]) ? 'btn-success' : 'btn-danger',
-                    'icon'   => ($fila[$th['field']]) ? 'fa-check' : 'fa-close',
-                );
-                break;
-            case 'color':
-                if (is_array($fila[$th['field']])) {
-                    $data = $fila[$th['field']];
-                } else {
-                    $data = array('background' => $fila[$th['field']], 'text' => '', 'color' => functions::getContrastColor($fila[$th['field']]));
-                }
-                break;
+        if th['type']=='active':
+            data = {
+                    'field'  : th['field'],
+                    'active' : fila[th['field']],
+                    'id'     : fila[0],
+                    'class'  : 'btn-success' if fila[th['field']] else 'btn-danger',
+                    'icon'   : 'fa-check' if fila[th['field']] else 'fa-close',
+            }
+        elif th['type']=='color':
+            if isinstance(fila[th['field']],dict):
+                data = fila[th['field']]
+            else:
+                data = {'background' : fila[th['field']], 'text' : '', 'color' : functions.getContrastColor(fila[th['field']])}
+                
+                
             case 'delete':
-                $data = array('id' => $fila[0]);
-                break;
+                data = array('id' : fila[0])
+                break
             case 'link':
-                $data = array('text' => $th['title_th'], 'url' => $fila[$th['field']]);
-                break;
+                data = array('text' : th['title_th'], 'url' : fila[th['field']])
+                break
             case 'image':
-                if (isset($fila[$th['field']]) && is_array($fila[$th['field']]) && count($fila[$th['field']]) > 0) {
-                    $portada      = image::portada($fila[$th['field']]);
-                    $thumb_url    = image::generar_url($portada, 'thumb');
-                    $zoom_url     = image::generar_url($portada, 'zoom');
-                    $original_url = image::generar_url($portada, '');
+                if (isset(fila[th['field']]) && is_array(fila[th['field']]) && count(fila[th['field']]) > 0) {
+                    portada      = image.portada(fila[th['field']])
+                    thumb_url    = image.generar_url(portada, 'thumb')
+                    zoom_url     = image.generar_url(portada, 'zoom')
+                    original_url = image.generar_url(portada, '')
                 } else {
-                    $thumb_url = $zoom_url = $original_url = '';
+                    thumb_url = zoom_url = original_url = ''
                 }
-                $data = array('title' => $th['title_th'], 'url' => $thumb_url, 'zoom' => $zoom_url, 'original' => $original_url, 'id' => $fila[0]);
-                break;
+                data = array('title' : th['title_th'], 'url' : thumb_url, 'zoom' : zoom_url, 'original' : original_url, 'id' : fila[0])
+                break
             case 'action':
-                $data = array(
-                    'text'    => $th['title_th'],
-                    'id'      => $fila[$th['field']],
-                    'action'  => $th['action'],
-                    'mensaje' => $th['mensaje'],
-                );
-                break;
+                data = array(
+                    'text'    : th['title_th'],
+                    'id'      : fila[th['field']],
+                    'action'  : th['action'],
+                    'mensaje' : th['mensaje'],
+                )
+                break
             case 'text':
             default:
-                return $fila[$th['field']];
-                break;
+                return fila[th['field']]
+                break
         }
 
-        view::set_array($data);
-        $content=view::render('list/'.$th['type'], false, true);
-        return $content;
+        view.set_array(data)
+        content=view.render('list/'.th['type'], false, true)
+        return content
     }

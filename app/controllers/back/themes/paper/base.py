@@ -86,6 +86,7 @@ class base:
 
     @classmethod
     def index(cls):
+        print(cls.class_name)
         '''Controlador de lista_class de elementos base, puede ser sobreescrito en el controlador de cada modulo'''
         ret = {'body': ''}
         # Clase para enviar a controlador de lista_class

@@ -59,13 +59,13 @@ class detalle:
         modulo  = modulo_model.getAll(var, {'limit' : 1})
         modulo  = modulo[0]
         estados = modulo['estado'][0]['estado']
-        if 'true' != estados[tipo_admin] and not force:
+        if 'True' != estados[tipo_admin] and not force:
             return {'error': 301, 'redirect': functions.url_redirect(['home'])}
         
         campos = {}
         for m in modulo['detalle']:
-            if 'true' == m['estado'][tipo_admin]:
-                campos[m['field']] = {'title_field' : m['titulo'], 'field' : m['field'], 'type' : m['tipo'], 'required' : ('true' == m['required']), 'help' : m['texto_ayuda']}
+            if 'True' == m['estado'][tipo_admin]:
+                campos[m['field']] = {'title_field' : m['titulo'], 'field' : m['field'], 'type' : m['tipo'], 'required' : ('True' == m['required']), 'help' : m['texto_ayuda']}
            
 
         return {'campos' : campos}
@@ -74,6 +74,7 @@ class detalle:
 
 
     def field(self,campos, fila, parent = '', idparent = 0, level = 0):
+        import datetime
         editor_count = 0
         if campos['type']=='active':
             data = {
@@ -148,75 +149,67 @@ class detalle:
             direcciones = []
             if campos['field'] in fila:
                 count = count(fila[campos['field']])
-
-                foreach (fila[campos['field']] as key : campo:
+                for campo in fila[campos['field']]:
                     field                = campo
                     field['title_field'] = campos['title_field']
                     field['field']       = campos['field']
-                    direcciones[]        = field
-                }
+                    direcciones.append(field)
+                
             else:
                 count = 0
-            }
-            foreach (direcciones as key : d:
-                direcciones[key]['lista_productos']   = campos['lista_productos']
-                direcciones[key]['direccion_entrega'] = campos['direccion_entrega']
-                foreach (direcciones[key]['direccion_entrega'] as k : e:
+            
+            for d in direcciones:
+                d['lista_productos']   = campos['lista_productos']
+                d['direccion_entrega'] = campos['direccion_entrega']
+                for e in d['direccion_entrega']:
                     if e['idusuariodireccion'] == d['idusuariodireccion']:
-                        direcciones[key]['direccion_entrega'][k]['selected'] = 'selected=""'
+                        e['selected'] = 'selected=""'
                     else:
-                        direcciones[key]['direccion_entrega'][k]['selected'] = ''
-                    }
-                }
+                        e['selected'] = ''
 
-                foreach (direcciones[key]['productos'] as k : p:
-                    direcciones[key]['productos'][k]['lista_atributos'] = campos['lista_atributos']
-                    foreach (direcciones[key]['productos'][k]['lista_atributos'] as f : e:
+                for p in d['productos'] :
+                    p['lista_atributos'] = campos['lista_atributos']
+                    for e in p['lista_atributos']:
                         if e['idproducto'] == p['idproductoatributo']:
-                            direcciones[key]['productos'][k]['lista_atributos'][f]['selected'] = 'selected=""'
+                            e['selected'] = 'selected=""'
                         else:
-                            direcciones[key]['productos'][k]['lista_atributos'][f]['selected'] = ''
-                        }
-                    }
-                }
-
-            }
+                            e['selected'] = ''
+                            
             data = {
                 'title_field'       : campos['title_field'],
                 'field'             : campos['field'],
-                'is_required'       : campos['required'],
+                'required'       : campos['required'],
                 'help'              : campos['help'],
-                'required'          : (campos['required']) ? 'required="required"' : '',
                 'direcciones'       : direcciones,
                 'direccion_entrega' : campos['direccion_entrega'],
                 'lista_productos'   : campos['lista_productos'],
                 'lista_atributos'   : campos['lista_atributos'],
-                'fecha'             : date('Y-m-d H:i:s'),
-                'count'             : (count > 0) ? count : '',
+                'fecha'             : datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                'count'             : str(count) if count > 0 else '',
             }
 
-        case 'multiple':
-            fields = array()
-            count  = (isset(fila[campos['field']]) && is_array(fila[campos['field']])) ? count(fila[campos['field']]) : 0
+        elif campos['type']=='multiple':
+            fields = []
+            count  =  len(fila[campos['field']]) if campos['field'] in fila and isinstance(fila[campos['field']], dict) else 0
             if count > 0:
-                foreach (fila[campos['field']] as key : f:
-                    td = array()
-                    foreach (campos['columnas'] as k : v:
+                for f in fila[campos['field']]:
+                    td = []
+                    for v in campos['columnas']:
                         content = self.field(v, f, campos['field'], key)
-                        td[]    = array('content' : content, 'content_field' : v['field'])
-                    }
-                    linea    = array('columna' : td)
-                    fields[] = linea
-                }
-                new_field = false
+                        td.append({'content' : content, 'content_field' : v['field']})
+                    
+                    linea    = {'columna' : td}
+                    fields.append(linea)
+                
+                new_field = False
             else:
-                new_field = true
-            }
-            new_line = array()
-            foreach (campos['columnas'] as k : v:
-                content    = self.field(v, array(), campos['field'])
-                new_line[] = array('content' : content, 'content_field' : v['field'])
-            }
+                new_field = True
+            
+            new_line = []
+            for v in campos['columnas']:
+                content    = self.field(v, {}, campos['field'])
+                new_line.append({'content' : content, 'content_field' : v['field']})
+            
 
             data = {
                 'fields'      : fields,
@@ -227,15 +220,15 @@ class detalle:
                 'field'       : campos['field'],
                 'required' : campos['required'],
             }
-        case 'multiple_text':
+        elif campos['type']=='multiple_text':
             data = {
                 'title_field' : campos['title_field'],
                 'field'       : campos['field'],
                 'parent'      : parent,
                 'col'         : campos['col'],
                 'required' : campos['required'],
-                'required'    : (campos['required']) ? 'required' : '',
-                'value'       : (isset(fila[campos['field']])) ? fila[campos['field']] : '',
+                'required'    : campos['required']
+                'value'      : fila[campos['field']] if campos['field'] in fila else '' ,
             }
         case 'multiple_number':
             data = {
@@ -256,7 +249,7 @@ class detalle:
                 'col'         : campos['col'],
                 'required' : campos['required'],
                 'required'    : (campos['required']) ? 'required' : '',
-                'value'       : (isset(fila[campos['field']])) ? fila[campos['field']] : '',
+                'value'      : fila[campos['field']] if campos['field'] in fila else '' ,
             }
         case 'multiple_hidden':
             data = {
@@ -267,7 +260,7 @@ class detalle:
             }
         case 'multiple_select':
             foreach (campos['option'] as key : option:
-                campos['option'][key]['selected'] = (isset(fila[campos['field']]) && fila[campos['field']] == option['value']) ? 'selected="selected"' : ''
+                campos['option'][key]['selected'] = (isset(fila[campos['field']]) and fila[campos['field']] == option['value']) ? 'selected="selected"' : ''
             }
             data = {
                 'title_field' : campos['title_field'],
@@ -295,15 +288,15 @@ class detalle:
                 'required' : campos['required'],
                 'required'    : (campos['required']) ? 'required' : '',
                 'active'      : (isset(fila[campos['field']])) ? (string) fila[campos['field']] : '',
-                'class'       : (isset(fila[campos['field']])) ? (('true' == fila[campos['field']]) ? 'btn-success' : 'btn-danger') : 'btn-default',
-                'icon'        : (isset(fila[campos['field']])) ? (('true' == fila[campos['field']]) ? 'fa-check' : 'fa-close') : 'fa-question-circle',
+                'class'       : (isset(fila[campos['field']])) ? (('True' == fila[campos['field']]) ? 'btn-success' : 'btn-danger') : 'btn-default',
+                'icon'        : (isset(fila[campos['field']])) ? (('True' == fila[campos['field']]) ? 'fa-check' : 'fa-close') : 'fa-question-circle',
             }
         case 'multiple_active_array':
             array = array()
             foreach (campos['array'] as key : value:
-                campos['array'][key]['active'] = (isset(fila[campos['field']][key])) ? (string) fila[campos['field']][key] : 'true'
-                campos['array'][key]['class']  = (isset(fila[campos['field']][key])) ? (('true' == fila[campos['field']][key]) ? 'btn-success' : 'btn-danger') : 'btn-success'
-                campos['array'][key]['icon']   = (isset(fila[campos['field']][key])) ? (('true' == fila[campos['field']][key]) ? 'fa-check' : 'fa-close') : 'fa-check'
+                campos['array'][key]['active'] = (isset(fila[campos['field']][key])) ? (string) fila[campos['field']][key] : 'True'
+                campos['array'][key]['class']  = (isset(fila[campos['field']][key])) ? (('True' == fila[campos['field']][key]) ? 'btn-success' : 'btn-danger') : 'btn-success'
+                campos['array'][key]['icon']   = (isset(fila[campos['field']][key])) ? (('True' == fila[campos['field']][key]) ? 'fa-check' : 'fa-close') : 'fa-check'
             }
             data = {
                 'title_field' : campos['title_field'],
@@ -317,16 +310,16 @@ class detalle:
             }
         case 'image':
             folder    = self.metadata['modulo']
-            image_url = (isset(fila[campos['field']]) && isset(fila[campos['field']][0])) ? (image.generar_url(fila[campos['field']][0], 'thumb')) : ''
+            image_url = (isset(fila[campos['field']]) and isset(fila[campos['field']][0])) ? (image.generar_url(fila[campos['field']][0], 'thumb')) : ''
             data      = array(
                 'title_field'       : campos['title_field'],
                 'field'             : campos['field'],
                 'is_required'       : campos['required'],
-                'is_required_modal' : ('' != image_url) ? campos['required'] : true,
-                'is_required_alert' : ('' != image_url) ? campos['required'] : true,
+                'is_required_modal' : ('' != image_url) ? campos['required'] : True,
+                'is_required_alert' : ('' != image_url) ? campos['required'] : True,
                 'required'          : (campos['required']) ? 'required="required"' : '',
                 'image'             : image_url,
-                'is_image'          : ('' != image_url) ? true : false,
+                'is_image'          : ('' != image_url) ? True : False,
                 'url'               : ('' != image_url) ? fila[campos['field']][0]['url'] : '',
                 'parent'            : ('' != image_url) ? fila[campos['field']][0]['parent'] : '',
                 'folder'            : ('' != image_url) ? fila[campos['field']][0]['folder'] : '',
@@ -346,8 +339,8 @@ class detalle:
                     field['field']       = campos['field']
                     field['image']       = image.generar_url(campo, 'thumb')
                     field['active']      = campo['portada']
-                    field['class']       = ('true' == campo['portada']) ? 'btn-success' : 'btn-danger'
-                    field['icon']        = ('true' == campo['portada']) ? 'fa-check' : 'fa-close'
+                    field['class']       = ('True' == campo['portada']) ? 'btn-success' : 'btn-danger'
+                    field['icon']        = ('True' == campo['portada']) ? 'fa-check' : 'fa-close'
                     fields[]             = field
                 }
             else:
@@ -364,16 +357,16 @@ class detalle:
             }
         case 'file':
             folder   = self.metadata['modulo']
-            file_url = (isset(fila[campos['field']]) && isset(fila[campos['field']][0])) ? (file.generar_url(fila[campos['field']][0], '')) : ''
+            file_url = (isset(fila[campos['field']]) and isset(fila[campos['field']][0])) ? (file.generar_url(fila[campos['field']][0], '')) : ''
             data     = array(
                 'title_field'       : campos['title_field'],
                 'field'             : campos['field'],
                 'is_required'       : campos['required'],
-                'is_required_modal' : ('' != file_url) ? campos['required'] : true,
-                'is_required_alert' : ('' != file_url) ? campos['required'] : true,
+                'is_required_modal' : ('' != file_url) ? campos['required'] : True,
+                'is_required_alert' : ('' != file_url) ? campos['required'] : True,
                 'required'          : (campos['required']) ? 'required="required"' : '',
                 'file'              : file_url,
-                'is_file'           : ('' != file_url) ? true : false,
+                'is_file'           : ('' != file_url) ? True : False,
                 'url'               : ('' != file_url) ? fila[campos['field']][0]['url'] : '',
                 'parent'            : ('' != file_url) ? fila[campos['field']][0]['parent'] : '',
                 'folder'            : ('' != file_url) ? fila[campos['field']][0]['folder'] : '',
@@ -409,7 +402,7 @@ class detalle:
                 'title_field' : campos['title_field'],
                 'field'       : campos['field'],
                 'required' : campos['required'],
-                'value'       : (isset(fila[campos['field']])) ? fila[campos['field']] : '',
+                'value'      : fila[campos['field']] if campos['field'] in fila else '' ,
                 'help'        : (isset(campos['help'])) ? campos['help'] : '',
             }
         case 'email':
@@ -417,7 +410,7 @@ class detalle:
                 'title_field' : campos['title_field'],
                 'field'       : campos['field'],
                 'required' : campos['required'],
-                'value'       : (isset(fila[campos['field']])) ? fila[campos['field']] : '',
+                'value'      : fila[campos['field']] if campos['field'] in fila else '' ,
             }
         case 'password':
             data = {
@@ -430,7 +423,7 @@ class detalle:
                 'title_field' : campos['title_field'],
                 'field'       : campos['field'],
                 'required' : campos['required'],
-                'value'       : (isset(fila[campos['field']])) ? fila[campos['field']] : '',
+                'value'      : fila[campos['field']] if campos['field'] in fila else '' ,
             }
         case 'map':
             data = {
@@ -454,7 +447,7 @@ class detalle:
                     }
                 }
                 data = {
-                    'is_children' : false,
+                    'is_children' : False,
                     'title_field' : campos['title_field'],
                     'field'       : campos['field'],
                     'is_required' : campos['required'],
@@ -476,7 +469,7 @@ class detalle:
                     checked = (in_array(idparent, fila[campos['field']])) ? 'checked="checked"' : ''
                 }
                 data = {
-                    'is_children' : true,
+                    'is_children' : True,
                     'field'       : campos['field'],
                     'value'       : idparent,
                     'title'       : (isset(parent[idparent])) ? parent[idparent]['titulo'] : '',
@@ -519,7 +512,7 @@ class detalle:
                 'title_field' : campos['title_field'],
                 'field'       : campos['field'],
                 'required' : campos['required'],
-                'value'       : (isset(fila[campos['field']])) ? fila[campos['field']] : '',
+                'value'      : fila[campos['field']] if campos['field'] in fila else '' ,
             }
         case 'text':
         default:
@@ -527,21 +520,21 @@ class detalle:
                 'title_field' : campos['title_field'],
                 'field'       : campos['field'],
                 'required' : campos['required'],
-                'value'       : (isset(fila[campos['field']])) ? fila[campos['field']] : '',
+                'value'      : fila[campos['field']] if campos['field'] in fila else '' ,
                 'help'        : (isset(campos['help'])) ? campos['help'] : '',
             }
         }
 
         
         view.set_array(data)
-        content=view.render('detail/'.campos['type'], false, true)
+        content=view.render('detail/'.campos['type'], False, True)
         return content
     }
 
     public static function guardar(class)
     {
         campos    = _POST['campos']
-        respuesta = array('exito' : false, 'mensaje' : '')
+        respuesta = array('exito' : False, 'mensaje' : '')
 
         if '' == campos['id']:
             respuesta['id']      = class.insert(campos)
@@ -550,7 +543,7 @@ class detalle:
             respuesta['id']      = class.update(campos)
             respuesta['mensaje'] = "Actualizado correctamente"
         }
-        respuesta['exito'] = true
+        respuesta['exito'] = True
         if is_array(respuesta['id']):
             return respuesta['id']
         }

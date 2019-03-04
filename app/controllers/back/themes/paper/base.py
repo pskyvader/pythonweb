@@ -298,7 +298,7 @@ class base:
             'list_url': functions.generar_url(url_list),
         }
 
-        detalle.normal(data, class_name)
+        detalle_class.normal(data, class_name)
 
     @classmethod
     def orden(cls):

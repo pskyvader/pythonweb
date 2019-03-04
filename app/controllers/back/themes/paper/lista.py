@@ -26,8 +26,8 @@ class lista:
         even = False
         for fila in row_data:
             td = []
-            print(th)
-            for v in th:
+            for k,v in th.items():
+                print(v)
                 content = self.field(v, fila)
                 td.append({'content': content, 'content_field': v['field']})
 

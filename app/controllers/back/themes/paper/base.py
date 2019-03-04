@@ -164,7 +164,8 @@ class base:
                         [cls.sub], {class_name.idname: v[0]})
 
         else:
-            del configuracion['th']['url_sub']
+            if 'url_sub' in configuracion['th']:
+                del configuracion['th']['url_sub']
 
         # informacion para generar la vista de lista_class
         data = {

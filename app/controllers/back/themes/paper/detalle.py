@@ -227,10 +227,9 @@ class detalle:
                 'parent'      : parent,
                 'col'         : campos['col'],
                 'required' : campos['required'],
-                'required'    : campos['required']
                 'value'      : fila[campos['field']] if campos['field'] in fila else '' ,
             }
-        case 'multiple_number':
+        elif campos['type']=='multiple_number':
             data = {
                 'title_field' : campos['title_field'],
                 'field'       : campos['field'],
@@ -238,30 +237,29 @@ class detalle:
                 'col'         : campos['col'],
                 'max'         : campos['max'],
                 'required' : campos['required'],
-                'required'    : (campos['required']) ? 'required' : '',
-                'value'       : (isset(fila[campos['field']])) ? fila[campos['field']] : campos['default'],
+                'value'       : fila[campos['field']] if campos['field'] in fila else campos['default'],
             }
-        case 'multiple_label':
+        elif campos['type']=='multiple_label':
             data = {
                 'title_field' : campos['title_field'],
                 'field'       : campos['field'],
                 'parent'      : parent,
                 'col'         : campos['col'],
                 'required' : campos['required'],
-                'required'    : (campos['required']) ? 'required' : '',
                 'value'      : fila[campos['field']] if campos['field'] in fila else '' ,
             }
-        case 'multiple_hidden':
+        
+        elif campos['type']=='multiple_hidden':
             data = {
                 'field'    : campos['field'],
                 'parent'   : parent,
-                'required' : (campos['required']) ? 'required' : '',
-                'value'    : (isset(fila[campos['field']])) ? fila[campos['field']] : '',
+                'required' : campos['required'],
+                'value'      : fila[campos['field']] if campos['field'] in fila else '' ,
             }
-        case 'multiple_select':
-            foreach (campos['option'] as key : option:
-                campos['option'][key]['selected'] = (isset(fila[campos['field']]) and fila[campos['field']] == option['value']) ? 'selected="selected"' : ''
-            }
+        elif campos['type']=='multiple_select':
+            for option in campos['option']:
+                option['selected'] = 'selected="selected"' if campos['field'] in fila and fila[campos['field']] == option['value'] else ''
+            
             data = {
                 'title_field' : campos['title_field'],
                 'field'       : campos['field'],
@@ -269,24 +267,23 @@ class detalle:
                 'col'         : campos['col'],
                 'option'      : campos['option'],
                 'required' : campos['required'],
-                'required'    : (campos['required']) ? 'required' : '',
             }
-        case 'multiple_button':
+        elif campos['type']=='multiple_button':
             data = {
                 'col' : campos['col'],
             }
-        case 'multiple_order':
+        elif campos['type']=='multiple_order':
             data = {
                 'col' : campos['col'],
             }
-        case 'multiple_active':
+        elif campos['type']=='multiple_active':
             data = {
                 'title_field' : campos['title_field'],
                 'field'       : campos['field'],
                 'parent'      : parent,
                 'col'         : campos['col'],
                 'required' : campos['required'],
-                'required'    : (campos['required']) ? 'required' : '',
+                'required'    : campos['required'],
                 'active'      : (isset(fila[campos['field']])) ? (string) fila[campos['field']] : '',
                 'class'       : (isset(fila[campos['field']])) ? (('True' == fila[campos['field']]) ? 'btn-success' : 'btn-danger') : 'btn-default',
                 'icon'        : (isset(fila[campos['field']])) ? (('True' == fila[campos['field']]) ? 'fa-check' : 'fa-close') : 'fa-question-circle',
@@ -306,7 +303,7 @@ class detalle:
                 'parent'      : parent,
                 'col'         : campos['col'],
                 'required' : campos['required'],
-                'required'    : (campos['required']) ? 'required' : '',
+                'required'    : campos['required'],
             }
         case 'image':
             folder    = self.metadata['modulo']
@@ -474,7 +471,7 @@ class detalle:
                     'value'       : idparent,
                     'title'       : (isset(parent[idparent])) ? parent[idparent]['titulo'] : '',
                     'checked'     : checked,
-                    'required'    : (campos['required']) ? 'required' : '',
+                    'required'    : campos['required'],
                     'level'       : (level - 1) * 20,
                     'children'    : '',
                 )

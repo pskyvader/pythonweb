@@ -300,26 +300,28 @@ class base:
 
         detalle_class.normal(data, class_name)
 
-    def orden(self):
+    @classmethod
+    def orden(cls):
         respuesta = {'body': ''}
-        respuesta['body'] = json.dumps(lista.orden(self.class_name))
+        respuesta['body'] = json.dumps(lista.orden(cls.class_name))
         return respuesta
 
-    def estado(self):
+    @classmethod
+    def estado(cls):
         respuesta = {'body': ''}
-        respuesta['body'] = json.dumps(lista.estado(self.class_name))
+        respuesta['body'] = json.dumps(lista.estado(cls.class_name))
         return respuesta
-
+    @classmethod
     def eliminar(self):
         respuesta = {'body': ''}
         respuesta['body'] = json.dumps(lista.eliminar(self.class_name))
         return respuesta
-
+    @classmethod
     def copy(self):
         respuesta = {'body': ''}
         respuesta['body'] = json.dumps(lista.copy(self.class_name))
         return respuesta
-
+    @classmethod
     def excel(self):
         get=app.get
         respuesta = {'body': ''}
@@ -348,7 +350,7 @@ class base:
         select = ""
         respuesta['body'] = json.dumps(lista.excel(self.class_name, where, select, self.metadata['title']))
         return respuesta
-
+    @classmethod
     def get_all(self):
         get=app.get
         respuesta = {'body': ''}
@@ -381,22 +383,22 @@ class base:
         
         respuesta['body']=json.dumps(row)
         return respuesta
-
+    @classmethod
     def regenerar(self):
         respuesta = {'body': ''}
         respuesta['body'] = json.dumps(image.regenerar(app.post))
         return respuesta
-
+    @classmethod
     def guardar(self):
         respuesta = {'body': ''}
         respuesta['body'] = json.dumps(detalle_class.guardar(self.class_name))
         return respuesta
-
+    @classmethod
     def upload(self):
         respuesta = {'body': ''}
         respuesta['body'] = json.dumps(image.upload_tmp(self.metadata['modulo']))
         return respuesta
-
+    @classmethod
     def upload_file(self):
         respuesta = {'body': ''}
         respuesta['body'] = json.dumps(file.upload_tmp())

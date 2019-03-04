@@ -40,9 +40,7 @@ class base:
             if len(params) >= 1:
                 ret = method(var)
             else:
-                print(method)
                 ret = method()
-                print(ret)
         else:
             ret = {
                 'error': 404
@@ -90,6 +88,7 @@ class base:
     def index(cls):
         '''Controlador de lista_class de elementos base, puede ser sobreescrito en el controlador de cada modulo'''
         ret = {'body': ''}
+        print(ret)
         # Clase para enviar a controlador de lista_class
         class_name = cls.class_name
         get = app.get

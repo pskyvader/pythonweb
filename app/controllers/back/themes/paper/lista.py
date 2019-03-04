@@ -70,7 +70,7 @@ class lista:
         count = class_name.getAll(where, condiciones, 'total')
         total = int(count / limit)
         if total < (count / limit):
-            total++
+            total+=1
         
 
         condiciones['limit'] = limit

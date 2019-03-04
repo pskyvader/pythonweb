@@ -7,7 +7,7 @@ from app.models.modulo import modulo as modulo_model
 from app.models.administrador import administrador as administrador_model
 from app.models.table import table
 
-from .lista_class import lista_class as lista_class_class
+from .lista import lista as lista_class
 from .detalle import detalle as detalle_class
 
 import importlib

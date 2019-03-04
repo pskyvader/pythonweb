@@ -110,7 +110,8 @@ class functions():
     def generar_pass(length=8):
         import string
         import secrets
-        password = ''.join(secrets.choice(string.ascii_uppercase + string.digits) for _ in range(length))
+        password = ''.join(secrets.choice(
+            string.ascii_uppercase + string.digits) for _ in range(length))
         return password
 
     @staticmethod
@@ -172,3 +173,18 @@ class functions():
             ruta = "http://" + texto
 
         return ruta
+
+    @staticmethod
+    def crear_arbol(data: dict, idpadre=0):
+        tree = {'children': {}, 'root': {}}
+        for node in data:
+            id = node[0]
+            # Puede que exista el children creado si los hijos entran antes que el padre
+            node['children'] = tree['children'][id]['children'] if id in tree['children'] else {}
+            tree['children'][id] = node
+            if node['idpadre'][0] == idpadre:
+                tree['root'][id] = tree['children'][id]
+            else:
+                tree['children'][node['idpadre'][0] ]['children'][id] = tree['children'][id]
+
+        return tree['root']

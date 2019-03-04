@@ -45,7 +45,6 @@ class base:
             ret = {
                 'error': 404
             }
-        print(ret)
         return ret
 
     @classmethod

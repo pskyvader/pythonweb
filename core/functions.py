@@ -163,6 +163,38 @@ class functions():
             return archivo + c + str(int(getmtime(ac))) if my_file.is_file() else ""
 
     @staticmethod
+    def getContrastColor(hexColor: str):
+        # rgb
+        hexColor = hexColor.lstrip('#')
+        R1, G1, B1 = tuple(int(hexColor[i:i+2], 16) for i in (0, 2, 4))
+
+        # black rgb
+        blackColor = "#000000"
+        blackColor = blackColor.lstrip('#')
+        R2BlackColor, G2BlackColor, B2BlackColor = tuple(
+            int(blackColor[i:i+2], 16) for i in (0, 2, 4))
+
+        # contrast ratio
+        L1 = 0.2126 * pow(R1 / 255, 2.2) + 0.7152 * \
+            pow(G1 / 255, 2.2) + 0.0722 * pow(B1 / 255, 2.2)
+        L2 = 0.2126 * pow(R2BlackColor / 255, 2.2) + 0.7152 * \
+            pow(G2BlackColor / 255, 2.2) + 0.0722 * \
+            pow(B2BlackColor / 255, 2.2)
+
+        contrastRatio = 0
+        if L1 > L2:
+            contrastRatio = int((L1 + 0.05) / (L2 + 0.05))
+        else:
+            contrastRatio = int((L2 + 0.05) / (L1 + 0.05))
+
+        # If contrast is more than 5, return black color
+        if contrastRatio > 5:
+            return '#000'
+        else:
+            # if not, return white color.
+            return '#fff'
+
+    @staticmethod
     def ruta(texto):
         texto = texto.strip()
         if "http" in texto or texto == '#':
@@ -185,6 +217,7 @@ class functions():
             if node['idpadre'][0] == idpadre:
                 tree['root'][id] = tree['children'][id]
             else:
-                tree['children'][node['idpadre'][0]]['children'][id] = tree['children'][id]
+                tree['children'][node['idpadre'][0]
+                                 ]['children'][id] = tree['children'][id]
 
         return tree['root']

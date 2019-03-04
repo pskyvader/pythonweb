@@ -166,7 +166,7 @@ class app:
                 print('len:',len(u))
                 u=next(iter(u))
                 print(u)
-        
+        print(url)
         return url
 
     @staticmethod

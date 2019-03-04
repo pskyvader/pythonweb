@@ -82,11 +82,9 @@ class base:
             {'url': functions.generar_url( ["home"]), 'title': 'Home', 'active': ''},
             {'url': functions.generar_url(self.url), 'title': ( self.metadata['title']), 'active': 'active'},
         ]
-        print(self.url)
 
     @classmethod
     def index(cls):
-        print(cls.class_name)
         '''Controlador de lista_class de elementos base, puede ser sobreescrito en el controlador de cada modulo'''
         ret = {'body': ''}
         # Clase para enviar a controlador de lista_class

@@ -13,7 +13,7 @@ class file(image):
                   "xlam", "xlsb", "ppt", "pptx", "potx", "ppsx", "sldx", "pdf"]
 
     @staticmethod
-    def upload_tmp(modulo):
+    def upload_tmp():
         '''Subir a carpeta temporal, durante la creacion de la seccion. al guardar el archivo se mueve a la carpeta definitiva'''
         respuesta = {'exito': False, 'mensaje': ''}
 

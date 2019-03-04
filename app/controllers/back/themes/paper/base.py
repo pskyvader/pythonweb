@@ -60,8 +60,8 @@ class base:
             else:
                 tipo = 0
 
-            modulo = modulo_model.getAll(
-                {'idmoduloconfiguracion': moduloconfiguracion[0], 'tipo': tipo})
+            modulo = modulo_model.getAll( {'idmoduloconfiguracion': moduloconfiguracion[0], 'tipo': tipo})
+            print(modulo)
             self.contiene_hijos = modulo[0]['hijos'] if 'hijos' in modulo[0] else False
             self.metadata['title'] = modulo[0]['titulo']
 

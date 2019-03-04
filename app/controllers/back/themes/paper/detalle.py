@@ -393,147 +393,148 @@ class detalle:
                 'help'              : campos['help'] if 'help' in campos else '',
             }
         elif campos['type']=='email':
-        case 'email':
             data = {
                 'title_field' : campos['title_field'],
                 'field'       : campos['field'],
                 'required' : campos['required'],
                 'value'      : fila[campos['field']] if campos['field'] in fila else '' ,
             }
-        case 'password':
+        elif campos['type']=='password':
             data = {
                 'title_field' : campos['title_field'],
                 'field'       : campos['field'],
                 'required' : campos['required'],
             }
-        case 'token':
+        
+        elif campos['type']=='token':
             data = {
                 'title_field' : campos['title_field'],
                 'field'       : campos['field'],
                 'required' : campos['required'],
                 'value'      : fila[campos['field']] if campos['field'] in fila else '' ,
             }
-        case 'map':
+        elif campos['type']=='map':
             data = {
                 'title_field' : campos['title_field'],
                 'field'       : campos['field'],
                 'required' : campos['required'],
-                'direccion'   : (isset(fila[campos['field']])) ? fila[campos['field']]['direccion'] : '',
-                'lat'         : (isset(fila[campos['field']])) ? fila[campos['field']]['lat'] : '',
-                'lng'         : (isset(fila[campos['field']])) ? fila[campos['field']]['lng'] : '',
+                'direccion'   :fila[campos['field']]['direccion'] if  campos['field'] in fila  else '',
+                'lat'         :  fila[campos['field']]['lat'] if campos['field'] in fila  else '',
+                'lng'         : fila[campos['field']]['lng'] if campos['field'] in fila  else '',
             }
-        case 'recursive_checkbox':
-        case 'recursive_radio':
+        
+        elif campos['type']=='recursive_checkbox' or campos['type']=='recursive_radio' :
             if 0 == level:
-                if isset(fila[campos['field']]):
+                if campos['field'] in fila:
                     count = count(fila[campos['field']])
                 else:
-                    if 'recursive_radio' == campos['type'] || isset(app.get[campos['field']]):
+                    if 'recursive_radio' == campos['type'] or campos['field'] in app.get:
                         count = 1
                     else:
                         count = 0
-                    }
-                }
                 data = {
                     'is_children' : False,
                     'title_field' : campos['title_field'],
                     'field'       : campos['field'],
-                    'is_required' : campos['required'],
+                    'required' : campos['required'],
                     'children'    : '',
-                    'required'    : (campos['required']) ? 'required="required"' : '',
-                    'count'       : (count > 0) ? count : '',
-                )
-                foreach (campos['parent'] as key : children:
-                    data['children'] .= self.field(campos, fila, '', children[0], 1)
+                    'count'       : count if count >0 else '',
                 }
+                for children in campos['parent']:
+                    data['children'] += self.field(campos, fila, '', children[0], 1)
+                
             else:
                 parent  = campos['parent']
-                checked = (0 == idparent) ? 'checked="checked"' : ''
-                if !isset(fila[campos['field']]):
-                    if isset(app.get[campos['field']]):
-                        checked = (idparent == app.get[campos['field']]) ? 'checked="checked"' : ''
-                    }
+                checked ='checked="checked"' if 0 == idparent else ''
+                if campos['field'] not in fila:
+                    if campos['field'] in app.get:
+                        checked = 'checked="checked"' if idparent == app.get[campos['field']] else ''
+                    
                 else:
-                    checked = (in_array(idparent, fila[campos['field']])) ? 'checked="checked"' : ''
-                }
+                    checked = 'checked="checked"' if idparent in fila[campos['field']] else ''
+                
                 data = {
                     'is_children' : True,
                     'field'       : campos['field'],
                     'value'       : idparent,
-                    'title'       : (isset(parent[idparent])) ? parent[idparent]['titulo'] : '',
+                    'title'       : parent[idparent]['titulo'] if idparent in parent else '',
                     'checked'     : checked,
                     'required'    : campos['required'],
                     'level'       : (level - 1) * 20,
                     'children'    : '',
-                )
-                if isset(parent[idparent]):
+                }
+                if idparent in parent:
                     campos['parent'] = parent[idparent]['children']
-                    foreach (campos['parent'] as key : children:
-                        data['children'] .= self.field(campos, fila, '', children[0], level + 1)
-                    }
-                }
-            }
-            break
-        case 'select':
-            data = {
-                'title_field' : campos['title_field'],
-                'field'       : campos['field'],
-                'required' : campos['required'],
-                'help'        : (isset(campos['help'])) ? campos['help'] : '',
-                'option'      : array(),
-            )
-            foreach (campos['parent'] as key : children:
-                selected = (0 == children[0]) ? 'selected="selected"' : ''
-                if !isset(fila[campos['field']]):
-                    if isset(app.get[campos['field']]):
-                        selected = (children[0] == app.get[campos['field']]) ? 'selected="selected"' : ''
-                    }
-                else:
-                    selected = (children[0] == fila[campos['field']]) ? 'selected="selected"' : ''
-                }
 
-                data['option'][] = array('value' : children[0], 'selected' : selected, 'text' : children['titulo'])
+                    for children in campos['parent']:
+                        data['children'] += self.field(campos, fila, '', children[0], level + 1)
+                    
+                    
+        elif campos['type']=='select':
+            data = {
+                'title_field' : campos['title_field'],
+                'field'       : campos['field'],
+                'required' : campos['required'],
+                'help'              : campos['help'] if 'help' in campos else '',
+                'option'      : [],
             }
-            break
-        case 'textarea':
+            for children in campos['parent']:
+                selected = 'selected="selected"' if 0 == children[0] else ''
+                if campos['field'] not in fila:
+                    if campos['field'] in app.get:
+                        checked = 'selected="selected"' if children[0] == app.get[campos['field']] else ''
+
+                else:
+                    selected = 'selected="selected"' if children[0] == fila[campos['field']] else ''
+                
+
+                data['option'].append({('value' : children[0], 'selected' : selected, 'text' : children['titulo']})
+            
+        elif campos['type']=='textarea':
             data = {
                 'title_field' : campos['title_field'],
                 'field'       : campos['field'],
                 'required' : campos['required'],
                 'value'      : fila[campos['field']] if campos['field'] in fila else '' ,
             }
-        case 'text':
-        default:
+        elif campos['type']=='text':
             data = {
                 'title_field' : campos['title_field'],
                 'field'       : campos['field'],
                 'required' : campos['required'],
                 'value'      : fila[campos['field']] if campos['field'] in fila else '' ,
-                'help'        : (isset(campos['help'])) ? campos['help'] : '',
+                'help'              : campos['help'] if 'help' in campos else '',
             }
-        }
+        
+        else:
+            data = {
+                'title_field' : campos['title_field'],
+                'field'       : campos['field'],
+                'required' : campos['required'],
+                'value'      : fila[campos['field']] if campos['field'] in fila else '' ,
+                'help'              : campos['help'] if 'help' in campos else '',
+            }
+        
 
         
-        view.set_array(data)
-        content=view.render('detail/'.campos['type'], False, True)
+        view.add_array(data)
+        content=view.render('detail/'+campos['type'], False)
         return content
-    }
-
-    public static function guardar(class)
-    {
-        campos    = _POST['campos']
-        respuesta = array('exito' : False, 'mensaje' : '')
+        
+    @staticmethod
+    def guardar(class_name):
+        campos    = app.post['campos']
+        respuesta = {'exito' : False, 'mensaje' : ''}
 
         if '' == campos['id']:
-            respuesta['id']      = class.insert(campos)
+            respuesta['id']      = class_name.insert(campos)
             respuesta['mensaje'] = "Creado correctamente"
         else:
-            respuesta['id']      = class.update(campos)
+            respuesta['id']      = class_name.update(campos)
             respuesta['mensaje'] = "Actualizado correctamente"
-        }
+        
         respuesta['exito'] = True
-        if is_array(respuesta['id']):
+        if isinstance(respuesta['id'],list):
             return respuesta['id']
-        }
         return respuesta
-    }
+    

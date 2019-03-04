@@ -78,10 +78,12 @@ class base:
                             self.metadata['title'] += ' - '+p['nombre']
 
         self.class_name = class_name
+        print(self.url)
         self.breadcrumb = [
             {'url': functions.generar_url( ["home"]), 'title': 'Home', 'active': ''},
             {'url': functions.generar_url(self.url), 'title': ( self.metadata['title']), 'active': 'active'},
         ]
+        print(self.url)
 
     @classmethod
     def index(cls):

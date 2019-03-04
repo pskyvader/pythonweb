@@ -216,7 +216,7 @@ class base:
 
         # controlador de detalle
         detalle = detalle_class(cls.metadata)
-        configuracion = detalle.configuracion(cls.metadata['modulo'])
+        configuracion = detalle_class.configuracion(cls.metadata['modulo'])
         
         if 'error' in configuracion:
             ret['error']=configuracion['error']

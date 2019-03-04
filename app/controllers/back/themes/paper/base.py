@@ -6,6 +6,9 @@ from app.models.moduloconfiguracion import moduloconfiguracion as moduloconfigur
 from app.models.modulo import modulo as modulo_model
 from app.models.administrador import administrador as administrador_model
 from app.models.table import table
+
+from .lista import lista
+
 import importlib
 import json
 

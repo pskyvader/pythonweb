@@ -219,13 +219,13 @@ class lista:
 
         th = []
         for m in modulo['mostrar']:
-            if 'True' == m['estado'][tipo_admin]:
+            if 'true' == m['estado'][tipo_admin]:
                 th[m['field']] = {'title_th': m['titulo'],
                                   'field': m['field'], 'type': m['tipo']}
 
         menu = []
         for m in modulo['menu']:
-            if 'True' == m['estado'][tipo_admin]:
+            if 'true' == m['estado'][tipo_admin]:
                 menu[m['field']] = True
             else:
                 menu[m['field']] = False

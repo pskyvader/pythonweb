@@ -1,4 +1,5 @@
 from core.app import app
+from core.image import image
 from core.view import view
 from .head import head
 from .header import header
@@ -283,18 +284,16 @@ class detalle:
                 'parent'      : parent,
                 'col'         : campos['col'],
                 'required' : campos['required'],
-                'required'    : campos['required'],
-                'active'      : (isset(fila[campos['field']])) ? (string) fila[campos['field']] : '',
-                'class'       : (isset(fila[campos['field']])) ? (('True' == fila[campos['field']]) ? 'btn-success' : 'btn-danger') : 'btn-default',
-                'icon'        : (isset(fila[campos['field']])) ? (('True' == fila[campos['field']]) ? 'fa-check' : 'fa-close') : 'fa-question-circle',
+                'active'      : str(fila[campos['field']]) if campos['field'] in fila else '' ,
+                'class'       : ('btn-success' if fila[campos['field']]=='true' else 'btn-danger') if campos['field'] in fila else 'btn-default',
+                'icon'       : ('fa-check' if fila[campos['field']]=='true' else 'fa-close') if campos['field'] in fila else 'fa-question-circle',
             }
-        case 'multiple_active_array':
-            array = array()
-            foreach (campos['array'] as key : value:
-                campos['array'][key]['active'] = (isset(fila[campos['field']][key])) ? (string) fila[campos['field']][key] : 'True'
-                campos['array'][key]['class']  = (isset(fila[campos['field']][key])) ? (('True' == fila[campos['field']][key]) ? 'btn-success' : 'btn-danger') : 'btn-success'
-                campos['array'][key]['icon']   = (isset(fila[campos['field']][key])) ? (('True' == fila[campos['field']][key]) ? 'fa-check' : 'fa-close') : 'fa-check'
-            }
+        elif campos['type']=='multiple_active_array':
+            for value in campos['array']:
+                value['active'] = str(fila[campos['field']]) if campos['field'] in fila else 'true',
+                value['class']  = ('btn-success' if fila[campos['field']]=='true' else 'btn-danger') if campos['field'] in fila else 'btn-success',
+                value['icon']   = ('fa-check' if fila[campos['field']]=='true' else 'fa-close') if campos['field'] in fila else 'fa-check',
+            
             data = {
                 'title_field' : campos['title_field'],
                 'array'       : campos['array'],
@@ -303,46 +302,42 @@ class detalle:
                 'parent'      : parent,
                 'col'         : campos['col'],
                 'required' : campos['required'],
-                'required'    : campos['required'],
             }
-        case 'image':
+        elif campos['type']=='image':
             folder    = self.metadata['modulo']
-            image_url = (isset(fila[campos['field']]) and isset(fila[campos['field']][0])) ? (image.generar_url(fila[campos['field']][0], 'thumb')) : ''
-            data      = array(
+            image_url = image.generar_url(fila[campos['field']][0], 'thumb') if campos['field'] in fila and 0 in fila[campos['field']] else ''
+            data      = {
                 'title_field'       : campos['title_field'],
                 'field'             : campos['field'],
-                'is_required'       : campos['required'],
-                'is_required_modal' : ('' != image_url) ? campos['required'] : True,
-                'is_required_alert' : ('' != image_url) ? campos['required'] : True,
-                'required'          : (campos['required']) ? 'required="required"' : '',
+                'required'       : campos['required'],
                 'image'             : image_url,
-                'is_image'          : ('' != image_url) ? True : False,
-                'url'               : ('' != image_url) ? fila[campos['field']][0]['url'] : '',
-                'parent'            : ('' != image_url) ? fila[campos['field']][0]['parent'] : '',
-                'folder'            : ('' != image_url) ? fila[campos['field']][0]['folder'] : '',
-                'subfolder'         : ('' != image_url) ? fila[campos['field']][0]['subfolder'] : '',
-                'help'              : (isset(campos['help'])) ? campos['help'] : '',
-            )
-            data['help'] .= " (Tamaño máximo de archivo " . self.max_upload . ")"
-            break
-        case 'multiple_image':
+                'is_image'          : '' != image_url,
+                'url'               :  fila[campos['field']][0]['url'] if '' != image_url else '',
+                'parent'            :  fila[campos['field']][0]['parent'] if '' != image_url else '',
+                'folder'            :  fila[campos['field']][0]['folder'] if '' != image_url else '',
+                'subfolder'         :  fila[campos['field']][0]['subfolder'] if '' != image_url else '',
+                'help'              : campos['help'] if 'help' in campos else '',
+            }
+            data['help'] += " (Tamaño máximo de archivo " + self.max_upload + ")"
+            
+        elif campos['type']=='multiple_image':
             folder = self.metadata['modulo']
-            fields = array()
-            if isset(fila[campos['field']]):
-                count = count(fila[campos['field']])
-                foreach (fila[campos['field']] as key : campo:
+            fields = []
+            if campos['field'] in fila:
+                count = len(fila[campos['field']])
+                for campo in fila[campos['field']]:
                     field                = campo
                     field['title_field'] = campos['title_field']
                     field['field']       = campos['field']
                     field['image']       = image.generar_url(campo, 'thumb')
                     field['active']      = campo['portada']
-                    field['class']       = ('True' == campo['portada']) ? 'btn-success' : 'btn-danger'
-                    field['icon']        = ('True' == campo['portada']) ? 'fa-check' : 'fa-close'
-                    fields[]             = field
-                }
+                    field['class']       ='btn-success' if 'true' == campo['portada'] else 'btn-danger'
+                    field['icon']        = 'fa-check' if 'true' == campo['portada'] else 'fa-close'
+                    fields.append(field)
+                
             else:
                 count = 0
-            }
+            
 
             data = {
                 'title_field' : campos['title_field'],
@@ -350,7 +345,7 @@ class detalle:
                 'required' : campos['required'],
                 'help'        : campos['help'],
                 'fields'      : fields,
-                'count'       : (count > 0) ? count : '',
+                'count'       : count if count>0 else ''
             }
         case 'file':
             folder   = self.metadata['modulo']

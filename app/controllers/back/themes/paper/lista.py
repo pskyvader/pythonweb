@@ -209,23 +209,23 @@ class lista:
         var                 = {'idmoduloconfiguracion' : moduloconfiguracion[0]}
         if 'tipo' in get:
             var['tipo'] = get['tipo']
-        modulo  = modulo_model.getAll(var, array('limit' : 1))
+        modulo  = modulo_model.getAll(var, {'limit' : 1})
         modulo  = modulo[0]
         estados = modulo['estado'][0]['estado']
         if 'true' != estados[tipo_admin]:
-            functions.url_redirect(array('home'))
-        th = array()
-        foreach (modulo['mostrar'] as key : m:
-            if 'true' == m['estado'][tipo_admin]:
-                th[m['field']] = array('title_th' : m['titulo'], 'field' : m['field'], 'type' : m['tipo'])
-            }
+            functions.url_redirect(['home'])
 
-        menu = array()
-        foreach (modulo['menu'] as key : m:
+        th = []
+        for m in modulo['mostrar']:
             if 'true' == m['estado'][tipo_admin]:
-                menu[m['field']] = true
-            } else {
-                menu[m['field']] = false
-            }
-        return array('menu' : menu, 'th' : th)
-    }
+                th[m['field']] = {'title_th' : m['titulo'], 'field' : m['field'], 'type' : m['tipo']}
+            
+
+        menu = []
+        for m in modulo['menu']:
+            if 'true' == m['estado'][tipo_admin]:
+                menu[m['field']] = True
+            else:
+                menu[m['field']] = False
+            
+        return {'menu' : menu, 'th' : th}

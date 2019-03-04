@@ -174,10 +174,8 @@ class lista:
                 original_url = image.generar_url(portada, '')
             else:
                 thumb_url = zoom_url = original_url = ''
-
             data = {'title': th['title_th'], 'url': thumb_url,
                     'zoom': zoom_url, 'original': original_url, 'id': fila[0]}
-
         elif th['type'] == 'action':
             data = {'text': th['title_th'],
                     'id': fila[th['field']],

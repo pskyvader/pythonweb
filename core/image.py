@@ -13,8 +13,8 @@ class image:
     upload_dir = ''
     upload_url = ''
 
-    @staticmethod
-    def upload_tmp(modulo):
+    @classmethod
+    def upload_tmp(cls,modulo):
         '''Subir a carpeta temporal, durante la creacion de la seccion. al guardar el archivo se mueve a la carpeta definitiva'''
         respuesta = {'exito': False, 'mensaje': ''}
         if 'file' in app.post:

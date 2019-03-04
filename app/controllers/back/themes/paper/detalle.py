@@ -5,6 +5,10 @@ from .header import header
 from .aside import aside
 from .footer import footer
 
+
+from app.models.moduloconfiguracion import moduloconfiguracion as moduloconfiguracion_model
+from app.models.modulo import modulo as modulo_model
+
 class detalle:
     metadata   = {'title' : ''}
     max_upload = "Ilimitado"

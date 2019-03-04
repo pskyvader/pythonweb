@@ -73,7 +73,8 @@ class functions():
             return functions.generar_url(url, extra_variables)
 
     @staticmethod
-    def generar_url(url, extra={}, front_auto=True, front=True):
+    def generar_url(url_original, extra={}, front_auto=True, front=True):
+        url=url_original
         url = '/'.join(map(str, url))
         if isinstance(extra, dict) and len(extra) > 0:
             url = url+"?" + urlencode(extra, 'utf-8')

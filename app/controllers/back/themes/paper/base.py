@@ -48,8 +48,7 @@ class base:
         return ret
 
     def __init__(self, class_name=None):
-        moduloconfiguracion = moduloconfiguracion_model.getByModulo(
-            self.metadata['modulo'])
+        moduloconfiguracion = moduloconfiguracion_model.getByModulo( self.metadata['modulo'])
         if 0 in moduloconfiguracion:
             self.contiene_tipos = moduloconfiguracion['tipos'] if 'tipos' in moduloconfiguracion else False
             self.sub = moduloconfiguracion['sub'] if 'sub' in moduloconfiguracion else ''
@@ -80,10 +79,8 @@ class base:
 
         self.class_name = class_name
         self.breadcrumb = [
-            {'url': functions.generar_url(
-                ["home"]), 'title': 'Home', 'active': ''},
-            {'url': functions.generar_url(self.url), 'title': (
-                self.metadata['title']), 'active': 'active'},
+            {'url': functions.generar_url( ["home"]), 'title': 'Home', 'active': ''},
+            {'url': functions.generar_url(self.url), 'title': ( self.metadata['title']), 'active': 'active'},
         ]
 
     @classmethod

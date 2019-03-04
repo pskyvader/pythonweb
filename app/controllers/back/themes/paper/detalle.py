@@ -1,4 +1,5 @@
 from core.app import app
+from core.file import file
 from core.image import image
 from core.view import view
 from .head import head
@@ -334,10 +335,8 @@ class detalle:
                     field['class']       ='btn-success' if 'true' == campo['portada'] else 'btn-danger'
                     field['icon']        = 'fa-check' if 'true' == campo['portada'] else 'fa-close'
                     fields.append(field)
-                
             else:
                 count = 0
-            
 
             data = {
                 'title_field' : campos['title_field'],
@@ -347,56 +346,53 @@ class detalle:
                 'fields'      : fields,
                 'count'       : count if count>0 else ''
             }
-        case 'file':
+        elif campos['type']=='file':
             folder   = self.metadata['modulo']
-            file_url = (isset(fila[campos['field']]) and isset(fila[campos['field']][0])) ? (file.generar_url(fila[campos['field']][0], '')) : ''
-            data     = array(
+            file_url = file.generar_url(fila[campos['field']][0], '') if campos['field'] in fila and 0 in fila[campos['field']] else ''
+            data     = {
                 'title_field'       : campos['title_field'],
                 'field'             : campos['field'],
-                'is_required'       : campos['required'],
-                'is_required_modal' : ('' != file_url) ? campos['required'] : True,
-                'is_required_alert' : ('' != file_url) ? campos['required'] : True,
-                'required'          : (campos['required']) ? 'required="required"' : '',
+                'required'       : campos['required'],
                 'file'              : file_url,
-                'is_file'           : ('' != file_url) ? True : False,
-                'url'               : ('' != file_url) ? fila[campos['field']][0]['url'] : '',
-                'parent'            : ('' != file_url) ? fila[campos['field']][0]['parent'] : '',
-                'folder'            : ('' != file_url) ? fila[campos['field']][0]['folder'] : '',
-                'subfolder'         : ('' != file_url) ? fila[campos['field']][0]['subfolder'] : '',
-                'help'              : (isset(campos['help'])) ? campos['help'] : '',
-            )
-            data['help'] .= " (Tamaño máximo de archivo " . self.max_upload . ")"
-            break
-        case 'multiple_file':
+                'is_file'           : '' != file_url,
+                'url'               :  fila[campos['field']][0]['url'] if '' != file_url else '',
+                'parent'            :  fila[campos['field']][0]['parent'] if '' != file_url else '',
+                'folder'            :  fila[campos['field']][0]['folder'] if '' != file_url else '',
+                'subfolder'         :  fila[campos['field']][0]['subfolder'] if '' != file_url else '',
+                'help'              : campos['help'] if 'help' in campos else '',
+            }
+            data['help'] += " (Tamaño máximo de archivo " + self.max_upload + ")"
+            
+        elif campos['type']=='multiple_file':
             folder = self.metadata['modulo']
-            fields = array()
-            if isset(fila[campos['field']]):
-                foreach (fila[campos['field']] as key : campo:
+            fields = []
+            if campos['field'] in fila:
+                for campo in fila[campos['field']]:
                     field                = campo
                     field['title_field'] = campos['title_field']
                     field['field']       = campos['field']
                     field['file']        = file.generar_url(campo, '')
-                    fields[]             = field
-                }
-            }
+                    
+                    fields.append(field)
 
             data = {
                 'title_field' : campos['title_field'],
                 'field'       : campos['field'],
                 'required' : campos['required'],
-                'help'        : (isset(campos['help'])) ? campos['help'] : '',
+                'help'              : campos['help'] if 'help' in campos else '',
                 'fields'      : fields,
-            )
-            data['help'] .= " (Tamaño máximo de archivo " . self.max_upload . ")"
-            break
-        case 'number':
+            }
+            data['help'] += " (Tamaño máximo de archivo " + self.max_upload + ")"
+
+        elif campos['type']=='number':
             data = {
                 'title_field' : campos['title_field'],
                 'field'       : campos['field'],
                 'required' : campos['required'],
                 'value'      : fila[campos['field']] if campos['field'] in fila else '' ,
-                'help'        : (isset(campos['help'])) ? campos['help'] : '',
+                'help'              : campos['help'] if 'help' in campos else '',
             }
+        elif campos['type']=='email':
         case 'email':
             data = {
                 'title_field' : campos['title_field'],

@@ -213,20 +213,91 @@ class lista:
         modulo = modulo_model.getAll(var, {'limit': 1})
         modulo = modulo[0]
         estados = modulo['estado'][0]['estado']
-        if 'true' != estados[tipo_admin]:
+        if 'True' != estados[tipo_admin]:
             return {'error': 301, 'redirect': functions.url_redirect(['home'])}
 
         th = []
         for m in modulo['mostrar']:
-            if 'true' == m['estado'][tipo_admin]:
+            if 'True' == m['estado'][tipo_admin]:
                 th[m['field']] = {'title_th': m['titulo'],
                                   'field': m['field'], 'type': m['tipo']}
 
         menu = []
         for m in modulo['menu']:
-            if 'true' == m['estado'][tipo_admin]:
+            if 'True' == m['estado'][tipo_admin]:
                 menu[m['field']] = True
             else:
                 menu[m['field']] = False
 
         return {'menu': menu, 'th': th}
+
+    @staticmethod
+    def orden(class_name):
+        campos = app.post['campos']
+        respuesta = {'exito': False, 'mensaje': ''}
+        elementos = campos['elementos']
+        for e in elementos:
+            class_name.update(e)
+
+        respuesta['exito'] = True
+        respuesta['mensaje'] = "Orden actualizado correctamente"
+        return respuesta
+
+    @staticmethod
+    def estado(class_name):
+        campos = app.post['campos']
+        respuesta = {'exito': False, 'mensaje': ''}
+        set_query = {'id': campos['id'], campos['campo']: campos['active']}
+        class_name.update(set_query)
+        respuesta['exito'] = True
+        respuesta['mensaje'] = "Estado actualizado correctamente."
+        return respuesta
+
+    @staticmethod
+    def eliminar(class_name):
+        campos = app.post['campos']
+        respuesta = {'exito': False, 'mensaje': ''}
+        class_name.delete(campos['id'])
+        respuesta['exito'] = True
+        respuesta['mensaje'] = "Eliminado correctamente."
+        return respuesta
+
+    @staticmethod
+    def copy(class_name):
+        campos = app.post['campos']
+        respuesta = {'exito': False, 'mensaje': ''}
+        id = class_name.copy(campos['id'])
+        respuesta['exito'] = True
+        respuesta['mensaje'] = "Copiado correctamente."
+        respuesta['id'] = id
+        respuesta['refresh'] = True
+        return respuesta
+
+    @staticmethod
+    def excel(class_name, where, select, title):
+        respuesta = {'exito': False, 'mensaje': 'No hay datos para exportar'}
+        condiciones = {}
+        condiciones['limit'] = app.post['limit']
+        condiciones['limit2'] = app.post['limit2']
+        row = class_name.getAll(where, condiciones, select)
+        if len(row) > 0:
+            head = []
+            delete = []
+            for k, v in row[0].items():
+                if isinstance(v, dict) or isinstance(k, int) or 'tipo' == k or 'orden' == k or 'estado' == k or k == class_name.idname:
+                    delete.append(k)
+                else:
+                    head.append(k)
+
+            if len(delete) > 0:
+                for r in row:
+                    for d in delete:
+                        del r[d]
+
+            respuesta['exito'] = True
+            respuesta['mensaje'] = "Excel generado."
+            respuesta['exportar'] = row
+            respuesta['head'] = head
+            respuesta['title'] = title
+
+        return respuesta

@@ -211,6 +211,10 @@ class lista:
         if 'tipo' in get:
             var['tipo'] = get['tipo']
         modulo = modulo_model.getAll(var, {'limit': 1})
+        
+        if 0 not in modulo:
+            return {'error': 301, 'redirect': functions.url_redirect(['home'])}
+
         modulo = modulo[0]
         estados = modulo['estado'][0]['estado']
         if 'true' != estados[tipo_admin]:

@@ -205,7 +205,7 @@ class lista:
     def configuracion(modulo: str):
         session = app.session
         get = app.get
-        tipo_admin = session["tipo" + app.prefix_site]
+        tipo_admin = str(session["tipo" + app.prefix_site])
         moduloconfiguracion = moduloconfiguracion_model.getByModulo(modulo)
         var = {'idmoduloconfiguracion': moduloconfiguracion[0]}
         if 'tipo' in get:
@@ -214,7 +214,6 @@ class lista:
 
         modulo = modulo[0]
         estados = modulo['estado'][0]['estado']
-        print(estados)
         if 'true' != estados[tipo_admin]:
             return {'error': 301, 'redirect': functions.url_redirect(['home'])}
 

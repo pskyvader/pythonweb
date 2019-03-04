@@ -45,7 +45,7 @@ class detalle:
         ret['body'] += f.normal()['body']
 
     @staticmethod
-    def configuracion(modulo, force = False):
+    def configuracion(self,modulo, force = False):
         tipo_admin          = app.session["tipo" + app.prefix_site]
         moduloconfiguracion = moduloconfiguracion_model.getByModulo(modulo)
         var                 = {'idmoduloconfiguracion' : moduloconfiguracion[0]}
@@ -69,7 +69,7 @@ class detalle:
 
 
 
-    def field(campos, fila, parent = '', idparent = 0, level = 0):
+    def field(self,campos, fila, parent = '', idparent = 0, level = 0):
         editor_count = 0
         if campos['type']=='active':
             data = {
@@ -144,7 +144,7 @@ class detalle:
             direcciones = []
             if campos['field'] in fila:
                 count = count(fila[campos['field']])
-                
+
                 foreach (fila[campos['field']] as key : campo:
                     field                = campo
                     field['title_field'] = campos['title_field']

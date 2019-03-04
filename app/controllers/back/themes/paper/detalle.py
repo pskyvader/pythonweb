@@ -139,10 +139,10 @@ class detalle:
                     {'url': theme + 'plugins/balloontoolbar/skins/moono-lisa/balloontoolbar.css', 'type': 'style'},
                     {'url': theme + 'plugins/balloonpanel/skins/moono-lisa/balloonpanel.css', 'type': 'style'},
 
-                    {'url': theme + 'skins/moono-lisa/editor.css' . t, 'type': 'style'},
-                    {'url': theme + 'plugins/basewidget/css/style.css' . t,
+                    {'url': theme + 'skins/moono-lisa/editor.css' + t, 'type': 'style'},
+                    {'url': theme + 'plugins/basewidget/css/style.css' + t,
                         'type': 'style'},
-                    {'url': theme + 'plugins/layoutmanager/css/style.css' . t,
+                    {'url': theme + 'plugins/layoutmanager/css/style.css' + t,
                         'type': 'style'},
                 ]
 

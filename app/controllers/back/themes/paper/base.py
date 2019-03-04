@@ -351,55 +351,55 @@ class base:
         respuesta['body'] = json.dumps(lista.excel(cls.class_name, where, select, cls.metadata['title']))
         return respuesta
 
-    def get_all(cls):
+    def get_all(self):
         get=app.get
         respuesta = {'body': ''}
         respuesta['body'] = {'exito': False, 'mensaje' : 'Debes recargar la pagina'}
-        if cls.contiene_tipos and 'tipo' not in get:
+        if self.contiene_tipos and 'tipo' not in get:
             respuesta['body']=json.dumps(respuesta['body'])
             return
         
-        if cls.contiene_hijos and 'idpadre' not in get:
+        if self.contiene_hijos and 'idpadre' not in get:
             respuesta['body']=json.dumps(respuesta['body'])
             return
         
         where = {}
-        if cls.contiene_tipos:
+        if self.contiene_tipos:
             where['tipo'] = get['tipo']
         
-        if cls.contiene_hijos:
+        if self.contiene_hijos:
             where['idpadre'] = get['idpadre']
         
-        if cls.class_parent!= None:
-            class_parent = cls.class_parent
+        if self.class_parent!= None:
+            class_parent = self.class_parent
             if class_parent.idname in get:
                 where[class_parent.idname] = get[class_parent.idname]
             
         
         condiciones = {}
         select = ""
-        class_name = cls.class_name
+        class_name = self.class_name
         row = class_name.getAll(where, condiciones, select)
         
         respuesta['body']=json.dumps(row)
         return respuesta
 
-    def regenerar(cls):
+    def regenerar(self):
         respuesta = {'body': ''}
         respuesta['body'] = json.dumps(image.regenerar(app.post))
         return respuesta
 
-    def guardar(cls):
+    def guardar(self):
         respuesta = {'body': ''}
-        respuesta['body'] = json.dumps(detalle_class.guardar(cls.class_name))
+        respuesta['body'] = json.dumps(detalle_class.guardar(self.class_name))
         return respuesta
 
-    def upload(cls):
+    def upload(self):
         respuesta = {'body': ''}
-        respuesta['body'] = json.dumps(image.upload_tmp(cls.metadata['modulo']))
+        respuesta['body'] = json.dumps(image.upload_tmp(self.metadata['modulo']))
         return respuesta
 
-    def upload_file(cls):
+    def upload_file(self):
         respuesta = {'body': ''}
         respuesta['body'] = json.dumps(file.upload_tmp())
         return respuesta

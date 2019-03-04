@@ -111,6 +111,10 @@ class base:
         # controlador de lista
         list = lista(cls.metadata)
         configuracion = list.configuracion(cls.metadata['modulo'])
+        if 'error' in configuracion:
+            ret['error']=configuracion['error']
+            ret['redirect']=configuracion['redirect']
+            return ret
 
         where = {}
         if cls.contiene_tipos:

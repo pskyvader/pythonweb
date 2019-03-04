@@ -21,6 +21,7 @@ class lista:
     def normal(self, data: dict):
         ret = {'body': ''}
         th = data['th']
+        print(th)
         row_data = data['row']
         row = []
         even = False

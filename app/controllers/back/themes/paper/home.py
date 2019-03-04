@@ -33,13 +33,10 @@ class home(base):
         ret['body']+=ret_head['body']
         
         he=header()
-        #ret_header=he.normal()
-        #ret['body']+=ret_header['body']
         ret['body']+=he.normal()['body']
 
         asi = aside()
-        ret_asi=asi.normal()
-        ret['body']+=ret_asi['body']
+        ret['body']+=asi.normal()['body']
 
 
         view.add('title', 'index')
@@ -54,7 +51,6 @@ class home(base):
 
 
         f = footer()
-        ret_f=f.normal()
-        ret['body']+=ret_f['body']
+        ret['body']+=f.normal()['body']
 
         return ret

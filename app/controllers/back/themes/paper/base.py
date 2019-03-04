@@ -7,7 +7,7 @@ from app.models.modulo import modulo as modulo_model
 from app.models.administrador import administrador as administrador_model
 from app.models.table import table
 
-from .lista import lista
+from .lista_class import lista_class as lista_class_class
 from .detalle import detalle as detalle_class
 
 import importlib
@@ -88,9 +88,9 @@ class base:
 
     @classmethod
     def index(cls):
-        '''Controlador de lista de elementos base, puede ser sobreescrito en el controlador de cada modulo'''
+        '''Controlador de lista_class de elementos base, puede ser sobreescrito en el controlador de cada modulo'''
         ret = {'body': ''}
-        # Clase para enviar a controlador de lista
+        # Clase para enviar a controlador de lista_class
         class_name = cls.class_name
         get = app.get
         if cls.contiene_tipos and not 'tipo' in get:
@@ -107,11 +107,11 @@ class base:
             ret['redirect'] = url_return
             return ret
 
-        # cabeceras y campos que se muestran en la lista:
-        # titulo,campo de la tabla a usar, tipo (ver archivo lista.py funcion "field")
-        # controlador de lista
-        list = lista(cls.metadata)
-        configuracion = list.configuracion(cls.metadata['modulo'])
+        # cabeceras y campos que se muestran en la lista_class:
+        # titulo,campo de la tabla a usar, tipo (ver archivo lista_class.py funcion "field")
+        # controlador de lista_class
+        lista = lista_class(cls.metadata)
+        configuracion = lista.configuracion(cls.metadata['modulo'])
         if 'error' in configuracion:
             ret['error']=configuracion['error']
             ret['redirect']=configuracion['redirect']
@@ -129,7 +129,7 @@ class base:
                 where[class_parent.idname] = get[class_parent.idname]
 
         condiciones = {}
-        url_detalle = list(cls.url)
+        url_detalle = cls.url
         url_detalle.append('detail')
         # obtener unicamente elementos de la pagina actual
         respuesta = list.get_row(class_name, where, condiciones, url_detalle)
@@ -167,7 +167,7 @@ class base:
         else:
             del configuracion['th']['url_sub']
 
-        # informacion para generar la vista de lista
+        # informacion para generar la vista de lista_class
         data = {
             'breadcrumb': cls.breadcrumb,
             'th': configuracion['th'],
@@ -303,23 +303,23 @@ class base:
     @classmethod
     def orden(cls):
         respuesta = {'body': ''}
-        respuesta['body'] = json.dumps(lista.orden(cls.class_name))
+        respuesta['body'] = json.dumps(lista_class.orden(cls.class_name))
         return respuesta
 
     @classmethod
     def estado(cls):
         respuesta = {'body': ''}
-        respuesta['body'] = json.dumps(lista.estado(cls.class_name))
+        respuesta['body'] = json.dumps(lista_class.estado(cls.class_name))
         return respuesta
     @classmethod
     def eliminar(cls):
         respuesta = {'body': ''}
-        respuesta['body'] = json.dumps(lista.eliminar(cls.class_name))
+        respuesta['body'] = json.dumps(lista_class.eliminar(cls.class_name))
         return respuesta
     @classmethod
     def copy(cls):
         respuesta = {'body': ''}
-        respuesta['body'] = json.dumps(lista.copy(cls.class_name))
+        respuesta['body'] = json.dumps(lista_class.copy(cls.class_name))
         return respuesta
     @classmethod
     def excel(cls):
@@ -348,7 +348,7 @@ class base:
             
         
         select = ""
-        respuesta['body'] = json.dumps(lista.excel(cls.class_name, where, select, cls.metadata['title']))
+        respuesta['body'] = json.dumps(lista_class.excel(cls.class_name, where, select, cls.metadata['title']))
         return respuesta
     @classmethod
     def get_all(cls):

@@ -156,16 +156,20 @@ class lista:
                 'class': 'btn-success' if fila[th['field']] else 'btn-danger',
                 'icon': 'fa-check' if fila[th['field']] else 'fa-close',
             }
+
         elif th['type'] == 'color':
             if isinstance(fila[th['field']], dict):
                 data = fila[th['field']]
             else:
                 data = {'background': fila[th['field']], 'text': '',
                         'color': functions.getContrastColor(fila[th['field']])}
+
         elif th['type'] == 'delete':
             data = {'id': fila[0]}
+
         elif th['type'] == 'link':
             data = {'text': th['title_th'], 'url': fila[th['field']]}
+
         elif th['type'] == 'image':
             if th['field'] in fila and isinstance(fila[th['field']], dict) and len(fila[th['field']]) > 0:
                 portada = image.portada(fila[th['field']])
@@ -176,6 +180,7 @@ class lista:
                 thumb_url = zoom_url = original_url = ''
             data = {'title': th['title_th'], 'url': thumb_url,
                     'zoom': zoom_url, 'original': original_url, 'id': fila[0]}
+
         elif th['type'] == 'action':
             data = {'text': th['title_th'],
                     'id': fila[th['field']],
@@ -185,9 +190,10 @@ class lista:
 
         elif th['type'] == 'text':
             return fila[th['field']]
+
         else:
             return fila[th['field']]
 
-        view.set_array(data)
+        view.add_array(data)
         content = view.render('list/'+th['type'], False)
         return content

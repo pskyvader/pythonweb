@@ -40,7 +40,9 @@ class base:
             if len(params) >= 1:
                 ret = method(var)
             else:
+                print(method)
                 ret = method()
+                print(ret)
         else:
             ret = {
                 'error': 404

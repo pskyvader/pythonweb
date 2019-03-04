@@ -223,7 +223,7 @@ class lista:
                 th[m['field']] = {'title_th': m['titulo'],
                                   'field': m['field'], 'type': m['tipo']}
 
-        menu = []
+        menu = {}
         for m in modulo['menu']:
             if 'true' == m['estado'][tipo_admin]:
                 menu[m['field']] = True

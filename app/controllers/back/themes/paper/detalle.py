@@ -1,5 +1,6 @@
 from core.app import app
 from core.file import file
+from core.functions import functions
 from core.image import image
 from core.view import view
 from .head import head
@@ -119,7 +120,7 @@ class detalle:
                 'value': fila[campos['field']] if campos['field'] in fila else '',
             }
             data['help'] += " (Tamaño máximo de archivo " + \
-                               self.max_upload + ")"
+                self.max_upload + ")"
             if 0 == editor_count:
                 theme = app.get_url() + view.get_theme() + 'assets/ckeditor/'
                 t = '?t=I8BG'
@@ -200,7 +201,7 @@ class detalle:
             count = len(fila[campos['field']]) if campos['field'] in fila and isinstance(
                 fila[campos['field']], dict) else 0
             if count > 0:
-                for key,f in fila[campos['field']].items():
+                for key, f in fila[campos['field']].items():
                     td = []
                     for v in campos['columnas']:
                         content = self.field(v, f, campos['field'], key)
@@ -268,7 +269,7 @@ class detalle:
         elif campos['type'] == 'multiple_select':
             for option in campos['option']:
                 option['selected'] = 'selected="selected"' if campos['field'] in fila and fila[campos['field']
-                    ] == option['value'] else ''
+                                                                                               ] == option['value'] else ''
 
             data = {
                 'title_field': campos['title_field'],
@@ -332,7 +333,7 @@ class detalle:
                 'help': campos['help'] if 'help' in campos else '',
             }
             data['help'] += " (Tamaño máximo de archivo " + \
-                               self.max_upload + ")"
+                self.max_upload + ")"
 
         elif campos['type'] == 'multiple_image':
             folder = self.metadata['modulo']
@@ -376,7 +377,7 @@ class detalle:
                 'help': campos['help'] if 'help' in campos else '',
             }
             data['help'] += " (Tamaño máximo de archivo " + \
-                               self.max_upload + ")"
+                self.max_upload + ")"
 
         elif campos['type'] == 'multiple_file':
             folder = self.metadata['modulo']
@@ -398,7 +399,7 @@ class detalle:
                 'fields': fields,
             }
             data['help'] += " (Tamaño máximo de archivo " + \
-                               self.max_upload + ")"
+                self.max_upload + ")"
 
         elif campos['type'] == 'number':
             data = {
@@ -504,17 +505,18 @@ class detalle:
                 else:
                     selected = 'selected="selected"' if children[0] == fila[campos['field']] else ''
 
-                data['option'].append({'value': children[0], 'selected': selected, 'text': children['titulo']})
+                data['option'].append(
+                    {'value': children[0], 'selected': selected, 'text': children['titulo']})
 
         elif campos['type'] == 'textarea':
-            data={
+            data = {
                 'title_field': campos['title_field'],
                 'field': campos['field'],
                 'required': campos['required'],
                 'value': fila[campos['field']] if campos['field'] in fila else '',
             }
         elif campos['type'] == 'text':
-            data={
+            data = {
                 'title_field': campos['title_field'],
                 'field': campos['field'],
                 'required': campos['required'],
@@ -523,7 +525,7 @@ class detalle:
             }
 
         else:
-            data={
+            data = {
                 'title_field': campos['title_field'],
                 'field': campos['field'],
                 'required': campos['required'],
@@ -531,25 +533,23 @@ class detalle:
                 'help': campos['help'] if 'help' in campos else '',
             }
 
-
-
         view.add_array(data)
-        content=view.render('detail/'+campos['type'], False)
+        content = view.render('detail/'+campos['type'], False)
         return content
 
     @staticmethod
     def guardar(class_name):
-        campos=app.post['campos']
-        respuesta={'exito': False, 'mensaje': ''}
+        campos = app.post['campos']
+        respuesta = {'exito': False, 'mensaje': ''}
 
         if '' == campos['id']:
-            respuesta['id']=class_name.insert(campos)
-            respuesta['mensaje']="Creado correctamente"
+            respuesta['id'] = class_name.insert(campos)
+            respuesta['mensaje'] = "Creado correctamente"
         else:
-            respuesta['id']=class_name.update(campos)
-            respuesta['mensaje']="Actualizado correctamente"
+            respuesta['id'] = class_name.update(campos)
+            respuesta['mensaje'] = "Actualizado correctamente"
 
-        respuesta['exito']=True
+        respuesta['exito'] = True
         if isinstance(respuesta['id'], dict):
             return respuesta['id']
         return respuesta

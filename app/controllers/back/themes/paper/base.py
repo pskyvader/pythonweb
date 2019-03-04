@@ -77,9 +77,9 @@ class base:
                         elif 'nombre' in p and p['nombre'] != '':
                             self.metadata['title'] += ' - '+p['nombre']
 
-        print(self.class_name)
         self.class_name = class_name
         print(self.class_name)
+        print(base.class_name)
         self.breadcrumb = [
             {'url': functions.generar_url( ["home"]), 'title': 'Home', 'active': ''},
             {'url': functions.generar_url(self.url), 'title': ( self.metadata['title']), 'active': 'active'},

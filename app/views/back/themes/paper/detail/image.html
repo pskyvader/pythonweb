@@ -27,7 +27,7 @@
         <input type="hidden" class="folder" name="image[{field}][0][folder]" value="{folder}">
         <input type="hidden" class="subfolder" name="image[{field}][0][subfolder]" value="{subfolder}">
         <input type="hidden" class="tmp" name="image[{field}][0][tmp]" value="">
-        <input id="{field}" class="name" name="" type="hidden" {required}  value="{url}">
+        <input id="{field}" class="name" name="" type="hidden" {% if required %} required="required" {% endif %}  value="{url}">
     </div>
     <div class="col-sm-3">
         <div class="alert alert-info">{help}</div> 

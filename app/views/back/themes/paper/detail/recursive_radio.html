@@ -9,7 +9,7 @@
 {else is_children}
 <label for="{field}" class="col-sm-2 control-label">{title_field} {if is_required} <sup>*</sup> {/if is_required}</label>
 <div class="col-sm-8 recursive-input">
-    <input id="{field}" class="name" name="" type="hidden" {required}  value="{count}">
+    <input id="{field}" class="name" name="" type="hidden" {% if required %} required="required" {% endif %}  value="{count}">
     {children}
 </div>
 {/if is_children}

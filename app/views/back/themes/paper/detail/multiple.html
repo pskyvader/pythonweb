@@ -2,7 +2,7 @@
     <label for="{field}" class="col-sm-2 control-label">{title_field} {if is_required} <sup>*</sup> {/if is_required}</label>
     <div class="col-sm-10">
         <div id="{field}" class="row--">
-            <input type="hidden" name="count" value="{count}" {required}>
+            <input type="hidden" name="count" value="{count}" {% if required %} required="required" {% endif %}>
             <div class="sorted_multiple">
                 {foreach fields}
                 <div class="campo fields row">
@@ -21,7 +21,7 @@
                 {foreach new_line}
                     {content}
                 {/foreach new_line}
-                <input type="hidden" name="{field}" value="0" {required}>
+                <input type="hidden" name="{field}" value="0" {% if required %} required="required" {% endif %}>
             </div>
         </div>
     </div>

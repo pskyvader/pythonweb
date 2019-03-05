@@ -34,7 +34,7 @@
                     <input type="hidden" class="subfolder" name="file[{field}][0][subfolder]" value="{subfolder}">
                     <input type="hidden" class="tmp" name="file[{field}][0][tmp]" value="">
                     <input type="hidden" class="original_name" name="file[{field}][0][original_name]" value="">
-                    <input id="{field}" class="name" name="" type="hidden" {required}  value="{url}">
+                    <input id="{field}" class="name" name="" type="hidden" {% if required %} required="required" {% endif %}  value="{url}">
         </div>
         <div class="col-sm-3">
             <div class="alert alert-info">{help}</div> 

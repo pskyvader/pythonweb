@@ -180,6 +180,7 @@ class app:
             post[key] = p[key].value
         post['prueba[a][b]']='[{"aaa":"bbb","c":1}]'
         post=app.format_array(post)
+        print(post)
         post=json.dumps(post)
         post=json.loads(post)
         print(post)

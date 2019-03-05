@@ -508,7 +508,6 @@ class detalle:
                 'value': fila[campos['field']] if campos['field'] in fila else '',
             }
         elif campos['type'] == 'text':
-            print(campos['type'],campos['field'],fila[campos['field']])
             data = {
                 'title_field': campos['title_field'],
                 'field': campos['field'],
@@ -526,6 +525,7 @@ class detalle:
                 'help': campos['help'] if 'help' in campos else '',
             }
 
+        print(data)
         view.add_array(data)
         content = view.render('detail/'+campos['type'], False)
         return content

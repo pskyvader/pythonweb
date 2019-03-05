@@ -237,6 +237,7 @@ class app:
                     aux_var=json.loads(i)
                     if isinstance(aux_var,dict) or isinstance(aux_var, list):
                         i=aux_var
+                        var_copy[k]=aux_var
                         print('exito',i)
                 except:
                     print('fail',i)

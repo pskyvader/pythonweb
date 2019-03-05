@@ -163,27 +163,22 @@ class functions():
             return archivo + c + str(int(getmtime(ac))) if my_file.is_file() else ""
 
     @staticmethod
-    def current_time(formato = '',as_string=True):
+    def current_time(formato = "%Y-%m-%d %H:%M:%S",as_string=True):
         '''fecha actual en zona horaria santiago, formato opcional'''
         import datetime
         import pytz
         fecha = datetime.datetime.now(pytz.timezone(functions.timezone))
         if as_string:
-            return fecha.strftime("%Y-%m-%d %H:%M:%S")
+            return fecha.strftime(formato)
         else:
             return fecha.timestamp()
 
     @staticmethod
-    def formato_fecha(fecha_string:str, formato = ''):
+    def formato_fecha(fecha_string:str, formato = '%d de %B del %Y', original_format="%Y-%m-%d %H:%M:%S"):
         '''Fecha con formato opcional'''
         import datetime
-        import time
-        fecha=time.strptime(fecha_string)
-        #fecha=datetime.datetime.strptime(fecha_string,"%Y-%m-%d %H:%M:%S")
-        if '' == formato:
-            fecha_final =fecha.strftime('%d de %B del %Y')
-        else:
-            fecha_final = fecha.strftime(formato)
+        fecha=datetime.datetime.strptime(fecha_string,"%Y-%m-%d %H:%M:%S")
+        fecha_final = fecha.strftime(formato)
         return fecha_final
     
 

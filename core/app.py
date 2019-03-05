@@ -195,7 +195,7 @@ class app:
                     if final_key not in aux:
                         aux[final_key]={}
                     
-                    eval(final_key+'={}')
+                    eval(final_key+"="+{})
                     print(eval(k+'='+False))
                     #comprobar si existe simbolo de cerrado, sino se guarda directamente
                     if rest.find(']')==-1:

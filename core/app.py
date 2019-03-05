@@ -177,7 +177,8 @@ class app:
         post = {}
         for key in p.keys():
             value=p[key].value
-            print(json.loads(value))
+            if "[" in value:
+                print(json.loads(value))
             post[key] = p[key].value
             
         return post

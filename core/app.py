@@ -196,7 +196,7 @@ class app:
                         aux[final_key][rest]=i
                 else:
                     aux[final_key]=i
-                del i
+                del var[k]
         var.update(aux)
         return var
 

@@ -1,6 +1,6 @@
 <div class="page-content">
     <ol class="breadcrumb">
-        {% for breadcrumb as b %}
+        {% for b in breadcrumb %}
         <li class="{{b.active}}">
             <a href="{{b.url}}">{{b.title}}</a>
         </li>
@@ -18,7 +18,7 @@
                             <div class="panel-ctrls pull-left">
                                 <label class="panel-ctrls-center">
                                     <select name="limit" aria-controls="limits" class="select form-control">
-                                        {% for limits as l %}
+                                        {% for l in limits %}
                                         <option value="{{l.value}}" {{l.active}}>{{l.text}}</option>
                                         {% endfor %}
                                     </select>
@@ -62,20 +62,20 @@
                                 <thead>
                                     <tr>
                                         {% if order_head %} <th width="30"></th>{% endif %}
-                                        {% for th as t%}
+                                        {% for t in th %}
                                         <th>{{t.title_th}}</th>
                                         {% endfor %}
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {% for row as r %}
+                                    {% for r in row %}
                                     <tr class="{% if r.even %} even {% else %} odd {% endif %} gradeX tooltips" data-id="{{r.id}}" data-order="{{r.order}}" data-placement="top" data-trigger="hover" data-original-title="ID: {{r.id}}">
                                         {% if order_body %}
                                         <td class="move">
                                             <i class="fa fa-arrows fa-lg"></i>
                                         </td>
                                         {% endif %}
-                                        {% for r.td as t %}
+                                        {% for t in r.td %}
                                         <td class="center" data-field="{{t.content_field}}">
                                             {{t.content}}
                                         </td>
@@ -91,7 +91,7 @@
                                 Mostrando {{inicio}} a {{fin}} de {{count}} elementos
                             </div>
                             <ul class="pagination pull-right m-n">
-                                {% for pagination as p %}
+                                {% for p in pagination %}
                                 <li class="{{p.class_page}}">
                                     <a href="{{p.url_page}}" class="{{p.class_page}}">{{p.text_page}}</a>
                                 </li>

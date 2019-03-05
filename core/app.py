@@ -240,7 +240,6 @@ class app:
                     pass
             elif isinstance(i,dict) or isinstance(i, list):
                 var_copy[k]=app.parse_values(i)
-        print('copy',var_copy)
         return var_copy
 
 

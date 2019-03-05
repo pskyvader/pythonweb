@@ -162,6 +162,7 @@ class app:
         for k,u in url.items():
             if len(u)==1:
                 url[k]=u[0]
+        url=app.format_array(url)
         return url
 
     @staticmethod
@@ -177,12 +178,7 @@ class app:
         post = {}
         for key in p.keys():
             post[key] = p[key].value
-        post['bla']=1
-        post['prueba[a][b][c][d][1]']=1
-        post['prueba[a][b][c][d][2]']=2
-        print(post)
         post=app.format_array(post)
-        print(post)
         return post
 
     @staticmethod

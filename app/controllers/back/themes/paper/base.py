@@ -185,7 +185,6 @@ class base:
         '''Controlador de detalle de elementos base, puede ser sobreescrito en el controlador de cada modulo'''
         ret = {'body': ''}
         # Clase para enviar a controlador de detalle
-        print(var)
         class_name = cls.class_name
         get = app.get
         url_list = cls.url.copy()
@@ -194,6 +193,7 @@ class base:
         url_save.append('guardar')
         url.append('detail')
         if 0 in var:
+            print(var)
             id = int(var[0])
             url.append(id)
             cls.metadata['title'] = 'Editar ' + cls.metadata['title']

@@ -176,6 +176,7 @@ class app:
             keep_blank_values=True
         )
         print(p)
+        print(p.getlist("campos"))
         post = {}
         for key in p.keys():
             post[key] = p[key].value

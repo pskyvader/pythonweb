@@ -196,7 +196,6 @@ class app:
                 final_key,rest=str(k).split('[',1)
                 if rest!='':
                     if final_key not in aux:
-                        print('aux['+final_key+']={}')
                         aux[final_key]={}
                     
                     #comprobar si existe simbolo de cerrado, sino se guarda directamente
@@ -223,6 +222,7 @@ class app:
                 del var[k]
 
 
+        print(var,aux)
         var.update(aux)
         return var
 

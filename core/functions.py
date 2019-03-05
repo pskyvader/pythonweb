@@ -171,7 +171,7 @@ class functions():
         if as_string:
             return fecha.strftime("%Y-%m-%d %H:%M:%S")
         else:
-            return fecha
+            return fecha.timestamp
 
     @staticmethod
     def formato_fecha(fecha:str, formato = ''):

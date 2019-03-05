@@ -163,6 +163,7 @@ class app:
             if len(u)==1:
                 url[k]=u[0]
         url=app.format_array(url)
+        url=app.parse_values(url)
         return url
 
     @staticmethod
@@ -180,9 +181,7 @@ class app:
             post[key] = p[key].value
         post['prueba[a][b]']='[{"aaa":"bbb","c":1}]'
         post=app.format_array(post)
-        print(post)
-        post=json.dumps(post)
-        post=json.loads(post)
+        post=app.parse_values(post)
         print(post)
         return post
 
@@ -228,9 +227,9 @@ class app:
 
 
     @staticmethod
-    def parse_values(var:dict):
+    def parse_values(var:dict,list):
         var_copy=var.copy()
-        for k,v in var_copy.items():
+        for k,i in var_copy.items():
             if isinstance(i,str):
                 try:
                     aux_var=json.loads(i)
@@ -241,7 +240,8 @@ class app:
                 except print(0):
                     pass
             
-            #if isinstance(i,dict) or isinstance(i, list):
+            if isinstance(i,dict) or isinstance(i, list):
+                i=app.parse_values(i)
 
 
 

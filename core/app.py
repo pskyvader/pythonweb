@@ -177,8 +177,8 @@ class app:
         post = {}
         for key in p.keys():
             value=p[key].value
-            if "[" in key:
-                key=key.replace('[','["').replace(']','"]')
+            #if "[" in key:
+            #    key=key.replace('[','["').replace(']','"]')
             post[key] = value
         print(post)
 

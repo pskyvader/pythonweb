@@ -227,7 +227,7 @@ class app:
 
 
     @staticmethod
-    def parse_values(var:dict,list):
+    def parse_values(var:dict):
         var_copy=var.copy()
         for k,i in var_copy.items():
             if isinstance(i,str):

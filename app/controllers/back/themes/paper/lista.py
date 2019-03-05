@@ -204,9 +204,8 @@ class lista:
 
     @staticmethod
     def configuracion(modulo: str):
-        session = app.session
         get = app.get
-        tipo_admin = str(session["tipo" + app.prefix_site])
+        tipo_admin = str(app.session["tipo" + app.prefix_site])
         moduloconfiguracion = moduloconfiguracion_model.getByModulo(modulo)
         var = {'idmoduloconfiguracion': moduloconfiguracion[0]}
         if 'tipo' in get:

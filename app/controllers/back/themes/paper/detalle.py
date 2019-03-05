@@ -56,14 +56,12 @@ class detalle:
 
     @staticmethod
     def configuracion(modulo:str, force=False):
-        session = app.session
         get = app.get
-        tipo_admin = str(session["tipo" + app.prefix_site])
+        tipo_admin = str(app.session["tipo" + app.prefix_site])
         moduloconfiguracion = moduloconfiguracion_model.getByModulo(modulo)
         var = {'idmoduloconfiguracion': moduloconfiguracion[0]}
         if 'tipo' in get:
             var['tipo'] = get['tipo']
-
         modulo = modulo_model.getAll(var, {'limit': 1})
         modulo = modulo[0]
         estados = modulo['estado'][0]['estado']

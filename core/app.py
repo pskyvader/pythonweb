@@ -222,7 +222,7 @@ class app:
                 aux[final_key]=i
                 del var[k]
 
-        var.dict_merge(aux)
+        var=app.dict_merge(var,aux)
         return var
 
 

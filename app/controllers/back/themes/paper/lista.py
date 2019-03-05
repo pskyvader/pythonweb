@@ -37,7 +37,7 @@ class lista:
 
         data['row'] = row
         data['title'] = self.metadata['title']
-        data['is_order'] = 'orden' in th
+        data['order'] = 'orden' in th
 
         data = self.pagination(data)
 

@@ -162,7 +162,8 @@ class app:
         for k,u in url.items():
             if len(u)==1:
                 url[k]=u[0]
-        print(url)
+            else:
+                print(k,u)
         return url
 
     @staticmethod

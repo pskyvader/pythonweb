@@ -180,8 +180,9 @@ class app:
             if "[" in key:
                 key=key.replace('[','["').replace(']','"]')
             post[key] = value
+        print(post)
 
-        print( (json.dumps(post)))
+        print( json.loads(json.dumps(post)))
             
         return post
     

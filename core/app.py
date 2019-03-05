@@ -215,7 +215,7 @@ class app:
                     aux[final_key]=i
                 del var[k]
             elif k=='':
-                final_key=len(var_copy)
+                final_key=len(var_copy)-1
                 aux[final_key]=i
                 del var[k]
 

@@ -29,7 +29,7 @@ class app:
     def init(self, environ):
         from core.functions import functions
         print (functions.current_time('',False))
-        print(functions.formato_fecha(fecha_string="01/05/2018 10:10", original_format="%d/%m/%Y %H:%M"))
+        print(functions.formato_fecha(fecha_string="01/05/2018 10:10", original_format="%d/%m/%Y %H:%M", as_string=False))
         app.environ = environ
         data_return = {}
         app.get = self.parse_get()

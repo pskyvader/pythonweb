@@ -187,14 +187,16 @@ class app:
         var_copy=var.copy()
         aux={}
         for k,i in var_copy.items():
-            try:
-                aux_var=json.loads(i)
-                if isinstance(aux_var,dict) or isinstance(aux_var, list):
-                    i=aux_var
-                    var[k]=i
-                    var_copy[k]=i
-            except print(0):
-                pass
+            if isinstance(i,str):
+                try:
+                    aux_var=json.loads(i)
+                    if isinstance(aux_var,dict) or isinstance(aux_var, list):
+                        i=aux_var
+                        var[k]=i
+                        var_copy[k]=i
+                except print(0):
+                    pass
+
             #si existe simbolo de array
             if "[" in k:
                 #separar key principal de key dentro de array

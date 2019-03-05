@@ -1,10 +1,12 @@
 <label for="{{field}}" class="col-sm-2 control-label">{{title_field}} {% if required %} <sup>*</sup> {% endif %}</label>
 <div class="col-sm-8">
-    <select id="{{field}}" name="{{field}}" class="form-control" {% if required %} required="required" {% endif %}> 
-        <option value="" selected="selected" {if is_required} hidden="" disabled="" {/if is_required}>Selecciona</option> 
-        {foreach option}
-            <option value="{{value}}" {selected}>{text}</option> 
-        {/foreach option} 
+    <select id="{{field}}" name="{{field}}" class="form-control" {% if required %} required="required" {% endif %}>
+        <option value="" selected="selected" {% if required %} hidden="" disabled="" {% endif %}}>Selecciona</option>
+        {% for o in option%}
+        <option value="{{o.value}}" {{o.selected}}>{{o.text}}</option>
+        {% endfor %}
     </select>
 </div>
-<div class="col-sm-2"><p class="help-block">{{help}}</p></div>
+<div class="col-sm-2">
+    <p class="help-block">{{help}}</p>
+</div>

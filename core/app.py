@@ -28,6 +28,7 @@ class app:
 
     def init(self, environ):
         from core.functions import functions
+        print (functions.current_time('',False))
         app.environ = environ
         data_return = {}
         app.get = self.parse_get()

@@ -2,7 +2,7 @@
     <select id="{{field}}" name="multiple[{parent}][{field}][]" class="form-control" data-required="{required}">
         <option value="" selected="selected">Selecciona {field}</option>
         {foreach option}
-        <option value="{value}" {selected}>{text}</option>
+        <option value="{{value}}" {selected}>{text}</option>
         {/foreach option}
     </select>
 </div>

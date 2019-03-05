@@ -180,9 +180,9 @@ class app:
         for key in p.keys():
             post[key] = p[key].value
         post['prueba[a][b]']='[{"aaa":"bbb","c":1}]'
+        print(post)
         post=app.format_array(post)
         post=app.parse_values(post)
-        print(post)
         return post
 
     @staticmethod

@@ -314,7 +314,6 @@ class base:
     @classmethod
     def estado(cls):
         respuesta = {'body': ''}
-        print('estado')
         respuesta['body'] = json.dumps(lista_class.estado(cls.class_name))
         return respuesta
     @classmethod

@@ -189,6 +189,7 @@ class app:
         for k,i in var_copy.items():
             #si existe simbolo de array
             if "[" in k:
+                print(eval(k+'='+i))
                 #separar key principal de key dentro de array
                 final_key,rest=k.split('[',2)
                 if rest!='':

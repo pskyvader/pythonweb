@@ -232,19 +232,14 @@ class app:
         var_copy=var.copy()
         for k,i in var_copy.items():
             if isinstance(i,str):
-                print('i',i)
                 try:
                     aux_var=json.loads(i)
                     if isinstance(aux_var,dict) or isinstance(aux_var, list):
-                        i=aux_var
                         var_copy[k]=aux_var
-                        print('exito',i)
                 except:
-                    print('fail',i)
                     pass
             elif isinstance(i,dict) or isinstance(i, list):
-                print('recursivo',i)
-                i=app.parse_values(i)
+                var_copy[k]=app.parse_values(i)
         print('copy',var_copy)
         return var_copy
 

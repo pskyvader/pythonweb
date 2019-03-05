@@ -38,7 +38,7 @@ class home(base):
         ret['body']+=asi.normal()['body']
 
 
-        view.add('title', 'index')
+        view.add('title', 'Home')
         breadcrumb=[
             {'url':functions.generar_url(cls.url),'title':cls.metadata['title'],'active':'active'}
         ]

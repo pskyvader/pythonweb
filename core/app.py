@@ -184,8 +184,7 @@ class app:
     def format_array(var:dict,aux={}):
         for k,i in var.items():
             if "[" in k:
-                final_key,rest=json.loads('{'+k+'}')
-                #final_key=str(k).split('[',2)
+                final_key,rest=str(k).split('[',2)
                 print(final_key)
                 #aux[final_key]=i
 

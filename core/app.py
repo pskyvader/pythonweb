@@ -168,17 +168,10 @@ class app:
     @staticmethod
     def parse_post():
         from cgi import FieldStorage
-        from cgi import parse_qs, escape
+        import urllib.parse
 
-
-        try:
-            request_body_size = int(app.environ.get('CONTENT_LENGTH', 0))
-        except (ValueError):
-            request_body_size = 0
-        
-        request_body = app.environ['wsgi.input'].read(request_body_size)
-        d = dict(parse_qs(request_body))
-        print(d.get('campos', []))
+        post_input = urllib.parse.parse_qs(app.environ['wsgi.input'].readline().decode(),True)
+        print(post_input)
 
 
         post_env = app.environ.copy()

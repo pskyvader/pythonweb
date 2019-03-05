@@ -243,6 +243,7 @@ class app:
                     pass
             elif isinstance(i,dict) or isinstance(i, list):
                 i=app.parse_values(i)
+        print(var_copy)
         return var_copy
 
 

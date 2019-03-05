@@ -27,6 +27,7 @@ class detalle:
         row_data = data['row']
         row = []
         for k,v in campos.items():
+            print(v,row_data)
             content = self.field(v, row_data)
             row.append( {'content': content, 'content_field': v['field'], 'class': 'hidden' if 'hidden' == v['type'] else ''})
 

@@ -29,6 +29,7 @@ class view:
 
     @staticmethod
     def render(template, minify=True):
+        '''Renderiza la vista segun view.data y la retorna'''
         theme = view.get_theme()
         template_url = theme + template + "." + view.extension
         my_file = Path(template_url)

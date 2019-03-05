@@ -180,9 +180,11 @@ class app:
             environ=post_env,
             keep_blank_values=True
         )
+        print(p)
         post = {}
         for key in p.keys():
             post[key] = p[key].value
+        print(post)
         return post
     
 

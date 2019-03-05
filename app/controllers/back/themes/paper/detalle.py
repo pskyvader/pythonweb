@@ -331,7 +331,6 @@ class detalle:
                 self.max_upload + ")"
 
         elif campos['type'] == 'multiple_image':
-            folder = self.metadata['modulo']
             fields = []
             if campos['field'] in fila:
                 count = len(fila[campos['field']])

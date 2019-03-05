@@ -177,6 +177,8 @@ class app:
         post = {}
         for key in p.keys():
             value=p[key].value
+            if "[" in key:
+                key=key.replace('[','["').replace(']','"]')
             post[key] = value
 
         print( json.loads(json.dumps(post)))

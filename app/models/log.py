@@ -1,8 +1,8 @@
 from core.app import app
 from core.database import database
+from core.functions import functions
 from .base_model import base_model
 from .table import table
-import datetime
 
 
 class log(base_model):
@@ -83,6 +83,6 @@ class log(base_model):
                 'administrador': administrador,
                 'tabla': tabla,
                 'accion': accion,
-                'fecha': datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                'fecha': functions.current_time(),
             }
             cls.insert(data)

@@ -162,8 +162,6 @@ class app:
         for k,u in url.items():
             if len(u)==1:
                 url[k]=u[0]
-            else:
-                print(k,u)
         return url
 
     @staticmethod
@@ -179,10 +177,9 @@ class app:
         post = {}
         for key in p.keys():
             value=p[key].value
-            if "[" in key:
-                print(key)
-                print(json.loads(key))
             post[key] = value
+
+        print(json.dumps(post))
             
         return post
     

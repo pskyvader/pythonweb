@@ -168,7 +168,11 @@ class app:
     @staticmethod
     def parse_post():
         from cgi import FieldStorage
-        print(app.environ['wsgi.input'].read())
+        try:
+            request_body_size = int(app.environ.get('CONTENT_LENGTH', 0))
+        except (ValueError):
+            request_body_size = 0
+        print(app.environ['wsgi.input'].read(request_body_size))
         post_env = app.environ.copy()
         post_env['QUERY_STRING'] = ''
         p = FieldStorage(

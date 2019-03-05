@@ -30,7 +30,7 @@
         <input id="{field}" class="name" name="" type="hidden" {% if required %} required="required" {% endif %}  value="{url}">
     </div>
     <div class="col-sm-3">
-        <div class="alert alert-info">{help}</div> 
+        <div class="alert alert-info">{{help}}</div> 
         {if is_required_alert} 
         {else is_required_alert} 
         <div class="alert alert-danger">Boton Eliminar borra la imagen de forma definitiva!</div> 

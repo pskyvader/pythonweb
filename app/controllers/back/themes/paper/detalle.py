@@ -55,7 +55,7 @@ class detalle:
         return ret
 
     @staticmethod
-    def configuracion(modulo:str, force=False):
+    def configuracion(modulo: str, force=False):
         tipo_admin = str(app.session["tipo" + app.prefix_site])
         moduloconfiguracion = moduloconfiguracion_model.getByModulo(modulo)
         var = {'idmoduloconfiguracion': moduloconfiguracion[0]}
@@ -70,8 +70,8 @@ class detalle:
         campos = {}
         for m in modulo['detalle']:
             if 'true' == m['estado'][tipo_admin]:
-                campos[m['field']] = {'title_field': m['titulo'], 'field': m['field'], 'type': m['tipo'], 'required': (
-                    'true' == m['required']), 'help': m['texto_ayuda']}
+                campos[m['field']] = {'title_field': m['titulo'], 'field': m['field'],
+                                      'type': m['tipo'], 'required': 'true' == m['required'], 'help': m['texto_ayuda']}
 
         return {'campos': campos}
 

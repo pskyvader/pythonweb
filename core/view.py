@@ -29,6 +29,7 @@ class view:
 
     @staticmethod
     def render(template, minify=True):
+        minify=False
         theme = view.get_theme()
         template_url = theme + template + "." + view.extension
         my_file = Path(template_url)

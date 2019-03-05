@@ -183,6 +183,7 @@ class app:
         print(post)
         post=app.format_array(post)
         post=app.parse_values(post)
+        print(post)
         return post
 
     @staticmethod

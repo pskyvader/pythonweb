@@ -178,7 +178,9 @@ class app:
         post = {}
         for key in p.keys():
             post[key] = p[key].value
+        post['prueba[a][b]']='[{"aaa":"bbb","c":1}]'
         post=app.format_array(post)
+        print(post)
         return post
 
     @staticmethod
@@ -187,16 +189,6 @@ class app:
         var_copy=var.copy()
         aux={}
         for k,i in var_copy.items():
-            if isinstance(i,str):
-                try:
-                    aux_var=json.loads(i)
-                    if isinstance(aux_var,dict) or isinstance(aux_var, list):
-                        i=aux_var
-                        var[k]=i
-                        var_copy[k]=i
-                except print(0):
-                    pass
-
             #si existe simbolo de array
             if "[" in k:
                 #separar key principal de key dentro de array
@@ -230,6 +222,25 @@ class app:
 
         var=app.merge(var,aux)
         return var
+
+
+    @staticmethod
+    def parse_values(var:dict):
+        var_copy=var.copy()
+        for k,v in var_copy.items():
+            if isinstance(i,str):
+                try:
+                    aux_var=json.loads(i)
+                    if isinstance(aux_var,dict) or isinstance(aux_var, list):
+                        i=aux_var
+                        var[k]=i
+                        var_copy[k]=i
+                except print(0):
+                    pass
+            
+            #if isinstance(i,dict) or isinstance(i, list):
+
+
 
 
     @staticmethod

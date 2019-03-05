@@ -48,9 +48,6 @@ class view:
 
         if minify:  # and not return_body and cache.is_cacheable():
             body = view.compress(body, 'html')
-        else:
-            
-            print(body)
 
         view.reset()
         return body

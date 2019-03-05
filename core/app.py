@@ -170,8 +170,8 @@ class app:
         from cgi import FieldStorage
         import urllib.parse
         print(app.environ['wsgi.input'].readline())
-        post_input = urllib.parse.parse_qs(app.environ['wsgi.input'].readline().decode(),True)
-        print(post_input)
+        #post_input = urllib.parse.parse_qs(app.environ['wsgi.input'].readline().decode(),True)
+        #print(post_input)
 
 
         post_env = app.environ.copy()

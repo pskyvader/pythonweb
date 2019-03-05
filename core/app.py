@@ -242,6 +242,7 @@ class app:
                     print('fail',i)
                     pass
             elif isinstance(i,dict) or isinstance(i, list):
+                print('recursivo',i)
                 i=app.parse_values(i)
         print('copy',var_copy)
         return var_copy

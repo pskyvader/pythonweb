@@ -56,8 +56,6 @@ class lista:
         ret['body'] += asi.normal()['body']
 
         view.add_array(data)
-        
-        print(view.data['th'])
         ret['body'] += view.render('list')
 
         f = footer()

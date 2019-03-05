@@ -186,7 +186,7 @@ class app:
             if "[" in k:
                 final_key=str(k).split('[',2)
                 print(final_key)
-                aux[final_key]=i
+                #aux[final_key]=i
 
 
     @staticmethod

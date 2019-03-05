@@ -185,7 +185,7 @@ class app:
         for k,i in var.items():
             if "[" in k:
                 final_key,rest=str(k).split('[',2)
-                print(final_key)
+                print(final_key,rest)
                 #aux[final_key]=i
 
 

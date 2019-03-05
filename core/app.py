@@ -199,23 +199,22 @@ class app:
                     #comprobar si existe simbolo de cerrado, sino se guarda directamente
                     if rest.find(']')==-1:
                         aux[final_key][rest]=i
-                        aux[final_key]=app.format_array(aux[final_key])
                     #comprobar si existe mas de un valor en sub key, sino se recupera el primer y unico valor
                     elif rest.find('[')==-1:
                         rest=str(rest).split(']',1)[0]
                         aux[final_key][rest]=i
-                        aux[final_key]=app.format_array(aux[final_key])
                     else:
                         if rest.find(']')<rest.find('['):
                             rest1,rest2=str(rest).split(']',1)
                             aux[final_key][rest1+rest2]=i
-                            aux[final_key][rest1]=app.format_array(aux[final_key][rest1])
                         else:
                             print('error de formato, formato aceptado: a[b][c][d]')
-
+                            break
+                    aux[final_key]=app.format_array(aux[final_key])
                 else:
                     aux[final_key]=i
                 del var[k]
+
         var.update(aux)
         return var
 

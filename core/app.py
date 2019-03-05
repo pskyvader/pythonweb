@@ -168,14 +168,12 @@ class app:
     @staticmethod
     def parse_post():
         from cgi import FieldStorage
-        l = int(app.environ.get('CONTENT_LENGTH')) if app.environ.get('CONTENT_LENGTH') else 0
-        input_post = app.environ['wsgi.input'].read(l) if l > 0 else ''
+        POST={}
+        args=sys.stdin.read().split('&')
 
-import urllib.parse
-input_post=b'------WebKitFormBoundaryAxRCRzrva5eXFgJv\r\nContent-Disposition: form-data; name="campos[id]"\r\n\r\n2\r\n------WebKitFormBoundaryAxRCRzrva5eXFgJv\r\nContent-Disposition: form-data; name="campos[campo]"\r\n\r\nestado\r\n------WebKitFormBoundaryAxRCRzrva5eXFgJv\r\nContent-Disposition: form-data; name="campos[active]"\r\n\r\nfalse\r\n------WebKitFormBoundaryAxRCRzrva5eXFgJv--\r\n'
-post_input = urllib.parse.parse_qs(input_post.decode(),True)
-for k,i in post_input.items():
-    print(k,i)
+        for arg in args: 
+            t=arg.split('=')
+            if len(t)>1: k, v=arg.split('='); POST[k]=v
 
 
         post_env = app.environ.copy()

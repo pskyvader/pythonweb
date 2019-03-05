@@ -355,7 +355,6 @@ class detalle:
                 'count': count if count > 0 else ''
             }
         elif campos['type'] == 'file':
-            folder = self.metadata['modulo']
             file_url = file.generar_url(
                 fila[campos['field']][0], '') if campos['field'] in fila and 0 in fila[campos['field']] else ''
             data = {
@@ -374,7 +373,6 @@ class detalle:
                 self.max_upload + ")"
 
         elif campos['type'] == 'multiple_file':
-            folder = self.metadata['modulo']
             fields = []
             if campos['field'] in fila:
                 for campo in fila[campos['field']]:

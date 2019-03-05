@@ -1,10 +1,10 @@
 from core.app import app
 from core.database import database
+from core.functions import functions
 from .base_model import base_model
 from .log import log
 from .table import table
 import json
-import datetime
 
 
 class pedido(base_model):
@@ -15,8 +15,7 @@ class pedido(base_model):
     def insert(cls, set_query: dict,  loggging=True):
         fields     = table.getByname(cls.table)
         if not 'fecha_creacion' in set_query:
-            set_query['fecha_creacion'] = datetime.datetime.now().strftime(
-                "%Y-%m-%d %H:%M:%S")
+            set_query['fecha_creacion'] = functions.current_time()
 
         insert = database.create_data(fields, set_query)
         connection = database.instance()

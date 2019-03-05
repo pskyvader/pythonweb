@@ -184,7 +184,8 @@ class app:
 
     @staticmethod
     def format_array(var:dict,aux={}):
-        for k,i in var.items():
+        var_copy=var.copy()
+        for k,i in var_copy.items():
             if "[" in k:
                 final_key,rest=str(k).split('[',2)
                 if rest!='':

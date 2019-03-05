@@ -25,7 +25,6 @@ class home(base):
             ret['redirect']=url_return
             return ret
         
-        registros=administrador_model.getAll(where={'idpadre':1},condiciones={'limit':1,'limit2':0})
         h = head(cls.metadata)
         ret_head=h.normal()
         if ret_head['headers']!='':
@@ -40,11 +39,8 @@ class home(base):
 
 
         view.add('title', 'index')
-        view.add('var', str(registros))
         breadcrumb=[
-            {'active':'active','url':'aaaa','title':'titulo'},
-            {'active':'','url':'bbb','title':'titulo2'},
-            {'active':'active','url':'ccc','title':'titulo3'},
+            {'url':functions.generar_url(cls.url),'title':cls.metadata['title'],'active':'active'}
         ]
         view.add('breadcrumb', breadcrumb)
         ret['body'] += view.render('home')

@@ -187,7 +187,8 @@ class base:
         # Clase para enviar a controlador de detalle
         class_name = cls.class_name
         get = app.get
-        url_save = url_list = cls.url.copy()
+        url_list = cls.url.copy()
+        url_save = cls.url.copy()
         url_save.append('guardar')
         cls.url.append('detail')
         if 0 in var:

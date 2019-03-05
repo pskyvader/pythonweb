@@ -170,14 +170,14 @@ class app:
         from cgi import FieldStorage
         from cgi import parse_qs, escape
 
-        
+
         try:
             request_body_size = int(app.environ.get('CONTENT_LENGTH', 0))
         except (ValueError):
             request_body_size = 0
         
         request_body = app.environ['wsgi.input'].read(request_body_size)
-        d = parse_qs(request_body)
+        d = dict(parse_qs(request_body))
         print(d)
 
 

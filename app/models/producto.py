@@ -117,7 +117,7 @@ class producto(base_model):
                         fechas = fechas.split(' - ')
                         fecha1= functions.formato_fecha(fechas[0], "%d/%m/%Y %H:%M")
                         fecha2= functions.formato_fecha(fechas[1], "%d/%m/%Y %H:%M")
-                        now = functions.current_time('',False)
+                        now = functions.current_time(as_string=False)
                         if fecha1 < now and now < fecha2:
                             precio_descuento = (
                                 (v['precio']) * descuento) / 100

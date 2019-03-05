@@ -188,7 +188,7 @@ class app:
         for key in p.keys():
             post[key] = p[key].value
         return post
-
+    @staticmethod
     def get_post_form(environ):
         from cgi import FieldStorage
         input = environ['wsgi.input']

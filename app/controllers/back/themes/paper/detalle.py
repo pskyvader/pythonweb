@@ -77,7 +77,6 @@ class detalle:
         return {'campos': campos}
 
     def field(self, campos, fila, parent='', idparent=0, level=0):
-        import datetime
         editor_count = 0
         if campos['type'] == 'active':
             data = {
@@ -192,7 +191,7 @@ class detalle:
                 'direccion_entrega': campos['direccion_entrega'],
                 'lista_productos': campos['lista_productos'],
                 'lista_atributos': campos['lista_atributos'],
-                'fecha': datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                'fecha': functions.current_time(),
                 'count': str(count) if count > 0 else '',
             }
 

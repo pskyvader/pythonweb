@@ -24,7 +24,7 @@
                             <form id="formulario" class="form-horizontal" method="POST" action="{{save_url}}" data-list="{{list_url}}">
                                 <input type="hidden" id="id" name="id" value="{{id}}">
                                 {% for r in row %}
-                                <div class="form-group {{r.class}}" data-field="{{r.content_field}}">{content}</div>
+                                <div class="form-group {{r.class}}" data-field="{{r.content_field}}">{{content}}</div>
                                 {% endfor %}
 
                                 <div class="panel-footer">

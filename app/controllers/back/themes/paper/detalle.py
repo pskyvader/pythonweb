@@ -26,11 +26,9 @@ class detalle:
         campos = data['campos']
         row_data = data['row']
         row = []
-
         for k,v in campos.items():
             content = self.field(v, row_data)
-            row.append(
-                {'content': content, 'content_field': v['field'], 'class': 'hidden' if 'hidden' == v['type'] else ''})
+            row.append( {'content': content, 'content_field': v['field'], 'class': 'hidden' if 'hidden' == v['type'] else ''})
 
         data['row'] = row
         data['title'] = self.metadata['title']

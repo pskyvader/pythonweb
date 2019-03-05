@@ -181,7 +181,7 @@ class app:
                 key=key.replace('[','["').replace(']','"]')
             post[key] = value
 
-        print( json.loads(json.dumps(post)))
+        print( (json.dumps(post)))
             
         return post
     

@@ -174,6 +174,7 @@ class app:
         for arg in args: 
             t=arg.split('=')
             if len(t)>1: k, v=arg.split('='); POST[k]=v
+        print(POST)
 
 
         post_env = app.environ.copy()

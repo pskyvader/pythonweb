@@ -230,7 +230,7 @@ class app:
     @staticmethod
     def parse_values(var:dict):
         var_copy=var.copy()
-        dictOfWords = dict.fromkeys(listOfStr , 1)
+        var_copy = dict.fromkeys(var_copy , 1)
         for k,i in var_copy.items():
             if isinstance(i,str):
                 try:

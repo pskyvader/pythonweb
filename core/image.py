@@ -521,8 +521,7 @@ class image:
     def delete_temp():
         from os import listdir
         from os.path import getmtime
-        from datetime import datetime
-        now = datetime.now()
+        now = functions.current_time('',False)
         horas = 1
 
         carpeta = image.get_upload_dir() + 'tmp/'  # ruta actual

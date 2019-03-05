@@ -163,12 +163,15 @@ class functions():
             return archivo + c + str(int(getmtime(ac))) if my_file.is_file() else ""
 
     @staticmethod
-    def current_time(formato = ''):
+    def current_time(formato = '',as_string=True):
         '''fecha actual en zona horaria santiago, formato opcional'''
         import datetime
         import pytz
         fecha = datetime.datetime.now(pytz.timezone(functions.timezone))
-        return fecha.strftime("%Y-%m-%d %H:%M:%S")
+        if as_string:
+            return fecha.strftime("%Y-%m-%d %H:%M:%S")
+        else:
+            return fecha
 
     @staticmethod
     def formato_fecha(fecha:str, formato = ''):

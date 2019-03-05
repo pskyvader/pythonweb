@@ -181,11 +181,11 @@ class app:
         return post
 
     @staticmethod
-    def format_array(var:dict):
-        aux={}
+    def format_array(var:dict,aux={}):
         for k,i in var.items():
             if "[" in k:
-                final_key=str(k).split('[',2)
+                final_key=json.loads('{'+k+'}')
+                #final_key=str(k).split('[',2)
                 print(final_key)
                 #aux[final_key]=i
 

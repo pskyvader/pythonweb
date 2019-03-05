@@ -174,7 +174,7 @@ class functions():
             return fecha.timestamp()
 
     @staticmethod
-    def formato_fecha(fecha_string:str, formato = '', original_format=''):
+    def formato_fecha(fecha_string:str, formato = '', original_format='', as_string=True):
         '''Fecha con formato opcional'''
         import datetime
         if formato=='':
@@ -183,8 +183,10 @@ class functions():
             original_format = "%Y-%m-%d %H:%M:%S"
         
         fecha=datetime.datetime.strptime(fecha_string,original_format)
-        fecha_final = fecha.strftime(formato)
-        return fecha_final
+        if as_string:
+            return fecha.strftime(formato)
+        else:
+            return fecha.timestamp()
     
 
     @staticmethod

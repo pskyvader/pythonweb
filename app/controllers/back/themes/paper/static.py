@@ -9,8 +9,10 @@ import socket
 
 class static:
     def init(self, var):
+        print(var)
         if 0 in var:
             del var[0]
+        print(var)
 
         if len(var) == 0:
             return {'error': 404}

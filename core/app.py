@@ -177,7 +177,8 @@ class app:
         post = {}
         for key in p.keys():
             post[key] = p[key].value
-        post['prueba[a][b][c]']=1
+        post['prueba[a][b][c][d]']=1
+        post['prueba[a][b[c]]']=1
         print(post)
         post=app.format_array(post)
         print(post)

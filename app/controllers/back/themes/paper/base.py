@@ -181,7 +181,7 @@ class base:
         return ret
 
     @classmethod
-    def detail(cls, var={}):
+    def detail(cls, var=[]):
         '''Controlador de detalle de elementos base, puede ser sobreescrito en el controlador de cada modulo'''
         ret = {'body': ''}
         # Clase para enviar a controlador de detalle

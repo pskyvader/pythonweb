@@ -169,7 +169,9 @@ class app:
     def parse_post():
         from cgi import FieldStorage
         #import urllib.parse
-        #print(app.environ['wsgi.input'].readline())
+        l = int(app.environ.get('CONTENT_LENGTH')) if app.environ.get('CONTENT_LENGTH') else 0
+        body = app.environ['wsgi.input'].read(l) if l > 0 else ''
+        print(body)
         #post_input = urllib.parse.parse_qs(app.environ['wsgi.input'].readline().decode(),True)
         #print(post_input)
 

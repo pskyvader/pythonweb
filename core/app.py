@@ -188,6 +188,7 @@ class app:
             if "[" in k:
                 final_key,rest=str(k).split('[',2)
                 if rest!='':
+                    aux[final_key]={}
                     if rest.find(']')==-1:
                         aux[final_key][rest]=i
                     elif rest.find('[')==-1:

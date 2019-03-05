@@ -176,10 +176,10 @@ class app:
         )
         post = {}
         for key in p.keys():
-            post[key] = p[key].value    
+            post[key] = p[key].value
         print(post)
-        #app.format_array(post)
-        print(post)    
+        app.format_array(post)
+        print(post)
         return post
 
     @staticmethod
@@ -196,6 +196,7 @@ class app:
                 else:
                     aux[final_key]=i
                 del i
+        var.update(aux)
 
 
     @staticmethod

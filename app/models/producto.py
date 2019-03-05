@@ -115,8 +115,8 @@ class producto(base_model):
                                             [0]]['descuento_fecha']
                     if descuento > 0 and descuento < 100:
                         fechas = fechas.split(' - ')
-                        fecha1= functions.formato_fecha(fechas[0], "%d/%m/%Y %H:%M")
-                        fecha2= functions.formato_fecha(fechas[1], "%d/%m/%Y %H:%M")
+                        fecha1= functions.formato_fecha(fechas[0], original_format="%d/%m/%Y %H:%M", as_string=False)
+                        fecha2= functions.formato_fecha(fechas[1], original_format="%d/%m/%Y %H:%M", as_string=False)
                         now = functions.current_time(as_string=False)
                         if fecha1 < now and now < fecha2:
                             precio_descuento = (
@@ -166,9 +166,9 @@ class producto(base_model):
 
                 if descuento > 0 and descuento < 100:
                     fechas = fechas.split(' - ')
-                    fecha1= functions.formato_fecha(fechas[0], "%d/%m/%Y %H:%M")
-                    fecha2= functions.formato_fecha(fechas[1], "%d/%m/%Y %H:%M")
-                    now = functions.current_time('',False)
+                    fecha1= functions.formato_fecha(fechas[0], original_format="%d/%m/%Y %H:%M", as_string=False)
+                    fecha2= functions.formato_fecha(fechas[1], original_format="%d/%m/%Y %H:%M", as_string=False)
+                    now = functions.current_time(as_string=False)
                     if fecha1 < now and now < fecha2:
                         precio_descuento = (
                             (row[0]['precio']) * descuento) / 100

@@ -3,7 +3,6 @@ from core.view import view
 from core.app import app
 from core.image import image
 from app.models.logo import logo as logo_model
-import datetime
 
 
 class header:
@@ -18,6 +17,6 @@ class header:
             self.data['logo_min'] = image.generar_url(logo['foto'][0], 'panel_min');
             self.data['url_exit'] = functions.generar_url(['logout'], False)
             view.add_array(self.data)
-            view.add('date', datetime.datetime.today().strftime("%Y-%m-%d %H:%M:%S"))
+            view.add('date', functions.current_time())
             ret['body'] = view.render('header')
         return ret

@@ -229,18 +229,16 @@ class app:
     @staticmethod
     def parse_values(var:dict):
         var_copy=var.copy()
-        for k,i in var_copy.items():
+        for i in var_copy:
+            print(i)
             if isinstance(i,str):
                 try:
                     aux_var=json.loads(i)
                     if isinstance(aux_var,dict) or isinstance(aux_var, list):
                         i=aux_var
-                        var[k]=i
-                        var_copy[k]=i
                 except:
                     pass
-            
-            if isinstance(i,dict) or isinstance(i, list):
+            elif isinstance(i,dict) or isinstance(i, list):
                 i=app.parse_values(i)
         return var_copy
 

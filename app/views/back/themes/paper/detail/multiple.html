@@ -1,7 +1,7 @@
 <div class="form-group multiple">
     <label for="{{field}}" class="col-sm-2 control-label">{{title_field}} {% if required %} <sup>*</sup> {% endif %}</label>
     <div class="col-sm-10">
-        <div id="{field}" class="row--">
+        <div id="{{field}}" class="row--">
             <input type="hidden" name="count" value="{count}" {% if required %} required="required" {% endif %}>
             <div class="sorted_multiple">
                 {foreach fields}
@@ -21,7 +21,7 @@
                 {foreach new_line}
                     {content}
                 {/foreach new_line}
-                <input type="hidden" name="{field}" value="0" {% if required %} required="required" {% endif %}>
+                <input type="hidden" name="{{field}}" value="0" {% if required %} required="required" {% endif %}>
             </div>
         </div>
     </div>

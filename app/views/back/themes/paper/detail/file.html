@@ -22,7 +22,7 @@
                                 <span class="btn btn-default btn-md btn-file">
                                     <span class="fileinput-new">Selecciona un archivo</span>
                                     <span class="fileinput-exists">Cambiar</span>
-                                    <input type="file" name="..." data-id="{field}" data-tipo="subir_archivo">
+                                    <input type="file" name="..." data-id="{{field}}" data-tipo="subir_archivo">
                                 </span>
                             </span>
                         </div>
@@ -34,7 +34,7 @@
                     <input type="hidden" class="subfolder" name="file[{field}][0][subfolder]" value="{subfolder}">
                     <input type="hidden" class="tmp" name="file[{field}][0][tmp]" value="">
                     <input type="hidden" class="original_name" name="file[{field}][0][original_name]" value="">
-                    <input id="{field}" class="name" name="" type="hidden" {% if required %} required="required" {% endif %}  value="{{url}}">
+                    <input id="{{field}}" class="name" name="" type="hidden" {% if required %} required="required" {% endif %}  value="{{url}}">
         </div>
         <div class="col-sm-3">
             <div class="alert alert-info">{{help}}</div> 

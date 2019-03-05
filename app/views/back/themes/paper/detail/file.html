@@ -7,7 +7,7 @@
                         <div class="input-group">
                                 <div class="form-control uneditable-input" data-trigger="fileinput">
                                         {if is_file}
-                                    <i class="fa fa-file fileinput-exists" style="display:inline-block;"></i>&nbsp;<span class="fileinput-filename">{url}</span>
+                                    <i class="fa fa-file fileinput-exists" style="display:inline-block;"></i>&nbsp;<span class="fileinput-filename">{{url}}</span>
                                     {else is_file}
                                     <i class="fa fa-file fileinput-exists"></i>&nbsp;<span class="fileinput-filename"></span>
                                     {/if is_file}
@@ -28,13 +28,13 @@
                         </div>
                     </div>
                     <input type="hidden" class="id" name="file[{field}][0][id]" value="1">
-                    <input type="hidden" class="url" name="file[{field}][0][url]" value="{url}">
+                    <input type="hidden" class="url" name="file[{field}][0][url]" value="{{url}}">
                     <input type="hidden" class="parent" name="file[{field}][0][parent]" value="{parent}">
                     <input type="hidden" class="folder" name="file[{field}][0][folder]" value="{folder}">
                     <input type="hidden" class="subfolder" name="file[{field}][0][subfolder]" value="{subfolder}">
                     <input type="hidden" class="tmp" name="file[{field}][0][tmp]" value="">
                     <input type="hidden" class="original_name" name="file[{field}][0][original_name]" value="">
-                    <input id="{field}" class="name" name="" type="hidden" {% if required %} required="required" {% endif %}  value="{url}">
+                    <input id="{field}" class="name" name="" type="hidden" {% if required %} required="required" {% endif %}  value="{{url}}">
         </div>
         <div class="col-sm-3">
             <div class="alert alert-info">{{help}}</div> 

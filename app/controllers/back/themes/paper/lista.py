@@ -55,7 +55,7 @@ class lista:
         asi = aside()
         ret['body'] += asi.normal()['body']
 
-        print(data)
+        print(data['th'])
         view.add_array(data)
         ret['body'] += view.render('list')
 

@@ -228,7 +228,7 @@ class app:
 
 
     @staticmethod
-    def parse_values(var:list):
+    def parse_values(var:dict):
         var_copy=var.copy()
         for i in var_copy.values():
             if isinstance(i,str):
@@ -243,7 +243,7 @@ class app:
                     pass
             elif isinstance(i,dict) or isinstance(i, list):
                 i=app.parse_values(i)
-        print(var_copy)
+        print('copy',var_copy)
         return var_copy
 
 

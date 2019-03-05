@@ -176,7 +176,8 @@ class app:
         )
         post = {}
         for key in p.keys():
-            post[key] = p[key].value            
+            post[key] = p[key].value    
+        app.format_array(post)        
         return post
 
     @staticmethod

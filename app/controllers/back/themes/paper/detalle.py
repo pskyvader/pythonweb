@@ -75,6 +75,7 @@ class detalle:
 
     def field(self, campos:dict, fila:dict, parent='', idparent=0, level=0):
         editor_count = 0
+        print(campos['type'],campos['field'],fila[campos['field']])
         if campos['type'] == 'active':
             data = {
                 'title_field': campos['title_field'],

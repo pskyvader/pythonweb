@@ -6,7 +6,6 @@ from .view import view
 import json
 from pathlib import Path
 import importlib
-from importlib import util
 
 
 class app:
@@ -175,12 +174,12 @@ class app:
             environ=post_env,
             keep_blank_values=True
         )
-        print(p)
-        print(p.getlist("campos"))
         post = {}
         for key in p.keys():
+            value=p[key].value
+            print(json.load(value))
             post[key] = p[key].value
-        print(post)
+            
         return post
     
 

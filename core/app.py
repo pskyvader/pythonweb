@@ -230,6 +230,6 @@ class app:
 
 
 class InputProcessed(object):
-        def read(self, *args):
-            raise EOFError('The wsgi.input stream has already been consumed')
-        readline = readlines = __iter__ = read
+    def read(self, *args):
+        raise EOFError('The wsgi.input stream has already been consumed')
+    readline = readlines = __iter__ = read

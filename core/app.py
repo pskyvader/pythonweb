@@ -168,11 +168,14 @@ class app:
     @staticmethod
     def parse_post():
         from cgi import FieldStorage
+        from cgi import parse_qs, escape
         try:
             request_body_size = int(app.environ.get('CONTENT_LENGTH', 0))
         except (ValueError):
             request_body_size = 0
-        print(app.environ['wsgi.input'].read(request_body_size))
+        request_body = app.environ['wsgi.input'].read(request_body_size)
+        d = parse_qs(request_body)
+        print(d)
         post_env = app.environ.copy()
         post_env['QUERY_STRING'] = ''
         p = FieldStorage(

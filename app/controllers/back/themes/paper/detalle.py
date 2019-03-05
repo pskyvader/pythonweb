@@ -169,17 +169,17 @@ class detalle:
                 d['direccion_entrega'] = campos['direccion_entrega']
                 for e in d['direccion_entrega']:
                     if e['idusuariodireccion'] == d['idusuariodireccion']:
-                        e['selected'] = 'selected=""'
+                        e['selected'] = True
                     else:
-                        e['selected'] = ''
+                        e['selected'] = False
 
                 for p in d['productos']:
                     p['lista_atributos'] = campos['lista_atributos']
                     for e in p['lista_atributos']:
                         if e['idproducto'] == p['idproductoatributo']:
-                            e['selected'] = 'selected=""'
+                            e['selected'] = True
                         else:
-                            e['selected'] = ''
+                            e['selected'] = False
 
             data = {
                 'title_field': campos['title_field'],

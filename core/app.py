@@ -195,7 +195,7 @@ class app:
                     if final_key not in aux:
                         aux[final_key]={}
                     
-                    respuesta=eval('aux_'+final_key+"="+str({}))
+                    respuesta=eval('aux_'+final_key+"=dict")
                     print(respuesta)
                     print(eval('aux_'+k+'='+False))
                     #comprobar si existe simbolo de cerrado, sino se guarda directamente

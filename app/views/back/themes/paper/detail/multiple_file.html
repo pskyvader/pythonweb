@@ -7,7 +7,7 @@
             {foreach fields}
             <div class="campo fields col-sm-6 col-md-4">
                 <div class="move"><i class="fa fa-arrows fa-lg"></i>
-                    <a class="file btn btn-xs" href="{file}" target="_blank" alt="{title_field}">
+                    <a class="file btn btn-xs" href="{file}" target="_blank" alt="{{title_field}}">
                         {{url}}
                     </a>
                     <input type="hidden" class="id" name="multiple[file][{field}][id][]" value="{id}">
@@ -26,7 +26,7 @@
         </div>
         <div class="campo new_line col-sm-6 col-md-4">
             <div class="move"><i class="fa fa-arrows fa-lg"></i>
-                <a class="file btn btn-xs" href="" target="_blank" alt="{title_field}"></a>
+                <a class="file btn btn-xs" href="" target="_blank" alt="{{title_field}}"></a>
                 <input type="hidden" class="id" name="multiple[file][{field}][id][]" value="">
                 <input type="hidden" class="tmp" name="multiple[file][{field}][tmp][]" value="">
                 <input type="hidden" class="original_name" name="multiple[file][{field}][original_name][]" value="">

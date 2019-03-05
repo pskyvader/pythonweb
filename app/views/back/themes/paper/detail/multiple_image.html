@@ -14,7 +14,7 @@
                         </button>
                         <input class="portada" name="multiple[image][{field}][portada][]" type="hidden" value="{active}">
                     </div>
-                    <img class="image" src="{image}" alt="{title_field}">
+                    <img class="image" src="{image}" alt="{{title_field}}">
                     <input type="hidden" class="id" name="multiple[image][{field}][id][]" value="{id}">
                     <input type="hidden" class="url" name="multiple[image][{field}][url][]" value="{{url}}">
                     <input type="hidden" class="parent" name="multiple[image][{field}][parent][]" value="{parent}">
@@ -36,7 +36,7 @@
                     </button>
                     <input class="portada" name="multiple[image][{field}][portada][]" type="hidden" value="false">
                 </div>
-                <img class="image" src="" alt="{title_field}">
+                <img class="image" src="" alt="{{title_field}}">
                 <input type="hidden" class="id" name="multiple[image][{field}][id][]" value="">
                 <input type="hidden" class="tmp" name="multiple[image][{field}][tmp][]" value="">
                 <button class="btn btn-raised eliminar btn-danger btn-md" onclick="count_images($(this).closest('.image'));$(this).closest('.campo').remove();">

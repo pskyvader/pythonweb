@@ -180,7 +180,7 @@ class app:
             if "[" in value:
                 print(value)
                 print(json.loads(value))
-            post[key] = p[key].value
+            post[key] = value
             
         return post
     

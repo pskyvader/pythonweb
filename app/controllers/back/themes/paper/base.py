@@ -251,7 +251,8 @@ class base:
                 else:
                     row['idpadre'] = json.dumps([0])
         else:
-            del configuracion['campos']['idpadre']
+            if 'idpadre' in configuracion['campos']:
+                del configuracion['campos']['idpadre']
 
         if cls.class_parent != None:
             class_parent = cls.class_parent

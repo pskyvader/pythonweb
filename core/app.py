@@ -214,6 +214,11 @@ class app:
                 else:
                     aux[final_key]=i
                 del var[k]
+            elif k=='':
+                final_key=str(len(var_copy))
+                aux[final_key]=i
+                del var[k]
+
 
         var.update(aux)
         return var

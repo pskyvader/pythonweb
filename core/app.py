@@ -191,7 +191,7 @@ class app:
             #si existe simbolo de array
             if "[" in k:
                 #separar key principal de key dentro de array
-                final_key,rest=k.split('[',2)
+                final_key,rest=str(k).split('[',1)
                 if rest!='':
                     if final_key not in aux:
                         aux[final_key]={}
@@ -202,12 +202,12 @@ class app:
                         aux[final_key]=app.format_array(aux[final_key])
                     #comprobar si existe mas de un valor en sub key, sino se recupera el primer y unico valor
                     elif rest.find('[')==-1:
-                        rest=str(rest).split(']',2)[0]
+                        rest=str(rest).split(']',1)[0]
                         aux[final_key][rest]=i
                         aux[final_key]=app.format_array(aux[final_key])
                     else:
                         if rest.find(']')<rest.find('['):
-                            rest1,rest2=str(rest).split(']',2)
+                            rest1,rest2=str(rest).split(']',1)
                             aux[final_key][rest1][rest2]=i
                             aux[final_key][rest1]=app.format_array(aux[final_key][rest1])
                         else:

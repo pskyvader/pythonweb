@@ -192,8 +192,8 @@ class base:
         url = cls.url.copy()
         url_save.append('guardar')
         url.append('detail')
+        print(var)
         if 0 in var:
-            print(var)
             id = int(var[0])
             url.append(id)
             cls.metadata['title'] = 'Editar ' + cls.metadata['title']

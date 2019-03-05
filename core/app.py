@@ -186,12 +186,17 @@ class app:
     def format_array(var:dict,aux={}):
         var_copy=var.copy()
         for k,i in var_copy.items():
+            #si existe simbolo de array
             if "[" in k:
+                #separar key principal de key dentro de array
                 final_key,rest=str(k).split('[',2)
                 if rest!='':
-                    aux[final_key]={}
+                    if final_key not in aux:
+                        aux[final_key]={}
+                    #comprobar si existe simbolo de cerrado, sino se guarda directamente
                     if rest.find(']')==-1:
                         aux[final_key][rest]=i
+                    #comprobar si existe mas de un valor en sub key, sino se recupera el primer y unico valor
                     elif rest.find('[')==-1:
                         rest=str(rest).split(']',2)[0]
                         aux[final_key][rest]=i

@@ -174,10 +174,10 @@ class functions():
             return fecha.timestamp()
 
     @staticmethod
-    def formato_fecha(fecha:str, formato = ''):
+    def formato_fecha(fecha_string:str, formato = ''):
         '''Fecha con formato opcional'''
         import datetime
-        fecha=datetime.datetime.strptime(fecha,"%Y-%m-%d %H:%M:%S")
+        fecha=datetime.datetime.strptime(fecha_string,"%Y-%m-%d %H:%M:%S")
         if '' == formato:
             fecha_final =fecha.strftime('%d de %B del %Y')
         else:

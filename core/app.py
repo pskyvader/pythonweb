@@ -167,16 +167,12 @@ class app:
 
     @staticmethod
     def parse_post():
+        fs=app.get_post_form(app.environ)
+        print(fs)
+        print(app.environ['wsgi.post_form'])
+        print(app.environ['wsgi.input'])
+        
         from cgi import FieldStorage
-        POST={}
-        args=sys.stdin.read().split('&')
-
-        for arg in args: 
-            t=arg.split('=')
-            if len(t)>1: k, v=arg.split('='); POST[k]=v
-        print(POST)
-
-
         post_env = app.environ.copy()
         post_env['QUERY_STRING'] = ''
         p = FieldStorage(
@@ -193,14 +189,11 @@ class app:
         from cgi import FieldStorage
         input = environ['wsgi.input']
         post_form = environ.get('wsgi.post_form')
-        if (post_form is not None
-            and post_form[0] is input):
+        if (post_form is not None and post_form[0] is input):
             return post_form[2]
         # This must be done to avoid a bug in cgi.FieldStorage
         environ.setdefault('QUERY_STRING', '')
-        fs = FieldStorage(fp=input,
-                            environ=environ,
-                            keep_blank_values=1)
+        fs = FieldStorage(fp=input, environ=environ, keep_blank_values=1)
         new_input = InputProcessed('')
         post_form = (new_input, input, fs)
         environ['wsgi.post_form'] = post_form

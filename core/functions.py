@@ -110,8 +110,7 @@ class functions():
     def generar_pass(length=8):
         import string
         import secrets
-        password = ''.join(secrets.choice(
-            string.ascii_uppercase + string.digits) for _ in range(length))
+        password = ''.join(secrets.choice( string.ascii_uppercase + string.digits) for _ in range(length))
         return password
 
     @staticmethod
@@ -161,6 +160,26 @@ class functions():
             return int(getmtime(ac)) if my_file.is_file() else -1
         else:
             return archivo + c + str(int(getmtime(ac))) if my_file.is_file() else ""
+
+    @staticmethod
+    def current_time(formato = ''):
+        '''fecha actual en zona horaria santiago, formato opcional'''
+        import datetime
+        import pytz
+        fecha = datetime.datetime.now(pytz.timezone(functions.timezone))
+        return fecha.strftime("%Y-%m-%d %H:%M:%S")
+
+    @staticmethod
+    def formato_fecha(fecha:str, formato = ''):
+        '''Fecha con formato opcional'''
+        import datetime
+        fecha=datetime.datetime.strptime(fecha,"%Y-%m-%d %H:%M:%S")
+        if '' == formato:
+            fecha_final =fecha.strftime('%d de %B del %Y')
+        else:
+            fecha_final = fecha.strftime(formato)
+        return fecha_final
+    
 
     @staticmethod
     def getContrastColor(hexColor: str):

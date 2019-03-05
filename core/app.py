@@ -178,7 +178,7 @@ class app:
         for key in p.keys():
             post[key] = p[key].value
         print(post)
-        app.format_array(post)
+        post=app.format_array(post)
         print(post)
         return post
 
@@ -197,6 +197,7 @@ class app:
                     aux[final_key]=i
                 del i
         var.update(aux)
+        return var
 
 
     @staticmethod

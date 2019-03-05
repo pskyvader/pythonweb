@@ -189,25 +189,26 @@ class base:
         get = app.get
         url_list = cls.url.copy()
         url_save = cls.url.copy()
+        url = cls.url.copy()
         url_save.append('guardar')
-        cls.url.append('detail')
+        url.append('detail')
         if 0 in var:
             id = int(var[0])
-            cls.url.append(id)
+            url.append(id)
             cls.metadata['title'] = 'Editar ' + cls.metadata['title']
         else:
             id = 0
             cls.metadata['title'] = 'Nuevo ' + cls.metadata['title']
 
         cls.breadcrumb.append({'url': functions.generar_url(
-            cls.url), 'title': cls.metadata['title'], 'active': 'active'})
+            url), 'title': cls.metadata['title'], 'active': 'active'})
         if cls.contiene_tipos and 'tipo' not in get:
-            cls.url = ['home']
+            url = ['home']
 
         if not administrador_model.verificar_sesion():
-            cls.url = {'login', 'index'} + cls.url
+            url = {'login', 'index'} + url
         # verificar sesion o redireccionar a login
-        url_return = functions.url_redirect(cls.url)
+        url_return = functions.url_redirect(url)
         if url_return != '':
             ret['error'] = 301
             ret['redirect'] = url_return
@@ -295,7 +296,7 @@ class base:
             'campos': configuracion['campos'],
             'row': row,
             'id': id if id != 0 else '',
-            'current_url': functions.generar_url(cls.url),
+            'current_url': functions.generar_url(url),
             'save_url': functions.generar_url(url_save),
             'list_url': functions.generar_url(url_list),
         }

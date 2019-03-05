@@ -177,7 +177,9 @@ class functions():
     def formato_fecha(fecha_string:str, formato = ''):
         '''Fecha con formato opcional'''
         import datetime
-        fecha=datetime.datetime.strptime(fecha_string,"%Y-%m-%d %H:%M:%S")
+        import time
+        fecha=time.strptime(fecha_string)
+        #fecha=datetime.datetime.strptime(fecha_string,"%Y-%m-%d %H:%M:%S")
         if '' == formato:
             fecha_final =fecha.strftime('%d de %B del %Y')
         else:

@@ -194,7 +194,7 @@ class app:
         # This must be done to avoid a bug in cgi.FieldStorage
         environ.setdefault('QUERY_STRING', '')
         fs = FieldStorage(fp=input, environ=environ, keep_blank_values=1)
-        new_input = InputProcessed('')
+        new_input = InputProcessed()
         post_form = (new_input, input, fs)
         environ['wsgi.post_form'] = post_form
         environ['wsgi.input'] = new_input

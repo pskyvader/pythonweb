@@ -242,7 +242,7 @@ class app:
             
             if isinstance(i,dict) or isinstance(i, list):
                 i=app.parse_values(i)
-
+        return var_copy
 
 
 

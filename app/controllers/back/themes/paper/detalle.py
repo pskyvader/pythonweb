@@ -508,6 +508,7 @@ class detalle:
                 'value': fila[campos['field']] if campos['field'] in fila else '',
             }
         elif campos['type'] == 'text':
+            print(campos['type'],campos['field'],fila[campos['field']])
             data = {
                 'title_field': campos['title_field'],
                 'field': campos['field'],

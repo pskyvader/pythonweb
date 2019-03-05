@@ -237,6 +237,7 @@ class app:
                     if isinstance(aux_var,dict) or isinstance(aux_var, list):
                         i=aux_var
                 except:
+                    print('fail',i)
                     pass
             elif isinstance(i,dict) or isinstance(i, list):
                 i=app.parse_values(i)

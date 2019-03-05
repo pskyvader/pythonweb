@@ -243,7 +243,6 @@ class lista:
 
     @staticmethod
     def estado(class_name):
-        print(app.post)
         campos = app.post['campos']
         respuesta = {'exito': False, 'mensaje': ''}
         set_query = {'id': campos['id'], campos['campo']: campos['active']}

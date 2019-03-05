@@ -185,7 +185,8 @@ class app:
         return post
 
     @staticmethod
-    def format_array(var:dict):
+    def format_array(var_original:dict):
+        var=var_original.copy()
         var_copy=var.copy()
         aux={}
         for k,i in var_copy.items():

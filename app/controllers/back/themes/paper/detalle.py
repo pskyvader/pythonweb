@@ -65,14 +65,14 @@ class detalle:
         modulo = modulo_model.getAll(var, {'limit': 1})
         modulo = modulo[0]
         estados = modulo['estado'][0]['estado']
-        if 'True' != estados[tipo_admin] and not force:
+        if 'true' != estados[tipo_admin] and not force:
             return {'error': 301, 'redirect': functions.url_redirect(['home'])}
 
         campos = {}
         for m in modulo['detalle']:
-            if 'True' == m['estado'][tipo_admin]:
+            if 'true' == m['estado'][tipo_admin]:
                 campos[m['field']] = {'title_field': m['titulo'], 'field': m['field'], 'type': m['tipo'], 'required': (
-                    'True' == m['required']), 'help': m['texto_ayuda']}
+                    'true' == m['required']), 'help': m['texto_ayuda']}
 
         return {'campos': campos}
 

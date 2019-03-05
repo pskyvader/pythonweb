@@ -229,7 +229,7 @@ class app:
     @staticmethod
     def parse_values(var:dict):
         var_copy=var.copy()
-        for i in var_copy:
+        for i in var_copy.values():
             print(i)
             if isinstance(i,str):
                 try:

@@ -176,16 +176,18 @@ class app:
         )
         post = {}
         for key in p.keys():
-            value=p[key].value
-            #if "[" in key:
-            #    key=key.replace('[','["').replace(']','"]')
-            post[key] = value
-        print(post)
-
-        print( json.loads(json.dumps(post)))
-            
+            post[key] = p[key].value            
         return post
-    
+
+    @staticmethod
+    def format_array(var:dict):
+        aux={}
+        for k,i in var.items():
+            if "[" in k:
+                final_key=str(k).split('[',2)
+                print(final_key)
+                aux[final_key]=i
+
 
     @staticmethod
     def parse_session():

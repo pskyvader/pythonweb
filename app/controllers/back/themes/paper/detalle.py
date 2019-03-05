@@ -315,7 +315,6 @@ class detalle:
                 'required': campos['required'],
             }
         elif campos['type'] == 'image':
-            folder = self.metadata['modulo']
             image_url = image.generar_url(
                 fila[campos['field']][0], 'thumb') if campos['field'] in fila and 0 in fila[campos['field']] else ''
             data = {

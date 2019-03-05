@@ -179,7 +179,7 @@ class app:
             value=p[key].value
             post[key] = value
 
-        print(json.dumps(post))
+        print( json.loads(json.dumps(post)))
             
         return post
     

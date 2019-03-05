@@ -237,7 +237,7 @@ class app:
                         i=aux_var
                         var[k]=i
                         var_copy[k]=i
-                except print(0):
+                except:
                     pass
             
             if isinstance(i,dict) or isinstance(i, list):

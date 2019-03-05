@@ -4,7 +4,7 @@
         <input id="{{field}}" class="name" name="" type="hidden" {% if required %} required="required" {% endif %} value="{count}">
         <div class="alert alert-info">{{help}}</div>
         <div class="direcciones_pedido row">
-            {foreach direcciones}
+            {% for d in direcciones %}
             <div class="col-xs-12 mt mb-lg linea">
                 <div class="campo direccion">
                     <h4 class="title pull-left">Direccion guardada</h4>
@@ -15,21 +15,21 @@
                     <div class="clearfix"></div>
                     <hr>
                     <div class="row datos_direccion">
-                        <input type="hidden" name="datos_direcciones[{idpedidodireccion}][iddireccionpedido]" class="iddireccionpedido" value="{idpedidodireccion}">
-                        <input type="hidden" name="datos_direcciones[{idpedidodireccion}][cantidad]" class="cantidad_productos" data-campo="Todas las direcciones deben tener al menos 1 producto" value="{cantidad}" required="">
+                        <input type="hidden" name="datos_direcciones[{{d.idpedidodireccion}}][iddireccionpedido]" class="iddireccionpedido" value="{{d.idpedidodireccion}}">
+                        <input type="hidden" name="datos_direcciones[{{d.idpedidodireccion}}][cantidad]" class="cantidad_productos" data-campo="Todas las direcciones deben tener al menos 1 producto" value="{{d.cantidad}}" required="">
                         <div class="col-md-4">
-                            <select name="datos_direcciones[{idpedidodireccion}][iddireccion]" class="form-control direccion_entrega">
+                            <select name="datos_direcciones[{{d.idpedidodireccion}}][iddireccion]" class="form-control direccion_entrega">
                                 <option value="" selected="selected" hidden="" disabled="">Selecciona una direccion de entrega</option>
-                                {foreach direccion_entrega}
-                                <option value="{idusuariodireccion}" data-precio="{precio}" {selected}>{titulo}</option>
-                                {/foreach direccion_entrega}
+                                {% for de in d.direccion_entrega %}
+                                <option value="{{de.idusuariodireccion}}" data-precio="{{de.precio}}" {% if de.selected%} selected='selected' {% endif %} >{{de.titulo}}</option>
+                                {% endfor %}
                             </select>
                         </div>
                         <div class="col-md-4">
-                            <input placeholder="Fecha de entrega" name="datos_direcciones[{idpedidodireccion}][fecha_entrega]" type="text" class="form-control date fecha_entrega" value="{fecha_entrega}" autocomplete="off">
+                            <input placeholder="Fecha de entrega" name="datos_direcciones[{{d.idpedidodireccion}}][fecha_entrega]" type="text" class="form-control date fecha_entrega" value="{{d.fecha_entrega}}" autocomplete="off">
                         </div>
                         <div class="col-md-4">
-                            <input type="text" class="form-control direccion_precio" value="{precio}" readonly="" placeholder="Valor de envio">
+                            <input type="text" class="form-control direccion_precio" value="{{d.precio}}" readonly="" placeholder="Valor de envio">
                         </div>
                     </div>
                     <hr>
@@ -37,9 +37,9 @@
                         <div class="col-sm-6 col-md-4">
                             <select name="" class="form-control lista_productos">
                                 <option value="" disabled="" hidden="" selected="">Selecciona un producto</option>
-                                {foreach lista_productos}
-                                <option value="{idproducto}" data-foto="{foto}" data-precio="{precio}" data-stock="{stock}">{titulo}</option>
-                                {/foreach lista_productos}
+                                {% for lp in d.lista_productos %}
+                                <option value="{{lp.idproducto}}" data-foto="{{lp.foto}}" data-precio="{{lp.precio}}" data-stock="{{lp.stock}}">{{lp.titulo}}</option>
+                                {% endfor %}
                             </select>
                         </div>
                         <div class="col-sm-6 col-md-4 cantidad">
@@ -50,19 +50,19 @@
                         </div>
                         <hr />
                         <div class="lista_productos_pedido col-xs-12">
-                            {foreach productos}
+                            {% for p in d.productos %}
                             <div class="datos_producto">
-                                <input type="hidden" name="datos_direcciones[{idpedidodireccion}][productos][{idpedidoproducto}][idproductopedido]" class="idproductopedido" value="{idpedidoproducto}">
-                                <input type="hidden" name="datos_direcciones[{idpedidodireccion}][productos][{idpedidoproducto}][idproducto]" class="idproducto" value="{idproducto}">
+                                <input type="hidden" name="datos_direcciones[{{d.idpedidodireccion}}][productos][{{p.idpedidoproducto}}][idproductopedido]" class="idproductopedido" value="{{p.idpedidoproducto}}">
+                                <input type="hidden" name="datos_direcciones[{{d.idpedidodireccion}}][productos][{{p.idpedidoproducto}}][idproducto]" class="idproducto" value="{{p.idproducto}}">
                                 <div class="move">
                                     <div class="handle">
                                         <i class="fa fa-arrows fa-lg"></i>
-                                        <label class="titulo">{titulo}</label>
+                                        <label class="titulo">{{p.titulo}}</label>
                                     </div>
                                     <div class="producto">
                                         <div class="row">
                                             <div class="col-xs-6 col-md-2">
-                                                <img src="{foto}" alt="Imagen" class="imagen">
+                                                <img src="{{p.foto}}" alt="Imagen" class="imagen">
                                             </div>
                                             <div class="col-xs-6 col-md-2 visible-sm visible-xs">
                                                 <button class="quitar_producto btn-raised btn-danger btn btn-md pull-right">
@@ -77,7 +77,7 @@
                                                         <label for="">Cantidad</label>
                                                     </div>
                                                     <div class="col-xs-6">
-                                                        <input type="number" min="1" name="datos_direcciones[{idpedidodireccion}][productos][{idpedidoproducto}][cantidad]" class="producto_cantidad form-control" value="{cantidad}" readonly="">
+                                                        <input type="number" min="1" name="datos_direcciones[{{d.idpedidodireccion}}][productos][{{p.idpedidoproducto}}][cantidad]" class="producto_cantidad form-control" value="{{p.cantidad}}" readonly="">
                                                     </div>
                                                 </div>
                                             </div>
@@ -87,8 +87,8 @@
                                                         <label for="">Precio</label>
                                                     </div>
                                                     <div class="col-xs-6">
-                                                        <input type="text" name="" class="precio form-control" value="{total}" readonly="">
-                                                        <input type="hidden" name="" class="precio_unitario" value="{precio}">
+                                                        <input type="text" name="" class="precio form-control" value="{{p.total}}" readonly="">
+                                                        <input type="hidden" name="" class="precio_unitario" value="{{p.precio}}">
                                                     </div>
                                                 </div>
                                             </div>
@@ -104,11 +104,11 @@
                                             <div class="form-group">
                                                 <label for="" class="col-sm-2 control-label">Atributo</label>
                                                 <div class="col-sm-10">
-                                                    <select name="datos_direcciones[{idpedidodireccion}][productos][{idpedidoproducto}][idproductoatributo]" class="form-control producto_atributo">
+                                                    <select name="datos_direcciones[{{d.idpedidodireccion}}][productos][{{p.idpedidoproducto}}][idproductoatributo]" class="form-control producto_atributo">
                                                         <option value="" disabled="" hidden="" selected="">Selecciona un Atributo</option>
-                                                        {foreach lista_atributos}
-                                                        <option value="{idproducto}" data-foto="{foto}" {selected}>{titulo}</option>
-                                                        {/foreach lista_atributos}
+                                                        {% for la in p.lista_atributos %}
+                                                        <option value="{{la.idproducto}}" data-foto="{{la.foto}}" {% if la.selected%} selected='selected' {% endif %}>{{la.titulo}}</option>
+                                                        {% endfor %}
                                                     </select>
                                                 </div>
                                             </div>
@@ -117,19 +117,19 @@
                                             <div class="form-group mensaje">
                                                 <label for="" class="col-sm-2 control-label">Mensaje de la tarjeta</label>
                                                 <div class="col-sm-10">
-                                                    <textarea name="datos_direcciones[{idpedidodireccion}][productos][{idpedidoproducto}][mensaje]" cols="30" rows="2" class="producto_mensaje form-control autosize">{mensaje}</textarea>
+                                                    <textarea name="datos_direcciones[{{d.idpedidodireccion}}][productos][{{p.idpedidoproducto}}][mensaje]" cols="30" rows="2" class="producto_mensaje form-control autosize">{{p.mensaje}}</textarea>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            {/foreach productos}
+                            {% endfor %}
                         </div>
                     </div>
                 </div>
             </div>
-            {/foreach direcciones}
+            {% endfor %}
         </div>
         <div class="add">
             <button class="add_direccion btn btn-block btn-primary btn-raised">Añadir dirección de envio</button>

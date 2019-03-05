@@ -4,23 +4,23 @@
         <div id="{{field}}" class="row--">
             <input type="hidden" name="count" value="{count}" {% if required %} required="required" {% endif %}>
             <div class="sorted_multiple">
-                {foreach fields}
+                {% for f in fields %}
                 <div class="campo fields row">
-                    {foreach columna}
-                        {content}
-                    {/foreach columna}
+                    {% for c in f.columna %}
+                        {{c.content}}
+                    {% endfor %}
                 </div>
-                {/foreach fields}
+                {% endfor %}
             </div>
-            <div class="campo new_field row" {if new_field} {else new_field} style="display:none;" {/if new_field}>
+            <div class="campo new_field row" {% if new_field %} {% else %} style="display:none;" {% endif %}>
                 <div class="col-xs-12">
                     <button class="agregar_editar btn-raised btn-primary btn btn-md" onclick="$(this).parent().parent().hide();">Agregar campo</button>
                 </div>
             </div>
             <div class="campo new_line row">
-                {foreach new_line}
-                    {content}
-                {/foreach new_line}
+                {% for n in new_line %}
+                    {{n.content}}
+                {% endfor %}
                 <input type="hidden" name="{{field}}" value="0" {% if required %} required="required" {% endif %}>
             </div>
         </div>

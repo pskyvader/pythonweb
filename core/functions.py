@@ -6,6 +6,7 @@ from os.path import getmtime
 
 class functions():
     cookies = []
+    timezone = 'America/Santiago'
     @staticmethod
     def get_cookie(find_cookie=''):
         from http import cookies

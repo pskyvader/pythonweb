@@ -230,7 +230,8 @@ class app:
     @staticmethod
     def parse_values(var:dict):
         var_copy=var.copy()
-        var_copy = dict.fromkeys(var_copy , 1)
+        if isinstance(var_copy, list):
+            var_copy = dict.fromkeys(var_copy , 1)
         for k,i in var_copy.items():
             if isinstance(i,str):
                 try:

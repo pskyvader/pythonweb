@@ -178,7 +178,7 @@ class app:
         for key in p.keys():
             post[key] = p[key].value    
         print(post)
-        app.format_array(post)     
+        #app.format_array(post)
         print(post)    
         return post
 

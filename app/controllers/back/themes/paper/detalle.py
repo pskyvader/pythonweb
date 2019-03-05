@@ -460,13 +460,13 @@ class detalle:
 
             else:
                 parent = campos['parent']
-                checked = 'checked="checked"' if 0 == idparent else ''
+                checked = True if 0 == idparent else False
                 if campos['field'] not in fila:
                     if campos['field'] in app.get:
-                        checked = 'checked="checked"' if idparent == app.get[campos['field']] else ''
+                        checked = True if idparent == app.get[campos['field']] else False
 
                 else:
-                    checked = 'checked="checked"' if idparent in fila[campos['field']] else ''
+                    checked = True if idparent in fila[campos['field']] else False
 
                 data = {
                     'is_children': True,

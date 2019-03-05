@@ -230,12 +230,13 @@ class app:
     def parse_values(var:list):
         var_copy=var.copy()
         for i in var_copy.values():
-            print('i',i)
             if isinstance(i,str):
+                print('i',i)
                 try:
                     aux_var=json.loads(i)
                     if isinstance(aux_var,dict) or isinstance(aux_var, list):
                         i=aux_var
+                        print('exito',i)
                 except:
                     print('fail',i)
                     pass

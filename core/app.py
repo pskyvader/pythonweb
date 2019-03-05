@@ -223,7 +223,6 @@ class app:
                 del var[k]
 
         var=app.merge(var,aux)
-        print(var)
         return var
 
 

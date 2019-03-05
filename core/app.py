@@ -209,7 +209,7 @@ class app:
                         if rest.find(']')<rest.find('['):
                             rest1,rest2=str(rest).split(']',1)
                             aux[final_key][rest1+rest2]=i
-                            #aux[final_key][rest1]=app.format_array(aux[final_key][rest1])
+                            aux[final_key][rest1]=app.format_array(aux[final_key][rest1])
                         else:
                             print('error de formato, formato aceptado: a[b][c][d]')
 

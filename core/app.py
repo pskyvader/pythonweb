@@ -227,10 +227,10 @@ class app:
 
 
     @staticmethod
-    def parse_values(var:dict):
+    def parse_values(var:list):
         var_copy=var.copy()
         for i in var_copy.values():
-            print(i)
+            print('i',i)
             if isinstance(i,str):
                 try:
                     aux_var=json.loads(i)

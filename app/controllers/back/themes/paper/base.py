@@ -302,7 +302,7 @@ class base:
             'list_url': functions.generar_url(url_list),
         }
 
-        ret=detalle.normal(data, class_name)
+        ret=detalle.normal(data)
         return ret
 
     @classmethod

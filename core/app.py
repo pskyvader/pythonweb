@@ -223,7 +223,7 @@ class app:
                 del var[k]
 
 
-        print(var,aux)
+        print('original',var,'aux',aux)
         var.update(aux)
         return var
 

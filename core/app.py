@@ -223,6 +223,7 @@ class app:
                 del var[k]
 
         var=app.dict_merge(var,aux)
+        print(var)
         return var
 
 

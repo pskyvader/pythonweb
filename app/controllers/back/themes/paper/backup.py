@@ -13,6 +13,7 @@ from core.functions import functions
 from core.view import view
 
 from pathlib import Path
+import json
 
 class backup(base):
     url = ['backup']
@@ -145,44 +146,40 @@ class backup(base):
         id        = app.post['id']
         inicio    = int(app.post['inicio']) - 1  if 'inicio' in app.post else 0
 
-        for root, dirs, files in os.walk(cls.dir_backup):
+        for root, dirs, files in os.walk(self.dir_backup):
             for fichero in files:
                 if id in fichero:
                     file=fichero
                     
         if file is not None:
             file = self.dir_backup + '/' + file
-            
             if zipfile.is_zipfile(file):
-                total = zip->numFiles
-                for (i = inicio i < total i++) {
-                    nombre = zip->getNameIndex(i)
-                    if (!in_array(nombre, self.no_restore)) {
-                        //exito  = true
-                        exito = zip->extractTo(self.base_dir, array(nombre))
-                        /*if(is_writable(self.base_dir . "/" . nombre)){
-                            nombre_final = str_replace(array("/", "\\"), DIRECTORY_SEPARATOR, self.base_dir . "/" . nombre)
-                            rename(self.base_dir . "/" . nombre, nombre_final)
-                        }*/
-                        if (!exito) {
-                            respuesta['errores'][] = nombre
-                        }
-                    }
-                    respuesta['errores'][] = nombre
+                zip=zipfile.ZipFile(file,'r')
+                file_list=zip.infolist()
+                total=len(file_list)
+                for i in range(inicio,total):
+                    nombre = file_list[i]
+                    if nombre not in self.no_restore:
+                        try:
+                            zip.extract(nombre,self.base_dir)
+                        except:
+                            respuesta['errores'].append(nombre)
+                    respuesta['errores'].append(nombre)
                     
-                    if (i % 100 == 0) {
-                        log = array('mensaje' => 'Restaurando ' . functions::substring(nombre, 30) . ' (' . (i + 1) . '/' . total . ')', 'porcentaje' => (((i + 1) / total) * 90))
-                        file_put_contents(self.archivo_log, functions::encode_json(log))
-                    }
-                    if (time() - tiempo > 15) {
+                    if i % 100 == 0:
+                        log = {'mensaje' : 'Restaurando ' +nombre[-30:] + ' (' + str(i + 1) + '/' +str(total) + ')', 'porcentaje' : ((i + 1) / total) * 90}
+                        file_write = open(self.archivo_log, 'w')
+                        file_write.write(json.dumps(log))
+                        file_write.close()
+                    if functions.current_time(as_string=False) - tiempo > 15:
                         respuesta['inicio'] = i
                         break
-                    }
-                }
-                zip->close()
-                if (!isset(respuesta['inicio'])) {
+
+                zip.close()
+                if 'inicio' not in respuesta:
+
                     if (file_exists(self.base_dir . '/bdd.sql')) {
-                        log = array('mensaje' => 'Restaurando Base de datos', 'porcentaje' => 95)
+                        log = array('mensaje' : 'Restaurando Base de datos', 'porcentaje' : 95)
                         file_put_contents(self.archivo_log, functions::encode_json(log))
                         connection = database::instance()
                         exito      = connection->restore_backup(self.base_dir . '/bdd.sql')
@@ -195,11 +192,8 @@ class backup(base):
                     }
                 }
                 respuesta['exito'] = true
-            } else {
-                respuesta['mensaje'] = 'Error al abrir archivo'
-            }
-            
-        }
+            else:
+                respuesta['mensaje'] = 'Error al abrir archivo, o archivo no valido'
 
         if (!isset(respuesta['inicio'])) {
             c = new configuracion_administrador()

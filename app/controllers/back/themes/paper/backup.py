@@ -82,7 +82,7 @@ class backup(base):
         else:
             tiempo_lento = float(tiempo_lento.replace(',','.'))
             is_mensaje = True
-            mensaje += tiempo_lento + " segundos (servidor lento)"
+            mensaje += str(tiempo_lento) + " segundos (servidor lento)"
 
         tiempo_rapido = configuracion_model.getByVariable(
             'tiempo_backup_rapido')
@@ -94,7 +94,7 @@ class backup(base):
             if tiempo_lento > 0:
                 mensaje += ", "
 
-            mensaje += tiempo_rapido + " segundos (servidor rápido)"
+            mensaje += str(tiempo_rapido) + " segundos (servidor rápido)"
 
         row = {}
         files = []

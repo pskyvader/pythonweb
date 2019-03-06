@@ -104,10 +104,9 @@ class image:
         from shutil import copyfile
         respuesta = {'exito': False, 'mensaje': ''}
 
-        name = original_file['url'].split('.')
-        extension = (name.pop()).lower()
+        name,extension=os.path.splitext(original_file['url'])
 
-        new_file = {'portada': True, 'id': 1, 'url': id_final + '.' + extension,
+        new_file = {'portada': True, 'id': 1, 'url': id_final + extension,
                     'parent': name_final, 'folder': folder, 'subfolder': subfolder, 'tmp': ''}
         original = image.generar_dir(original_file, tag)
 
@@ -187,7 +186,7 @@ class image:
             
             name,extension=os.path.splitext(file['name'])
             extension=extension.lower()
-            
+
             my_file = Path(folder)
             if not my_file.is_dir():
                 makedirs(folder, 777)

@@ -181,7 +181,8 @@ class app:
         try:
             for key in p.keys():
                 post[key] = p[key].value
-        
+        except:
+            pass
         post=app.format_array(post)
         post=app.parse_values(post)
         return post

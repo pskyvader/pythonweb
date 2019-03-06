@@ -38,7 +38,7 @@ class base:
             method = getattr(cls, fun)
             sig = signature(method)
             params = sig.parameters
-            print(len(params),inspect.getargspec(method))
+            print(inspect.getargspec(method))
             if len(params) >= 2:
                 ret = method(var)
             elif len(params) == 1:

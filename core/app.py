@@ -171,13 +171,13 @@ class app:
         from cgi import FieldStorage
         post_env = app.environ.copy()
         post_env['QUERY_STRING'] = ''
+        print(app.environ['wsgi.input'])
         p = FieldStorage(
             fp=app.environ['wsgi.input'],
             environ=post_env,
             keep_blank_values=True
         )
         post = {}
-        print(p.keys())
         for key in p.keys():
             post[key] = p[key].value
         post=app.format_array(post)

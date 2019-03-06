@@ -19,6 +19,7 @@ class administrador(base):
         ret = {'body': ''}
         # Clase para enviar a controlador de detalle
         class_name = cls.class_name
+        print(class_name)
         get = app.get
         url_list = cls.url.copy()
         url_save = cls.url.copy()

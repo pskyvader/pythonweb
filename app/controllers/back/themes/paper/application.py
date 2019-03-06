@@ -12,9 +12,10 @@ from core.functions import functions
 from core.image import image
 from core.view import view
 
+
 class application(base):
     url = ['application']
-    metadata = {'title' : 'application','modulo':'application'}
+    metadata = {'title': 'application', 'modulo': 'application'}
     breadcrumb = []
 
     @classmethod
@@ -22,7 +23,7 @@ class application(base):
         '''Controlador de lista_class de elementos base, puede ser sobreescrito en el controlador de cada modulo'''
         ret = {'body': ''}
         # Clase para enviar a controlador de lista_class
-        url_final=cls.url.copy()
+        url_final = cls.url.copy()
         if not administrador_model.verificar_sesion():
             url_final = ['login', 'index'] + url_final
         # verificar sesion o redireccionar a login
@@ -32,14 +33,11 @@ class application(base):
             ret['redirect'] = url_return
             return ret
 
-
-
         h = head(cls.metadata)
-        ret_head=h.normal()
-        if ret_head['headers']!='':
+        ret_head = h.normal()
+        if ret_head['headers'] != '':
             return ret_head
-        ret['body']+=ret_head['body']
-        
+        ret['body'] += ret_head['body']
 
         config = app.get_config()
         logo = logo_model.getById(7)
@@ -47,14 +45,9 @@ class application(base):
         view.add('color_secundario', config['color_secundario'])
         view.add('logo', image.generar_url(logo['foto'][0], 'icono600'))
         view.add('path', functions.generar_url(url_final))
-        view.render('application')
-
-        ret['body'] += view.render('home')
-
+        ret['body'] += view.render('application')
 
         f = footer()
-        ret['body']+=f.normal()['body']
-
-
+        ret['body'] += f.normal()['body']
 
         return ret

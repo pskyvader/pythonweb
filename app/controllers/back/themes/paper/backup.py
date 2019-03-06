@@ -420,6 +420,6 @@ class backup(base):
         '''Inicio o continuacion de respaldo en modo lento (toma mas tiempo pero consume menos recursos)'''
         ret = {'body': ''}
         config    = app.get_config()
-        respuesta = self.zipData(self.dir, app.post['archivo_backup'], json.loads(app.post['lista']), app.post['total'])
+        respuesta = self.zipData(self.base_dir, app.post['archivo_backup'], json.loads(app.post['lista']), app.post['total'])
         ret['body']=json.dumps(respuesta)
         return ret

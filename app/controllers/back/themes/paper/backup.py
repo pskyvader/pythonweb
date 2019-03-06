@@ -36,7 +36,6 @@ class backup(base):
         ret = {'body': ''}
         # Clase para enviar a controlador de lista_class
         url_final=cls.url.copy()
-        get = app.get
         
         if not administrador_model.verificar_sesion():
             url_final = ['login', 'index'] + url_final
@@ -134,3 +133,87 @@ class backup(base):
         ret['body']+=f.normal()['body']    
         return ret
     
+
+
+    def restaurar(self):
+        '''Restaura un backup, usar con precaucion ya que reemplaza todos los archivos de codigo'''
+        import os
+        tiempo    = functions.current_time(as_string=False)
+        respuesta = {'exito' : False, 'mensaje' : 'archivo no encontrado', 'errores' : []}
+        id        = app.post['id']
+        inicio    = int(app.post['inicio']) - 1  if 'inicio' in app.post else 0
+
+        for root, dirs, file in os.walk(cls.dir_backup):
+            for fichero in file:
+                name, extension = os.path.splitext(fichero)
+                if(extension == ".zip"):
+                    files.append(name+extension)
+        foreach (scandir(this->dir_backup) as key => files) {
+            if (strpos(files, id) !== False) {
+                file = files
+                break
+            }
+        }
+        if (isset(file)) {
+            if (extension_loaded('zip') === true) {
+                file = this->dir_backup . '/' . file
+                zip  = new \ZipArchive()
+                if (zip->open(file) === true) {
+                    total = zip->numFiles
+                    for (i = inicio i < total i++) {
+                        nombre = zip->getNameIndex(i)
+                        if (!in_array(nombre, this->no_restore)) {
+                            //exito  = true
+                            exito = zip->extractTo(this->dir, array(nombre))
+                            /*if(is_writable(this->dir . "/" . nombre)){
+                                nombre_final = str_replace(array("/", "\\"), DIRECTORY_SEPARATOR, this->dir . "/" . nombre)
+                                rename(this->dir . "/" . nombre, nombre_final)
+                            }*/
+                            if (!exito) {
+                                respuesta['errores'][] = nombre
+                            }
+                        }
+                        respuesta['errores'][] = nombre
+                        
+                        if (i % 100 == 0) {
+                            log = array('mensaje' => 'Restaurando ' . functions::substring(nombre, 30) . ' (' . (i + 1) . '/' . total . ')', 'porcentaje' => (((i + 1) / total) * 90))
+                            file_put_contents(this->archivo_log, functions::encode_json(log))
+                        }
+                        if (time() - tiempo > 15) {
+                            respuesta['inicio'] = i
+                            break
+                        }
+                    }
+                    zip->close()
+                    if (!isset(respuesta['inicio'])) {
+                        if (file_exists(this->dir . '/bdd.sql')) {
+                            log = array('mensaje' => 'Restaurando Base de datos', 'porcentaje' => 95)
+                            file_put_contents(this->archivo_log, functions::encode_json(log))
+                            connection = database::instance()
+                            exito      = connection->restore_backup(this->dir . '/bdd.sql')
+                            if (!exito) {
+                                respuesta['errores'][] = exito
+                            }
+                        } else {
+                            respuesta['mensaje']   = 'No existe base de datos'
+                            respuesta['errores'][] = 'bdd.sql'
+                        }
+                    }
+                    respuesta['exito'] = true
+                } else {
+                    respuesta['mensaje'] = 'Error al abrir archivo'
+                }
+            } else {
+                respuesta['mensaje'] = 'Debes instalar la extension ZIP'
+            }
+        }
+
+        if (!isset(respuesta['inicio'])) {
+            c = new configuracion_administrador()
+            c->json_update(False)
+
+            log = array('mensaje' => 'Restauracion finalizada', 'porcentaje' => 100)
+            file_put_contents(this->archivo_log, functions::encode_json(log))
+        }
+        echo json_encode(respuesta)
+    }

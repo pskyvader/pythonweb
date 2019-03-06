@@ -90,16 +90,17 @@ class base:
         ret = {'body': ''}
         # Clase para enviar a controlador de lista_class
         class_name = cls.class_name
+        url_final=cls.url.copy()
         get = app.get
         if cls.contiene_tipos and not 'tipo' in get:
-            cls.url = ['home']
+            url_final = ['home']
         if cls.contiene_hijos and not 'idpadre' in get:
-            cls.url = ['home']
+            url_final = ['home']
 
         if not administrador_model.verificar_sesion():
-            cls.url = ['login', 'index'] + cls.url
+            url_final = ['login', 'index'] + url_final
         # verificar sesion o redireccionar a login
-        url_return = functions.url_redirect(cls.url)
+        url_return = functions.url_redirect(url_final)
         if url_return != '':
             ret['error'] = 301
             ret['redirect'] = url_return
@@ -127,7 +128,7 @@ class base:
                 where[class_parent.idname] = get[class_parent.idname]
 
         condiciones = {}
-        url_detalle = cls.url.copy()
+        url_detalle = url_final.copy()
         url_detalle.append('detail')
         # obtener unicamente elementos de la pagina actual
         respuesta = lista.get_row(class_name, where, condiciones, url_detalle)
@@ -141,12 +142,12 @@ class base:
             if cls.contiene_tipos:
                 for v in respuesta['row']:
                     v['url_children'] = functions.generar_url(
-                        cls.url, {'idpadre': v[0], 'tipo': get['tipo']})
+                        url_final, {'idpadre': v[0], 'tipo': get['tipo']})
 
             else:
                 for v in respuesta['row']:
                     v['url_children'] = functions.generar_url(
-                        cls.url, {'idpadre': v[0]})
+                        url_final, {'idpadre': v[0]})
 
         else:
             if 'url_children' in configuracion['th']:
@@ -171,7 +172,7 @@ class base:
         data = {
             'breadcrumb': cls.breadcrumb,
             'th': configuracion['th'],
-            'current_url': functions.generar_url(cls.url),
+            'current_url': functions.generar_url(url_final),
             'new_url': functions.generar_url(url_detalle),
         }
 

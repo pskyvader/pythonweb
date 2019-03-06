@@ -16,7 +16,7 @@ class home(base):
     @classmethod
     def index(cls):
         ret = {'body':''}
-        url_final=cls.url
+        url_final=cls.url.copy()
         if not administrador_model.verificar_sesion():
             url_final = ['login', 'index', 'home']
         

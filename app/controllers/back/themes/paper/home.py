@@ -16,13 +16,12 @@ class home(base):
     @classmethod
     def index(cls):
         ret = {'body':''}
+        url_final=cls.url
         if not administrador_model.verificar_sesion():
-            print('no verificar sesion')
-            cls.url = ['login', 'index', 'home']
+            url_final = ['login', 'index', 'home']
         
-        url_return=functions.url_redirect(cls.url)
+        url_return=functions.url_redirect(url_final)
         if url_return!='':
-            print(cls.url, url_return)
             ret['error']=301
             ret['redirect']=url_return
             return ret
@@ -42,7 +41,7 @@ class home(base):
 
         view.add('title', 'Home')
         breadcrumb=[
-            {'url':functions.generar_url(cls.url),'title':cls.metadata['title'],'active':'active'}
+            {'url':functions.generar_url(url_final),'title':cls.metadata['title'],'active':'active'}
         ]
         view.add('breadcrumb', breadcrumb)
         ret['body'] += view.render('home')

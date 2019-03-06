@@ -1,4 +1,3 @@
-from .base import base
 from app.models.administrador import administrador as administrador_model
 from app.models.configuracion import configuracion as configuracion_model
 
@@ -20,7 +19,7 @@ import os
 import json
 
 
-class backup(base):
+class backup():
     url = ['backup']
     metadata = {'title': 'backup', 'modulo': 'backup'}
     breadcrumb = []

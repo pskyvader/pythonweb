@@ -32,9 +32,7 @@ class static:
                 ('Accept-encoding', 'gzip,deflate'),
                 ('Content-Encoding', 'gzip')
             ]
-            cache_file = theme+'cache/' + \
-                str(functions.fecha_archivo(resource_url, True)) + \
-                '-'+resource.replace('/', '-')
+            cache_file = theme+'cache/' +  str(functions.fecha_archivo(resource_url, True)) +  '-'+resource.replace('/', '-')
             my_file = Path(cache_file)
             if my_file.is_file():
                 ret['file']=cache_file

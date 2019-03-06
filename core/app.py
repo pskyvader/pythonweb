@@ -182,7 +182,7 @@ class app:
             for key in p.keys():
                 post[key] = p[key].value
         except Exception as error:
-            raise ValueError('Error al obtener post: ' + repr(error) + repr(p))
+            raise RuntimeError('Error al obtener post: ' + repr(error) + repr(p))
 
         post=app.format_array(post)
         post=app.parse_values(post)

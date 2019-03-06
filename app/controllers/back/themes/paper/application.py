@@ -14,14 +14,7 @@ class application(base):
         '''Controlador de lista_class de elementos base, puede ser sobreescrito en el controlador de cada modulo'''
         ret = {'body': ''}
         # Clase para enviar a controlador de lista_class
-        class_name = cls.class_name
         url_final=cls.url.copy()
-        get = app.get
-        if cls.contiene_tipos and not 'tipo' in get:
-            url_final = ['home']
-        if cls.contiene_hijos and not 'idpadre' in get:
-            url_final = ['home']
-
         if not administrador_model.verificar_sesion():
             url_final = ['login', 'index'] + url_final
         # verificar sesion o redireccionar a login

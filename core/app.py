@@ -181,9 +181,9 @@ class app:
         try:
             for key in p.keys():
                 post[key] = p[key].value
-        except:
-            print('error al obtener post',p)
-            pass
+        except Exception as error:
+            raise ValueError('Error al obtener post: ' + repr(error) + repr(p))
+
         post=app.format_array(post)
         post=app.parse_values(post)
         return post

@@ -141,6 +141,7 @@ class backup(base):
 
     def restaurar(self):
         '''Restaura un backup, usar con precaucion ya que reemplaza todos los archivos de codigo'''
+        ret = {'body': ''}
         import os
         import zipfile
         file=None
@@ -202,8 +203,10 @@ class backup(base):
             c = configuracion_administrador()
             c.json_update(False)
 
-            log = array('mensaje' => 'Restauracion finalizada', 'porcentaje' => 100)
-            file_put_contents(self.archivo_log, functions::encode_json(log))
-        }
-        echo json_encode(respuesta)
-    }
+            log = {'mensaje' : 'Restauracion finalizada', 'porcentaje' : 100}
+            file_write = open(self.archivo_log, 'w')
+            file_write.write(json.dumps(log))
+            file_write.close()
+        ret['body']=json.dumps(respuesta)
+        return ret
+    

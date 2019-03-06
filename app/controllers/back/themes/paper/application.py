@@ -38,7 +38,7 @@ class application(base):
         ret['body']+=ret_head['body']
         
 
-        config = app.getConfig()
+        config = app.get_config()
         logo = logo_model.getById(7)
         view.add('color_primario', config['color_primario'])
         view.add('color_secundario', config['color_secundario'])

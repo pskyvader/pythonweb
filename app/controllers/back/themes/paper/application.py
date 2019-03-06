@@ -25,7 +25,7 @@ class application(base):
         # Clase para enviar a controlador de lista_class
         url_final = cls.url.copy()
         if not administrador_model.verificar_sesion():
-            url_final = ['login', 'index'] + url_final
+            url_final = ['login', 'index', 'home']
         # verificar sesion o redireccionar a login
         url_return = functions.url_redirect(url_final)
         if url_return != '':

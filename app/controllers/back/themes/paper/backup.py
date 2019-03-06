@@ -10,6 +10,7 @@ from .footer import footer
 
 from core.app import app
 from core.functions import functions
+from core.view import view
 
 from pathlib import Path
 
@@ -76,62 +77,56 @@ class backup(base):
 
         mensaje      = "Tiempo promedio de respaldo: "
         tiempo_lento = configuracion_model.getByVariable('tiempo_backup_lento')
-        if isinstance(tiempo_lento,bool) is_bool(tiempo_lento):
+        if isinstance(tiempo_lento,bool):
             tiempo_lento = 0
-        } else {
-            tiempo_lento = (int) tiempo_lento
-            is_mensaje   = true
-            mensaje .= tiempo_lento . " segundos (servidor lento)"
-        }
+        else:
+            tiempo_lento = int(tiempo_lento)
+            is_mensaje   = True
+            mensaje += tiempo_lento + " segundos (servidor lento)"
+        
         tiempo_rapido = configuracion_model.getByVariable('tiempo_backup_rapido')
-        if is_bool(tiempo_rapido):
+        if isinstance(tiempo_rapido,bool):
             tiempo_rapido = 0
-        } else {
-            tiempo_rapido = (int) tiempo_rapido
-            is_mensaje    = true
+        else:
+            tiempo_rapido = int(tiempo_rapido)
+            is_mensaje    = True
             if tiempo_lento > 0:
-                mensaje .= ", "
+                mensaje += ", "
+            
+            mensaje += tiempo_rapido + " segundos (servidor rápido)"
+        
+
+        row   = {}
+        files=[]
+        for root, dirs, file in os.walk(cls.dir_backup):
+            for fichero in file:
+                name, extension = os.path.splitext(fichero)
+                if(extension == ".zip"):
+                    files.append(name+extension)
+
+        url = app.get_url(True) + 'backup/'
+
+        for key,f in dict.fromkeys(files):
+            name, extension = os.path.splitext(f)
+            fecha       = name.split('-')
+            fecha       = fecha.pop()
+            row[fecha] = {
+                'even'  : (key % 2 == 0),
+                'id'    : fecha,
+                'fecha' : functions.formato_fecha(fecha),
+                'size'  : functions.file_size(cls.dir_backup + '/' + f),
+                'url'   : url + f,
             }
-            mensaje .= tiempo_rapido . " segundos (servidor rápido)"
-        }
 
-        row   = array()
-        files = array_filter(scandir(cls.dir_backup), function (item:
-            if is_file(cls.dir_backup . '/' . item):
-                extension = explode('.', item)
-                extension = array_pop(extension)
-                if extension == 'zip':
-                    return true
-                }
-            }
-            return False
-        })
-        url = app.get_url(true) . 'backup/'
-
-        foreach (files as key => f:
-            extension = explode('.', f)
-            array_pop(extension)
-            fecha       = explode('-', implode('.', extension))
-            fecha       = array_pop(fecha)
-            row[fecha] = array(
-                'even'  => (key % 2 == 0),
-                'id'    => fecha,
-                'fecha' => functions.formato_fecha(fecha),
-                'size'  => functions.file_size(cls.dir_backup . '/' . f),
-                'url'   => url . f,
-            )
-        }
-        row = array_reverse(row)
-
-        view.set('row', row)
-        view.set('breadcrumb', cls.breadcrumb)
-        view.set('title', cls.metadata['title'])
-        view.set('is_error', is_error)
-        view.set('mensaje_error', mensaje_error)
-        view.set('is_mensaje', is_mensaje)
-        view.set('mensaje', mensaje)
-        view.set('tiempo_lento', tiempo_lento)
-        view.set('tiempo_rapido', tiempo_rapido)
+        view.add('row', row)
+        view.add('breadcrumb', cls.breadcrumb)
+        view.add('title', cls.metadata['title'])
+        view.add('is_error', is_error)
+        view.add('mensaje_error', mensaje_error)
+        view.add('is_mensaje', is_mensaje)
+        view.add('mensaje', mensaje)
+        view.add('tiempo_lento', tiempo_lento)
+        view.add('tiempo_rapido', tiempo_rapido)
         view.render('backup')
 
         footer = new footer()

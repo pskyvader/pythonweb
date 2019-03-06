@@ -152,7 +152,8 @@ class lista:
         return data
 
     def field(self, th: dict, fila: dict):
-        th['field']=int(th['field'])
+        if th['field']=='0':
+            th['field']=int(th['field'])
         if th['type'] == 'active':
             data = {
                 'field': th['field'],

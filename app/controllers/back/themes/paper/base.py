@@ -40,6 +40,8 @@ class base:
             print(len(params))
             if len(params) >= 2:
                 ret = method(var)
+            elif len(params) == 1:
+                ret = method(cls)
             else:
                 ret = method()
         else:

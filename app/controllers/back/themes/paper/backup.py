@@ -30,9 +30,9 @@ class backup(base):
     no_restore = ['backup/']
 
     def __init__(self):
-        self.base_dir = app.get_dir(True)
-        self.dir_backup = self.base_dir + 'backup'
-        self.archivo_log = app.get_dir() + '/log.json'
+        backup.base_dir = app.get_dir(True)
+        backup.dir_backup = self.base_dir + 'backup'
+        backup.archivo_log = app.get_dir() + '/log.json'
 
     @classmethod
     def index(cls):

@@ -177,6 +177,7 @@ class app:
             keep_blank_values=True
         )
         post = {}
+        print(post)
         for key in p.keys():
             post[key] = p[key].value
         post=app.format_array(post)

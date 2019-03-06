@@ -40,7 +40,7 @@ class base:
             if len(params) >= 2:
                 ret = method(var)
             else:
-                print(sig)
+                print(signature(method))
                 ret = method(cls)
         else:
             ret = {

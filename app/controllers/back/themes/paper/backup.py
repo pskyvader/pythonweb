@@ -378,9 +378,11 @@ class backup(base):
                         lista_archivos.append(fichero)
 
                         if log and count % 1000 == 0:
+                            log_file = {
+                                'mensaje': 'Recuperando archivo ' . file, 'porcentaje': 10
+                            }
                             file_write = open(self.archivo_log, 'w')
-                            file_write.write(json.dumps(
-                                {'mensaje': 'Recuperando archivo ' . file, 'porcentaje': 10}))
+                            file_write.write(json.dumps(log_file))
                             file_write.close()
             respuesta['lista'] = lista_archivos
             respuesta['archivo_backup'] = self.dir_backup + '/' + app.prefix_site + \

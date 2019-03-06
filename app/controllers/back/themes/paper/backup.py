@@ -241,7 +241,7 @@ class backup(base):
         import os
         ret = {'body': ''}
         os.remove(self.dir_backup + '/' + self.archivo_log)
-        ret['body']='true'
+        ret['body']="'true'"
         return ret
 
     def actualizar_tiempo(self):
@@ -265,10 +265,10 @@ class backup(base):
             tiempo = (tiempo * cantidad) + float(campos['tiempo'])
             cantidad+=1
             tiempo = tiempo / cantidad
-            configuracion_model.setByVariable('cantidad_backup_' . campos['tipo_backup'], cantidad)
-            configuracion_model.setByVariable('tiempo_backup_' . campos['tipo_backup'], tiempo)
-            respuesta['exito']   = true
-            respuesta['mensaje'] = 'tiempo: ' . tiempo . ', cantidad: ' . cantidad
-        }
-        echo json_encode(respuesta)
-    }
+            configuracion_model.setByVariable('cantidad_backup_' + campos['tipo_backup'], cantidad)
+            configuracion_model.setByVariable('tiempo_backup_' + campos['tipo_backup'], tiempo)
+            respuesta['exito']   = True
+            respuesta['mensaje'] = 'tiempo: ' + str(tiempo) +', cantidad: ' + str(cantidad)
+        
+        ret['body']=json.dumps(respuesta)
+        return ret

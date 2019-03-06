@@ -10,14 +10,14 @@
 <script>
     var element = document.createElement('link');
     element.rel = 'prerender';
-    element.href = '{path}';
+    element.href = '{{path}}';
     document.head.appendChild(element);
 </script> 
 <script>
     window.onload = function() {
-        console.log('load'+ "{path}");
+        console.log('load'+ "{{path}}");
         setTimeout(function(){
-        window.location.replace("{path}");
+        window.location.replace("{{path}}");
         },100);
     }
 </script>

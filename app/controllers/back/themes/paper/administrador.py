@@ -6,7 +6,7 @@ from core.functions import functions
 class administrador(base):
     url = ['administrador']
     metadata = {'title' : 'administrador','modulo':'administrador'}
-    breadcrumb = {}
+    breadcrumb = []
     def __init__(self):
         super().__init__(administrador_model)
 

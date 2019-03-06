@@ -14,8 +14,8 @@ from core.view import view
 
 
 class application(base):
-    url = ['application']
-    metadata = {'title': 'application', 'modulo': 'application'}
+    url = ['home']
+    metadata = {'title': 'home', 'modulo': 'home'}
     breadcrumb = []
 
     @classmethod

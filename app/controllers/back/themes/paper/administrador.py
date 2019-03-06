@@ -16,6 +16,7 @@ class administrador(base):
     def detail(cls, var=[]):
         '''Controlador de detalle de elementos base, puede ser sobreescrito en el controlador de cada modulo'''
         ret = {'body': ''}
+        print(detalle_class)
         # Clase para enviar a controlador de detalle
         class_name = cls.class_name
         get = app.get

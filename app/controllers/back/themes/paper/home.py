@@ -17,6 +17,7 @@ class home(base):
     def index(cls):
         ret = {'body':''}
         if not administrador_model.verificar_sesion():
+            print('no verificar sesion')
             cls.url = ['login', 'index', 'home']
         
         url_return=functions.url_redirect(cls.url)

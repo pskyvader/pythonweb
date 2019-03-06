@@ -12,37 +12,34 @@ class administrador(base):
     def __init__(self):
         super().__init__(administrador_model)
 
-
     @classmethod
     def detail(cls, var=[]):
         '''Controlador de detalle de elementos base, puede ser sobreescrito en el controlador de cada modulo'''
-        print(detalle_class)
         ret = {'body': ''}
         # Clase para enviar a controlador de detalle
         class_name = cls.class_name
         get = app.get
         url_list = cls.url.copy()
         url_save = cls.url.copy()
-        url = cls.url.copy()
+        url_final = cls.url.copy()
         url_save.append('guardar')
-        url.append('detail')
+        url_final.append('detail')
         if len(var)>0:
             id = int(var[0])
-            url.append(id)
+            url_final.append(id)
             cls.metadata['title'] = 'Editar ' + cls.metadata['title']
         else:
             id = 0
             cls.metadata['title'] = 'Nuevo ' + cls.metadata['title']
 
-        cls.breadcrumb.append({'url': functions.generar_url(
-            url), 'title': cls.metadata['title'], 'active': 'active'})
+        cls.breadcrumb.append({'url': functions.generar_url( url_final), 'title': cls.metadata['title'], 'active': 'active'})
         if cls.contiene_tipos and 'tipo' not in get:
-            url = ['home']
+            url_final = ['home']
 
         if not administrador_model.verificar_sesion():
-            url = {'login', 'index'} + url
+            url_final = ['login', 'index'] + url_final
         # verificar sesion o redireccionar a login
-        url_return = functions.url_redirect(url)
+        url_return = functions.url_redirect(url_final)
         if url_return != '':
             ret['error'] = 301
             ret['redirect'] = url_return
@@ -131,7 +128,7 @@ class administrador(base):
             'campos': configuracion['campos'],
             'row': row,
             'id': id if id != 0 else '',
-            'current_url': functions.generar_url(url),
+            'current_url': functions.generar_url(url_final),
             'save_url': functions.generar_url(url_save),
             'list_url': functions.generar_url(url_list),
         }

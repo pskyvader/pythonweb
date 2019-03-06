@@ -1,9 +1,13 @@
 from .base import base
 from app.models.administrador import administrador as administrador_model
+
 from app.models.table import table
 from core.app import app
 from core.functions import functions
+
 from .detalle import detalle as detalle_class
+
+
 import json
 
 class administrador(base):

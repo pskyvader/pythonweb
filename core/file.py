@@ -9,8 +9,8 @@ from .image import image
 class file(image):
     types = ["application/zip", "application/x-zip-compressed", "application/octet-stream", "application/postscript", "application/msword", "application/vnd.ms-excel", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.openxmlformats-officedocument.spreadsheetml.template", "application/vnd.openxmlformats-officedocument.presentationml.template", "application/vnd.openxmlformats-officedocument.presentationml.slideshow",
              "application/vnd.openxmlformats-officedocument.presentationml.presentation", "application/vnd.openxmlformats-officedocument.presentationml.slide", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/vnd.openxmlformats-officedocument.wordprocessingml.template", "application/vnd.ms-excel.addin.macroEnabled.12", "application/vnd.ms-excel.sheet.binary.macroEnabled.12", "application/pdf", "application/download"]
-    extensions = ["zip", "doc", "docx", "dotx", "xls", "xlsx", "xltx",
-                  "xlam", "xlsb", "ppt", "pptx", "potx", "ppsx", "sldx", "pdf"]
+    extensions = [".zip", ".doc", ".docx", ".dotx", ".xls", ".xlsx", ".xltx",
+                  ".xlam", ".xlsb", ".ppt", ".pptx", ".potx", ".ppsx", ".sldx", ".pdf"]
 
     @staticmethod
     def upload_tmp():
@@ -55,10 +55,9 @@ class file(image):
         if not my_file.is_dir():
             makedirs(folder, 777)
 
-        name,extension= splitext(file['tmp'])
-        nombre_final,ext= splitext(file['original_name'])
+        name, extension = splitext(file['tmp'])
+        nombre_final, ext = splitext(file['original_name'])
         nombre_final = functions.url_amigable(''.join(nombre_final))
-
 
         file['url'] = file['id'] + '-' + nombre_final + extension
         rename(folder_tmp + '/' + file['tmp'], folder + '/' + file['url'])

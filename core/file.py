@@ -56,10 +56,9 @@ class file(image):
             makedirs(folder, 777)
 
         name,extension= splitext(file['tmp'])
-
-        nombre_final = file['original_name'].split('.')
-        nombre_final.pop()
+        nombre_final,ext= splitext(file['original_name'])
         nombre_final = functions.url_amigable(''.join(nombre_final))
+
 
         file['url'] = file['id'] + '-' + nombre_final + extension
         rename(folder_tmp + '/' + file['tmp'], folder + '/' + file['url'])

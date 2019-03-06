@@ -2,11 +2,11 @@ from .base import base
 from app.models.administrador import administrador as administrador_model
 
 from .head import head
-from .header import header
-from .aside import aside
 from .footer import footer
 
+from core.app import app
 from core.functions import functions
+from core.image import image
 from core.view import view
 
 class application(base):
@@ -37,34 +37,21 @@ class application(base):
             return ret_head
         ret['body']+=ret_head['body']
         
-        he=header()
-        ret['body']+=he.normal()['body']
 
-        asi = aside()
-        ret['body']+=asi.normal()['body']
+        config = app.getConfig()
+        logo = logo_model.getById(7)
+        view.add('color_primario', config['color_primario'])
+        view.add('color_secundario', config['color_secundario'])
+        view.add('logo', image.generar_url(logo['foto'][0], 'icono600'))
+        view.add('path', functions.generar_url(url_final))
+        view.render('application')
 
-
-        view.add('title', 'Home')
-        breadcrumb=[
-            {'url':functions.generar_url(url_final),'title':cls.metadata['title'],'active':'active'}
-        ]
-        view.add('breadcrumb', breadcrumb)
         ret['body'] += view.render('home')
 
 
         f = footer()
         ret['body']+=f.normal()['body']
 
-        $head = new head($this->metadata);
-        $head->normal();
-        $config = app::getConfig();
-        $logo = logo_model::getById(7);
-        view::set('color_primario', $config['color_primario']);
-        view::set('color_secundario', $config['color_secundario']);
-        view::set('logo', image::generar_url($logo['foto'][0], 'icono600'));
-        view::set('path', functions::generar_url($this->url));
-        view::render('application');
-        $footer = new footer();
-        $footer->normal();
+
 
         return ret

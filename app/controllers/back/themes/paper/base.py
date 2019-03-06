@@ -32,7 +32,7 @@ class base:
             var = ['index']
 
         if hasattr(cls, var[0]) and callable(getattr(cls, var[0])):
-            fun = var[0]
+            fun = var[0]()
             del var[0]
             method = getattr(cls, fun)
             sig = signature(method)

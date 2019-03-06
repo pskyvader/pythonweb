@@ -7,6 +7,7 @@ from .aside import aside
 from .footer import footer
 
 from core.functions import functions
+from core.view import view
 
 class application(base):
     url = ['application']

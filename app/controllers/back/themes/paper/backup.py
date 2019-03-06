@@ -127,12 +127,10 @@ class backup(base):
         view.add('mensaje', mensaje)
         view.add('tiempo_lento', tiempo_lento)
         view.add('tiempo_rapido', tiempo_rapido)
-        view.render('backup')
+        ret['body']+=view.render('backup')
 
-        footer = new footer()
-        footer->normal()
-    }
-
-    
+        
+        f = footer()
+        ret['body']+=f.normal()['body']    
         return ret
     

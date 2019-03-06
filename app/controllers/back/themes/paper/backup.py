@@ -16,6 +16,7 @@ from core.functions import functions
 from core.view import view
 
 from pathlib import Path
+import os
 import json
 
 class backup(base):
@@ -36,7 +37,6 @@ class backup(base):
     @classmethod
     def index(cls):
         '''Controlador de lista_class de elementos base, puede ser sobreescrito en el controlador de cada modulo'''
-        import os
         ret = {'body': ''}
         # Clase para enviar a controlador de lista_class
         url_final=cls.url.copy()
@@ -142,7 +142,6 @@ class backup(base):
     def restaurar(self):
         '''Restaura un backup, usar con precaucion ya que reemplaza todos los archivos de codigo'''
         ret = {'body': ''}
-        import os
         import zipfile
         file=None
         tiempo    = functions.current_time(as_string=False)
@@ -213,7 +212,6 @@ class backup(base):
 
 
     def eliminar(self):
-        import os
         ret = {'body': ''}
         campos    = app.post['campos']
         respuesta = {'exito' : False, 'mensaje' : ''}
@@ -238,10 +236,9 @@ class backup(base):
         return ret
     
     def vaciar_log(self):
-        import os
         ret = {'body': ''}
         os.remove(self.dir_backup + '/' + self.archivo_log)
-        ret['body']="'true'"
+        ret['body']="'True'"
         return ret
 
     def actualizar_tiempo(self):
@@ -272,3 +269,94 @@ class backup(base):
         
         ret['body']=json.dumps(respuesta)
         return ret
+
+
+
+
+    def eliminar_error(self):
+        '''Elimina archivos que no se lograron completar'''
+        ret = {'body': ''}
+        respuesta = {'exito' : True}
+
+        files=[]
+        for root, dirs, file in os.walk(self.dir_backup):
+            for fichero in file:
+                name, extension = os.path.splitext(fichero)
+                if(extension != '.zip'):
+                    files.append(name+extension)
+
+        url = app.get_dir(True) + 'backup/'
+
+        for f in files:
+            os.remove(url + f)
+        ret['body']=json.dumps(respuesta)
+        return ret
+    
+    def generar(self):
+        '''comprueba las carpetas de respaldo y obtiene la lista de archivos para respaldar en zip'''
+        ret = {'body': ''}
+        c = configuracion_administrador()
+        c.json(False)
+        respuesta = {'exito' : True, 'mensaje' : ''}
+
+        my_file = Path(self.dir_backup)
+        if my_file.is_dir():
+            if os.access(self.dir_backup, os.W_OK) is not True:
+                respuesta['mensaje'] = 'Debes dar permisos de escritura o eliminar el archivo ' + self.dir_backup
+                respuesta['exito']   = False
+            
+        elif os.access(self.base_dir, os.W_OK) is not True:
+            respuesta['mensaje'] = 'Debes dar permisos de escritura en ' + self.base_dir
+            respuesta['exito']   = False
+        
+        if respuesta['exito']:
+            respuesta = self.get_files(self.base_dir)
+
+        ret['body']=json.dumps(respuesta)
+        return ret
+
+    def generar_backup(self,log = True):
+        ret = {'body': ''}
+        c = configuracion_administrador()
+        c.json(False)
+        respuesta = {'exito' : True, 'mensaje' : ''}
+
+        my_file = Path(self.dir_backup)
+        if my_file.is_dir():
+            if os.access(self.dir_backup, os.W_OK) is not True:
+                respuesta['mensaje'] = 'Debes dar permisos de escritura o eliminar el archivo ' + self.dir_backup
+                respuesta['exito']   = False
+            
+        elif os.access(self.base_dir, os.W_OK) is not True:
+            respuesta['mensaje'] = 'Debes dar permisos de escritura en ' + self.base_dir
+            respuesta['exito']   = False
+        
+        if respuesta['exito']:
+            respuesta = self.get_files(self.base_dir)
+
+        if respuesta['exito']:
+            total = len(respuesta['lista'])
+            if respuesta['lista']>0:
+                while len(respuesta['lista']) > 0 and respuesta['exito']:
+            do {
+                respuesta = this->zipData(this->dir, respuesta['archivo_backup'], respuesta['lista'], total, log)
+            } while ((len(respuesta['lista']) > 0) && respuesta['exito'])
+        }
+
+        if (respuesta['exito']:
+            if (log:
+                file_put_contents(this->archivo_log, functions.encode_json(array('mensaje' : 'Respaldando Base de datos ', 'porcentaje' : 90)))
+            }
+            respuesta = this->bdd(false, respuesta['archivo_backup'])
+        }
+        if (respuesta['exito']:
+            if (log:
+                file_put_contents(this->archivo_log, functions.encode_json(array('mensaje' : 'Respaldo finalizado', 'porcentaje' : 100)))
+            }
+        }
+        if (log:
+            echo json_encode(respuesta)
+        } else {
+            return respuesta
+        }
+    }

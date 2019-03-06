@@ -1,6 +1,9 @@
 from .base import base
 from app.models.administrador import administrador as administrador_model
 
+
+from app.models.logo import logo as logo_model
+
 from .head import head
 from .footer import footer
 

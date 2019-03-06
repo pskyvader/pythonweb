@@ -80,8 +80,7 @@ class backup(base):
         if isinstance(tiempo_lento, bool):
             tiempo_lento = 0
         else:
-            print(tiempo_lento)
-            tiempo_lento = float(tiempo_lento)
+            tiempo_lento = float(tiempo_lento.replace(',','.'))
             is_mensaje = True
             mensaje += tiempo_lento + " segundos (servidor lento)"
 
@@ -90,7 +89,7 @@ class backup(base):
         if isinstance(tiempo_rapido, bool):
             tiempo_rapido = 0
         else:
-            tiempo_rapido = int(tiempo_rapido)
+            tiempo_rapido = float(tiempo_rapido.replace(',','.'))
             is_mensaje = True
             if tiempo_lento > 0:
                 mensaje += ", "

@@ -22,6 +22,7 @@ class home(base):
         
         url_return=functions.url_redirect(cls.url)
         if url_return!='':
+            print(cls.url, url_return)
             ret['error']=301
             ret['redirect']=url_return
             return ret

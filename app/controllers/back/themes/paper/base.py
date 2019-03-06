@@ -41,7 +41,7 @@ class base:
             if len(params) >= 2:
                 ret = method(var)
             else:
-                ret = method(cls)
+                ret = method()
         else:
             ret = {
                 'error': 404

@@ -17,16 +17,17 @@ class login(base):
     def index(cls, url):
         from time import time
         ret = {'body': ''}
-        cls.url = cls.url+url
+        url_final=cls.url.copy()
+        url_final = url_final+url
 
         cookie_admin = functions.get_cookie('cookieadmin'+app.prefix_site)
         if cookie_admin != False:
             logueado = administrador_model.login_cookie(cookie_admin)
             if logueado:
                 if not url:
-                    cls.url = ['home']
+                    url_final = ['home']
                 else:
-                    cls.url = url
+                    url_final = url
         if 'bloqueo_administrador' in app.session and app.session['bloqueo_administrador'] > time():
             ret['body'] = "IP Bloqueada por intentos fallidos. Intente más tarde. tiempo: " +  str(int(app.session['bloqueo_administrador']-time()))+" segundos"
             return ret
@@ -48,9 +49,9 @@ class login(base):
                             if 'intento_administrador' in app.session:
                                 app.session['intento_administrador'] = 0
                             if not url:
-                                cls.url = ['home']
+                                url_final = ['home']
                             else:
-                                cls.url = url
+                                url_final = url
                         else:
                             error_login = True
                             if not 'intento_administrador' in app.session:
@@ -67,7 +68,7 @@ class login(base):
                     app.session['intento_administrador'] = 0
                 app.session['intento_administrador'] += 1
 
-        url_return = functions.url_redirect(cls.url)
+        url_return = functions.url_redirect(url_final)
         if url_return != '':
             ret['error'] = 301
             ret['redirect'] = url_return

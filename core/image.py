@@ -406,11 +406,12 @@ class image:
 
     @staticmethod
     def nombre_archivo(file, tag='', extension='', remove=False):
-        name = file.split('.')
+        from os.path import splitext
+        name, ext = splitext(file)
         if'' == extension:
-            extension = (name.pop()).lower()
+            extension = ext
         else:
-            name.pop()
+            extension='.'+extension
 
         if remove:
             name = (''.join(name)).split('-')
@@ -419,9 +420,9 @@ class image:
 
         name = functions.url_amigable(''.join(name))
         if '' != tag:
-            return name + '-' + tag + '.' + extension
+            return name + '-' + tag + extension
         else:
-            return name + '.' + extension
+            return name + extension
 
     @staticmethod
     def generar_url(file, tag='thumb', extension="", folder="", subfolder=""):

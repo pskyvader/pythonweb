@@ -173,6 +173,7 @@ class administrador(base_model):
                 return False
             else:
                 profile = profile_model.getByTipo(admin['tipo'])
+                print(profile)
                 if not 'tipo' in profile or int(profile['tipo']) <= 0:
                     return False
                 else:

@@ -1,6 +1,10 @@
 from .base import base
 from app.models.administrador import administrador as administrador_model
 
+from .head import head
+from .header import header
+from .aside import aside
+from .footer import footer
 
 from core.functions import functions
 
@@ -24,77 +28,42 @@ class application(base):
             ret['redirect'] = url_return
             return ret
 
-        # cabeceras y campos que se muestran en la lista_class:
-        # titulo,campo de la tabla a usar, tipo (ver archivo lista_class.py funcion "field")
-        # controlador de lista_class
-        lista = lista_class(cls.metadata)
-        configuracion = lista.configuracion(cls.metadata['modulo'])
-        if 'error' in configuracion:
-            ret['error']=configuracion['error']
-            ret['redirect']=configuracion['redirect']
-            return ret
 
-        where = {}
-        if cls.contiene_tipos:
-            where['tipo'] = get['tipo']
-        if cls.contiene_hijos:
-            where['idpadre'] = get['idpadre']
-        if cls.class_parent != None:
-            class_parent = cls.class_parent
 
-            if class_parent.idname in get:
-                where[class_parent.idname] = get[class_parent.idname]
+        h = head(cls.metadata)
+        ret_head=h.normal()
+        if ret_head['headers']!='':
+            return ret_head
+        ret['body']+=ret_head['body']
+        
+        he=header()
+        ret['body']+=he.normal()['body']
 
-        condiciones = {}
-        url_detalle = url_final.copy()
-        url_detalle.append('detail')
-        # obtener unicamente elementos de la pagina actual
-        respuesta = lista.get_row(class_name, where, condiciones, url_detalle)
+        asi = aside()
+        ret['body']+=asi.normal()['body']
 
-        if 'copy' in configuracion['th']:
-            configuracion['th']['copy']['action'] = configuracion['th']['copy']['field']
-            configuracion['th']['copy']['field'] = 0
-            configuracion['th']['copy']['mensaje'] = 'Copiando'
 
-        if cls.contiene_hijos:
-            if cls.contiene_tipos:
-                for v in respuesta['row']:
-                    v['url_children'] = functions.generar_url(
-                        url_final, {'idpadre': v[0], 'tipo': get['tipo']})
+        view.add('title', 'Home')
+        breadcrumb=[
+            {'url':functions.generar_url(url_final),'title':cls.metadata['title'],'active':'active'}
+        ]
+        view.add('breadcrumb', breadcrumb)
+        ret['body'] += view.render('home')
 
-            else:
-                for v in respuesta['row']:
-                    v['url_children'] = functions.generar_url(
-                        url_final, {'idpadre': v[0]})
 
-        else:
-            if 'url_children' in configuracion['th']:
-                del configuracion['th']['url_children']
+        f = footer()
+        ret['body']+=f.normal()['body']
 
-        if cls.sub != '':
-            if cls.contiene_tipos:
-                for v in respuesta['row']:
-                    v['url_sub'] = functions.generar_url(
-                        [cls.sub], {class_name.idname: v[0], 'tipo': get['tipo']})
+        $head = new head($this->metadata);
+        $head->normal();
+        $config = app::getConfig();
+        $logo = logo_model::getById(7);
+        view::set('color_primario', $config['color_primario']);
+        view::set('color_secundario', $config['color_secundario']);
+        view::set('logo', image::generar_url($logo['foto'][0], 'icono600'));
+        view::set('path', functions::generar_url($this->url));
+        view::render('application');
+        $footer = new footer();
+        $footer->normal();
 
-            else:
-                for v in respuesta['row']:
-                    v['url_sub'] = functions.generar_url(
-                        [cls.sub], {class_name.idname: v[0]})
-
-        else:
-            if 'url_sub' in configuracion['th']:
-                del configuracion['th']['url_sub']
-
-        # informacion para generar la vista de lista_class
-        data = {
-            'breadcrumb': cls.breadcrumb,
-            'th': configuracion['th'],
-            'current_url': functions.generar_url(url_final),
-            'new_url': functions.generar_url(url_detalle),
-        }
-
-        data.update(respuesta)
-        data.update(configuracion['menu'])
-        ret = lista.normal(data)
         return ret

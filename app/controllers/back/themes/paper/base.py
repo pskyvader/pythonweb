@@ -192,17 +192,17 @@ class base:
         url_save = cls.url.copy()
         url_final = cls.url.copy()
         url_save.append('guardar')
-        url.append('detail')
+        url_final.append('detail')
         if len(var)>0:
             id = int(var[0])
-            url.append(id)
+            url_final.append(id)
             cls.metadata['title'] = 'Editar ' + cls.metadata['title']
         else:
             id = 0
             cls.metadata['title'] = 'Nuevo ' + cls.metadata['title']
 
         cls.breadcrumb.append({'url': functions.generar_url(
-            url), 'title': cls.metadata['title'], 'active': 'active'})
+            url_final), 'title': cls.metadata['title'], 'active': 'active'})
         if cls.contiene_tipos and 'tipo' not in get:
             url = ['home']
 

@@ -207,8 +207,8 @@ class image:
 
     @classmethod
     def validate(cls, file):
-        name = file['name'].split('.')
-        extension = '.'+(name.pop()).lower()
+        from os.path import splitext
+        name,extension=splitext(file['name'])
         respuesta = {'exito': False, 'mensaje': 'Error: formato no valido'}
         if 0 != file['error']:
             respuesta['mensaje'] = 'Error al subir archivo: ' + file['error']

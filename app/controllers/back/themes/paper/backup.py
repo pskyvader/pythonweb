@@ -233,6 +233,7 @@ class backup(base):
 
     def vaciar_log(self):
         ret = {'body': ''}
+        print(self)
         os.remove(self.dir_backup + '/' + self.archivo_log)
         ret['body'] = "'True'"
         return ret

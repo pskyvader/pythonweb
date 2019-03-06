@@ -233,7 +233,9 @@ class backup(base):
 
     def vaciar_log(self):
         ret = {'body': ''}
-        os.remove(self.archivo_log)
+        my_file = Path(archivo_log)
+        if my_file.is_file():
+            os.remove(self.archivo_log)
         ret['body'] = "'True'"
         return ret
 

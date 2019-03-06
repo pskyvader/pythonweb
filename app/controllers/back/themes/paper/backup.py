@@ -364,4 +364,62 @@ class backup(base):
         else:
             return respuesta
         
+    def get_files(self,source:str, log = True):
+        '''obtiene lista de archivos para respaldar en zip'''
+        ret = {'body': ''}
+        respuesta = {'exito' : False, 'mensaje' : 'Debes instalar la extension ZIP'}
+        largo=len(source)
+        my_file = Path(source)
+        if my_file.is_dir():
+            lista_archivos=[]
+            count=0
+            for root, dirs, file in os.walk(source):
+                for fichero in file:
+                    if '.git' not in fichero and '.zip' not in fichero and '.sql' not in fichero  and file != '.' and file != '..' and file[-1:]  != '.' and file[-2:]  != '..':
+                        count+=1
+                        file = fichero.replace("\\", "/")
+                        lista_archivos.append(fichero)
+                    
+                        if log and count % 1000 == 0:
+                            file_write = open(self.archivo_log, 'w')
+                            file_write.write(json.dumps({'mensaje' : 'Recuperando archivo ' . file, 'porcentaje' : 10}))
+                            file_write.close()
+            respuesta['lista']          = lista_archivos
+            respuesta['archivo_backup'] = self.dir_backup + '/' + app.prefix_site + '-' + functions.current_time(as_string=False) + '.zip'
+            respuesta['exito']          = True
+        else:
+            respuesta['mensaje'] = 'Directorio no valido'
+        
+        return respuesta
     
+
+    def bdd(self, log = True, archivo_backup = ''):
+        '''crea respaldo de la base de datos y la agrega al archivo zip'''
+        import zipfile
+        ret = {'body': ''}
+        if archivo_backup == '':
+            archivo_backup = app.post['archivo_backup']
+
+        connection = database.instance()
+        respuesta  = connection.backup()
+        if respuesta['exito']:
+            try:
+                zip=zipfile.ZipFile(archivo_backup,'w')
+                zip.writestr('bdd.sql', "\n".join(respuesta['sql']))
+                zip.close()
+            except:
+                respuesta['exito']=False
+                respuesta['mensaje']='Ocurrio un error al intentar guardar la base de datos en archivo zip '+ archivo_backup
+        if log:
+            ret['body']=json.dumps(respuesta)
+            return ret
+        else:
+            return respuesta
+            
+    def continuar(self):
+        '''Inicio o continuacion de respaldo en modo lento (toma mas tiempo pero consume menos recursos)'''
+        ret = {'body': ''}
+        config    = app.get_config()
+        respuesta = self.zipData(self.dir, app.post['archivo_backup'], json.loads(app.post['lista']), app.post['total'])
+        ret['body']=json.dumps(respuesta)
+        return ret

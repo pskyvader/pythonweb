@@ -178,9 +178,10 @@ class app:
             keep_blank_values=True
         )
         post = {}
-        if p.keys()!='':
+        try:
             for key in p.keys():
                 post[key] = p[key].value
+        
         post=app.format_array(post)
         post=app.parse_values(post)
         return post

@@ -172,27 +172,15 @@ class app:
         post_env = app.environ.copy()
         post_env['QUERY_STRING'] = ''
 
-        try:
-            request_body_size = int(app.environ.get('CONTENT_LENGTH', 0))
-        except (ValueError):
-            request_body_size = 0
-
-        # When the method is POST the variable will be sent
-        # in the HTTP request body which is passed by the WSGI server
-        # in the file like wsgi.input app.environment variable.
-        request_body = app.environ['wsgi.input'].read(request_body_size)
-
-        print(request_body)
-
-        
         p = FieldStorage(
             fp=app.environ['wsgi.input'],
             environ=post_env,
             keep_blank_values=True
         )
         post = {}
-        for key in p.keys():
-            post[key] = p[key].value
+        if p.keys()!='':
+            for key in p.keys():
+                post[key] = p[key].value
         post=app.format_array(post)
         post=app.parse_values(post)
         return post

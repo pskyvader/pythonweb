@@ -123,7 +123,7 @@ class image:
                 makedirs(folder, 777)
 
             destino = folder + '/' + new_file['url']
-            if os.access(folder, os.R_OK):
+            if os.access(folder, os.W_OK):
                 copyfile(original, destino)
                 respuesta['exito'] = True
                 respuesta['file'] = [new_file]

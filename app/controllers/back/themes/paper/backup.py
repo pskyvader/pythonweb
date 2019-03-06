@@ -237,10 +237,10 @@ class backup(base):
         ret['body']=json.dumps(respuesta)
         return ret
     
-    def vaciar_log(self,file):
+    def vaciar_log(self):
         import os
         ret = {'body': ''}
-        os.remove(self.dir_backup + '/' + file)
+        os.remove(self.dir_backup + '/' + self.archivo_log)
         ret['body']='true'
         return ret
 

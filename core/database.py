@@ -37,7 +37,6 @@ class database():
         return cursor
 
     def consulta(self, sql, return_query, delete_cache=True):
-        print(sql)
         rows = None
         try:
             cursor = self.prepare()
@@ -104,7 +103,7 @@ class database():
         return row
 
     def insert(self, table, idname, insert, delete_cache=True):
-        valor_primario = ""
+        valor_primario = "NULL"
         image = []
         if 'image' in insert:
             image = insert['image']
@@ -121,7 +120,7 @@ class database():
         for key, value in insert.items():
             sql += "," + key
 
-        sql += ") VALUES ('" + valor_primario + "'"
+        sql += ") VALUES (" + valor_primario
 
         for key, value in insert.items():
             sql += ","

@@ -9,6 +9,7 @@ from .aside import aside
 from .footer import footer
 
 from core.app import app
+from core.database import database
 from core.functions import functions
 from core.view import view
 
@@ -177,11 +178,13 @@ class backup(base):
 
                 zip.close()
                 if 'inicio' not in respuesta:
-
-                    if (file_exists(self.base_dir . '/bdd.sql')) {
-                        log = array('mensaje' : 'Restaurando Base de datos', 'porcentaje' : 95)
-                        file_put_contents(self.archivo_log, functions::encode_json(log))
-                        connection = database::instance()
+                    my_file = Path(self.base_dir + '/bdd.sql')
+                    if my_file.is_file():
+                        log = {'mensaje' : 'Restaurando Base de datos', 'porcentaje' : 95}
+                        file_write = open(self.archivo_log, 'w')
+                        file_write.write(json.dumps(log))
+                        file_write.close()
+                        connection = database.instance()
                         exito      = connection->restore_backup(self.base_dir . '/bdd.sql')
                         if (!exito) {
                             respuesta['errores'][] = exito

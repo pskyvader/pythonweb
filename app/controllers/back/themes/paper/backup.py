@@ -8,6 +8,8 @@ from .header import header
 from .aside import aside
 from .footer import footer
 
+from .configuracion_administrador import configuracion_administrador
+
 from core.app import app
 from core.database import database
 from core.functions import functions
@@ -185,20 +187,18 @@ class backup(base):
                         file_write.write(json.dumps(log))
                         file_write.close()
                         connection = database.instance()
-                        exito      = connection->restore_backup(self.base_dir . '/bdd.sql')
-                        if (!exito) {
-                            respuesta['errores'][] = exito
-                        }
-                    } else {
+                        exito      = connection.restore_backup(self.base_dir + '/bdd.sql')
+                        if not isinstance(exito,bool) or not exito:
+                            respuesta['errores'].append(exito)
+                        
+                    else:
                         respuesta['mensaje']   = 'No existe base de datos'
-                        respuesta['errores'][] = 'bdd.sql'
-                    }
-                }
-                respuesta['exito'] = true
+                        respuesta['errores'].append('bdd.sql')
+                respuesta['exito'] = True
             else:
                 respuesta['mensaje'] = 'Error al abrir archivo, o archivo no valido'
 
-        if (!isset(respuesta['inicio'])) {
+        if 'inicio' not in respuesta:
             c = new configuracion_administrador()
             c->json_update(False)
 

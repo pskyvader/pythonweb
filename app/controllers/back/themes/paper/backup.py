@@ -138,23 +138,19 @@ class backup(base):
     def restaurar(self):
         '''Restaura un backup, usar con precaucion ya que reemplaza todos los archivos de codigo'''
         import os
+        from zipfile import ZipFile 
+        file=None
         tiempo    = functions.current_time(as_string=False)
         respuesta = {'exito' : False, 'mensaje' : 'archivo no encontrado', 'errores' : []}
         id        = app.post['id']
         inicio    = int(app.post['inicio']) - 1  if 'inicio' in app.post else 0
 
-        for root, dirs, file in os.walk(cls.dir_backup):
-            for fichero in file:
-                name, extension = os.path.splitext(fichero)
-                if(extension == ".zip"):
-                    files.append(name+extension)
-        foreach (scandir(this->dir_backup) as key => files) {
-            if (strpos(files, id) !== False) {
-                file = files
-                break
-            }
-        }
-        if (isset(file)) {
+        for root, dirs, files in os.walk(cls.dir_backup):
+            for fichero in files:
+                if id in fichero:
+                    file=fichero
+                    
+        if file is not None:
             if (extension_loaded('zip') === true) {
                 file = this->dir_backup . '/' . file
                 zip  = new \ZipArchive()

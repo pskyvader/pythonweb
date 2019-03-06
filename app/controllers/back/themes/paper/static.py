@@ -38,9 +38,6 @@ class static:
             my_file = Path(cache_file)
             if my_file.is_file():
                 ret['file']=cache_file
-                #file_read = open(cache_file, "rb")
-                #ret['body'] = file_read.read()
-                #file_read.close()
             else:
                 from gzip import compress
                 test = os.listdir(theme+'cache/')
@@ -55,6 +52,5 @@ class static:
                 file_write = open(cache_file, 'wb')
                 file_write.write(f)
                 file_write.close()
-                #ret['body'] = f
                 ret['file']=cache_file
         return ret

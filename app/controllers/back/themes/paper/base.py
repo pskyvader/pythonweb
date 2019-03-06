@@ -190,7 +190,7 @@ class base:
         get = app.get
         url_list = cls.url.copy()
         url_save = cls.url.copy()
-        url = cls.url.copy()
+        url_final = cls.url.copy()
         url_save.append('guardar')
         url.append('detail')
         if len(var)>0:

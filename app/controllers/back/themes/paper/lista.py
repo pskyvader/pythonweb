@@ -193,6 +193,7 @@ class lista:
                     }
 
         elif th['type'] == 'text':
+            print(fila)
             return fila[th['field']]
 
         else:

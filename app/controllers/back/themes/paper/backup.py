@@ -11,8 +11,8 @@ class backup(base):
     archivo_log = ''
     no_restore   = ['backup/']
     
-    def __init__(cls):
-        cls.dir_base         = app.get_dir(True)
-        cls.dir_backup  = cls.dir_base + 'backup'
-        cls.archivo_log = app.get_dir() + '/log.json'
+    def __init__(self):
+        self.dir_base         = app.get_dir(True)
+        self.dir_backup  = self.dir_base + 'backup'
+        self.archivo_log = app.get_dir() + '/log.json'
     

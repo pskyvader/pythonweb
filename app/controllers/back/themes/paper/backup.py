@@ -199,8 +199,8 @@ class backup(base):
                 respuesta['mensaje'] = 'Error al abrir archivo, o archivo no valido'
 
         if 'inicio' not in respuesta:
-            c = new configuracion_administrador()
-            c->json_update(False)
+            c = configuracion_administrador()
+            c.json_update(False)
 
             log = array('mensaje' => 'Restauracion finalizada', 'porcentaje' => 100)
             file_put_contents(self.archivo_log, functions::encode_json(log))

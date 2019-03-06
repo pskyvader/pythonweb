@@ -3,6 +3,7 @@ from app.models.administrador import administrador as administrador_model
 from app.models.table import table
 from core.app import app
 from core.functions import functions
+from .detalle import detalle as detalle_class
 import json
 
 class administrador(base):
@@ -16,7 +17,6 @@ class administrador(base):
     def detail(cls, var=[]):
         '''Controlador de detalle de elementos base, puede ser sobreescrito en el controlador de cada modulo'''
         ret = {'body': ''}
-        print(detalle_class)
         # Clase para enviar a controlador de detalle
         class_name = cls.class_name
         get = app.get

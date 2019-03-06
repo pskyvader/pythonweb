@@ -425,7 +425,6 @@ class backup(base):
     def zipData(self, source, destination, lista, total=1, log=True):
         '''recorre los archivos entregados y crea un archivo zip'''
         import zipfile
-        ret = {'body': ''}
         respuesta = {'exito': False, 'mensaje': 'Error al crear archivo'}
         tiempo = 0
         archivo = destination

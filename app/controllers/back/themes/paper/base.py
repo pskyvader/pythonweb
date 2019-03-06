@@ -38,9 +38,9 @@ class base:
             sig = signature(method)
             params = sig.parameters
             if len(params) >= 2:
-                ret = cls.method(var)
+                ret = method(var)
             else:
-                ret = cls.method()
+                ret = method()
         else:
             ret = {
                 'error': 404

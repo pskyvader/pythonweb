@@ -38,7 +38,7 @@ class base:
             method = getattr(cls, fun)
             sig = signature(method)
             params = sig.parameters
-            
+            print(params['b'].annotation)
             print(params)
             if len(params) >= 2:
                 ret = method(var)

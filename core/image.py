@@ -182,13 +182,12 @@ class image:
             if '' == name_final:
                 name_final = uuid.uuid4().hex
             else:
-                name_final = name_final.split('.')
-                extension = '.'+(name_final.pop()).lower()
+                name_final,extension=os.path.splitext(name_final)
                 name_final = functions.url_amigable(''.join(name_final))
-
-            name = file['name'].split('.')
-            extension = '.'+(name.pop()).lower()
-            name = functions.url_amigable(''.join(name))
+            
+            name,extension=os.path.splitext(file['name'])
+            extension=extension.lower()
+            
             my_file = Path(folder)
             if not my_file.is_dir():
                 makedirs(folder, 777)

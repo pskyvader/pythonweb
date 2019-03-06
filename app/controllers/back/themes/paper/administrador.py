@@ -2,6 +2,7 @@ from .base import base
 from app.models.administrador import administrador as administrador_model
 from core.app import app
 from core.functions import functions
+import json
 
 class administrador(base):
     url = ['administrador']

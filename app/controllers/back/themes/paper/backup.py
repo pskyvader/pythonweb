@@ -76,7 +76,7 @@ class backup(base):
 
         mensaje      = "Tiempo promedio de respaldo: "
         tiempo_lento = configuracion_model.getByVariable('tiempo_backup_lento')
-        if is_bool(tiempo_lento):
+        if isinstance(tiempo_lento,bool) is_bool(tiempo_lento):
             tiempo_lento = 0
         } else {
             tiempo_lento = (int) tiempo_lento

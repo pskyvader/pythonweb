@@ -182,7 +182,8 @@ class app:
             for key in p.keys():
                 post[key] = p[key].value
         except Exception as error:
-            raise RuntimeError('Error al obtener post: ' + repr(error) + repr(p)+ app.environ['PATH_INFO'])
+            #raise RuntimeError('Error al obtener post: ' + repr(error) + repr(p)+ app.environ['PATH_INFO'])
+            pass
 
         post=app.format_array(post)
         post=app.parse_values(post)

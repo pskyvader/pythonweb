@@ -8,7 +8,7 @@ from .header import header
 from .aside import aside
 from .footer import footer
 
-from .configuracion_administrador import configuracion_administrador
+#from .configuracion_administrador import configuracion_administrador
 
 from core.app import app
 from core.database import database

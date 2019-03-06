@@ -1,5 +1,6 @@
 from .base import base
 from app.models.administrador import administrador as administrador_model
+from app.models.configuracion import configuracion as configuracion_model
 
 
 from .head import head
@@ -64,18 +65,17 @@ class backup(base):
         my_file = Path(cls.dir_backup)
         if my_file.is_dir():
             if os.access(cls.dir_backup, os.W_OK) is not True:
-            if not is_writable(cls.dir_backup):
-                mensaje_error = 'Debes dar permisos de escritura o eliminar el archivo ' . cls.dir_backup
-            }
-        elif not is_writable(cls.base_dir):
-            mensaje_error = 'Debes dar permisos de escritura en ' . cls.base_dir
-        }
+                mensaje_error = 'Debes dar permisos de escritura o eliminar el archivo ' + cls.dir_backup
+            
+        elif os.access(cls.base_dir, os.W_OK) is not True:
+            mensaje_error = 'Debes dar permisos de escritura en ' + cls.base_dir
+        
         is_error = (mensaje_error != '')
 
-        is_mensaje = false
+        is_mensaje = False
 
         mensaje      = "Tiempo promedio de respaldo: "
-        tiempo_lento = configuracion_model::getByVariable('tiempo_backup_lento')
+        tiempo_lento = configuracion_model.getByVariable('tiempo_backup_lento')
         if is_bool(tiempo_lento):
             tiempo_lento = 0
         } else {
@@ -83,7 +83,7 @@ class backup(base):
             is_mensaje   = true
             mensaje .= tiempo_lento . " segundos (servidor lento)"
         }
-        tiempo_rapido = configuracion_model::getByVariable('tiempo_backup_rapido')
+        tiempo_rapido = configuracion_model.getByVariable('tiempo_backup_rapido')
         if is_bool(tiempo_rapido):
             tiempo_rapido = 0
         } else {
@@ -104,9 +104,9 @@ class backup(base):
                     return true
                 }
             }
-            return false
+            return False
         })
-        url = app::get_url(true) . 'backup/'
+        url = app.get_url(true) . 'backup/'
 
         foreach (files as key => f:
             extension = explode('.', f)
@@ -116,23 +116,23 @@ class backup(base):
             row[fecha] = array(
                 'even'  => (key % 2 == 0),
                 'id'    => fecha,
-                'fecha' => functions::formato_fecha(fecha),
-                'size'  => functions::file_size(cls.dir_backup . '/' . f),
+                'fecha' => functions.formato_fecha(fecha),
+                'size'  => functions.file_size(cls.dir_backup . '/' . f),
                 'url'   => url . f,
             )
         }
         row = array_reverse(row)
 
-        view::set('row', row)
-        view::set('breadcrumb', cls.breadcrumb)
-        view::set('title', cls.metadata['title'])
-        view::set('is_error', is_error)
-        view::set('mensaje_error', mensaje_error)
-        view::set('is_mensaje', is_mensaje)
-        view::set('mensaje', mensaje)
-        view::set('tiempo_lento', tiempo_lento)
-        view::set('tiempo_rapido', tiempo_rapido)
-        view::render('backup')
+        view.set('row', row)
+        view.set('breadcrumb', cls.breadcrumb)
+        view.set('title', cls.metadata['title'])
+        view.set('is_error', is_error)
+        view.set('mensaje_error', mensaje_error)
+        view.set('is_mensaje', is_mensaje)
+        view.set('mensaje', mensaje)
+        view.set('tiempo_lento', tiempo_lento)
+        view.set('tiempo_rapido', tiempo_rapido)
+        view.render('backup')
 
         footer = new footer()
         footer->normal()

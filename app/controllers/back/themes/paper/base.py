@@ -40,7 +40,8 @@ class base:
             if len(params) >= 2:
                 ret = method(var)
             else:
-                print(repr(params))
+                for p in params:
+                    print(p)
                 ret = method(cls)
         else:
             ret = {

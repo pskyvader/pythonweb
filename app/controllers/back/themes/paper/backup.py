@@ -316,6 +316,7 @@ class backup(base):
         return ret
 
     def generar_backup(self,log = True):
+        '''genera respaldo del sitio en zip, en formato "Respaldo rapido" (usa mas recursos)'''
         ret = {'body': ''}
         c = configuracion_administrador()
         c.json(False)
@@ -337,26 +338,30 @@ class backup(base):
         if respuesta['exito']:
             total = len(respuesta['lista'])
             if respuesta['lista']>0:
+                respuesta['exito']=True
                 while len(respuesta['lista']) > 0 and respuesta['exito']:
-            do {
-                respuesta = this->zipData(this->dir, respuesta['archivo_backup'], respuesta['lista'], total, log)
-            } while ((len(respuesta['lista']) > 0) && respuesta['exito'])
-        }
+                    respuesta = self.zipData(self.base_dir, respuesta['archivo_backup'], respuesta['lista'], total, log)
 
-        if (respuesta['exito']:
-            if (log:
-                file_put_contents(this->archivo_log, functions.encode_json(array('mensaje' : 'Respaldando Base de datos ', 'porcentaje' : 90)))
-            }
-            respuesta = this->bdd(false, respuesta['archivo_backup'])
-        }
-        if (respuesta['exito']:
-            if (log:
-                file_put_contents(this->archivo_log, functions.encode_json(array('mensaje' : 'Respaldo finalizado', 'porcentaje' : 100)))
-            }
-        }
-        if (log:
-            echo json_encode(respuesta)
-        } else {
+        if respuesta['exito']:
+            if log:
+                log = {'mensaje' : 'Respaldando Base de datos ', 'porcentaje' : 90}
+                file_write = open(self.archivo_log, 'w')
+                file_write.write(json.dumps(log))
+                file_write.close()
+            respuesta = self.bdd(False, respuesta['archivo_backup'])
+        
+        if respuesta['exito']:
+            if log:
+                log = {'mensaje' : 'Restauracion finalizada', 'porcentaje' : 100}
+                file_write = open(self.archivo_log, 'w')
+                file_write.write(json.dumps(log))
+                file_write.close()
+            
+        
+        if log:
+            ret['body']=json.dumps(respuesta)
+            return ret
+        else:
             return respuesta
-        }
-    }
+        
+    

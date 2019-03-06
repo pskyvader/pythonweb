@@ -366,9 +366,7 @@ class backup(base):
         
     def get_files(self,source:str, log = True):
         '''obtiene lista de archivos para respaldar en zip'''
-        ret = {'body': ''}
         respuesta = {'exito' : False, 'mensaje' : 'Debes instalar la extension ZIP'}
-        largo=len(source)
         my_file = Path(source)
         if my_file.is_dir():
             lista_archivos=[]
@@ -422,3 +420,87 @@ class backup(base):
         respuesta = self.zipData(self.base_dir, app.post['archivo_backup'], json.loads(app.post['lista']), app.post['total'])
         ret['body']=json.dumps(respuesta)
         return ret
+
+
+
+    def zipData(source, destination, lista, total = 1, log = True):
+        '''recorre los archivos entregados y crea un archivo zip'''
+        import zipfile
+        ret = {'body': ''}
+        respuesta = {'exito' : False, 'mensaje' : 'Error al crear archivo'}
+        tiempo   = 0
+        archivo  = destination
+
+        memory_limit = 128*1024*1024
+        memory_limit = (int) (memory_limit) / 1.5
+        memory_usage=0
+
+        zip=zipfile.ZipFile(archivo,'w')
+        count  = 0
+        for file in lista:
+            count+=1
+            memory_usage += os.path.getsize(source + '/' + file)
+            if memory_usage > memory_limit:
+                break
+            
+            zip.write()
+            zipfile.ZipInfo('empty/')
+
+
+            
+            if (is_dir(source . '/' . file) === True) {
+                zip->addEmptyDir(file . '/')
+            } else if (is_file(source . '/' . file) === True) {
+                zip->addFromString(file, file_get_contents(source . '/' . file))
+            }
+
+            unset(lista[key])
+            if (log && (time() - tiempo > 5 || count % 1000 == 0)) {
+                file_put_contents(
+                    this->archivo_log,
+                    functions::encode_json(
+                        array(
+                            'mensaje'    => file . ' (' . (total - count(lista)) . '/' . total . ')',
+                            'porcentaje' => 10 + ((total - count(lista)) / total) * 40,
+                        )
+                    )
+                )
+                tiempo = time()
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        if (log) {
+            file_put_contents(
+                this->archivo_log,
+                functions::encode_json(
+                    array(
+                        'mensaje'      => functions::substring(file, 30) . ' (' . (total - count(lista)) . '/' . total . ')',
+                        'notificacion' => 'Guardando archivo, Esta operacion puede tomar algun tiempo',
+                        'porcentaje'   => 10 + ((total - count(lista)) / total) * 40,
+                    )
+                )
+            )
+
+        }
+
+        respuesta['exito']          = zip->close()
+        respuesta['lista']          = array_values(lista)
+        respuesta['archivo_backup'] = destination
+        respuesta['archivo_actual'] = file
+        respuesta['partes']         = partes
+        
+        return respuesta
+    }

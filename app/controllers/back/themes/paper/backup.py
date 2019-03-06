@@ -80,7 +80,8 @@ class backup(base):
         if isinstance(tiempo_lento, bool):
             tiempo_lento = 0
         else:
-            tiempo_lento = int(tiempo_lento)
+            print(tiempo_lento)
+            tiempo_lento = float(tiempo_lento)
             is_mensaje = True
             mensaje += tiempo_lento + " segundos (servidor lento)"
 

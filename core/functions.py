@@ -248,3 +248,19 @@ class functions():
                                  ]['children'][id] = tree['children'][id]
 
         return tree['root']
+
+    @staticmethod
+    def file_size(file_url, only_size = False):
+        from os import stat
+        if not only_size:
+            size = stat(file_url).st_size
+        else:
+            size = file_url
+        
+        unit       = ['','b', 'kb', 'mb', 'gb', 'tb', 'pb']
+        for u in unit:
+            if abs(size) < 1024.0:
+                return "%3.2f %s" % (size, u)
+            size /= 1024.0
+
+        return "%.2f %s" % (size, 'Yb')

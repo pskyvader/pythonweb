@@ -32,15 +32,15 @@ class base:
             var = ['index']
 
         if hasattr(cls, var[0]) and callable(getattr(cls, var[0])):
-            fun = var[0]()
+            fun = var[0]
             del var[0]
             method = getattr(cls, fun)
             sig = signature(method)
             params = sig.parameters
             if len(params) >= 2:
-                ret = method(var)
+                ret = cls.method(var)
             else:
-                ret = method()
+                ret = cls.method()
         else:
             ret = {
                 'error': 404

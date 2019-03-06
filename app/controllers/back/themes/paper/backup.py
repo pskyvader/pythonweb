@@ -210,3 +210,65 @@ class backup(base):
         ret['body']=json.dumps(respuesta)
         return ret
     
+
+
+    def eliminar(self):
+        import os
+        ret = {'body': ''}
+        campos    = app.post['campos']
+        respuesta = {'exito' : False, 'mensaje' : ''}
+        id        = campos['id']
+
+        file=[]
+        for root, dirs, files in os.walk(self.dir_backup):
+            for fichero in files:
+                if id in fichero:
+                    file.append(fichero)
+
+        file = file.pop()
+
+        if os.access(self.dir_backup + '/' + file, os.W_OK) is not True:
+            respuesta['mensaje'] = 'Debes dar permisos de escritura o eliminar el archivo manualmente'
+        else:
+            os.remove(self.dir_backup + '/' + file)
+            respuesta['exito']   = True
+            respuesta['mensaje'] = "Eliminado correctamente."
+        
+        ret['body']=json.dumps(respuesta)
+        return ret
+    
+    def vaciar_log(self,file):
+        import os
+        ret = {'body': ''}
+        os.remove(self.dir_backup + '/' + file)
+        ret['body']='true'
+        return ret
+
+    def actualizar_tiempo(self):
+        '''actualiza el tiempo total del respaldo realizado, para dar informacion del tiempo promedio de respaldo'''
+        ret = {'body': ''}
+        respuesta = {'exito' : False}
+        campos    = app.post
+        if 'tiempo' in campos and 'tipo_backup' in campos:
+            cantidad = configuracion_model.getByVariable('cantidad_backup_' + campos['tipo_backup'])
+            if isinstance(cantidad,bool):
+                cantidad = 0
+            else:
+                cantidad=float(cantidad)
+
+            tiempo = configuracion_model.getByVariable('tiempo_backup_' + campos['tipo_backup'])
+            if isinstance(tiempo,bool):
+                tiempo = 0
+            else:
+                tiempo=float(tiempo)
+
+            tiempo = (tiempo * cantidad) + float(campos['tiempo'])
+            cantidad+=1
+            tiempo = tiempo / cantidad
+            configuracion_model.setByVariable('cantidad_backup_' . campos['tipo_backup'], cantidad)
+            configuracion_model.setByVariable('tiempo_backup_' . campos['tipo_backup'], tiempo)
+            respuesta['exito']   = true
+            respuesta['mensaje'] = 'tiempo: ' . tiempo . ', cantidad: ' . cantidad
+        }
+        echo json_encode(respuesta)
+    }

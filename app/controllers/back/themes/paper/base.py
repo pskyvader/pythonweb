@@ -27,6 +27,7 @@ class base:
     @classmethod
     def init(cls, var):
         from inspect import signature
+        import inspect
 
         if len(var) == 0:
             var = ['index']
@@ -37,7 +38,7 @@ class base:
             method = getattr(cls, fun)
             sig = signature(method)
             params = sig.parameters
-            print(len(params),params[0])
+            print(len(params),inspect.getargspec(method))
             if len(params) >= 2:
                 ret = method(var)
             elif len(params) == 1:

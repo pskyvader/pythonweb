@@ -15,7 +15,7 @@ class view:
     """
     
     @staticmethod
-    def render(template_list, minify=False):
+    def render(template_list, minify=True):
         '''Renderiza las vistas de la lista enviadas, las comprime y la retorna en un string'''
         from .functions import functions
         from .cache import cache
@@ -46,7 +46,7 @@ class view:
         time=functions.current_time(as_string=False)
 
         print(cache.cacheable)
-        if minify and cache.is_cacheable():
+        if minify and cache.cacheable:
             body = view.compress(body, 'html')
             print('mini')
 

@@ -44,7 +44,6 @@ class cache:
             name = cache.file_name(url)
             my_file = Path(folder+name)
             if my_file.is_file():
-                print(folder+name)
                 return my_file
 
         return ""

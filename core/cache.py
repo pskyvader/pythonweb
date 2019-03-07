@@ -63,6 +63,7 @@ class cache:
         from gzip import compress
         ruta    = functions.generar_url(url)
         current = functions.current_url()
+        print('cache',ruta,current)
         if ruta == current and app.front and cache.cacheable:
             folder = app.get_dir(True) + 'cache/'
             if access(folder, W_OK):

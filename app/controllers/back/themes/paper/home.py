@@ -33,7 +33,7 @@ class home(base):
         #ret['body']+=ret_head['body']
         
         he=header()
-        #ret['body']+=he.normal()['body']
+        ret['body']+=he.normal()['body']
 
         asi = aside()
         #ret['body']+=asi.normal()['body']

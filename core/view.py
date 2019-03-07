@@ -64,7 +64,6 @@ class view:
         )
 
         for template,data in template_list:
-            print(template,data)
             template_url = theme + template + "." + view.extension
             my_file = Path(template_url)
             if not my_file.is_file():
@@ -82,6 +81,18 @@ class view:
             body = view.compress(body, 'html')
 
         return body
+    @staticmethod
+    def render_unit(env,template,data):
+        if isinstance(data,dict) or isinstance(data,list):
+            for d in data:
+                if not isinstance(d,str):
+                    d=view.render_unit(env,template,d)
+        elif isinstance(data,tuple):
+            data=view.render_unit(env,data(0),data(1))
+                    
+        template = env.get_template(template + "." + view.extension)
+        return template.render(data)
+
     
 
     @staticmethod

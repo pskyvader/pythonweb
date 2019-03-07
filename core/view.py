@@ -46,7 +46,7 @@ class view:
         time=functions.current_time(as_string=False)
 
         print(cache.cacheable)
-        if minify and cache.is_cacheable:
+        if minify and cache.is_cacheable():
             body = view.compress(body, 'html')
             print('mini')
 

@@ -28,6 +28,8 @@ class cache:
         from pathlib import Path
         if app.front:
             cache.cacheable = False
+        else:
+            cache.cacheable=True
         ruta = functions.generar_url(url)
         current = functions.current_url()
         

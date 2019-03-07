@@ -120,7 +120,7 @@ class backup(base):
             }
 
         #lista de los valores del dict, en orden inverso
-        #ow=reversed(sorted(row.values()))
+        row=reversed(sorted(row.values()))
 
         view.add('row', row)
         view.add('breadcrumb', cls.breadcrumb)

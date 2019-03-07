@@ -30,7 +30,7 @@ class cache:
             cache.cacheable = False
         ruta = functions.generar_url(url)
         current = functions.current_url()
-        print('cache 1')
+        print('cache 1',ruta,current)
         if ruta != current:
             return ""
 

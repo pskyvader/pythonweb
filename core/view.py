@@ -15,45 +15,7 @@ class view:
             %(content)s
         </html>
     """
-    @staticmethod
-    def add2(key, value):
-        view.data[key] = value
-
-    @staticmethod
-    def add_array2(data):
-        view.data = data
-
-    @staticmethod
-    def reset():
-        view.data = {}
-
-    @staticmethod
-    def render2(template, minify=True):
-        '''Renderiza la vista segun view.data y la retorna'''
-        theme = view.get_theme()
-        template_url = theme + template + "." + view.extension
-        my_file = Path(template_url)
-        if not my_file.is_file():
-            body = view.html % {  # Fill the above html template in
-                'content': " <body>Error: El archivo " + template_url + " no existe </body>"
-            }
-            return body
-
-        # if template_url in view.content_url:
-        #    content = view.content_url[template_url]
-        # else:
-        #    content = view.content_url[template_url] =  codecs.open(template_url, encoding='utf-8').read()
-
-        #body = view.render_template(content)
-        body = view.render_template_url2(
-            template + "." + view.extension, view.data)
-
-        if minify:  # and not return_body and cache.is_cacheable():
-            body = view.compress(body, 'html')
-
-        view.reset()
-        return body
-
+    
     @staticmethod
     def render_multiple(template_list, minify=True):
         '''Renderiza las vistas de la lista enviadas, las comprime y la retorna en un string'''
@@ -105,31 +67,6 @@ class view:
 
 
 
-
-
-    @staticmethod
-    def render_template2(content):
-        from jinja2 import Template
-        template = Template(content)
-        content = template.render(view.data)
-        return content
-
-    @staticmethod
-    def render_template_url2(template_url, data):
-        from jinja2 import Environment, FileSystemLoader
-        env = Environment(
-            loader=FileSystemLoader(view.get_theme())
-        )
-        template = env.get_template(template_url)
-        content = template.render(data)
-        return content
-
-    @staticmethod
-    def render_template(content):
-        from ibis import Template
-        template = Template(content)
-        content = template.render(view.data)
-        return content
 
     @staticmethod
     def render_template_url(template_url):

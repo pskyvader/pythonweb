@@ -180,7 +180,9 @@ class view:
 
     @staticmethod
     def combine_resources(type_resource='css', locales={}, theme='', base_url='', nuevo=0):
-        from core.functions import functions
+        from .functions import functions
+        from .cache import cache
+
         dir_resources = theme+'resources/'
         file = 'resources-' + str(nuevo) + '-' + \
             str(len(locales)) + '.'+type_resource

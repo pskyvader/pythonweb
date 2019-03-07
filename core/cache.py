@@ -77,19 +77,20 @@ class cache:
                     file_write.close()
 
     @staticmethod
-    def file_name(url:list,get:dict):
+    def file_name(url:list):
+        from .app import app
         from .functions import functions
         name = '-'.join(url)
         n = name.split('.',1)
         if len(n)>1:
             return ""
         
-        for key,u in get.items():
+        for key,u in app.get.items():
             ext = "__" + key + "-" + u
-            n = functions.url_amigable(n)
-            name .= n
-        }
-        post = _POST
+            n = functions.url_amigable(ext)
+            name += n
+        
+        post = app.post
         if (isset(post['ajax']):
             name .= '__ajax'
             unset(post['ajax'])

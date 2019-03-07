@@ -83,7 +83,7 @@ class app:
 
         view.set_theme(app.root + app.view_dir)
 
-        file_cache=cache.get_cache(url,app.get)
+        file_cache=cache.get_cache(url)
         if file_cache!='':
             response={'file':file_cache,'is_file':True}
         else:

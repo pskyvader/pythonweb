@@ -53,7 +53,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {% for r in row %}
+                                    {% for k,r in sorted(list(row.items()), key=lambda x:x, reverse=True) %}
                                     <tr class="{% cycle 'odd', 'even' %} gradeX tooltips" data-id="{{r.id}}" data-placement="top" data-trigger="hover" data-original-title="ID: {{r.id}}">
                                         <td class="center" data-field="size">
                                             {{r.size}}

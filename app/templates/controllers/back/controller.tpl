@@ -2,6 +2,7 @@ from .base import base
 from app.models.{{class}} import {{class}} as {{class}}_model
 
 #from app.models.table import table
+#from app.models.administrador import administrador as administrador_model
 
 #from .detalle import detalle as detalle_class
 #from .lista import lista as lista_class

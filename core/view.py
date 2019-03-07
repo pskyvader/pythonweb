@@ -89,7 +89,7 @@ class view:
             for d in data:
                 print(d)
                 if not isinstance(d, str):
-                    print(d)
+                    print('no str',d)
                     d = view.render_unit(env, template, d)
         elif isinstance(data, list):
             for d in data:

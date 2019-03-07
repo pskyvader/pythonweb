@@ -14,7 +14,7 @@ class cache:
     @staticmethod
     def add_cache(content):
         from .app import app
-        if not app.front and cache.cacheable:
+        if app.front and cache.cacheable:
             cache.data.append(content)
 
 
@@ -44,7 +44,7 @@ class cache:
                 cache.cacheable = False
                 
 
-        if not app.front and cache.cacheable:
+        if app.front and cache.cacheable:
             folder  = app.get_dir(True) + 'cache/'
             name = cache.file_name(url)
             my_file = Path(folder+name)
@@ -63,7 +63,7 @@ class cache:
         from gzip import compress
         ruta    = functions.generar_url(url)
         current = functions.current_url()
-        if ruta == current and not app.front and cache.cacheable:
+        if ruta == current and app.front and cache.cacheable:
             folder = app.get_dir(True) + 'cache/'
             if access(folder, W_OK):
                 name = cache.file_name(url)

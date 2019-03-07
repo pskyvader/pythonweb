@@ -13,7 +13,6 @@ from .footer import footer
 from core.app import app
 from core.database import database
 from core.functions import functions
-from core.view import view
 
 from pathlib import Path
 import os

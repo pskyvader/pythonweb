@@ -86,7 +86,7 @@ class view:
     @staticmethod
     def render_unit(env, template, data):
         if isinstance(data, dict):
-            for d in data:
+            for d in data.items():
                 print(d)
                 if not isinstance(d, str):
                     print('no str',d)

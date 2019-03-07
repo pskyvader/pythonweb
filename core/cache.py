@@ -21,6 +21,7 @@ class cache:
     @staticmethod
     def delete_cache():
         import shutil
+        from .app import app
         direrctory        = app.get_dir(True) + 'cache/'
         shutil.rmtree(direrctory)
         
@@ -45,7 +46,7 @@ class cache:
 
         if app.front and cache.cacheable:
             folder  = app.get_dir(True) + 'cache/'
-            name = cache.file_name(folder)
+            name = cache.file_name(url)
             my_file = Path(folder+name)
             if my_file.is_file():
                 return my_file
@@ -64,14 +65,17 @@ class cache:
         if ruta == current and app.front and cache.cacheable:
             folder = app.get_dir(True) + 'cache/'
             if access(folder, W_OK):
-            if (is_writable(folder):
                 name = cache.file_name(url)
-                if ('' != name:
+                if name!='':
+                    f = open(resource_url, "rb").read()
+                f = compress(f)
+
+                file_write = open(cache_file, 'wb')
+                file_write.write(f)
+                file_write.close()
+
                     file_put_contents(folder . name, implode('', cache.data))
-                }
-            }
-        }
-    }
+                    
 
     @staticmethod
     def file_name(url:list)

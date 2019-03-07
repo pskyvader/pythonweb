@@ -83,16 +83,23 @@ class app:
 
         view.set_theme(app.root + app.view_dir)
 
-
-        url_cache=url.copy()
-        file_cache=cache.get_cache(url_cache)
-        if file_cache!='':
-            response={'file':file_cache,'is_file':True,'body':''}
+        url_cache = url.copy()
+        file_cache = cache.get_cache(url_cache)
+        if file_cache != '':
+            response = {
+                'file': file_cache, 
+                'is_file': True, 
+                'body': '', 'headers': [
+                ('Content-Type', 'text/html; charset=utf-8'),
+                ('Accept-encoding', 'gzip,deflate'),
+                ('Content-Encoding', 'gzip')]
+            }
         else:
             controller = app.controller_dir + url[0]
             my_file = Path(app.root + controller + '.py')
             if my_file.is_file():
-                current_module = importlib.import_module(controller.replace("/", "."))
+                current_module = importlib.import_module(
+                    controller.replace("/", "."))
                 current_module = getattr(current_module, url[0])
                 current_module = current_module()
                 del url[0]
@@ -101,7 +108,6 @@ class app:
             else:
                 response = {'error': 404}
 
-        
         if 'headers' not in response:
             response['headers'] = [
                 ('Content-Type', 'text/html; charset=utf-8')
@@ -130,7 +136,7 @@ class app:
         if 'file' in response:
             data_return['file'] = response['file']
 
-        if isinstance(response['body'],list):
+        if isinstance(response['body'], list):
             data_return['response_body'] = view.render(response['body'])
             cache.save_cache(url_cache)
         else:
@@ -139,7 +145,6 @@ class app:
         data_return['headers'] = response['headers']
         for cookie in functions.cookies:
             data_return['headers'].append(('Set-Cookie', cookie))
-
 
         return data_return
 
@@ -174,11 +179,11 @@ class app:
         url = dict(parse_qs(app.environ['QUERY_STRING']))
         if 'url' in url:
             del url['url']
-        for k,u in url.items():
-            if len(u)==1:
-                url[k]=u[0]
-        url=app.format_array(url)
-        url=app.parse_values(url)
+        for k, u in url.items():
+            if len(u) == 1:
+                url[k] = u[0]
+        url = app.format_array(url)
+        url = app.parse_values(url)
         return url
 
     @staticmethod
@@ -200,82 +205,82 @@ class app:
             #raise RuntimeError('Error al obtener post: ' + repr(error) + repr(p)+ app.environ['PATH_INFO'])
             pass
 
-        post=app.format_array(post)
-        post=app.parse_values(post)
+        post = app.format_array(post)
+        post = app.parse_values(post)
         return post
 
     @staticmethod
-    def format_array(var_original:dict):
-        var=var_original.copy()
-        var_copy=var.copy()
-        aux={}
-        for k,i in var_copy.items():
-            #si existe simbolo de array
+    def format_array(var_original: dict):
+        var = var_original.copy()
+        var_copy = var.copy()
+        aux = {}
+        for k, i in var_copy.items():
+            # si existe simbolo de array
             if "[" in k:
-                #separar key principal de key dentro de array
-                final_key,rest=str(k).split('[',1)
-                if rest!='':
+                # separar key principal de key dentro de array
+                final_key, rest = str(k).split('[', 1)
+                if rest != '':
                     if final_key not in aux:
-                        aux[final_key]={}
-                    
-                    #comprobar si existe simbolo de cerrado, sino se guarda directamente
-                    if rest.find(']')==-1:
-                        aux[final_key][rest]=i
-                    #comprobar si existe mas de un valor en sub key, sino se recupera el primer y unico valor
-                    elif rest.find('[')==-1:
-                        rest=str(rest).split(']',1)[0]
-                        aux[final_key][rest]=i
+                        aux[final_key] = {}
+
+                    # comprobar si existe simbolo de cerrado, sino se guarda directamente
+                    if rest.find(']') == -1:
+                        aux[final_key][rest] = i
+                    # comprobar si existe mas de un valor en sub key, sino se recupera el primer y unico valor
+                    elif rest.find('[') == -1:
+                        rest = str(rest).split(']', 1)[0]
+                        aux[final_key][rest] = i
                     else:
-                        if rest.find(']')<rest.find('['):
-                            rest1,rest2=str(rest).split(']',1)
-                            aux[final_key][rest1+rest2]=i
+                        if rest.find(']') < rest.find('['):
+                            rest1, rest2 = str(rest).split(']', 1)
+                            aux[final_key][rest1+rest2] = i
                         else:
-                            print('error de formato, formato aceptado: a[b][c][d]=valor')
+                            print(
+                                'error de formato, formato aceptado: a[b][c][d]=valor')
                             break
-                    aux[final_key]=app.format_array(aux[final_key])
+                    aux[final_key] = app.format_array(aux[final_key])
                 else:
-                    aux[final_key]=i
+                    aux[final_key] = i
                 del var[k]
-            elif k=='':
-                final_key=len(var_copy)-1
-                aux[final_key]=i
+            elif k == '':
+                final_key = len(var_copy)-1
+                aux[final_key] = i
                 del var[k]
 
-        var=app.merge(var,aux)
+        var = app.merge(var, aux)
         return var
 
-
     @staticmethod
-    def parse_values(var:dict):
-        var_copy=var.copy()
+    def parse_values(var: dict):
+        var_copy = var.copy()
         if isinstance(var_copy, list):
-            var_copy = dict.fromkeys(var_copy , 1)
-        for k,i in var_copy.items():
-            if isinstance(i,str):
+            var_copy = dict.fromkeys(var_copy, 1)
+        for k, i in var_copy.items():
+            if isinstance(i, str):
                 try:
-                    aux_var=json.loads(i)
-                    if isinstance(aux_var,dict) or isinstance(aux_var, list):
-                        var_copy[k]=aux_var
+                    aux_var = json.loads(i)
+                    if isinstance(aux_var, dict) or isinstance(aux_var, list):
+                        var_copy[k] = aux_var
                 except:
                     pass
-            elif isinstance(i,dict) or isinstance(i, list):
-                var_copy[k]=app.parse_values(i)
+            elif isinstance(i, dict) or isinstance(i, list):
+                var_copy[k] = app.parse_values(i)
         return var_copy
-
-
 
     @staticmethod
     def merge(a, b, path=None):
         "merges b into a"
-        if path is None: path = []
+        if path is None:
+            path = []
         for key in b:
             if key in a:
                 if isinstance(a[key], dict) and isinstance(b[key], dict):
                     app.merge(a[key], b[key], path + [str(key)])
                 elif a[key] == b[key]:
-                    pass # same leaf value
+                    pass  # same leaf value
                 else:
-                    raise Exception('Conflict at %s' % '.'.join(path + [str(key)]))
+                    raise Exception('Conflict at %s' %
+                                    '.'.join(path + [str(key)]))
             else:
                 a[key] = b[key]
         return a

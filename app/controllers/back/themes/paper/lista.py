@@ -201,8 +201,9 @@ class lista:
         else:
             return fila[th['field']]
 
-        view.add_array(data)
-        content = view.render('list/'+th['type'], False)
+        #view.add_array(data)
+        #content = view.render('list/'+th['type'], False)
+        content=('list/'+th['type'],data)
         return content
 
     @staticmethod

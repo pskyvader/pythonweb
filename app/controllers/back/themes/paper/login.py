@@ -89,7 +89,7 @@ class login(base):
         data['url_recuperar',functions.generar_url(["recuperar"])]
         logo=logo_model.getById(2)
         data['logo',image.generar_url(logo['foto'][0], 'login')]
-        ret['body'] += view.render('login')
+        ret['body'].append('login',data)
 
         f = footer()
         ret_f = f.normal()

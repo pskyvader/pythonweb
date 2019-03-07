@@ -68,7 +68,7 @@ class comuna(base):
             if class_parent.idname in get:
                 where[class_parent.idname] = get[class_parent.idname]
 
-        condiciones = {}
+        condiciones = {'order':'titulo ASC'}
         url_detalle = url_final.copy()
         url_detalle.append('detail')
         # obtener unicamente elementos de la pagina actual

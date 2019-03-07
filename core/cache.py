@@ -7,9 +7,6 @@ class cache:
     @staticmethod
     def set_cache(cacheable:bool):
         cache.cacheable = cacheable
-    @staticmethod
-    def is_cacheable():
-        return cache.cacheable
     
     @staticmethod
     def add_cache(content):

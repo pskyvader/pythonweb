@@ -72,7 +72,9 @@ class view:
                 }
                 return body
 
-        body = view.render_template_url2(template + "." + view.extension)
+        body=''
+        for template,data in template_list:
+            body += view.render_template_url2(template + "." + view.extension,data)
 
         
         template = env.get_template(template_url)

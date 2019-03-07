@@ -64,7 +64,7 @@ class view:
             loader=FileSystemLoader(theme),
             bytecode_cache=FileSystemBytecodeCache()
         )
-        print(functions.current_time())
+        print(functions.current_time(as_string=False))
         for template, data in template_list:
             template_url = theme + template + "." + view.extension
             my_file = Path(template_url)
@@ -80,7 +80,7 @@ class view:
             #body += template.render(data)
             body += view.render_unit(env, template, data)
 
-        print(functions.current_time())
+        print(functions.current_time(as_string=False))
 
         if minify:  # and not return_body and cache.is_cacheable():
             body = view.compress(body, 'html')

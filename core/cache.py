@@ -26,12 +26,6 @@ class cache:
         from .app import app
         from .functions import functions
         from pathlib import Path
-
-        folder = app.get_dir(True) + 'cache/'
-        name = cache.file_name(url)
-        if name=='':
-            return ''
-
         if app.front:
             cache.cacheable = False
         ruta = functions.generar_url(url)
@@ -47,6 +41,8 @@ class cache:
 
         
         if cache.cacheable:
+            folder = app.get_dir(True) + 'cache/'
+            name = cache.file_name(url)
             my_file = Path(folder+name)
             if my_file.is_file():
                 return my_file

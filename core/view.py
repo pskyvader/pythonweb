@@ -98,7 +98,6 @@ class view:
             data = view.render_unit(env, data[0], data[1])
         
         if template!='' and isinstance(data, dict):
-            print(template)
             template = env.get_template(template + "." + view.extension)
             content=template.render(data)
             return content

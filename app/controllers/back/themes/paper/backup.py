@@ -129,7 +129,7 @@ class backup(base):
         data['tiempo_lento']=tiempo_lento
         data['tiempo_rapido']=tiempo_rapido
 
-        ret['body'] += view.render('backup')
+        ret['body'].append(('backup',data))
 
         f = footer()
         ret['body'] += f.normal()['body']

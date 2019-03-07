@@ -30,7 +30,7 @@ class home(base):
         ret_head=h.normal()
         if ret_head['headers']!='':
             return ret_head
-        #ret['body']+=ret_head['body']
+        ret['body']+=ret_head['body']
         
         he=header()
         ret['body']+=he.normal()['body']

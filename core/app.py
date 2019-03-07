@@ -93,7 +93,7 @@ class app:
         else:
             response = {'error': 404}
 
-        render=False
+        
         if 'headers' not in response:
             response['headers'] = [
                 ('Content-Type', 'text/html; charset=utf-8')
@@ -122,11 +122,11 @@ class app:
         if 'file' in response:
             data_return['file'] = response['file']
 
-            
-        if render:
+        if isinstance(response['body'],list):
             data_return['response_body'] = view.render_multiple(response['body'])
         else:
             data_return['response_body'] = response['body']
+
         data_return['headers'] = response['headers']
         for cookie in functions.cookies:
             data_return['headers'].append(('Set-Cookie', cookie))

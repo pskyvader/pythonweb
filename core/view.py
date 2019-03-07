@@ -100,7 +100,7 @@ class view:
         if isinstance(data, dict):
             template = env.get_template(template + "." + view.extension)
             content=template.render(data)
-            print(content)
+            print(content,template)
             return content
         else:
             return data

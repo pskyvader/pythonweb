@@ -53,6 +53,28 @@ class view:
         view.reset()
         return body
 
+
+    @staticmethod
+    def render_multiple(template_list, minify=True):
+        '''Renderiza la vista segun view.data y la retorna'''
+        theme = view.get_theme()
+        template_url = theme + template + "." + view.extension
+        my_file = Path(template_url)
+        if not my_file.is_file():
+            body = view.html % {  # Fill the above html template in
+                'content': " <body>Error: El archivo " + template_url + " no existe </body>"
+            }
+            return body
+
+        body = view.render_template_url2(template + "." + view.extension)
+
+        if minify:  # and not return_body and cache.is_cacheable():
+            body = view.compress(body, 'html')
+
+        view.reset()
+        return body
+    
+
     @staticmethod
     def render_template2(content):
         from jinja2 import Template
@@ -61,13 +83,13 @@ class view:
         return content
 
     @staticmethod
-    def render_template_url2(template_url):
+    def render_template_url2(template_url,data):
         from jinja2 import Environment, FileSystemLoader
         env = Environment(
             loader=FileSystemLoader(view.get_theme())
         )
         template = env.get_template(template_url)
-        content = template.render(view.data)
+        content = template.render(data)
         return content
 
     @staticmethod

@@ -164,10 +164,15 @@ class view:
         if array_only:
             return [css, nuevo]
         else:
-            view.add('js', [])
-            view.add('is_css', True)
-            view.add('css', css)
-            return view.render('resources')
+            data={}
+            data['js']=[]
+            data['is_css']=True
+            data['css']=css
+            #view.add('js', [])
+            #view.add('is_css', True)
+            #view.add('css', css)
+            return ('resources',data)
+            #return view.render('resources')
 
     @staticmethod
     def js(combine=True, array_only=False):

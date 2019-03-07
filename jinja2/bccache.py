@@ -215,6 +215,7 @@ class FileSystemBytecodeCache(BytecodeCache):
             directory = self._get_default_cache_dir()
         self.directory = directory
         self.pattern = pattern
+        print(directory)
 
     def _get_default_cache_dir(self):
         def _unsafe_dir():

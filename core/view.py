@@ -88,7 +88,6 @@ class view:
         if isinstance(data, dict):
             for k,d in data.items():
                 if isinstance(d, dict) or isinstance(d, list) or isinstance(d, tuple):
-                    print('no str',k,d)
                     d = view.render_unit(env, template, d)
         elif isinstance(data, list):
             for d in data:

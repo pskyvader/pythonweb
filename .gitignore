@@ -113,6 +113,7 @@ upload/files/*
 upload/images/*
 uploads/img/*
 backup/*
+cache/*
 .autogit
 **/cache/*
 **/resources/*

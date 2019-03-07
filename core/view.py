@@ -39,20 +39,20 @@ class view:
             }
             return body
 
-        #if template_url in view.content_url:
+        # if template_url in view.content_url:
         #    content = view.content_url[template_url]
-        #else:
+        # else:
         #    content = view.content_url[template_url] =  codecs.open(template_url, encoding='utf-8').read()
 
         #body = view.render_template(content)
-        body = view.render_template_url2(template + "." + view.extension,view.data)
+        body = view.render_template_url2(
+            template + "." + view.extension, view.data)
 
         if minify:  # and not return_body and cache.is_cacheable():
             body = view.compress(body, 'html')
 
         view.reset()
         return body
-
 
     @staticmethod
     def render_multiple(template_list, minify=True):
@@ -63,7 +63,7 @@ class view:
             loader=FileSystemLoader(theme)
         )
 
-        for template,data in template_list:
+        for template, data in template_list:
             template_url = theme + template + "." + view.extension
             my_file = Path(template_url)
             if not my_file.is_file():
@@ -72,30 +72,35 @@ class view:
                 }
                 return body
 
-        body=''
-        for template,data in template_list:
+        body = ''
+        for template, data in template_list:
             #template = env.get_template(template + "." + view.extension)
             #body += template.render(data)
-            body += view.render_unit(env,template,data)
+            body += view.render_unit(env, template, data)
 
         if minify:  # and not return_body and cache.is_cacheable():
             body = view.compress(body, 'html')
 
         return body
+
     @staticmethod
-    def render_unit(env,template,data):
-        if isinstance(data,dict) or isinstance(data,list):
+    def render_unit(env, template, data):
+        if isinstance(data, dict):
             for d in data:
-                if not isinstance(d,str):
+                print(d)
+                if not isinstance(d, str):
                     print(d)
-                    d=view.render_unit(env,template,d)
-        elif isinstance(data,tuple):
-            data=view.render_unit(env,data(0),data(1))
-                    
+                    d = view.render_unit(env, template, d)
+        elif isinstance(data, list):
+            for d in data:
+                if not isinstance(d, str):
+                    print(d)
+                    d = view.render_unit(env, template, d)
+        elif isinstance(data, tuple):
+            data = view.render_unit(env, data(0), data(1))
+
         template = env.get_template(template + "." + view.extension)
         return template.render(data)
-
-    
 
     @staticmethod
     def render_template2(content):
@@ -105,7 +110,7 @@ class view:
         return content
 
     @staticmethod
-    def render_template_url2(template_url,data):
+    def render_template_url2(template_url, data):
         from jinja2 import Environment, FileSystemLoader
         env = Environment(
             loader=FileSystemLoader(view.get_theme())
@@ -210,7 +215,7 @@ class view:
         nuevo = 0
         error = ""
         for res in view.resources[type_resource]:
-            c=res.copy()
+            c = res.copy()
             c['is_content'] = False
             if c['local']:
                 c['url_tmp'] = c['url']

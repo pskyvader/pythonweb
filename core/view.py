@@ -45,10 +45,8 @@ class view:
         print((functions.current_time(as_string=False)-time) *1000)
         time=functions.current_time(as_string=False)
 
-        print(cache.cacheable)
         if minify and cache.cacheable:
             body = view.compress(body, 'html')
-            print('mini')
 
         
         print((functions.current_time(as_string=False)-time) *1000)

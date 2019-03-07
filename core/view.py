@@ -87,7 +87,7 @@ class view:
     def render_unit(env, template, data):
         if isinstance(data, dict):
             for k,d in data.items():
-                if isinstance(d, dict) or isinstance(d, list) or isinstance(data, tuple):
+                if isinstance(d, dict) or isinstance(d, list) or isinstance(d, tuple):
                     print('no str',k,d)
                     d = view.render_unit(env, template, d)
         elif isinstance(data, list):

@@ -40,7 +40,8 @@ class application(base):
         data['logo']=image.generar_url(logo['foto'][0], 'icono600')
         data['path']=functions.generar_url(url_final)
         data['color_primario']=config['color_primario']
-        ret['body'] += view.render('application')
+        
+        ret['body'].append(('application',data))
 
         f = footer()
         ret['body'] += f.normal()['body']

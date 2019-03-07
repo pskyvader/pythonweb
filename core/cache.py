@@ -52,14 +52,15 @@ class cache:
     def save_cache(url: list):
         from .app import app
         from .functions import functions
-        from os import W_OK
-        from os import access
+        import os
         from gzip import compress
         ruta = functions.generar_url(url)
         current = functions.current_url()
         if ruta == current and cache.cacheable:
             folder = app.get_dir(True) + 'cache/'
-            if access(folder, W_OK):
+            if not os.path.exists(folder):
+                os.makedirs(folder)
+            if os.access(folder, os.W_OK):
                 name = cache.file_name(url)
                 if name != '':
                     f = ''.join(cache.data)

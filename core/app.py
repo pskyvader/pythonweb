@@ -86,19 +86,18 @@ class app:
         file_cache=cache.get_cache(url,app.get)
         if file_cache!='':
             response={'file':file_cache,'is_file':True}
-
-
-        controller = app.controller_dir + url[0]
-        my_file = Path(app.root + controller + '.py')
-        if my_file.is_file():
-            current_module = importlib.import_module(controller.replace("/", "."))
-            current_module = getattr(current_module, url[0])
-            current_module = current_module()
-            del url[0]
-            # returns {'body':str,'headers':str} or {'error':int,...'redirect':str}
-            response = current_module.init(url)
         else:
-            response = {'error': 404}
+            controller = app.controller_dir + url[0]
+            my_file = Path(app.root + controller + '.py')
+            if my_file.is_file():
+                current_module = importlib.import_module(controller.replace("/", "."))
+                current_module = getattr(current_module, url[0])
+                current_module = current_module()
+                del url[0]
+                # returns {'body':str,'headers':str} or {'error':int,...'redirect':str}
+                response = current_module.init(url)
+            else:
+                response = {'error': 404}
 
         
         if 'headers' not in response:

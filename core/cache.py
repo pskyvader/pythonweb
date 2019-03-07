@@ -42,7 +42,6 @@ class cache:
                 cache.cacheable = False
 
         if cache.cacheable:
-            
             print('cache 4')
             folder = app.get_dir(True) + 'cache/'
             name = cache.file_name(url)

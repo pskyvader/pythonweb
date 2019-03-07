@@ -61,6 +61,16 @@ class view:
         return content
 
     @staticmethod
+    def render_template_url2(template_url):
+        from jinja2 import Environment, FileSystemLoader
+        env = Environment(
+            loader=FileSystemLoader('/path/to/templates')
+        )
+        template = env.get_template(template_url)
+        content = template.render(view.data)
+        return content
+
+    @staticmethod
     def render_template(content):
         from ibis import Template
         template = Template(content)

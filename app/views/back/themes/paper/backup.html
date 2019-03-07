@@ -53,21 +53,21 @@
                                     </thead>
                                     <tbody>
                                         {% for r in row %}
-                                        <tr class=" {{ loop.cycle('odd', 'even') }} {% if even %} even {% else %} odd {% endif %} gradeX tooltips" data-id="{{id}}" data-placement="top" data-trigger="hover" data-original-title="ID: {{id}}">
+                                        <tr class=" {{ loop.cycle('odd', 'even') }} {% if r.even %} even {% else %} odd {% endif %} gradeX tooltips" data-id="{{r.id}}" data-placement="top" data-trigger="hover" data-original-title="ID: {{r.id}}">
                                             <td class="center" data-field="size">
-                                                {{size}}
+                                                {{r.size}}
                                             </td>
                                             <td class="center" data-field="fecha">
-                                                {{fecha}}
+                                                {{r.fecha}}
                                             </td>
                                             <td class="center" data-field="restaurar">
-                                                <button class="btn btn-primary btn-raised restaurar btn-md" data-id="{{id}}" data-toggle="modal" data-target=".modal-restaurar">Restaurar</button>
+                                                <button class="btn btn-primary btn-raised restaurar btn-md" data-id="{{r.id}}" data-toggle="modal" data-target=".modal-restaurar">Restaurar</button>
                                             </td>
                                             <td class="center" data-field="descargar">
-                                                <a class="btn btn-primary btn-raised btn-md" href="{{url}}">Descargar</a>
+                                                <a class="btn btn-primary btn-raised btn-md" href="{{r.url}}">Descargar</a>
                                             </td>
                                             <td class="center" data-field="eliminar">
-                                                <button data-id="{{id}}" class="btn btn-raised eliminar btn-danger btn-md" data-toggle="modal" data-target=".modal-eliminar">
+                                                <button data-id="{{r.id}}" class="btn btn-raised eliminar btn-danger btn-md" data-toggle="modal" data-target=".modal-eliminar">
                                                     <i class="material-icons">delete</i> Eliminar
                                                 </button>
                                             </td>

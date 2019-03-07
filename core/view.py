@@ -74,11 +74,8 @@ class view:
 
         body=''
         for template,data in template_list:
-            body += view.render_template_url2(template + "." + view.extension,data)
-
-        
-        template = env.get_template(template_url)
-        content = template.render(data)
+            template = env.get_template(template + "." + view.extension)
+            body += template.render(data)
 
         if minify:  # and not return_body and cache.is_cacheable():
             body = view.compress(body, 'html')

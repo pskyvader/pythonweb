@@ -53,7 +53,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {% for r in row|reversed() %}
+                                    {% for r in reversed(row) %}
                                     <tr class="{% cycle 'odd', 'even' %} gradeX tooltips" data-id="{{r.id}}" data-placement="top" data-trigger="hover" data-original-title="ID: {{r.id}}">
                                         <td class="center" data-field="size">
                                             {{r.size}}

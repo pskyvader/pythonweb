@@ -119,6 +119,10 @@ class backup(base):
                 'url': url + f,
             }
 
+
+        row = row.items()
+        row= reversed(row)
+
         view.add('row', row)
         view.add('breadcrumb', cls.breadcrumb)
         view.add('title', cls.metadata['title'])

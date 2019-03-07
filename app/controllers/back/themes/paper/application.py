@@ -35,10 +35,12 @@ class application(base):
 
         config = app.get_config()
         logo = logo_model.getById(7)
-        view.add('color_primario', config['color_primario'])
-        view.add('color_secundario', config['color_secundario'])
-        view.add('logo', image.generar_url(logo['foto'][0], 'icono600'))
-        view.add('path', functions.generar_url(url_final))
+        data={}
+        data['color_primario']=config['color_primario']
+        data['color_secundario']=config['color_secundario']
+        data['logo']=image.generar_url(logo['foto'][0], 'icono600')
+        data['path']=functions.generar_url(url_final)
+        data['color_primario']=config['color_primario']
         ret['body'] += view.render('application')
 
         f = footer()

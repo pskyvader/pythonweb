@@ -83,7 +83,6 @@ class login(base):
         ret['body'] += ret_head['body']
 
         data={}
-        data['logo']=''
         data['error_login']=error_login
         data['token']=token
         data['url_recuperar']=functions.generar_url(["recuperar"])

@@ -47,7 +47,7 @@ class detalle:
 
         #view.add_array(data)
         #ret['body'] += view.render('detail')
-        ret['body'].append(('list',data))
+        ret['body'].append(('detail',data))
 
         f = footer()
         ret['body'] += f.normal()['body']

@@ -1,6 +1,6 @@
 from core.app import app
 from core.functions import functions
-from core.view import view
+#from core.view import view
 from core.image import image
 from app.models.logo import logo as logo_model
 import json
@@ -59,12 +59,13 @@ class head:
         head.data['manifest_url'] = app.get_url() + 'manifest.js'
 
     def normal(self):
-        ret = {'headers': '', 'body': ''}
+        ret = {'headers': '', 'body': []}
         if 'ajax' not in app.post:
             if 'ajax_header' not in app.post:
                 head.data['css'] = view.css()
-                view.add_array(head.data)
-                ret['body'] = view.render('head')
+                #view.add_array(head.data)
+                #ret['body'] = view.render('head')
+                ret['body'].append(('head',head.data))
             else:
                 ret['headers'] = [ ('Content-Type', 'application/json; charset=utf-8') ]
                 ret['body'] = json.dumps(self.data)

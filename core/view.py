@@ -62,7 +62,7 @@ class view:
         theme = view.get_theme()
         env = Environment(
             loader=FileSystemLoader(theme),
-            #bytecode_cache=FileSystemBytecodeCache()
+            bytecode_cache=FileSystemBytecodeCache()
         )
         time=functions.current_time(as_string=False)
         for template, data in template_list:

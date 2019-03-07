@@ -60,6 +60,7 @@ class cache:
         from .functions import functions
         from os import W_OK
         from os import access
+        from gzip import compress
         ruta    = functions.generar_url(url)
         current = functions.current_url()
         if ruta == current and app.front and cache.cacheable:
@@ -67,31 +68,24 @@ class cache:
             if access(folder, W_OK):
                 name = cache.file_name(url)
                 if name!='':
-                    f = open(resource_url, "rb").read()
-                f = compress(f)
+                    f = ''.join(cache.data)
+                    f = bytes(f, 'utf-8')
+                    f = compress(f)
 
-                file_write = open(cache_file, 'wb')
-                file_write.write(f)
-                file_write.close()
-
-                    file_put_contents(folder . name, implode('', cache.data))
-                    
+                    file_write = open(folder+name, 'wb')
+                    file_write.write(f)
+                    file_write.close()
 
     @staticmethod
-    def file_name(url:list)
-    {
-        if (!isset(url['url']):
+    def file_name(url:list,get:dict):
+        from .functions import functions
+        name = '-'.join(url)
+        n = name.split('.',1)
+        if len(n)>1:
             return ""
-        }
-
-        name = str_replace('/', '-', url['url'])
-        unset(url['url'])
-        n = explode('.', name, 2)
-        if (isset(n[1]):
-            return ""
-        }
-        foreach (url as key => u:
-            n = "__" . key . "-" . u
+        
+        for key,u in get.items():
+            ext = "__" + key + "-" + u
             n = functions.url_amigable(n)
             name .= n
         }

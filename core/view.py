@@ -57,7 +57,7 @@ class view:
     @staticmethod
     def render_multiple(template_list, minify=True):
         '''Renderiza la vista segun view.data y la retorna'''
-        from jinja2 import Environment, FileSystemLoader
+        from jinja2 import Environment, FileSystemLoader,FileSystemBytecodeCache
         theme = view.get_theme()
         env = Environment(
             loader=FileSystemLoader(theme)

@@ -80,7 +80,7 @@ class view:
             #body += template.render(data)
             body += view.render_unit(env, template, data)
 
-        print(functions.current_time(as_string=False)-time)
+        print((functions.current_time(as_string=False)-time) *1000)
 
         if minify:  # and not return_body and cache.is_cacheable():
             body = view.compress(body, 'html')

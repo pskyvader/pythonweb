@@ -88,16 +88,16 @@ class view:
         if isinstance(data, dict):
             for k,d in data.items():
                 if isinstance(d, dict) or isinstance(d, list) or isinstance(d, tuple):
-                    d = view.render_unit(env, template, d)
+                    d = view.render_unit(env, '', d)
         elif isinstance(data, list):
             for d in data:
                 if isinstance(d, dict) or isinstance(d, list) or isinstance(d, tuple):
-                    d = view.render_unit(env, template, d)
+                    d = view.render_unit(env, '', d)
         elif isinstance(data, tuple):
             print('tupla',d)
             data = view.render_unit(env, data(0), data(1))
         
-        if isinstance(data, dict):
+        if template!='' and isinstance(data, dict):
             print(template)
             template = env.get_template(template + "." + view.extension)
             content=template.render(data)

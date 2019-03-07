@@ -121,7 +121,7 @@ class backup(base):
 
 
         row = row.items()
-        row= reversed(row)
+        row= row.reversed()
 
         view.add('row', row)
         view.add('breadcrumb', cls.breadcrumb)

@@ -44,7 +44,7 @@ class cache:
                 cache.cacheable = False
                 
 
-        if app.front and cache.cacheable:
+        if not app.front and cache.cacheable:
             folder  = app.get_dir(True) + 'cache/'
             name = cache.file_name(url)
             my_file = Path(folder+name)

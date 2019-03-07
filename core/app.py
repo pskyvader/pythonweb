@@ -83,6 +83,10 @@ class app:
 
         view.set_theme(app.root + app.view_dir)
 
+        file_cache=cache.get_cache(url,app.get)
+        if file_cache!='':
+            response={'file':file_cache,'is_file':True}
+
 
         controller = app.controller_dir + url[0]
         my_file = Path(app.root + controller + '.py')

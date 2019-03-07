@@ -59,10 +59,8 @@ class cache:
         if ruta == current and cache.cacheable:
             folder = app.get_dir(True) + 'cache/'
             if not os.path.exists(folder):
-                print('save cache2')
                 os.makedirs(folder)
             
-            print('save cache3')
             if os.access(folder, os.W_OK):
                 name = cache.file_name(url)
                 if name != '':

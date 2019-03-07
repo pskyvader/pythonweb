@@ -26,7 +26,7 @@ class cache:
         from .app import app
         from .functions import functions
         from pathlib import Path
-        if not app.front:
+        if app.front:
             cache.cacheable = False
         ruta = functions.generar_url(url)
         current = functions.current_url()

@@ -58,7 +58,7 @@ function inicio() {
 var day = moment($('#time').data('time'), 'YYYY-MM-DD HH:mm:ss');
 $('#time span').text(day.format('DD/MM HH:mm:ss'));
 
-setInterval(function() { 
+setInterval(function() {
     day = day.add(1, 'second');
     $('#time span').text(day.format('D/MM HH:mm:ss'));
 }, 1000);

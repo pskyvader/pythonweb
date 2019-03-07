@@ -45,7 +45,8 @@ class view:
             content = view.content_url[template_url] =  codecs.open(template_url, encoding='utf-8').read()
             #content = view.content_url[template_url] = open( template_url, "r").read()
 
-        body = view.render_template(content)
+        #body = view.render_template(content)
+        body = view.render_template(template_url)
 
         if minify:  # and not return_body and cache.is_cacheable():
             body = view.compress(body, 'html')

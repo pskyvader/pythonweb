@@ -26,8 +26,8 @@ class cache:
         from .app import app
         from .functions import functions
         from pathlib import Path
-        
-        if app.front:
+
+        if not app.front:
             cache.cacheable = False
         else:
             cache.cacheable = True

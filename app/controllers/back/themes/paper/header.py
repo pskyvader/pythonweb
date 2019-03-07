@@ -19,5 +19,5 @@ class header:
             self.data['date'] = functions.current_time()
             #view.add_array(self.data)
             #ret['body'] = view.render('header')
-            ret['body'].append(('header',data))
+            ret['body'].append(('header',self.data))
         return ret

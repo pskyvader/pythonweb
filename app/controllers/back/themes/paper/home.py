@@ -36,7 +36,7 @@ class home(base):
         ret['body']+=he.normal()['body']
 
         asi = aside()
-        ret['body']+=asi.normal()['body']
+        #ret['body']+=asi.normal()['body']
         data={}
         data['title']='Home'
         #view.add('title', 'Home')

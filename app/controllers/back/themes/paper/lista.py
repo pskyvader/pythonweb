@@ -1,7 +1,6 @@
 from core.app import app
 from core.functions import functions
 from core.image import image
-from core.view import view
 from .head import head
 from .header import header
 from .aside import aside
@@ -56,8 +55,6 @@ class lista:
         ret['body'] += asi.normal()['body']
 
         ret['body'].append(('list',data))
-        #view.add_array(data)
-        #ret['body'] += view.render('list')
 
         f = footer()
         ret['body'] += f.normal()['body']
@@ -201,8 +198,6 @@ class lista:
         else:
             return fila[th['field']]
 
-        #view.add_array(data)
-        #content = view.render('list/'+th['type'], False)
         content=('list/'+th['type'],data)
         return content
 

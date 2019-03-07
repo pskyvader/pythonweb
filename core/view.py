@@ -64,7 +64,7 @@ class view:
             loader=FileSystemLoader(theme),
             bytecode_cache=FileSystemBytecodeCache()
         )
-        print(functions.current_time(as_string=False))
+        time=functions.current_time(as_string=False)
         for template, data in template_list:
             template_url = theme + template + "." + view.extension
             my_file = Path(template_url)

@@ -60,7 +60,8 @@ class view:
         from jinja2 import Environment, FileSystemLoader,FileSystemBytecodeCache
         theme = view.get_theme()
         env = Environment(
-            loader=FileSystemLoader(theme)
+            loader=FileSystemLoader(theme),
+            bytecode_cache=FileSystemBytecodeCache
         )
 
         for template, data in template_list:

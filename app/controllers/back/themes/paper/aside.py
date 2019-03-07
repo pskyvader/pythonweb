@@ -1,5 +1,5 @@
 from core.functions import functions
-from core.view import view
+#from core.view import view
 from core.app import app
 from core.image import image
 from app.models.administrador import administrador as administrador_model
@@ -11,7 +11,7 @@ from app.models.pedidoestado import pedidoestado as pedidoestado_model
 class aside:
 
     def normal(self):
-        ret = {'body': ''}
+        ret = {'body': []}
         if 'ajax' not in app.post:
             administrador = administrador_model.getById( app.session[administrador_model.idname + app.prefix_site])
             tipo_admin = administrador["tipo"]
@@ -132,13 +132,20 @@ class aside:
                 menu.append({'url': url, 'icon': 'settings_applications', 'title': 'Configuracion Administrador',
                              'has_submenu': False, 'active': active, 'separador': False})
 
-            view.add('menu', menu)
+            data={}
+            data['menu']=menu
+            data['name']=administrador["nombre"]
+            data['email']=administrador["email"]
+            data['url_admin']=functions.generar_url( ["administrador", "detail", administrador[0], 'profile'], {'tipo': tipo_admin})
+            data['img_admin']=image.generar_url( administrador["foto"][0], 'profile')
 
-            view.add('name', administrador["nombre"])
-            view.add('email', administrador["email"])
-            view.add('url_admin', functions.generar_url( ["administrador", "detail", administrador[0], 'profile'], {'tipo': tipo_admin}))
-            view.add('img_admin', image.generar_url( administrador["foto"][0], 'profile'))
-            view.add('img_admin', '')
 
-            ret['body'] = view.render('aside')
+            #view.add('menu', menu)
+            #view.add('name', administrador["nombre"])
+            #view.add('email', administrador["email"])
+            #view.add('url_admin', functions.generar_url( ["administrador", "detail", administrador[0], 'profile'], {'tipo': tipo_admin}))
+            #view.add('img_admin', image.generar_url( administrador["foto"][0], 'profile'))
+
+            #ret['body'] = view.render('aside')
+            ret['body'].append(('aside',data))
         return ret

@@ -99,7 +99,9 @@ class view:
         
         if isinstance(data, dict):
             template = env.get_template(template + "." + view.extension)
-            return template.render(data)
+            content=template.render(data)
+            print(content)
+            return content
         else:
             return data
 

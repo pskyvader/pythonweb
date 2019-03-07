@@ -192,7 +192,6 @@ function cargar_ajax(href, push, data_form) {
     }, 200);
     setTimeout(function() {
         if (!actualizado) {
-            console.log('timeout');
             $(location).prop('href', href);
             valido = false;
         }

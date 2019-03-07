@@ -68,6 +68,7 @@ class cache:
             if access(folder, W_OK):
                 name = cache.file_name(url)
                 if name!='':
+                    print(cache.data)
                     f = ''.join(cache.data)
                     f = bytes(f, 'utf-8')
                     f = compress(f)

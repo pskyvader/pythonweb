@@ -72,10 +72,7 @@ class view:
     def render_template_url(template_url):
         import ibis
         loader = ibis.loaders.FileLoader(view.get_theme())
-
-        
-        from ibis import Template
-        template = Template(content)
+        template = loader(template_url)
         content = template.render(view.data)
         return content
 

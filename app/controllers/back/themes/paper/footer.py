@@ -8,7 +8,5 @@ class footer:
         if 'ajax' not in app.post:
             data={}
             data['js']=view.js()
-            #view.add('js',view.js())
-            #ret['body'] = view.render('footer')
             ret['body'].append(('footer',data))
         return ret

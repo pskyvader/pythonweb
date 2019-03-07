@@ -84,7 +84,7 @@ class view:
         return body
 
     @staticmethod
-    def render_unit(env, template, data):
+    def render_unit(env, template, data,pr=False):
         if isinstance(data, dict):
             for k,d in data.items():
                 if isinstance(d, dict) or isinstance(d, list) or isinstance(d, tuple):
@@ -95,11 +95,13 @@ class view:
                     d = view.render_unit(env, '', d)
         elif isinstance(data, tuple):
             print('tupla',data)
-            data = view.render_unit(env, data[0], data[1])
+            data = view.render_unit(env, data[0], data[1],True)
         
         if template!='' and isinstance(data, dict):
             template = env.get_template(template + "." + view.extension)
             content=template.render(data)
+            if(pr):
+                print(data,template,content)
             return content
         else:
             return data

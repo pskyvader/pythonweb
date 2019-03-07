@@ -1,6 +1,5 @@
 from core.functions import functions
 from core.app import app
-from core.view import view
 from core.image import image
 from app.models.administrador import administrador as administrador_model
 from app.models.logo import logo as logo_model

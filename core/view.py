@@ -67,11 +67,11 @@ class view:
 
 
     @staticmethod
-    def render_template_url(template_url):
+    def render_template_url(template_url,data):
         import ibis
         loader = ibis.loaders.FileLoader(view.get_theme())
         template = loader(template_url)
-        content = template.render(view.data)
+        content = template.render(data)
         return content
 
     @staticmethod

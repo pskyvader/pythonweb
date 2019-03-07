@@ -9,14 +9,15 @@ class header:
     data = {'logo': '', 'url_exit': '', }
 
     def normal(self):
-        ret = {'body': ''}
+        ret = {'body': []}
         if 'ajax' not in app.post:
             logo = logo_model.getById(3);
             self.data['logo_max'] = image.generar_url(logo['foto'][0], 'panel_max');
             logo = logo_model.getById(4);
             self.data['logo_min'] = image.generar_url(logo['foto'][0], 'panel_min');
             self.data['url_exit'] = functions.generar_url(['logout'], False)
-            view.add_array(self.data)
-            view.add('date', functions.current_time())
-            ret['body'] = view.render('header')
+            self.data['date'] = functions.current_time()
+            #view.add_array(self.data)
+            #ret['body'] = view.render('header')
+            ret['body'].append(('header',data))
         return ret

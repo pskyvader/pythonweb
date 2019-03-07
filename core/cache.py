@@ -56,7 +56,7 @@ class cache:
         from gzip import compress
         ruta = functions.generar_url(url)
         current = functions.current_url()
-        print('save cache')
+        print('save cache',ruta,current,cache.cacheable)
         if ruta == current and cache.cacheable:
             folder = app.get_dir(True) + 'cache/'
             if not os.path.exists(folder):

@@ -50,6 +50,6 @@ class home(base):
 
 
         f = footer()
-        #ret['body']+=f.normal()['body']
+        ret['body']+=f.normal()['body']
 
         return ret

@@ -13,18 +13,21 @@ class view:
             %(content)s
         </html>
     """
-
+    
     @staticmethod
     def render(template_list, minify=True):
         '''Renderiza las vistas de la lista enviadas, las comprime y la retorna en un string'''
+        from .functions import functions
         from .cache import cache
-        from jinja2 import Environment, FileSystemLoader, FileSystemBytecodeCache
+        from jinja2 import Environment, FileSystemLoader,FileSystemBytecodeCache
         theme = view.get_theme()
         env = Environment(
             loader=FileSystemLoader(theme),
             bytecode_cache=FileSystemBytecodeCache()
         )
 
+
+        time=functions.current_time(as_string=False)
         for template, data in template_list:
             template_url = theme + template + "." + view.extension
             my_file = Path(template_url)
@@ -38,10 +41,15 @@ class view:
         for template, data in template_list:
             body += view.render_unit(env, template, data)
 
+        print((functions.current_time(as_string=False)-time) *1000)
+        time=functions.current_time(as_string=False)
 
         if minify and cache.is_cacheable:
             body = view.compress(body, 'html')
 
+        
+        print((functions.current_time(as_string=False)-time) *1000)
+        
         cache.add_cache(body)
 
         return body
@@ -49,25 +57,28 @@ class view:
     @staticmethod
     def render_unit(env, template, data):
         if isinstance(data, dict):
-            for k, d in data.items():
+            for k,d in data.items():
                 if isinstance(d, dict) or isinstance(d, list) or isinstance(d, tuple):
-                    data[k] = view.render_unit(env, '', d)
+                    data[k]= view.render_unit(env, '', d)
         elif isinstance(data, list):
             for d in data:
                 if isinstance(d, dict) or isinstance(d, list) or isinstance(d, tuple):
                     d = view.render_unit(env, '', d)
         elif isinstance(data, tuple):
             data = view.render_unit(env, data[0], data[1])
-
-        if template != '' and isinstance(data, dict):
+        
+        if template!='' and isinstance(data, dict):
             template = env.get_template(template + "." + view.extension)
-            content = template.render(data)
+            content=template.render(data)
             return content
         else:
             return data
 
+
+
+
     @staticmethod
-    def render_template_url(template_url, data):
+    def render_template_url(template_url,data):
         import ibis
         loader = ibis.loaders.FileLoader(view.get_theme())
         template = loader(template_url)
@@ -99,11 +110,11 @@ class view:
         if array_only:
             return [css, nuevo]
         else:
-            data = {}
-            data['js'] = []
-            data['is_css'] = True
-            data['css'] = css
-            return ('resources', data)
+            data={}
+            data['js']=[]
+            data['is_css']=True
+            data['css']=css
+            return ('resources',data)
 
     @staticmethod
     def js(combine=True, array_only=False):
@@ -130,11 +141,11 @@ class view:
         if array_only:
             return [js, nuevo]
         else:
-            data = {}
-            data['css'] = []
-            data['is_css'] = False
-            data['js'] = js
-            return ('resources', data)
+            data={}
+            data['css']=[]
+            data['is_css']=False
+            data['js']=js
+            return ('resources',data)
 
     @staticmethod
     def set_theme(theme):

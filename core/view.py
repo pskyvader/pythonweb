@@ -89,7 +89,7 @@ class view:
             for k,d in data.items():
                 if isinstance(d, dict) or isinstance(d, list) or isinstance(d, tuple):
                     print(d)
-                    d = view.render_unit(env, '', d)
+                    data[k]= view.render_unit(env, '', d)
                     print(d,data[k])
         elif isinstance(data, list):
             for d in data:

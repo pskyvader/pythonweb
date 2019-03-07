@@ -18,6 +18,7 @@ class view:
     def render_multiple(template_list, minify=False):
         '''Renderiza las vistas de la lista enviadas, las comprime y la retorna en un string'''
         from .functions import functions
+        from .cache import cache
         from jinja2 import Environment, FileSystemLoader,FileSystemBytecodeCache
         theme = view.get_theme()
         env = Environment(

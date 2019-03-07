@@ -121,6 +121,8 @@ class backup(base):
 
         #lista de los valores del dict, en orden inverso
         row=reversed(sorted(row.values()))
+        data={}
+        data['row']=row
 
         view.add('row', row)
         view.add('breadcrumb', cls.breadcrumb)

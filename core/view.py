@@ -96,9 +96,12 @@ class view:
                     d = view.render_unit(env, template, d)
         elif isinstance(data, tuple):
             data = view.render_unit(env, data(0), data(1))
-
-        template = env.get_template(template + "." + view.extension)
-        return template.render(data)
+        
+        if isinstance(data, dict):
+            template = env.get_template(template + "." + view.extension)
+            return template.render(data)
+        else:
+            return data
 
     @staticmethod
     def render_template2(content):

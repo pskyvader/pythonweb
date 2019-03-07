@@ -84,7 +84,7 @@ class view:
         return body
 
     @staticmethod
-    def render_unit(env, template, data,pr=False):
+    def render_unit(env, template, data):
         if isinstance(data, dict):
             for k,d in data.items():
                 if isinstance(d, dict) or isinstance(d, list) or isinstance(d, tuple):

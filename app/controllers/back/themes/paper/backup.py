@@ -71,6 +71,7 @@ class backup(base):
         elif os.access(cls.base_dir, os.W_OK) is not True:
             mensaje_error = 'Debes dar permisos de escritura en ' + cls.base_dir
 
+        print('mensaje error',mensaje_error)
         is_error = (mensaje_error != '')
 
         is_mensaje = False
@@ -95,6 +96,8 @@ class backup(base):
                 mensaje += ", "
 
             mensaje += str(tiempo_rapido) + " segundos (servidor rápido)"
+
+        print('mensaje',mensaje)
 
         row = {}
         files = []

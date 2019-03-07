@@ -63,8 +63,6 @@ class head:
         if 'ajax' not in app.post:
             if 'ajax_header' not in app.post:
                 head.data['css'] = view.css()
-                #view.add_array(head.data)
-                #ret['body'] = view.render('head')
                 ret['body'].append(('head',head.data))
             else:
                 ret['headers'] = [ ('Content-Type', 'application/json; charset=utf-8') ]

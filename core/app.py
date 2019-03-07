@@ -293,6 +293,7 @@ class app:
     @staticmethod
     def get_config():
         if len(app.config) == 0:
+            print('config')
             with open(app.app_dir + 'config/config.json') as f:
                 app.config = json.load(f)
         return app.config

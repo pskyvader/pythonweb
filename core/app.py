@@ -83,7 +83,9 @@ class app:
 
         view.set_theme(app.root + app.view_dir)
 
-        file_cache=cache.get_cache(url)
+
+        url_cache=url
+        file_cache=cache.get_cache(url_cache)
         if file_cache!='':
             response={'file':file_cache,'is_file':True}
         else:
@@ -129,13 +131,14 @@ class app:
             data_return['file'] = response['file']
 
         if isinstance(response['body'],list):
-            data_return['response_body'] = view.render_multiple(response['body'])
+            data_return['response_body'] = view.render(response['body'])
         else:
             data_return['response_body'] = response['body']
 
         data_return['headers'] = response['headers']
         for cookie in functions.cookies:
             data_return['headers'].append(('Set-Cookie', cookie))
+
 
         return data_return
 

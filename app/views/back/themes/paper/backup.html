@@ -54,7 +54,7 @@
                                 </thead>
                                 <tbody>
                                     {% for r in row %}
-                                    <tr class=" {{ loop.cycle('odd', 'even') }} {% if r.even %} even {% else %} odd {% endif %} gradeX tooltips" data-id="{{r.id}}" data-placement="top" data-trigger="hover" data-original-title="ID: {{r.id}}">
+                                    <tr class="{% if even(loop.index)  %} even {% else %} odd {% endif %} gradeX tooltips" data-id="{{r.id}}" data-placement="top" data-trigger="hover" data-original-title="ID: {{r.id}}">
                                         <td class="center" data-field="size">
                                             {{r.size}}
                                         </td>

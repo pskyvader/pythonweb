@@ -16,11 +16,11 @@ class view:
         </html>
     """
     @staticmethod
-    def add(key, value):
+    def add2(key, value):
         view.data[key] = value
 
     @staticmethod
-    def add_array(data):
+    def add_array2(data):
         view.data = data
 
     @staticmethod

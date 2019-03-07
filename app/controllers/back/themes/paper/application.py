@@ -10,7 +10,6 @@ from .footer import footer
 from core.app import app
 from core.functions import functions
 from core.image import image
-from core.view import view
 
 
 class application(base):

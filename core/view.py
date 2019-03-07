@@ -63,7 +63,6 @@ class view:
             loader=FileSystemLoader(theme)
         )
 
-        print(template_list)
         for template,data in template_list:
             template_url = theme + template + "." + view.extension
             my_file = Path(template_url)

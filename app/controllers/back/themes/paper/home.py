@@ -15,7 +15,7 @@ class home(base):
 
     @classmethod
     def index(cls):
-        ret = {'body':''}
+        ret = {'body':[]}
         url_final=cls.url.copy()
         if not administrador_model.verificar_sesion():
             url_final = ['login', 'index', 'home']
@@ -30,13 +30,13 @@ class home(base):
         ret_head=h.normal()
         if ret_head['headers']!='':
             return ret_head
-        ret['body']+=ret_head['body']
+        #ret['body']+=ret_head['body']
         
         he=header()
-        ret['body']+=he.normal()['body']
+        #ret['body']+=he.normal()['body']
 
         asi = aside()
-        ret['body']+=asi.normal()['body']
+        #ret['body']+=asi.normal()['body']
 
 
         view.add('title', 'Home')
@@ -48,6 +48,6 @@ class home(base):
 
 
         f = footer()
-        ret['body']+=f.normal()['body']
+        #ret['body']+=f.normal()['body']
 
         return ret

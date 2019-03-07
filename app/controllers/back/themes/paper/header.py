@@ -1,5 +1,4 @@
 from core.functions import functions
-#from core.view import view
 from core.app import app
 from core.image import image
 from app.models.logo import logo as logo_model
@@ -17,7 +16,5 @@ class header:
             self.data['logo_min'] = image.generar_url(logo['foto'][0], 'panel_min');
             self.data['url_exit'] = functions.generar_url(['logout'], False)
             self.data['date'] = functions.current_time()
-            #view.add_array(self.data)
-            #ret['body'] = view.render('header')
             ret['body'].append(('header',self.data))
         return ret

@@ -94,7 +94,7 @@ class view:
                 if isinstance(d, dict) or isinstance(d, list) or isinstance(d, tuple):
                     d = view.render_unit(env, '', d)
         elif isinstance(data, tuple):
-            data = view.render_unit(env, data[0], data[1],True)
+            data = view.render_unit(env, data[0], data[1])
         
         if template!='' and isinstance(data, dict):
             template = env.get_template(template + "." + view.extension)

@@ -32,10 +32,12 @@ class static:
                 ('Accept-encoding', 'gzip,deflate'),
                 ('Content-Encoding', 'gzip')
             ]
-            cache_file = theme+'cache/' +  str(functions.fecha_archivo(resource_url, True)) +  '-'+resource.replace('/', '-')
+            cache_file = theme+'cache/' + \
+                str(functions.fecha_archivo(resource_url, True)) + \
+                '-'+resource.replace('/', '-')
             my_file = Path(cache_file)
             if my_file.is_file():
-                ret['file']=cache_file
+                ret['file'] = cache_file
             else:
                 from gzip import compress
                 test = os.listdir(theme+'cache/')
@@ -50,5 +52,5 @@ class static:
                 file_write = open(cache_file, 'wb')
                 file_write.write(f)
                 file_write.close()
-                ret['file']=cache_file
+                ret['file'] = cache_file
         return ret

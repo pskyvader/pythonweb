@@ -26,6 +26,12 @@ class cache:
         from .app import app
         from .functions import functions
         from pathlib import Path
+
+        folder = app.get_dir(True) + 'cache/'
+        name = cache.file_name(url)
+        if name=='':
+            return ''
+
         if app.front:
             cache.cacheable = False
         ruta = functions.generar_url(url)

@@ -24,9 +24,6 @@ class view:
         env = Environment(loader=FileSystemLoader(theme),
                           bytecode_cache=FileSystemBytecodeCache())
 
-        #import ibis
-        #env = ibis.loaders.FileLoader(theme)
-
         for template, data in template_list:
             template_url = theme + template + "." + view.extension
             my_file = Path(template_url)
@@ -61,20 +58,13 @@ class view:
             data = view.render_unit(env, data[0], data[1])
 
         if template != '' and isinstance(data, dict):
-            #template = env(template + "." + view.extension)
             template = env.get_template(template + "." + view.extension)
             content = template.render(data)
             return content
         else:
             return data
 
-    @staticmethod
-    def render_template_url(template_url, data):
-        import ibis
-        loader = ibis.loaders.FileLoader(view.get_theme())
-        template = loader(template_url)
-        content = template.render(data)
-        return content
+
 
     @staticmethod
     def css(combine=True, array_only=False):
@@ -205,7 +195,7 @@ class view:
             locales = [{'url': base_url+'resources/' + file,
                         'media': 'all', 'defer': defer, 'is_content': False}]
         else:
-            # cache.delete_cache()
+            cache.delete_cache()
             if functions.get_cookie('loaded_'+type_resource) != False:
                 functions.set_cookie('loaded_'+type_resource, True, (31536000))
 

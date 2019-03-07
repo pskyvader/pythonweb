@@ -119,7 +119,7 @@ class backup(base):
                 'url': url + f,
             }
 
-
+        #lista de los valores del dict, en orden inverso
         row=reversed(sorted(row.values()))
 
         view.add('row', row)

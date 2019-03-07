@@ -27,14 +27,15 @@ class cache:
 
     @staticmethod
     def get_cache(url:list):
+        from .app import app
         from .functions import functions
         ruta    = functions.generar_url(url)
         current = functions.current_url()
-        if (ruta != current) {
+        if ruta != current:
             return ""
-        }
+        
 
-        if (null == self.cacheable_config) {
+        if cache.cacheable_config==None:
             config                 = app.getConfig()
             self.cacheable_config = (isset(config['cache']) ? config['cache'] : true)
             if (!self.cacheable_config) {

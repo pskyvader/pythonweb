@@ -87,17 +87,14 @@ class cache:
         
         for key,u in app.get.items():
             ext = "__" + key + "-" + u
-            n = functions.url_amigable(ext)
-            name += n
+            ext = functions.url_amigable(ext)
+            name += ext
         
-        post = app.post
-        if (isset(post['ajax']):
-            name .= '__ajax'
-            unset(post['ajax'])
-        }
-        if (count(post) > 0:
+        post = app.post.copy()
+        if 'ajax' in post:
+            name += '__ajax'
+            del post
+            
+        if len(post) >0:
             return ""
-        }
-
         return name
-    }

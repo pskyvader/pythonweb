@@ -1,5 +1,4 @@
 from core.app import app
-#from core.view import view
 from core.functions import functions
 from .base import base
 from .head import head
@@ -15,41 +14,38 @@ class home(base):
 
     @classmethod
     def index(cls):
-        ret = {'body':[]}
-        url_final=cls.url.copy()
+        ret = {'body': []}
+        url_final = cls.url.copy()
         if not administrador_model.verificar_sesion():
             url_final = ['login', 'index', 'home']
-        
-        url_return=functions.url_redirect(url_final)
-        if url_return!='':
-            ret['error']=301
-            ret['redirect']=url_return
+
+        url_return = functions.url_redirect(url_final)
+        if url_return != '':
+            ret['error'] = 301
+            ret['redirect'] = url_return
             return ret
-        
+
         h = head(cls.metadata)
-        ret_head=h.normal()
-        if ret_head['headers']!='':
+        ret_head = h.normal()
+        if ret_head['headers'] != '':
             return ret_head
-        ret['body']+=ret_head['body']
-        
-        he=header()
-        ret['body']+=he.normal()['body']
+        ret['body'] += ret_head['body']
+
+        he = header()
+        ret['body'] += he.normal()['body']
 
         asi = aside()
-        ret['body']+=asi.normal()['body']
-        data={}
-        data['title']='Home'
-        #view.add('title', 'Home')
-        breadcrumb=[
-            {'url':functions.generar_url(url_final),'title':cls.metadata['title'],'active':'active'}
+        ret['body'] += asi.normal()['body']
+        data = {}
+        data['title'] = 'Home'
+        breadcrumb = [
+            {'url': functions.generar_url(
+                url_final), 'title': cls.metadata['title'], 'active':'active'}
         ]
-        data['breadcrumb']=breadcrumb
-        #view.add('breadcrumb', breadcrumb)
-        ret['body'].append(('home',data))
-        #ret['body'] += view.render('home')
-
+        data['breadcrumb'] = breadcrumb
+        ret['body'].append(('home', data))
 
         f = footer()
-        ret['body']+=f.normal()['body']
+        ret['body'] += f.normal()['body']
 
         return ret

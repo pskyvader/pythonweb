@@ -526,8 +526,7 @@ class detalle:
                 'help': campos['help'] if 'help' in campos else '',
             }
 
-        view.add_array(data)
-        content = view.render('detail/'+campos['type'], False)
+        content=('detail/'+campos['type'],data)
         return content
 
     @staticmethod

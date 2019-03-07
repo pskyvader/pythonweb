@@ -19,7 +19,7 @@ class lista:
             self.metadata[key] = value
 
     def normal(self, data: dict):
-        ret = {'body': ''}
+        ret = {'body': []}
         th = data['th']
         row_data = data['row']
         row = []
@@ -55,8 +55,9 @@ class lista:
         asi = aside()
         ret['body'] += asi.normal()['body']
 
-        view.add_array(data)
-        ret['body'] += view.render('list')
+        ret['body'].append(('list',data))
+        #view.add_array(data)
+        #ret['body'] += view.render('list')
 
         f = footer()
         ret['body'] += f.normal()['body']

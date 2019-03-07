@@ -49,6 +49,8 @@ class view:
 
         
         print((functions.current_time(as_string=False)-time) *1000)
+        
+        cache.add_cache(body)
 
         return body
 

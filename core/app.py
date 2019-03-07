@@ -132,6 +132,7 @@ class app:
 
         if isinstance(response['body'],list):
             data_return['response_body'] = view.render(response['body'])
+            cache.save_cache(url_cache)
         else:
             data_return['response_body'] = response['body']
 

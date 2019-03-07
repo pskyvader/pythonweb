@@ -64,6 +64,7 @@ class view:
         )
 
         for template,data in template_list:
+            print(template,data)
             template_url = theme + template + "." + view.extension
             my_file = Path(template_url)
             if not my_file.is_file():

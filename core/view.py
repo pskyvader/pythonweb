@@ -39,10 +39,10 @@ class view:
             }
             return body
 
-        if template_url in view.content_url:
-            content = view.content_url[template_url]
-        else:
-            content = view.content_url[template_url] =  codecs.open(template_url, encoding='utf-8').read()
+        #if template_url in view.content_url:
+        #    content = view.content_url[template_url]
+        #else:
+        #    content = view.content_url[template_url] =  codecs.open(template_url, encoding='utf-8').read()
             #content = view.content_url[template_url] = open( template_url, "r").read()
 
         #body = view.render_template(content)

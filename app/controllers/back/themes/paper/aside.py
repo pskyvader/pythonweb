@@ -139,6 +139,5 @@ class aside:
             data['url_admin']=functions.generar_url( ["administrador", "detail", administrador[0], 'profile'], {'tipo': tipo_admin})
             data['img_admin']=image.generar_url( administrador["foto"][0], 'profile')
 
-
             ret['body'].append(('aside',data))
         return ret

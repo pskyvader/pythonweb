@@ -168,11 +168,7 @@ class view:
             data['js']=[]
             data['is_css']=True
             data['css']=css
-            #view.add('js', [])
-            #view.add('is_css', True)
-            #view.add('css', css)
             return ('resources',data)
-            #return view.render('resources')
 
     @staticmethod
     def js(combine=True, array_only=False):
@@ -199,10 +195,11 @@ class view:
         if array_only:
             return [js, nuevo]
         else:
-            view.add('css', [])
-            view.add('is_css', False)
-            view.add('js', js)
-            return view.render('resources')
+            data={}
+            data['css']=[]
+            data['is_css']=False
+            data['js']=js
+            return ('resources',data)
 
     @staticmethod
     def set_theme(theme):

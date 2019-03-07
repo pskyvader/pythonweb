@@ -2,7 +2,7 @@
 
 class cache:
     data = []
-    cacheable = True
+    cacheable = None
     cacheable_config = None
     @staticmethod
     def set_cache(cacheable: bool):
@@ -29,10 +29,10 @@ class cache:
         if app.front:
             cache.cacheable = False
         else:
-            cache.cacheable=True
+            cache.cacheable = True
         ruta = functions.generar_url(url)
         current = functions.current_url()
-        
+
         if ruta != current:
             return ""
         if cache.cacheable_config == None:
@@ -41,7 +41,6 @@ class cache:
             if not cache.cacheable_config:
                 cache.cacheable = False
 
-        
         if cache.cacheable:
             folder = app.get_dir(True) + 'cache/'
             name = cache.file_name(url)
@@ -63,7 +62,7 @@ class cache:
             folder = app.get_dir(True) + 'cache/'
             if not os.path.exists(folder):
                 os.makedirs(folder)
-            
+
             if os.access(folder, os.W_OK):
                 name = cache.file_name(url)
                 if name != '':

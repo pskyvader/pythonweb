@@ -92,7 +92,6 @@ class login(base):
         ret['body'].append('login',data)
 
         f = footer()
-        ret_f = f.normal()
-        ret['body'] += ret_f['body']
+        ret['body'] += f.normal()['body']
 
         return ret

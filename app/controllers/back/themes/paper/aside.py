@@ -140,12 +140,5 @@ class aside:
             data['img_admin']=image.generar_url( administrador["foto"][0], 'profile')
 
 
-            #view.add('menu', menu)
-            #view.add('name', administrador["nombre"])
-            #view.add('email', administrador["email"])
-            #view.add('url_admin', functions.generar_url( ["administrador", "detail", administrador[0], 'profile'], {'tipo': tipo_admin}))
-            #view.add('img_admin', image.generar_url( administrador["foto"][0], 'profile'))
-
-            #ret['body'] = view.render('aside')
             ret['body'].append(('aside',data))
         return ret

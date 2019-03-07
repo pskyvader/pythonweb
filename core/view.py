@@ -103,6 +103,10 @@ class view:
         else:
             return data
 
+
+
+
+
     @staticmethod
     def render_template2(content):
         from jinja2 import Template
@@ -300,3 +304,22 @@ class view:
             from htmlmin import minify
             combine_files = minify(combine_files, True, True, True)
         return combine_files
+
+
+
+class MyCache(BytecodeCache):
+    def __init__(self, directory):
+        self.directory = directory
+
+    def load_bytecode(self, bucket):
+        from os import path
+        filename = path.join(self.directory, bucket.key)
+        if path.exists(filename):
+            with open(filename, 'rb') as f:
+                bucket.load_bytecode(f)
+
+    def dump_bytecode(self, bucket):
+        from os import path
+        filename = path.join(self.directory, bucket.key)
+        with open(filename, 'wb') as f:
+            bucket.write_bytecode(f)

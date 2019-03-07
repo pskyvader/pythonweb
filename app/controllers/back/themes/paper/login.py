@@ -83,12 +83,12 @@ class login(base):
         ret['body'] += ret_head['body']
 
         data={}
-        data['logo','']
-        data['error_login',error_login]
-        data['token',token]
-        data['url_recuperar',functions.generar_url(["recuperar"])]
+        data['logo']=''
+        data['error_login']=error_login
+        data['token']=token
+        data['url_recuperar']=functions.generar_url(["recuperar"])
         logo=logo_model.getById(2)
-        data['logo',image.generar_url(logo['foto'][0], 'login')]
+        data['logo']=image.generar_url(logo['foto'][0], 'login')
         ret['body'].append('login',data)
 
         f = footer()

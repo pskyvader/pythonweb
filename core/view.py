@@ -6,8 +6,6 @@ import codecs
 
 class view:
     extension = 'html'
-    content_url = {}
-    data = {}
     theme = ''
     resources = {}
     html = """

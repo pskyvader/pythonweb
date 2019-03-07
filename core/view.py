@@ -92,9 +92,9 @@ class view:
         elif isinstance(data, list):
             for d in data:
                 if isinstance(d, dict) or isinstance(d, list) or isinstance(d, tuple):
-                    print(d)
                     d = view.render_unit(env, template, d)
         elif isinstance(data, tuple):
+            print('tupla',d)
             data = view.render_unit(env, data(0), data(1))
         
         if isinstance(data, dict):

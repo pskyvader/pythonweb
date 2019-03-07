@@ -82,12 +82,13 @@ class login(base):
             return ret_head
         ret['body'] += ret_head['body']
 
-        view.add('logo', '')
-        view.add('error_login', error_login)
-        view.add('token', token)
-        view.add('url_recuperar', functions.generar_url(["recuperar"]))
+        data={}
+        data['logo','']
+        data['error_login',error_login]
+        data['token',token]
+        data['url_recuperar',functions.generar_url(["recuperar"])]
         logo=logo_model.getById(2)
-        view.add('logo', image.generar_url(logo['foto'][0], 'login'))
+        data['logo',image.generar_url(logo['foto'][0], 'login')]
         ret['body'] += view.render('login')
 
         f = footer()

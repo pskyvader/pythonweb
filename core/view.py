@@ -87,9 +87,9 @@ class view:
         if isinstance(data,dict) or isinstance(data,list):
             for d in data:
                 if not isinstance(d,str):
+                    print(d)
                     d=view.render_unit(env,template,d)
         elif isinstance(data,tuple):
-            print(data)
             data=view.render_unit(env,data(0),data(1))
                     
         template = env.get_template(template + "." + view.extension)

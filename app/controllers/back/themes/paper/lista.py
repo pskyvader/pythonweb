@@ -63,7 +63,7 @@ class lista:
         return ret
 
     def get_row(self, class_name, where: dict, condiciones: dict, urledit: str):
-        get = app.get
+        get = app.get.copy()
         limit = int(get['limit']) if 'limit' in get else 10
         page = int(get['page']) if 'page' in get else 1
         search = str(get['search']) if 'search' in get else ''
@@ -96,7 +96,7 @@ class lista:
 
     def pagination(self, data: dict):
         import urllib.parse
-        get = app.get
+        get = app.get.copy()
         limits = {
             10: {'value': 10, 'text': 10, 'active': ''},
             25: {'value': 25, 'text': 25, 'active': ''},

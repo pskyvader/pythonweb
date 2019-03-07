@@ -22,7 +22,7 @@ class detalle:
             self.metadata[key] = value
 
     def normal(self, data: dict):
-        ret = {'body': ''}
+        ret = {'body': []}
         campos = data['campos']
         row_data = data['row']
         row = []
@@ -45,8 +45,9 @@ class detalle:
         asi = aside()
         ret['body'] += asi.normal()['body']
 
-        view.add_array(data)
-        ret['body'] += view.render('detail')
+        #view.add_array(data)
+        #ret['body'] += view.render('detail')
+        ret['body'].append(('list',data))
 
         f = footer()
         ret['body'] += f.normal()['body']

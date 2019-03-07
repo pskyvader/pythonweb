@@ -1,5 +1,5 @@
 from core.app import app
-from core.view import view
+#from core.view import view
 from core.functions import functions
 from .base import base
 from .head import head
@@ -37,14 +37,16 @@ class home(base):
 
         asi = aside()
         #ret['body']+=asi.normal()['body']
-
-
-        view.add('title', 'Home')
+        data={}
+        data['title']='Home'
+        #view.add('title', 'Home')
         breadcrumb=[
             {'url':functions.generar_url(url_final),'title':cls.metadata['title'],'active':'active'}
         ]
-        view.add('breadcrumb', breadcrumb)
-        ret['body'] += view.render('home')
+        data['breadcrumb']=breadcrumb
+        #view.add('breadcrumb', breadcrumb)
+        ret['body'].append(('home',data))
+        #ret['body'] += view.render('home')
 
 
         f = footer()

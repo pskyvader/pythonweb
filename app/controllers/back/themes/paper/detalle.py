@@ -45,8 +45,6 @@ class detalle:
         asi = aside()
         ret['body'] += asi.normal()['body']
 
-        #view.add_array(data)
-        #ret['body'] += view.render('detail')
         ret['body'].append(('detail',data))
 
         f = footer()

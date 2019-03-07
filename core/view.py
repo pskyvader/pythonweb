@@ -85,6 +85,7 @@ class view:
     @staticmethod
     def render_unit(env,template,data):
         if isinstance(data,dict) or isinstance(data,list):
+            print(data)
             for d in data:
                 if not isinstance(d,str):
                     d=view.render_unit(env,template,d)

@@ -19,12 +19,13 @@ class view:
         '''Renderiza las vistas de la lista enviadas, las comprime y la retorna en un string'''
         from .functions import functions
         from .cache import cache
-        #from jinja2 import Environment, FileSystemLoader,FileSystemBytecodeCache
+        from jinja2 import Environment, FileSystemLoader,FileSystemBytecodeCache
         theme = view.get_theme()
-        #env = Environment( loader=FileSystemLoader(theme), bytecode_cache=FileSystemBytecodeCache() )
 
-        import ibis
-        env = ibis.loaders.FileLoader(theme)
+        env = Environment( loader=FileSystemLoader(theme), bytecode_cache=FileSystemBytecodeCache() )
+
+        #import ibis
+        #env = ibis.loaders.FileLoader(theme)
 
 
         time=functions.current_time(as_string=False)
@@ -68,8 +69,8 @@ class view:
             data = view.render_unit(env, data[0], data[1])
         
         if template!='' and isinstance(data, dict):
-            template = env(template + "." + view.extension)
-            #template = env.get_template(template + "." + view.extension)
+            #template = env(template + "." + view.extension)
+            template = env.get_template(template + "." + view.extension)
             content=template.render(data)
             return content
         else:

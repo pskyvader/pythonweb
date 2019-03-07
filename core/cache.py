@@ -30,26 +30,21 @@ class cache:
             cache.cacheable = False
         ruta = functions.generar_url(url)
         current = functions.current_url()
-        print('cache 1',ruta,current,cache.cacheable)
+        
         if ruta != current:
             return ""
-        print('cache 2',cache.cacheable)
         if cache.cacheable_config == None:
-            print('cache 3',cache.cacheable)
             config = app.get_config()
             cache.cacheable_config = config['cache'] if 'cache' in config else True
             if not cache.cacheable_config:
                 cache.cacheable = False
 
         
-        print('cache 4',cache.cacheable_config,cache.cacheable)
         if cache.cacheable:
-            print('cache 5')
             folder = app.get_dir(True) + 'cache/'
             name = cache.file_name(url)
             my_file = Path(folder+name)
             if my_file.is_file():
-                print(my_file)
                 return my_file
 
         return ""

@@ -41,14 +41,12 @@ class view:
         for template, data in template_list:
             body += view.render_unit(env, template, data)
 
-        print((functions.current_time(as_string=False)-time) *1000)
         time=functions.current_time(as_string=False)
 
         if minify and cache.is_cacheable:
             body = view.compress(body, 'html')
 
         
-        print((functions.current_time(as_string=False)-time) *1000)
         
         cache.add_cache(body)
 

@@ -4,8 +4,11 @@ from core.app import app
 
 class footer:
     def normal(self):
-        ret = {'body': ''}
+        ret = {'body': []}
         if 'ajax' not in app.post:
-            view.add('js',view.js())
-            ret['body'] = view.render('footer')
+            data={}
+            data['js']=view.js()
+            #view.add('js',view.js())
+            #ret['body'] = view.render('footer')
+            ret['body'].append(('footer',data))
         return ret

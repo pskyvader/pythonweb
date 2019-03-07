@@ -87,7 +87,7 @@ class app:
         url_cache=url.copy()
         file_cache=cache.get_cache(url_cache)
         if file_cache!='':
-            response={'file':file_cache,'is_file':True}
+            response={'file':file_cache,'is_file':True,'body':''}
         else:
             controller = app.controller_dir + url[0]
             my_file = Path(app.root + controller + '.py')

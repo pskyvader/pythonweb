@@ -20,3 +20,19 @@ class {name} extends base
         parent::__construct(new {name}_model);
     }
 }
+
+from .base import base
+from app.models.{{class}} import {{class}} as {{class}}_model
+
+#from core.app import app
+#from core.functions import functions
+#from .detalle import detalle as detalle_class
+#from .lista import lista as lista_class
+
+
+class {{class}}(base):
+    url = ['{{class}}']
+    metadata = {'title' : '{{class}}','modulo':'{{class}}'}
+    breadcrumb = []
+    def __init__(self):
+        super().__init__({{class}}_model)

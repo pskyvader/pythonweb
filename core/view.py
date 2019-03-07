@@ -46,7 +46,7 @@ class view:
             #content = view.content_url[template_url] = open( template_url, "r").read()
 
         #body = view.render_template(content)
-        body = view.render_template(template_url)
+        body = view.render_template_url(template_url)
 
         if minify:  # and not return_body and cache.is_cacheable():
             body = view.compress(body, 'html')
@@ -63,6 +63,13 @@ class view:
 
     @staticmethod
     def render_template(content):
+        from ibis import Template
+        template = Template(content)
+        content = template.render(view.data)
+        return content
+
+    @staticmethod
+    def render_template_url(template_url):
         from ibis import Template
         template = Template(content)
         content = template.render(view.data)

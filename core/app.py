@@ -26,7 +26,9 @@ class app:
         app.root = root + '/'
 
     def init(self, environ):
-        from core.functions import functions
+        from .cache import cache
+        from .functions import functions
+
         app.environ = environ
         data_return = {}
         app.get = self.parse_get()
@@ -80,6 +82,7 @@ class app:
                 'back/themes/' + config['theme_back'] + '/'
 
         view.set_theme(app.root + app.view_dir)
+
 
         controller = app.controller_dir + url[0]
         my_file = Path(app.root + controller + '.py')

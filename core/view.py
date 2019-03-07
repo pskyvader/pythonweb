@@ -28,7 +28,7 @@ class view:
         view.data = {}
 
     @staticmethod
-    def render(template, minify=True):
+    def render2(template, minify=True):
         '''Renderiza la vista segun view.data y la retorna'''
         theme = view.get_theme()
         template_url = theme + template + "." + view.extension
@@ -56,7 +56,7 @@ class view:
 
     @staticmethod
     def render_multiple(template_list, minify=True):
-        '''Renderiza la vista segun view.data y la retorna'''
+        '''Renderiza las vistas de la lista enviadas, las comprime y la retorna en un string'''
         from .functions import functions
         from jinja2 import Environment, FileSystemLoader,FileSystemBytecodeCache
         theme = view.get_theme()

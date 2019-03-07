@@ -37,7 +37,7 @@ class backup(base):
     @classmethod
     def index(cls):
         '''Controlador de lista_class de elementos base, puede ser sobreescrito en el controlador de cada modulo'''
-        ret = {'body': ''}
+        ret = {'body': []}
         # Clase para enviar a controlador de lista_class
         url_final = cls.url.copy()
 
@@ -123,16 +123,13 @@ class backup(base):
         row=reversed(sorted(row.values()))
         data={}
         data['row']=row
+        data['breadcrumb']=cls.breadcrumb
+        data['title']=cls.metadata['title']
+        data['mensaje_error']=mensaje_error
+        data['mensaje']=mensaje
+        data['tiempo_lento']=tiempo_lento
+        data['tiempo_rapido']=tiempo_rapido
 
-        view.add('row', row)
-        view.add('breadcrumb', cls.breadcrumb)
-        view.add('title', cls.metadata['title'])
-        view.add('is_error', is_error)
-        view.add('mensaje_error', mensaje_error)
-        view.add('is_mensaje', is_mensaje)
-        view.add('mensaje', mensaje)
-        view.add('tiempo_lento', tiempo_lento)
-        view.add('tiempo_rapido', tiempo_rapido)
         ret['body'] += view.render('backup')
 
         f = footer()

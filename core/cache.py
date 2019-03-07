@@ -33,9 +33,9 @@ class cache:
         print('cache 1',ruta,current)
         if ruta != current:
             return ""
-
+        print('cache 2')
         if cache.cacheable_config == None:
-            print('cache 2')
+            print('cache 3')
             config = app.get_config()
             cache.cacheable_config = config['cache'] if 'cache' in config else True
             if not cache.cacheable_config:
@@ -43,7 +43,7 @@ class cache:
 
         if cache.cacheable:
             
-            print('cache 3')
+            print('cache 4')
             folder = app.get_dir(True) + 'cache/'
             name = cache.file_name(url)
             my_file = Path(folder+name)

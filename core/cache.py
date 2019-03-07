@@ -50,6 +50,8 @@ class cache:
             my_file = Path(folder+name)
             if my_file.is_file():
                 return my_file
+        else:
+            cache.cacheable=False
         
         return ""
 

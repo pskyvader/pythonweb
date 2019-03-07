@@ -95,7 +95,7 @@ class view:
                     d = view.render_unit(env, '', d)
         elif isinstance(data, tuple):
             print('tupla',data)
-            data = view.render_unit(env, data()[0], data()[1])
+            data = view.render_unit(env, data[0], data[1])
         
         if template!='' and isinstance(data, dict):
             print(template)

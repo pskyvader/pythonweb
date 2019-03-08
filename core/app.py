@@ -130,6 +130,7 @@ class app:
                     error_file = ''
                 else:
                     error_file = str(my_file)
+                print(error_file)
 
                 controller = app.controller_dir + 'error'
                 my_file = Path(app.root + controller + '.py')

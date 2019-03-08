@@ -18,8 +18,8 @@ class cache:
     def delete_cache():
         import shutil
         from .app import app
-        direrctory = app.get_dir(True) + 'cache/'
-        shutil.rmtree(direrctory)
+        directory = app.get_dir(True) + 'cache/'
+        shutil.rmtree(directory)
 
     @staticmethod
     def get_cache(url: list):

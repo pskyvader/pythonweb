@@ -136,7 +136,7 @@ class app:
                     response['body']= view.render(response_error['body'])
                 else:
                     if not config['debug']:
-                        str(my_file)=''
+                        my_file=''
                     response['body'] = '<html><body>No encontrado ' +   str(my_file) + '</body></html>'
         else:
             data_return['status'] = '200 OK'

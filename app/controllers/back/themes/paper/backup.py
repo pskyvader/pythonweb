@@ -71,13 +71,12 @@ class backup(base):
         elif os.access(cls.base_dir, os.W_OK) is not True:
             mensaje_error = 'Debes dar permisos de escritura en ' + cls.base_dir
 
-
         mensaje = "Tiempo promedio de respaldo: "
         tiempo_lento = configuracion_model.getByVariable('tiempo_backup_lento')
         if isinstance(tiempo_lento, bool):
             tiempo_lento = 0
         else:
-            tiempo_lento = float(tiempo_lento.replace(',','.'))
+            tiempo_lento = float(tiempo_lento.replace(',', '.'))
             mensaje += str(tiempo_lento) + " segundos (servidor lento)"
 
         tiempo_rapido = configuracion_model.getByVariable(
@@ -85,12 +84,11 @@ class backup(base):
         if isinstance(tiempo_rapido, bool):
             tiempo_rapido = 0
         else:
-            tiempo_rapido = float(tiempo_rapido.replace(',','.'))
+            tiempo_rapido = float(tiempo_rapido.replace(',', '.'))
             if tiempo_lento > 0:
                 mensaje += ", "
 
             mensaje += str(tiempo_rapido) + " segundos (servidor rápido)"
-
 
         row = {}
         files = []
@@ -114,18 +112,18 @@ class backup(base):
                 'url': url + f,
             }
 
-        #lista de los valores del dict, en orden inverso
-        row=reversed(sorted(row.values()))
-        data={}
-        data['row']=row
-        data['breadcrumb']=cls.breadcrumb
-        data['title']=cls.metadata['title']
-        data['mensaje_error']=mensaje_error
-        data['mensaje']=mensaje
-        data['tiempo_lento']=tiempo_lento
-        data['tiempo_rapido']=tiempo_rapido
+        # lista de los valores del dict, en orden inverso
+        row = reversed(sorted(row.values()))
+        data = {}
+        data['row'] = row
+        data['breadcrumb'] = cls.breadcrumb
+        data['title'] = cls.metadata['title']
+        data['mensaje_error'] = mensaje_error
+        data['mensaje'] = mensaje
+        data['tiempo_lento'] = tiempo_lento
+        data['tiempo_rapido'] = tiempo_rapido
 
-        ret['body'].append(('backup',data))
+        ret['body'].append(('backup', data))
 
         f = footer()
         ret['body'] += f.normal()['body']
@@ -308,7 +306,7 @@ class backup(base):
             respuesta['exito'] = False
 
         if respuesta['exito']:
-            respuesta = self.get_files(self,self.base_dir)
+            respuesta = self.get_files(self, self.base_dir)
 
         ret['body'] = json.dumps(respuesta)
         return ret
@@ -331,7 +329,7 @@ class backup(base):
             respuesta['exito'] = False
 
         if respuesta['exito']:
-            respuesta = self.get_files(self,self.base_dir)
+            respuesta = self.get_files(self, self.base_dir)
 
         if respuesta['exito']:
             total = len(respuesta['lista'])
@@ -386,7 +384,7 @@ class backup(base):
                             file_write.close()
             respuesta['lista'] = lista_archivos
             respuesta['archivo_backup'] = self.dir_backup + '/' + app.prefix_site + \
-                '-' + functions.current_time(as_string=False) + '.zip'
+                '-' + str(functions.current_time(as_string=False)) + '.zip'
             respuesta['exito'] = True
         else:
             respuesta['mensaje'] = 'Directorio no valido'

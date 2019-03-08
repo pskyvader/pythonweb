@@ -48,7 +48,7 @@ class error():
 
         asi = aside()
         ret['body'] += asi.normal()['body']
-        data = {'error',var}
+        data = {'error':var}
         ret['body'].append(('404', data))
 
         f = footer()

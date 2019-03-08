@@ -31,7 +31,7 @@ class backup(base):
 
     def __init__(self):
         backup.base_dir = app.get_dir(True)
-        backup.dir_backup = self.base_dir + 'backup'
+        backup.dir_backup = backup.base_dir + 'backup'
         backup.archivo_log = app.get_dir(True) + '/log.json'
 
     @classmethod

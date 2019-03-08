@@ -173,6 +173,8 @@ class app:
                     url[0] = 'manifest'
                 elif url[0] == 'sw.js':
                     url[0] = 'sw'
+                elif url[0] == 'log.json':
+                    url[0] = 'logging'
                 elif url[0] == 'favicon.ico':
                     url[0] = 'favicon'
                 elif len(url) > 1:
@@ -180,6 +182,8 @@ class app:
                         url[1] = 'manifest'
                     elif url[1] == 'sw.js':
                         url[1] = 'sw'
+                    elif url[1] == 'log.json':
+                        url[1] = 'logging'
                     elif url[1] == 'favicon.ico':
                         url[1] = 'favicon'
 

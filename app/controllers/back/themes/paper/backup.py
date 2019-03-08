@@ -32,7 +32,7 @@ class backup(base):
     def __init__(self):
         backup.base_dir = app.get_dir(True)
         backup.dir_backup = self.base_dir + 'backup'
-        backup.archivo_log = app.get_dir() + '/log.json'
+        backup.archivo_log = app.get_dir(True) + '/log.json'
 
     @classmethod
     def index(cls):
@@ -381,7 +381,7 @@ class backup(base):
                             log_file = {
                                 'mensaje': 'Recuperando archivo ' + file, 'porcentaje': 10
                             }
-                            file_write = open(self.archivo_log, 'w')
+                            file_write = open(self.archivo_log, 'w+')
                             file_write.write(json.dumps(log_file))
                             file_write.close()
             respuesta['lista'] = lista_archivos

@@ -301,6 +301,7 @@ class database():
             for b in range(1,numBatches+1):
                 query = 'SELECT * FROM `' + table + '` LIMIT ' + str(b * self.batchSize - self.batchSize) + ',' + str(self.batchSize)
                 row = self.consulta(query, True)
+                print(row)
                 realBatchSize = len(row)
                 numFields = len(campos)
                 if realBatchSize != 0:

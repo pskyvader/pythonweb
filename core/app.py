@@ -127,9 +127,9 @@ class app:
             else:
                 data_return['status'] = '404 Not Found'
                 if not config['debug']:
-                    my_file = ''
+                    error_file = ''
                 else:
-                    my_file = str(my_file)
+                    error_file = str(my_file)
 
                 controller = app.controller_dir + 'error'
                 my_file = Path(app.root + controller + '.py')
@@ -137,11 +137,11 @@ class app:
                     current_module = importlib.import_module( controller.replace("/", "."))
                     current_module = getattr(current_module, 'error')
                     current_module = current_module()
-                    response_error = current_module.init(['index',my_file])
-                    #response_error = current_module.index(str(my_file))
+                    response_error = current_module.init(['index',error_file])
+                    #response_error = current_module.index(str(error_file))
                     response['body'] = response_error['body']
                 else:
-                    response['body'] = '<html><body>No encontrado ' +  my_file + '</body></html>'
+                    response['body'] = '<html><body>No encontrado ' +  error_file + '</body></html>'
         else:
             data_return['status'] = '200 OK'
 

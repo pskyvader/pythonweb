@@ -27,7 +27,7 @@ class configuracionadministrador(base):
     @classmethod
     def index(cls):
         '''Controlador de lista_class de elementos base, puede ser sobreescrito en el controlador de cada modulo'''
-        ret = {'body': ''}
+        ret = {'body': []}
         # Clase para enviar a controlador de lista_class
         url_final = cls.url.copy()
         if not administrador_model.verificar_sesion():

@@ -355,8 +355,11 @@ class backup(base):
                 file_write.write(json.dumps(log_file))
                 file_write.close()
 
+
         if log:
             ret['body'] = json.dumps(respuesta)
+
+        print(ret)
         return ret
 
     def get_files(self, source: str, log=True):

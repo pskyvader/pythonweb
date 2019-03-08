@@ -137,7 +137,6 @@ class app:
                     response_error = current_module.index()
 
                 response['body'] = view.render(response_error['body'])
-                #response['body'] = '<html><body>No encontrado ' +   str(my_file) + '</body></html>'
         else:
             data_return['status'] = '200 OK'
 

@@ -387,7 +387,10 @@ class backup(base):
                             file_write.close()
                 if len(file)==0 and len(dirs)==0:
                     if 'pycache' not in root and '.git' not in root and '.autogit' not in root and '.vscode' not in root and 'session_data' not in root:
-                        print(root,dirs,file)
+                        fichero_final=root
+                        fichero_final = fichero_final.replace("\\", "/").replace("//", "/")
+                        fichero_final=fichero_final[len(source)-1:]
+                        lista_archivos.append(fichero_final)
 
             respuesta['lista'] = lista_archivos
             respuesta['archivo_backup'] = self.dir_backup + '/' + app.prefix_site + \

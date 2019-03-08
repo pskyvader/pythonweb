@@ -313,7 +313,7 @@ class backup(base):
         ret['body'] = json.dumps(respuesta)
         return ret
 
-    def generar_backup(self, log=True):
+    def generar_backup(self, logging=True):
         '''genera respaldo del sitio en zip, en formato "Respaldo rapido" (usa mas recursos)'''
         ret = {'body': ''}
         c = configuracion_administrador()
@@ -338,10 +338,10 @@ class backup(base):
             if total > 0:
                 respuesta['exito'] = True
                 while len(respuesta['lista']) > 0 and respuesta['exito']:
-                    respuesta = self.zipData(self,self.base_dir, respuesta['archivo_backup'], respuesta['lista'], total, log)
+                    respuesta = self.zipData(self,self.base_dir, respuesta['archivo_backup'], respuesta['lista'], total, logging)
 
         if respuesta['exito']:
-            if log:
+            if logging:
                 log_file = {'mensaje': 'Respaldando Base de datos ', 'porcentaje': 90}
                 file_write = open(self.archivo_log, 'w')
                 file_write.write(json.dumps(log_file))
@@ -349,17 +349,17 @@ class backup(base):
             respuesta = self.bdd(self,False, respuesta['archivo_backup'])
 
         if respuesta['exito']:
-            if log:
+            if logging:
                 log_file = {'mensaje': 'Restauracion finalizada', 'porcentaje': 100}
                 file_write = open(self.archivo_log, 'w')
                 file_write.write(json.dumps(log_file))
                 file_write.close()
 
 
-        if log:
+        if logging:
             ret['body'] = json.dumps(respuesta)
 
-        print(ret,log)
+        print(ret,logging)
         return ret
 
     def get_files(self, source: str, log=True):

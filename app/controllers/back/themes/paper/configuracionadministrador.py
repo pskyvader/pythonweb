@@ -1,6 +1,6 @@
 from .base import base
 
-#from app.models.table import table
+from app.models.table import table as table_model
 from app.models.administrador import administrador as administrador_model
 
 #from .detalle import detalle as detalle_class
@@ -47,13 +47,17 @@ class configuracionadministrador(base):
 
         asi = aside()
         ret['body'] += asi.normal()['body']
-        data = {}
-        data['title'] = 'Home'
-        breadcrumb = [
-            {'url': functions.generar_url(
-                url_final), 'title': cls.metadata['title'], 'active':'active'}
-        ]
-        data['breadcrumb'] = breadcrumb
+        
+        $vaciar = table_model::getAll(array('truncate' => true), array(), 'tablename');
+        view::set('vaciar', $vaciar);
+        view::set('breadcrumb', $this->breadcrumb);
+        view::set('title', $this->metadata['title']);
+        view::set('save_url', functions::generar_url(array_merge($this->url, array('vaciar'))));
+        view::set('list_url', functions::generar_url($this->url));
+        view::render('configuracion_administrador');
+
+
+
         ret['body'].append(('home', data))
 
         f = footer()

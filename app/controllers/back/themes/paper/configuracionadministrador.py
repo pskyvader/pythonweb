@@ -11,7 +11,7 @@ from app.models.administrador import administrador as administrador_model
 #from .footer import footer
 
 #from core.app import app
-#from core.functions import functions
+from core.functions import functions
 #from core.image import image
 
 class configuracionadministrador(base):

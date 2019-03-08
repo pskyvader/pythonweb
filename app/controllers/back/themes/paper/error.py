@@ -26,7 +26,7 @@ class error(base):
     breadcrumb = []
 
     @classmethod
-    def index(cls,var:str=''):
+    def index(cls,var=[]):
         ret = {'body': []}
         url_final = cls.url.copy()
         if not administrador_model.verificar_sesion():
@@ -48,7 +48,7 @@ class error(base):
 
         asi = aside()
         ret['body'] += asi.normal()['body']
-        data = {'error':var}
+        data = {'error':var[0]}
         ret['body'].append(('404', data))
 
         f = footer()

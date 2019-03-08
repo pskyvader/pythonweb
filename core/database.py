@@ -269,87 +269,87 @@ class database():
                      'mensaje': 'Error al respaldar base de datos', 'sql': []}
         self.disableForeignKeyChecks = True
         self.batchSize = 1000
-        try:
-            if tables == '*':
-                tables = []
-                row = self.consulta('SHOW TABLES', True)
-                for value in row:
-                    tables.append(value[0])
-            else:
-                tables = tables if isinstance(tables, list) else (
-                    tables.replace(' ', '')).split(',')
+        #try:
+        if tables == '*':
+            tables = []
+            row = self.consulta('SHOW TABLES', True)
+            for value in row:
+                tables.append(value[0])
+        else:
+            tables = tables if isinstance(tables, list) else (
+                tables.replace(' ', '')).split(',')
 
-            sql = ""
+        sql = ""
 
-            if self.disableForeignKeyChecks == True:
-                sql += "SET foreign_key_checks = 0\n\n"
+        if self.disableForeignKeyChecks == True:
+            sql += "SET foreign_key_checks = 0\n\n"
 
-            for table in tables:
-                sql += 'DROP TABLE IF EXISTS `' + table + '`'
-                row = self.consulta('SHOW CREATE TABLE `' + table + '`', True)
-                sql += "\n\n" + row[0][1] + "\n\n"
+        for table in tables:
+            sql += 'DROP TABLE IF EXISTS `' + table + '`'
+            row = self.consulta('SHOW CREATE TABLE `' + table + '`', True)
+            sql += "\n\n" + row[0][1] + "\n\n"
 
-                row = self.consulta(
-                    'SELECT COUNT(*) FROM `' + table + '`', True)
-                numRows = row[0][0]
+            row = self.consulta(
+                'SELECT COUNT(*) FROM `' + table + '`', True)
+            numRows = row[0][0]
 
-                numBatches = int(numRows / self.batchSize) + 1
+            numBatches = int(numRows / self.batchSize) + 1
 
-                campos = self.consulta("SELECT COLUMN_NAME,COLUMN_TYPE FROM information_schema.columns WHERE table_schema='" +
-                                       self._dbName + "' AND table_name='" + table + "'", True)
+            campos = self.consulta("SELECT COLUMN_NAME,COLUMN_TYPE FROM information_schema.columns WHERE table_schema='" +
+                                    self._dbName + "' AND table_name='" + table + "'", True)
 
-                for b in range(numBatches+1):
-                    query = 'SELECT * FROM `' + table + '` LIMIT ' + \
-                        (b * self.batchSize - self.batchSize) + \
-                        ',' + self.batchSize
-                    row = self.consulta(query, True)
-                    realBatchSize = len(row)
-                    numFields = len(campos)
-                    if realBatchSize != 0:
-                        sql += 'INSERT INTO `' + table + '` VALUES '
-                        for key, fila in row.items():
-                            rowCount = key + 1
-                            sql += '('
+            for b in range(numBatches+1):
+                query = 'SELECT * FROM `' + table + '` LIMIT ' + \
+                    (b * self.batchSize - self.batchSize) + \
+                    ',' + self.batchSize
+                row = self.consulta(query, True)
+                realBatchSize = len(row)
+                numFields = len(campos)
+                if realBatchSize != 0:
+                    sql += 'INSERT INTO `' + table + '` VALUES '
+                    for key, fila in row.items():
+                        rowCount = key + 1
+                        sql += '('
 
-                            for k, v in campos.items():
-                                j = v[0]
-                                if j in fila:
-                                    fila[j] = self._connection.escape_string(
-                                        fila[j])
-                                    fila[j] = fila[j].replace("\n", "\\n")
-                                    fila[j] = fila[j].replace("\r", "\\r")
-                                    fila[j] = fila[j].replace("\f", "\\f")
-                                    fila[j] = fila[j].replace("\t", "\\t")
-                                    fila[j] = fila[j].replace("\v", "\\v")
-                                    fila[j] = fila[j].replace("\a", "\\a")
-                                    fila[j] = fila[j].replace("\b", "\\b")
-                                    sql += '"' + fila[j] + '"'
-                                else:
-                                    sql += 'NULL'
-
-                                if k < (numFields - 1):
-                                    sql += ','
-                            if rowCount == realBatchSize:
-                                rowCount = 0
-                                sql += ")\n"
+                        for k, v in campos.items():
+                            j = v[0]
+                            if j in fila:
+                                fila[j] = self._connection.escape_string(
+                                    fila[j])
+                                fila[j] = fila[j].replace("\n", "\\n")
+                                fila[j] = fila[j].replace("\r", "\\r")
+                                fila[j] = fila[j].replace("\f", "\\f")
+                                fila[j] = fila[j].replace("\t", "\\t")
+                                fila[j] = fila[j].replace("\v", "\\v")
+                                fila[j] = fila[j].replace("\a", "\\a")
+                                fila[j] = fila[j].replace("\b", "\\b")
+                                sql += '"' + fila[j] + '"'
                             else:
-                                sql += "),\n"
+                                sql += 'NULL'
 
-                            rowCount += 1
+                            if k < (numFields - 1):
+                                sql += ','
+                        if rowCount == realBatchSize:
+                            rowCount = 0
+                            sql += ")\n"
+                        else:
+                            sql += "),\n"
 
-                    respuesta['sql'].append(sql)
-                    sql = ''
+                        rowCount += 1
 
-                sql += "\n\n"
+                respuesta['sql'].append(sql)
+                sql = ''
 
-            if self.disableForeignKeyChecks:
-                sql += "SET foreign_key_checks = 1\n"
+            sql += "\n\n"
 
-            respuesta['sql'].append(sql)
-            respuesta['exito'] = True
-        except Exception as e:
-            respuesta['mensaje'] = str(e)
-            raise RuntimeError('Error al obtener respaldo en base de datos: ' + repr(e)+ app.environ['PATH_INFO'])
+        if self.disableForeignKeyChecks:
+            sql += "SET foreign_key_checks = 1\n"
+
+        respuesta['sql'].append(sql)
+        respuesta['exito'] = True
+        #except Exception as e:
+        #    respuesta['mensaje'] = str(e)
+        #    raise RuntimeError('Error al obtener respaldo en base de datos: ' + repr(e)+ app.environ['PATH_INFO'])
 
         return respuesta
 

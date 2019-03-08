@@ -37,12 +37,9 @@ class home(base):
         asi = aside()
         ret['body'] += asi.normal()['body']
         data = {}
-        data['title'] = 'Home'
-        breadcrumb = [
-            {'url': functions.generar_url(
-                url_final), 'title': cls.metadata['title'], 'active':'active'}
-        ]
-        data['breadcrumb'] = breadcrumb
+        data['title'] = cls.metadata['title']
+        cls.breadcrumb = [ {'url': functions.generar_url( url_final), 'title': cls.metadata['title'], 'active':'active'} ]
+        data['breadcrumb'] = cls.breadcrumb
         ret['body'].append(('home', data))
 
         f = footer()

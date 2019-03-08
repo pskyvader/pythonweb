@@ -132,7 +132,7 @@ class app:
                 current_module = getattr(current_module, 'error')
                 current_module = current_module()
                 if config['debug']:
-                    response_error = current_module.index()
+                    response_error = current_module.index(str(my_file))
                 else:
                     response_error = current_module.index()
 

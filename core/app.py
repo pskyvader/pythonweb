@@ -87,18 +87,19 @@ class app:
         file_cache = cache.get_cache(url_cache)
         if file_cache != '':
             response = {
-                'file': file_cache, 
-                'is_file': True, 
+                'file': file_cache,
+                'is_file': True,
                 'body': '', 'headers': [
-                ('Content-Type', 'text/html; charset=utf-8'),
-                ('Accept-encoding', 'gzip,deflate'),
-                ('Content-Encoding', 'gzip')]
+                    ('Content-Type', 'text/html; charset=utf-8'),
+                    ('Accept-encoding', 'gzip,deflate'),
+                    ('Content-Encoding', 'gzip')]
             }
         else:
             controller = app.controller_dir + url[0]
             my_file = Path(app.root + controller + '.py')
             if my_file.is_file():
-                current_module = importlib.import_module( controller.replace("/", "."))
+                current_module = importlib.import_module(
+                    controller.replace("/", "."))
                 current_module = getattr(current_module, url[0])
                 current_module = current_module()
                 del url[0]
@@ -125,19 +126,20 @@ class app:
                     response['body'] = ''
             else:
                 data_return['status'] = '404 Not Found'
+                if not config['debug']:
+                    my_file = ''
                 controller = app.controller_dir + 'error'
                 my_file = Path(app.root + controller + '.py')
                 if my_file.is_file():
                     current_module = importlib.import_module( controller.replace("/", "."))
                     current_module = getattr(current_module, 'error')
                     current_module = current_module()
-                    if config['debug']:
-                        response_error=current_module.index(str(my_file))                
-                    response['body']= view.render(response_error['body'])
+                    response_error = current_module.init(str(my_file))
+                    #response_error = current_module.index(str(my_file))
+                    response['body'] = response_error['body']
                 else:
-                    if not config['debug']:
-                        my_file=''
-                    response['body'] = '<html><body>No encontrado ' +   str(my_file) + '</body></html>'
+                    response['body'] = '<html><body>No encontrado ' + \
+                        str(my_file) + '</body></html>'
         else:
             data_return['status'] = '200 OK'
 

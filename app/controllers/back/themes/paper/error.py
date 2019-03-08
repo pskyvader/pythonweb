@@ -22,11 +22,11 @@ from core.functions import functions
 
 class error(base):
     url = ['error']
-    metadata = {'title' : 'error','modulo':'error'}
+    metadata = {'title': 'error', 'modulo': 'error'}
     breadcrumb = []
 
     @classmethod
-    def index(cls,var=[]):
+    def index(cls, var=[]):
         ret = {'body': []}
         url_final = cls.url.copy()
         if not administrador_model.verificar_sesion():
@@ -48,7 +48,10 @@ class error(base):
 
         asi = aside()
         ret['body'] += asi.normal()['body']
-        data = {'error':var[0]}
+        data = {}
+        if len(var) > 0:
+            data['error'] = var[0]
+
         ret['body'].append(('404', data))
 
         f = footer()

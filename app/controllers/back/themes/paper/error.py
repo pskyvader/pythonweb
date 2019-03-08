@@ -20,13 +20,13 @@ from core.functions import functions
 
 #import json
 
-class error(base):
+class error():
     url = ['error']
     metadata = {'title' : 'error','modulo':'error'}
     breadcrumb = []
 
     @classmethod
-    def index(cls):
+    def index(cls,var):
         ret = {'body': []}
         url_final = cls.url.copy()
         if not administrador_model.verificar_sesion():
@@ -49,7 +49,7 @@ class error(base):
 
         asi = aside()
         ret['body'] += asi.normal()['body']
-        data = {}
+        data = {'error',var}
         ret['body'].append(('404', data))
 
         f = footer()

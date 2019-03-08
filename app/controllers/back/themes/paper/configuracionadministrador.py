@@ -69,7 +69,7 @@ class configuracionadministrador(base):
 
         return ret
 
-    def vaciar():
+    def vaciar(self):
         ret = {'body': []}
         post = app.post
         if 'campos' in post:

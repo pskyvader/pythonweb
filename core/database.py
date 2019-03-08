@@ -305,12 +305,11 @@ class database():
                 numFields = len(campos)
                 if realBatchSize != 0:
                     sql += 'INSERT INTO `' + table + '` VALUES '
-                    key=0
-                    for fila in list(row):
+                    for key, fila in enumerate(row):
                         rowCount = key + 1
                         sql += '('
 
-                        for k, v in campos.items():
+                        for k, v in enumerate(campos):
                             j = v[0]
                             if j in fila:
                                 fila[j] = self._connection.escape_string(
@@ -335,7 +334,6 @@ class database():
                             sql += "),\n"
 
                         rowCount += 1
-                        key += 1
 
                 respuesta['sql'].append(sql)
                 sql = ''

@@ -177,12 +177,15 @@ class functions():
     def formato_fecha(fecha_string:str, formato = '', original_format='', as_string=True):
         '''Fecha con formato opcional'''
         import datetime
+
         if formato=='':
             formato = '%d de %B del %Y'
         if original_format=='':
             original_format = "%Y-%m-%d %H:%M:%S"
-        
-        fecha=datetime.datetime.strptime(fecha_string,original_format)
+        if not isinstance(fecha_string,str):
+            fecha=datetime.datetime.fromtimestamp(fecha_string)
+        else:
+            fecha=datetime.datetime.strptime(fecha_string,original_format)
         if as_string:
             return fecha.strftime(formato)
         else:
@@ -257,7 +260,7 @@ class functions():
         else:
             size = file_url
         
-        unit       = ['','b', 'kb', 'mb', 'gb', 'tb', 'pb']
+        unit       = ['b', 'kb', 'mb', 'gb', 'tb', 'pb']
         for u in unit:
             if abs(size) < 1024.0:
                 return "%3.2f %s" % (size, u)

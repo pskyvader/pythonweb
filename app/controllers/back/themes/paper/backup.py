@@ -32,7 +32,10 @@ class backup(base):
     def __init__(self):
         backup.base_dir = app.get_dir(True)
         backup.dir_backup = backup.base_dir + 'backup'
+        if not os.path.exists(backup.dir_backup):
+            os.makedirs(backup.dir_backup)
         backup.archivo_log = app.get_dir(True) + '/log.json'
+
 
     @classmethod
     def index(cls):
@@ -90,7 +93,7 @@ class backup(base):
 
             mensaje += str(tiempo_rapido) + " segundos (servidor rápido)"
 
-        row = {}
+        row = []
         files = []
         for root, dirs, file in os.walk(cls.dir_backup):
             for fichero in file:
@@ -100,20 +103,19 @@ class backup(base):
 
         url = app.get_url(True) + 'backup/'
 
-        for key, f in dict.fromkeys(files):
+        for f in files:
             name, extension = os.path.splitext(f)
             fecha = name.split('-')
-            fecha = fecha.pop()
-            row[fecha] = {
-                'even': (key % 2 == 0),
+            fecha = float(fecha.pop())
+            row.append({
                 'id': fecha,
                 'fecha': functions.formato_fecha(fecha),
                 'size': functions.file_size(cls.dir_backup + '/' + f),
                 'url': url + f,
-            }
+            })
 
         # lista de los valores del dict, en orden inverso
-        row = reversed(sorted(row.values()))
+        row = reversed(row)
         data = {}
         data['row'] = row
         data['breadcrumb'] = cls.breadcrumb
@@ -333,48 +335,45 @@ class backup(base):
 
         if respuesta['exito']:
             total = len(respuesta['lista'])
-            if respuesta['lista'] > 0:
+            if total > 0:
                 respuesta['exito'] = True
                 while len(respuesta['lista']) > 0 and respuesta['exito']:
-                    respuesta = self.zipData(
-                        self.base_dir, respuesta['archivo_backup'], respuesta['lista'], total, log)
+                    respuesta = self.zipData(self,self.base_dir, respuesta['archivo_backup'], respuesta['lista'], total, log)
 
         if respuesta['exito']:
             if log:
-                log = {'mensaje': 'Respaldando Base de datos ', 'porcentaje': 90}
+                log_file = {'mensaje': 'Respaldando Base de datos ', 'porcentaje': 90}
                 file_write = open(self.archivo_log, 'w')
-                file_write.write(json.dumps(log))
+                file_write.write(json.dumps(log_file))
                 file_write.close()
-            respuesta = self.bdd(False, respuesta['archivo_backup'])
+            respuesta = self.bdd(self,False, respuesta['archivo_backup'])
 
         if respuesta['exito']:
             if log:
-                log = {'mensaje': 'Restauracion finalizada', 'porcentaje': 100}
+                log_file = {'mensaje': 'Restauracion finalizada', 'porcentaje': 100}
                 file_write = open(self.archivo_log, 'w')
-                file_write.write(json.dumps(log))
+                file_write.write(json.dumps(log_file))
                 file_write.close()
 
         if log:
             ret['body'] = json.dumps(respuesta)
-            return ret
-        else:
-            return respuesta
+        return ret
 
     def get_files(self, source: str, log=True):
         '''obtiene lista de archivos para respaldar en zip'''
-        respuesta = {'exito': False,
-                     'mensaje': 'Debes instalar la extension ZIP'}
+        respuesta = {'exito': False, 'mensaje': ''}
         my_file = Path(source)
         if my_file.is_dir():
             lista_archivos = []
             count = 0
             for root, dirs, file in os.walk(source):
                 for fichero in file:
-                    if '.git' not in root and 'session_data' not in root and '.zip' not in fichero and '.sql' not in fichero and fichero != '.' and fichero != '..' and fichero[-1:] != '.' and fichero[-2:] != '..':
+                    if 'pycache' not in root and '.git' not in root and '.autogit' not in root and '.vscode' not in root and 'session_data' not in root and '.zip' not in fichero and '.sql' not in fichero and fichero != '.' and fichero != '..' and fichero[-1:] != '.' and fichero[-2:] != '..':
                         count += 1
-                        print('root:',root,'fichero:',fichero)
-                        fichero_final=root+fichero
-                        fichero_final = fichero_final.replace("\\", "/")
+                        #print('root:',root,'fichero:',fichero)
+                        fichero_final=root+'/'+fichero
+                        fichero_final = fichero_final.replace("\\", "/").replace("//", "/")
+                        fichero_final=fichero_final[len(source)-1:]
                         lista_archivos.append(fichero_final)
 
                         if log and count % 1000 == 0:
@@ -384,7 +383,6 @@ class backup(base):
                             file_write = open(self.archivo_log, 'w+')
                             file_write.write(json.dumps(log_file))
                             file_write.close()
-            print(lista_archivos)
             respuesta['lista'] = lista_archivos
             respuesta['archivo_backup'] = self.dir_backup + '/' + app.prefix_site + \
                 '-' + str(functions.current_time(as_string=False)) + '.zip'
@@ -421,7 +419,7 @@ class backup(base):
         '''Inicio o continuacion de respaldo en modo lento (toma mas tiempo pero consume menos recursos)'''
         ret = {'body': ''}
         lista=json.loads(app.post['lista'])
-        respuesta = self.zipData(self.base_dir, app.post['archivo_backup'], lista, app.post['total'])
+        respuesta = self.zipData(self,self.base_dir, app.post['archivo_backup'], lista, app.post['total'])
         ret['body'] = json.dumps(respuesta)
         return ret
 
@@ -431,30 +429,31 @@ class backup(base):
         respuesta = {'exito': False, 'mensaje': 'Error al crear archivo'}
         tiempo = 0
         archivo = destination
-
         memory_limit = 128*1024*1024
         memory_limit = (int)(memory_limit) / 1.5
         memory_usage = 0
 
         zip = zipfile.ZipFile(archivo, 'w')
         count = 0
-        for file in lista:
+        print(len(lista))
+        for file in lista.copy():
             count += 1
-            memory_usage += os.path.getsize(source + '/' + file)
+            final_file=source + file
+            memory_usage += os.path.getsize(final_file)
             if memory_usage > memory_limit:
                 break
 
-            my_file = Path(source + '/' + file)
+            my_file = Path(final_file)
             if my_file.is_dir():
-                zip.writestr(zipfile.ZipInfo(source + '/' + file), '')
+                zip.writestr(zipfile.ZipInfo(final_file), '')
             else:
-                zip.write(source + '/' + file)
+                zip.write(final_file)
 
-            del file
+            lista.remove(file)
 
             if log and (functions.current_time(as_string=False) - tiempo > 5 or count % 1000 == 0):
                 log_file = {
-                    'mensaje': file[-30:] + ' (' + str(total - len(lista)) + '/' + str(total) + ')',
+                    'mensaje': final_file[-30:] + ' (' + str(total - len(lista)) + '/' + str(total) + ')',
                     'porcentaje': 10 + ((total - len(lista)) / total) * 40
                 }
                 file_write = open(self.archivo_log, 'w')
@@ -464,7 +463,7 @@ class backup(base):
 
         if log:
             log_file = {
-                'mensaje': file[-30:] + ' (' + str(total - len(lista)) + '/' + str(total) + ')',
+                'mensaje': final_file[-30:] + ' (' + str(total - len(lista)) + '/' + str(total) + ')',
                 'notificacion': 'Guardando archivo, Esta operacion puede tomar algun tiempo',
                 'porcentaje': 10 + ((total - len(lista)) / total) * 40
             }
@@ -476,6 +475,6 @@ class backup(base):
         respuesta['exito'] = True
         respuesta['lista'] = lista
         respuesta['archivo_backup'] = destination
-        respuesta['archivo_actual'] = file
+        respuesta['archivo_actual'] = final_file
 
         return respuesta

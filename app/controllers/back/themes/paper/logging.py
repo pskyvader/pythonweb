@@ -10,12 +10,13 @@ import socket
 
 
 class logging:
-    def init(self):
+    def init(self,var):
         ret = {'body': ''}
         resource=app.get_dir(True)+'log.json'
         ret['headers'] = [ ('Content-Type', 'text/plain; charset=utf-8') ]
         
         my_file = Path(resource)
+        ret['is_file'] = True
         if my_file.is_file():
             ret['file'] = resource
         else:

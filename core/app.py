@@ -23,6 +23,8 @@ class app:
     get = {}
 
     def __init__(self, root):
+        import locale
+        locale.setlocale(locale.LC_ALL, "es_CL.UTF-8")
         app.root = root + '/'
 
     def init(self, environ):

@@ -53,7 +53,7 @@ $('body').on('submit', 'form.search', function() {
     return false;
 });
 $('body').on('click', 'table button.eliminar', function() {
-    $('.modal-eliminar #nombre_elemento').text($('tr[data-id=' + $(this).data('id') + '] td[data-field=titulo]').text());
+    $('.modal-eliminar #nombre_elemento').text($('tr[data-id="' + $(this).data('id') + '"] td[data-field=titulo]').text());
     $('.modal-eliminar input[name=id_eliminar]').val($(this).data('id'));
 });
 $('body').on('click', 'button.accion', function() {
@@ -70,7 +70,7 @@ function eliminar_elemento() {
     var info = {
         id: id
     };
-    $('tr[data-id=' + id + ']').remove();
+    $('tr[data-id="' + id + '"]').remove();
     post(create_url(modulo, 'eliminar'), info, "Eliminando", !1);
 }
 $('body').on('click', 'table button.active', function() {
@@ -85,7 +85,7 @@ $('body').on('click', 'table button.active', function() {
 });
 
 function cambiar_estado(info) {
-    var btn = $('button.active[data-id=' + info.id + '][data-field=' + info.campo + ']');
+    var btn = $('button.active[data-id="' + info.id + '"][data-field=' + info.campo + ']');
     var clase = (info.active) ? 'btn-success' : 'btn-danger';
     var icono = (info.active) ? 'fa-check' : 'fa-close';
     btn.data('active', info.active).removeClass('btn-success btn-danger').addClass(clase);

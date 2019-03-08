@@ -52,7 +52,7 @@ class database():
                 # cache.delete_cache()
         except:
             self._connection.rollback()
-            print('error DB query')
+            print('error DB query',sql)
 
         if rows is None:
             if return_query:

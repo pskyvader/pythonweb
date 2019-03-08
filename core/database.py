@@ -305,8 +305,8 @@ class database():
                 numFields = len(campos)
                 if realBatchSize != 0:
                     sql += 'INSERT INTO `' + table + '` VALUES '
-                    for key, fila in dict.fromkeys(row , 1):
-                        print(key,fila)
+                    key=0
+                    for fila in row:
                         rowCount = key + 1
                         sql += '('
 
@@ -335,6 +335,7 @@ class database():
                             sql += "),\n"
 
                         rowCount += 1
+                        key+=1
 
                 respuesta['sql'].append(sql)
                 sql = ''

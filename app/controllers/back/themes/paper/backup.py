@@ -331,7 +331,7 @@ class backup(base):
             respuesta['exito'] = False
 
         if respuesta['exito']:
-            respuesta = self.get_files(self.base_dir)
+            respuesta = self.get_files(self,self.base_dir)
 
         if respuesta['exito']:
             total = len(respuesta['lista'])

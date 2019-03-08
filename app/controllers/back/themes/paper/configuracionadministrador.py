@@ -142,3 +142,136 @@ class configuracionadministrador(base):
             return ret
         else:
             return responder
+
+
+    def json_update(self,responder = True):
+        respuesta = {'exito' : True, 'mensaje' : ['JSON actualizado correctamente']}
+        ret = {'body': []}
+
+        base_dir       = app.get_dir(True) + '/config/'
+
+        file_read = open(base_dir + 'bdd.json', 'r')
+        campos=json.loads(file_read.read())
+        file_read.close()
+        
+        for key,tabla in campos.items():
+            tablename = tabla['tablename']
+            #primero es siempre la tabla "tablas", se crea inmediatamente para guardar las siguientes configuraciones
+            if key == 0: 
+                existe = table_model.table_exists(tablename)
+                if not existe:
+                    fields = dict(tabla['fields'])
+                    fields={'titulo' : tabla['idname'], 'tipo' : 'int(11)', 'primary' : True} +fields
+
+                    foreach (fields as key : value:
+                        if not isset(fields[key]['primary']):
+                            fields[key]['primary'] = false
+                        }
+                    }
+                    connection = database.instance()
+                    connection->create(tablename, fields)
+                }
+            }
+            table = table_model.getAll(array('tablename' : tablename))
+
+            tabla['fields'] = functions.encode_json(tabla['fields'])
+            if count(table) == 1:
+                tabla['id'] = table[0][0]
+                table_model.update(tabla, false)
+            } else {
+                table_model.insert(tabla, false)
+            }
+        }
+
+        tablas = table_model.getAll()
+
+        foreach (tablas as key : tabla:
+            mensajes = table_model.validate(tabla[0], false)
+            if not mensajes['exito']:
+                respuesta = mensajes
+                break
+            } else {
+                respuesta['mensaje'] = array_merge(respuesta['mensaje'], mensajes['mensaje'])
+            }
+        }
+
+        row = administrador_model.getAll(array('email' : 'admin@mysitio.cl'))
+        if count(row) == 0:
+            insert_admin = array(
+                'pass'         : 12345678,
+                'pass_repetir' : 12345678,
+                'nombre'       : 'Admin',
+                'email'        : 'admin@mysitio.cl',
+                'tipo'         : 1,
+                'estado'       : True,
+            )
+            administrador_model.insert(insert_admin)
+        }
+
+        row = logo_model.getAll()
+        if count(row) == 0:
+            insert_logo = array(
+                array('titulo' : 'favicon', 'orden' : 1),
+                array('titulo' : 'Logo login', 'orden' : 2),
+                array('titulo' : 'Logo panel grande', 'orden' : 3),
+                array('titulo' : 'Logo panel pequeño', 'orden' : 4),
+                array('titulo' : 'Logo Header sitio', 'orden' : 5),
+                array('titulo' : 'Logo Footer sitio', 'orden' : 6),
+                array('titulo' : 'Manifest', 'orden' : 7),
+                array('titulo' : 'Email', 'orden' : 8),
+            )
+            foreach (insert_logo as key : logos:
+                logo_model.insert(logos)
+            }
+        }
+
+        campos = functions.decode_json(file_get_contents(base_dir . 'moduloconfiguracion.json'))
+        foreach (campos as key : moduloconfiguracion:
+            row  = moduloconfiguracion_model.getAll(array('module' : moduloconfiguracion['module']), array('limit' : 1))
+            hijo = moduloconfiguracion['hijo']
+            unset(moduloconfiguracion['hijo'])
+            moduloconfiguracion['mostrar'] = functions.encode_json(moduloconfiguracion['mostrar'])
+            moduloconfiguracion['detalle'] = functions.encode_json(moduloconfiguracion['detalle'])
+            if count(row) == 1:
+                moduloconfiguracion['id'] = row[0][0]
+                moduloconfiguracion_model.update(moduloconfiguracion, false)
+                foreach (hijo as key : h:
+                    h['idmoduloconfiguracion'] = moduloconfiguracion['id']
+                    row2                       = modulo_model.getAll(array('idmoduloconfiguracion' : h['idmoduloconfiguracion'], 'tipo' : h['tipo']), array('limit' : 1))
+
+                    h['menu']     = functions.encode_json(h['menu'])
+                    h['mostrar']  = functions.encode_json(h['mostrar'])
+                    h['detalle']  = functions.encode_json(h['detalle'])
+                    h['recortes'] = functions.encode_json(h['recortes'])
+                    h['estado']   = functions.encode_json(h['estado'])
+                    if count(row2) == 1:
+                        h['id'] = row2[0][0]
+                        modulo_model.update(h, false)
+                    } else {
+                        modulo_model.insert(h, false)
+                    }
+                }
+            } else {
+                id = moduloconfiguracion_model.insert(moduloconfiguracion, false)
+                foreach (hijo as key : h:
+                    h['idmoduloconfiguracion'] = id
+                    h['menu']                  = functions.encode_json(h['menu'])
+                    h['mostrar']               = functions.encode_json(h['mostrar'])
+                    h['detalle']               = functions.encode_json(h['detalle'])
+                    h['recortes']              = functions.encode_json(h['recortes'])
+                    h['estado']                = functions.encode_json(h['estado'])
+                    modulo_model.insert(h, false)
+                }
+            }
+        }
+
+        campos = functions.decode_json(file_get_contents(base_dir . 'configuracion.json'))
+        foreach (campos as key : configuracion:
+            row = configuracion_model.getByVariable(configuracion['variable'])
+            configuracion_model.setByVariable(configuracion['variable'], configuracion['valor'])
+        }
+        cache.delete_cache()
+        if responder:
+            echo json_encode(respuesta)
+        }
+    }

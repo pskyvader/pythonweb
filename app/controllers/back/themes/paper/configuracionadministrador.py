@@ -2,6 +2,7 @@ from .base import base
 
 from app.models.table import table as table_model
 from app.models.administrador import administrador as administrador_model
+from app.models.moduloconfiguracion import moduloconfiguracion as moduloconfiguracion_model
 
 #from .detalle import detalle as detalle_class
 #from .lista import lista as lista_class
@@ -81,3 +82,52 @@ class configuracionadministrador(base):
                          'mensaje': 'Debe seleccionar una tabla para vaciar'}
         ret['body'] = json.dumps(respuesta)
         return ret
+
+    def json(self,responder = True):
+        respuesta = {'exito' : True, 'mensaje' : 'JSON generado correctamente'}
+        
+        base_dir       = app.get_dir(True) + '/config/'
+        row       = table_model.getAll()
+        campos    = []
+        for tabla in row.values():
+            a = {
+                'tablename' : tabla['tablename'],
+                'idname'    : tabla['idname'],
+                'fields'    : tabla['fields'],
+                'truncate'  : tabla['truncate'],
+            }
+            campos.append(a)
+
+        file_write = open(base_dir + 'bdd.json', 'w')
+        file_write.write(json.dumps(campos))
+        file_write.close()
+
+        row         = moduloconfiguracion_model.getAll()
+        campos      = array()
+        fields      = table_model.getByname('moduloconfiguracion')
+        fields_hijo = table_model.getByname('modulo')
+        foreach (row as key : tabla) {
+            a        = database.create_data(fields, tabla)
+            row_hijo = modulo_model.getAll(array('idmoduloconfiguracion' : tabla[0]))
+            h        = array()
+
+            foreach (row_hijo as key : hijos) {
+                h[] = database.create_data(fields_hijo, hijos)
+            }
+            a['hijo'] = h
+            campos[]  = a
+        }
+        file_put_contents(base_dir . 'moduloconfiguracion.json', functions.encode_json(campos, True))
+
+        row    = configuracion_model.getAll()
+        campos = array()
+        fields = table_model.getByname('configuracion')
+        foreach (row as key : tabla) {
+            a        = database.create_data(fields, tabla)
+            campos[] = a
+        }
+        file_put_contents(base_dir . 'configuracion.json', functions.encode_json(campos, True))
+        if (responder) {
+            echo json_encode(respuesta)
+        }
+    }

@@ -5,10 +5,10 @@ from app.models.administrador import administrador as administrador_model
 
 #from .detalle import detalle as detalle_class
 #from .lista import lista as lista_class
-#from .head import head
-#from .header import header
-#from .aside import aside
-#from .footer import footer
+from .head import head
+from .header import header
+from .aside import aside
+from .footer import footer
 
 #from core.app import app
 from core.functions import functions
@@ -36,77 +36,27 @@ class configuracionadministrador(base):
             ret['redirect'] = url_return
             return ret
 
-        # cabeceras y campos que se muestran en la lista_class:
-        # titulo,campo de la tabla a usar, tipo (ver archivo lista_class.py funcion "field")
-        # controlador de lista_class
-        lista = lista_class(cls.metadata)
-        configuracion = lista.configuracion(cls.metadata['modulo'])
-        if 'error' in configuracion:
-            ret['error']=configuracion['error']
-            ret['redirect']=configuracion['redirect']
-            return ret
+        h = head(cls.metadata)
+        ret_head = h.normal()
+        if ret_head['headers'] != '':
+            return ret_head
+        ret['body'] += ret_head['body']
 
-        where = {}
-        if cls.contiene_tipos:
-            where['tipo'] = get['tipo']
-        if cls.contiene_hijos:
-            where['idpadre'] = get['idpadre']
-        if cls.class_parent != None:
-            class_parent = cls.class_parent
+        he = header()
+        ret['body'] += he.normal()['body']
 
-            if class_parent.idname in get:
-                where[class_parent.idname] = get[class_parent.idname]
+        asi = aside()
+        ret['body'] += asi.normal()['body']
+        data = {}
+        data['title'] = 'Home'
+        breadcrumb = [
+            {'url': functions.generar_url(
+                url_final), 'title': cls.metadata['title'], 'active':'active'}
+        ]
+        data['breadcrumb'] = breadcrumb
+        ret['body'].append(('home', data))
 
-        condiciones = {}
-        url_detalle = url_final.copy()
-        url_detalle.append('detail')
-        # obtener unicamente elementos de la pagina actual
-        respuesta = lista.get_row(class_name, where, condiciones, url_detalle)
+        f = footer()
+        ret['body'] += f.normal()['body']
 
-        if 'copy' in configuracion['th']:
-            configuracion['th']['copy']['action'] = configuracion['th']['copy']['field']
-            configuracion['th']['copy']['field'] = 0
-            configuracion['th']['copy']['mensaje'] = 'Copiando'
-
-        if cls.contiene_hijos:
-            if cls.contiene_tipos:
-                for v in respuesta['row']:
-                    v['url_children'] = functions.generar_url(
-                        url_final, {'idpadre': v[0], 'tipo': get['tipo']})
-
-            else:
-                for v in respuesta['row']:
-                    v['url_children'] = functions.generar_url(
-                        url_final, {'idpadre': v[0]})
-
-        else:
-            if 'url_children' in configuracion['th']:
-                del configuracion['th']['url_children']
-
-        if cls.sub != '':
-            if cls.contiene_tipos:
-                for v in respuesta['row']:
-                    v['url_sub'] = functions.generar_url(
-                        [cls.sub], {class_name.idname: v[0], 'tipo': get['tipo']})
-
-            else:
-                for v in respuesta['row']:
-                    v['url_sub'] = functions.generar_url(
-                        [cls.sub], {class_name.idname: v[0]})
-
-        else:
-            if 'url_sub' in configuracion['th']:
-                del configuracion['th']['url_sub']
-
-        # informacion para generar la vista de lista_class
-        data = {
-            'breadcrumb': cls.breadcrumb,
-            'th': configuracion['th'],
-            'current_url': functions.generar_url(url_final),
-            'new_url': functions.generar_url(url_detalle),
-        }
-
-        data.update(respuesta)
-        data.update(configuracion['menu'])
-        ret = lista.normal(data)
         return ret

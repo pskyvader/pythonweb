@@ -25,7 +25,7 @@ class base:
     contiene_hijos = False
 
     @classmethod
-    def init(cls, var):
+    def init(cls, var:list):
         from inspect import signature
         import inspect
 

@@ -3,6 +3,7 @@ from .base import base
 from app.models.table import table as table_model
 from app.models.administrador import administrador as administrador_model
 from app.models.configuracion import configuracion as configuracion_model
+from app.models.logo import logo as logo_model
 from app.models.modulo import modulo as modulo_model
 from app.models.moduloconfiguracion import moduloconfiguracion as moduloconfiguracion_model
 
@@ -160,56 +161,49 @@ class configuracionadministrador(base):
             if key == 0: 
                 existe = table_model.table_exists(tablename)
                 if not existe:
-                    fields = dict(tabla['fields'])
-                    fields={'titulo' : tabla['idname'], 'tipo' : 'int(11)', 'primary' : True} +fields
-
-                    foreach (fields as key : value:
-                        if not isset(fields[key]['primary']):
-                            fields[key]['primary'] = false
-                        }
-                    }
+                    fields={'titulo' : tabla['idname'], 'tipo' : 'int(11)', 'primary' : True}
+                    fields.update(dict(tabla['fields']))
+                    for k,value in fields.items():
+                        if not 'primary' in value:
+                            fields[key]['primary'] = False
                     connection = database.instance()
-                    connection->create(tablename, fields)
-                }
-            }
-            table = table_model.getAll(array('tablename' : tablename))
+                    connection.create(tablename, fields)
+                    
+            table = table_model.getAll({'tablename' : tablename})
 
             tabla['fields'] = functions.encode_json(tabla['fields'])
-            if count(table) == 1:
+            if len(table) == 1:
                 tabla['id'] = table[0][0]
-                table_model.update(tabla, false)
-            } else {
-                table_model.insert(tabla, false)
-            }
-        }
-
+                table_model.update(tabla, False)
+            else:
+                table_model.insert(tabla, False)
+                
         tablas = table_model.getAll()
 
-        foreach (tablas as key : tabla:
-            mensajes = table_model.validate(tabla[0], false)
+        for key,tabla in tablas.items():
+            mensajes = table_model.validate(tabla[0], False)
             if not mensajes['exito']:
                 respuesta = mensajes
                 break
-            } else {
-                respuesta['mensaje'] = array_merge(respuesta['mensaje'], mensajes['mensaje'])
-            }
-        }
+            else:
+                respuesta['mensaje'] = respuesta['mensaje']+ mensajes['mensaje']
+                
 
-        row = administrador_model.getAll(array('email' : 'admin@mysitio.cl'))
-        if count(row) == 0:
-            insert_admin = array(
+        row = administrador_model.getAll({'email' : 'admin@mysitio.cl'})
+        if len(row) == 0:
+            insert_admin = {
                 'pass'         : 12345678,
                 'pass_repetir' : 12345678,
                 'nombre'       : 'Admin',
                 'email'        : 'admin@mysitio.cl',
                 'tipo'         : 1,
                 'estado'       : True,
-            )
+            }
             administrador_model.insert(insert_admin)
-        }
+        
 
         row = logo_model.getAll()
-        if count(row) == 0:
+        if len(row) == 0:
             insert_logo = array(
                 array('titulo' : 'favicon', 'orden' : 1),
                 array('titulo' : 'Logo login', 'orden' : 2),
@@ -232,9 +226,9 @@ class configuracionadministrador(base):
             unset(moduloconfiguracion['hijo'])
             moduloconfiguracion['mostrar'] = functions.encode_json(moduloconfiguracion['mostrar'])
             moduloconfiguracion['detalle'] = functions.encode_json(moduloconfiguracion['detalle'])
-            if count(row) == 1:
+            if len(row) == 1:
                 moduloconfiguracion['id'] = row[0][0]
-                moduloconfiguracion_model.update(moduloconfiguracion, false)
+                moduloconfiguracion_model.update(moduloconfiguracion, False)
                 foreach (hijo as key : h:
                     h['idmoduloconfiguracion'] = moduloconfiguracion['id']
                     row2                       = modulo_model.getAll(array('idmoduloconfiguracion' : h['idmoduloconfiguracion'], 'tipo' : h['tipo']), array('limit' : 1))
@@ -244,15 +238,15 @@ class configuracionadministrador(base):
                     h['detalle']  = functions.encode_json(h['detalle'])
                     h['recortes'] = functions.encode_json(h['recortes'])
                     h['estado']   = functions.encode_json(h['estado'])
-                    if count(row2) == 1:
+                    if len(row2) == 1:
                         h['id'] = row2[0][0]
-                        modulo_model.update(h, false)
-                    } else {
-                        modulo_model.insert(h, false)
+                        modulo_model.update(h, False)
+                    else:
+                        modulo_model.insert(h, False)
                     }
                 }
-            } else {
-                id = moduloconfiguracion_model.insert(moduloconfiguracion, false)
+            else:
+                id = moduloconfiguracion_model.insert(moduloconfiguracion, False)
                 foreach (hijo as key : h:
                     h['idmoduloconfiguracion'] = id
                     h['menu']                  = functions.encode_json(h['menu'])
@@ -260,7 +254,7 @@ class configuracionadministrador(base):
                     h['detalle']               = functions.encode_json(h['detalle'])
                     h['recortes']              = functions.encode_json(h['recortes'])
                     h['estado']                = functions.encode_json(h['estado'])
-                    modulo_model.insert(h, false)
+                    modulo_model.insert(h, False)
                 }
             }
         }

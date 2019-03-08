@@ -248,14 +248,14 @@ class backup(base):
             if isinstance(cantidad, bool):
                 cantidad = 0
             else:
-                cantidad = float(cantidad)
+                cantidad = float(cantidad.replace(',', '.'))
 
             tiempo = configuracion_model.getByVariable(
                 'tiempo_backup_' + campos['tipo_backup'])
             if isinstance(tiempo, bool):
                 tiempo = 0
             else:
-                tiempo = float(tiempo)
+                tiempo = float(tiempo.replace(',', '.'))
 
             tiempo = (tiempo * cantidad) + float(campos['tiempo'])
             cantidad += 1

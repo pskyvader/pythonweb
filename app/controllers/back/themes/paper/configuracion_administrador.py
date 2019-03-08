@@ -216,7 +216,7 @@ class configuracion_administrador(base):
             for logos in insert_logo:
                 logo_model.insert(logos)
 
-        file_read = open(base_dir + 'bdd.moduloconfiguracion', 'r')
+        file_read = open(base_dir + 'moduloconfiguracion.json', 'r')
         campos = json.loads(file_read.read())
         file_read.close()
 
@@ -261,7 +261,7 @@ class configuracion_administrador(base):
                     h['estado'] = json.dumps(h['estado'])
                     modulo_model.insert(h, False)
 
-        file_read = open(base_dir + 'bdd.configuracion', 'r')
+        file_read = open(base_dir + 'configuracion.json', 'r')
         campos = json.loads(file_read.read())
         file_read.close()
         for configuracion in campos.values():

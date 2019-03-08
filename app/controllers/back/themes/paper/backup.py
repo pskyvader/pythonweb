@@ -453,7 +453,7 @@ class backup(base):
 
             my_file = Path(final_file)
             if my_file.is_dir():
-                zip.writestr(file, '')
+                zip.writestr(file+'/', '')
             else:
                 zip.write(final_file,file)
 

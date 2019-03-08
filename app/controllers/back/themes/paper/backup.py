@@ -405,7 +405,7 @@ class backup(base):
         respuesta = connection.backup()
         if respuesta['exito']:
             try:
-                zip = zipfile.ZipFile(archivo_backup, 'w')
+                zip = zipfile.ZipFile(archivo_backup, 'a')
                 zip.writestr('bdd.sql', "\n".join(respuesta['sql']))
                 zip.close()
             except:
@@ -435,7 +435,7 @@ class backup(base):
         memory_limit = (int)(memory_limit) / 1.5
         memory_usage = 0
 
-        zip = zipfile.ZipFile(archivo, 'w')
+        zip = zipfile.ZipFile(archivo, 'a')
         count = 0
         for file in lista.copy():
             count += 1

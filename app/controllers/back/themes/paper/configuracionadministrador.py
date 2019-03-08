@@ -2,6 +2,7 @@ from .base import base
 
 from app.models.table import table as table_model
 from app.models.administrador import administrador as administrador_model
+from app.models.configuracion import configuracion as configuracion_model
 from app.models.modulo import modulo as modulo_model
 from app.models.moduloconfiguracion import moduloconfiguracion as moduloconfiguracion_model
 
@@ -110,16 +111,19 @@ class configuracionadministrador(base):
         fields_hijo = table_model.getByname('modulo')
         for tabla in row.values():
             a        = database.create_data(fields, tabla)
-            row_hijo = modulo_model.getAll(array('idmoduloconfiguracion' : tabla[0]))
-            h        = array()
+            row_hijo = modulo_model.getAll({'idmoduloconfiguracion' : tabla[0]})
+            h        = []
 
-            foreach (row_hijo as key : hijos) {
-                h[] = database.create_data(fields_hijo, hijos)
-            }
+            for hijos in row_hijo.values():
+                h.append(database.create_data(fields_hijo, hijos))
+            
             a['hijo'] = h
-            campos[]  = a
-        }
-        file_put_contents(base_dir . 'moduloconfiguracion.json', functions.encode_json(campos, True))
+            campos.append(a)
+            
+
+        file_write = open(base_dir + 'moduloconfiguracion.json', 'w')
+        file_write.write(json.dumps(campos))
+        file_write.close()
 
         row    = configuracion_model.getAll()
         campos = array()

@@ -132,9 +132,9 @@ class app:
                 current_module = getattr(current_module, 'error')
                 current_module = current_module()
                 if config['debug']:
-                    response_error = current_module.index(str(my_file))
+                    response_error = current_module.index()
                 else:
-                    response_error = current_module.index('')
+                    response_error = current_module.index()
 
                 response['body'] = view.render(response_error['body'])
                 #response['body'] = '<html><body>No encontrado ' +   str(my_file) + '</body></html>'

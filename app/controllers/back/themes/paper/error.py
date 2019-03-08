@@ -26,7 +26,7 @@ class error():
     breadcrumb = []
 
     @classmethod
-    def index(cls,var):
+    def index(cls,var=''):
         ret = {'body': []}
         url_final = cls.url.copy()
         if not administrador_model.verificar_sesion():

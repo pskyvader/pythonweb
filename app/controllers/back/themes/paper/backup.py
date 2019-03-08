@@ -446,6 +446,7 @@ class backup(base):
 
             my_file = Path(final_file)
             if my_file.is_dir():
+                print('dir>',final_file)
                 zip.writestr(zipfile.ZipInfo(final_file), '')
             else:
                 zip.write(final_file,file)

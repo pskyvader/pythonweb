@@ -12,6 +12,7 @@ from app.models.{{class}} import {{class}} as {{class}}_model
 #from .footer import footer
 
 #from core.app import app
+#from core.database import database
 #from core.functions import functions
 #from core.image import image
 

@@ -11,6 +11,7 @@ def application2(environ, start_response):
     #init_time = datetime.now()
     app_web = app(os.path.dirname(__file__))
     main_data = app_web.init(environ)
+    print(main_data)
     ret = main_data['response_body']
 
     if isinstance(ret, str) and ret != '':

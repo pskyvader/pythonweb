@@ -35,7 +35,6 @@ class view:
 
         body = ''
         for template, data in template_list:
-            print(template,data)
             body += view.render_unit(env, template, data)
 
         if minify and cache.cacheable:

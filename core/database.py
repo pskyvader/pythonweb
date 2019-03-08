@@ -298,8 +298,8 @@ class database():
             campos = self.consulta("SELECT COLUMN_NAME,COLUMN_TYPE FROM information_schema.columns WHERE table_schema='" +
                                     self._dbName + "' AND table_name='" + table + "'", True)
 
-            for b in range(numBatches):
-                query = 'SELECT * FROM `' + table + '` LIMIT ' + str((b+1) * self.batchSize - self.batchSize) + ',' + str(self.batchSize)
+            for b in range(1,numBatches+1):
+                query = 'SELECT * FROM `' + table + '` LIMIT ' + str(b * self.batchSize - self.batchSize) + ',' + str(self.batchSize)
                 row = self.consulta(query, True)
                 realBatchSize = len(row)
                 numFields = len(campos)

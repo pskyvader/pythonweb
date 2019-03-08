@@ -50,10 +50,7 @@ class error(base):
         asi = aside()
         ret['body'] += asi.normal()['body']
         data = {}
-        data['title'] = cls.metadata['title']
-        cls.breadcrumb = [ {'url': functions.generar_url( url_final), 'title': cls.metadata['title'], 'active':'active'} ]
-        data['breadcrumb'] = cls.breadcrumb
-        ret['body'].append(('home', data))
+        ret['body'].append(('404', data))
 
         f = footer()
         ret['body'] += f.normal()['body']

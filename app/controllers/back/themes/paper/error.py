@@ -48,6 +48,7 @@ class error(base):
 
         asi = aside()
         ret['body'] += asi.normal()['body']
+        print(var)
         data = {'error':var}
         ret['body'].append(('404', data))
 

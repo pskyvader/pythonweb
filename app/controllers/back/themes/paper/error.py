@@ -27,6 +27,7 @@ class error():
 
     @classmethod
     def index(cls,var):
+        print(cls,var)
         ret = {'body': []}
         url_final = cls.url.copy()
         if not administrador_model.verificar_sesion():

@@ -21,8 +21,7 @@ class view:
         from jinja2 import Environment, FileSystemLoader, FileSystemBytecodeCache
         theme = view.get_theme()
 
-        env = Environment(loader=FileSystemLoader(theme),
-                          bytecode_cache=FileSystemBytecodeCache())
+        env = Environment(loader=FileSystemLoader(theme), bytecode_cache=FileSystemBytecodeCache(),trim_blocks=True,lstrip_blocks=True)
 
         for template, data in template_list:
             template_url = theme + template + "." + view.extension

@@ -1,7 +1,4 @@
-
-
 from .base import base
-from app.models.configuracionadministrador import configuracionadministrador as configuracionadministrador_model
 
 #from app.models.table import table
 #from app.models.administrador import administrador as administrador_model

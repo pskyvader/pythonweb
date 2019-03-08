@@ -127,8 +127,7 @@ class app:
             else:
                 data_return['status'] = '404 Not Found'
                 controller = app.controller_dir + 'error'
-                current_module = importlib.import_module(
-                    controller.replace("/", "."))
+                current_module = importlib.import_module( controller.replace("/", "."))
                 current_module = getattr(current_module, 'error')
                 current_module = current_module()
                 if config['debug']:

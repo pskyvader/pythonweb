@@ -348,7 +348,7 @@ class database():
             respuesta['sql'].append(sql)
             respuesta['exito'] = True
         except Exception as e:
-            respuesta['mensaje'] = e
+            respuesta['mensaje'] = str(e)
 
         return respuesta
 

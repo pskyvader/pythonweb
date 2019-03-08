@@ -313,7 +313,7 @@ class backup(base):
         ret['body'] = json.dumps(respuesta)
         return ret
 
-    def generar_backup(self, logging=True):
+    def generar_backup(self,var=[], logging=True):
         '''genera respaldo del sitio en zip, en formato "Respaldo rapido" (usa mas recursos)'''
         ret = {'body': ''}
         c = configuracion_administrador()

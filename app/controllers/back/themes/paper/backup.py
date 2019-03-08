@@ -448,7 +448,7 @@ class backup(base):
             if my_file.is_dir():
                 zip.writestr(zipfile.ZipInfo(final_file), '')
             else:
-                zip.write(os.path.basename(final_file))
+                zip.write(final_file,file)
 
             lista.remove(file)
 

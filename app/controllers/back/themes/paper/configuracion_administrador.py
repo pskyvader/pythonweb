@@ -93,6 +93,7 @@ class configuracion_administrador(base):
         
         base_dir       = app.get_dir(True) + '/config/'
         row       = table_model.getAll()
+        print(row)
         campos    = []
         for tabla in row.values():
             a = {

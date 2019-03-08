@@ -306,7 +306,8 @@ class database():
                 if realBatchSize != 0:
                     sql += 'INSERT INTO `' + table + '` VALUES '
                     key=0
-                    print(zip(row))
+                    for k,v in zip(row):
+                        print(k,v)
                     for fila in row:
                         rowCount = key + 1
                         sql += '('

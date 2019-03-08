@@ -88,6 +88,7 @@ class configuracionadministrador(base):
 
     def json(self,responder = True):
         respuesta = {'exito' : True, 'mensaje' : 'JSON generado correctamente'}
+        ret = {'body': []}
         
         base_dir       = app.get_dir(True) + '/config/'
         row       = table_model.getAll()
@@ -126,14 +127,18 @@ class configuracionadministrador(base):
         file_write.close()
 
         row    = configuracion_model.getAll()
-        campos = array()
+        campos = []
         fields = table_model.getByname('configuracion')
-        foreach (row as key : tabla) {
+        for tabla in row.values():
             a        = database.create_data(fields, tabla)
-            campos[] = a
-        }
-        file_put_contents(base_dir . 'configuracion.json', functions.encode_json(campos, True))
-        if (responder) {
-            echo json_encode(respuesta)
-        }
-    }
+            campos.append(a)
+
+        file_write = open(base_dir + 'configuracion.json', 'w')
+        file_write.write(json.dumps(campos))
+        file_write.close()
+        
+        if responder:
+            ret['body'] = json.dumps(respuesta)
+            return ret
+        else:
+            return responder

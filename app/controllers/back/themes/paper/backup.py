@@ -357,6 +357,7 @@ class backup(base):
 
 
         if logging:
+            print('respuesta',respuesta)
             ret['body'] = json.dumps(respuesta)
 
         return ret

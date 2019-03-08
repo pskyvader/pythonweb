@@ -11,10 +11,12 @@ from .aside import aside
 from .footer import footer
 
 from core.app import app
+from core.cache import cache
 from core.functions import functions
 #from core.image import image
 
 import json
+
 
 class configuracionadministrador(base):
     url = ['configuracionadministrador']
@@ -67,16 +69,15 @@ class configuracionadministrador(base):
 
         return ret
 
-    
     def vaciar():
         ret = {'body': []}
-        post=app.post
+        post = app.post
         if 'campos' in post:
-            campos    = post['campos']
+            campos = post['campos']
             respuesta = table_model.truncate(campos)
             cache.delete_cache()
         else:
-            respuesta =  {'exito' : False, 'mensaje' : 'Debe seleccionar una tabla para vaciar'}
-        ret['body']=json.
-        echo json_encode(respuesta)
-    }
+            respuesta = {'exito': False,
+                         'mensaje': 'Debe seleccionar una tabla para vaciar'}
+        ret['body'] = json.dumps(respuesta)
+        return ret

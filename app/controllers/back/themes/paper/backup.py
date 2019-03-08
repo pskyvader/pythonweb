@@ -372,12 +372,13 @@ class backup(base):
                 for fichero in file:
                     if '.git' not in fichero and '.zip' not in fichero and '.sql' not in fichero and file != '.' and file != '..' and file[-1:] != '.' and file[-2:] != '..':
                         count += 1
-                        file = fichero.replace("\\", "/")
-                        lista_archivos.append(fichero)
+                        fichero_final=root+dirs+fichero
+                        fichero_final = fichero_final.replace("\\", "/")
+                        lista_archivos.append(fichero_final)
 
                         if log and count % 1000 == 0:
                             log_file = {
-                                'mensaje': 'Recuperando archivo ' + file, 'porcentaje': 10
+                                'mensaje': 'Recuperando archivo ' + fichero, 'porcentaje': 10
                             }
                             file_write = open(self.archivo_log, 'w+')
                             file_write.write(json.dumps(log_file))

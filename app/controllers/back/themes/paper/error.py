@@ -7,10 +7,10 @@ from app.models.administrador import administrador as administrador_model
 
 #from .detalle import detalle as detalle_class
 #from .lista import lista as lista_class
-#from .head import head
-#from .header import header
-#from .aside import aside
-#from .footer import footer
+from .head import head
+from .header import header
+from .aside import aside
+from .footer import footer
 
 #from core.app import app
 #from core.database import database

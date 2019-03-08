@@ -20,7 +20,7 @@ from core.functions import functions
 
 #import json
 
-class error():
+class error(base):
     url = ['error']
     metadata = {'title' : 'error','modulo':'error'}
     breadcrumb = []

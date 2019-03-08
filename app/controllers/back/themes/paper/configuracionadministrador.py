@@ -165,13 +165,13 @@ class configuracionadministrador(base):
                     fields.update(dict(tabla['fields']))
                     for k,value in fields.items():
                         if not 'primary' in value:
-                            fields[key]['primary'] = False
+                            fields[k]['primary'] = False
                     connection = database.instance()
                     connection.create(tablename, fields)
                     
             table = table_model.getAll({'tablename' : tablename})
 
-            tabla['fields'] = functions.encode_json(tabla['fields'])
+            tabla['fields'] = json.dumps(tabla['fields'])
             if len(table) == 1:
                 tabla['id'] = table[0][0]
                 table_model.update(tabla, False)
@@ -180,7 +180,7 @@ class configuracionadministrador(base):
                 
         tablas = table_model.getAll()
 
-        for key,tabla in tablas.items():
+        for tabla in tablas.values():
             mensajes = table_model.validate(tabla[0], False)
             if not mensajes['exito']:
                 respuesta = mensajes
@@ -204,68 +204,71 @@ class configuracionadministrador(base):
 
         row = logo_model.getAll()
         if len(row) == 0:
-            insert_logo = array(
-                array('titulo' : 'favicon', 'orden' : 1),
-                array('titulo' : 'Logo login', 'orden' : 2),
-                array('titulo' : 'Logo panel grande', 'orden' : 3),
-                array('titulo' : 'Logo panel pequeño', 'orden' : 4),
-                array('titulo' : 'Logo Header sitio', 'orden' : 5),
-                array('titulo' : 'Logo Footer sitio', 'orden' : 6),
-                array('titulo' : 'Manifest', 'orden' : 7),
-                array('titulo' : 'Email', 'orden' : 8),
-            )
-            foreach (insert_logo as key : logos:
+            insert_logo =[
+                {'titulo' : 'favicon', 'orden' : 1},
+                {'titulo' : 'Logo login', 'orden' : 2},
+                {'titulo' : 'Logo panel grande', 'orden' : 3},
+                {'titulo' : 'Logo panel pequeño', 'orden' : 4},
+                {'titulo' : 'Logo Header sitio', 'orden' : 5},
+                {'titulo' : 'Logo Footer sitio', 'orden' : 6},
+                {'titulo' : 'Manifest', 'orden' : 7},
+                {'titulo' : 'Email', 'orden' : 8},
+            ]
+            for logos in insert_logo:
                 logo_model.insert(logos)
-            }
-        }
+            
+            
+        file_read = open(base_dir + 'bdd.moduloconfiguracion', 'r')
+        campos=json.loads(file_read.read())
+        file_read.close()
 
-        campos = functions.decode_json(file_get_contents(base_dir . 'moduloconfiguracion.json'))
-        foreach (campos as key : moduloconfiguracion:
-            row  = moduloconfiguracion_model.getAll(array('module' : moduloconfiguracion['module']), array('limit' : 1))
-            hijo = moduloconfiguracion['hijo']
-            unset(moduloconfiguracion['hijo'])
-            moduloconfiguracion['mostrar'] = functions.encode_json(moduloconfiguracion['mostrar'])
-            moduloconfiguracion['detalle'] = functions.encode_json(moduloconfiguracion['detalle'])
+        for moduloconfiguracion in campos.values():
+            row  = moduloconfiguracion_model.getAll({'module' : moduloconfiguracion['module']}, {'limit' : 1})
+            hijo = dict(moduloconfiguracion['hijo']).copy()
+            del moduloconfiguracion['hijo']
+            
+            moduloconfiguracion['mostrar'] = json.dumps(moduloconfiguracion['mostrar'])
+            moduloconfiguracion['detalle'] = json.dumps(moduloconfiguracion['detalle'])
             if len(row) == 1:
                 moduloconfiguracion['id'] = row[0][0]
                 moduloconfiguracion_model.update(moduloconfiguracion, False)
-                foreach (hijo as key : h:
+                for h in hijo.values():
                     h['idmoduloconfiguracion'] = moduloconfiguracion['id']
-                    row2                       = modulo_model.getAll(array('idmoduloconfiguracion' : h['idmoduloconfiguracion'], 'tipo' : h['tipo']), array('limit' : 1))
+                    row2                       = modulo_model.getAll({'idmoduloconfiguracion' : h['idmoduloconfiguracion'], 'tipo' : h['tipo']}, {'limit' : 1})
 
-                    h['menu']     = functions.encode_json(h['menu'])
-                    h['mostrar']  = functions.encode_json(h['mostrar'])
-                    h['detalle']  = functions.encode_json(h['detalle'])
-                    h['recortes'] = functions.encode_json(h['recortes'])
-                    h['estado']   = functions.encode_json(h['estado'])
+                    h['menu']     = json.dumps(h['menu'])
+                    h['mostrar']  = json.dumps(h['mostrar'])
+                    h['detalle']  = json.dumps(h['detalle'])
+                    h['recortes'] = json.dumps(h['recortes'])
+                    h['estado']   = json.dumps(h['estado'])
                     if len(row2) == 1:
                         h['id'] = row2[0][0]
                         modulo_model.update(h, False)
                     else:
                         modulo_model.insert(h, False)
-                    }
-                }
+                        
             else:
                 id = moduloconfiguracion_model.insert(moduloconfiguracion, False)
-                foreach (hijo as key : h:
+                for h in hijo.values():
                     h['idmoduloconfiguracion'] = id
-                    h['menu']                  = functions.encode_json(h['menu'])
-                    h['mostrar']               = functions.encode_json(h['mostrar'])
-                    h['detalle']               = functions.encode_json(h['detalle'])
-                    h['recortes']              = functions.encode_json(h['recortes'])
-                    h['estado']                = functions.encode_json(h['estado'])
+                    h['menu']                  = json.dumps(h['menu'])
+                    h['mostrar']               = json.dumps(h['mostrar'])
+                    h['detalle']               = json.dumps(h['detalle'])
+                    h['recortes']              = json.dumps(h['recortes'])
+                    h['estado']                = json.dumps(h['estado'])
                     modulo_model.insert(h, False)
-                }
-            }
-        }
+                    
 
-        campos = functions.decode_json(file_get_contents(base_dir . 'configuracion.json'))
-        foreach (campos as key : configuracion:
+        file_read = open(base_dir + 'bdd.configuracion', 'r')
+        campos=json.loads(file_read.read())
+        file_read.close()
+        for configuracion in campos.values():
             row = configuracion_model.getByVariable(configuracion['variable'])
             configuracion_model.setByVariable(configuracion['variable'], configuracion['valor'])
-        }
+        
         cache.delete_cache()
         if responder:
-            echo json_encode(respuesta)
-        }
-    }
+            ret['body'] = json.dumps(respuesta)
+            return ret
+        else:
+            return responder

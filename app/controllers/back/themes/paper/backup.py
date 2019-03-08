@@ -385,6 +385,8 @@ class backup(base):
                             file_write = open(self.archivo_log, 'w+')
                             file_write.write(json.dumps(log_file))
                             file_write.close()
+                else:
+                    print(root,dirs,file)
             respuesta['lista'] = lista_archivos
             respuesta['archivo_backup'] = self.dir_backup + '/' + app.prefix_site + \
                 '-' + str(functions.current_time(as_string=False)) + '.zip'

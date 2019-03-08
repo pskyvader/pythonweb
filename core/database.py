@@ -312,8 +312,7 @@ class database():
                         for k, v in enumerate(campos):
                             j = v[0]
                             if j in fila:
-                                fila[j] = self._connection.escape_string(
-                                    fila[j])
+                                fila[j] = self._connection.escape_string(str(fila[j]))
                                 fila[j] = fila[j].replace("\n", "\\n")
                                 fila[j] = fila[j].replace("\r", "\\r")
                                 fila[j] = fila[j].replace("\f", "\\f")

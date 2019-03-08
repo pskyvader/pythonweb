@@ -16,7 +16,7 @@ from .base import base
 
 class configuracionadministrador(base):
     url = ['configuracionadministrador']
-    metadata = {'title' : 'configuracionadministrador','modulo':'configuracionadministrador'}
+    metadata = {'title' : 'Configuracion de administrador','modulo':'configuracionadministrador'}
     breadcrumb = []
     def __init__(self):
-        super().__init__(configuracionadministrador_model)
+        super().__init__(None)

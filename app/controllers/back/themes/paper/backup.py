@@ -308,7 +308,7 @@ class backup(base):
             respuesta['exito'] = False
 
         if respuesta['exito']:
-            respuesta = self.get_files(self.base_dir)
+            respuesta = self.get_files(self,self.base_dir)
 
         ret['body'] = json.dumps(respuesta)
         return ret

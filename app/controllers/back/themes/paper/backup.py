@@ -323,11 +323,11 @@ class backup(base):
         my_file = Path(self.dir_backup)
         if my_file.is_dir():
             if os.access(self.dir_backup, os.W_OK) is not True:
-                respuesta['mensaje'] = 'Debes dar permisos de escritura o eliminar el archivo ' + self.dir_backup
+                respuesta['mensaje'] = 'Debes dar permisos de escritura o eliminar el archivo ' + str(self.dir_backup)
                 respuesta['exito'] = False
 
         elif os.access(self.base_dir, os.W_OK) is not True:
-            respuesta['mensaje'] = 'Debes dar permisos de escritura en ' + self.base_dir
+            respuesta['mensaje'] = 'Debes dar permisos de escritura en ' + str(self.base_dir)
             respuesta['exito'] = False
 
         if respuesta['exito']:
@@ -410,7 +410,7 @@ class backup(base):
                 zip.close()
             except:
                 respuesta['exito'] = False
-                respuesta['mensaje'] = 'Ocurrio un error al intentar guardar la base de datos en archivo zip ' + archivo_backup
+                respuesta['mensaje'] = 'Ocurrio un error al intentar guardar la base de datos en archivo zip ' + str(archivo_backup)
         if log:
             ret['body'] = json.dumps(respuesta)
             return ret

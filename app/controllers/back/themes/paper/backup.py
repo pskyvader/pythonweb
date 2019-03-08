@@ -369,6 +369,7 @@ class backup(base):
             lista_archivos = []
             count = 0
             for root, dirs, file in os.walk(source):
+                print(root,dirs,file)
                 for fichero in file:
                     if '.git' not in fichero and '.zip' not in fichero and '.sql' not in fichero and file != '.' and file != '..' and file[-1:] != '.' and file[-2:] != '..':
                         count += 1

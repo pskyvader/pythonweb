@@ -357,10 +357,8 @@ class backup(base):
 
 
         if logging:
-            print(respuesta)
             ret['body'] = json.dumps(respuesta)
 
-        print(ret,logging)
         return ret
 
     def get_files(self, source: str, log=True):

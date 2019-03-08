@@ -386,7 +386,8 @@ class backup(base):
                             file_write.write(json.dumps(log_file))
                             file_write.close()
                 if len(file)==0 and len(dirs)==0:
-                    print(root,dirs,file)
+                    if 'pycache' not in root and '.git' not in root and '.autogit' not in root and '.vscode' not in root and 'session_data' not in root:
+                        print(root,dirs,file)
 
             respuesta['lista'] = lista_archivos
             respuesta['archivo_backup'] = self.dir_backup + '/' + app.prefix_site + \

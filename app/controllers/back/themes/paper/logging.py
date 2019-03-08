@@ -1,4 +1,6 @@
 from core.view import view
+from core.app import app
+
 import os
 from pathlib import Path
 from core.functions import functions
@@ -8,11 +10,9 @@ import socket
 
 
 class logging:
-    def init(self, var):
-        if len(var) == 0:
-            return {'error': 404}
-
+    def init(self):
         ret = {'body': ''}
+        app.get
         theme = view.get_theme()
         resource = '/'.join(var)
         resource_url = theme + resource

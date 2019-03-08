@@ -129,7 +129,11 @@ class app:
                 current_module = importlib.import_module( controller.replace("/", "."))
                 current_module = getattr(current_module, 'error')
                 current_module = current_module()
-                response_error=current_module.index(str(my_file))                
+                if config['debug']:
+                    response_error=current_module.index(str(my_file))    
+                else:
+                    response_error=current_module.index('')    
+
                 response['body']= view.render(response_error['body'])
                 #response['body'] = '<html><body>No encontrado ' +   str(my_file) + '</body></html>'
         else:

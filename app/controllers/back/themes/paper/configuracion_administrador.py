@@ -91,7 +91,7 @@ class configuracion_administrador(base):
         respuesta = {'exito': True, 'mensaje': 'JSON generado correctamente'}
         ret = {'body': []}
 
-        base_dir = app.get_dir(True) + '/config/'
+        base_dir = app.get_dir(True) + 'config/'
         row = table_model.getAll()
         campos = []
         for tabla in row:

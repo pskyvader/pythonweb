@@ -359,7 +359,7 @@ class backup(base):
         if log:
             ret['body'] = json.dumps(respuesta)
 
-        print(ret)
+        print(ret,log)
         return ret
 
     def get_files(self, source: str, log=True):

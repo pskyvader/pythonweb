@@ -435,7 +435,6 @@ class backup(base):
 
         zip = zipfile.ZipFile(archivo, 'w')
         count = 0
-        print(len(lista))
         for file in lista.copy():
             count += 1
             final_file=source + file

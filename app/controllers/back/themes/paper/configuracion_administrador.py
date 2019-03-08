@@ -87,20 +87,19 @@ class configuracion_administrador(base):
         ret['body'] = json.dumps(respuesta)
         return ret
 
-    def json(self,responder = True):
-        respuesta = {'exito' : True, 'mensaje' : 'JSON generado correctamente'}
+    def json(self, responder=True):
+        respuesta = {'exito': True, 'mensaje': 'JSON generado correctamente'}
         ret = {'body': []}
-        
-        base_dir       = app.get_dir(True) + '/config/'
-        row       = table_model.getAll()
-        print(row)
-        campos    = []
-        for tabla in row.values():
+
+        base_dir = app.get_dir(True) + '/config/'
+        row = table_model.getAll()
+        campos = []
+        for tabla in row:
             a = {
-                'tablename' : tabla['tablename'],
-                'idname'    : tabla['idname'],
-                'fields'    : tabla['fields'],
-                'truncate'  : tabla['truncate'],
+                'tablename': tabla['tablename'],
+                'idname': tabla['idname'],
+                'fields': tabla['fields'],
+                'truncate': tabla['truncate'],
             }
             campos.append(a)
 
@@ -108,69 +107,69 @@ class configuracion_administrador(base):
         file_write.write(json.dumps(campos))
         file_write.close()
 
-        row         = moduloconfiguracion_model.getAll()
-        campos      = []
-        fields      = table_model.getByname('moduloconfiguracion')
+        row = moduloconfiguracion_model.getAll()
+        campos = []
+        fields = table_model.getByname('moduloconfiguracion')
         fields_hijo = table_model.getByname('modulo')
-        for tabla in row.values():
-            a        = database.create_data(fields, tabla)
-            row_hijo = modulo_model.getAll({'idmoduloconfiguracion' : tabla[0]})
-            h        = []
+        for tabla in row:
+            a = database.create_data(fields, tabla)
+            row_hijo = modulo_model.getAll({'idmoduloconfiguracion': tabla[0]})
+            h = []
 
-            for hijos in row_hijo.values():
+            for hijos in row_hijo:
                 h.append(database.create_data(fields_hijo, hijos))
-            
+
             a['hijo'] = h
             campos.append(a)
-            
 
         file_write = open(base_dir + 'moduloconfiguracion.json', 'w')
         file_write.write(json.dumps(campos))
         file_write.close()
 
-        row    = configuracion_model.getAll()
+        row = configuracion_model.getAll()
         campos = []
         fields = table_model.getByname('configuracion')
-        for tabla in row.values():
-            a        = database.create_data(fields, tabla)
+        for tabla in row:
+            a = database.create_data(fields, tabla)
             campos.append(a)
 
         file_write = open(base_dir + 'configuracion.json', 'w')
         file_write.write(json.dumps(campos))
         file_write.close()
-        
+
         if responder:
             ret['body'] = json.dumps(respuesta)
             return ret
         else:
             return responder
 
-
-    def json_update(self,responder = True):
-        respuesta = {'exito' : True, 'mensaje' : ['JSON actualizado correctamente']}
+    def json_update(self, responder=True):
+        respuesta = {'exito': True, 'mensaje': [
+            'JSON actualizado correctamente']}
         ret = {'body': []}
 
-        base_dir       = app.get_dir(True) + '/config/'
+        base_dir = app.get_dir(True) + '/config/'
 
         file_read = open(base_dir + 'bdd.json', 'r')
-        campos=json.loads(file_read.read())
+        campos = json.loads(file_read.read())
         file_read.close()
-        
-        for key,tabla in campos.items():
+
+        for key, tabla in campos.items():
             tablename = tabla['tablename']
-            #primero es siempre la tabla "tablas", se crea inmediatamente para guardar las siguientes configuraciones
-            if key == 0: 
+            # primero es siempre la tabla "tablas", se crea inmediatamente para guardar las siguientes configuraciones
+            if key == 0:
                 existe = table_model.table_exists(tablename)
                 if not existe:
-                    fields={'titulo' : tabla['idname'], 'tipo' : 'int(11)', 'primary' : True}
+                    fields = {'titulo': tabla['idname'],
+                              'tipo': 'int(11)', 'primary': True}
                     fields.update(dict(tabla['fields']))
-                    for k,value in fields.items():
+                    for k, value in fields.items():
                         if not 'primary' in value:
                             fields[k]['primary'] = False
                     connection = database.instance()
                     connection.create(tablename, fields)
-                    
-            table = table_model.getAll({'tablename' : tablename})
+
+            table = table_model.getAll({'tablename': tablename})
 
             tabla['fields'] = json.dumps(tabla['fields'])
             if len(table) == 1:
@@ -178,7 +177,7 @@ class configuracion_administrador(base):
                 table_model.update(tabla, False)
             else:
                 table_model.insert(tabla, False)
-                
+
         tablas = table_model.getAll()
 
         for tabla in tablas.values():
@@ -187,86 +186,89 @@ class configuracion_administrador(base):
                 respuesta = mensajes
                 break
             else:
-                respuesta['mensaje'] = respuesta['mensaje']+ mensajes['mensaje']
-                
+                respuesta['mensaje'] = respuesta['mensaje'] + \
+                    mensajes['mensaje']
 
-        row = administrador_model.getAll({'email' : 'admin@mysitio.cl'})
+        row = administrador_model.getAll({'email': 'admin@mysitio.cl'})
         if len(row) == 0:
             insert_admin = {
-                'pass'         : 12345678,
-                'pass_repetir' : 12345678,
-                'nombre'       : 'Admin',
-                'email'        : 'admin@mysitio.cl',
-                'tipo'         : 1,
-                'estado'       : True,
+                'pass': 12345678,
+                'pass_repetir': 12345678,
+                'nombre': 'Admin',
+                'email': 'admin@mysitio.cl',
+                'tipo': 1,
+                'estado': True,
             }
             administrador_model.insert(insert_admin)
-        
 
         row = logo_model.getAll()
         if len(row) == 0:
-            insert_logo =[
-                {'titulo' : 'favicon', 'orden' : 1},
-                {'titulo' : 'Logo login', 'orden' : 2},
-                {'titulo' : 'Logo panel grande', 'orden' : 3},
-                {'titulo' : 'Logo panel pequeño', 'orden' : 4},
-                {'titulo' : 'Logo Header sitio', 'orden' : 5},
-                {'titulo' : 'Logo Footer sitio', 'orden' : 6},
-                {'titulo' : 'Manifest', 'orden' : 7},
-                {'titulo' : 'Email', 'orden' : 8},
+            insert_logo = [
+                {'titulo': 'favicon', 'orden': 1},
+                {'titulo': 'Logo login', 'orden': 2},
+                {'titulo': 'Logo panel grande', 'orden': 3},
+                {'titulo': 'Logo panel pequeño', 'orden': 4},
+                {'titulo': 'Logo Header sitio', 'orden': 5},
+                {'titulo': 'Logo Footer sitio', 'orden': 6},
+                {'titulo': 'Manifest', 'orden': 7},
+                {'titulo': 'Email', 'orden': 8},
             ]
             for logos in insert_logo:
                 logo_model.insert(logos)
-            
-            
+
         file_read = open(base_dir + 'bdd.moduloconfiguracion', 'r')
-        campos=json.loads(file_read.read())
+        campos = json.loads(file_read.read())
         file_read.close()
 
         for moduloconfiguracion in campos.values():
-            row  = moduloconfiguracion_model.getAll({'module' : moduloconfiguracion['module']}, {'limit' : 1})
+            row = moduloconfiguracion_model.getAll(
+                {'module': moduloconfiguracion['module']}, {'limit': 1})
             hijo = dict(moduloconfiguracion['hijo']).copy()
             del moduloconfiguracion['hijo']
-            
-            moduloconfiguracion['mostrar'] = json.dumps(moduloconfiguracion['mostrar'])
-            moduloconfiguracion['detalle'] = json.dumps(moduloconfiguracion['detalle'])
+
+            moduloconfiguracion['mostrar'] = json.dumps(
+                moduloconfiguracion['mostrar'])
+            moduloconfiguracion['detalle'] = json.dumps(
+                moduloconfiguracion['detalle'])
             if len(row) == 1:
                 moduloconfiguracion['id'] = row[0][0]
                 moduloconfiguracion_model.update(moduloconfiguracion, False)
                 for h in hijo.values():
                     h['idmoduloconfiguracion'] = moduloconfiguracion['id']
-                    row2                       = modulo_model.getAll({'idmoduloconfiguracion' : h['idmoduloconfiguracion'], 'tipo' : h['tipo']}, {'limit' : 1})
+                    row2 = modulo_model.getAll(
+                        {'idmoduloconfiguracion': h['idmoduloconfiguracion'], 'tipo': h['tipo']}, {'limit': 1})
 
-                    h['menu']     = json.dumps(h['menu'])
-                    h['mostrar']  = json.dumps(h['mostrar'])
-                    h['detalle']  = json.dumps(h['detalle'])
+                    h['menu'] = json.dumps(h['menu'])
+                    h['mostrar'] = json.dumps(h['mostrar'])
+                    h['detalle'] = json.dumps(h['detalle'])
                     h['recortes'] = json.dumps(h['recortes'])
-                    h['estado']   = json.dumps(h['estado'])
+                    h['estado'] = json.dumps(h['estado'])
                     if len(row2) == 1:
                         h['id'] = row2[0][0]
                         modulo_model.update(h, False)
                     else:
                         modulo_model.insert(h, False)
-                        
+
             else:
-                id = moduloconfiguracion_model.insert(moduloconfiguracion, False)
+                id = moduloconfiguracion_model.insert(
+                    moduloconfiguracion, False)
                 for h in hijo.values():
                     h['idmoduloconfiguracion'] = id
-                    h['menu']                  = json.dumps(h['menu'])
-                    h['mostrar']               = json.dumps(h['mostrar'])
-                    h['detalle']               = json.dumps(h['detalle'])
-                    h['recortes']              = json.dumps(h['recortes'])
-                    h['estado']                = json.dumps(h['estado'])
+                    h['menu'] = json.dumps(h['menu'])
+                    h['mostrar'] = json.dumps(h['mostrar'])
+                    h['detalle'] = json.dumps(h['detalle'])
+                    h['recortes'] = json.dumps(h['recortes'])
+                    h['estado'] = json.dumps(h['estado'])
                     modulo_model.insert(h, False)
-                    
 
         file_read = open(base_dir + 'bdd.configuracion', 'r')
-        campos=json.loads(file_read.read())
+        campos = json.loads(file_read.read())
         file_read.close()
         for configuracion in campos.values():
             row = configuracion_model.getByVariable(configuracion['variable'])
-            configuracion_model.setByVariable(configuracion['variable'], configuracion['valor'])
-        
+            configuracion_model.setByVariable(
+                configuracion['variable'], configuracion['valor'])
+
         cache.delete_cache()
         if responder:
             ret['body'] = json.dumps(respuesta)

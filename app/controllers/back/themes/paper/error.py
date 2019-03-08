@@ -31,12 +31,11 @@ class error():
         url_final = cls.url.copy()
         if not administrador_model.verificar_sesion():
             url_final = ['login', 'index', 'home']
-
-        url_return = functions.url_redirect(url_final)
-        if url_return != '':
-            ret['error'] = 301
-            ret['redirect'] = url_return
-            return ret
+            url_return = functions.url_redirect(url_final)
+            if url_return != '':
+                ret['error'] = 301
+                ret['redirect'] = url_return
+                return ret
 
         h = head(cls.metadata)
         ret_head = h.normal()

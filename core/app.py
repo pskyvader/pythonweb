@@ -134,7 +134,7 @@ class app:
                     current_module = importlib.import_module( controller.replace("/", "."))
                     current_module = getattr(current_module, 'error')
                     current_module = current_module()
-                    response_error = current_module.init(str(my_file))
+                    response_error = current_module.init(['index',str(my_file)])
                     #response_error = current_module.index(str(my_file))
                     response['body'] = response_error['body']
                 else:

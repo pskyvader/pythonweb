@@ -14,7 +14,7 @@ from app.models.administrador import administrador as administrador_model
 
 #from core.app import app
 #from core.database import database
-#from core.functions import functions
+from core.functions import functions
 #from core.image import image
 
 

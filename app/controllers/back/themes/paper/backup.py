@@ -370,9 +370,9 @@ class backup(base):
             count = 0
             for root, dirs, file in os.walk(source):
                 for fichero in file:
-                    if '.git' not in fichero and '.zip' not in fichero and '.sql' not in fichero and file != '.' and file != '..' and file[-1:] != '.' and file[-2:] != '..':
+                    if '.git' not in fichero and '.zip' not in fichero and '.sql' not in fichero and fichero != '.' and fichero != '..' and fichero[-1:] != '.' and fichero[-2:] != '..':
                         count += 1
-                        print(root,fichero)
+                        print('root:',root,'fichero:',fichero)
                         fichero_final=root+fichero
                         fichero_final = fichero_final.replace("\\", "/")
                         lista_archivos.append(fichero_final)

@@ -103,7 +103,7 @@ class configuracion_administrador(base):
             }
             campos.append(a)
 
-        file_write = open(base_dir + 'bdd.json', 'w')
+        file_write = open(base_dir + 'bdd.json', 'w+')
         file_write.write(json.dumps(campos))
         file_write.close()
 
@@ -122,7 +122,7 @@ class configuracion_administrador(base):
             a['hijo'] = h
             campos.append(a)
 
-        file_write = open(base_dir + 'moduloconfiguracion.json', 'w')
+        file_write = open(base_dir + 'moduloconfiguracion.json', 'w+')
         file_write.write(json.dumps(campos))
         file_write.close()
 
@@ -133,7 +133,7 @@ class configuracion_administrador(base):
             a = database.create_data(fields, tabla)
             campos.append(a)
 
-        file_write = open(base_dir + 'configuracion.json', 'w')
+        file_write = open(base_dir + 'configuracion.json', 'w+')
         file_write.write(json.dumps(campos))
         file_write.close()
 

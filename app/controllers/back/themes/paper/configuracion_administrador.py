@@ -23,10 +23,10 @@ from core.functions import functions
 import json
 
 
-class configuracionadministrador(base):
-    url = ['configuracionadministrador']
+class configuracion_administrador(base):
+    url = ['configuracion_administrador']
     metadata = {'title': 'Configuracion de administrador',
-                'modulo': 'configuracionadministrador'}
+                'modulo': 'configuracion_administrador'}
     breadcrumb = []
 
     def __init__(self):

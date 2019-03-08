@@ -306,8 +306,9 @@ class database():
                 if realBatchSize != 0:
                     sql += 'INSERT INTO `' + table + '` VALUES '
                     key=0
-                    for k,v in zip(row):
-                        print(k,v)
+
+                    dictOfWords = dict.fromkeys(row , 1)
+                    print(dictOfWords)
                     for fila in row:
                         rowCount = key + 1
                         sql += '('

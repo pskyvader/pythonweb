@@ -77,7 +77,6 @@ class backup(base):
             tiempo_lento = 0
         else:
             tiempo_lento = float(tiempo_lento.replace(',','.'))
-            is_mensaje = True
             mensaje += str(tiempo_lento) + " segundos (servidor lento)"
 
         tiempo_rapido = configuracion_model.getByVariable(
@@ -86,7 +85,6 @@ class backup(base):
             tiempo_rapido = 0
         else:
             tiempo_rapido = float(tiempo_rapido.replace(',','.'))
-            is_mensaje = True
             if tiempo_lento > 0:
                 mensaje += ", "
 

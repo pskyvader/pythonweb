@@ -7,7 +7,7 @@ import datetime
 import socket
 
 
-class log.json:
+class logging:
     def init(self, var):
         if len(var) == 0:
             return {'error': 404}

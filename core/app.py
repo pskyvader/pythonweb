@@ -130,6 +130,8 @@ class app:
                 current_module = getattr(current_module, 'error')
                 current_module = current_module()
                 response_error=current_module.index(str(my_file))
+
+                print(response_error)
                 
                 response['body']= view.render(response_error['body'])
                 #response['body'] = '<html><body>No encontrado ' +   str(my_file) + '</body></html>'

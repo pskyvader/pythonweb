@@ -3,6 +3,7 @@ from app.models.{{class}} import {{class}} as {{class}}_model
 
 #from app.models.table import table as table_model
 #from app.models.administrador import administrador as administrador_model
+#from app.models.modulo import modulo as modulo_model
 #from app.models.moduloconfiguracion import moduloconfiguracion as moduloconfiguracion_model
 
 #from .detalle import detalle as detalle_class

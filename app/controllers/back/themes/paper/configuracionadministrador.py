@@ -2,6 +2,7 @@ from .base import base
 
 from app.models.table import table as table_model
 from app.models.administrador import administrador as administrador_model
+from app.models.modulo import modulo as modulo_model
 from app.models.moduloconfiguracion import moduloconfiguracion as moduloconfiguracion_model
 
 #from .detalle import detalle as detalle_class
@@ -12,6 +13,7 @@ from .aside import aside
 from .footer import footer
 
 from core.app import app
+from core.database import database
 from core.cache import cache
 from core.functions import functions
 #from core.image import image
@@ -103,10 +105,10 @@ class configuracionadministrador(base):
         file_write.close()
 
         row         = moduloconfiguracion_model.getAll()
-        campos      = array()
+        campos      = []
         fields      = table_model.getByname('moduloconfiguracion')
         fields_hijo = table_model.getByname('modulo')
-        foreach (row as key : tabla) {
+        for tabla in row.values():
             a        = database.create_data(fields, tabla)
             row_hijo = modulo_model.getAll(array('idmoduloconfiguracion' : tabla[0]))
             h        = array()

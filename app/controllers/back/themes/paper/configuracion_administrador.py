@@ -91,7 +91,7 @@ class configuracion_administrador(base):
         respuesta = {'exito': True, 'mensaje': 'JSON generado correctamente'}
         ret = {'body': []}
 
-        base_dir = app.get_dir(True) + 'config/'
+        base_dir = app.get_dir(True) + 'app/config/'
         row = table_model.getAll()
         campos = []
         for tabla in row:
@@ -148,7 +148,7 @@ class configuracion_administrador(base):
             'JSON actualizado correctamente']}
         ret = {'body': []}
 
-        base_dir = app.get_dir(True) + '/config/'
+        base_dir = app.get_dir(True) + 'app/config/'
 
         file_read = open(base_dir + 'bdd.json', 'r')
         campos = json.loads(file_read.read())

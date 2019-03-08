@@ -126,10 +126,10 @@ class app:
                     response['body'] = ''
             else:
                 data_return['status'] = '404 Not Found'
-                if not config['debug']:
-                    error_file = ''
-                else:
+                if config['debug']:
                     error_file = str(my_file)
+                else:
+                    error_file = ''
 
                 controller = app.controller_dir + 'error'
                 my_file = Path(app.root + controller + '.py')

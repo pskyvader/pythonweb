@@ -103,7 +103,7 @@ class app:
                 current_module = getattr(current_module, url[0])
                 current_module = current_module()
                 del url[0]
-                # returns {'body':str,'headers':str} or {'error':int,...'redirect':str}
+                # returns {'body':[],'headers':str} or {'error':int,...'redirect':str}
                 response = current_module.init(url)
             else:
                 response = {'error': 404}

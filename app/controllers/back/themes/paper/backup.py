@@ -346,7 +346,7 @@ class backup(base):
                 file_write = open(self.archivo_log, 'w')
                 file_write.write(json.dumps(log_file))
                 file_write.close()
-            respuesta = self.bdd(self,False, respuesta['archivo_backup'])
+            respuesta = self.bdd(self,[],False, respuesta['archivo_backup'])
 
         if respuesta['exito']:
             if logging:

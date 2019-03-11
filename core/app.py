@@ -211,19 +211,18 @@ class app:
     @staticmethod
     def parse_post():
         from cgi import FieldStorage
+        from cgi import parse_qs
 
         post = {}
-        print(app.environ)
         if app.environ['REQUEST_METHOD'] == 'POST':
             post_env = app.environ.copy()
             post_env['QUERY_STRING'] = ''
-            print(app.environ['REQUEST_METHOD'])
 
-            p = FieldStorage(
-                fp=app.environ['wsgi.input'],
-                environ=post_env,
-                keep_blank_values=True
-            )
+            #p = FieldStorage( fp=app.environ['wsgi.input'], environ=post_env, keep_blank_values=True )
+
+            request_body_size = int(post_env.get('CONTENT_LENGTH', 0))
+            request_body = post_env['wsgi.input'].read(request_body_size)
+            p = parse_qs(request_body)
             print(p)
 
             try:
@@ -232,7 +231,7 @@ class app:
             except Exception as error:
                 #raise RuntimeError('Error al obtener post: ' + repr(error) + repr(p)+ app.environ['PATH_INFO'])
                 pass
-
+        print(post)
         post = app.format_array(post)
         post = app.parse_values(post)
         return post

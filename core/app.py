@@ -214,11 +214,11 @@ class app:
         except (ValueError):
             request_body_size = 0
 
-        # When the method is POST the variable will be sent
-        # in the HTTP request body which is passed by the WSGI server
-        # in the file like wsgi.input environment variable.
         request_body = app.environ['wsgi.input'].read(request_body_size)
+
         print('environ',request_body)
+
+        
         post_env = app.environ.copy()
         post_env['QUERY_STRING'] = ''
 

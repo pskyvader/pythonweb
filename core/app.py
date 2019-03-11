@@ -227,7 +227,8 @@ class app:
 
             try:
                 for key in p.keys():
-                    post[key] = p[key].value
+                    #post[key] = p[key].value
+                    post[key] = p[key]
             except Exception as error:
                 #raise RuntimeError('Error al obtener post: ' + repr(error) + repr(p)+ app.environ['PATH_INFO'])
                 pass

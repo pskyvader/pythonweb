@@ -401,7 +401,7 @@ class backup(base):
 
         return respuesta
 
-    def bdd(self, log=True, archivo_backup=''):
+    def bdd(self,var=[], log=True, archivo_backup=''):
         '''crea respaldo de la base de datos y la agrega al archivo zip'''
         import zipfile
         ret = {'body': ''}

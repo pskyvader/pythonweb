@@ -136,14 +136,16 @@ class app:
                 controller = app.controller_dir + 'error'
                 my_file = Path(app.root + controller + '.py')
                 if my_file.is_file():
-                    current_module = importlib.import_module( controller.replace("/", "."))
+                    current_module = importlib.import_module(
+                        controller.replace("/", "."))
                     current_module = getattr(current_module, 'error')
                     current_module = current_module()
-                    response_error = current_module.init(['index',error_file])
+                    response_error = current_module.init(['index', error_file])
                     #response_error = current_module.index(str(error_file))
                     response['body'] = response_error['body']
                 else:
-                    response['body'] = '<html><body>No encontrado ' +  error_file + '</body></html>'
+                    response['body'] = '<html><body>No encontrado ' + \
+                        error_file + '</body></html>'
         else:
             data_return['status'] = '200 OK'
 
@@ -217,14 +219,14 @@ class app:
         if app.environ['REQUEST_METHOD'] == 'POST':
             print(app.environ['REQUEST_METHOD'])
             p = FieldStorage(
-                    fp=app.environ['wsgi.input'],
-                    environ=post_env,
-                    keep_blank_values=True
-                )
+                fp=app.environ['wsgi.input'],
+                environ=post_env,
+                keep_blank_values=True
+            )
             print(p)
-            
+
             try:
-            
+
                 for key in p.keys():
                     post[key] = p[key].value
             except Exception as error:

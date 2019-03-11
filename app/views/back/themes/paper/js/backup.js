@@ -163,7 +163,6 @@ function lista_backup(data) {
     //console.log(data);
     total_respaldo = data.lista.length;
     if (data.exito) {
-        console.log(data);
         //end();
         barra(10);
         post_basic(create_url(modulo, 'continuar'), {

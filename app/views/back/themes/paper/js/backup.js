@@ -206,6 +206,7 @@ function fin_backup(data) {
     if (!respaldo_finalizado) {
         habilitar(true);
         respaldo_finalizado = true;
+        console.log(data);
         var data = JSON.parse(data);
         if (data.exito) {
             var tiempo = end();

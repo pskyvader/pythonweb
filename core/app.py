@@ -212,13 +212,13 @@ class app:
         post_env = app.environ.copy()
         post_env['QUERY_STRING'] = ''
 
-        p = FieldStorage(
-            fp=app.environ['wsgi.input'],
-            environ=post_env,
-            keep_blank_values=True
-        )
         post = {}
         try:
+            p = FieldStorage(
+                fp=app.environ['wsgi.input'],
+                environ=post_env,
+                keep_blank_values=True
+            )
             for key in p.keys():
                 post[key] = p[key].value
         except Exception as error:

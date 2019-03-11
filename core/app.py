@@ -196,15 +196,15 @@ class app:
     @staticmethod
     def parse_get():
         from cgi import parse_qs
-        url = dict(parse_qs(app.environ['QUERY_STRING']))
-        if 'url' in url:
-            del url['url']
-        for k, u in url.items():
+        get = dict(parse_qs(app.environ['QUERY_STRING']))
+        if 'url' in get:
+            del get['url']
+        for k, u in get.items():
             if len(u) == 1:
-                url[k] = u[0]
-        url = app.format_array(url)
-        url = app.parse_values(url)
-        return url
+                get[k] = u[0]
+        get = app.format_array(get)
+        get = app.parse_values(get)
+        return get
 
     @staticmethod
     def parse_post():

@@ -61,8 +61,8 @@ function post(url_post, info, mensaje_inicial, importante, archivo, callback, ex
         data: data,
         cache: false,
         dataType: 'json',
-        process: false, // Dont process the files
-        process: false, // Set content type to false as jQuery will tell the server its a query string request
+        processData: process, // Dont process the files
+        contentType: false, // Set content type to false as jQuery will tell the server its a query string request
         beforeSend: function() {
             notificacion_footer(mensaje_inicial);
         },

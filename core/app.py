@@ -218,9 +218,7 @@ class app:
         # in the HTTP request body which is passed by the WSGI server
         # in the file like wsgi.input environment variable.
         request_body = app.environ['wsgi.input'].read(request_body_size)
-        
-        wsgi.file_wrapper
-        print('environ',app.environ)
+        print('environ',request_body)
         post_env = app.environ.copy()
         post_env['QUERY_STRING'] = ''
 

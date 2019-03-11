@@ -215,7 +215,7 @@ class app:
         except (ValueError):
             request_body_size = 0
 
-        request_body = app.environ['wsgi.input'].read(request_body_size)
+        request_body = (app.environ.copy())['wsgi.input'].read(request_body_size)
 
         print('request_body_size',request_body_size)
         print('request_body',request_body)

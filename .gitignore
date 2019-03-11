@@ -106,7 +106,7 @@ venv.bak/
 #custom
 .vscode
 .htaccess
-log.json
+**/log.json
 server.py
 **/app/config/*
 session_data

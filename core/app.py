@@ -227,6 +227,7 @@ class app:
 
             try:
                 for key,u in p.items():
+                    print(key,u)
                     if len(u) == 1:
                         post[key] = u[0]
                     else:

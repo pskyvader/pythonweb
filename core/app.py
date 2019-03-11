@@ -214,20 +214,21 @@ class app:
         post_env['QUERY_STRING'] = ''
         post = {}
         print(app.environ)
-        p = FieldStorage(
-                fp=app.environ['wsgi.input'],
-                environ=post_env,
-                keep_blank_values=True
-            )
-        print(p)
-        
-        try:
-           
-            for key in p.keys():
-                post[key] = p[key].value
-        except Exception as error:
-            #raise RuntimeError('Error al obtener post: ' + repr(error) + repr(p)+ app.environ['PATH_INFO'])
-            pass
+        if app.environ['REQUEST_METHOD'] == 'POST':
+            p = FieldStorage(
+                    fp=app.environ['wsgi.input'],
+                    environ=post_env,
+                    keep_blank_values=True
+                )
+            print(p)
+            
+            try:
+            
+                for key in p.keys():
+                    post[key] = p[key].value
+            except Exception as error:
+                #raise RuntimeError('Error al obtener post: ' + repr(error) + repr(p)+ app.environ['PATH_INFO'])
+                pass
 
         post = app.format_array(post)
         post = app.parse_values(post)

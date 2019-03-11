@@ -9,14 +9,12 @@ sys.path.insert(0, os.path.dirname(__file__))
 def application2(environ, start_response):
     #from datetime import datetime
     #init_time = datetime.now()
-    print('inicio')
+    
     app_web = app(os.path.dirname(__file__))
     main_data = app_web.init(environ)
     ret = main_data['response_body']
 
 
-
-    print('fin')
 
     if isinstance(ret, str) and ret != '':
         ret = bytes(ret, 'utf-8')

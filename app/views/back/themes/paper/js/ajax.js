@@ -50,6 +50,8 @@ function post(url_post, info, mensaje_inicial, importante, archivo, callback, ex
         $.each(archivo, function(key, value) {
             data.append(key, value);
         });
+    }else{
+        data={'campo':info}
     }
     $.ajax({
         url: url_post,

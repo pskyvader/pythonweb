@@ -218,23 +218,18 @@ class app:
             post_env = app.environ.copy()
             post_env['QUERY_STRING'] = ''
 
-            #p = FieldStorage( fp=app.environ['wsgi.input'], environ=post_env, keep_blank_values=True )
-
-            request_body_size = int(post_env.get('CONTENT_LENGTH', 0))
-            request_body = post_env['wsgi.input'].read(request_body_size)
-            p = parse_qs(request_body)
+            p = FieldStorage(
+                fp=app.environ['wsgi.input'],
+                keep_blank_values=True
+            )
+            #request_body_size = int(app.environ.get('CONTENT_LENGTH', 0))
+            #request_body = app.environ['wsgi.input'].read(request_body_size)
+            #p = parse_qs(request_body)
             print(p)
 
             try:
-                for key,u in p.items():
-                    print(key,'-----------------',u)
-                    if len(u) == 1:
-                        post[key] = u[0]
-                    else:
-                        post[key] = u
-
-
-                    #post[key] = p[key].value
+                for key in p.keys():
+                    post[key] = p[key].value
             except Exception as error:
                 #raise RuntimeError('Error al obtener post: ' + repr(error) + repr(p)+ app.environ['PATH_INFO'])
                 pass

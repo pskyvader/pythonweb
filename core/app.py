@@ -209,6 +209,7 @@ class app:
     @staticmethod
     def parse_post():
         from cgi import FieldStorage
+        from cgi import parse_qs
         try:
             request_body_size = int(app.environ.get('CONTENT_LENGTH', 0))
         except (ValueError):
@@ -217,6 +218,9 @@ class app:
         request_body = app.environ['wsgi.input'].read(request_body_size)
 
         print('environ',request_body)
+        d = parse_qs(request_body)
+        print('d',d)
+
 
 
         post_env = app.environ.copy()

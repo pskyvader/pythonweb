@@ -51,8 +51,10 @@ function post(url_post, info, mensaje_inicial, importante, archivo, callback, ex
             data.append(key, value);
         });
         process=false
+        type=false
     }else{
         process=true
+        type='application/x-www-form-urlencoded; charset=UTF-8'
         data={'campos':info}
     }
     $.ajax({
@@ -62,7 +64,7 @@ function post(url_post, info, mensaje_inicial, importante, archivo, callback, ex
         cache: false,
         dataType: 'json',
         processData: process, // Dont process the files
-        contentType: false, // Set content type to false as jQuery will tell the server its a query string request
+        contentType: type, // Set content type to false as jQuery will tell the server its a query string request
         beforeSend: function() {
             notificacion_footer(mensaje_inicial);
         },

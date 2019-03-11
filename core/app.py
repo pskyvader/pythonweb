@@ -220,23 +220,13 @@ class app:
             post_env['QUERY_STRING'] = ''
             post_env['CONTENT_LENGTH'] = int(app.environ.get('CONTENT_LENGTH', 0))
 
-            p = FieldStorage(
-                fp=post_env2['wsgi.input'],
-                environ=post_env,
-                keep_blank_values=True
-            )
-            #request_body_size = int(app.environ.get('CONTENT_LENGTH', 0))
-            #request_body = app.environ['wsgi.input'].read(request_body_size)
-            #p = parse_qs(request_body)
-            print(p)
-
+            p = FieldStorage( fp=post_env2['wsgi.input'], environ=post_env, keep_blank_values=True )
             try:
                 for key in p.keys():
                     post[key] = p[key].value
             except Exception as error:
                 #raise RuntimeError('Error al obtener post: ' + repr(error) + repr(p)+ app.environ['PATH_INFO'])
                 pass
-        print(post)
         post = app.format_array(post)
         post = app.parse_values(post)
         return post

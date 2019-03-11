@@ -212,6 +212,7 @@ class app:
 
         post_env = app.environ.copy()
         post_env['QUERY_STRING'] = ''
+        post_env['REQUEST_METHOD'] = 'POST'
 
         post = {}
         

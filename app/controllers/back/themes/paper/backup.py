@@ -427,8 +427,8 @@ class backup(base):
     def continuar(self):
         '''Inicio o continuacion de respaldo en modo lento (toma mas tiempo pero consume menos recursos)'''
         ret = {'body': ''}
-        l=app.post['lista'].split(',')
-        print(l)
+        for a in app.post['lista']:
+            print(a)
         lista=json.loads(app.post['lista'])
         respuesta = self.zipData(self,self.base_dir, app.post['archivo_backup'], lista, app.post['total'])
         ret['body'] = json.dumps(respuesta)

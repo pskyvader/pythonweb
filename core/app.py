@@ -215,6 +215,7 @@ class app:
         post = {}
         print(app.environ)
         if app.environ['REQUEST_METHOD'] == 'POST':
+            print(app.environ['REQUEST_METHOD'])
             p = FieldStorage(
                     fp=app.environ['wsgi.input'],
                     environ=post_env,

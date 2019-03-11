@@ -217,6 +217,7 @@ class app:
             environ=post_env,
             keep_blank_values=True
         )
+        print(p)
         post = {}
         try:
             for key in p.keys():

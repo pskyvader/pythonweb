@@ -226,9 +226,14 @@ class app:
             print(p)
 
             try:
-                for key in p.keys():
+                for key,u in p.items():
+                    if len(u) == 1:
+                        post[key] = u[0]
+                    else:
+                        post[key] = u
+
+
                     #post[key] = p[key].value
-                    post[key] = p[key]
             except Exception as error:
                 #raise RuntimeError('Error al obtener post: ' + repr(error) + repr(p)+ app.environ['PATH_INFO'])
                 pass

@@ -212,12 +212,13 @@ class app:
     def parse_post():
         from cgi import FieldStorage
 
-        post_env = app.environ.copy()
-        post_env['QUERY_STRING'] = ''
         post = {}
         print(app.environ)
         if app.environ['REQUEST_METHOD'] == 'POST':
+            post_env = app.environ.copy()
+            post_env['QUERY_STRING'] = ''
             print(app.environ['REQUEST_METHOD'])
+
             p = FieldStorage(
                 fp=app.environ['wsgi.input'],
                 environ=post_env,
@@ -226,7 +227,6 @@ class app:
             print(p)
 
             try:
-
                 for key in p.keys():
                     post[key] = p[key].value
             except Exception as error:

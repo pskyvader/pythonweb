@@ -217,6 +217,7 @@ class app:
         post = {}
         
         try:
+            print(app.environ)
             p = FieldStorage(
                 fp=app.environ['wsgi.input'],
                 environ=post_env,

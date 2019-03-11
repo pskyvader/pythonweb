@@ -218,7 +218,7 @@ class app:
         request_body = app.environ['wsgi.input'].read(request_body_size)
 
         print('environ',request_body)
-        d = parse_qs(request_body)
+        d = dict(parse_qs(request_body))
         print('d',d)
 
 

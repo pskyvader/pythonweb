@@ -108,7 +108,7 @@ venv.bak/
 .htaccess
 **/log.json
 server.py
-**/app/config/*
+app/config/*
 session_data
 sitemap.xml
 upload/files/*

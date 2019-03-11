@@ -152,7 +152,7 @@ function leer_log(restaurar) {
             error: function() {
                 setTimeout(leer_log, 1000);
             },
-            timeout: 1500 //in milliseconds
+            timeout: 500 //in milliseconds
         });
     }
 }

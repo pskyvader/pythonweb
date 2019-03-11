@@ -220,6 +220,8 @@ class app:
         print('environ',request_body)
         d = dict(parse_qs(request_body))
         print('d',d)
+        for a in d:
+            print('a',a)
 
 
 

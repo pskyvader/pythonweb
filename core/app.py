@@ -219,6 +219,7 @@ class app:
         try:
             p = FieldStorage(
                 fp=app.environ['wsgi.input'],
+                environ=post_env,
                 keep_blank_values=True
             )
             print(p)

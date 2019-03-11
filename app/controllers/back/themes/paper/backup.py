@@ -207,6 +207,7 @@ class backup(base):
 
     def eliminar(self):
         ret = {'body': ''}
+        print('post',app.post)
         campos = app.post['campos']
         respuesta = {'exito': False, 'mensaje': ''}
         id = campos['id']

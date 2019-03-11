@@ -51,7 +51,6 @@ function post(url_post, info, mensaje_inicial, importante, archivo, callback, ex
             data.append(key, value);
         });
     }
-    console.log(data);
     $.ajax({
         url: url_post,
         type: 'POST',

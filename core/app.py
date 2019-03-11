@@ -209,8 +209,7 @@ class app:
     @staticmethod
     def parse_post():
         from cgi import FieldStorage
-        from cgi import parse_qs    print('a',a)
-
+        from cgi import parse_qs
 
 
         post_env = app.environ.copy()

@@ -263,6 +263,7 @@ class database():
         import os
         sql = open(backup, "r").read()
         sql=sql.replace('\n','')
+        sql=sql.replace('  ','')
         exito = self.consulta(sql, False)
         if exito:
             os.remove(backup)

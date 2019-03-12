@@ -244,6 +244,10 @@ function fin_restaurar(data) {
         }
         if (data.exito) {
             if (data.inicio) {
+                console.log(data)
+                if (data.mensaje) {
+                    notificacion_footer(data.mensaje);
+                }
                 var accion = 'restaurar';
                 post_basic(create_url(modulo, accion), {
                     id: $('.modal-restaurar input[name=id_restaurar]').val(),

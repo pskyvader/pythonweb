@@ -111,8 +111,8 @@ CREATE TABLE `seo_configuracion` (
 
 INSERT INTO `seo_configuracion` VALUES ("5","version","0.30.0"),
 ("12","orden_producto","orden:Recomendados,ventas:Más vendidos,precio ASC:Precio de menor a mayor,precio DESC:Precio de mayor a menor,titulo ASC:A-Z,titulo DESC:Z-A"),
-("13","cantidad_backup_rapido","36.0"),
-("14","tiempo_backup_rapido","10.833333333333334"),
+("13","cantidad_backup_rapido","37.0"),
+("14","tiempo_backup_rapido","10.675675675675675"),
 ("15","cantidad_backup_lento","20.0"),
 ("16","tiempo_backup_lento","11.200000000000003");
 
@@ -171,7 +171,7 @@ CREATE TABLE `seo_log` (
   `accion` char(255) NOT NULL,
   `fecha` datetime NOT NULL,
   PRIMARY KEY (`idlog`)
-) ENGINE=InnoDB AUTO_INCREMENT=5687 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5689 DEFAULT CHARSET=utf8;
 
 INSERT INTO `seo_log` VALUES ("1","Admin (admin@mysitio.cl)","configuracion","metodo: delete, ID: 6","2018-11-20 14:28:34"),
 ("2","Admin (admin@mysitio.cl)","configuracion","metodo: delete, ID: 7","2018-11-20 14:28:36"),
@@ -5863,7 +5863,9 @@ INSERT INTO `seo_log` VALUES ("5001","Admin (admin@mysitio.cl)","seo","metodo: u
 ("5683","Admin (admin@mysitio.cl)","configuracion","metodo: configuracion, ID: 13","2019-03-12 12:24:27"),
 ("5684","Admin (admin@mysitio.cl)","configuracion","metodo: configuracion, ID: 14","2019-03-12 12:24:27"),
 ("5685","Admin (admin@mysitio.cl)","configuracion","metodo: configuracion, ID: 15","2019-03-12 12:37:58"),
-("5686","Admin (admin@mysitio.cl)","configuracion","metodo: configuracion, ID: 16","2019-03-12 12:37:58");
+("5686","Admin (admin@mysitio.cl)","configuracion","metodo: configuracion, ID: 16","2019-03-12 12:37:58"),
+("5687","Admin (admin@mysitio.cl)","configuracion","metodo: configuracion, ID: 13","2019-03-12 12:45:40"),
+("5688","Admin (admin@mysitio.cl)","configuracion","metodo: configuracion, ID: 14","2019-03-12 12:45:40");
 
 
 

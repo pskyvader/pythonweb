@@ -181,8 +181,7 @@ class backup(base):
                         file_write.write(json.dumps(log))
                         file_write.close()
                         connection = database.instance()
-                        exito = connection.restore_backup(
-                            self.base_dir + '/bdd.sql')
+                        exito = connection.restore_backup( self.base_dir + '/bdd.sql')
                         if not isinstance(exito, bool) or not exito:
                             respuesta['errores'].append(exito)
 

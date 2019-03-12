@@ -220,7 +220,7 @@ class configuracion_administrador(base):
         campos = json.loads(file_read.read())
         file_read.close()
 
-        for moduloconfiguracion in campos.values():
+        for moduloconfiguracion in campos:
             row = moduloconfiguracion_model.getAll(
                 {'module': moduloconfiguracion['module']}, {'limit': 1})
             hijo = dict(moduloconfiguracion['hijo']).copy()

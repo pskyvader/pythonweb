@@ -477,7 +477,7 @@ class database():
 
     
     def get_prefix(self):
-        return database._prefix
+        return self._prefix
 
     @staticmethod
     def instance():

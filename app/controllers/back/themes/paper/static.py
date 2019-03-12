@@ -9,6 +9,7 @@ import socket
 
 class static:
     def init(self, var):
+        from os import path,makedirs
         if len(var) == 0:
             return {'error': 404}
 
@@ -35,6 +36,10 @@ class static:
             cache_file = theme+'cache/' + \
                 str(functions.fecha_archivo(resource_url, True)) + \
                 '-'+resource.replace('/', '-')
+
+            if not path.exists(theme+'cache/'):
+                makedirs(theme+'cache/')
+
             my_file = Path(cache_file)
             if my_file.is_file():
                 ret['file'] = cache_file

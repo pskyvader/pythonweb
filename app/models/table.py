@@ -193,7 +193,7 @@ class table(base_model):
         from pathlib import Path
         from core.view import view
         from .log import log
-        import codecs
+        import io
         config = app.get_config()
         respuesta = {'exito': True, 'mensaje': []}
         row = cls.getById(id)
@@ -208,8 +208,7 @@ class table(base_model):
         else:
             controller_url = dir + 'app/templates/controllers/back/controller.tpl'
             view.add_array({'name': tablename, 'theme': config['theme_back']})
-            controller_template = view.render_template(
-                codecs.open(controller_url, encoding='utf-8').read())
+            controller_template = view.render_template( io.open(controller_url, encoding='utf-8').read())
             respuesta['mensaje'].append(
                 'Controlador ' + tablename + ' no existe, creado')
             file_write = open(destino, 'w', encoding='utf-8')
@@ -223,10 +222,9 @@ class table(base_model):
         else:
             model_url = dir + 'app/templates/models/back/model.tpl'
 
-            view.add_array(
-                {'class': tablename, 'table': tablename, 'idname': idname})
-            model_template = view.render_template(
-                codecs.open(model_url, encoding='utf-8').read())
+            view.add_array( {'class': tablename, 'table': tablename, 'idname': idname})
+            model_template = view.render_template( io.open(model_url, encoding='utf-8').read())
+
             respuesta['mensaje'].append(
                 'Modelo ' + tablename + ' no existe, creado')
             file_write = open(destino, 'w', encoding='utf-8')

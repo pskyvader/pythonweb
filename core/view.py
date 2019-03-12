@@ -68,6 +68,14 @@ class view:
             return data
 
     @staticmethod
+    def render_template(template_bytes,data):
+        from jinja2 import Template
+        template = Template(template_bytes)
+        content = template.render(data)
+        return content
+
+
+    @staticmethod
     def css(combine=True, array_only=False):
         from core.functions import functions
         from core.app import app

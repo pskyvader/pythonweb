@@ -73,7 +73,7 @@ class table(base_model):
         row = cls.getById(id)
         row['fields'] = json.dumps(row['fields'])
 
-        fields     = table.getByname(cls.table)
+        fields = table.getByname(cls.table)
         insert = database.create_data(fields, row)
         connection = database.instance()
         row = connection.insert(cls.table, cls.idname, insert)
@@ -185,7 +185,7 @@ class table(base_model):
         select = 'count(*) as count'
         row = connection.get(table, cls.idname, where, condiciones, select)
         connection.set_prefix(prefix)
-        
+
         return (row[0]['count'] == 1)
 
     @classmethod
@@ -207,7 +207,8 @@ class table(base_model):
                 'Controlador ' + tablename + ' ya existe')
         else:
             controller_url = dir + 'app/templates/controllers/back/controller.tpl'
-            controller_template = view.render_template( io.open(controller_url, encoding='utf-8').read(),{'name': tablename, 'theme': config['theme_back']})
+            controller_template = view.render_template(io.open(
+                controller_url, encoding='utf-8').read(), {'name': tablename, 'theme': config['theme_back']})
             respuesta['mensaje'].append(
                 'Controlador ' + tablename + ' no existe, creado')
             file_write = open(destino, 'w', encoding='utf-8')
@@ -220,9 +221,8 @@ class table(base_model):
             respuesta['mensaje'].append('Modelo ' + tablename + ' ya existe')
         else:
             model_url = dir + 'app/templates/models/back/model.tpl'
-
-            view.add_array( {'class': tablename, 'table': tablename, 'idname': idname})
-            model_template = view.render_template( io.open(model_url, encoding='utf-8').read())
+            model_template = view.render_template(io.open(
+                model_url, encoding='utf-8').read(), {'class': tablename, 'table': tablename, 'idname': idname})
 
             respuesta['mensaje'].append(
                 'Modelo ' + tablename + ' no existe, creado')

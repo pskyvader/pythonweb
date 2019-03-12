@@ -52,10 +52,10 @@ class database():
                 if delete_cache:
                     cache.delete_cache()
         except pymysql.InternalError as error:
-            self._connection.rollback()
             code, message = error.args
             print('error DB query:',code, message)
             print('query',sql)
+            self._connection.rollback()
 
         if rows is None:
             if return_query:
@@ -265,8 +265,11 @@ class database():
         sql=sql.replace('\n','')
         sql=sql.strip()
         sql=sql.replace('`','')
+
+        sql_list=sql.split(';')
+        for s in sql_list:
+            exito = self.consulta(s, False)
         
-        exito = self.consulta(sql, False)
         if exito:
             os.remove(backup)
         return exito

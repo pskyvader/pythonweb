@@ -11,9 +11,8 @@ import socket
 
 class logging:
     def init(self,var):
-        ret = {'body': ''}
         resource=app.get_dir(True)+'log.json'
-        ret['headers'] = [ ('Content-Type', 'text/plain; charset=utf-8') ]
+        ret = {'headers': [ ('Content-Type', 'application/json; charset=utf-8') ], 'body': ''}
         
         my_file = Path(resource)
         ret['is_file'] = True

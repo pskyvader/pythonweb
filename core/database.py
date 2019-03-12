@@ -471,12 +471,12 @@ class database():
         file.delete_temp()
         return data
 
-    @staticmethod
-    def set_prefix(prefix):
+    
+    def set_prefix(self,prefix):
         database._prefix = prefix
 
-    @staticmethod
-    def get_prefix():
+    
+    def get_prefix(self):
         return database._prefix
 
     @staticmethod

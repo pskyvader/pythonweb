@@ -155,7 +155,6 @@ class backup(base):
                 total = len(file_list)
                 for i in range(inicio, total):
                     nombre = file_list[i]
-                    nombre=nombre.filename()
                     if nombre not in self.no_restore:
                         try:
                             zip.extract(file_list[i], self.base_dir)

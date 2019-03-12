@@ -85,8 +85,8 @@ class backup(base):
             'tiempo_backup_rapido')
         if isinstance(tiempo_rapido, bool):
             tiempo_rapido = 0
-            if tiempo_lento==0:
-                mensaje=''
+            if tiempo_lento == 0:
+                mensaje = ''
         else:
             tiempo_rapido = float(tiempo_rapido.replace(',', '.'))
             if tiempo_lento > 0:
@@ -194,12 +194,14 @@ class backup(base):
                     else:
                         respuesta['mensaje'] = 'No existe base de datos'
                         respuesta['errores'].append('bdd.sql')
+                else:
+                    if respuesta['mensaje'] == '':
+                        respuesta['mensaje'] = 'Restaurando ...' + nombre[-30:] + ' (' + str(i + 1) + '/' + str(total) + ')', 'porcentaje': ((i + 1) / total) * 90
                 respuesta['exito'] = True
             else:
                 respuesta['mensaje'] = 'Error al abrir archivo, o archivo no valido'
         else:
             respuesta['mensaje'] = 'archivo no encontrado'
-
 
         if 'inicio' not in respuesta:
             c = configuracion_administrador()

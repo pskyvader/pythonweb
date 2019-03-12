@@ -168,7 +168,7 @@ class backup(base):
                         file_write = open(self.archivo_log, 'w')
                         file_write.write(json.dumps(log))
                         file_write.close()
-                        time.sleep(.100)
+                        time.sleep(.500)
                     if functions.current_time(as_string=False) - tiempo > 15:
                         respuesta['inicio'] = i
                         break
@@ -385,7 +385,7 @@ class backup(base):
                             file_write = open(self.archivo_log, 'w+')
                             file_write.write(json.dumps(log_file))
                             file_write.close()
-                            time.sleep(.100)
+                            time.sleep(.500)
                 if len(file)==0 and len(dirs)==0:
                     if 'cache' not in root and 'custom_resources' not in root and '.git' not in root and '.autogit' not in root and '.vscode' not in root and 'session_data' not in root:
                         fichero_final=root

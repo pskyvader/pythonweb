@@ -269,6 +269,7 @@ class database():
 
         sql_list = sql.split(';')
         for s in sql_list:
+            print(s)
             exito = self.consulta(s, False)
 
         if exito:

@@ -55,7 +55,6 @@ class database():
             code, message = error.args
             self._connection.rollback()
             print('error DB query:', code, message)
-            print('query', sql)
             raise RuntimeError('error DB query: '+sql)
 
         if rows is None:

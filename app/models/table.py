@@ -207,8 +207,7 @@ class table(base_model):
                 'Controlador ' + tablename + ' ya existe')
         else:
             controller_url = dir + 'app/templates/controllers/back/controller.tpl'
-            view.add_array({'name': tablename, 'theme': config['theme_back']})
-            controller_template = view.render_template( io.open(controller_url, encoding='utf-8').read())
+            controller_template = view.render_template( io.open(controller_url, encoding='utf-8').read(),{'name': tablename, 'theme': config['theme_back']})
             respuesta['mensaje'].append(
                 'Controlador ' + tablename + ' no existe, creado')
             file_write = open(destino, 'w', encoding='utf-8')

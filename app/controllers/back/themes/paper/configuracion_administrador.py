@@ -231,6 +231,7 @@ class configuracion_administrador(base):
             moduloconfiguracion['detalle'] = json.dumps(
                 moduloconfiguracion['detalle'])
             if len(row) == 1:
+                print(row)
                 moduloconfiguracion['id'] = row[0][0]
                 moduloconfiguracion_model.update(moduloconfiguracion, False)
                 for h in hijo:

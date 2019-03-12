@@ -5910,7 +5910,14 @@ CREATE TABLE `seo_mediopago` (
   PRIMARY KEY (`idmediopago`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
-INSERT INTO `seo_mediopago` VALUES ("1","Transferencia bancaria","Puedes pagar mediante transferencia bancaria, enviar un correo con la confirmación de tu pago y listo!","<p>Por favor haz un deposito o transferencia con el monto total, con los siguientes datos:</p><ul><li>Titular: Maria del Carmen Cladera</li><li>RUT: 22.854.956-8</li><li>Banco: Banco Edwards City&nbsp;</li><li>Numero de Cuenta Corriente: 3170017001</li></ul><p>&nbsp;</p><p align=\"justify\">Tambi&eacute;n podr&aacute; hacer dep&oacute;sitos en Servipag en la cuenta del Banco de Chile.</p><p align=\"justify\">Le solicitamos enviar el <strong>Codigo del pedido y comprobante </strong>de dep&oacute;sito&nbsp;o transferencia electr&oacute;nica&nbsp;al e-mail&nbsp;<strong><u><a href=\"mailto:jarrosycafe@gmail.com\">jarrosycafe@gmail.com</a>.</u></strong></p><p align=\"justify\">&nbsp;</p><p align=\"justify\">La boleta o factura ser&aacute; remitida por correo. (Esto es obligatorio por SII)</p>","1","1"),
+INSERT INTO `seo_mediopago` VALUES (
+  "1",
+  "Transferencia bancaria",
+  "Puedes pagar mediante transferencia bancaria, enviar un correo con la confirmación de tu pago y listo!",
+  "<p>Por favor haz un deposito o transferencia con el monto total, con los siguientes datos:</p><ul><li>Titular: Maria del Carmen Cladera</li><li>RUT: 22.854.956-8</li><li>Banco: Banco Edwards City&nbsp;</li><li>Numero de Cuenta Corriente: 3170017001</li></ul><p>&nbsp;</p><p align=\"justify\">Tambi&eacute;n podr&aacute; hacer dep&oacute;sitos en Servipag en la cuenta del Banco de Chile.</p><p align=\"justify\">Le solicitamos enviar el <strong>Codigo del pedido y comprobante </strong>de dep&oacute;sito&nbsp;o transferencia electr&oacute;nica&nbsp;al e-mail&nbsp;<strong><u><a href=\"mailto:jarrosycafe@gmail.com\">jarrosycafe@gmail.com</a>.</u></strong></p><p align=\"justify\">&nbsp;</p><p align=\"justify\">La boleta o factura ser&aacute; remitida por correo. (Esto es obligatorio por SII)</p>",
+  "1",
+  "1"
+  ),
 ("2","Webpay","Puedes pagar con Red Compra con tarjeta de crédito o débito","","2","1");
 
 

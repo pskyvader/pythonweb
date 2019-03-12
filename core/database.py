@@ -264,7 +264,6 @@ class database():
         sql = open(backup, "r").read()
         sql=sql.replace('\n','')
         sql=sql.strip()
-            
         sql=sql.replace('`','')
         
         exito = self.consulta(sql, False)

@@ -361,6 +361,7 @@ class backup(base):
 
     def get_files(self, source: str, log=True):
         '''obtiene lista de archivos para respaldar en zip'''
+        import time
         respuesta = {'exito': False, 'mensaje': ''}
         my_file = Path(source)
         if my_file.is_dir():
@@ -382,6 +383,7 @@ class backup(base):
                             file_write = open(self.archivo_log, 'w+')
                             file_write.write(json.dumps(log_file))
                             file_write.close()
+                            time.sleep(.300)
                 if len(file)==0 and len(dirs)==0:
                     if 'cache' not in root and 'custom_resources' not in root and '.git' not in root and '.autogit' not in root and '.vscode' not in root and 'session_data' not in root:
                         fichero_final=root

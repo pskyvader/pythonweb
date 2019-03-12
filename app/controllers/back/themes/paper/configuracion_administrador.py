@@ -264,7 +264,7 @@ class configuracion_administrador(base):
         file_read = open(base_dir + 'configuracion.json', 'r')
         campos = json.loads(file_read.read())
         file_read.close()
-        for configuracion in campos.values():
+        for configuracion in campos:
             row = configuracion_model.getByVariable(configuracion['variable'])
             configuracion_model.setByVariable(
                 configuracion['variable'], configuracion['valor'])

@@ -141,7 +141,7 @@ class backup(base):
         file = None
         tiempo = functions.current_time(as_string=False)
         respuesta = {'exito': False,
-                     'mensaje': 'archivo no encontrado', 'errores': []}
+                     'mensaje': '', 'errores': []}
         id = app.post['id']
         inicio = int(app.post['inicio']) - 1 if 'inicio' in app.post else 0
 
@@ -197,6 +197,9 @@ class backup(base):
                 respuesta['exito'] = True
             else:
                 respuesta['mensaje'] = 'Error al abrir archivo, o archivo no valido'
+        else:
+            respuesta['mensaje'] = 'archivo no encontrado'
+
 
         if 'inicio' not in respuesta:
             c = configuracion_administrador()

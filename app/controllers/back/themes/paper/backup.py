@@ -163,7 +163,7 @@ class backup(base):
                     respuesta['errores'].append(nombre)
 
                     if i % 100 == 0:
-                        log = {'mensaje': 'Restaurando ' + nombre[-30:] + ' (' + str( i + 1) + '/' + str(total) + ')', 'porcentaje': ((i + 1) / total) * 90}
+                        log = {'mensaje': 'Restaurando ...' + nombre[-30:] + ' (' + str( i + 1) + '/' + str(total) + ')', 'porcentaje': ((i + 1) / total) * 90}
                         file_write = open(self.archivo_log, 'w')
                         file_write.write(json.dumps(log))
                         file_write.close()
@@ -377,7 +377,7 @@ class backup(base):
 
                         if log and count % 1000 == 0:
                             log_file = {
-                                'mensaje': 'Recuperando archivo ' + fichero_final[-30:], 'porcentaje': 10
+                                'mensaje': 'Recuperando archivo ...' + fichero_final[-30:], 'porcentaje': 10
                             }
                             file_write = open(self.archivo_log, 'w+')
                             file_write.write(json.dumps(log_file))
@@ -460,7 +460,7 @@ class backup(base):
 
             if log and (functions.current_time(as_string=False) - tiempo > 5 or count % 1000 == 0):
                 log_file = {
-                    'mensaje': final_file[-30:] + ' (' + str(total - len(lista)) + '/' + str(total) + ')',
+                    'mensaje': '...'+final_file[-30:] + ' (' + str(total - len(lista)) + '/' + str(total) + ')',
                     'porcentaje': 10 + ((total - len(lista)) / total) * 40
                 }
                 file_write = open(self.archivo_log, 'w')
@@ -470,7 +470,7 @@ class backup(base):
 
         if log:
             log_file = {
-                'mensaje': final_file[-30:] + ' (' + str(total - len(lista)) + '/' + str(total) + ')',
+                'mensaje': '...'+final_file[-30:] + ' (' + str(total - len(lista)) + '/' + str(total) + ')',
                 'notificacion': 'Guardando archivo, Esta operacion puede tomar algun tiempo',
                 'porcentaje': 10 + ((total - len(lista)) / total) * 40
             }

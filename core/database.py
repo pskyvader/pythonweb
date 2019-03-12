@@ -53,9 +53,10 @@ class database():
                     cache.delete_cache()
         except pymysql.InternalError as error:
             code, message = error.args
-            print('error DB query:',code, message)
-            print('query',sql)
             self._connection.rollback()
+            print('error DB query:', code, message)
+            print('query', sql)
+            raise RuntimeError('error DB query: '+sql)
 
         if rows is None:
             if return_query:
@@ -68,7 +69,7 @@ class database():
     def get_last_insert_id(self):
         return self._connection.insert_id()
 
-    def get(self, table:str, idname:str, where:dict, condiciones={}, select=""):
+    def get(self, table: str, idname: str, where: dict, condiciones={}, select=""):
         if select == "":
             select = "*"
         elif select == 'total':
@@ -77,7 +78,7 @@ class database():
         sql = "SELECT " + select + " FROM " + self._prefix + table
         sql += " WHERE (TRUE"
         for key, value in where.items():
-            if isinstance(value,bool):
+            if isinstance(value, bool):
                 sql += " AND " + key + "=" + str(value).lower()
             else:
                 sql += " AND " + key + "='" + str(value) + "'"
@@ -127,7 +128,8 @@ class database():
 
         for key, value in insert.items():
             sql += ","
-            sql += value if (value == "true" or value == "false") else "'" + str(value).replace("'", "\\'") + "'"
+            sql += value if (value == "true" or value ==
+                             "false") else "'" + str(value).replace("'", "\\'") + "'"
 
         sql += ")"
         row = self.consulta(sql, False, delete_cache)
@@ -262,14 +264,14 @@ class database():
     def restore_backup(self, backup):
         import os
         sql = open(backup, "r").read()
-        sql=sql.replace('\n','')
-        sql=sql.strip()
-        sql=sql.replace('`','')
+        sql = sql.replace('\n', '')
+        sql = sql.strip()
+        sql = sql.replace('`', '')
 
-        sql_list=sql.split(';')
+        sql_list = sql.split(';')
         for s in sql_list:
             exito = self.consulta(s, False)
-        
+
         if exito:
             os.remove(backup)
         return exito
@@ -279,7 +281,7 @@ class database():
                      'mensaje': 'Error al respaldar base de datos', 'sql': []}
         self.disableForeignKeyChecks = True
         self.batchSize = 1000
-        #try:
+        # try:
         if tables == '*':
             tables = []
             row = self.consulta('SHOW TABLES', True)
@@ -306,10 +308,12 @@ class database():
             numBatches = int(numRows / self.batchSize) + 1
 
             campos = self.consulta("SELECT COLUMN_NAME,COLUMN_TYPE FROM information_schema.columns WHERE table_schema='" +
-                                    self._dbName + "' AND table_name='" + table + "'", True)
+                                   self._dbName + "' AND table_name='" + table + "'", True)
 
-            for b in range(1,numBatches+1):
-                query = 'SELECT * FROM `' + table + '` LIMIT ' + str(b * self.batchSize - self.batchSize) + ',' + str(self.batchSize)
+            for b in range(1, numBatches+1):
+                query = 'SELECT * FROM `' + table + '` LIMIT ' + \
+                    str(b * self.batchSize - self.batchSize) + \
+                    ',' + str(self.batchSize)
                 row = self.consulta(query, True)
                 realBatchSize = len(row)
                 numFields = len(campos)
@@ -322,7 +326,8 @@ class database():
                         for k, v in enumerate(campos):
                             j = v[0]
                             if j in fila:
-                                fila[j] = self._connection.escape_string(str(fila[j]))
+                                fila[j] = self._connection.escape_string(
+                                    str(fila[j]))
                                 fila[j] = fila[j].replace("\n", "\\n")
                                 fila[j] = fila[j].replace("\r", "\\r")
                                 fila[j] = fila[j].replace("\f", "\\f")
@@ -354,7 +359,7 @@ class database():
 
         respuesta['sql'].append(sql)
         respuesta['exito'] = True
-        #except Exception as e:
+        # except Exception as e:
         #    respuesta['mensaje'] = str(e)
         #    raise RuntimeError('Error al obtener respaldo en base de datos: ' + repr(e)+ app.environ['PATH_INFO'])
 
@@ -365,9 +370,9 @@ class database():
         import hashlib
         part1 = hashlib.sha256()
         part1.update(password.encode('utf-8'))
-        part2=hashlib.sha256()
+        part2 = hashlib.sha256()
         part2.update(part1.hexdigest().encode('utf-8'))
-        password= part1.hexdigest() + part2.hexdigest()
+        password = part1.hexdigest() + part2.hexdigest()
         return password
 
     @staticmethod
@@ -481,11 +486,9 @@ class database():
         file.delete_temp()
         return data
 
-    
-    def set_prefix(self,prefix):
+    def set_prefix(self, prefix):
         self._prefix = prefix
 
-    
     def get_prefix(self):
         return self._prefix
 

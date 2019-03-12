@@ -160,7 +160,9 @@ function leer_log(restaurar) {
 
 
 function lista_backup(data) {
-    var data = JSON.parse(data);
+    if (typeof(data) != 'object') {
+        var data = JSON.parse(data);
+    }
     //console.log(data);
     total_respaldo = data.lista.length;
     if (data.exito) {
@@ -179,7 +181,9 @@ function lista_backup(data) {
 }
 
 function continuar_backup(data) {
-    var data = JSON.parse(data);
+    if (typeof(data) != 'object') {
+        var data = JSON.parse(data);
+    }
     if (data.exito) {
         //end();
         if (data.lista.length > 0) {
@@ -207,7 +211,9 @@ function fin_backup(data) {
     if (!respaldo_finalizado) {
         habilitar(true);
         respaldo_finalizado = true;
-        var data = JSON.parse(data);
+        if (typeof(data) != 'object') {
+            var data = JSON.parse(data);
+        }
         if (data.exito) {
             var tiempo = end();
             notificacion('Confirmacion', 'Respaldo completado', 'success');
@@ -233,7 +239,9 @@ function fin_backup(data) {
 function fin_restaurar(data) {
     //console.log(data,end());
     if (!respaldo_finalizado) {
-        var data = JSON.parse(data);
+        if (typeof(data) != 'object') {
+            var data = JSON.parse(data);
+        }
         if (data.exito) {
             if (data.inicio) {
                 var accion = 'restaurar';

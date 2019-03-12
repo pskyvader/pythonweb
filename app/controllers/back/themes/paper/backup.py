@@ -133,7 +133,7 @@ class backup(base):
 
     def restaurar(self):
         '''Restaura un backup, usar con precaucion ya que reemplaza todos los archivos de codigo'''
-        ret = {'body': ''}
+        ret = {'headers': [ ('Content-Type', 'application/json; charset=utf-8') ], 'body': ''}
         import zipfile
         file = None
         tiempo = functions.current_time(as_string=False)
@@ -204,7 +204,7 @@ class backup(base):
         return ret
 
     def eliminar(self):
-        ret = {'body': ''}
+        ret = {'headers': [ ('Content-Type', 'application/json; charset=utf-8') ], 'body': ''}
         campos = app.post['campos']
         respuesta = {'exito': False, 'mensaje': ''}
         id = campos['id']
@@ -237,7 +237,7 @@ class backup(base):
 
     def actualizar_tiempo(self):
         '''actualiza el tiempo total del respaldo realizado, para dar informacion del tiempo promedio de respaldo'''
-        ret = {'body': ''}
+        ret = {'headers': [ ('Content-Type', 'application/json; charset=utf-8') ], 'body': ''}
         respuesta = {'exito': False}
         campos = app.post
         if 'tiempo' in campos and 'tipo_backup' in campos:
@@ -271,7 +271,7 @@ class backup(base):
 
     def eliminar_error(self):
         '''Elimina archivos que no se lograron completar'''
-        ret = {'body': ''}
+        ret = {'headers': [ ('Content-Type', 'application/json; charset=utf-8') ], 'body': ''}
         respuesta = {'exito': True}
 
         files = []
@@ -290,7 +290,7 @@ class backup(base):
 
     def generar(self):
         '''comprueba las carpetas de respaldo y obtiene la lista de archivos para respaldar en zip'''
-        ret = {'body': ''}
+        ret = {'headers': [ ('Content-Type', 'application/json; charset=utf-8') ], 'body': ''}
         c = configuracion_administrador()
         c.json(False)
         respuesta = {'exito': True, 'mensaje': ''}
@@ -313,7 +313,7 @@ class backup(base):
 
     def generar_backup(self,var=[], logging=True):
         '''genera respaldo del sitio en zip, en formato "Respaldo rapido" (usa mas recursos)'''
-        ret = {'body': ''}
+        ret = {'headers': [ ('Content-Type', 'application/json; charset=utf-8') ], 'body': ''}
         c = configuracion_administrador()
         c.json(False)
         respuesta = {'exito': True, 'mensaje': ''}
@@ -401,7 +401,7 @@ class backup(base):
     def bdd(self,var=[], log=True, archivo_backup=''):
         '''crea respaldo de la base de datos y la agrega al archivo zip'''
         import zipfile
-        ret = {'body': ''}
+        ret = {'headers': [ ('Content-Type', 'application/json; charset=utf-8') ], 'body': ''}
         if archivo_backup == '':
             archivo_backup = app.post['archivo_backup']
 
@@ -423,7 +423,7 @@ class backup(base):
 
     def continuar(self):
         '''Inicio o continuacion de respaldo en modo lento (toma mas tiempo pero consume menos recursos)'''
-        ret = {'body': ''}
+        ret = {'headers': [ ('Content-Type', 'application/json; charset=utf-8') ], 'body': ''}
         #lista=json.loads(app.post['lista'])
         lista=app.post['lista']
         respuesta = self.zipData(self,self.base_dir, app.post['archivo_backup'], lista, app.post['total'])

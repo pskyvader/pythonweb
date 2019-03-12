@@ -196,7 +196,8 @@ class backup(base):
                         respuesta['errores'].append('bdd.sql')
                 else:
                     if respuesta['mensaje'] == '':
-                        respuesta['mensaje'] = 'Restaurando ...' + nombre[-30:] + ' (' + str(i + 1) + '/' + str(total) + ')', 'porcentaje': ((i + 1) / total) * 90
+                        respuesta['mensaje'] = 'Restaurando ...' + nombre[-30:] + ' (' + str(i + 1) + '/' + str(total) + ')'
+                        respuesta['porcentaje']= ((i + 1) / total) * 90
                 respuesta['exito'] = True
             else:
                 respuesta['mensaje'] = 'Error al abrir archivo, o archivo no valido'

@@ -86,7 +86,7 @@ class lista:
 
         row = class_name.getAll(where, condiciones)
         for v in row:
-            urltmp = urledit
+            urltmp = urledit.copy()
             urltmp.append(v[0])
             v['url_detalle'] = functions.generar_url(urltmp)
 

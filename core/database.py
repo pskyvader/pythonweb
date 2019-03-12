@@ -263,7 +263,11 @@ class database():
     def restore_backup(self, backup):
         import os
         sql = open(backup, "r").read()
-        sql_list = sql.split(';\n')
+        sql = sql.replace('\n', '')
+        sql = sql.strip()
+        sql = sql.replace('`', '')
+
+        sql_list = sql.split(';')
         for s in sql_list:
             exito = self.consulta(s, False)
 

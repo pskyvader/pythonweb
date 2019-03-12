@@ -118,5 +118,5 @@ backup/*
 cache/*
 .autogit
 **/cache/*
-**/resources/*
+**/custom_resources/*
 tmp

@@ -68,12 +68,11 @@ class view:
             return data
 
     @staticmethod
-    def render_template(template_bytes,data):
+    def render_template(template_bytes, data):
         from jinja2 import Template
         template = Template(template_bytes)
         content = template.render(data)
         return content
-
 
     @staticmethod
     def css(combine=True, array_only=False):
@@ -191,8 +190,11 @@ class view:
     def combine_resources(type_resource='css', locales={}, theme='', base_url='', nuevo=0):
         from .functions import functions
         from .cache import cache
+        from os import path, makedirs
 
         dir_resources = theme+'resources/'
+        if not path.exists(dir_resources):
+            makedirs(dir_resources)
         file = 'resources-' + str(nuevo) + '-' + \
             str(len(locales)) + '.'+type_resource
         my_file = Path(dir_resources+file)

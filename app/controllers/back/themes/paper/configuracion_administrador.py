@@ -223,7 +223,7 @@ class configuracion_administrador(base):
         for moduloconfiguracion in campos:
             row = moduloconfiguracion_model.getAll(
                 {'module': moduloconfiguracion['module']}, {'limit': 1})
-            hijo = dict(moduloconfiguracion['hijo']).copy()
+            hijo = moduloconfiguracion['hijo'].copy()
             del moduloconfiguracion['hijo']
 
             moduloconfiguracion['mostrar'] = json.dumps(

@@ -154,11 +154,10 @@ class backup(base):
                 file_list = zip.infolist()
                 total = len(file_list)
                 for i in range(inicio, total):
-                    nombre = file_list[i]
-                    print(nombre)
+                    nombre = file_list[i].filename()
                     if nombre not in self.no_restore:
                         try:
-                            zip.extract(nombre, self.base_dir)
+                            zip.extract(file_list[i], self.base_dir)
                         except:
                             respuesta['errores'].append(nombre)
                     respuesta['errores'].append(nombre)

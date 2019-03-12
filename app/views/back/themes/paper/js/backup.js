@@ -146,13 +146,14 @@ function leer_log(restaurar) {
                         setTimeout(leer_log, 500);
                     }
                 } else {
+                    console.log(data)
                     setTimeout(leer_log, 500);
                 }
             },
             error: function() {
                 setTimeout(leer_log, 1000);
             },
-            timeout: 500 //in milliseconds
+            //timeout: 500 //in milliseconds
         });
     }
 }

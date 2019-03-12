@@ -55,7 +55,7 @@ class database():
             code, message = error.args
             self._connection.rollback()
             print('error DB query:', code, message)
-            raise RuntimeError('error DB query: '+sql)
+            raise RuntimeError('error DB query: ')
 
         if rows is None:
             if return_query:
@@ -262,13 +262,21 @@ class database():
 
     def restore_backup(self, backup):
         import os
-        sql = open(backup, "r").read()
+        import io
+
+        f = io.open(backup, 'r', encoding='utf8')
+        sql=f.read()
+        f.close()
+
         sql_list = sql.split(';\n')
         for s in sql_list:
-            print(s)
+            s=str(s).strip()
+            if s=='':
+                continue
+            
             exito = self.consulta(s, False)
             if not exito:
-                print('error',s)
+                print('error consulta:',s)
 
         if exito:
             os.remove(backup)

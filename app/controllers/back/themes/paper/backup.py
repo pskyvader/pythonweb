@@ -370,7 +370,6 @@ class backup(base):
                 for fichero in file:
                     if 'pycache' not in root and '.git' not in root and '.autogit' not in root and '.vscode' not in root and 'session_data' not in root and '.zip' not in fichero and '.sql' not in fichero and fichero != '.' and fichero != '..' and fichero[-1:] != '.' and fichero[-2:] != '..':
                         count += 1
-                        #print('root:',root,'fichero:',fichero)
                         fichero_final=root+'/'+fichero
                         fichero_final = fichero_final.replace("\\", "/").replace("//", "/")
                         fichero_final=fichero_final[len(source)-1:]

@@ -180,7 +180,7 @@ class configuracion_administrador(base):
 
         tablas = table_model.getAll()
 
-        for tabla in tablas.values():
+        for tabla in tablas:
             mensajes = table_model.validate(tabla[0], False)
             if not mensajes['exito']:
                 respuesta = mensajes

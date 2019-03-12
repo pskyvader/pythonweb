@@ -186,7 +186,6 @@ class table(base_model):
         row = connection.get(table, cls.idname, where, condiciones, select)
         connection.set_prefix(prefix)
         
-        print(row)
         return (row[0]['count'] == 1)
 
     @classmethod

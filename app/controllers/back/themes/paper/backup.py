@@ -152,7 +152,9 @@ class backup(base):
             if zipfile.is_zipfile(file):
                 zip = zipfile.ZipFile(file, 'r')
                 file_list = zip.infolist()
+                print(file_list)
                 total = len(file_list)
+                print(total)
                 for i in range(inicio, total):
                     nombre = file_list[i]
                     if nombre not in self.no_restore:
@@ -163,8 +165,7 @@ class backup(base):
                     respuesta['errores'].append(nombre)
 
                     if i % 100 == 0:
-                        log = {'mensaje': 'Restaurando ' + nombre[-30:] + ' (' + str(
-                            i + 1) + '/' + str(total) + ')', 'porcentaje': ((i + 1) / total) * 90}
+                        log = {'mensaje': 'Restaurando ' + nombre[-30:] + ' (' + str( i + 1) + '/' + str(total) + ')', 'porcentaje': ((i + 1) / total) * 90}
                         file_write = open(self.archivo_log, 'w')
                         file_write.write(json.dumps(log))
                         file_write.close()

@@ -262,6 +262,7 @@ class database():
     def restore_backup(self, backup):
         import os
         sql = open(backup, "r").read()
+        sql=sql.replace('\n','')
         exito = self.consulta(sql, False)
         if exito:
             os.remove(backup)

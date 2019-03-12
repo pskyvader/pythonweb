@@ -132,7 +132,7 @@ class table(base_model):
             for column in row:
                 columns[column['COLUMN_NAME']] = column
 
-            for key, field in fields.items():
+            for key, field in enumerate(fields):
                 field['after'] = fields[key - 1]['titulo'] if (key > 0) else ''
 
                 if field['titulo'] in columns:

@@ -154,7 +154,7 @@ class configuracion_administrador(base):
         campos = json.loads(file_read.read())
         file_read.close()
 
-        for key, tabla in campos.items():
+        for key, tabla in enumerate(campos):
             tablename = tabla['tablename']
             # primero es siempre la tabla "tablas", se crea inmediatamente para guardar las siguientes configuraciones
             if key == 0:

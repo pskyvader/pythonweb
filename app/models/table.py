@@ -177,6 +177,8 @@ class table(base_model):
         config = app.get_config()
         connection = database.instance()
         prefix = connection.get_prefix()
+        print('prefix',prefix)
+        print('prefix',connection.get_prefix())
         connection.set_prefix('')
         table = 'information_schema.tables'
         where = {'table_schema': config["database"],
@@ -185,6 +187,7 @@ class table(base_model):
         select = 'count(*) as count'
         row = connection.get(table, cls.idname, where, condiciones, select)
         connection.set_prefix(prefix)
+        
         print(row)
         return (row[0]['count'] == 1)
 

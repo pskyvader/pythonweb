@@ -135,6 +135,7 @@ class backup(base):
         '''Restaura un backup, usar con precaucion ya que reemplaza todos los archivos de codigo'''
         ret = {'headers': [ ('Content-Type', 'application/json; charset=utf-8') ], 'body': ''}
         import zipfile
+        import time
         file = None
         tiempo = functions.current_time(as_string=False)
         respuesta = {'exito': False,
@@ -162,11 +163,12 @@ class backup(base):
                             respuesta['errores'].append(nombre)
                     respuesta['errores'].append(nombre)
 
-                    if i % 100 == 0:
+                    if i % 500 == 0:
                         log = {'mensaje': 'Restaurando ...' + nombre[-30:] + ' (' + str( i + 1) + '/' + str(total) + ')', 'porcentaje': ((i + 1) / total) * 90}
                         file_write = open(self.archivo_log, 'w')
                         file_write.write(json.dumps(log))
                         file_write.close()
+                        time.sleep(.50)
                     if functions.current_time(as_string=False) - tiempo > 15:
                         respuesta['inicio'] = i
                         break

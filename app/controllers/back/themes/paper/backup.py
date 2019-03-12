@@ -368,7 +368,7 @@ class backup(base):
             count = 0
             for root, dirs, file in os.walk(source):
                 for fichero in file:
-                    if 'cache' not in root and '.git' not in root and '.autogit' not in root and '.vscode' not in root and 'session_data' not in root and '.zip' not in fichero and '.sql' not in fichero and fichero != '.' and fichero != '..' and fichero[-1:] != '.' and fichero[-2:] != '..':
+                    if 'cache' not in root and 'resources' not in root and '.git' not in root and '.autogit' not in root and '.vscode' not in root and 'session_data' not in root and '.zip' not in fichero and '.sql' not in fichero and fichero != '.' and fichero != '..' and fichero[-1:] != '.' and fichero[-2:] != '..':
                         count += 1
                         fichero_final=root+'/'+fichero
                         fichero_final = fichero_final.replace("\\", "/").replace("//", "/")
@@ -383,7 +383,7 @@ class backup(base):
                             file_write.write(json.dumps(log_file))
                             file_write.close()
                 if len(file)==0 and len(dirs)==0:
-                    if 'cache' not in root and '.git' not in root and '.autogit' not in root and '.vscode' not in root and 'session_data' not in root:
+                    if 'cache' not in root and 'resources' not in root and '.git' not in root and '.autogit' not in root and '.vscode' not in root and 'session_data' not in root:
                         fichero_final=root
                         fichero_final = fichero_final.replace("\\", "/").replace("//", "/")
                         fichero_final=fichero_final[len(source)-1:]

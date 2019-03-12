@@ -58,9 +58,9 @@ class LoggingMiddleware:
         def _start_response(status, headers, *args):
             if status != "200 OK":
                 #pprint.pprint(('REQUEST', environ), stream=errors)
-                pprint.pprint(('REQUEST', environ['PATH_INFO']), stream=errors)
+                pprint.pprint(('REQUEST:', environ['PATH_INFO']), stream=errors)
                 #pprint.pprint(('RESPONSE', status, headers), stream=errors)
-                pprint.pprint(('RESPONSE', status), stream=errors)
+                pprint.pprint(('RESPONSE:', status), stream=errors)
             return start_response(status, headers, *args)
         return self.__application(environ, _start_response)
 

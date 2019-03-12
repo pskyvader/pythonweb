@@ -1,6 +1,6 @@
-SET foreign_key_checks = 0
+SET foreign_key_checks = 0;
 
-DROP TABLE IF EXISTS `seo_administrador`
+DROP TABLE IF EXISTS `seo_administrador`;
 
 CREATE TABLE `seo_administrador` (
   `idadministrador` int(11) NOT NULL AUTO_INCREMENT,
@@ -12,14 +12,14 @@ CREATE TABLE `seo_administrador` (
   `estado` tinyint(1) NOT NULL DEFAULT '1',
   `cookie` char(255) NOT NULL,
   PRIMARY KEY (`idadministrador`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 INSERT INTO `seo_administrador` VALUES ("1","1","admin@mysitio.cl","ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64ffef3d83e32b4d981b0c0f75206e891268c6aa8bd8db5a315db7bf24168a4be27","Admin","[{\"portada\":\"true\",\"id\":\"1\",\"url\":\"1.jpg\",\"parent\":\"1\",\"folder\":\"administrador\",\"subfolder\":\"foto\",\"tmp\":\"\"}]","1","ca5e9b0f501c4599b33b3b5978e52f4f"),
-("2","2","paula@gatografias.cl","7c4a8d09ca3762af61e59520943dc26494f8941b570e001ea406fe85557edac7ebebc7d28f1eec03","Paula","[{\"portada\":\"true\",\"id\":\"1\",\"url\":\"1.jpg\",\"parent\":\"2\",\"folder\":\"administrador\",\"subfolder\":\"foto\"}]","1","")
+("2","2","paula@gatografias.cl","7c4a8d09ca3762af61e59520943dc26494f8941b570e001ea406fe85557edac7ebebc7d28f1eec03","Paula","[{\"portada\":\"true\",\"id\":\"1\",\"url\":\"1.jpg\",\"parent\":\"2\",\"folder\":\"administrador\",\"subfolder\":\"foto\"}]","1","");
 
 
 
-DROP TABLE IF EXISTS `seo_banner`
+DROP TABLE IF EXISTS `seo_banner`;
 
 CREATE TABLE `seo_banner` (
   `idbanner` int(11) NOT NULL AUTO_INCREMENT,
@@ -34,16 +34,16 @@ CREATE TABLE `seo_banner` (
   `orden` int(11) NOT NULL,
   `estado` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`idbanner`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 INSERT INTO `seo_banner` VALUES ("1","2","No encontrado","","","","","","[{\"portada\":\"true\",\"id\":\"1\",\"url\":\"1.jpg\",\"parent\":\"1\",\"folder\":\"banner\",\"subfolder\":\"foto\"}]","0","1"),
 ("2","1","Banner 1","Prueba","Prueba","","<p>Prueba</p>","#","[{\"portada\":\"true\",\"id\":\"1\",\"url\":\"1.png\",\"parent\":\"2\",\"folder\":\"banner\",\"subfolder\":\"foto\",\"tmp\":\"\"}]","1","1"),
 ("3","1","Banner 2","Prueba","Prueba","","<p>Prueba</p>","","[{\"portada\":\"true\",\"id\":\"1\",\"url\":\"1.png\",\"parent\":\"3\",\"folder\":\"banner\",\"subfolder\":\"foto\",\"tmp\":\"\"}]","2","1"),
-("4","1","banner 4","Prueba","Prueba","","","#","[{\"portada\":\"true\",\"id\":\"1\",\"url\":\"1.png\",\"parent\":\"4\",\"folder\":\"banner\",\"subfolder\":\"foto\",\"tmp\":\"\"}]","3","1")
+("4","1","banner 4","Prueba","Prueba","","","#","[{\"portada\":\"true\",\"id\":\"1\",\"url\":\"1.png\",\"parent\":\"4\",\"folder\":\"banner\",\"subfolder\":\"foto\",\"tmp\":\"\"}]","3","1");
 
 
 
-DROP TABLE IF EXISTS `seo_comuna`
+DROP TABLE IF EXISTS `seo_comuna`;
 
 CREATE TABLE `seo_comuna` (
   `idcomuna` int(11) NOT NULL AUTO_INCREMENT,
@@ -53,7 +53,7 @@ CREATE TABLE `seo_comuna` (
   `orden` int(11) NOT NULL,
   `estado` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`idcomuna`)
-) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8;
 
 INSERT INTO `seo_comuna` VALUES ("1","1","Buin","10000","1","1"),
 ("2","1","Calera de Tango","10000","1","1"),
@@ -96,29 +96,29 @@ INSERT INTO `seo_comuna` VALUES ("1","1","Buin","10000","1","1"),
 ("39","1","San Miguel","4000","1","1"),
 ("40","1","San Ramón","4500","1","1"),
 ("41","1","Santiago centro","5500","1","1"),
-("42","1","Vitacura","5000","1","1")
+("42","1","Vitacura","5000","1","1");
 
 
 
-DROP TABLE IF EXISTS `seo_configuracion`
+DROP TABLE IF EXISTS `seo_configuracion`;
 
 CREATE TABLE `seo_configuracion` (
   `idconfiguracion` int(11) NOT NULL AUTO_INCREMENT,
   `variable` char(255) NOT NULL,
   `valor` char(255) NOT NULL,
   PRIMARY KEY (`idconfiguracion`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 
 INSERT INTO `seo_configuracion` VALUES ("5","version","0.30.0"),
 ("12","orden_producto","orden:Recomendados,ventas:Más vendidos,precio ASC:Precio de menor a mayor,precio DESC:Precio de mayor a menor,titulo ASC:A-Z,titulo DESC:Z-A"),
 ("13","cantidad_backup_rapido","36.0"),
 ("14","tiempo_backup_rapido","10.833333333333334"),
-("15","cantidad_backup_lento","19.0"),
-("16","tiempo_backup_lento","11.473684210526319")
+("15","cantidad_backup_lento","20.0"),
+("16","tiempo_backup_lento","11.200000000000003");
 
 
 
-DROP TABLE IF EXISTS `seo_direccion`
+DROP TABLE IF EXISTS `seo_direccion`;
 
 CREATE TABLE `seo_direccion` (
   `iddireccion` int(11) NOT NULL AUTO_INCREMENT,
@@ -137,12 +137,12 @@ CREATE TABLE `seo_direccion` (
   `empresa` char(255) NOT NULL,
   `referencias` longtext NOT NULL,
   PRIMARY KEY (`iddireccion`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 
 
-DROP TABLE IF EXISTS `seo_galeria`
+DROP TABLE IF EXISTS `seo_galeria`;
 
 CREATE TABLE `seo_galeria` (
   `idgaleria` int(11) NOT NULL AUTO_INCREMENT,
@@ -157,12 +157,12 @@ CREATE TABLE `seo_galeria` (
   `orden` int(11) NOT NULL,
   `estado` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`idgaleria`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 
 
-DROP TABLE IF EXISTS `seo_log`
+DROP TABLE IF EXISTS `seo_log`;
 
 CREATE TABLE `seo_log` (
   `idlog` int(11) NOT NULL AUTO_INCREMENT,
@@ -171,7 +171,7 @@ CREATE TABLE `seo_log` (
   `accion` char(255) NOT NULL,
   `fecha` datetime NOT NULL,
   PRIMARY KEY (`idlog`)
-) ENGINE=InnoDB AUTO_INCREMENT=5685 DEFAULT CHARSET=utf8
+) ENGINE=InnoDB AUTO_INCREMENT=5687 DEFAULT CHARSET=utf8;
 
 INSERT INTO `seo_log` VALUES ("1","Admin (admin@mysitio.cl)","configuracion","metodo: delete, ID: 6","2018-11-20 14:28:34"),
 ("2","Admin (admin@mysitio.cl)","configuracion","metodo: delete, ID: 7","2018-11-20 14:28:36"),
@@ -1172,7 +1172,7 @@ INSERT INTO `seo_log` VALUES ("1","Admin (admin@mysitio.cl)","configuracion","me
 ("997","Admin (admin@mysitio.cl)","sitemap","metodo: insert","2018-12-12 17:39:55"),
 ("998","Admin (admin@mysitio.cl)","sitemap","metodo: update","2018-12-12 17:39:55"),
 ("999","Admin (admin@mysitio.cl)","sitemap","metodo: update","2018-12-12 17:39:55"),
-("1000","Admin (admin@mysitio.cl)","sitemap","metodo: update","2018-12-12 17:39:55")
+("1000","Admin (admin@mysitio.cl)","sitemap","metodo: update","2018-12-12 17:39:55");
 
 INSERT INTO `seo_log` VALUES ("1001","Admin (admin@mysitio.cl)","sitemap","metodo: insert","2018-12-12 17:39:55"),
 ("1002","Admin (admin@mysitio.cl)","sitemap","metodo: insert","2018-12-12 17:39:55"),
@@ -2173,7 +2173,7 @@ INSERT INTO `seo_log` VALUES ("1001","Admin (admin@mysitio.cl)","sitemap","metod
 ("1997","Admin (admin@mysitio.cl)","sitemap","metodo: update","2018-12-12 17:47:36"),
 ("1998","Admin (admin@mysitio.cl)","sitemap","metodo: insert","2018-12-12 17:47:36"),
 ("1999","Admin (admin@mysitio.cl)","sitemap","metodo: update","2018-12-12 17:47:36"),
-("2000","Admin (admin@mysitio.cl)","sitemap","metodo: insert","2018-12-12 17:47:36")
+("2000","Admin (admin@mysitio.cl)","sitemap","metodo: insert","2018-12-12 17:47:36");
 
 INSERT INTO `seo_log` VALUES ("2001","Admin (admin@mysitio.cl)","sitemap","metodo: insert","2018-12-12 17:47:36"),
 ("2002","Admin (admin@mysitio.cl)","sitemap","metodo: insert","2018-12-12 17:47:36"),
@@ -3174,7 +3174,7 @@ INSERT INTO `seo_log` VALUES ("2001","Admin (admin@mysitio.cl)","sitemap","metod
 ("2997","Admin (admin@mysitio.cl)","sitemap","metodo: insert","2018-12-12 18:21:42"),
 ("2998","Admin (admin@mysitio.cl)","sitemap","metodo: insert","2018-12-12 18:21:42"),
 ("2999","Admin (admin@mysitio.cl)","sitemap","metodo: update","2018-12-12 18:21:42"),
-("3000","Admin (admin@mysitio.cl)","sitemap","metodo: insert","2018-12-12 18:21:42")
+("3000","Admin (admin@mysitio.cl)","sitemap","metodo: insert","2018-12-12 18:21:42");
 
 INSERT INTO `seo_log` VALUES ("3001","Admin (admin@mysitio.cl)","sitemap","metodo: insert","2018-12-12 18:21:42"),
 ("3002","Admin (admin@mysitio.cl)","sitemap","metodo: insert","2018-12-12 18:21:42"),
@@ -4175,7 +4175,7 @@ INSERT INTO `seo_log` VALUES ("3001","Admin (admin@mysitio.cl)","sitemap","metod
 ("3997","Admin (admin@mysitio.cl)","pedidodireccion","metodo: update","2018-12-19 19:36:06"),
 ("3998","Admin (admin@mysitio.cl)","pedido","metodo: update","2018-12-19 19:36:06"),
 ("3999","Admin (admin@mysitio.cl)","pedido","metodo: update","2018-12-19 19:37:05"),
-("4000","Admin (admin@mysitio.cl)","pedidodireccion","metodo: update","2018-12-19 19:37:05")
+("4000","Admin (admin@mysitio.cl)","pedidodireccion","metodo: update","2018-12-19 19:37:05");
 
 INSERT INTO `seo_log` VALUES ("4001","Admin (admin@mysitio.cl)","pedido","metodo: update","2018-12-19 19:37:05"),
 ("4002","Admin (admin@mysitio.cl)","pedido","metodo: update","2018-12-19 19:37:09"),
@@ -5176,7 +5176,7 @@ INSERT INTO `seo_log` VALUES ("4001","Admin (admin@mysitio.cl)","pedido","metodo
 ("4997","Admin (admin@mysitio.cl)","banner","metodo: update","2018-12-27 17:52:13"),
 ("4998","Admin (admin@mysitio.cl)","seo","metodo: update","2018-12-27 18:03:27"),
 ("4999","Admin (admin@mysitio.cl)","seo","metodo: update","2018-12-27 18:13:33"),
-("5000","Admin (admin@mysitio.cl)","seo","metodo: update","2018-12-27 18:13:33")
+("5000","Admin (admin@mysitio.cl)","seo","metodo: update","2018-12-27 18:13:33");
 
 INSERT INTO `seo_log` VALUES ("5001","Admin (admin@mysitio.cl)","seo","metodo: update","2018-12-27 18:15:42"),
 ("5002","Admin (admin@mysitio.cl)","seo","metodo: update","2018-12-27 18:15:42"),
@@ -5861,11 +5861,13 @@ INSERT INTO `seo_log` VALUES ("5001","Admin (admin@mysitio.cl)","seo","metodo: u
 ("5681","Admin (admin@mysitio.cl)","configuracion","metodo: configuracion, ID: 15","2019-03-12 12:22:25"),
 ("5682","Admin (admin@mysitio.cl)","configuracion","metodo: configuracion, ID: 16","2019-03-12 12:22:25"),
 ("5683","Admin (admin@mysitio.cl)","configuracion","metodo: configuracion, ID: 13","2019-03-12 12:24:27"),
-("5684","Admin (admin@mysitio.cl)","configuracion","metodo: configuracion, ID: 14","2019-03-12 12:24:27")
+("5684","Admin (admin@mysitio.cl)","configuracion","metodo: configuracion, ID: 14","2019-03-12 12:24:27"),
+("5685","Admin (admin@mysitio.cl)","configuracion","metodo: configuracion, ID: 15","2019-03-12 12:37:58"),
+("5686","Admin (admin@mysitio.cl)","configuracion","metodo: configuracion, ID: 16","2019-03-12 12:37:58");
 
 
 
-DROP TABLE IF EXISTS `seo_logo`
+DROP TABLE IF EXISTS `seo_logo`;
 
 CREATE TABLE `seo_logo` (
   `idlogo` int(11) NOT NULL AUTO_INCREMENT,
@@ -5873,7 +5875,7 @@ CREATE TABLE `seo_logo` (
   `foto` longtext NOT NULL,
   `orden` int(11) NOT NULL,
   PRIMARY KEY (`idlogo`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 INSERT INTO `seo_logo` VALUES ("1","favicon","[{\"portada\":\"true\",\"id\":\"1\",\"url\":\"1.png\",\"parent\":\"1\",\"folder\":\"logo\",\"subfolder\":\"foto\"}]","1"),
 ("2","Logo login","[{\"portada\":\"true\",\"id\":\"1\",\"url\":\"1.png\",\"parent\":\"2\",\"folder\":\"logo\",\"subfolder\":\"foto\"}]","2"),
@@ -5882,11 +5884,11 @@ INSERT INTO `seo_logo` VALUES ("1","favicon","[{\"portada\":\"true\",\"id\":\"1\
 ("5","Logo Header sitio","[{\"portada\":\"true\",\"id\":\"1\",\"url\":\"1.png\",\"parent\":\"5\",\"folder\":\"logo\",\"subfolder\":\"foto\"}]","5"),
 ("6","Logo Footer sitio","[{\"portada\":\"true\",\"id\":\"1\",\"url\":\"1.png\",\"parent\":\"6\",\"folder\":\"logo\",\"subfolder\":\"foto\"}]","6"),
 ("7","Manifest","[{\"portada\":\"true\",\"id\":\"1\",\"url\":\"1.png\",\"parent\":\"7\",\"folder\":\"logo\",\"subfolder\":\"foto\"}]","7"),
-("8","Email","[{\"portada\":\"true\",\"id\":\"1\",\"url\":\"1.png\",\"parent\":\"8\",\"folder\":\"logo\",\"subfolder\":\"foto\"}]","8")
+("8","Email","[{\"portada\":\"true\",\"id\":\"1\",\"url\":\"1.png\",\"parent\":\"8\",\"folder\":\"logo\",\"subfolder\":\"foto\"}]","8");
 
 
 
-DROP TABLE IF EXISTS `seo_mediopago`
+DROP TABLE IF EXISTS `seo_mediopago`;
 
 CREATE TABLE `seo_mediopago` (
   `idmediopago` int(11) NOT NULL AUTO_INCREMENT,
@@ -5896,14 +5898,14 @@ CREATE TABLE `seo_mediopago` (
   `orden` int(11) NOT NULL,
   `estado` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`idmediopago`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 INSERT INTO `seo_mediopago` VALUES ("1","Transferencia bancaria","Puedes pagar mediante transferencia bancaria, enviar un correo con la confirmación de tu pago y listo!","<p>Por favor haz un deposito o transferencia con el monto total, con los siguientes datos:</p><ul><li>Titular: Maria del Carmen Cladera</li><li>RUT: 22.854.956-8</li><li>Banco: Banco Edwards City&nbsp;</li><li>Numero de Cuenta Corriente: 3170017001</li></ul><p>&nbsp;</p><p align=\"justify\">Tambi&eacute;n podr&aacute; hacer dep&oacute;sitos en Servipag en la cuenta del Banco de Chile.</p><p align=\"justify\">Le solicitamos enviar el <strong>Codigo del pedido y comprobante </strong>de dep&oacute;sito&nbsp;o transferencia electr&oacute;nica&nbsp;al e-mail&nbsp;<strong><u><a href=\"mailto:jarrosycafe@gmail.com\">jarrosycafe@gmail.com</a>.</u></strong></p><p align=\"justify\">&nbsp;</p><p align=\"justify\">La boleta o factura ser&aacute; remitida por correo. (Esto es obligatorio por SII)</p>","1","1"),
-("2","Webpay","Puedes pagar con Red Compra con tarjeta de crédito o débito","","2","1")
+("2","Webpay","Puedes pagar con Red Compra con tarjeta de crédito o débito","","2","1");
 
 
 
-DROP TABLE IF EXISTS `seo_modulo`
+DROP TABLE IF EXISTS `seo_modulo`;
 
 CREATE TABLE `seo_modulo` (
   `idmodulo` int(11) NOT NULL AUTO_INCREMENT,
@@ -5919,7 +5921,7 @@ CREATE TABLE `seo_modulo` (
   `aside` tinyint(1) NOT NULL DEFAULT '1',
   `hijos` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`idmodulo`)
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8;
 
 INSERT INTO `seo_modulo` VALUES ("1","1","0","SEO","[{\"field\":\"new\",\"titulo\":\"Nuevo\",\"estado\":{\"1\":\"true\",\"2\":\"false\",\"3\":\"false\"}},{\"field\":\"excel\",\"titulo\":\"Exportar a excel\",\"estado\":{\"1\":\"false\",\"2\":\"false\",\"3\":\"false\"}},{\"field\":\"regenerar\",\"titulo\":\"Regenerar imagenes\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"false\"}}]","[{\"field\":\"0\",\"tipo\":\"text\",\"titulo\":\"ID\",\"estado\":{\"1\":\"false\",\"2\":\"false\",\"3\":\"false\"}},{\"field\":\"orden\",\"tipo\":\"text\",\"titulo\":\"Orden\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"false\"}},{\"field\":\"titulo\",\"tipo\":\"text\",\"titulo\":\"Titulo\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}},{\"field\":\"url\",\"tipo\":\"text\",\"titulo\":\"URL\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}},{\"field\":\"estado\",\"tipo\":\"active\",\"titulo\":\"Estado\",\"estado\":{\"1\":\"true\",\"2\":\"false\",\"3\":\"false\"}},{\"field\":\"banner\",\"tipo\":\"image\",\"titulo\":\"Banner\",\"estado\":{\"1\":\"false\",\"2\":\"false\",\"3\":\"false\"}},{\"field\":\"menu\",\"tipo\":\"active\",\"titulo\":\"Menu\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"false\"}},{\"field\":\"submenu\",\"tipo\":\"active\",\"titulo\":\"Submenu\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"false\"}},{\"field\":\"copy\",\"tipo\":\"action\",\"titulo\":\"Copiar\",\"estado\":{\"1\":\"false\",\"2\":\"false\",\"3\":\"false\"}},{\"field\":\"url_detalle\",\"tipo\":\"link\",\"titulo\":\"Editar\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}},{\"field\":\"delete\",\"tipo\":\"delete\",\"titulo\":\"Eliminar\",\"estado\":{\"1\":\"true\",\"2\":\"false\",\"3\":\"false\"}}]","[{\"field\":\"titulo\",\"tipo\":\"text\",\"titulo\":\"Titulo\",\"texto_ayuda\":\"\",\"required\":\"true\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}},{\"field\":\"url\",\"tipo\":\"url\",\"titulo\":\"URL\",\"texto_ayuda\":\"\",\"required\":\"true\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}},{\"field\":\"foto\",\"tipo\":\"image\",\"titulo\":\"Foto\",\"texto_ayuda\":\"Foto para redes sociales, 350x260 px, formato jpg o png\",\"required\":\"false\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}},{\"field\":\"banner\",\"tipo\":\"image\",\"titulo\":\"Banner\",\"texto_ayuda\":\"Imagen 2000x400 px, formato jpg o png\",\"required\":\"true\",\"estado\":{\"1\":\"false\",\"2\":\"false\",\"3\":\"false\"}},{\"field\":\"modulo_front\",\"tipo\":\"url\",\"titulo\":\"Modulo en front\",\"texto_ayuda\":\"\",\"required\":\"true\",\"estado\":{\"1\":\"true\",\"2\":\"false\",\"3\":\"false\"}},{\"field\":\"modulo_back\",\"tipo\":\"url\",\"titulo\":\"Modulo en back\",\"texto_ayuda\":\"\",\"required\":\"true\",\"estado\":{\"1\":\"true\",\"2\":\"false\",\"3\":\"false\"}},{\"field\":\"tipo_modulo\",\"tipo\":\"number\",\"titulo\":\"Tipo en modulo\",\"texto_ayuda\":\"\",\"required\":\"true\",\"estado\":{\"1\":\"true\",\"2\":\"false\",\"3\":\"false\"}},{\"field\":\"link_menu\",\"tipo\":\"url\",\"titulo\":\"Link en menu\",\"texto_ayuda\":\"Normalmente \'detail\'\",\"required\":\"false\",\"estado\":{\"1\":\"true\",\"2\":\"false\",\"3\":\"false\"}},{\"field\":\"keywords\",\"tipo\":\"token\",\"titulo\":\"Palabras clave\",\"texto_ayuda\":\"\",\"required\":\"false\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}},{\"field\":\"metadescripcion\",\"tipo\":\"textarea\",\"titulo\":\"Meta Descripción\",\"texto_ayuda\":\"\",\"required\":\"false\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}},{\"field\":\"orden\",\"tipo\":\"number\",\"titulo\":\"Orden\",\"texto_ayuda\":\"\",\"required\":\"true\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"false\"}},{\"field\":\"menu\",\"tipo\":\"active\",\"titulo\":\"Menu\",\"texto_ayuda\":\"\",\"required\":\"true\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"false\"}},{\"field\":\"submenu\",\"tipo\":\"active\",\"titulo\":\"Submenu\",\"texto_ayuda\":\"\",\"required\":\"true\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"false\"}},{\"field\":\"estado\",\"tipo\":\"active\",\"titulo\":\"Estado\",\"texto_ayuda\":\"\",\"required\":\"true\",\"estado\":{\"1\":\"true\",\"2\":\"false\",\"3\":\"false\"}}]","[{\"tag\":\"social\",\"titulo\":\"Redes sociales\",\"ancho\":\"350\",\"alto\":\"260\",\"calidad\":\"90\",\"tipo\":\"centrar\"},{\"tag\":\"foto1\",\"titulo\":\"Foto 1\",\"ancho\":\"2000\",\"alto\":\"400\",\"calidad\":\"90\",\"tipo\":\"recortar\"},{\"tag\":\"foto2\",\"titulo\":\"Foto 2\",\"ancho\":\"960\",\"alto\":\"200\",\"calidad\":\"90\",\"tipo\":\"recortar\"},{\"tag\":\"foto3\",\"titulo\":\"Foto 3\",\"ancho\":\"720\",\"alto\":\"200\",\"calidad\":\"90\",\"tipo\":\"recortar\"},{\"tag\":\"foto4\",\"titulo\":\"Foto 4\",\"ancho\":\"540\",\"alto\":\"200\",\"calidad\":\"90\",\"tipo\":\"recortar\"}]","1","[{\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"false\"}}]","1","0"),
 ("2","2","1","Datos de contacto","[{\"field\":\"new\",\"titulo\":\"Nuevo\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}},{\"field\":\"excel\",\"titulo\":\"Exportar a excel\",\"estado\":{\"1\":\"false\",\"2\":\"false\",\"3\":\"false\"}},{\"field\":\"regenerar\",\"titulo\":\"Regenerar imagenes\",\"estado\":{\"1\":\"false\",\"2\":\"false\",\"3\":\"false\"}}]","[{\"field\":\"orden\",\"tipo\":\"text\",\"titulo\":\"Orden\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}},{\"field\":\"titulo\",\"tipo\":\"text\",\"titulo\":\"Titulo\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}},{\"field\":\"texto\",\"tipo\":\"text\",\"titulo\":\"Texto\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}},{\"field\":\"estado\",\"tipo\":\"active\",\"titulo\":\"Estado\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}},{\"field\":\"copy\",\"tipo\":\"action\",\"titulo\":\"Copiar\",\"estado\":{\"1\":\"false\",\"2\":\"false\",\"3\":\"false\"}},{\"field\":\"url_detalle\",\"tipo\":\"link\",\"titulo\":\"Editar\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}},{\"field\":\"delete\",\"tipo\":\"delete\",\"titulo\":\"Eliminar\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}}]","[{\"field\":\"titulo\",\"tipo\":\"text\",\"titulo\":\"Titulo\",\"texto_ayuda\":\"\",\"required\":\"true\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}},{\"field\":\"descripcion\",\"tipo\":\"editor\",\"titulo\":\"Descripcion\",\"texto_ayuda\":\"\",\"required\":\"false\",\"estado\":{\"1\":\"false\",\"2\":\"false\",\"3\":\"false\"}},{\"field\":\"texto\",\"tipo\":\"text\",\"titulo\":\"Texto\",\"texto_ayuda\":\"\",\"required\":\"true\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}},{\"field\":\"mapa\",\"tipo\":\"map\",\"titulo\":\"Mapa\",\"texto_ayuda\":\"\",\"required\":\"false\",\"estado\":{\"1\":\"false\",\"2\":\"false\",\"3\":\"false\"}},{\"field\":\"orden\",\"tipo\":\"number\",\"titulo\":\"Orden\",\"texto_ayuda\":\"\",\"required\":\"true\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}},{\"field\":\"estado\",\"tipo\":\"active\",\"titulo\":\"Estado\",\"texto_ayuda\":\"\",\"required\":\"true\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}}]","[]","1","[{\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}}]","1","0"),
@@ -5953,11 +5955,11 @@ INSERT INTO `seo_modulo` VALUES ("1","1","0","SEO","[{\"field\":\"new\",\"titulo
 ("30","24","2","Estados de envio","[{\"field\":\"new\",\"titulo\":\"Nuevo\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}},{\"field\":\"excel\",\"titulo\":\"Exportar a excel\",\"estado\":{\"1\":\"false\",\"2\":\"false\",\"3\":\"false\"}},{\"field\":\"regenerar\",\"titulo\":\"Regenerar imagenes\",\"estado\":{\"1\":\"false\",\"2\":\"false\",\"3\":\"false\"}}]","[{\"field\":\"0\",\"tipo\":\"text\",\"titulo\":\"ID\",\"estado\":{\"1\":\"false\",\"2\":\"false\",\"3\":\"false\"}},{\"field\":\"orden\",\"tipo\":\"text\",\"titulo\":\"Orden\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}},{\"field\":\"titulo\",\"tipo\":\"text\",\"titulo\":\"Titulo\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}},{\"field\":\"color\",\"tipo\":\"color\",\"titulo\":\"Color\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}},{\"field\":\"estado\",\"tipo\":\"active\",\"titulo\":\"Estado\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}},{\"field\":\"copy\",\"tipo\":\"action\",\"titulo\":\"Copiar\",\"estado\":{\"1\":\"false\",\"2\":\"false\",\"3\":\"false\"}},{\"field\":\"url_detalle\",\"tipo\":\"link\",\"titulo\":\"Editar\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}},{\"field\":\"delete\",\"tipo\":\"delete\",\"titulo\":\"Eliminar\",\"estado\":{\"1\":\"false\",\"2\":\"false\",\"3\":\"false\"}}]","[{\"field\":\"titulo\",\"tipo\":\"text\",\"titulo\":\"Titulo\",\"texto_ayuda\":\"\",\"required\":\"true\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}},{\"field\":\"resumen\",\"tipo\":\"textarea\",\"titulo\":\"Resumen\",\"texto_ayuda\":\"\",\"required\":\"\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}},{\"field\":\"color\",\"tipo\":\"color\",\"titulo\":\"Color\",\"texto_ayuda\":\"\",\"required\":\"true\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}},{\"field\":\"orden\",\"tipo\":\"number\",\"titulo\":\"Orden\",\"texto_ayuda\":\"Color para identificar el estado del envio\",\"required\":\"true\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}},{\"field\":\"estado\",\"tipo\":\"active\",\"titulo\":\"Estado\",\"texto_ayuda\":\"\",\"required\":\"true\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}}]","","2","[{\"estado\":{\"1\":\"true\",\"2\":\"false\",\"3\":\"false\"}}]","1","0"),
 ("31","25","0","Medios de pago","[{\"field\":\"new\",\"titulo\":\"Nuevo\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}},{\"field\":\"excel\",\"titulo\":\"Exportar a excel\",\"estado\":{\"1\":\"false\",\"2\":\"false\",\"3\":\"false\"}},{\"field\":\"regenerar\",\"titulo\":\"Regenerar imagenes\",\"estado\":{\"1\":\"false\",\"2\":\"false\",\"3\":\"false\"}}]","[{\"field\":\"0\",\"tipo\":\"text\",\"titulo\":\"ID\",\"estado\":{\"1\":\"false\",\"2\":\"false\",\"3\":\"false\"}},{\"field\":\"orden\",\"tipo\":\"text\",\"titulo\":\"Orden\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}},{\"field\":\"titulo\",\"tipo\":\"text\",\"titulo\":\"Titulo\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}},{\"field\":\"estado\",\"tipo\":\"active\",\"titulo\":\"Estado\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}},{\"field\":\"copy\",\"tipo\":\"action\",\"titulo\":\"Copiar\",\"estado\":{\"1\":\"false\",\"2\":\"false\",\"3\":\"false\"}},{\"field\":\"url_detalle\",\"tipo\":\"link\",\"titulo\":\"Editar\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}},{\"field\":\"delete\",\"tipo\":\"delete\",\"titulo\":\"Eliminar\",\"estado\":{\"1\":\"false\",\"2\":\"false\",\"3\":\"false\"}}]","[{\"field\":\"titulo\",\"tipo\":\"text\",\"titulo\":\"Titulo\",\"texto_ayuda\":\"\",\"required\":\"true\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}},{\"field\":\"resumen\",\"tipo\":\"textarea\",\"titulo\":\"Resumen\",\"texto_ayuda\":\"\",\"required\":\"\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}},{\"field\":\"descripcion\",\"tipo\":\"editor\",\"titulo\":\"Descripción\",\"texto_ayuda\":\"\",\"required\":\"false\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}},{\"field\":\"orden\",\"tipo\":\"number\",\"titulo\":\"Orden\",\"texto_ayuda\":\"\",\"required\":\"true\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}},{\"field\":\"estado\",\"tipo\":\"active\",\"titulo\":\"Estado\",\"texto_ayuda\":\"\",\"required\":\"true\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}}]","","1","[{\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"false\"}}]","1","0"),
 ("32","26","1","Pedidos","[{\"field\":\"new\",\"titulo\":\"Nuevo\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}},{\"field\":\"excel\",\"titulo\":\"Exportar a excel\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}},{\"field\":\"regenerar\",\"titulo\":\"Regenerar imagenes\",\"estado\":{\"1\":\"false\",\"2\":\"false\",\"3\":\"false\"}}]","[{\"field\":\"0\",\"tipo\":\"text\",\"titulo\":\"ID\",\"estado\":{\"1\":\"false\",\"2\":\"false\",\"3\":\"false\"}},{\"field\":\"cookie_pedido\",\"tipo\":\"text\",\"titulo\":\"Codigo de pedido\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}},{\"field\":\"fecha_pago\",\"tipo\":\"text\",\"titulo\":\"Fecha de pago\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}},{\"field\":\"nombre\",\"tipo\":\"text\",\"titulo\":\"Usuario\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}},{\"field\":\"email\",\"tipo\":\"text\",\"titulo\":\"Email\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}},{\"field\":\"idpedidoestado\",\"tipo\":\"color\",\"titulo\":\"Estado\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}},{\"field\":\"idmediopago\",\"tipo\":\"text\",\"titulo\":\"Medio de pago\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}},{\"field\":\"total\",\"tipo\":\"text\",\"titulo\":\"Total\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}},{\"field\":\"url_detalle\",\"tipo\":\"link\",\"titulo\":\"Editar\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}}]","[{\"field\":\"idusuario\",\"tipo\":\"select\",\"titulo\":\"Usuario\",\"texto_ayuda\":\"Debes elegir un usuario, o crearlo en la seccion de usuarios\",\"required\":\"true\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}},{\"field\":\"nombre\",\"tipo\":\"text\",\"titulo\":\"Nombre\",\"texto_ayuda\":\"\",\"required\":\"true\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}},{\"field\":\"email\",\"tipo\":\"email\",\"titulo\":\"Email\",\"texto_ayuda\":\"\",\"required\":\"true\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}},{\"field\":\"telefono\",\"tipo\":\"text\",\"titulo\":\"Teléfono\",\"texto_ayuda\":\"\",\"required\":\"true\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}},{\"field\":\"cookie_pedido\",\"tipo\":\"password\",\"titulo\":\"Codigo de pedido\",\"texto_ayuda\":\"\",\"required\":\"true\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}},{\"field\":\"fecha_pago\",\"tipo\":\"date\",\"titulo\":\"Fecha de pago\",\"texto_ayuda\":\"\",\"required\":\"true\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}},{\"field\":\"idpedidoestado\",\"tipo\":\"select\",\"titulo\":\"Estado\",\"texto_ayuda\":\"\",\"required\":\"true\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}},{\"field\":\"idmediopago\",\"tipo\":\"select\",\"titulo\":\"Medio de pago\",\"texto_ayuda\":\"\",\"required\":\"true\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}},{\"field\":\"comentarios\",\"tipo\":\"textarea\",\"titulo\":\"Comentarios\",\"texto_ayuda\":\"\",\"required\":\"false\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}},{\"field\":\"direcciones\",\"tipo\":\"grupo_pedido\",\"titulo\":\"Direcciones\",\"texto_ayuda\":\"Aquí puedes agregar tus direcciones de entrega y añadir productos\",\"required\":\"true\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}},{\"field\":\"total\",\"tipo\":\"number\",\"titulo\":\"Total\",\"texto_ayuda\":\"Este campo se puede modificar, se sugiere permitir que se calcule automaticamente\",\"required\":\"true\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}}]","","1","[{\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}}]","1","0"),
-("33","18","2","Atributos","[{\"field\":\"new\",\"titulo\":\"Nuevo\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}},{\"field\":\"excel\",\"titulo\":\"Exportar a excel\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}},{\"field\":\"regenerar\",\"titulo\":\"Regenerar imagenes\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}}]","[{\"field\":\"0\",\"tipo\":\"text\",\"titulo\":\"ID\",\"estado\":{\"1\":\"false\",\"2\":\"false\",\"3\":\"false\"}},{\"field\":\"orden\",\"tipo\":\"text\",\"titulo\":\"Orden\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}},{\"field\":\"titulo\",\"tipo\":\"text\",\"titulo\":\"Titulo\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}},{\"field\":\"foto\",\"tipo\":\"image\",\"titulo\":\"Foto\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}},{\"field\":\"estado\",\"tipo\":\"active\",\"titulo\":\"Estado\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}},{\"field\":\"destacado\",\"tipo\":\"active\",\"titulo\":\"Destacado\",\"estado\":{\"1\":\"false\",\"2\":\"false\",\"3\":\"false\"}},{\"field\":\"copy\",\"tipo\":\"action\",\"titulo\":\"Copiar\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}},{\"field\":\"url_detalle\",\"tipo\":\"link\",\"titulo\":\"Editar\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}},{\"field\":\"delete\",\"tipo\":\"delete\",\"titulo\":\"Eliminar\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}}]","[{\"field\":\"titulo\",\"tipo\":\"text\",\"titulo\":\"Titulo\",\"texto_ayuda\":\"\",\"required\":\"true\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}},{\"field\":\"url\",\"tipo\":\"url\",\"titulo\":\"URL\",\"texto_ayuda\":\"\",\"required\":\"false\",\"estado\":{\"1\":\"false\",\"2\":\"false\",\"3\":\"false\"}},{\"field\":\"foto\",\"tipo\":\"multiple_image\",\"titulo\":\"Foto\",\"texto_ayuda\":\"Imagen 50x50 px, formato jpg o png\",\"required\":\"true\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}},{\"field\":\"archivo\",\"tipo\":\"multiple_file\",\"titulo\":\"Archivo\",\"texto_ayuda\":\"(Opcional) Archivo formato doc, pdf, ppt, xls\",\"required\":\"false\",\"estado\":{\"1\":\"false\",\"2\":\"false\",\"3\":\"false\"}},{\"field\":\"resumen\",\"tipo\":\"textarea\",\"titulo\":\"Resumen\",\"texto_ayuda\":\"\",\"required\":\"\",\"estado\":{\"1\":\"false\",\"2\":\"false\",\"3\":\"false\"}},{\"field\":\"codigo\",\"tipo\":\"text\",\"titulo\":\"Codigo de producto\",\"texto_ayuda\":\"\",\"required\":\"false\",\"estado\":{\"1\":\"false\",\"2\":\"false\",\"3\":\"false\"}},{\"field\":\"precio\",\"tipo\":\"number\",\"titulo\":\"Precio\",\"texto_ayuda\":\"\",\"required\":\"false\",\"estado\":{\"1\":\"false\",\"2\":\"false\",\"3\":\"false\"}},{\"field\":\"descuento\",\"tipo\":\"number\",\"titulo\":\"Porcentaje de Descuento\",\"texto_ayuda\":\"(0-99%) Dejar en 0% para desactivar\",\"required\":\"false\",\"estado\":{\"1\":\"false\",\"2\":\"false\",\"3\":\"false\"}},{\"field\":\"descuento_fecha\",\"tipo\":\"daterange\",\"titulo\":\"Fechas de descuento\",\"texto_ayuda\":\"\",\"required\":\"false\",\"estado\":{\"1\":\"false\",\"2\":\"false\",\"3\":\"false\"}},{\"field\":\"stock\",\"tipo\":\"number\",\"titulo\":\"Stock disponible\",\"texto_ayuda\":\"\",\"required\":\"false\",\"estado\":{\"1\":\"false\",\"2\":\"false\",\"3\":\"false\"}},{\"field\":\"descripcion\",\"tipo\":\"editor\",\"titulo\":\"Descripcion\",\"texto_ayuda\":\"\",\"required\":\"\",\"estado\":{\"1\":\"false\",\"2\":\"false\",\"3\":\"false\"}},{\"field\":\"idproductocategoria\",\"tipo\":\"recursive_checkbox\",\"titulo\":\"Categoria\",\"texto_ayuda\":\"\",\"required\":\"false\",\"estado\":{\"1\":\"false\",\"2\":\"false\",\"3\":\"false\"}},{\"field\":\"keywords\",\"tipo\":\"token\",\"titulo\":\"Palabras clave\",\"texto_ayuda\":\"\",\"required\":\"\",\"estado\":{\"1\":\"false\",\"2\":\"false\",\"3\":\"false\"}},{\"field\":\"metadescripcion\",\"tipo\":\"textarea\",\"titulo\":\"Meta Descripción\",\"texto_ayuda\":\"\",\"required\":\"\",\"estado\":{\"1\":\"false\",\"2\":\"false\",\"3\":\"false\"}},{\"field\":\"orden\",\"tipo\":\"number\",\"titulo\":\"Orden\",\"texto_ayuda\":\"\",\"required\":\"true\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}},{\"field\":\"estado\",\"tipo\":\"active\",\"titulo\":\"Estado\",\"texto_ayuda\":\"\",\"required\":\"true\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}},{\"field\":\"destacado\",\"tipo\":\"active\",\"titulo\":\"Destacado\",\"texto_ayuda\":\"\",\"required\":\"false\",\"estado\":{\"1\":\"false\",\"2\":\"false\",\"3\":\"false\"}}]","[{\"tag\":\"cart\",\"titulo\":\"Carro\",\"ancho\":\"50\",\"alto\":\"50\",\"calidad\":\"90\",\"tipo\":\"centrar\"}]","2","[{\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}}]","1","0")
+("33","18","2","Atributos","[{\"field\":\"new\",\"titulo\":\"Nuevo\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}},{\"field\":\"excel\",\"titulo\":\"Exportar a excel\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}},{\"field\":\"regenerar\",\"titulo\":\"Regenerar imagenes\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}}]","[{\"field\":\"0\",\"tipo\":\"text\",\"titulo\":\"ID\",\"estado\":{\"1\":\"false\",\"2\":\"false\",\"3\":\"false\"}},{\"field\":\"orden\",\"tipo\":\"text\",\"titulo\":\"Orden\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}},{\"field\":\"titulo\",\"tipo\":\"text\",\"titulo\":\"Titulo\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}},{\"field\":\"foto\",\"tipo\":\"image\",\"titulo\":\"Foto\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}},{\"field\":\"estado\",\"tipo\":\"active\",\"titulo\":\"Estado\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}},{\"field\":\"destacado\",\"tipo\":\"active\",\"titulo\":\"Destacado\",\"estado\":{\"1\":\"false\",\"2\":\"false\",\"3\":\"false\"}},{\"field\":\"copy\",\"tipo\":\"action\",\"titulo\":\"Copiar\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}},{\"field\":\"url_detalle\",\"tipo\":\"link\",\"titulo\":\"Editar\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}},{\"field\":\"delete\",\"tipo\":\"delete\",\"titulo\":\"Eliminar\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}}]","[{\"field\":\"titulo\",\"tipo\":\"text\",\"titulo\":\"Titulo\",\"texto_ayuda\":\"\",\"required\":\"true\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}},{\"field\":\"url\",\"tipo\":\"url\",\"titulo\":\"URL\",\"texto_ayuda\":\"\",\"required\":\"false\",\"estado\":{\"1\":\"false\",\"2\":\"false\",\"3\":\"false\"}},{\"field\":\"foto\",\"tipo\":\"multiple_image\",\"titulo\":\"Foto\",\"texto_ayuda\":\"Imagen 50x50 px, formato jpg o png\",\"required\":\"true\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}},{\"field\":\"archivo\",\"tipo\":\"multiple_file\",\"titulo\":\"Archivo\",\"texto_ayuda\":\"(Opcional) Archivo formato doc, pdf, ppt, xls\",\"required\":\"false\",\"estado\":{\"1\":\"false\",\"2\":\"false\",\"3\":\"false\"}},{\"field\":\"resumen\",\"tipo\":\"textarea\",\"titulo\":\"Resumen\",\"texto_ayuda\":\"\",\"required\":\"\",\"estado\":{\"1\":\"false\",\"2\":\"false\",\"3\":\"false\"}},{\"field\":\"codigo\",\"tipo\":\"text\",\"titulo\":\"Codigo de producto\",\"texto_ayuda\":\"\",\"required\":\"false\",\"estado\":{\"1\":\"false\",\"2\":\"false\",\"3\":\"false\"}},{\"field\":\"precio\",\"tipo\":\"number\",\"titulo\":\"Precio\",\"texto_ayuda\":\"\",\"required\":\"false\",\"estado\":{\"1\":\"false\",\"2\":\"false\",\"3\":\"false\"}},{\"field\":\"descuento\",\"tipo\":\"number\",\"titulo\":\"Porcentaje de Descuento\",\"texto_ayuda\":\"(0-99%) Dejar en 0% para desactivar\",\"required\":\"false\",\"estado\":{\"1\":\"false\",\"2\":\"false\",\"3\":\"false\"}},{\"field\":\"descuento_fecha\",\"tipo\":\"daterange\",\"titulo\":\"Fechas de descuento\",\"texto_ayuda\":\"\",\"required\":\"false\",\"estado\":{\"1\":\"false\",\"2\":\"false\",\"3\":\"false\"}},{\"field\":\"stock\",\"tipo\":\"number\",\"titulo\":\"Stock disponible\",\"texto_ayuda\":\"\",\"required\":\"false\",\"estado\":{\"1\":\"false\",\"2\":\"false\",\"3\":\"false\"}},{\"field\":\"descripcion\",\"tipo\":\"editor\",\"titulo\":\"Descripcion\",\"texto_ayuda\":\"\",\"required\":\"\",\"estado\":{\"1\":\"false\",\"2\":\"false\",\"3\":\"false\"}},{\"field\":\"idproductocategoria\",\"tipo\":\"recursive_checkbox\",\"titulo\":\"Categoria\",\"texto_ayuda\":\"\",\"required\":\"false\",\"estado\":{\"1\":\"false\",\"2\":\"false\",\"3\":\"false\"}},{\"field\":\"keywords\",\"tipo\":\"token\",\"titulo\":\"Palabras clave\",\"texto_ayuda\":\"\",\"required\":\"\",\"estado\":{\"1\":\"false\",\"2\":\"false\",\"3\":\"false\"}},{\"field\":\"metadescripcion\",\"tipo\":\"textarea\",\"titulo\":\"Meta Descripción\",\"texto_ayuda\":\"\",\"required\":\"\",\"estado\":{\"1\":\"false\",\"2\":\"false\",\"3\":\"false\"}},{\"field\":\"orden\",\"tipo\":\"number\",\"titulo\":\"Orden\",\"texto_ayuda\":\"\",\"required\":\"true\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}},{\"field\":\"estado\",\"tipo\":\"active\",\"titulo\":\"Estado\",\"texto_ayuda\":\"\",\"required\":\"true\",\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}},{\"field\":\"destacado\",\"tipo\":\"active\",\"titulo\":\"Destacado\",\"texto_ayuda\":\"\",\"required\":\"false\",\"estado\":{\"1\":\"false\",\"2\":\"false\",\"3\":\"false\"}}]","[{\"tag\":\"cart\",\"titulo\":\"Carro\",\"ancho\":\"50\",\"alto\":\"50\",\"calidad\":\"90\",\"tipo\":\"centrar\"}]","2","[{\"estado\":{\"1\":\"true\",\"2\":\"true\",\"3\":\"true\"}}]","1","0");
 
 
 
-DROP TABLE IF EXISTS `seo_moduloconfiguracion`
+DROP TABLE IF EXISTS `seo_moduloconfiguracion`;
 
 CREATE TABLE `seo_moduloconfiguracion` (
   `idmoduloconfiguracion` int(11) NOT NULL AUTO_INCREMENT,
@@ -5973,7 +5975,7 @@ CREATE TABLE `seo_moduloconfiguracion` (
   `aside` tinyint(1) NOT NULL DEFAULT '1',
   `tipos` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`idmoduloconfiguracion`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
 
 INSERT INTO `seo_moduloconfiguracion` VALUES ("1","equalizer","seo","","","SEO","[{\"field\":\"0\",\"titulo\":\"ID\",\"tipo\":\"text\"},{\"field\":\"orden\",\"titulo\":\"Orden\",\"tipo\":\"text\"},{\"field\":\"titulo\",\"titulo\":\"Titulo\",\"tipo\":\"text\"},{\"field\":\"url\",\"titulo\":\"URL\",\"tipo\":\"text\"},{\"field\":\"estado\",\"titulo\":\"Estado\",\"tipo\":\"active\"},{\"field\":\"banner\",\"titulo\":\"Banner\",\"tipo\":\"image\"},{\"field\":\"menu\",\"titulo\":\"Menu\",\"tipo\":\"active\"},{\"field\":\"submenu\",\"titulo\":\"Submenu\",\"tipo\":\"active\"},{\"field\":\"copy\",\"titulo\":\"Copiar\",\"tipo\":\"action\"},{\"field\":\"url_detalle\",\"titulo\":\"Editar\",\"tipo\":\"link\"},{\"field\":\"delete\",\"titulo\":\"Eliminar\",\"tipo\":\"delete\"}]","[{\"field\":\"titulo\",\"titulo\":\"Titulo\",\"tipo\":\"text\"},{\"field\":\"url\",\"titulo\":\"URL\",\"tipo\":\"url\"},{\"field\":\"foto\",\"titulo\":\"Foto\",\"tipo\":\"image\"},{\"field\":\"banner\",\"titulo\":\"Banner\",\"tipo\":\"image\"},{\"field\":\"modulo_front\",\"titulo\":\"Modulo en front\",\"tipo\":\"url\"},{\"field\":\"modulo_back\",\"titulo\":\"Modulo en back\",\"tipo\":\"url\"},{\"field\":\"tipo_modulo\",\"titulo\":\"Tipo en modulo\",\"tipo\":\"number\"},{\"field\":\"link_menu\",\"titulo\":\"Link en menu\",\"tipo\":\"url\"},{\"field\":\"keywords\",\"titulo\":\"Palabras clave\",\"tipo\":\"token\"},{\"field\":\"metadescripcion\",\"titulo\":\"Meta Descripción\",\"tipo\":\"textarea\"},{\"field\":\"orden\",\"titulo\":\"Orden\",\"tipo\":\"number\"},{\"field\":\"menu\",\"titulo\":\"Menu\",\"tipo\":\"active\"},{\"field\":\"submenu\",\"titulo\":\"Submenu\",\"tipo\":\"active\"},{\"field\":\"estado\",\"titulo\":\"Estado\",\"tipo\":\"active\"}]","5","1","1","0"),
 ("2","format_color_text","texto","","","Textos","[{\"field\":\"orden\",\"titulo\":\"Orden\",\"tipo\":\"text\"},{\"field\":\"titulo\",\"titulo\":\"Titulo\",\"tipo\":\"text\"},{\"field\":\"texto\",\"titulo\":\"Texto\",\"tipo\":\"text\"},{\"field\":\"estado\",\"titulo\":\"Estado\",\"tipo\":\"active\"},{\"field\":\"copy\",\"titulo\":\"Copiar\",\"tipo\":\"action\"},{\"field\":\"url_detalle\",\"titulo\":\"Editar\",\"tipo\":\"link\"},{\"field\":\"delete\",\"titulo\":\"Eliminar\",\"tipo\":\"delete\"}]","[{\"field\":\"titulo\",\"titulo\":\"Titulo\",\"tipo\":\"text\"},{\"field\":\"descripcion\",\"titulo\":\"Descripcion\",\"tipo\":\"editor\"},{\"field\":\"texto\",\"titulo\":\"Texto\",\"tipo\":\"text\"},{\"field\":\"mapa\",\"titulo\":\"Mapa\",\"tipo\":\"map\"},{\"field\":\"orden\",\"titulo\":\"Orden\",\"tipo\":\"number\"},{\"field\":\"estado\",\"titulo\":\"Estado\",\"tipo\":\"active\"}]","6","1","1","1"),
@@ -5999,11 +6001,11 @@ INSERT INTO `seo_moduloconfiguracion` VALUES ("1","equalizer","seo","","","SEO",
 ("23","place","comuna","","region","Comuna","[{\"field\":\"0\",\"titulo\":\"ID\",\"tipo\":\"text\"},{\"field\":\"orden\",\"titulo\":\"Orden\",\"tipo\":\"text\"},{\"field\":\"titulo\",\"titulo\":\"Titulo\",\"tipo\":\"text\"},{\"field\":\"precio\",\"titulo\":\"Precio\",\"tipo\":\"text\"},{\"field\":\"estado\",\"titulo\":\"Estado\",\"tipo\":\"active\"},{\"field\":\"copy\",\"titulo\":\"Copiar\",\"tipo\":\"action\"},{\"field\":\"url_detalle\",\"titulo\":\"Editar\",\"tipo\":\"link\"},{\"field\":\"delete\",\"titulo\":\"Eliminar\",\"tipo\":\"delete\"}]","[{\"field\":\"titulo\",\"titulo\":\"Titulo\",\"tipo\":\"text\"},{\"field\":\"precio\",\"titulo\":\"Precio\",\"tipo\":\"number\"},{\"field\":\"idregion\",\"titulo\":\"Region\",\"tipo\":\"select\"},{\"field\":\"orden\",\"titulo\":\"Orden\",\"tipo\":\"number\"},{\"field\":\"estado\",\"titulo\":\"Estado\",\"tipo\":\"active\"}]","11","1","0","0"),
 ("24","business_center","pedidoestado","","","Estados del pedido","[{\"field\":\"0\",\"titulo\":\"ID\",\"tipo\":\"text\"},{\"field\":\"orden\",\"titulo\":\"Orden\",\"tipo\":\"text\"},{\"field\":\"titulo\",\"titulo\":\"Titulo\",\"tipo\":\"text\"},{\"field\":\"color\",\"titulo\":\"Color\",\"tipo\":\"color\"},{\"field\":\"estado\",\"titulo\":\"Estado\",\"tipo\":\"active\"},{\"field\":\"copy\",\"titulo\":\"Copiar\",\"tipo\":\"action\"},{\"field\":\"url_detalle\",\"titulo\":\"Editar\",\"tipo\":\"link\"},{\"field\":\"delete\",\"titulo\":\"Eliminar\",\"tipo\":\"delete\"}]","[{\"field\":\"titulo\",\"titulo\":\"Titulo\",\"tipo\":\"text\"},{\"field\":\"resumen\",\"titulo\":\"Resumen\",\"tipo\":\"textarea\"},{\"field\":\"color\",\"titulo\":\"Color\",\"tipo\":\"color\"},{\"field\":\"orden\",\"titulo\":\"Orden\",\"tipo\":\"number\"},{\"field\":\"estado\",\"titulo\":\"Estado\",\"tipo\":\"active\"}]","15","1","1","1"),
 ("25","attach_money","mediopago","","","Medios de pago","[{\"field\":\"0\",\"titulo\":\"ID\",\"tipo\":\"text\"},{\"field\":\"orden\",\"titulo\":\"Orden\",\"tipo\":\"text\"},{\"field\":\"titulo\",\"titulo\":\"Titulo\",\"tipo\":\"text\"},{\"field\":\"estado\",\"titulo\":\"Estado\",\"tipo\":\"active\"},{\"field\":\"copy\",\"titulo\":\"Copiar\",\"tipo\":\"action\"},{\"field\":\"url_detalle\",\"titulo\":\"Editar\",\"tipo\":\"link\"},{\"field\":\"delete\",\"titulo\":\"Eliminar\",\"tipo\":\"delete\"}]","[{\"field\":\"titulo\",\"titulo\":\"Titulo\",\"tipo\":\"text\"},{\"field\":\"resumen\",\"titulo\":\"Resumen\",\"tipo\":\"textarea\"},{\"field\":\"descripcion\",\"titulo\":\"Descripción\",\"tipo\":\"editor\"},{\"field\":\"orden\",\"titulo\":\"Orden\",\"tipo\":\"number\"},{\"field\":\"estado\",\"titulo\":\"Estado\",\"tipo\":\"active\"}]","16","1","1","0"),
-("26","store","pedido","","","Pedidos","[{\"field\":\"0\",\"titulo\":\"ID\",\"tipo\":\"text\"},{\"field\":\"cookie_pedido\",\"titulo\":\"Codigo de pedido\",\"tipo\":\"text\"},{\"field\":\"fecha_pago\",\"titulo\":\"Fecha de pago\",\"tipo\":\"text\"},{\"field\":\"nombre\",\"titulo\":\"Usuario\",\"tipo\":\"text\"},{\"field\":\"email\",\"titulo\":\"Email\",\"tipo\":\"text\"},{\"field\":\"idpedidoestado\",\"titulo\":\"Estado\",\"tipo\":\"color\"},{\"field\":\"idmediopago\",\"titulo\":\"Medio de pago\",\"tipo\":\"text\"},{\"field\":\"total\",\"titulo\":\"Total\",\"tipo\":\"text\"},{\"field\":\"url_detalle\",\"titulo\":\"Editar\",\"tipo\":\"link\"}]","[{\"field\":\"idusuario\",\"titulo\":\"Usuario\",\"tipo\":\"select\"},{\"field\":\"nombre\",\"titulo\":\"Nombre\",\"tipo\":\"text\"},{\"field\":\"email\",\"titulo\":\"Email\",\"tipo\":\"email\"},{\"field\":\"telefono\",\"titulo\":\"Teléfono\",\"tipo\":\"text\"},{\"field\":\"cookie_pedido\",\"titulo\":\"Codigo de pedido\",\"tipo\":\"password\"},{\"field\":\"fecha_pago\",\"titulo\":\"Fecha de pago\",\"tipo\":\"date\"},{\"field\":\"idpedidoestado\",\"titulo\":\"Estado\",\"tipo\":\"select\"},{\"field\":\"idmediopago\",\"titulo\":\"Medio de pago\",\"tipo\":\"select\"},{\"field\":\"comentarios\",\"titulo\":\"Comentarios\",\"tipo\":\"textarea\"},{\"field\":\"direcciones\",\"titulo\":\"Direcciones\",\"tipo\":\"grupo_pedido\"},{\"field\":\"total\",\"titulo\":\"Total\",\"tipo\":\"number\"}]","14","1","1","1")
+("26","store","pedido","","","Pedidos","[{\"field\":\"0\",\"titulo\":\"ID\",\"tipo\":\"text\"},{\"field\":\"cookie_pedido\",\"titulo\":\"Codigo de pedido\",\"tipo\":\"text\"},{\"field\":\"fecha_pago\",\"titulo\":\"Fecha de pago\",\"tipo\":\"text\"},{\"field\":\"nombre\",\"titulo\":\"Usuario\",\"tipo\":\"text\"},{\"field\":\"email\",\"titulo\":\"Email\",\"tipo\":\"text\"},{\"field\":\"idpedidoestado\",\"titulo\":\"Estado\",\"tipo\":\"color\"},{\"field\":\"idmediopago\",\"titulo\":\"Medio de pago\",\"tipo\":\"text\"},{\"field\":\"total\",\"titulo\":\"Total\",\"tipo\":\"text\"},{\"field\":\"url_detalle\",\"titulo\":\"Editar\",\"tipo\":\"link\"}]","[{\"field\":\"idusuario\",\"titulo\":\"Usuario\",\"tipo\":\"select\"},{\"field\":\"nombre\",\"titulo\":\"Nombre\",\"tipo\":\"text\"},{\"field\":\"email\",\"titulo\":\"Email\",\"tipo\":\"email\"},{\"field\":\"telefono\",\"titulo\":\"Teléfono\",\"tipo\":\"text\"},{\"field\":\"cookie_pedido\",\"titulo\":\"Codigo de pedido\",\"tipo\":\"password\"},{\"field\":\"fecha_pago\",\"titulo\":\"Fecha de pago\",\"tipo\":\"date\"},{\"field\":\"idpedidoestado\",\"titulo\":\"Estado\",\"tipo\":\"select\"},{\"field\":\"idmediopago\",\"titulo\":\"Medio de pago\",\"tipo\":\"select\"},{\"field\":\"comentarios\",\"titulo\":\"Comentarios\",\"tipo\":\"textarea\"},{\"field\":\"direcciones\",\"titulo\":\"Direcciones\",\"tipo\":\"grupo_pedido\"},{\"field\":\"total\",\"titulo\":\"Total\",\"tipo\":\"number\"}]","14","1","1","1");
 
 
 
-DROP TABLE IF EXISTS `seo_pedido`
+DROP TABLE IF EXISTS `seo_pedido`;
 
 CREATE TABLE `seo_pedido` (
   `idpedido` int(11) NOT NULL AUTO_INCREMENT,
@@ -6022,16 +6024,16 @@ CREATE TABLE `seo_pedido` (
   `comentarios` longtext NOT NULL,
   `pedido_manual` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`idpedido`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 INSERT INTO `seo_pedido` VALUES ("1","1","CDD4350C","2019-01-09 16:11:53","2019-01-10 11:20:00","1","4","1","Pablo Andrés Raín Contreras","pablo.rain.contreras@gmail.com","957850924","35000","35000","","0"),
 ("2","1","A8A545A3","2019-01-10 14:34:07","2019-01-10 11:50:00","1","10","1","Pablo Andrés Raín Contreras","pablo.rain.contreras@gmail.com","957850924","50000","52500","","0"),
 ("3","1","828D2B66","2019-01-11 14:57:35","2019-01-11 18:21:18","1","3","0","Pablo Andrés Raín Contreras","pablo.rain.contreras@gmail.com","957850924","15000","15000","","0"),
-("4","1","E3385EA9","2019-01-14 20:22:27","0000-00-00 00:00:00","0","1","0","","","","30000","30000","","0")
+("4","1","E3385EA9","2019-01-14 20:22:27","0000-00-00 00:00:00","0","1","0","","","","30000","30000","","0");
 
 
 
-DROP TABLE IF EXISTS `seo_pedidodireccion`
+DROP TABLE IF EXISTS `seo_pedidodireccion`;
 
 CREATE TABLE `seo_pedidodireccion` (
   `idpedidodireccion` int(11) NOT NULL AUTO_INCREMENT,
@@ -6046,16 +6048,16 @@ CREATE TABLE `seo_pedidodireccion` (
   `referencias` longtext NOT NULL,
   `fecha_entrega` datetime NOT NULL,
   PRIMARY KEY (`idpedidodireccion`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 INSERT INTO `seo_pedidodireccion` VALUES ("1","1","2","5","5000","CDD4350C-B6","Pablo","957850924","Llanquiray 1458, El Bosque;","","2019-01-19 10:00:00"),
 ("2","2","2","9","5000","A8A545A3-6A","Pablo","957850924","Llanquiray 1458, El Bosque;","","2019-01-16 10:00:00"),
 ("3","2","3","9","5000","A8A545A3-58","Pablo","5073198518","23 7th Avenue Southwest, Puente Alto;, edificio raymond building, departamento 2","","2019-01-17 10:15:00"),
-("4","3","2","9","5000","828D2B66-F2","Pablo","957850924","Llanquiray 1458, El Bosque","","2019-01-17 10:00:00")
+("4","3","2","9","5000","828D2B66-F2","Pablo","957850924","Llanquiray 1458, El Bosque","","2019-01-17 10:00:00");
 
 
 
-DROP TABLE IF EXISTS `seo_pedidoestado`
+DROP TABLE IF EXISTS `seo_pedidoestado`;
 
 CREATE TABLE `seo_pedidoestado` (
   `idpedidoestado` int(11) NOT NULL AUTO_INCREMENT,
@@ -6066,7 +6068,7 @@ CREATE TABLE `seo_pedidoestado` (
   `orden` int(11) NOT NULL,
   `estado` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`idpedidoestado`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 INSERT INTO `seo_pedidoestado` VALUES ("1","1","Carro","Pedido en carro","#9e9e9e","2","1"),
 ("2","1","Pagando","Pedido en proceso de pago","#f7ee18","3","1"),
@@ -6077,11 +6079,11 @@ INSERT INTO `seo_pedidoestado` VALUES ("1","1","Carro","Pedido en carro","#9e9e9
 ("7","1","Error en el pago","Hubo un error al pagar, reintentar","#ff0000","6","1"),
 ("8","2","Producto entregado","El producto fue entregado exitosamente","#027800","4","1"),
 ("9","2","Pago pendiente","Pedido no pagado, no se lista para entrega","#787878","1","1"),
-("10","1","Esperando transferencia","Solo para medio de pago transferencia","#0487ff","5","1")
+("10","1","Esperando transferencia","Solo para medio de pago transferencia","#0487ff","5","1");
 
 
 
-DROP TABLE IF EXISTS `seo_pedidoproducto`
+DROP TABLE IF EXISTS `seo_pedidoproducto`;
 
 CREATE TABLE `seo_pedidoproducto` (
   `idpedidoproducto` int(11) NOT NULL AUTO_INCREMENT,
@@ -6097,7 +6099,7 @@ CREATE TABLE `seo_pedidoproducto` (
   `cantidad` int(11) NOT NULL,
   `total` int(11) NOT NULL,
   PRIMARY KEY (`idpedidoproducto`)
-) ENGINE=InnoDB AUTO_INCREMENT=214 DEFAULT CHARSET=utf8
+) ENGINE=InnoDB AUTO_INCREMENT=214 DEFAULT CHARSET=utf8;
 
 INSERT INTO `seo_pedidoproducto` VALUES ("1","1","1","1","Producto de prueba","[{\"portada\":true,\"id\":1,\"url\":\"1.png\",\"parent\":\"\",\"folder\":\"pedidoproducto\",\"subfolder\":\"\",\"tmp\":\"\"}]","feliz cumplea;os","29","Globo de cumpleaños","10000","1","10000"),
 ("2","1","1","21","Producto de prueba","[{\"portada\":true,\"id\":1,\"url\":\"2.png\",\"parent\":\"\",\"folder\":\"pedidoproducto\",\"subfolder\":\"\",\"tmp\":\"\"}]","felices fiestas","31","Globo de fiesta","10000","1","10000"),
@@ -6109,11 +6111,11 @@ INSERT INTO `seo_pedidoproducto` VALUES ("1","1","1","1","Producto de prueba","[
 ("210","3","4","19","Producto de prueba","[{\"portada\":true,\"id\":1,\"url\":\"210.png\",\"parent\":\"\",\"folder\":\"pedidoproducto\",\"subfolder\":\"\",\"tmp\":\"\"}]","","30","","10000","1","10000"),
 ("211","4","0","21","Producto de prueba","[{\"portada\":true,\"id\":1,\"url\":\"211.png\",\"parent\":\"\",\"folder\":\"pedidoproducto\",\"subfolder\":\"\",\"tmp\":\"\"}]","","0","","10000","1","10000"),
 ("212","4","0","19","Producto de prueba","[{\"portada\":true,\"id\":1,\"url\":\"212.png\",\"parent\":\"\",\"folder\":\"pedidoproducto\",\"subfolder\":\"\",\"tmp\":\"\"}]","","0","","10000","1","10000"),
-("213","4","0","20","Producto de prueba","[{\"portada\":true,\"id\":1,\"url\":\"213.png\",\"parent\":\"\",\"folder\":\"pedidoproducto\",\"subfolder\":\"\",\"tmp\":\"\"}]","","0","","10000","1","10000")
+("213","4","0","20","Producto de prueba","[{\"portada\":true,\"id\":1,\"url\":\"213.png\",\"parent\":\"\",\"folder\":\"pedidoproducto\",\"subfolder\":\"\",\"tmp\":\"\"}]","","0","","10000","1","10000");
 
 
 
-DROP TABLE IF EXISTS `seo_producto`
+DROP TABLE IF EXISTS `seo_producto`;
 
 CREATE TABLE `seo_producto` (
   `idproducto` int(11) NOT NULL AUTO_INCREMENT,
@@ -6137,7 +6139,7 @@ CREATE TABLE `seo_producto` (
   `estado` tinyint(1) NOT NULL DEFAULT '1',
   `destacado` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`idproducto`)
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8;
 
 INSERT INTO `seo_producto` VALUES ("1","[\"1\",\"3\",\"2\"]","1","Producto de prueba","producto-de-prueba","[{\"portada\":\"true\",\"id\":\"1\",\"url\":\"1.png\",\"subfolder\":\"foto\",\"parent\":1,\"folder\":\"producto\"}]","","","10000","0","09/01/2019 00:00 - 09/01/2019 23:59","99","0","","","","","1","1","1"),
 ("10","[\"1\",\"3\",\"2\"]","1","Producto de prueba","producto-de-prueba","[{\"portada\":true,\"id\":1,\"url\":\"10.png\",\"parent\":10,\"folder\":\"producto\",\"subfolder\":\"foto\",\"tmp\":\"\"}]","","","10000","0","09/01/2019 00:00 - 09/01/2019 23:59","99","0","","","","","7","1","1"),
@@ -6156,11 +6158,11 @@ INSERT INTO `seo_producto` VALUES ("1","[\"1\",\"3\",\"2\"]","1","Producto de pr
 ("23","[\"1\",\"3\",\"2\"]","1","Producto de prueba","producto-de-prueba","[{\"portada\":true,\"id\":1,\"url\":\"23.png\",\"parent\":23,\"folder\":\"producto\",\"subfolder\":\"foto\",\"tmp\":\"\"}]","","","10000","0","09/01/2019 00:00 - 09/01/2019 23:59","100","0","","","","","15","1","1"),
 ("29","[\"0\"]","2","Globo de cumpleaños","","[{\"portada\":\"true\",\"id\":\"1\",\"url\":\"1.jpg\",\"subfolder\":\"foto\",\"parent\":29,\"folder\":\"producto\"}]","","","0","0","","0","0","","","","","1","1","1"),
 ("30","[\"0\"]","2","Globo de aniversario","","[{\"portada\":\"true\",\"id\":\"2\",\"url\":\"2.jpg\",\"subfolder\":\"foto\",\"parent\":\"30\",\"folder\":\"producto\"}]","","","0","0","","0","0","","","","","2","1","1"),
-("31","[\"0\"]","2","Globo de fiesta","","[{\"portada\":\"true\",\"id\":\"2\",\"url\":\"2.jpg\",\"subfolder\":\"foto\",\"parent\":\"31\",\"folder\":\"producto\"}]","","","0","0","","0","0","","","","","3","1","1")
+("31","[\"0\"]","2","Globo de fiesta","","[{\"portada\":\"true\",\"id\":\"2\",\"url\":\"2.jpg\",\"subfolder\":\"foto\",\"parent\":\"31\",\"folder\":\"producto\"}]","","","0","0","","0","0","","","","","3","1","1");
 
 
 
-DROP TABLE IF EXISTS `seo_productocategoria`
+DROP TABLE IF EXISTS `seo_productocategoria`;
 
 CREATE TABLE `seo_productocategoria` (
   `idproductocategoria` int(11) NOT NULL AUTO_INCREMENT,
@@ -6179,15 +6181,15 @@ CREATE TABLE `seo_productocategoria` (
   `estado` tinyint(1) NOT NULL DEFAULT '1',
   `destacado` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`idproductocategoria`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 INSERT INTO `seo_productocategoria` VALUES ("1","[\"0\"]","1","Categoria 1","categoria-1","[{\"portada\":\"true\",\"id\":\"1\",\"url\":\"1.jpg\",\"parent\":\"1\",\"folder\":\"productocategoria\",\"subfolder\":\"foto\",\"tmp\":\"\"}]","3","06/11/2018 00:00 - 21/12/2018 23:00","sfdsdf","<p>asdfafds</p><p>&#39;sdfa</p><p>a</p><p>sdf</p><p>afsd</p>","","","1","1","1"),
 ("2","[\"0\"]","1","Categoria 2","categoria-2","[{\"portada\":\"true\",\"id\":\"1\",\"url\":\"1.jpg\",\"parent\":\"2\",\"folder\":\"productocategoria\",\"subfolder\":\"foto\"}]","0","20/11/2018 00:00 - 20/11/2018 23:59","sfdsdf","<p>asdfafds</p><p>&#39;sdfa</p><p>a</p><p>sdf</p><p>afsd</p>","","","2","1","1"),
-("3","[\"1\"]","1","Sub categoria 1","sub-categoria-1","[{\"portada\":\"true\",\"id\":\"1\",\"url\":\"1.jpg\",\"parent\":\"3\",\"folder\":\"productocategoria\",\"subfolder\":\"foto\"}]","0","27/11/2018 00:00 - 27/11/2018 23:59","","","","","1","1","1")
+("3","[\"1\"]","1","Sub categoria 1","sub-categoria-1","[{\"portada\":\"true\",\"id\":\"1\",\"url\":\"1.jpg\",\"parent\":\"3\",\"folder\":\"productocategoria\",\"subfolder\":\"foto\"}]","0","27/11/2018 00:00 - 27/11/2018 23:59","","","","","1","1","1");
 
 
 
-DROP TABLE IF EXISTS `seo_profile`
+DROP TABLE IF EXISTS `seo_profile`;
 
 CREATE TABLE `seo_profile` (
   `idprofile` int(11) NOT NULL AUTO_INCREMENT,
@@ -6196,15 +6198,15 @@ CREATE TABLE `seo_profile` (
   `orden` int(11) NOT NULL,
   `estado` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`idprofile`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 INSERT INTO `seo_profile` VALUES ("1","1","Super Admin","1","1"),
 ("2","2","Admin Normal","2","1"),
-("3","3","Admin Limitado","3","1")
+("3","3","Admin Limitado","3","1");
 
 
 
-DROP TABLE IF EXISTS `seo_region`
+DROP TABLE IF EXISTS `seo_region`;
 
 CREATE TABLE `seo_region` (
   `idregion` int(11) NOT NULL AUTO_INCREMENT,
@@ -6213,13 +6215,13 @@ CREATE TABLE `seo_region` (
   `orden` int(11) NOT NULL,
   `estado` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`idregion`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
-INSERT INTO `seo_region` VALUES ("1","Region metropolitana","5000","1","1")
+INSERT INTO `seo_region` VALUES ("1","Region metropolitana","5000","1","1");
 
 
 
-DROP TABLE IF EXISTS `seo_seccion`
+DROP TABLE IF EXISTS `seo_seccion`;
 
 CREATE TABLE `seo_seccion` (
   `idseccion` int(11) NOT NULL AUTO_INCREMENT,
@@ -6238,7 +6240,7 @@ CREATE TABLE `seo_seccion` (
   `estado` tinyint(1) NOT NULL DEFAULT '1',
   `destacado` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`idseccion`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 
 INSERT INTO `seo_seccion` VALUES ("1","[2]","1","servicio 1","","servicio-1","[{\"portada\":\"true\",\"id\":\"1\",\"url\":\"1.jpg\",\"parent\":\"1\",\"folder\":\"seccion\",\"subfolder\":\"foto\",\"tmp\":\"\"},{\"portada\":\"false\",\"id\":\"2\",\"url\":\"2.jpg\",\"parent\":\"1\",\"folder\":\"seccion\",\"subfolder\":\"foto\",\"tmp\":\"\"},{\"portada\":\"false\",\"id\":\"3\",\"url\":\"3.jpg\",\"parent\":\"1\",\"folder\":\"seccion\",\"subfolder\":\"foto\",\"tmp\":\"\"},{\"portada\":\"false\",\"id\":\"4\",\"url\":\"4.jpg\",\"parent\":\"1\",\"folder\":\"seccion\",\"subfolder\":\"foto\",\"tmp\":\"\"},{\"portada\":\"false\",\"id\":\"5\",\"url\":\"5.jpg\",\"parent\":\"1\",\"folder\":\"seccion\",\"subfolder\":\"foto\",\"tmp\":\"\"},{\"portada\":\"false\",\"id\":\"6\",\"url\":\"6.jpg\",\"parent\":\"1\",\"folder\":\"seccion\",\"subfolder\":\"foto\",\"tmp\":\"\"},{\"portada\":\"false\",\"id\":\"7\",\"url\":\"7.jpg\",\"parent\":\"1\",\"folder\":\"seccion\",\"subfolder\":\"foto\",\"tmp\":\"\"},{\"portada\":\"false\",\"id\":\"8\",\"url\":\"8.jpg\",\"parent\":\"1\",\"folder\":\"seccion\",\"subfolder\":\"foto\",\"tmp\":\"\"},{\"portada\":\"false\",\"id\":\"9\",\"url\":\"9.jpg\",\"parent\":\"1\",\"folder\":\"seccion\",\"subfolder\":\"foto\",\"tmp\":\"\"},{\"portada\":\"false\",\"id\":\"10\",\"url\":\"10.jpg\",\"parent\":\"1\",\"folder\":\"seccion\",\"subfolder\":\"foto\",\"tmp\":\"\"},{\"portada\":\"false\",\"id\":\"11\",\"url\":\"11.jpg\",\"parent\":\"1\",\"folder\":\"seccion\",\"subfolder\":\"foto\",\"tmp\":\"\"},{\"portada\":\"false\",\"id\":\"12\",\"url\":\"12.jpg\",\"parent\":\"1\",\"folder\":\"seccion\",\"subfolder\":\"foto\",\"tmp\":\"\"},{\"portada\":\"false\",\"id\":\"13\",\"url\":\"13.jpg\",\"parent\":\"1\",\"folder\":\"seccion\",\"subfolder\":\"foto\",\"tmp\":\"\"},{\"portada\":\"false\",\"id\":\"14\",\"url\":\"14.jpg\",\"parent\":\"1\",\"folder\":\"seccion\",\"subfolder\":\"foto\",\"tmp\":\"\"},{\"portada\":\"false\",\"id\":\"15\",\"url\":\"15.jpg\",\"parent\":\"1\",\"folder\":\"seccion\",\"subfolder\":\"foto\",\"tmp\":\"\"},{\"portada\":\"false\",\"id\":\"17\",\"url\":\"17.jpg\",\"parent\":\"1\",\"folder\":\"seccion\",\"subfolder\":\"foto\",\"tmp\":\"\"},{\"portada\":\"false\",\"id\":\"18\",\"url\":\"18.jpg\",\"parent\":\"1\",\"folder\":\"seccion\",\"subfolder\":\"foto\",\"tmp\":\"\"},{\"portada\":\"false\",\"id\":\"19\",\"url\":\"19.jpg\",\"parent\":\"1\",\"folder\":\"seccion\",\"subfolder\":\"foto\",\"tmp\":\"\"},{\"portada\":\"false\",\"id\":\"20\",\"url\":\"20.jpg\",\"parent\":\"1\",\"folder\":\"seccion\",\"subfolder\":\"foto\",\"tmp\":\"\"},{\"portada\":\"false\",\"id\":\"21\",\"url\":\"21.jpg\",\"parent\":\"1\",\"folder\":\"seccion\",\"subfolder\":\"foto\",\"tmp\":\"\"},{\"portada\":\"false\",\"id\":\"22\",\"url\":\"22.jpg\",\"parent\":\"1\",\"folder\":\"seccion\",\"subfolder\":\"foto\",\"tmp\":\"\"},{\"portada\":\"false\",\"id\":\"23\",\"url\":\"23.jpg\",\"parent\":\"1\",\"folder\":\"seccion\",\"subfolder\":\"foto\",\"tmp\":\"\"},{\"portada\":\"false\",\"id\":\"24\",\"url\":\"24.jpg\",\"parent\":\"1\",\"folder\":\"seccion\",\"subfolder\":\"foto\",\"tmp\":\"\"},{\"portada\":\"false\",\"id\":\"25\",\"url\":\"25.jpg\",\"parent\":\"1\",\"folder\":\"seccion\",\"subfolder\":\"foto\",\"tmp\":\"\"},{\"portada\":\"false\",\"id\":\"26\",\"url\":\"26.jpg\",\"parent\":\"1\",\"folder\":\"seccion\",\"subfolder\":\"foto\",\"tmp\":\"\"},{\"portada\":\"false\",\"id\":\"27\",\"url\":\"27.jpg\",\"parent\":\"1\",\"folder\":\"seccion\",\"subfolder\":\"foto\",\"tmp\":\"\"},{\"portada\":\"false\",\"id\":\"28\",\"url\":\"28.jpg\",\"parent\":\"1\",\"folder\":\"seccion\",\"subfolder\":\"foto\",\"tmp\":\"\"},{\"portada\":\"false\",\"id\":\"29\",\"url\":\"29.jpg\",\"parent\":\"1\",\"folder\":\"seccion\",\"subfolder\":\"foto\",\"tmp\":\"\"},{\"portada\":\"false\",\"id\":\"30\",\"url\":\"30.jpg\",\"parent\":\"1\",\"folder\":\"seccion\",\"subfolder\":\"foto\",\"tmp\":\"\"},{\"portada\":\"false\",\"id\":\"31\",\"url\":\"31.jpg\",\"parent\":\"1\",\"folder\":\"seccion\",\"subfolder\":\"foto\",\"tmp\":\"\"},{\"portada\":\"false\",\"id\":\"32\",\"url\":\"32.jpg\",\"parent\":\"1\",\"folder\":\"seccion\",\"subfolder\":\"foto\",\"tmp\":\"\"},{\"portada\":\"false\",\"id\":\"33\",\"url\":\"33.jpg\",\"parent\":\"1\",\"folder\":\"seccion\",\"subfolder\":\"foto\",\"tmp\":\"\"},{\"portada\":\"false\",\"id\":\"34\",\"url\":\"34.jpg\",\"parent\":\"1\",\"folder\":\"seccion\",\"subfolder\":\"foto\",\"tmp\":\"\"},{\"portada\":\"false\",\"id\":\"35\",\"url\":\"35.jpg\",\"parent\":\"1\",\"folder\":\"seccion\",\"subfolder\":\"foto\",\"tmp\":\"\"},{\"portada\":\"false\",\"id\":\"36\",\"url\":\"36.jpg\",\"parent\":\"1\",\"folder\":\"seccion\",\"subfolder\":\"foto\",\"tmp\":\"\"},{\"portada\":\"false\",\"id\":\"37\",\"url\":\"37.jpg\",\"parent\":\"1\",\"folder\":\"seccion\",\"subfolder\":\"foto\",\"tmp\":\"\"},{\"portada\":\"false\",\"id\":\"38\",\"url\":\"38.jpg\",\"parent\":\"1\",\"folder\":\"seccion\",\"subfolder\":\"foto\",\"tmp\":\"\"},{\"portada\":\"false\",\"id\":\"39\",\"url\":\"39.jpg\",\"parent\":\"1\",\"folder\":\"seccion\",\"subfolder\":\"foto\",\"tmp\":\"\"},{\"portada\":\"false\",\"id\":\"40\",\"url\":\"40.jpg\",\"parent\":\"1\",\"folder\":\"seccion\",\"subfolder\":\"foto\",\"tmp\":\"\"},{\"portada\":\"false\",\"id\":\"41\",\"url\":\"41.jpg\",\"parent\":\"1\",\"folder\":\"seccion\",\"subfolder\":\"foto\",\"tmp\":\"\"},{\"portada\":\"false\",\"id\":\"42\",\"url\":\"42.jpg\",\"parent\":\"1\",\"folder\":\"seccion\",\"subfolder\":\"foto\",\"tmp\":\"\"}]","","","<p>sadf</p><p>afsd</p><p>as</p><p>df</p><p>ad</p>","","","1","1","1"),
 ("2","[\"5\"]","1","servicio 2","","servicio-2","[{\"portada\":\"true\",\"id\":\"2\",\"url\":\"2.jpg\",\"parent\":\"2\",\"folder\":\"seccion\",\"sub\":\"\",\"tmp\":\"\",\"subfolder\":\"foto\"}]","","","<p>asdasfd</p>","","","1","1","1"),
@@ -6248,11 +6250,11 @@ INSERT INTO `seo_seccion` VALUES ("1","[2]","1","servicio 1","","servicio-1","[{
 ("7","[\"0\"]","2","Quienes Somos","","quienes-somos","","[{\"id\":\"1\",\"url\":\"1-folleto_semejantes_4.pdf\",\"parent\":\"7\",\"folder\":\"seccion\",\"subfolder\":\"archivo\"}]","","<p>s dgs dgsdf gsgsd</p><p>fg</p><p>sdf</p><p>gsdf</p><p>ffg</p>","","","2","1","1"),
 ("8","[\"0\"]","2","Historia","","historia","","","","<p>asdfasfd asd fa sfd</p>","","","3","1","1"),
 ("9","[\"0\"]","3","Quienes Somos","Bienvenidos a J & C","quienes-somos","[{\"portada\":\"true\",\"id\":\"1\",\"url\":\"1.png\",\"parent\":\"9\",\"folder\":\"seccion\",\"subfolder\":\"foto\"}]","","J&C Desayunos (Jarros y Café) es una empresa creada con el objetivo de prestar servicios personalizados de alta calidad y distinción. El estilo, la calidad, la eficiencia y la originalidad de la propuesta son objeto de una revisión permanente que nos obliga a superar permanentemente nuestra gama de productos y servicios.","<p><strong>J&amp;C Desayunos (Jarros y Caf&eacute;)</strong> es una empresa creada con el objetivo de prestar servicios personalizados de alta calidad y distinci&oacute;n. El estilo, la calidad, la eficiencia y la originalidad de la propuesta son objeto de una revisi&oacute;n permanente que nos obliga a superar permanentemente nuestra gama de productos y servicios.</p><p>La empresa se organiza en torno de una Direcci&oacute;n Gerencial que supervisa directamente los procesos de atenci&oacute;n al cliente, abastecimiento, control de calidad y reparto. Cada proceso es controlado con rigor, pero manteniendo un esmero personal. Nuestra organizaci&oacute;n combina as&iacute; una visi&oacute;n global y un cuidado artesanal que marca la diferencia.</p><p>Cada pedido activa un proceso de producci&oacute;n de servicio cuyo objetivo es la plena satisfacci&oacute;n de dos interlocutores privilegiados: El cliente y el destinatario del agasajo.</p><p>La prosecuci&oacute;n de este objetivo se logra poniendo en todo el proceso una atenci&oacute;n particular al contenido afectivo y emocional que vehicula cada obsequio. Cada entrega es preparada teniendo en cuenta todos los detalles que hacen de ella un gesto de distinci&oacute;n. Este esfuerzo se manifiesta en la satisfacci&oacute;n de nuestros clientes que reiteran sus pedidos y se sintetiza generalmente en la sonrisa emocionada de los agasajados, hecho que constatamos a diario.</p><p>Radicada en Santiago de Chile desde 2001, nuestra empresa presenta una trayectoria de crecimiento exponencial, tanto en lo que concierne la calidad y cantidad de agasajos distribuidos como en el &aacute;rea de distribuci&oacute;n.</p><p>En 2006 nuestra organizaci&oacute;n lanza la l&iacute;nea de agasajos corporativos destinados a atender una demanda creciente de empresas y organizaciones que buscan presentes des distinci&oacute;n para su personal o su clientela. El &eacute;xito de la propuesta fue rotundo, en 2007 los pedidos se multiplicaron y la versatilidad y flexibilidad de nuestra organizaci&oacute;n dio muestras de probada eficiencia obteniendo la plena satisfacci&oacute;n de clientes y agasajados.</p><p><strong>Actualmente somos la &uacute;nica empresa chilena en condiciones de garantizar una demanda corporativa en &oacute;ptimas condiciones de tiempo y calidad.</strong></p><p>Nuestra cobertura se extiende ahora a todo Chile y tenemos una capacidad de producci&oacute;n de acuerdo a las necesidades del cliente.</p><p>La prensa escrita, radial y televisiva se ha hecho eco de nuestro suceso que ha venido a ocupar un espacio vac&iacute;o en Chile y es ya parte del regocijo cotidiano de centenas de personas.</p><p><strong>Hoy, todo el esmero y el afecto que pone Jarros &amp; Caf&eacute; en cada entrega se resumen en dos palabras: Jerarqu&iacute;a y Calidad, nosotros firmamos simplemente J&amp;C</strong></p>","","","1","1","1"),
-("13","[\"0\"]","3","Historia","Nuestra historia","historia","[{\"portada\":\"true\",\"id\":\"1\",\"url\":\"13.png\",\"parent\":\"13\",\"folder\":\"seccion\",\"subfolder\":\"foto\",\"tmp\":\"\"}]","","J&C Desayunos (Jarros y Café) es una empresa creada con el objetivo de prestar servicios personalizados de alta calidad y distinción. El estilo, la calidad, la eficiencia y la originalidad de la propuesta son objeto de una revisión permanente que nos obliga a superar permanentemente nuestra gama de productos y servicios.","<p>Nuestra historia</p>","","","1","1","0")
+("13","[\"0\"]","3","Historia","Nuestra historia","historia","[{\"portada\":\"true\",\"id\":\"1\",\"url\":\"13.png\",\"parent\":\"13\",\"folder\":\"seccion\",\"subfolder\":\"foto\",\"tmp\":\"\"}]","","J&C Desayunos (Jarros y Café) es una empresa creada con el objetivo de prestar servicios personalizados de alta calidad y distinción. El estilo, la calidad, la eficiencia y la originalidad de la propuesta son objeto de una revisión permanente que nos obliga a superar permanentemente nuestra gama de productos y servicios.","<p>Nuestra historia</p>","","","1","1","0");
 
 
 
-DROP TABLE IF EXISTS `seo_seccioncategoria`
+DROP TABLE IF EXISTS `seo_seccioncategoria`;
 
 CREATE TABLE `seo_seccioncategoria` (
   `idseccioncategoria` int(11) NOT NULL AUTO_INCREMENT,
@@ -6269,7 +6271,7 @@ CREATE TABLE `seo_seccioncategoria` (
   `estado` tinyint(1) NOT NULL DEFAULT '1',
   `destacado` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`idseccioncategoria`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
 INSERT INTO `seo_seccioncategoria` VALUES ("2","[\"0\"]","1","Categoría 1","categoria-1","[{\"portada\":\"true\",\"id\":\"1\",\"url\":\"1.jpg\",\"parent\":\"2\",\"folder\":\"seccioncategoria\",\"subfolder\":\"foto\",\"tmp\":\"\"}]","asfd adsf  fa fsd","<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus fermentum est non velit ultricies efficitur. Integer lacus sapien, aliquet auctor dignissim ut, pellentesque id ante. Suspendisse augue nulla, auctor nec mauris ut, finibus iaculis ipsum. Sed eu vehicula dolor, eget posuere tellus. Vivamus non egestas mauris. Nunc nec mattis mauris. Nunc euismod, dui non vulputate molestie, magna ex malesuada purus, eu porttitor elit magna a erat. Aenean eu nisl in ligula ultricies ultricies in quis enim.</p>","","sdfsfdsdffsdsdsfd","1","1","1"),
 ("3","[\"5\"]","1","sub 1","sub-1","[{\"portada\":\"true\",\"id\":\"1\",\"url\":\"1.jpg\",\"parent\":\"3\",\"folder\":\"seccioncategoria\",\"subfolder\":\"foto\",\"tmp\":\"\"}]","","<p>asdf</p>","","aaaaa","2","1","1"),
@@ -6278,11 +6280,11 @@ INSERT INTO `seo_seccioncategoria` VALUES ("2","[\"0\"]","1","Categoría 1","cat
 ("6","[\"5\"]","1","sub 1a","sub-1a","[{\"portada\":\"true\",\"id\":\"1\",\"url\":\"1.jpg\",\"parent\":\"6\",\"folder\":\"seccioncategoria\",\"subfolder\":\"foto\",\"tmp\":\"\"}]","","<p>asdf</p>","","aaaaa","2","1","1"),
 ("7","[\"2\"]","1","asfdafdsfdas","asfdafdsfdas","[{\"portada\":\"true\",\"id\":\"1\",\"url\":\"1.jpg\",\"parent\":\"7\",\"folder\":\"seccioncategoria\",\"subfolder\":\"foto\",\"tmp\":\"\"}]","","","","","5","1","1"),
 ("10","[\"0\"]","1","aaa","aaa","[{\"portada\":\"true\",\"id\":\"1\",\"url\":\"1.jpg\",\"parent\":\"10\",\"folder\":\"seccioncategoria\",\"subfolder\":\"foto\",\"tmp\":\"\"}]","","","","","3","1","1"),
-("11","[\"0\"]","1","asfdasdf","asfdasdf","[{\"portada\":\"true\",\"id\":\"1\",\"url\":\"1.jpg\",\"parent\":\"11\",\"folder\":\"seccioncategoria\",\"subfolder\":\"foto\",\"tmp\":\"\"}]","","<p>asdafds</p>","","","4","1","1")
+("11","[\"0\"]","1","asfdasdf","asfdasdf","[{\"portada\":\"true\",\"id\":\"1\",\"url\":\"1.jpg\",\"parent\":\"11\",\"folder\":\"seccioncategoria\",\"subfolder\":\"foto\",\"tmp\":\"\"}]","","<p>asdafds</p>","","","4","1","1");
 
 
 
-DROP TABLE IF EXISTS `seo_seo`
+DROP TABLE IF EXISTS `seo_seo`;
 
 CREATE TABLE `seo_seo` (
   `idseo` int(11) NOT NULL AUTO_INCREMENT,
@@ -6302,7 +6304,7 @@ CREATE TABLE `seo_seo` (
   `submenu` tinyint(1) NOT NULL DEFAULT '1',
   `estado` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`idseo`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
 INSERT INTO `seo_seo` VALUES ("1","Inicio","inicio","","[{\"portada\":\"true\",\"id\":\"1\",\"url\":\"1.jpg\",\"parent\":\"1\",\"folder\":\"seo\",\"subfolder\":\"foto\",\"tmp\":\"\"}]","[{\"portada\":\"true\",\"id\":\"1\",\"url\":\"1.jpg\",\"parent\":\"1\",\"folder\":\"seo\",\"subfolder\":\"banner\",\"tmp\":\"\"}]","home","none","0","","home, seccion home, sitio prueba","Home en sitio de prueba","1","1","0","1"),
 ("2","Servicios","servicios","","[{\"portada\":\"true\",\"id\":\"1\",\"url\":\"1.jpg\",\"parent\":\"2\",\"folder\":\"seo\",\"subfolder\":\"foto\",\"tmp\":\"\"}]","[{\"portada\":\"true\",\"id\":\"1\",\"url\":\"1.jpg\",\"parent\":\"2\",\"folder\":\"seo\",\"subfolder\":\"banner\",\"tmp\":\"\"}]","cmscategory","seccioncategoria","1","","asd","asdf","7","0","0","0"),
@@ -6314,11 +6316,11 @@ INSERT INTO `seo_seo` VALUES ("1","Inicio","inicio","","[{\"portada\":\"true\",\
 ("9","Mi cuenta","cuenta","","[{\"portada\":\"true\",\"id\":\"1\",\"url\":\"\",\"parent\":\"9\",\"folder\":\"seo\",\"subfolder\":\"\",\"tmp\":\"\"}]","","user","none","0","","cuenta, usuario, login, registro","Cuenta de usuario","5","0","0","1"),
 ("10","Carro","carro","","[{\"portada\":\"true\",\"id\":\"1\",\"url\":\"\",\"parent\":\"10\",\"folder\":\"seo\",\"subfolder\":\"\",\"tmp\":\"\"}]","","cart","none","0","","","","9","0","0","1"),
 ("11","Pedido","pedido","","[{\"portada\":\"true\",\"id\":\"1\",\"url\":\"\",\"parent\":\"11\",\"folder\":\"seo\",\"subfolder\":\"\",\"tmp\":\"\"}]","","order","none","1","","","","10","0","0","1"),
-("12","Medios de pago","medios-pago","","[{\"portada\":\"true\",\"id\":\"1\",\"url\":\"\",\"parent\":\"12\",\"folder\":\"seo\",\"subfolder\":\"\",\"tmp\":\"\"}]","","payment","none","0","","","","11","0","0","1")
+("12","Medios de pago","medios-pago","","[{\"portada\":\"true\",\"id\":\"1\",\"url\":\"\",\"parent\":\"12\",\"folder\":\"seo\",\"subfolder\":\"\",\"tmp\":\"\"}]","","payment","none","0","","","","11","0","0","1");
 
 
 
-DROP TABLE IF EXISTS `seo_sitemap`
+DROP TABLE IF EXISTS `seo_sitemap`;
 
 CREATE TABLE `seo_sitemap` (
   `idsitemap` int(11) NOT NULL AUTO_INCREMENT,
@@ -6328,7 +6330,7 @@ CREATE TABLE `seo_sitemap` (
   `valid` char(255) NOT NULL,
   `ready` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`idsitemap`)
-) ENGINE=InnoDB AUTO_INCREMENT=106 DEFAULT CHARSET=utf8
+) ENGINE=InnoDB AUTO_INCREMENT=106 DEFAULT CHARSET=utf8;
 
 INSERT INTO `seo_sitemap` VALUES ("1","0","http://desarrollo.example.com/","0","","1"),
 ("2","1","http://desarrollo.example.com/inicio","1","","1"),
@@ -6434,11 +6436,11 @@ INSERT INTO `seo_sitemap` VALUES ("1","0","http://desarrollo.example.com/","0","
 ("102","92","http://desarrollo.example.com/productos/category/3-sub-categoria-1?page=1javascript:;","6","invalid","1"),
 ("103","99","http://desarrollo.example.com/cuenta/registrotel:12345678","6","invalid","1"),
 ("104","99","http://desarrollo.example.com/cuenta/registro#","6","invalid","1"),
-("105","99","http://desarrollo.example.com/cuenta/registrojavascript:;","6","invalid","1")
+("105","99","http://desarrollo.example.com/cuenta/registrojavascript:;","6","invalid","1");
 
 
 
-DROP TABLE IF EXISTS `seo_table`
+DROP TABLE IF EXISTS `seo_table`;
 
 CREATE TABLE `seo_table` (
   `idtable` int(11) NOT NULL AUTO_INCREMENT,
@@ -6447,7 +6449,7 @@ CREATE TABLE `seo_table` (
   `fields` longtext NOT NULL,
   `truncate` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`idtable`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
 
 INSERT INTO `seo_table` VALUES ("1","table","idtable","[{\"titulo\": \"tablename\", \"tipo\": \"char(255)\"}, {\"titulo\": \"idname\", \"tipo\": \"char(255)\"}, {\"titulo\": \"fields\", \"tipo\": \"longtext\"}, {\"titulo\": \"truncate\", \"tipo\": \"tinyint(1)\"}]","0"),
 ("2","administrador","idadministrador","[{\"titulo\": \"tipo\", \"tipo\": \"int(11)\"}, {\"titulo\": \"email\", \"tipo\": \"char(255)\"}, {\"titulo\": \"pass\", \"tipo\": \"char(255)\"}, {\"titulo\": \"nombre\", \"tipo\": \"char(255)\"}, {\"titulo\": \"foto\", \"tipo\": \"longtext\"}, {\"titulo\": \"estado\", \"tipo\": \"tinyint(1)\"}, {\"titulo\": \"cookie\", \"tipo\": \"char(255)\"}]","0"),
@@ -6474,11 +6476,11 @@ INSERT INTO `seo_table` VALUES ("1","table","idtable","[{\"titulo\": \"tablename
 ("23","pedido","idpedido","[{\"titulo\": \"tipo\", \"tipo\": \"int(11)\"}, {\"titulo\": \"cookie_pedido\", \"tipo\": \"char(255)\"}, {\"titulo\": \"fecha_creacion\", \"tipo\": \"datetime\"}, {\"titulo\": \"fecha_pago\", \"tipo\": \"datetime\"}, {\"titulo\": \"idusuario\", \"tipo\": \"int(11)\"}, {\"titulo\": \"idpedidoestado\", \"tipo\": \"int(11)\"}, {\"titulo\": \"idmediopago\", \"tipo\": \"int(11)\"}, {\"titulo\": \"nombre\", \"tipo\": \"char(255)\"}, {\"titulo\": \"email\", \"tipo\": \"char(255)\"}, {\"titulo\": \"telefono\", \"tipo\": \"char(255)\"}, {\"titulo\": \"total_original\", \"tipo\": \"int(11)\"}, {\"titulo\": \"total\", \"tipo\": \"int(11)\"}, {\"titulo\": \"comentarios\", \"tipo\": \"longtext\"}, {\"titulo\": \"pedido_manual\", \"tipo\": \"tinyint(1)\"}]","1"),
 ("24","pedidoproducto","idpedidoproducto","[{\"titulo\": \"idpedido\", \"tipo\": \"int(11)\"}, {\"titulo\": \"idpedidodireccion\", \"tipo\": \"int(11)\"}, {\"titulo\": \"idproducto\", \"tipo\": \"int(11)\"}, {\"titulo\": \"titulo\", \"tipo\": \"char(255)\"}, {\"titulo\": \"foto\", \"tipo\": \"char(255)\"}, {\"titulo\": \"mensaje\", \"tipo\": \"longtext\"}, {\"titulo\": \"idproductoatributo\", \"tipo\": \"int(11)\"}, {\"titulo\": \"titulo_atributo\", \"tipo\": \"char(255)\"}, {\"titulo\": \"precio\", \"tipo\": \"int(11)\"}, {\"titulo\": \"cantidad\", \"tipo\": \"int(11)\"}, {\"titulo\": \"total\", \"tipo\": \"int(11)\"}]","1"),
 ("25","pedidodireccion","idpedidodireccion","[{\"titulo\": \"idpedido\", \"tipo\": \"int(11)\"}, {\"titulo\": \"idusuariodireccion\", \"tipo\": \"int(11)\"}, {\"titulo\": \"idpedidoestado\", \"tipo\": \"int(11)\"}, {\"titulo\": \"precio\", \"tipo\": \"int(11)\"}, {\"titulo\": \"cookie_direccion\", \"tipo\": \"char(255)\"}, {\"titulo\": \"nombre\", \"tipo\": \"char(255)\"}, {\"titulo\": \"telefono\", \"tipo\": \"char(255)\"}, {\"titulo\": \"direccion_completa\", \"tipo\": \"longtext\"}, {\"titulo\": \"referencias\", \"tipo\": \"longtext\"}, {\"titulo\": \"fecha_entrega\", \"tipo\": \"datetime\"}]","1"),
-("26","mediopago","idmediopago","[{\"titulo\": \"titulo\", \"tipo\": \"char(255)\"}, {\"titulo\": \"resumen\", \"tipo\": \"longtext\"}, {\"titulo\": \"descripcion\", \"tipo\": \"longtext\"}, {\"titulo\": \"orden\", \"tipo\": \"int(11)\"}, {\"titulo\": \"estado\", \"tipo\": \"tinyint(1)\"}]","1")
+("26","mediopago","idmediopago","[{\"titulo\": \"titulo\", \"tipo\": \"char(255)\"}, {\"titulo\": \"resumen\", \"tipo\": \"longtext\"}, {\"titulo\": \"descripcion\", \"tipo\": \"longtext\"}, {\"titulo\": \"orden\", \"tipo\": \"int(11)\"}, {\"titulo\": \"estado\", \"tipo\": \"tinyint(1)\"}]","1");
 
 
 
-DROP TABLE IF EXISTS `seo_texto`
+DROP TABLE IF EXISTS `seo_texto`;
 
 CREATE TABLE `seo_texto` (
   `idtexto` int(11) NOT NULL AUTO_INCREMENT,
@@ -6491,7 +6493,7 @@ CREATE TABLE `seo_texto` (
   `orden` int(11) NOT NULL,
   `estado` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`idtexto`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 
 INSERT INTO `seo_texto` VALUES ("1","1","Telefono","","12345678","","","1","1"),
 ("2","1","Email","","contacto@mysitio.cl","","","2","1"),
@@ -6504,11 +6506,11 @@ INSERT INTO `seo_texto` VALUES ("1","1","Telefono","","12345678","","","1","1"),
 ("10","3","Acerca de mi","<p>Amante de los gatos y la fotograf&iacute;a, disfruto admirando paisajes en mis viajes, tomando caf&eacute; en cualquier hora del d&iacute;a y jugando un buen videojuego.</p>","","","","3","1"),
 ("11","1","Nombre","","Paula","","","3","0"),
 ("12","2","Flickr","","fa-flickr","https://www.flickr.com/photos/natashastark/","","3","1"),
-("13","2","500px","","fa-500px","https://500px.com/natashastark","","4","1")
+("13","2","500px","","fa-500px","https://500px.com/natashastark","","4","1");
 
 
 
-DROP TABLE IF EXISTS `seo_usuario`
+DROP TABLE IF EXISTS `seo_usuario`;
 
 CREATE TABLE `seo_usuario` (
   `idusuario` int(11) NOT NULL AUTO_INCREMENT,
@@ -6521,13 +6523,13 @@ CREATE TABLE `seo_usuario` (
   `estado` tinyint(1) NOT NULL DEFAULT '1',
   `cookie` char(255) NOT NULL,
   PRIMARY KEY (`idusuario`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
-INSERT INTO `seo_usuario` VALUES ("1","1","Pablo Andrés Raín Contreras","957850924","pablo.rain.contreras@gmail.com","7c4a8d09ca3762af61e59520943dc26494f8941b570e001ea406fe85557edac7ebebc7d28f1eec03","","1","jyc-desayunos5c38d96b58cc8")
+INSERT INTO `seo_usuario` VALUES ("1","1","Pablo Andrés Raín Contreras","957850924","pablo.rain.contreras@gmail.com","7c4a8d09ca3762af61e59520943dc26494f8941b570e001ea406fe85557edac7ebebc7d28f1eec03","","1","jyc-desayunos5c38d96b58cc8");
 
 
 
-DROP TABLE IF EXISTS `seo_usuariodireccion`
+DROP TABLE IF EXISTS `seo_usuariodireccion`;
 
 CREATE TABLE `seo_usuariodireccion` (
   `idusuariodireccion` int(11) NOT NULL AUTO_INCREMENT,
@@ -6546,11 +6548,11 @@ CREATE TABLE `seo_usuariodireccion` (
   `empresa` char(255) NOT NULL,
   `referencias` longtext NOT NULL,
   PRIMARY KEY (`idusuariodireccion`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 INSERT INTO `seo_usuariodireccion` VALUES ("2","1","1","Direccion 1","Pablo","Llanquiray 1458","8","957850924","","","","","","",""),
-("3","1","1","Direccion 2","Pablo","23 7th Avenue Southwest","32","5073198518","","raymond building","2","","","","")
+("3","1","1","Direccion 2","Pablo","23 7th Avenue Southwest","32","5073198518","","raymond building","2","","","","");
 
 
 
-SET foreign_key_checks = 1
+SET foreign_key_checks = 1;

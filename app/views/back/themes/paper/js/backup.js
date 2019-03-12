@@ -244,9 +244,11 @@ function fin_restaurar(data) {
         }
         if (data.exito) {
             if (data.inicio) {
-                console.log(data)
                 if (data.mensaje) {
                     notificacion_footer(data.mensaje);
+                }
+                if(data.porcentaje){
+                    barra(data.porcentaje + tiempo_promedio_guardar);
                 }
                 var accion = 'restaurar';
                 post_basic(create_url(modulo, accion), {

@@ -163,6 +163,7 @@ class backup(base):
                     respuesta['errores'].append(nombre)
 
                     if i % 100 == 0:
+                        print(nombre[-30:],total,i)
                         log = {'mensaje': 'Restaurando ' + nombre[-30:] + ' (' + str( i + 1) + '/' + str(total) + ')', 'porcentaje': ((i + 1) / total) * 90}
                         file_write = open(self.archivo_log, 'w')
                         file_write.write(json.dumps(log))

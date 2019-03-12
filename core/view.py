@@ -192,7 +192,7 @@ class view:
         from .cache import cache
         from os import path, makedirs
 
-        dir_resources = theme+'resources/'
+        dir_resources = theme+'custom_resources/'
         if not path.exists(dir_resources):
             makedirs(dir_resources)
         file = 'resources-' + str(nuevo) + '-' + \
@@ -205,7 +205,7 @@ class view:
                 functions.set_cookie('loaded_'+type_resource, True, (31536000))
                 defer = True
 
-            locales = [{'url': base_url+'resources/' + file,
+            locales = [{'url': base_url+'custom_resources/' + file,
                         'media': 'all', 'defer': defer, 'is_content': False}]
         else:
             cache.delete_cache()
@@ -226,7 +226,7 @@ class view:
                 combine_files = view.compress(combine_files, type_resource)
                 file_write.write(combine_files)
                 file_write.close()
-                locales = [{'url': base_url+'resources/' + file,
+                locales = [{'url': base_url+'custom_resources/' + file,
                             'media': 'all', 'defer': True, 'is_content': False}]
             else:
                 for l in locales:

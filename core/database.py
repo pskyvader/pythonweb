@@ -271,6 +271,8 @@ class database():
         for s in sql_list:
             print(s)
             exito = self.consulta(s, False)
+            if not exito:
+                print('error',s)
 
         if exito:
             os.remove(backup)

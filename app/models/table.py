@@ -93,9 +93,8 @@ class table(base_model):
         table_validate = cls.getById(id)
         idname = table_validate['idname']
         tablename = table_validate['tablename']
-        fields = dict(table_validate['fields'])
-        fields = [
-            {'titulo': idname, 'tipo': 'int(11)', 'primary': True}]+fields
+        fields = list(table_validate['fields'])
+        fields = [ {'titulo': idname, 'tipo': 'int(11)', 'primary': True}]+fields
 
         check = {}
         for field in fields:

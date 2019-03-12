@@ -37,6 +37,7 @@ class database():
         return cursor
 
     def consulta(self, sql, return_query, delete_cache=True):
+        from .cache import cache
         rows = None
         try:
             cursor = self.prepare()
@@ -47,12 +48,14 @@ class database():
                 for r in rows:
                     for k, v in enumerate(list(r.values())):
                         r[k] = v
-            # else:
-                # if delete_cache:
-                # cache.delete_cache()
-        except:
+            else:
+                if delete_cache:
+                    cache.delete_cache()
+        except pymysql.InternalError as error:
             self._connection.rollback()
-            print('error DB query',sql)
+            code, message = error.args
+            print('error DB query:',code, message)
+            print('query',sql)
 
         if rows is None:
             if return_query:

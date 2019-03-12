@@ -473,7 +473,7 @@ class database():
 
     
     def set_prefix(self,prefix):
-        database._prefix = prefix
+        self._prefix = prefix
 
     
     def get_prefix(self):

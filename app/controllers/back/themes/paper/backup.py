@@ -152,9 +152,7 @@ class backup(base):
             if zipfile.is_zipfile(file):
                 zip = zipfile.ZipFile(file, 'r')
                 file_list = zip.infolist()
-                print(file_list)
                 total = len(file_list)
-                print(total)
                 for i in range(inicio, total):
                     nombre = file_list[i]
                     if nombre not in self.no_restore:

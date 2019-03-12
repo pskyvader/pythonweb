@@ -233,7 +233,7 @@ class configuracion_administrador(base):
             if len(row) == 1:
                 moduloconfiguracion['id'] = row[0][0]
                 moduloconfiguracion_model.update(moduloconfiguracion, False)
-                for h in hijo.values():
+                for h in hijo:
                     h['idmoduloconfiguracion'] = moduloconfiguracion['id']
                     row2 = modulo_model.getAll(
                         {'idmoduloconfiguracion': h['idmoduloconfiguracion'], 'tipo': h['tipo']}, {'limit': 1})

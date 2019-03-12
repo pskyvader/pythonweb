@@ -85,6 +85,8 @@ class backup(base):
             'tiempo_backup_rapido')
         if isinstance(tiempo_rapido, bool):
             tiempo_rapido = 0
+            if tiempo_lento==0:
+                mensaje=''
         else:
             tiempo_rapido = float(tiempo_rapido.replace(',', '.'))
             if tiempo_lento > 0:

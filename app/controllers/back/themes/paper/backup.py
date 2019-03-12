@@ -377,7 +377,7 @@ class backup(base):
 
                         if log and count % 1000 == 0:
                             log_file = {
-                                'mensaje': 'Recuperando archivo ' + fichero, 'porcentaje': 10
+                                'mensaje': 'Recuperando archivo ' + fichero_final[-30:], 'porcentaje': 10
                             }
                             file_write = open(self.archivo_log, 'w+')
                             file_write.write(json.dumps(log_file))

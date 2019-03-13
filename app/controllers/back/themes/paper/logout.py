@@ -27,8 +27,7 @@ class logout(base):
         ret = {'body': []}
         administrador_model.logout()
         url_return = functions.url_redirect(self.url)
-        if url_return != '':
-            ret['error'] = 301
-            ret['redirect'] = url_return
-            return ret
+        ret['error'] = 301
+        ret['redirect'] = url_return
+        return ret
     

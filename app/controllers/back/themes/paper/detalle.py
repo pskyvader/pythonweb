@@ -299,6 +299,7 @@ class detalle:
                 campos['array'][key]['icon'] = ('fa-check' if fila[campos['field']][key] == 'true' else 'fa-close') if campos['field'] in fila and key in fila[campos['field']] else 'fa-check'
                 
             campos['array']=campos['array'].items()
+            print(campos['array'])
             data = {
                 'title_field': campos['title_field'],
                 'array': campos['array'],

@@ -15,7 +15,7 @@ from app.models.moduloconfiguracion import moduloconfiguracion as moduloconfigur
 
 from core.app import app
 #from core.database import database
-#from core.functions import functions
+from core.functions import functions
 #from core.image import image
 
 
@@ -47,13 +47,13 @@ class modulo(base):
         parent_class=self.parent_class
 
         if not 'idmoduloconfiguracion' in app.get:
-            self.url = array('home')
-        } else {
-        self.parent = parent_class.getById(app.get['idmoduloconfiguracion'])
-            array_pop(self.breadcrumb)
-            self.breadcrumb[] = array('url' : functions.generar_url(array('moduloconfiguracion')), 'title' : self.parent['titulo'], 'active' : '')
-            self.metadata['title'] = self.parent['titulo'] . ' - ' . self.metadata['title']
-            self.breadcrumb[] = array('url' : functions.generar_url(self.url), 'title' : (self.metadata['title']), 'active' : 'active')
+            self.url = ['home']
+        else:
+            self.parent = parent_class.getById(app.get['idmoduloconfiguracion'])
+            self.breadcrumb.pop()
+            self.breadcrumb.append({'url' : functions.generar_url(['moduloconfiguracion']), 'title' : self.parent['titulo'], 'active' : ''})
+            self.metadata['title'] = self.parent['titulo'] + ' - ' + self.metadata['title']
+            self.breadcrumb.append({'url' : functions.generar_url(self.url), 'title' : (self.metadata['title']), 'active' : 'active'})
         }
     }
     public function index()
@@ -115,7 +115,7 @@ class modulo(base):
             id = (int) var[0]
             this->url[] = id
             this->metadata['title'] = 'Editar '.this->metadata['title'] 
-        } else {
+        else:
             id = 0
             this->metadata['title'] = 'Nuevo '.this->metadata['title'] 
         }

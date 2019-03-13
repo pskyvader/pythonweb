@@ -303,7 +303,7 @@ class detalle:
                 campos['array'][key]['active'] = str(fila[campos['field']][key_copy]) if campos['field'] in fila and key_copy in fila[campos['field']] else 'true'
                 campos['array'][key]['class'] = ('btn-success' if fila[campos['field']][key_copy] == 'true' else 'btn-danger') if campos['field'] in fila and key_copy in fila[campos['field']] else 'btn-success'
                 campos['array'][key]['icon'] = ('fa-check' if fila[campos['field']][key_copy] == 'true' else 'fa-close') if campos['field'] in fila and key_copy in fila[campos['field']] else 'fa-check'
-                array_campos.append(campos['array'][key].copy())
+                array_campos.append(campos['array'][key])
 
             data = {
                 'title_field': campos['title_field'],

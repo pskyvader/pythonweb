@@ -201,6 +201,7 @@ class detalle:
                     td = []
                     for v in campos['columnas'].values():
                         content = self.field(v, f, campos['field'], key)
+                        print(type(content),content)
                         td.append(
                             {'content': content, 'content_field': v['field']})
 

@@ -25,7 +25,6 @@ class modulo(base):
     url = ['modulo']
     metadata = {'title': 'Modulos', 'modulo': 'modulo'}
     breadcrumb = []
-    parent_class = None
     parent = None
     tipos_recortes = {
         'recortar': {'text': 'Recortar', 'value': 'recortar'},
@@ -41,14 +40,12 @@ class modulo(base):
 
     def __init__(self):
         super().__init__(modulo_model)
-        self.parent_class = moduloconfiguracion_model()
-        parent_class = self.parent_class
+        parent_class = moduloconfiguracion_model()
 
         if not 'idmoduloconfiguracion' in app.get:
             self.url = ['home']
         else:
-            self.parent = parent_class.getById(
-                app.get['idmoduloconfiguracion'])
+            self.parent = parent_class.getById( app.get['idmoduloconfiguracion'])
             self.breadcrumb.pop()
             self.breadcrumb.append({'url': functions.generar_url(
                 ['moduloconfiguracion']), 'title': self.parent['titulo'], 'active': ''})

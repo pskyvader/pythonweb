@@ -149,6 +149,7 @@ class administrador(base_model):
     def logout():
         prefix_site = app.prefix_site
         session = app.session
+        print(session)
         del session[administrador.idname + prefix_site]
         del session["email" + prefix_site]
         del session["nombre" + prefix_site]

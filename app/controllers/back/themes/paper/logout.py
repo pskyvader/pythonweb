@@ -14,7 +14,7 @@ from app.models.administrador import administrador as administrador_model
 
 #from core.app import app
 #from core.database import database
-#from core.functions import functions
+from core.functions import functions
 #from core.image import image
 
 
@@ -24,6 +24,7 @@ class logout(base):
     url = ['login','index']
 
     def init(self,var=[]):
+        ret = {'body': []}
         administrador_model.logout()
         url_return = functions.url_redirect(self.url)
         if url_return != '':

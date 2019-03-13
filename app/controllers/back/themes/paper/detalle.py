@@ -272,7 +272,7 @@ class detalle:
                 'field': campos['field'],
                 'parent': parent,
                 'col': campos['col'],
-                'option': list(campos['option'].values()),
+                'option': list(campos['option'].copy().values()),
                 'required': campos['required'],
             }
         elif campos['type'] == 'multiple_button':

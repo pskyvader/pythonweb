@@ -200,7 +200,7 @@ class detalle:
                 for key, f in enumerate(fila[campos['field']]):
                     td = []
                     for v in campos['columnas'].values():
-                        content = self.field(v.copy(), f, campos['field'], key)
+                        content = self.field(v.copy(), f.copy(), campos['field'], key)
                         td.append(
                             {'content': content, 'content_field': v['field']})
 

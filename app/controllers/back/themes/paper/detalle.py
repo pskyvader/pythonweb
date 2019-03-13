@@ -214,6 +214,7 @@ class detalle:
             new_line = []
             #new fields, without values
             for v in campos['columnas'].values():
+                print(v)
                 content = self.field(v, {}, campos['field'])
                 new_line.append(
                     {'content': content, 'content_field': v['field']})

@@ -195,7 +195,7 @@ class detalle:
             fields = []
             count = len(fila[campos['field']]) if campos['field'] in fila and isinstance( fila[campos['field']], list) else 0
             if count > 0:
-                for key, f in fila[campos['field']].items():
+                for key, f in enumerate(fila[campos['field']]):
                     td = []
                     for v in campos['columnas']:
                         content = self.field(v, f, campos['field'], key)

@@ -261,6 +261,8 @@ class modulo(base):
 
         row['detalle'] = det
 
+        print(row['detalle'])
+
         if id == 0:
             estados = {}
             for key, ta in tipos_administrador.items():

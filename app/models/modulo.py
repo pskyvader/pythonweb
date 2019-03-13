@@ -63,6 +63,7 @@ class modulo(base_model):
         connection = database.instance()
         row = connection.get(cls.table, cls.idname, where)
         if len(row) == 1:
+            print(row)
             if 'menu' in row[0] and row[0]['menu']!='':
                 row[0]['menu'] = json.loads(row[0]['menu'])
             else:

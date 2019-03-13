@@ -298,9 +298,10 @@ class detalle:
                 campos['array'][key]['class'] = ('btn-success' if fila[campos['field']][key] == 'true' else 'btn-danger') if campos['field'] in fila and key in fila[campos['field']] else 'btn-success'
                 campos['array'][key]['icon'] = ('fa-check' if fila[campos['field']][key] == 'true' else 'fa-close') if campos['field'] in fila and key in fila[campos['field']] else 'fa-check'
                 
+            campos['array']=campos['array'].items()
             data = {
                 'title_field': campos['title_field'],
-                'array': campos['array'].items(),
+                'array': campos['array'],
                 'field': campos['field'],
                 'idparent': idparent,
                 'parent': parent,

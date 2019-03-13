@@ -233,8 +233,8 @@ class modulo(base):
             row['mostrar']=mostrar_copy
 
         mostrar = []
-        if isinstance(parent['mostrar'], dict):
-            for p in parent['mostrar'].values():
+        if isinstance(parent['mostrar'], list):
+            for p in parent['mostrar']:
                 t = {}
             if 'mostrar' in row and p['field'] in row['mostrar']:
                 t = row['mostrar'][p['field']]
@@ -251,8 +251,8 @@ class modulo(base):
             row['detalle']=detalle_copy
 
         det = []
-        if isinstance(parent['detalle'], dict):
-            for p in parent['detalle'].values():
+        if isinstance(parent['detalle'], list):
+            for p in parent['detalle']:
                 t = {}
             if 'detalle' in row and p['field'] in row['detalle']:
                 t = row['detalle'][p['field']]
@@ -261,7 +261,6 @@ class modulo(base):
 
         row['detalle'] = det
 
-        print(type(parent['detalle']),parent['detalle'])
 
         if id == 0:
             estados = {}

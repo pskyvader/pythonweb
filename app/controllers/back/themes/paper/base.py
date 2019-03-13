@@ -40,21 +40,16 @@ class base:
             params = sig.parameters
             if len(params) >= 1:
                 if 'self' in params:
-                    if len(params) == 1:
-                        ret = method(self)
+                    if 'var' in params:
+                        ret = method(self,var=var)
                     else:
-                        if 'var' in params:
-                            ret = method(self,var)
-                        else:
-                            ret = method(self)
+                        ret = method(self)
                 else:
                     if 'var' in params:
-                        ret = method(var)
+                        ret = method(var=var)
                     else:
-                        print(fun)
                         ret = method()
             else:
-                print(fun)
                 ret = method()
         else:
             ret = {

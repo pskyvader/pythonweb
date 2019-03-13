@@ -2,10 +2,10 @@
     <div class="row">
         {% for a in array %}
         <div class="col-xs-height">
-            <button style="margin:10px 10px;" id="btn{{a.field}}" data-field="{{a.field}}" data-active="{{a.active}}" data-id="0" class="btn btn-raised active tooltips btn-md {{a.class}}" data-original-title="{{a.title_field}} {{a.text}}">
+            <button style="margin:10px 10px;" id="btn{{field}}" data-field="{{field}}" data-active="{{a.active}}" data-id="0" class="btn btn-raised active tooltips btn-md {{a.class}}" data-original-title="{{title_field}} {{a.text}}">
                 <i class="fa {{a.icon}}"></i>
             </button>
-            <input id="{{a.field}}" name="multiple[{{a.parent}}][{{a.field}}][{{a.idparent}}][{{a.id}}]" type="hidden" value="{{a.active}}" data-required="{{a.required}}">
+            <input id="{{field}}" name="multiple[{{a.parent}}][{{field}}][{{a.idparent}}][{{a.id}}]" type="hidden" value="{{a.active}}" data-required="{{a.required}}">
         </div>
         {% endfor %}
     </div>

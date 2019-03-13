@@ -66,17 +66,25 @@ class base_model:
         for r in row:
             deleted = False
             if 'idpadre' in r:
-                r['idpadre'] = json.loads(r['idpadre'])
+                if r['idpadre']!='':
+                    r['idpadre'] = json.loads(r['idpadre'])
+                else:
+                    r['idpadre']=[]
                 if idpadre != None and idpadre not in r['idpadre']:
                     deleted = True
                     del r
 
             if return_total == None:
                 if not deleted and 'foto' in r:
-                    print('foto',r['foto'])
-                    r['foto'] = json.loads(r['foto'])
+                    if r['foto']!='':
+                        r['foto'] = json.loads(r['foto'])
+                    else:
+                        r['foto']=[]
                 if not deleted and 'archivo' in r:
-                    r['archivo'] = json.loads(r['archivo'])
+                    if r['archivo']!='':
+                        r['archivo'] = json.loads(r['archivo'])
+                    else:
+                        r['archivo']=[]
 
         if limit != None:
             if limit2 == 0:

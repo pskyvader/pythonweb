@@ -37,22 +37,22 @@ class modulo(base):
         'excel': {'titulo': 'Exportar a excel', 'field': 'excel'},
         'regenerar': {'titulo': 'Regenerar imagenes', 'field': 'regenerar'}
     }
-
-    def __init__(self):
+    @classmethod
+    def __init__(cls):
         super().__init__(modulo_model)
         parent_class = moduloconfiguracion_model()
 
         if not 'idmoduloconfiguracion' in app.get:
-            self.url = ['home']
+            cls.url = ['home']
         else:
-            self.parent = parent_class.getById( app.get['idmoduloconfiguracion'])
-            self.breadcrumb.pop()
-            self.breadcrumb.append({'url': functions.generar_url(
-                ['moduloconfiguracion']), 'title': self.parent['titulo'], 'active': ''})
-            self.metadata['title'] = self.parent['titulo'] + \
-                ' - ' + self.metadata['title']
-            self.breadcrumb.append({'url': functions.generar_url(
-                self.url), 'title': (self.metadata['title']), 'active': 'active'})
+            cls.parent = parent_class.getById( app.get['idmoduloconfiguracion'])
+            cls.breadcrumb.pop()
+            cls.breadcrumb.append({'url': functions.generar_url(
+                ['moduloconfiguracion']), 'title': cls.parent['titulo'], 'active': ''})
+            cls.metadata['title'] = cls.parent['titulo'] + \
+                ' - ' + cls.metadata['title']
+            cls.breadcrumb.append({'url': functions.generar_url(
+                cls.url), 'title': (cls.metadata['title']), 'active': 'active'})
 
     @classmethod
     def index(cls):

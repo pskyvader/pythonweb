@@ -343,7 +343,7 @@ class detalle:
                     field['active'] = campo['portada']
                     field['class'] = 'btn-success' if 'true' == campo['portada'] else 'btn-danger'
                     field['icon'] = 'fa-check' if 'true' == campo['portada'] else 'fa-close'
-                    fields.append(field)
+                    fields.append(field.copy())
             else:
                 count = 0
 
@@ -382,7 +382,7 @@ class detalle:
                     field['field'] = campos['field']
                     field['file'] = file.generar_url(campo, '')
 
-                    fields.append(field)
+                    fields.append(field.copy())
 
             data = {
                 'title_field': campos['title_field'],
@@ -436,7 +436,7 @@ class detalle:
         elif campos['type'] == 'recursive_checkbox' or campos['type'] == 'recursive_radio':
             if 0 == level:
                 if campos['field'] in fila:
-                    count = count(fila[campos['field']])
+                    count = len(fila[campos['field']])
                 else:
                     if 'recursive_radio' == campos['type'] or campos['field'] in app.get:
                         count = 1
@@ -447,12 +447,11 @@ class detalle:
                     'title_field': campos['title_field'],
                     'field': campos['field'],
                     'required': campos['required'],
-                    'children': '',
+                    'children': [],
                     'count': count if count > 0 else '',
                 }
                 for children in campos['parent']:
-                    data['children'] += self.field(campos,
-                                                   fila, '', children[0], 1)
+                    data['children'] += self.field(campos, fila, '', children[0], 1)
 
             else:
                 parent = campos['parent']
@@ -475,11 +474,10 @@ class detalle:
                     'children': '',
                 }
                 if idparent in parent:
-                    campos['parent'] = parent[idparent]['children']
+                    campos['parent'] = parent[idparent]['children'].copy()
 
                     for children in campos['parent']:
-                        data['children'] += self.field(campos,
-                                                       fila, '', children[0], level + 1)
+                        data['children'] += self.field(campos, fila, '', children[0], level + 1)
 
         elif campos['type'] == 'select':
             data = {
@@ -490,16 +488,15 @@ class detalle:
                 'option': [],
             }
             for children in campos['parent']:
-                selected = 'selected="selected"' if 0 == children[0] else ''
+                selected = (0 == children[0])
                 if campos['field'] not in fila:
                     if campos['field'] in app.get:
-                        checked = 'selected="selected"' if children[0] == app.get[campos['field']] else ''
+                        checked = (children[0] == app.get[campos['field']])
 
                 else:
-                    selected = 'selected="selected"' if children[0] == fila[campos['field']] else ''
+                    selected = (children[0] == fila[campos['field']])
 
-                data['option'].append(
-                    {'value': children[0], 'selected': selected, 'text': children['titulo']})
+                data['option'].append( {'value': children[0], 'selected': selected, 'text': children['titulo']})
 
         elif campos['type'] == 'textarea':
             data = {

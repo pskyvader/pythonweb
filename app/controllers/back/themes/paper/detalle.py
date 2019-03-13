@@ -522,7 +522,7 @@ class detalle:
                 'help': campos['help'] if 'help' in campos else '',
             }
 
-        content=('detail/'+campos['type'],data.copy())
+        content=('detail/'+campos['type'],data)
         return content
 
     @staticmethod

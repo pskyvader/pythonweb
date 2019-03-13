@@ -15,6 +15,7 @@ class login(base):
     @classmethod
     def index(cls, var):
         from time import time
+        url=var
         ret = {'body': []}
         url_final=cls.url.copy()
         url_final = url_final+url

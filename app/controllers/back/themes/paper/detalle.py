@@ -28,7 +28,7 @@ class detalle:
         row = []
         for k,v in campos.items():
             content = self.field(v, row_data)
-            if k=='estado':
+            if k=='recortes':
                 print(content)
             row.append( {'content': content, 'content_field': v['field'], 'class': 'hidden' if 'hidden' == v['type'] else ''})
 

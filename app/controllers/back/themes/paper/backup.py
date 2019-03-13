@@ -348,14 +348,14 @@ class backup(base):
             respuesta['exito'] = False
 
         if respuesta['exito']:
-            respuesta = self.get_files(self, self.base_dir)
+            respuesta = self.get_files( self.base_dir)
 
         if respuesta['exito']:
             total = len(respuesta['lista'])
             if total > 0:
                 respuesta['exito'] = True
                 while len(respuesta['lista']) > 0 and respuesta['exito']:
-                    respuesta = self.zipData( self.base_dir, respuesta['archivo_backup'], respuesta['lista'], total, logging)
+                    respuesta = self.zipData(  self.base_dir, respuesta['archivo_backup'], respuesta['lista'], total, logging)
 
         if respuesta['exito']:
             if logging:
@@ -364,7 +364,7 @@ class backup(base):
                 file_write = open(self.archivo_log, 'w')
                 file_write.write(json.dumps(log_file))
                 file_write.close()
-            respuesta = self.bdd(self, [], False, respuesta['archivo_backup'])
+            respuesta = self.bdd(False, respuesta['archivo_backup'])
 
         if respuesta['exito']:
             if logging:

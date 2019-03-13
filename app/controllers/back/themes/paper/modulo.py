@@ -123,18 +123,19 @@ class modulo(base):
         url_list = cls.url.copy()
         url_save = cls.url.copy()
         url_final = cls.url.copy()
+        metadata=cls.metadata.copy()
         url_save.append('guardar')
         url_final.append('detail')
 
         if len(var) > 0:
             id = int(var[0])
             url_final.append(id)
-            cls.metadata['title'] = 'Editar ' + cls.metadata['title']
+            metadata['title'] = 'Editar ' + metadata['title']
         else:
             id = 0
-            cls.metadata['title'] = 'Nuevo ' + cls.metadata['title']
+            metadata['title'] = 'Nuevo ' + metadata['title']
 
-        cls.breadcrumb.append({'url': functions.generar_url( url_final), 'title': cls.metadata['title'], 'active': 'active'})
+        cls.breadcrumb.append({'url': functions.generar_url( url_final), 'title': metadata['title'], 'active': 'active'})
 
         if not administrador_model.verificar_sesion():
             url_final = ['login', 'index'] + url_final
@@ -145,7 +146,7 @@ class modulo(base):
             ret['redirect'] = url_return
             return ret
 
-        cls.metadata['title'] = parent['titulo'] +  ' - ' + cls.metadata['title']
+        metadata['title'] = parent['titulo'] +  ' - ' + metadata['title']
         # cabeceras y campos que se muestran en el detalle:
         # titulo,campo de la tabla a usar, tipo (ver archivo detalle.py funcion "field")
 
@@ -202,7 +203,7 @@ class modulo(base):
         }
 
         # controlador de detalle
-        detalle = detalle_class(cls.metadata)
+        detalle = detalle_class(metadata)
 
         row = class_name.getById(id) if id != 0 else []
 

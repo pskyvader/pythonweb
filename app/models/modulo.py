@@ -67,12 +67,10 @@ class modulo(base_model):
                 row[0]['menu'] = json.loads(row[0]['menu'])
             else:
                 row[0]['menu'] = []
-            print('antes',row[0]['mostrar'])
             if 'mostrar' in row[0] and row[0]['mostrar'] != '':
                 row[0]['mostrar'] = json.loads(row[0]['mostrar'])
             else:
                 row[0]['mostrar'] = []
-            print('despues',row[0]['mostrar'])
 
             if 'detalle' in row[0] and row[0]['detalle'] != '':
                 row[0]['detalle'] = json.loads(row[0]['detalle'])

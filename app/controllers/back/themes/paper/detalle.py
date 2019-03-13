@@ -154,11 +154,10 @@ class detalle:
             direcciones = []
             if campos['field'] in fila:
                 count = count(fila[campos['field']])
-                for campo in fila[campos['field']]:
-                    field = campo
+                for field in fila[campos['field']]:
                     field['title_field'] = campos['title_field']
                     field['field'] = campos['field']
-                    direcciones.append(field)
+                    direcciones.append(field.copy())
 
             else:
                 count = 0

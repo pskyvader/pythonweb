@@ -1,4 +1,4 @@
 class ping():
-    def init(self,var):
+    def init(self,var=[]):
         ret={'body':'"true"'}
         return ret

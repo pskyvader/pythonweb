@@ -22,8 +22,12 @@ from app.models.administrador import administrador as administrador_model
 
 class logout(base):
     url = ['login','index']
-    
+
     def init(self,var=[]):
         administrador_model.logout()
-        functions.url_redirect($this->url);
+        url_return = functions.url_redirect(self.url)
+        if url_return != '':
+            ret['error'] = 301
+            ret['redirect'] = url_return
+            return ret
     

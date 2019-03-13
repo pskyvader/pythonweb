@@ -134,8 +134,7 @@ class modulo(base):
             id = 0
             cls.metadata['title'] = 'Nuevo ' + cls.metadata['title']
 
-        cls.breadcrumb.append({'url': functions.generar_url(
-            url_final), 'title': cls.metadata['title'], 'active': 'active'})
+        cls.breadcrumb.append({'url': functions.generar_url( url_final), 'title': cls.metadata['title'], 'active': 'active'})
 
         if not administrador_model.verificar_sesion():
             url_final = ['login', 'index'] + url_final

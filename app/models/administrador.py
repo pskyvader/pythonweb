@@ -150,7 +150,6 @@ class administrador(base_model):
         prefix_site = app.prefix_site
         session = app.session
         if administrador.idname + prefix_site in session:
-            print(session)
             del session[administrador.idname + prefix_site]
             del session["email" + prefix_site]
             del session["nombre" + prefix_site]

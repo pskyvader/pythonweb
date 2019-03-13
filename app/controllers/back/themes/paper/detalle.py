@@ -204,8 +204,6 @@ class detalle:
 
                     linea = {'columna': td}
                     fields.append(linea)
-                
-                print(fields)
 
                 new_field = False
             else:

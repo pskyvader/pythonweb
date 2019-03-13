@@ -195,15 +195,6 @@ class detalle:
 
         elif campos['type'] == 'multiple':
             fields = []
-            
-            new_line = []
-            #new fields, without values
-            for v in campos['columnas'].values():
-                content = self.field(v, {}, campos['field'])
-                new_line.append(
-                    {'content': content, 'content_field': v['field']})
-
-
             count = len(fila[campos['field']]) if campos['field'] in fila and isinstance( fila[campos['field']], list) else 0
             if count > 0:
                 for key, f in enumerate(fila[campos['field']]):
@@ -219,6 +210,13 @@ class detalle:
                 new_field = False
             else:
                 new_field = True
+
+            new_line = []
+            #new fields, without values
+            for v in campos['columnas'].values():
+                content = self.field(v, {}, campos['field'])
+                new_line.append(
+                    {'content': content, 'content_field': v['field']})
 
             data = {
                 'fields': fields,

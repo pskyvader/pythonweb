@@ -149,12 +149,14 @@ class administrador(base_model):
     def logout():
         prefix_site = app.prefix_site
         session = app.session
-        print(session)
-        del session[administrador.idname + prefix_site]
-        del session["email" + prefix_site]
-        del session["nombre" + prefix_site]
-        del session["estado" + prefix_site]
-        del session["tipo" + prefix_site]
+        if administrador.idname + prefix_site in session:
+            print(session)
+            del session[administrador.idname + prefix_site]
+            del session["email" + prefix_site]
+            del session["nombre" + prefix_site]
+            del session["estado" + prefix_site]
+            del session["tipo" + prefix_site]
+            
         functions.set_cookie('cookieadmin' + prefix_site, 'aaa', (31536000))
 
     @staticmethod

@@ -213,8 +213,11 @@ class detalle:
 
             new_line = []
             #new fields, without values
+            for v in campos['columnas'].values():
+                content = self.field(v, {}, campos['field'])
+                new_line.append(
+                    {'content': content, 'content_field': v['field']})
 
-            print(fields)
             data = {
                 'fields': fields,
                 'count': count,
@@ -519,7 +522,7 @@ class detalle:
                 'help': campos['help'] if 'help' in campos else '',
             }
 
-        content=('detail/'+campos['type'],data)
+        content=('detail/'+campos['type'],data.copy())
         return content
 
     @staticmethod

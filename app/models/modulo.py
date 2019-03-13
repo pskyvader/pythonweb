@@ -30,8 +30,8 @@ class modulo(base_model):
 
         row = connection.get(cls.table, cls.idname, where, condiciones, select)
         for r in row:
-            print(r)
             if 'menu' in r and r['menu']!='':
+                print(r['menu'])
                 r['menu'] = json.loads(r['menu'])
             if 'mostrar' in r and r['mostrar']!='':
                 r['mostrar'] = json.loads(r['mostrar'])

@@ -49,7 +49,7 @@ class modulo(base):
             cls.parent = parent_class.getById( app.get['idmoduloconfiguracion'])
             cls.breadcrumb.pop()
             cls.breadcrumb.append({'url': functions.generar_url( ['moduloconfiguracion']), 'title': cls.parent['titulo'], 'active': ''})
-            cls.metadata['title'] = cls.parent['titulo'] + ' - ' + cls.metadata['title']
+            cls.metadata['title'] = cls.parent['titulo'] + ' - Modulos'
             cls.breadcrumb.append({'url': functions.generar_url( cls.url), 'title': (cls.metadata['title']), 'active': 'active'})
 
     @classmethod

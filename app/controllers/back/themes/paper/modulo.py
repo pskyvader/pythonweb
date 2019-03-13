@@ -41,6 +41,7 @@ class modulo(base):
     def __init__(cls):
         super().__init__(modulo_model)
         parent_class = moduloconfiguracion_model()
+        print(app.get)
 
         if not 'idmoduloconfiguracion' in app.get:
             cls.url = ['home']

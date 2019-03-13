@@ -48,12 +48,9 @@ class modulo(base):
             cls.url = ['modulo']
             cls.parent = parent_class.getById( app.get['idmoduloconfiguracion'])
             cls.breadcrumb.pop()
-            cls.breadcrumb.append({'url': functions.generar_url(
-                ['moduloconfiguracion']), 'title': cls.parent['titulo'], 'active': ''})
-            cls.metadata['title'] = cls.parent['titulo'] + \
-                ' - ' + cls.metadata['title']
-            cls.breadcrumb.append({'url': functions.generar_url(
-                cls.url), 'title': (cls.metadata['title']), 'active': 'active'})
+            cls.breadcrumb.append({'url': functions.generar_url( ['moduloconfiguracion']), 'title': cls.parent['titulo'], 'active': ''})
+            #cls.metadata['title'] = cls.parent['titulo'] + ' - ' + cls.metadata['title']
+            cls.breadcrumb.append({'url': functions.generar_url( cls.url), 'title': (cls.metadata['title']), 'active': 'active'})
 
     @classmethod
     def index(cls):

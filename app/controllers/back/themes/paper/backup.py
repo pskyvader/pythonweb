@@ -453,8 +453,7 @@ class backup(base):
             ('Content-Type', 'application/json; charset=utf-8')], 'body': ''}
         # lista=json.loads(app.post['lista'])
         lista = app.post['lista']
-        respuesta = self.zipData(
-            self, self.base_dir, app.post['archivo_backup'], lista, app.post['total'])
+        respuesta = self.zipData( self.base_dir, app.post['archivo_backup'], lista, app.post['total'])
         ret['body'] = json.dumps(respuesta)
         return ret
 

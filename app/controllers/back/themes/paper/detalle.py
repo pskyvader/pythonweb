@@ -27,7 +27,7 @@ class detalle:
         row_data = data['row']
         row = []
         for k,v in campos.items():
-            content = self.field(v, row_data)
+            content = self.field(v.copy(), row_data.copy())
             row.append( {'content': content, 'content_field': v['field'], 'class': 'hidden' if 'hidden' == v['type'] else ''})
 
 
@@ -447,7 +447,7 @@ class detalle:
                     'count': count if count > 0 else '',
                 }
                 for children in campos['parent']:
-                    data['children'] += self.field(campos.copy(),
+                    data['children'] += self.field(campos,
                                                    fila, '', children[0], 1)
 
             else:
@@ -474,7 +474,7 @@ class detalle:
                     campos['parent'] = parent[idparent]['children']
 
                     for children in campos['parent']:
-                        data['children'] += self.field(campos.copy(),
+                        data['children'] += self.field(campos,
                                                        fila, '', children[0], level + 1)
 
         elif campos['type'] == 'select':

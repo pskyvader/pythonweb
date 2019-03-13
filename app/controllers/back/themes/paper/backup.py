@@ -327,7 +327,7 @@ class backup(base):
         ret['body'] = json.dumps(respuesta)
         return ret
 
-    def generar_backup(self, var=[], logging=True):
+    def generar_backup(self, logging=True):
         '''genera respaldo del sitio en zip, en formato "Respaldo rapido" (usa mas recursos)'''
         ret = {'headers': [
             ('Content-Type', 'application/json; charset=utf-8')], 'body': ''}
@@ -423,7 +423,7 @@ class backup(base):
 
         return respuesta
 
-    def bdd(self, var=[], log=True, archivo_backup=''):
+    def bdd(self, log=True, archivo_backup=''):
         '''crea respaldo de la base de datos y la agrega al archivo zip'''
         import zipfile
         ret = {'headers': [

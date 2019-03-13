@@ -163,7 +163,6 @@ class administrador(base_model):
     def verificar_sesion():
         prefix_site = app.prefix_site
         session = app.session
-        print(session)
         if (administrador.idname+prefix_site) in session and session[administrador.idname + prefix_site] != '':
             admin = administrador.getById(
                 session[administrador.idname + prefix_site])

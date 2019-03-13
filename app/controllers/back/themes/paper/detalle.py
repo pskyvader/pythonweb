@@ -118,7 +118,7 @@ class detalle:
             data['help'] += " (Tamaño máximo de archivo " + \
                 self.max_upload + ")"
             if 0 == editor_count:
-                theme = app.get_url() + view.get_theme() + 'assets/ckeditor/'
+                theme = app.get_url() +'static/' + 'assets/ckeditor/'
                 t = '?t=I8BG'
                 data['preload'] = [
                     {'url': 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css', 'type': 'style'},

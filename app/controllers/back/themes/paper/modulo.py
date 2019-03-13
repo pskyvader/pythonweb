@@ -191,7 +191,7 @@ class modulo(base):
             'menu': {'title_field': 'Menu', 'field': 'menu', 'type': 'multiple', 'required': True, 'columnas': columnas_menu},
             'mostrar': {'title_field': 'Mostrar', 'field': 'mostrar', 'type': 'multiple', 'required': True, 'columnas': columnas_mostrar},
             'detalle': {'title_field': 'Detalle', 'field': 'detalle', 'type': 'multiple', 'required': True, 'columnas': columnas_detalle},
-            'recortes': {'title_field': 'Imagenes', 'field': 'recortes', 'type': 'multiple', 'required': True, 'columnas': columnas_recortes},
+            'recortes': {'title_field': 'Imagenes', 'field': 'recortes', 'type': 'multiple', 'required': True, 'columnas': columnas_recortes.copy()},
             'tipo': {'title_field': 'Tipo', 'field': 'tipo', 'type': 'number', 'required': True},
             'orden': {'title_field': 'Orden', 'field': 'orden', 'type': 'number', 'required': True},
             'estado': {'title_field': 'Estado', 'field': 'estado', 'type': 'multiple', 'required': True, 'columnas': columnas_estado},

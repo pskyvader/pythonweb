@@ -24,29 +24,29 @@ class base:
     contiene_tipos = False
     contiene_hijos = False
 
-    @classmethod
-    def init(cls, var:list):
+    
+    def init(self, var:list):
         from inspect import signature
         import inspect
 
         if len(var) == 0:
             var = ['index']
 
-        if hasattr(cls, var[0]) and callable(getattr(cls, var[0])):
+        if hasattr(self, var[0]) and callable(getattr(self, var[0])):
             fun = var[0]
             del var[0]
-            method = getattr(cls, fun)
+            method = getattr(self, fun)
             sig = signature(method)
             params = sig.parameters
             if len(params) >= 1:
                 if 'self' in params:
                     if len(params) == 1:
-                        ret = method(cls)
+                        ret = method(self)
                     else:
                         if 'var' in params:
-                            ret = method(cls,var)
+                            ret = method(self,var)
                         else:
-                            ret = method(cls)
+                            ret = method(self)
                 else:
                     if 'var' in params:
                         ret = method(var)

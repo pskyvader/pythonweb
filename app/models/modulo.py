@@ -32,10 +32,16 @@ class modulo(base_model):
         for r in row:
             if 'menu' in r and r['menu']!='':
                 r['menu'] = json.loads(r['menu'])
+            else:
+                r['menu']=[]
             if 'mostrar' in r and r['mostrar']!='':
                 r['mostrar'] = json.loads(r['mostrar'])
+            else:
+                r['mostrar']=[]
             if 'detalle' in r and r['detalle']!='':
                 r['detalle'] = json.loads(r['detalle'])
+            else:
+                r['detalle']=[]
             if 'recortes' in r and r['recortes']!='':
                 r['recortes'] = json.loads(r['recortes'])
             else:
@@ -43,6 +49,8 @@ class modulo(base_model):
             
             if 'estado' in r and r['estado']!='':
                 r['estado'] = json.loads(r['estado'])
+            else:
+                r['estado']=[]
 
         if return_total != None:
             return len(row)
@@ -55,14 +63,28 @@ class modulo(base_model):
         connection = database.instance()
         row = connection.get(cls.table, cls.idname, where)
         if len(row) == 1:
-            row[0]['menu'] = json.loads(row[0]['menu'])
-            row[0]['mostrar'] = json.loads(row[0]['mostrar'])
-            row[0]['detalle'] = json.loads(row[0]['detalle'])
-            if row[0]['recortes']!='':
-                row[0]['recortes'] = json.loads(row[0]['recortes'])
+            if 'menu' in row[0] and row[0]['menu']!='':
+                row[0]['menu'] = json.loads(row[0]['menu'])
             else:
-                row[0]['recortes']=[]
-            row[0]['estado'] = json.loads(row[0]['estado'])
+                row[0]['menu'] = []
+            if 'mostrar' in row[0] and row[0]['mostrar']!='':
+                row[0]['mostrar'] = json.loads(row[0]['mostrar'])
+            else:
+                row[0]['mostrar'] = []
+            if 'detalle' in row[0] and row[0]['detalle']!='':
+                row[0]['detalle'] = json.loads(row[0]['detalle'])
+            else:
+                row[0]['detalle'] = []
+
+            if 'recortes' in row[0] and row[0]['recortes']!='':
+                    row[0]['recortes'] = json.loads(row[0]['recortes'])
+            else:
+                row[0]['recortes'] = []
+            if 'estado' in row[0] and row[0]['estado']!='':
+                row[0]['estado'] = json.loads(row[0]['estado'])
+            else:
+                row[0]['estado'] = []
+
         return row[0] if len(row) == 1 else row
 
     @classmethod

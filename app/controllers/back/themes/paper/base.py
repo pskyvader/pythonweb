@@ -70,7 +70,7 @@ class base:
             modulo = modulo_model.getAll( {'idmoduloconfiguracion': moduloconfiguracion[0], 'tipo': tipo})
             
             cls.contiene_hijos = modulo[0]['hijos'] if 'hijos' in modulo[0] else False
-            cls.metadata['title'] = modulo[0]['titulo']
+            #cls.metadata['title'] = modulo[0]['titulo']
 
             if cls.padre != '':
                 parent = 'app.models.' + cls.padre

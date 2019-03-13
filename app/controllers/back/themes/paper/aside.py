@@ -113,11 +113,9 @@ class aside:
 
                 mc=moduloconfiguracion_model.getAll()
                 for m in mc:
-                    url = functions.generar_url(
-                        ['modulo'], {'idmoduloconfiguracion': m[0]})
+                    url = functions.generar_url( ['modulo'], {'idmoduloconfiguracion': m[0]})
                     active = (url == current_url)
-                    me['submenu'].append(
-                        {'url': url, 'sub_title': m['titulo'], 'active': active})
+                    me['submenu'].append( {'url': url, 'sub_title': m['titulo'], 'active': active})
 
                 menu.append(me)
 

@@ -63,7 +63,6 @@ class modulo(base_model):
         connection = database.instance()
         row = connection.get(cls.table, cls.idname, where)
         if len(row) == 1:
-            print(type(row[0]['detalle']),row[0]['detalle'])
             if 'menu' in row[0] and row[0]['menu']!='':
                 row[0]['menu'] = json.loads(row[0]['menu'])
             else:
@@ -72,10 +71,14 @@ class modulo(base_model):
                 row[0]['mostrar'] = json.loads(row[0]['mostrar'])
             else:
                 row[0]['mostrar'] = []
+                
+            print(type(row[0]['detalle']),row[0]['detalle'])
             if 'detalle' in row[0] and row[0]['detalle']!='':
                 row[0]['detalle'] = json.loads(row[0]['detalle'])
             else:
                 row[0]['detalle'] = []
+                
+            print(type(row[0]['detalle']),row[0]['detalle'])
 
             if 'recortes' in row[0] and row[0]['recortes']!='':
                     row[0]['recortes'] = json.loads(row[0]['recortes'])

@@ -204,6 +204,8 @@ class detalle:
 
                     linea = {'columna': td}
                     fields.append(linea)
+                
+                print(fields)
 
                 new_field = False
             else:
@@ -262,8 +264,8 @@ class detalle:
                 'value': fila[campos['field']] if campos['field'] in fila else '',
             }
         elif campos['type'] == 'multiple_select':
-            for key,option in campos['option'].items():
-                campos['option'][key]['selected'] = (campos['field'] in fila and fila[campos['field']] == option['value'])
+            for option in campos['option'].values():
+                option['selected'] = (campos['field'] in fila and fila[campos['field']] == option['value'])
 
             data = {
                 'title_field': campos['title_field'],

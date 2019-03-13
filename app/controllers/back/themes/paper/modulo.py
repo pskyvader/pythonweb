@@ -96,9 +96,9 @@ class modulo(base):
         url_detalle.append('detail')
         # obtener unicamente elementos de la pagina actual
         respuesta = lista.get_row(class_name, where, condiciones, url_detalle)
+        print(respuesta)
 
-        menu = {'new': (parent['tipos'] or len(
-            respuesta['row']) == 0), 'excel': False, 'regenerar': False}
+        menu = {'new': (parent['tipos'] or len( respuesta['row']) == 0), 'excel': False, 'regenerar': False}
 
         # informacion para generar la vista de lista_class
         data = {

@@ -6,7 +6,7 @@ from app.models.administrador import administrador as administrador_model
 from app.models.moduloconfiguracion import moduloconfiguracion as moduloconfiguracion_model
 from app.models.profile import profile as profile_model
 
-#from .detalle import detalle as detalle_class
+from .detalle import detalle as detalle_class
 from .lista import lista as lista_class
 #from .head import head
 #from .header import header
@@ -161,57 +161,57 @@ class modulo(base):
         # titulo,campo de la tabla a usar, tipo (ver archivo detalle.py funcion "field")
 
 
-        ta = profile.getAll(array('estado' : true))
-        tipos_administrador = array()
-        foreach (ta as key : t:
-            tipos_administrador[t['tipo']] = array('id' : t['tipo'], 'text' : t['titulo'])
+        ta = profile_model.getAll({'estado':True})
+        tipos_administrador = {}
+        for t in ta:
+            tipos_administrador[t['tipo']] = {'id' : t['tipo'], 'text' : t['titulo']}
+        
+
+        columnas_menu = {
+            'field' : {'title_field' : 'Campo', 'field' : 'field', 'type' : 'multiple_hidden', 'required' : True},
+            'titulo' : {'title_field' : 'Titulo', 'field' : 'titulo', 'type' : 'multiple_label', 'required' : True, 'col' : 3},
+            'estado' : {'title_field' : 'Estado', 'field' : 'estado', 'type' : 'multiple_active_array', 'required' : True, 'col' : 9, 'array' : tipos_administrador},
+        }
+        columnas_mostrar = {
+            'field' : {'title_field' : 'Campo', 'field' : 'field', 'type' : 'multiple_hidden', 'required' : True},
+            'tipo' : {'title_field' : 'Tipo', 'field' : 'tipo', 'type' : 'multiple_hidden', 'required' : True},
+            'titulo' : {'title_field' : 'Titulo', 'field' : 'titulo', 'type' : 'multiple_label', 'required' : True, 'col' : 3},
+            'estado' : {'title_field' : 'Estado', 'field' : 'estado', 'type' : 'multiple_active_array', 'required' : True, 'col' : 9, 'array' : tipos_administrador},
+        }
+        columnas_detalle = {
+            'field' : {'title_field' : 'Campo', 'field' : 'field', 'type' : 'multiple_hidden', 'required' : True},
+            'tipo' : {'title_field' : 'Tipo', 'field' : 'tipo', 'type' : 'multiple_hidden', 'required' : True},
+            'titulo' : {'title_field' : 'Titulo', 'field' : 'titulo', 'type' : 'multiple_label', 'required' : True, 'col' : 2},
+            'texto_ayuda' : {'title_field' : 'Texto de ayuda', 'field' : 'texto_ayuda', 'type' : 'multiple_text', 'required' : False, 'col' : 2},
+            'required' : {'title_field' : 'Obligatorio', 'field' : 'required', 'type' : 'multiple_active', 'required' : True, 'col' : 2},
+            'estado' : {'title_field' : 'Estado', 'field' : 'estado', 'type' : 'multiple_active_array', 'required' : True, 'col' : 6, 'array' : tipos_administrador},
         }
 
-        columnas_menu = array(
-            'field' : array('title_field' : 'Campo', 'field' : 'field', 'type' : 'multiple_hidden', 'required' : true),
-            'titulo' : array('title_field' : 'Titulo', 'field' : 'titulo', 'type' : 'multiple_label', 'required' : true, 'col' : 3),
-            'estado' : array('title_field' : 'Estado', 'field' : 'estado', 'type' : 'multiple_active_array', 'required' : true, 'col' : 9, 'array' : tipos_administrador),
-        )
-        columnas_mostrar = array(
-            'field' : array('title_field' : 'Campo', 'field' : 'field', 'type' : 'multiple_hidden', 'required' : true),
-            'tipo' : array('title_field' : 'Tipo', 'field' : 'tipo', 'type' : 'multiple_hidden', 'required' : true),
-            'titulo' : array('title_field' : 'Titulo', 'field' : 'titulo', 'type' : 'multiple_label', 'required' : true, 'col' : 3),
-            'estado' : array('title_field' : 'Estado', 'field' : 'estado', 'type' : 'multiple_active_array', 'required' : true, 'col' : 9, 'array' : tipos_administrador),
-        )
-        columnas_detalle = array(
-            'field' : array('title_field' : 'Campo', 'field' : 'field', 'type' : 'multiple_hidden', 'required' : true),
-            'tipo' : array('title_field' : 'Tipo', 'field' : 'tipo', 'type' : 'multiple_hidden', 'required' : true),
-            'titulo' : array('title_field' : 'Titulo', 'field' : 'titulo', 'type' : 'multiple_label', 'required' : true, 'col' : 2),
-            'texto_ayuda' : array('title_field' : 'Texto de ayuda', 'field' : 'texto_ayuda', 'type' : 'multiple_text', 'required' : false, 'col' : 2),
-            'required' : array('title_field' : 'Obligatorio', 'field' : 'required', 'type' : 'multiple_active', 'required' : true, 'col' : 2),
-            'estado' : array('title_field' : 'Estado', 'field' : 'estado', 'type' : 'multiple_active_array', 'required' : true, 'col' : 6, 'array' : tipos_administrador),
-        )
-
-        columnas_recortes = array(
-            'tag' : array('title_field' : 'Etiqueta', 'field' : 'tag', 'type' : 'multiple_text', 'required' : true, 'col' : 2),
-            'titulo' : array('title_field' : 'Titulo', 'field' : 'titulo', 'type' : 'multiple_text', 'required' : true, 'col' : 2),
-            'ancho' : array('title_field' : 'Ancho', 'field' : 'ancho', 'type' : 'multiple_text', 'required' : true, 'col' : 1),
-            'alto' : array('title_field' : 'Alto', 'field' : 'alto', 'type' : 'multiple_text', 'required' : true, 'col' : 1),
-            'calidad' : array('title_field' : 'Calidad', 'field' : 'calidad', 'type' : 'multiple_number', 'required' : true, 'col' : 2, 'max' : 100, 'default' : 90),
-            'tipo' : array('title_field' : 'Tipo', 'field' : 'tipo', 'type' : 'multiple_select', 'required' : true, 'option' : this->tipos_recortes, 'col' : 2),
-            'button' : array('field' : '', 'type' : 'multiple_button', 'col' : 2),
-        )
-        columnas_estado = array(
-            'estado' : array('title_field' : 'Estado', 'field' : 'estado', 'type' : 'multiple_active_array', 'required' : true, 'col' : 9, 'array' : tipos_administrador),
-        )
-        campos = array(
-            'idmoduloconfiguracion' : array('title_field' : 'idmoduloconfiguracion', 'field' : 'idmoduloconfiguracion', 'type' : 'hidden', 'required' : true),
-            'titulo' : array('title_field' : 'Titulo', 'field' : 'titulo', 'type' : 'text', 'required' : true),
-            'menu' : array('title_field' : 'Menu', 'field' : 'menu', 'type' : 'multiple', 'required' : true, 'columnas' : columnas_menu),
-            'mostrar' : array('title_field' : 'Mostrar', 'field' : 'mostrar', 'type' : 'multiple', 'required' : true, 'columnas' : columnas_mostrar),
-            'detalle' : array('title_field' : 'Detalle', 'field' : 'detalle', 'type' : 'multiple', 'required' : true, 'columnas' : columnas_detalle),
-            'recortes' : array('title_field' : 'Imagenes', 'field' : 'recortes', 'type' : 'multiple', 'required' : true, 'columnas' : columnas_recortes),
-            'tipo' : array('title_field' : 'Tipo', 'field' : 'tipo', 'type' : 'number', 'required' : true),
-            'orden' : array('title_field' : 'Orden', 'field' : 'orden', 'type' : 'number', 'required' : true),
-            'estado' : array('title_field' : 'Estado', 'field' : 'estado', 'type' : 'multiple', 'required' : true, 'columnas' : columnas_estado),
-            'aside' : array('title_field' : 'Aside', 'field' : 'aside', 'type' : 'active', 'required' : true),
-            'hijos' : array('title_field' : 'Contiene hijos', 'field' : 'hijos', 'type' : 'active', 'required' : true),
-        )
+        columnas_recortes = {
+            'tag' : {'title_field' : 'Etiqueta', 'field' : 'tag', 'type' : 'multiple_text', 'required' : True, 'col' : 2},
+            'titulo' : {'title_field' : 'Titulo', 'field' : 'titulo', 'type' : 'multiple_text', 'required' : True, 'col' : 2},
+            'ancho' : {'title_field' : 'Ancho', 'field' : 'ancho', 'type' : 'multiple_text', 'required' : True, 'col' : 1},
+            'alto' : {'title_field' : 'Alto', 'field' : 'alto', 'type' : 'multiple_text', 'required' : True, 'col' : 1},
+            'calidad' : {'title_field' : 'Calidad', 'field' : 'calidad', 'type' : 'multiple_number', 'required' : True, 'col' : 2, 'max' : 100, 'default' : 90},
+            'tipo' : {'title_field' : 'Tipo', 'field' : 'tipo', 'type' : 'multiple_select', 'required' : True, 'option' : cls.tipos_recortes, 'col' : 2},
+            'button' : {'field' : '', 'type' : 'multiple_button', 'col' : 2},
+        }
+        columnas_estado = {
+            'estado' : {'title_field' : 'Estado', 'field' : 'estado', 'type' : 'multiple_active_array', 'required' : True, 'col' : 9, 'array' : tipos_administrador},
+        }
+        campos = {
+            'idmoduloconfiguracion' : {'title_field' : 'idmoduloconfiguracion', 'field' : 'idmoduloconfiguracion', 'type' : 'hidden', 'required' : True},
+            'titulo' : {'title_field' : 'Titulo', 'field' : 'titulo', 'type' : 'text', 'required' : True},
+            'menu' : {'title_field' : 'Menu', 'field' : 'menu', 'type' : 'multiple', 'required' : True, 'columnas' : columnas_menu},
+            'mostrar' : {'title_field' : 'Mostrar', 'field' : 'mostrar', 'type' : 'multiple', 'required' : True, 'columnas' : columnas_mostrar},
+            'detalle' : {'title_field' : 'Detalle', 'field' : 'detalle', 'type' : 'multiple', 'required' : True, 'columnas' : columnas_detalle},
+            'recortes' : {'title_field' : 'Imagenes', 'field' : 'recortes', 'type' : 'multiple', 'required' : True, 'columnas' : columnas_recortes},
+            'tipo' : {'title_field' : 'Tipo', 'field' : 'tipo', 'type' : 'number', 'required' : True},
+            'orden' : {'title_field' : 'Orden', 'field' : 'orden', 'type' : 'number', 'required' : True},
+            'estado' : {'title_field' : 'Estado', 'field' : 'estado', 'type' : 'multiple', 'required' : True, 'columnas' : columnas_estado},
+            'aside' : {'title_field' : 'Aside', 'field' : 'aside', 'type' : 'active', 'required' : True},
+            'hijos' : {'title_field' : 'Contiene hijos', 'field' : 'hijos', 'type' : 'active', 'required' : True},
+        }
 
 
 
@@ -376,7 +376,7 @@ class modulo(base):
         if (id == 0:
             estados = array()
             foreach (tipos_administrador as key : ta:
-                estados[key] = "true"
+                estados[key] = "True"
             }
             row['estado'] = array(array('estado' : estados))
         }

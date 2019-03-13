@@ -111,8 +111,9 @@ class app:
                 response = {'error': 404}
 
         if 'headers' not in response:
-            response['headers'] =[]
-            response['headers'].append(('Content-Type', 'text/html; charset=utf-8') )
+            response['headers'] = [
+                ('Content-Type', 'text/html; charset=utf-8')
+            ]
 
         if 'error' in response:
             if response['error'] == 301:
@@ -217,11 +218,9 @@ class app:
             post_env = app.environ.copy()
             post_env2 = app.environ.copy()
             post_env['QUERY_STRING'] = ''
-            post_env['CONTENT_LENGTH'] = int(
-                app.environ.get('CONTENT_LENGTH', 0))
+            post_env['CONTENT_LENGTH'] = int(app.environ.get('CONTENT_LENGTH', 0))
 
-            p = FieldStorage(
-                fp=post_env2['wsgi.input'], environ=post_env, keep_blank_values=True)
+            p = FieldStorage( fp=post_env2['wsgi.input'], environ=post_env, keep_blank_values=True )
             try:
                 for key in p.keys():
                     post[key] = p[key].value

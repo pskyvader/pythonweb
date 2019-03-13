@@ -263,7 +263,7 @@ class detalle:
             }
         elif campos['type'] == 'multiple_select':
             for option in campos['option'].values():
-                option['selected'] = 'selected="selected"' if campos['field'] in fila and fila[campos['field']] == option['value'] else ''
+                option['selected'] = (campos['field'] in fila and fila[campos['field']] == option['value'])
 
             data = {
                 'title_field': campos['title_field'],

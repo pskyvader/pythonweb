@@ -14,7 +14,7 @@ class base_model:
         idpadre = None
         return_total = None
         connection = database.instance()
-        fields     = table.getByname(cls.table)
+        fields = table.getByname(cls.table)
         if 'estado' not in where and app.front and 'estado' in fields:
             where['estado'] = True
 
@@ -66,25 +66,25 @@ class base_model:
         for r in row:
             deleted = False
             if 'idpadre' in r:
-                if r['idpadre']!='':
+                if r['idpadre'] != '':
                     r['idpadre'] = json.loads(r['idpadre'])
                 else:
-                    r['idpadre']=[]
+                    r['idpadre'] = []
                 if idpadre != None and idpadre not in r['idpadre']:
                     deleted = True
                     del r
 
             if return_total == None:
                 if not deleted and 'foto' in r:
-                    if r['foto']!='':
+                    if r['foto'] != '':
                         r['foto'] = json.loads(r['foto'])
                     else:
-                        r['foto']=[]
+                        r['foto'] = []
                 if not deleted and 'archivo' in r:
-                    if r['archivo']!='':
+                    if r['archivo'] != '':
                         r['archivo'] = json.loads(r['archivo'])
                     else:
-                        r['archivo']=[]
+                        r['archivo'] = []
 
         if limit != None:
             if limit2 == 0:
@@ -102,7 +102,7 @@ class base_model:
         from .table import table
         where = {cls.idname: id}
         if app.front:
-            fields     = table.getByname(cls.table)
+            fields = table.getByname(cls.table)
             if 'estado' in fields:
                 where['estado'] = True
 
@@ -110,18 +110,27 @@ class base_model:
         row = connection.get(cls.table, cls.idname, where)
         if len(row) == 1:
             if 'idpadre' in row[0]:
-                row[0]['idpadre'] = json.loads(row[0]['idpadre'])
+                if row[0]['idpadre'] != '':
+                    row[0]['idpadre'] = json.loads(row[0]['idpadre'])
+                else:
+                    row[0]['idpadre'] = []
             if 'foto' in row[0]:
-                row[0]['foto'] = json.loads(row[0]['foto'])
+                if row[0]['foto'] != '':
+                    row[0]['foto'] = json.loads(row[0]['foto'])
+                else:
+                    row[0]['foto'] = []
             if 'archivo' in row[0]:
-                row[0]['archivo'] = json.loads(row[0]['archivo'])
+                if row[0]['archivo'] != '':
+                    row[0]['archivo'] = json.loads(row[0]['archivo'])
+                else:
+                    row[0]['archivo'] = []
         return row[0] if len(row) == 1 else row
 
     @classmethod
     def insert(cls, set_query: dict,  loggging=True):
         from .log import log
         from .table import table
-        fields     = table.getByname(cls.table)
+        fields = table.getByname(cls.table)
         insert = database.create_data(fields, set_query)
         connection = database.instance()
         row = connection.insert(cls.table, cls.idname, insert)
@@ -142,7 +151,7 @@ class base_model:
         connection = database.instance()
         row = connection.update(cls.table, cls.idname, set_query, where)
         if loggging:
-            log_register=set_query
+            log_register = set_query
             log_register.update(where)
             log.insert_log(cls.table, cls.idname, cls, log_register)
         if isinstance(row, bool) and row:
@@ -175,7 +184,7 @@ class base_model:
         if 'archivo' in row:
             del row['archivo']
 
-        fields     = table.getByname(cls.table)
+        fields = table.getByname(cls.table)
         insert = database.create_data(fields, row)
         connection = database.instance()
         row = connection.insert(cls.table, cls.idname, insert)

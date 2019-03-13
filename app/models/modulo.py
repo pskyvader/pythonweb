@@ -36,7 +36,7 @@ class modulo(base_model):
                 r['mostrar'] = json.loads(r['mostrar'])
             if 'detalle' in r and r['detalle']!='':
                 r['detalle'] = json.loads(r['detalle'])
-            if r['recortes']!='':
+            if 'recortes' in r and r['recortes']!='':
                 r['recortes'] = json.loads(r['recortes'])
             else:
                 r['recortes']=[]

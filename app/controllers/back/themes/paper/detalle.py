@@ -193,8 +193,8 @@ class detalle:
 
         elif campos['type'] == 'multiple':
             fields = []
-            count = len(fila[campos['field']]) if campos['field'] in fila and isinstance(
-                fila[campos['field']], dict) else 0
+            count = len(fila[campos['field']]) if campos['field'] in fila and isinstance( fila[campos['field']], dict) else 0
+            print(count)
             if count > 0:
                 for key, f in fila[campos['field']].items():
                     td = []

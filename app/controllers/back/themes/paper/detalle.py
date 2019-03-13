@@ -211,7 +211,7 @@ class detalle:
                 new_field = True
 
             new_line = []
-            for v in campos['columnas']:
+            for v in campos['columnas'].values():
                 #field(self, campos:dict, fila:dict, parent='', idparent=0, level=0):
                 print('campos',v)
                 print('fila',{})

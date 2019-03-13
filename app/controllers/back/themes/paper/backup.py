@@ -355,7 +355,7 @@ class backup(base):
             if total > 0:
                 respuesta['exito'] = True
                 while len(respuesta['lista']) > 0 and respuesta['exito']:
-                    respuesta = self.zipData( self, self.base_dir, respuesta['archivo_backup'], respuesta['lista'], total, logging)
+                    respuesta = self.zipData( self.base_dir, respuesta['archivo_backup'], respuesta['lista'], total, logging)
 
         if respuesta['exito']:
             if logging:

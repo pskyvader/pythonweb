@@ -41,11 +41,11 @@ class modulo(base):
     def __init__(cls):
         super().__init__(modulo_model)
         parent_class = moduloconfiguracion_model()
-        print(app.get)
 
         if not 'idmoduloconfiguracion' in app.get:
             cls.url = ['home']
         else:
+            cls.url = ['modulo']
             cls.parent = parent_class.getById( app.get['idmoduloconfiguracion'])
             cls.breadcrumb.pop()
             cls.breadcrumb.append({'url': functions.generar_url(

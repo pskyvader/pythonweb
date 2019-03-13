@@ -64,7 +64,6 @@ class modulo(base):
         # Clase para enviar a controlador de lista_class
         class_name = cls.class_name
         url_final = cls.url.copy()
-        parent_class = cls.parent_class
         parent = cls.parent
 
         if not administrador_model.verificar_sesion():

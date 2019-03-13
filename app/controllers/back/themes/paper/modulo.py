@@ -146,8 +146,7 @@ class modulo(base):
             ret['redirect'] = url_return
             return ret
 
-        cls.metadata['title'] = parent['titulo'] + \
-            ' - ' + cls.metadata['title']
+        cls.metadata['title'] = parent['titulo'] +  ' - ' + cls.metadata['title']
         # cabeceras y campos que se muestran en el detalle:
         # titulo,campo de la tabla a usar, tipo (ver archivo detalle.py funcion "field")
 

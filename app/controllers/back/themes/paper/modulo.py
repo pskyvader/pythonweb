@@ -261,7 +261,7 @@ class modulo(base):
 
         row['detalle'] = det
 
-        print(row['detalle'])
+        print(type(parent['detalle']),parent['detalle'])
 
         if id == 0:
             estados = {}

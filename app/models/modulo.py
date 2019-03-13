@@ -40,7 +40,9 @@ class modulo(base_model):
                 r['recortes'] = json.loads(r['recortes'])
             else:
                 r['recortes']=[]
-            r['estado'] = json.loads(r['estado'])
+            
+            if 'estado' in r and r['estado']!='':
+                r['estado'] = json.loads(r['estado'])
 
         if return_total != None:
             return len(row)

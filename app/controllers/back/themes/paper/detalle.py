@@ -205,7 +205,7 @@ class detalle:
                             {'content': content, 'content_field': v['field']})
 
                     linea = {'columna': td}
-                    fields.append(linea)
+                    fields.append(linea.copy())
 
                 new_field = False
             else:

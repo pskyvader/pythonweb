@@ -295,10 +295,10 @@ class detalle:
             }
         elif campos['type'] == 'multiple_active_array':
             for value in campos['array']:
-                value['active'] = str(fila[campos['field']]) if campos['field'] in fila else 'true',
-                print('campo',fila[campos['field']])
-                value['class'] = ('btn-success' if fila[campos['field']] == 'true' else 'btn-danger') if campos['field'] in fila else 'btn-success',
-                value['icon'] = ('fa-check' if fila[campos['field']] == 'true' else 'fa-close') if campos['field'] in fila else 'fa-check',
+                print(fila[campos['field']])
+                value['active'] = str(fila[campos['field']]) if campos['field'] in fila else 'true'
+                value['class'] = ('btn-success' if fila[campos['field']] == 'true' else 'btn-danger') if campos['field'] in fila else 'btn-success'
+                value['icon'] = ('fa-check' if fila[campos['field']] == 'true' else 'fa-close') if campos['field'] in fila else 'fa-check'
 
             data = {
                 'title_field': campos['title_field'],

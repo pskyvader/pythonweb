@@ -27,7 +27,7 @@ class detalle:
         row_data = data['row']
         row = []
         for k,v in campos.items():
-            content = self.field(v.copy(), row_data.copy())
+            content = self.field(v, row_data)
             row.append( {'content': content, 'content_field': v['field'], 'class': 'hidden' if 'hidden' == v['type'] else ''})
 
 
@@ -195,12 +195,21 @@ class detalle:
 
         elif campos['type'] == 'multiple':
             fields = []
+            
+            new_line = []
+            #new fields, without values
+            for v in campos['columnas'].values():
+                content = self.field(v, {}, campos['field'])
+                new_line.append(
+                    {'content': content, 'content_field': v['field']})
+
+
             count = len(fila[campos['field']]) if campos['field'] in fila and isinstance( fila[campos['field']], list) else 0
             if count > 0:
                 for key, f in enumerate(fila[campos['field']]):
                     td = []
                     for v in campos['columnas'].values():
-                        content = self.field(v.copy(), f.copy(), campos['field'], key)
+                        content = self.field(v, f, campos['field'], key)
                         td.append(
                             {'content': content, 'content_field': v['field']})
 
@@ -210,13 +219,6 @@ class detalle:
                 new_field = False
             else:
                 new_field = True
-
-            new_line = []
-            #new fields, without values
-            for v in campos['columnas'].values():
-                content = self.field(v.copy(), {}, campos['field'])
-                new_line.append(
-                    {'content': content, 'content_field': v['field']})
 
             data = {
                 'fields': fields,

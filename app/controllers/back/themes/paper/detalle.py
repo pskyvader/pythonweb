@@ -194,7 +194,6 @@ class detalle:
         elif campos['type'] == 'multiple':
             fields = []
             count = len(fila[campos['field']]) if campos['field'] in fila and isinstance( fila[campos['field']], list) else 0
-            print(campos['field'],fila[campos['field']])
             if count > 0:
                 for key, f in enumerate(fila[campos['field']]):
                     td = []

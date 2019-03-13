@@ -294,12 +294,11 @@ class detalle:
                 'icon': ('fa-check' if fila[campos['field']] == 'true' else 'fa-close') if campos['field'] in fila else 'fa-question-circle',
             }
         elif campos['type'] == 'multiple_active_array':
-            for value in campos['array']:
-                print(fila[campos['field']])
-                value['active'] = str(fila[campos['field']]) if campos['field'] in fila else 'true'
-                value['class'] = ('btn-success' if fila[campos['field']] == 'true' else 'btn-danger') if campos['field'] in fila else 'btn-success'
-                value['icon'] = ('fa-check' if fila[campos['field']] == 'true' else 'fa-close') if campos['field'] in fila else 'fa-check'
-
+            for key,value in campos['array'].items():
+                value['active'] = str(fila[campos['field']][key]) if key in fila[campos['field']] else 'true'
+                value['class'] = ('btn-success' if fila[campos['field']][key] == 'true' else 'btn-danger') if key in fila[campos['field']] else 'btn-success'
+                value['icon'] = ('fa-check' if fila[campos['field']][key] == 'true' else 'fa-close') if key in fila[campos['field']] else 'fa-check'
+                
             data = {
                 'title_field': campos['title_field'],
                 'array': campos['array'],

@@ -200,8 +200,7 @@ class detalle:
                 for key, f in enumerate(fila[campos['field']]):
                     td = []
                     for v in campos['columnas'].values():
-                        content = self.field(v, f, campos['field'], key)
-                        print(type(content),content)
+                        content = self.field(v.copy(), f, campos['field'], key)
                         td.append(
                             {'content': content, 'content_field': v['field']})
 
@@ -215,7 +214,7 @@ class detalle:
             new_line = []
             #new fields, without values
             for v in campos['columnas'].values():
-                content = self.field(v, {}, campos['field'])
+                content = self.field(v.copy(), {}, campos['field'])
                 new_line.append(
                     {'content': content, 'content_field': v['field']})
 
@@ -448,7 +447,7 @@ class detalle:
                     'count': count if count > 0 else '',
                 }
                 for children in campos['parent']:
-                    data['children'] += self.field(campos,
+                    data['children'] += self.field(campos.copy(),
                                                    fila, '', children[0], 1)
 
             else:
@@ -475,7 +474,7 @@ class detalle:
                     campos['parent'] = parent[idparent]['children']
 
                     for children in campos['parent']:
-                        data['children'] += self.field(campos,
+                        data['children'] += self.field(campos.copy(),
                                                        fila, '', children[0], level + 1)
 
         elif campos['type'] == 'select':

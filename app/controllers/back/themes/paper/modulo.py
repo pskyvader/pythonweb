@@ -214,7 +214,7 @@ class modulo(base):
         if 'menu' in row:
             for m in row['menu']:
                 menu_copy[m['field']] = m
-                
+
         row['menu']=menu_copy
 
         menu = []
@@ -227,9 +227,11 @@ class modulo(base):
 
         row['menu'] = menu
 
+        mostrar_copy={}
         if 'mostrar' in row:
-            for k, m in row['mostrar'].items():
-                row['mostrar'][m['field']] = m
+            for m in row['mostrar']:
+                mostrar_copy[m['field']] = m
+        row['mostrar']=mostrar_copy
 
         mostrar = []
         if isinstance(parent['mostrar'], dict):

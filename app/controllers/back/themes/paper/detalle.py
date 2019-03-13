@@ -264,15 +264,17 @@ class detalle:
                 'value': fila[campos['field']] if campos['field'] in fila else '',
             }
         elif campos['type'] == 'multiple_select':
+            options=[]
             for option in campos['option'].values():
                 option['selected'] = (campos['field'] in fila and fila[campos['field']] == option['value'])
+                options.append(option.copy())
 
             data = {
                 'title_field': campos['title_field'],
                 'field': campos['field'],
                 'parent': parent,
                 'col': campos['col'],
-                'option': list(campos['option'].copy().values()),
+                'option': options,
                 'required': campos['required'],
             }
         elif campos['type'] == 'multiple_button':

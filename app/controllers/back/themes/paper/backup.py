@@ -206,7 +206,7 @@ class backup(base):
 
         if 'inicio' not in respuesta:
             c = configuracion_administrador()
-            c.json_update([],False)
+            c.json_update(False)
 
             log = {'mensaje': 'Restauracion finalizada', 'porcentaje': 100}
             file_write = open(self.archivo_log, 'w')
@@ -308,7 +308,7 @@ class backup(base):
         ret = {'headers': [
             ('Content-Type', 'application/json; charset=utf-8')], 'body': ''}
         c = configuracion_administrador()
-        c.json([],False)
+        c.json(False)
         respuesta = {'exito': True, 'mensaje': ''}
 
         my_file = Path(self.dir_backup)
@@ -332,7 +332,7 @@ class backup(base):
         ret = {'headers': [
             ('Content-Type', 'application/json; charset=utf-8')], 'body': ''}
         c = configuracion_administrador()
-        c.json([],False)
+        c.json(False)
         respuesta = {'exito': True, 'mensaje': ''}
 
         my_file = Path(self.dir_backup)

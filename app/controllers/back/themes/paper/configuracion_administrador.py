@@ -87,7 +87,7 @@ class configuracion_administrador(base):
         ret['body'] = json.dumps(respuesta)
         return ret
 
-    def json(self,var=[], responder=True):
+    def json(self, responder=True):
         respuesta = {'exito': True, 'mensaje': 'JSON generado correctamente'}
         ret = {'headers': [ ('Content-Type', 'application/json; charset=utf-8') ], 'body': ''}
 
@@ -143,7 +143,7 @@ class configuracion_administrador(base):
         else:
             return respuesta
 
-    def json_update(self,var=[], responder=True):
+    def json_update(self, responder=True):
         respuesta = {'exito': True, 'mensaje': [
             'JSON actualizado correctamente']}
         ret = {'headers': [ ('Content-Type', 'application/json; charset=utf-8') ], 'body': ''}

@@ -44,9 +44,15 @@ class base:
                     if len(params) == 1:
                         ret = method(cls)
                     else:
-                        ret = method(cls,var)
+                        if 'var' in params:
+                            ret = method(cls,var)
+                        else:
+                            ret = method(cls)
                 else:
-                    ret = method(var)
+                    if 'var' in params:
+                        ret = method(var)
+                    else:
+                        ret = method()
             else:
                 ret = method()
         else:

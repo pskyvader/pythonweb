@@ -233,6 +233,7 @@ class lista:
         campos = app.post['campos']
         respuesta = {'exito': False, 'mensaje': ''}
         elementos = campos['elementos']
+        print(elementos)
         for e in elementos:
             class_name.update(e)
 

@@ -297,6 +297,7 @@ class detalle:
             for key,value in campos['array'].items():
                 print(key,value)
                 print('field',campos['field'])
+                print('fila',fila)
                 value['active'] = str(fila[campos['field']][key]) if key in fila[campos['field']] else 'true'
                 value['class'] = ('btn-success' if fila[campos['field']][key] == 'true' else 'btn-danger') if key in fila[campos['field']] else 'btn-success'
                 value['icon'] = ('fa-check' if fila[campos['field']][key] == 'true' else 'fa-close') if key in fila[campos['field']] else 'fa-check'

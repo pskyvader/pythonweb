@@ -283,7 +283,6 @@ class modulo(base):
             'list_url': functions.generar_url(url_list),
         }
 
-        print(campos)
 
         ret = detalle.normal(data)
         return ret

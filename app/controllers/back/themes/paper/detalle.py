@@ -214,6 +214,8 @@ class detalle:
             for v in campos['columnas']:
                 #field(self, campos:dict, fila:dict, parent='', idparent=0, level=0):
                 print('campos',v)
+                print('fila',{})
+                print('parent',campos['field'])
                 content = self.field(v, {}, campos['field'])
                 new_line.append(
                     {'content': content, 'content_field': v['field']})

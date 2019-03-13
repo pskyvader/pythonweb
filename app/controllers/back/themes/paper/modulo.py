@@ -210,9 +210,12 @@ class modulo(base):
             campos['tipo']['type'] = 'hidden'
             row['tipo'] = 0
 
+        menu_copy={}
         if 'menu' in row:
             for m in row['menu']:
-                row['menu'][m['field']] = m
+                menu_copy[m['field']] = m
+                
+        row['menu']=menu_copy
 
         menu = []
         for p in cls.tipos_menu.values():

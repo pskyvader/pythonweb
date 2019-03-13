@@ -210,12 +210,12 @@ class modulo(base):
             campos['tipo']['type'] = 'hidden'
             row['tipo'] = 0
 
-        menu_copy={}
+       
         if 'menu' in row:
+            menu_copy={}
             for m in row['menu']:
                 menu_copy[m['field']] = m
-
-        row['menu']=menu_copy
+            row['menu']=menu_copy
 
         menu = []
         for p in cls.tipos_menu.values():
@@ -227,11 +227,12 @@ class modulo(base):
 
         row['menu'] = menu
 
-        mostrar_copy={}
+        
         if 'mostrar' in row:
+            mostrar_copy={}
             for m in row['mostrar']:
                 mostrar_copy[m['field']] = m
-        row['mostrar']=mostrar_copy
+            row['mostrar']=mostrar_copy
 
         mostrar = []
         if isinstance(parent['mostrar'], dict):
@@ -244,11 +245,12 @@ class modulo(base):
 
         row['mostrar'] = mostrar
 
-        detalle_copy={}
+        
         if 'detalle' in row:
+            detalle_copy={}
             for m in row['detalle']:
                 detalle_copy[m['field']] = m
-        row['detalle']=detalle_copy
+            row['detalle']=detalle_copy
 
         det = []
         if isinstance(parent['detalle'], dict):

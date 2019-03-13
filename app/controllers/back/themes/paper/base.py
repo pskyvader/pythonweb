@@ -42,7 +42,7 @@ class base:
             if len(params) >= 1:
                 if 'self' in params:
                     if len(params) == 1:
-                        ret = method(cls)
+                        ret = cls.method()
                     else:
                         if 'var' in params:
                             ret = method(cls,var)

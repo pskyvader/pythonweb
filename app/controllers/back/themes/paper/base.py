@@ -38,19 +38,16 @@ class base:
             method = getattr(self, fun)
             sig = signature(method)
             params = sig.parameters
-            if len(params) >= 1:
-                if 'self' in params:
-                    if 'var' in params:
-                        ret = method(self,var=var)
-                    else:
-                        ret = method(self)
+            if 'self' in params:
+                if 'var' in params:
+                    ret = method(self,var=var)
                 else:
-                    if 'var' in params:
-                        ret = method(var=var)
-                    else:
-                        ret = method()
+                    ret = method(self)
             else:
-                ret = method()
+                if 'var' in params:
+                    ret = method(var=var)
+                else:
+                    ret = method()
         else:
             ret = {
                 'error': 404

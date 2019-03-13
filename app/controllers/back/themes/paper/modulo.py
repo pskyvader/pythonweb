@@ -236,8 +236,8 @@ class modulo(base):
         if isinstance(parent['mostrar'], list):
             for p in parent['mostrar']:
                 t = {}
-            if 'mostrar' in row and p['field'] in row['mostrar']:
-                t = row['mostrar'][p['field']]
+                if 'mostrar' in row and p['field'] in row['mostrar']:
+                    t = row['mostrar'][p['field']]
             t.update(p)
             mostrar.append(t)
 
@@ -254,8 +254,8 @@ class modulo(base):
         if isinstance(parent['detalle'], list):
             for p in parent['detalle']:
                 t = {}
-            if 'detalle' in row and p['field'] in row['detalle']:
-                t = row['detalle'][p['field']]
+                if 'detalle' in row and p['field'] in row['detalle']:
+                    t = row['detalle'][p['field']]
             t.update(p)
             det.append(t)
 

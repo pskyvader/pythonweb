@@ -13,7 +13,7 @@ class login(base):
     metadata = {'title': 'login', 'modulo': 'login'}
 
     @classmethod
-    def index(cls, url):
+    def index(cls, var):
         from time import time
         ret = {'body': []}
         url_final=cls.url.copy()

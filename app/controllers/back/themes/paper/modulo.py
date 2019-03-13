@@ -123,7 +123,6 @@ class modulo(base):
         ret = {'body': ''}
         # Clase para enviar a controlador de detalle
         class_name = cls.class_name
-        parent_class = cls.parent_class
         parent = cls.parent
         url_list = cls.url.copy()
         url_save = cls.url.copy()

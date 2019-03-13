@@ -270,7 +270,7 @@ class detalle:
                 'field': campos['field'],
                 'parent': parent,
                 'col': campos['col'],
-                'option': campos['option'],
+                'option': list(campos['option'].values()),
                 'required': campos['required'],
             }
         elif campos['type'] == 'multiple_button':

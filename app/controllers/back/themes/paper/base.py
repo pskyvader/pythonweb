@@ -198,17 +198,18 @@ class base:
         url_list = cls.url.copy()
         url_save = cls.url.copy()
         url_final = cls.url.copy()
+        metadata=cls.metadata.copy()
         url_save.append('guardar')
         url_final.append('detail')
         if len(var)>0:
             id = int(var[0])
             url_final.append(id)
-            cls.metadata['title'] = 'Editar ' + cls.metadata['title']
+            metadata['title'] = 'Editar ' + metadata['title']
         else:
             id = 0
-            cls.metadata['title'] = 'Nuevo ' + cls.metadata['title']
+            metadata['title'] = 'Nuevo ' + metadata['title']
 
-        cls.breadcrumb.append({'url': functions.generar_url( url_final), 'title': cls.metadata['title'], 'active': 'active'})
+        cls.breadcrumb.append({'url': functions.generar_url( url_final), 'title': metadata['title'], 'active': 'active'})
         if cls.contiene_tipos and 'tipo' not in get:
             url_final = ['home']
 
@@ -225,8 +226,8 @@ class base:
         # titulo,campo de la tabla a usar, tipo (ver archivo detalle.py funcion "field")
 
         # controlador de detalle
-        detalle = detalle_class(cls.metadata)
-        configuracion = detalle.configuracion(cls.metadata['modulo'])
+        detalle = detalle_class(metadata)
+        configuracion = detalle.configuracion(metadata['modulo'])
         
         if 'error' in configuracion:
             ret['error']=configuracion['error']

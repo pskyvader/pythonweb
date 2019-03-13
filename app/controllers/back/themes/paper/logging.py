@@ -10,7 +10,7 @@ import socket
 
 
 class logging:
-    def init(self,var):
+    def init(self,var=[]):
         resource=app.get_dir(True)+'log.json'
         ret = {'headers': [ ('Content-Type', 'application/json; charset=utf-8') ], 'body': ''}
         

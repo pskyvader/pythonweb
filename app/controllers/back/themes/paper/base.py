@@ -38,11 +38,10 @@ class base:
             method = getattr(cls, fun)
             sig = signature(method)
             params = sig.parameters
-            print(params)
             if len(params) >= 1:
                 if 'self' in params:
                     if len(params) == 1:
-                        ret = cls.method()
+                        ret = method(cls)
                     else:
                         if 'var' in params:
                             ret = method(cls,var)

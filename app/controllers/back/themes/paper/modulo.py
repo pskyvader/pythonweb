@@ -244,9 +244,11 @@ class modulo(base):
 
         row['mostrar'] = mostrar
 
+        detalle_copy={}
         if 'detalle' in row:
-            for k, m in row['detalle'].items():
-                row['detalle'][m['field']] = m
+            for m in row['detalle']:
+                detalle_copy[m['field']] = m
+        row['detalle']=detalle_copy
 
         det = []
         if isinstance(parent['detalle'], dict):

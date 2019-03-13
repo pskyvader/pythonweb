@@ -238,8 +238,8 @@ class modulo(base):
                 t = {}
                 if 'mostrar' in row and p['field'] in row['mostrar']:
                     t = row['mostrar'][p['field']]
-            t.update(p)
-            mostrar.append(t)
+                t.update(p)
+                mostrar.append(t)
 
         row['mostrar'] = mostrar
 
@@ -256,8 +256,8 @@ class modulo(base):
                 t = {}
                 if 'detalle' in row and p['field'] in row['detalle']:
                     t = row['detalle'][p['field']]
-            t.update(p)
-            det.append(t)
+                t.update(p)
+                det.append(t)
 
         row['detalle'] = det
 

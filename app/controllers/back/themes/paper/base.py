@@ -51,8 +51,10 @@ class base:
                     if 'var' in params:
                         ret = method(var)
                     else:
+                        print(fun)
                         ret = method()
             else:
+                print(fun)
                 ret = method()
         else:
             ret = {

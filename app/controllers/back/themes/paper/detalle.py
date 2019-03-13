@@ -202,7 +202,7 @@ class detalle:
                     for v in campos['columnas'].values():
                         content = self.field(v, f, campos['field'], key)
                         td.append(
-                            {'content': content, 'content_field': v['field']})
+                            {'content': content.copy(), 'content_field': v['field']})
 
                     linea = {'columna': td}
                     fields.append(linea)

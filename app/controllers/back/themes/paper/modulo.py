@@ -2,12 +2,12 @@ from .base import base
 from app.models.modulo import modulo as modulo_model
 
 #from app.models.table import table as table_model
-#from app.models.administrador import administrador as administrador_model
+from app.models.administrador import administrador as administrador_model
 #from app.models.modulo import modulo as modulo_model
 from app.models.moduloconfiguracion import moduloconfiguracion as moduloconfiguracion_model
 
 #from .detalle import detalle as detalle_class
-#from .lista import lista as lista_class
+from .lista import lista as lista_class
 #from .head import head
 #from .header import header
 #from .aside import aside
@@ -54,53 +54,69 @@ class modulo(base):
             self.breadcrumb.append({'url' : functions.generar_url(['moduloconfiguracion']), 'title' : self.parent['titulo'], 'active' : ''})
             self.metadata['title'] = self.parent['titulo'] + ' - ' + self.metadata['title']
             self.breadcrumb.append({'url' : functions.generar_url(self.url), 'title' : (self.metadata['title']), 'active' : 'active'})
-        }
-    }
-    public function index()
-    {
-        class = this->class // Clase para enviar a controlador de lista
-        parent_class = this->parent_class // Clase Padre
-        parent=this->parent
+  
+    @classmethod
+    def index(cls):
+        '''Controlador de lista_class de elementos base, puede ser sobreescrito en el controlador de cada modulo'''
+        ret = {'body': ''}
+        # Clase para enviar a controlador de lista_class
+        class_name = cls.class_name
+        url_final=cls.url.copy()
+        parent_class=cls.parent_class
+        parent=cls.parent
         
+
         if not administrador_model.verificar_sesion():
-            this->url = array_merge(array('login', 'index'), this->url)
+            url_final = ['login', 'index'] + url_final
+        # verificar sesion o redireccionar a login
+        url_return = functions.url_redirect(url_final)
+        if url_return != '':
+            ret['error'] = 301
+            ret['redirect'] = url_return
+            return ret
+
+
+
+        # cabeceras y campos que se muestran en la lista_class:
+        # titulo,campo de la tabla a usar, tipo (ver archivo lista_class.py funcion "field")
+        th = {
+            'id' : {'title_th' : 'ID', 'field' : 0, 'type' : 'text'},
+            'tipo' : {'title_th' : 'Tipo', 'field' : 'tipo', 'type' : 'text'},
+            'orden' : {'title_th' : 'Orden', 'field' : 'orden', 'type' : 'text'},
+            'titulo' : {'title_th' : 'Titulo', 'field' : 'titulo', 'type' : 'text'},
+            'aside' : {'title_th' : 'Aparece en aside', 'field' : 'aside', 'type' : 'active'},
+            #'hijos' : {'title_th' : 'Contiene hijos', 'field' : 'hijos', 'type' : 'active'},
+            'copy' : {'title_th' : 'Copiar', 'field' : 0, 'type' : 'action','action':'copy','mensaje':'Copiando Elemento'},
+            'editar' : {'title_th' : 'Editar', 'field' : 'url_detalle', 'type' : 'link'},
+            'delete' : {'title_th' : 'Eliminar', 'field' : 'delete', 'type' : 'delete'},
         }
-        functions.url_redirect(this->url) //verificar sesion o redireccionar a login
 
-        /* cabeceras y campos que se muestran en la lista:
-        titulo,campo de la tabla a usar, tipo (ver archivo lista.php funcion "field") */
-        th = array(
-            'id' : array('title_th' : 'ID', 'field' : 0, 'type' : 'text'),
-            'tipo' : array('title_th' : 'Tipo', 'field' : 'tipo', 'type' : 'text'),
-            'orden' : array('title_th' : 'Orden', 'field' : 'orden', 'type' : 'text'),
-            'titulo' : array('title_th' : 'Titulo', 'field' : 'titulo', 'type' : 'text'),
-            'aside' : array('title_th' : 'Aparece en aside', 'field' : 'aside', 'type' : 'active'),
-            //'hijos' : array('title_th' : 'Contiene hijos', 'field' : 'hijos', 'type' : 'active'),
-            'copy' : array('title_th' : 'Copiar', 'field' : 0, 'type' : 'action','action':'copy','mensaje':'Copiando Elemento'),
-            'editar' : array('title_th' : 'Editar', 'field' : 'url_detalle', 'type' : 'link'),
-            'delete' : array('title_th' : 'Eliminar', 'field' : 'delete', 'type' : 'delete'),
-        )
+        # controlador de lista_class
 
-        list = new lista(this->metadata) //controlador de lista
+        lista = lista_class(cls.metadata)
+        where = {'idmoduloconfiguracion' : parent[0]}
+        
+        condiciones = {}
+        url_detalle = url_final.copy()
+        url_detalle.append('detail')
+        # obtener unicamente elementos de la pagina actual
+        respuesta = lista.get_row(class_name, where, condiciones, url_detalle)
 
-        where = array('idmoduloconfiguracion' : parent[0])
-        condiciones = array()
-        url_detalle = this->url
-        url_detalle[] = 'detail'
-        respuesta = list->get_row(class, where, condiciones, url_detalle) //obtener unicamente elementos de la pagina actual
-        row = respuesta['row']
-        new = (parent['tipos'] || count(row) == 0) ? true : false
-        menu = array('new' : new, 'excel' : false, 'regenerar' : false)
+        menu = {'new' : (parent['tipos'] or len(respuesta['row']) == 0), 'excel' : False, 'regenerar' : False}
 
-        data = array( //informacion para generar la vista de la lista, arrays SIEMPRE antes de otras variables!!!!
-            'breadcrumb' : this->breadcrumb,
-            'th' : th,
-            'current_url' : functions.generar_url(this->url),
-            'new_url' : functions.generar_url(url_detalle),
-        )
-        data = array_merge(data, respuesta, menu)
-        list->normal(data)
-    }
+        # informacion para generar la vista de lista_class
+        data = {
+            'breadcrumb': cls.breadcrumb,
+            'th': th,
+            'current_url': functions.generar_url(url_final),
+            'new_url': functions.generar_url(url_detalle),
+        }
+
+        data.update(respuesta)
+        data.update(menu)
+        ret = lista.normal(data)
+        return ret
+
 
     public function detail(var = array())
     {

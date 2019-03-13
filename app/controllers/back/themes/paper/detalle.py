@@ -197,7 +197,7 @@ class detalle:
             if count > 0:
                 for key, f in enumerate(fila[campos['field']]):
                     td = []
-                    for v in campos['columnas']:
+                    for v in campos['columnas'].values():
                         content = self.field(v, f, campos['field'], key)
                         td.append(
                             {'content': content, 'content_field': v['field']})

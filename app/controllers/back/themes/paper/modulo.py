@@ -211,7 +211,7 @@ class modulo(base):
             row['tipo'] = 0
 
         if 'menu' in row:
-            for k, m in row['menu'].items():
+            for m in row['menu']:
                 row['menu'][m['field']] = m
 
         menu = []

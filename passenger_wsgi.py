@@ -24,8 +24,8 @@ def application2(environ, start_response):
         main_data['headers'].append(('Content-Encoding', 'gzip'))
 
     start_response(main_data['status'], main_data['headers'])
-
-    print(environ['PATH_INFO'],'total', (datetime.now()-init_time).total_seconds()*1000)
+    if main_data['status']=='200 OK':
+        print(environ['PATH_INFO'],'total', (datetime.now()-init_time).total_seconds()*1000)
 
     if 'is_file' in main_data and main_data['is_file']:
         f = open(main_data['file'], 'rb')

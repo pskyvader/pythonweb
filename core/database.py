@@ -144,6 +144,7 @@ class database():
 
     def update(self, table, idname, set_query, where, delete_cache=True):
         set_query = self.process_multiple(set_query)
+        print(set_query)
         image = []
         if 'image' in set_query:
             image = set_query['image']

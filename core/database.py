@@ -403,6 +403,8 @@ class database():
     @staticmethod
     def process_multiple(data):
         import json
+        
+        print('antes',data)
         if 'multiple' in data:
             for key, multiple in data['multiple'].items():
                 row = {}
@@ -422,6 +424,8 @@ class database():
                 else:
                     data[key] = row
             del data['multiple']
+        
+        print('despues',data)
         return data
 
     def process_image(self, image_list, table, idname, id_image):

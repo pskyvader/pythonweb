@@ -211,6 +211,7 @@ class app:
     @staticmethod
     def parse_post():
         from cgi import FieldStorage
+        from cgi import MiniFieldStorage
         from cgi import parse_qs
 
         post = {}
@@ -224,6 +225,7 @@ class app:
             try:
                 for key in p.keys():
                     print(key,type(p[key]),p[key])
+                    if isinstance(p[key], MiniFieldStorage)
                     post[key] = p[key].value
             except Exception as error:
                 print('Error al obtener post: ' + repr(error) + repr(p)+ app.environ['PATH_INFO'])

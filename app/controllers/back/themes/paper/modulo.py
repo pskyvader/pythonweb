@@ -228,6 +228,7 @@ class modulo(base):
         
         if 'mostrar' in row:
             mostrar_copy={}
+            print(row['mostrar'])
             for m in row['mostrar']:
                 mostrar_copy[m['field']] = m
             row['mostrar']=mostrar_copy

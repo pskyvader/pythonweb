@@ -243,7 +243,7 @@ class app:
                             tmp_list.append(a.value)
                         else:
                             tmp_list.append(a)
-                    p[key]=tmp_list
+                    post[key]=tmp_list
                 else:
                     post[key] = p[key]
         except Exception as error:

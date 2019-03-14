@@ -320,13 +320,11 @@ class app:
                         pass
                 elif isinstance(i, dict) or isinstance(i, list):
                     var_copy[k] = app.parse_values(i)
-        elif isinstance(i, str):
+        elif isinstance(var_copy, str):
             try:
-                aux_var = json.loads(i)
+                aux_var = json.loads(var_copy)
                 if isinstance(aux_var, dict) or isinstance(aux_var, list):
                     var_copy = app.parse_values(aux_var)
-                else:
-                    var_copy=aux_var
             except:
                 pass
 

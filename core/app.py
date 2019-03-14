@@ -223,7 +223,6 @@ class app:
 
             p = FieldStorage( fp=post_env2['wsgi.input'], environ=post_env, keep_blank_values=True )
             try:
-                print(repr(p), type(p))
                 for key in p.keys():
                     if isinstance(p[key], MiniFieldStorage):
                         post[key] = p[key].value

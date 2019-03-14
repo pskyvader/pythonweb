@@ -536,6 +536,7 @@ class detalle:
             #respuesta['id'] = class_name.insert(campos)
             respuesta['mensaje'] = "Creado correctamente"
         else:
+            respuesta['id']=campos['id']
             #respuesta['id'] = class_name.update(campos)
             respuesta['mensaje'] = "Actualizado correctamente"
 

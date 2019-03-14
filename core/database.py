@@ -409,7 +409,6 @@ class database():
                 row = {}
                 for k, e in multiple.items():
                     if isinstance(e, dict):
-                        print('despues',k,e)
                         for a, f in e.items():
                             if key == "image" or key == "file":
                                 for ke, va in f.items():
@@ -417,6 +416,8 @@ class database():
                             else:
                                 if not a in row:
                                     row[a]={}
+                                
+                                print('despues',a,k,f)
                                 row[a][k] = f
                     else:
                         row[k] = e

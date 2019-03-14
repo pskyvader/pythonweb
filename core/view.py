@@ -18,7 +18,7 @@ class view:
         '''Renderiza las vistas de la lista enviadas, las comprime y la retorna en un string'''
         from .app import app
         from .cache import cache
-        from jinja2 import Environment, FileSystemLoader, FileSystemBytecodeCache,MemcachedBytecodeCache
+        from jinja2 import Environment, FileSystemLoader, FileSystemBytecodeCache
         theme = view.get_theme()
 
         env = Environment(

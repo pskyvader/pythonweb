@@ -421,6 +421,7 @@ class database():
                         row[k] = e
 
                 if key != "image" and key != "file":
+                    print('despues',key,row)
                     data[key] = json.dumps(row)
                 else:
                     print('despues',key,row)

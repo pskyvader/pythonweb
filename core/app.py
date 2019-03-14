@@ -221,7 +221,7 @@ class app:
 
             p = FieldStorage( fp=post_env2['wsgi.input'], environ=post_env, keep_blank_values=True )
             
-            post=app.post_field(p)
+            post=app.post_field(p.items())
         
         post = app.format_array(post)
         post = app.parse_values(post)
@@ -232,17 +232,11 @@ class app:
         from cgi import MiniFieldStorage
         post={}
         try:
-            for key in p.keys():
+            for key,value in p:
                 if isinstance(p[key], MiniFieldStorage):
                     post[key] = p[key].value
                 elif isinstance(p[key],list):
-                    tmp_list=[]
-                    for a in p[key]:
-                        if isinstance(a, MiniFieldStorage):
-                            tmp_list.append(a.value)
-                        else:
-                            tmp_list.append(a)
-                    p[key]=tmp_list
+                    p[key]=app.post_field(enumerate(p[key]))
                 else:
                     post[key] = p[key]
         except Exception as error:

@@ -528,8 +528,8 @@ class detalle:
 
     @staticmethod
     def guardar(class_name):
+        print(app.post)
         campos = app.post['campos']
-        print(campos)
         respuesta = {'exito': False, 'mensaje': ''}
 
         if campos['id']=='':

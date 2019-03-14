@@ -168,7 +168,7 @@ class app:
         for cookie in functions.cookies:
             data_return['headers'].append(('Set-Cookie', cookie))
         if data_return['status']=='200 OK':
-            print('total', (datetime.now()-init_time).total_seconds()*1000)
+            print('despues de render', (datetime.now()-init_time).total_seconds()*1000)
         return data_return
 
     @staticmethod

@@ -265,7 +265,7 @@ class app:
                 # separar key principal de key dentro de array
                 final_key, rest = str(k).split('[', 1)
                 if rest != '':
-                    print(type(final_key))
+                    print(final_key, rest)
                     if final_key not in aux:
                         aux[final_key] = {}
 

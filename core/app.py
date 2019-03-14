@@ -221,12 +221,8 @@ class app:
             p = FieldStorage( fp=post_env['wsgi.input'], environ=post_env, keep_blank_values=True )
             if p.list!=None:
                 post=app.post_field(p)
-        
-        if 'campos' in post:
-            print('antes',post['campos']['multiple']['detalle'])
+
         post = app.format_array(post)
-        if 'campos' in post:
-            print('despues',post['campos']['multiple']['detalle'])
         post = app.parse_values(post)
         
         return post

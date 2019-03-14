@@ -224,7 +224,7 @@ class app:
         
         post = app.format_array(post)
         post = app.parse_values(post)
-        print(post)
+        print(post['campos']['multiple']['detalle'])
         return post
 
     @staticmethod

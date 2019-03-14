@@ -260,12 +260,12 @@ class app:
         var_copy = var.copy()
         aux = {}
         for k, i in var_copy.items():
-            print(type(k))
             # si existe simbolo de array
             if "[" in k:
                 # separar key principal de key dentro de array
                 final_key, rest = str(k).split('[', 1)
                 if rest != '':
+                    print(type(final_key))
                     if final_key not in aux:
                         aux[final_key] = {}
 

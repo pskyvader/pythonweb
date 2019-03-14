@@ -296,7 +296,7 @@ class app:
         if len(var)==1:
             key,value=next(iter(var.items()))
             if isinstance(key,int):
-                print('valor unico',key,value)
+                var=value
         return var
 
     @staticmethod

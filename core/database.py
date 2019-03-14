@@ -415,6 +415,8 @@ class database():
                                 for ke, va in f.items():
                                     row[k][ke][a] = va
                             else:
+                                if not a in row:
+                                    row[a]={}
                                 row[a][k] = f
                     else:
                         row[k] = e

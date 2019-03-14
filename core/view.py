@@ -18,13 +18,12 @@ class view:
         '''Renderiza las vistas de la lista enviadas, las comprime y la retorna en un string'''
         from .app import app
         from .cache import cache
-        from jinja2 import Environment, FileSystemLoader, FileSystemBytecodeCache,MemcachedBytecodeCache,MinimalClientInterface
+        from jinja2 import Environment, FileSystemLoader, FileSystemBytecodeCache,MemcachedBytecodeCache
         theme = view.get_theme()
 
         env = Environment(
             loader=FileSystemLoader(theme),
-            #bytecode_cache=FileSystemBytecodeCache(directory=app.get_dir(True) + 'tmp/'),
-            bytecode_cache=MemcachedBytecodeCache(client=MinimalClientInterface()),
+            bytecode_cache=FileSystemBytecodeCache(directory=app.get_dir(True) + 'tmp/'),
             trim_blocks=True,
             lstrip_blocks=True
         )

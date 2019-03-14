@@ -274,11 +274,11 @@ class app:
                     # comprobar si existe mas de un valor en sub key, sino se recupera el primer y unico valor
                     elif rest.find('[') == -1:
                         rest = str(rest).split(']', 1)[0]
+                        print(final_key, rest)
                         aux[final_key][rest] = i
                     else:
                         if rest.find(']') < rest.find('['):
                             rest1, rest2 = str(rest).split(']', 1)
-                            print(final_key, rest1+rest2)
                             aux[final_key][rest1+rest2] = i
                         else:
                             print(

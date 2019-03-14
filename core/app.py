@@ -236,7 +236,13 @@ class app:
                 if isinstance(p[key], MiniFieldStorage):
                     post[key] = p[key].value
                 elif isinstance(p[key],list):
-                    p[key]=app.post_field(enumerate(p[key]))
+                    tmp_list=[]
+                    for a in p[key]:
+                        if isinstance(a, MiniFieldStorage):
+                            tmp_list.append(a.value)
+                        else:
+                            tmp_list.append(a)
+                    p[key]=tmp_list
                 else:
                     post[key] = p[key]
         except Exception as error:

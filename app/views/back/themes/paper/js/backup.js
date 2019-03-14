@@ -146,7 +146,7 @@ function leer_log(restaurar) {
                         setTimeout(leer_log, 500);
                     }
                 } else {
-                    console.log(data)
+                    //console.log(data)
                     setTimeout(leer_log, 500);
                 }
             },

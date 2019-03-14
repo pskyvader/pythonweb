@@ -265,7 +265,6 @@ class app:
                 # separar key principal de key dentro de array
                 final_key, rest = str(k).split('[', 1)
                 if rest != '':
-                    print(final_key, rest)
                     if final_key not in aux:
                         aux[final_key] = {}
 
@@ -289,6 +288,7 @@ class app:
                     aux[final_key] = i
                 del var[k]
             elif k == '':
+                print(final_key, i)
                 final_key = len(var_copy)-1
                 aux[final_key] = i
                 del var[k]

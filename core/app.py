@@ -211,8 +211,6 @@ class app:
     @staticmethod
     def parse_post():
         from cgi import FieldStorage
-        from cgi import MiniFieldStorage
-        from cgi import parse_qs
 
         post = {}
         if app.environ['REQUEST_METHOD'] == 'POST':
@@ -222,19 +220,29 @@ class app:
             post_env['CONTENT_LENGTH'] = int(app.environ.get('CONTENT_LENGTH', 0))
 
             p = FieldStorage( fp=post_env2['wsgi.input'], environ=post_env, keep_blank_values=True )
-            try:
+            
+            post=app.post_field(p)
+        
+        post = app.format_array(post)
+        post = app.parse_values(post)
+        return post
+
+    @staticmethod
+    def post_field(p):
+        from cgi import MiniFieldStorage
+        post={}
+        try:
                 for key in p.keys():
                     if isinstance(p[key], MiniFieldStorage):
                         post[key] = p[key].value
+                    elif isinstance(p[key],list):
+
                     else:
                         post[key] = p[key]
             except Exception as error:
                 #print('Error al obtener post: ' + repr(error) + repr(p)+ app.environ['PATH_INFO'])
-                #raise RuntimeError('Error al obtener post: ' + repr(error) + repr(p)+ app.environ['PATH_INFO'])
+                raise RuntimeError('Error al obtener post: ' + repr(error) + repr(p)+ app.environ['PATH_INFO'])
                 pass
-        
-        post = app.format_array(post)
-        post = app.parse_values(post)
         return post
 
     @staticmethod

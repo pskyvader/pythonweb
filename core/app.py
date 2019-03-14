@@ -260,7 +260,7 @@ class app:
         var_copy = var.copy()
         aux = {}
         for k, i in var_copy.items():
-            if k==0:
+            if k=='0':
                 print(i)
             # si existe simbolo de array
             if "[" in k:

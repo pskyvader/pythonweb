@@ -419,6 +419,7 @@ class database():
                                     row[a]={}
                                 row[a][k] = f
                     else:
+                        print(k,e)
                         row[k] = e
 
                 if key != "image" and key != "file":

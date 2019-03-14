@@ -544,3 +544,4 @@ class detalle:
         if isinstance(respuesta['id'], dict):
             return respuesta['id']
         return respuesta
+        

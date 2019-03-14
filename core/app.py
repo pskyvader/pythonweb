@@ -300,6 +300,8 @@ class app:
         var_copy = var.copy()
         if isinstance(var_copy, list):
             var_copy = dict.fromkeys(var_copy, 1)
+            print('dicccionario',var_copy)
+        
         for k, i in var_copy.items():
             if isinstance(i, str):
                 try:

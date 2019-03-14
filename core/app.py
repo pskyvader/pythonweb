@@ -1,5 +1,3 @@
-# import cgitb
-# cgitb.enable()
 import sys
 import os
 from .view import view
@@ -30,6 +28,8 @@ class app:
     def init(self, environ):
         from .cache import cache
         from .functions import functions
+        from datetime import datetime
+        init_time = datetime.now()
 
         app.environ = environ
         data_return = {}
@@ -163,7 +163,7 @@ class app:
         data_return['headers'] = response['headers']
         for cookie in functions.cookies:
             data_return['headers'].append(('Set-Cookie', cookie))
-
+        print('total', (datetime.now()-init_time).total_seconds()*1000)
         return data_return
 
     @staticmethod

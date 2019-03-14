@@ -529,6 +529,7 @@ class detalle:
     @staticmethod
     def guardar(class_name):
         campos = app.post['campos']
+        print(campos)
         respuesta = {'exito': False, 'mensaje': ''}
 
         if campos['id']=='':

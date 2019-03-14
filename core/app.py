@@ -223,7 +223,7 @@ class app:
             p = FieldStorage( fp=post_env2['wsgi.input'], environ=post_env, keep_blank_values=True )
             try:
                 for key in p.keys():
-                    print(type(p[key]))
+                    print(key,type(p[key]),p[key])
                     post[key] = p[key].value
             except Exception as error:
                 print('Error al obtener post: ' + repr(error) + repr(p)+ app.environ['PATH_INFO'])

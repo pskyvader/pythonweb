@@ -416,8 +416,6 @@ class database():
                             else:
                                 if not a in row:
                                     row[a]={}
-                                
-                                print('despues',a,k,f)
                                 row[a][k] = f
                     else:
                         row[k] = e
@@ -425,6 +423,7 @@ class database():
                 if key != "image" and key != "file":
                     data[key] = json.dumps(row)
                 else:
+                    print('despues',key,row)
                     data[key] = row
             del data['multiple']
         return data

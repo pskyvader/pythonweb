@@ -299,20 +299,28 @@ class app:
     def parse_values(var: dict):
         var_copy = var.copy()
         if isinstance(var_copy, list):
-            print('lista',var_copy)
-            var_copy = dict(enumerate(var_copy))
-            print('dicccionario',var_copy)
+            for i in var_copy:
+                if isinstance(i, str):
+                    try:
+                        aux_var = json.loads(i)
+                        if isinstance(aux_var, dict) or isinstance(aux_var, list):
+                            var_copy[k] = aux_var
+                    except:
+                        pass
+                elif isinstance(i, dict) or isinstance(i, list):
+                    var_copy[k] = app.parse_values(i)
+        elif isinstance(var_copy, dict):
+            for k, i in var_copy.items():
+                if isinstance(i, str):
+                    try:
+                        aux_var = json.loads(i)
+                        if isinstance(aux_var, dict) or isinstance(aux_var, list):
+                            var_copy[k] = aux_var
+                    except:
+                        pass
+                elif isinstance(i, dict) or isinstance(i, list):
+                    var_copy[k] = app.parse_values(i)
         
-        for k, i in var_copy.items():
-            if isinstance(i, str):
-                try:
-                    aux_var = json.loads(i)
-                    if isinstance(aux_var, dict) or isinstance(aux_var, list):
-                        var_copy[k] = aux_var
-                except:
-                    pass
-            elif isinstance(i, dict) or isinstance(i, list):
-                var_copy[k] = app.parse_values(i)
         return var_copy
 
     @staticmethod

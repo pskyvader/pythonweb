@@ -300,7 +300,7 @@ class app:
         var_copy = var.copy()
         if isinstance(var_copy, list):
             print('lista',var_copy)
-            var_copy = dict.fromkeys(var_copy, 1)
+            var_copy = dict(enumerate(var_copy))
             print('dicccionario',var_copy)
         
         for k, i in var_copy.items():

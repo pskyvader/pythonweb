@@ -408,6 +408,7 @@ class database():
             for key, multiple in data['multiple'].items():
                 row = {}
                 for k, e in multiple.items():
+                    print(k)
                     if isinstance(e, dict):
                         for a, f in e.items():
                             if key == "image" or key == "file":
@@ -421,10 +422,8 @@ class database():
                         row[k] = e
 
                 if key != "image" and key != "file":
-                    print('despues',key,row)
                     data[key] = json.dumps(row)
                 else:
-                    print('despues',key,row)
                     data[key] = row
             del data['multiple']
         return data

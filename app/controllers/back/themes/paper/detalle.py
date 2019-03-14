@@ -528,11 +528,11 @@ class detalle:
 
     @staticmethod
     def guardar(class_name):
-        print(app.post)
         campos = app.post['campos']
+        print(campos)
         respuesta = {'exito': False, 'mensaje': ''}
 
-        if '' == campos['id']:
+        if campos['id']=='':
             respuesta['id'] = class_name.insert(campos)
             respuesta['mensaje'] = "Creado correctamente"
         else:

@@ -219,7 +219,8 @@ class app:
             post_env['QUERY_STRING'] = ''
             post_env['CONTENT_LENGTH'] = int(app.environ.get('CONTENT_LENGTH', 0))
 
-            p = FieldStorage( fp=post_env2['wsgi.input'], environ=post_env, keep_blank_values=True )
+            p1,p2,p3 = FieldStorage( fp=post_env2['wsgi.input'], environ=post_env, keep_blank_values=True )
+            print(p1,p2,p3)
             print(type(p))
             post=app.post_field(p)
         

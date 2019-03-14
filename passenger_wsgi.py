@@ -15,6 +15,7 @@ def application2(environ, start_response):
     ret = main_data['response_body']
 
 
+    print('total', (datetime.now()-init_time).total_seconds()*1000)
 
     if isinstance(ret, str) and ret != '':
         ret = bytes(ret, 'utf-8')
@@ -33,7 +34,6 @@ def application2(environ, start_response):
             print('no filewrapper')
             return file_wrapper(f, 1024)
     else:
-        print('total', (datetime.now()-init_time).total_seconds()*1000)
         return [ret]
 
 

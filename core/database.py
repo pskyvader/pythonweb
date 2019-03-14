@@ -409,7 +409,7 @@ class database():
             for key, multiple in data['multiple'].items():
                 row = {}
                 for k, e in multiple.items():
-                    if isinstance(e, list):
+                    if isinstance(e, dict):
                         for a, f in e.items():
                             if key == "image" or key == "file":
                                 for ke, va in f.items():

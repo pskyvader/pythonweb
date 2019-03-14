@@ -154,6 +154,10 @@ class app:
         if 'file' in response:
             data_return['file'] = response['file']
 
+        
+        print('antes de render', (datetime.now()-init_time).total_seconds()*1000)
+        init_time=datetime.now()
+
         if isinstance(response['body'], list):
             data_return['response_body'] = view.render(response['body'])
             cache.save_cache(url_cache)

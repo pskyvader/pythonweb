@@ -408,7 +408,6 @@ class database():
     @staticmethod
     def process_multiple(data):
         import json
-        
         if 'multiple' in data:
             for key, multiple in data['multiple'].items():
                 row = {}

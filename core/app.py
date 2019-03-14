@@ -278,6 +278,7 @@ class app:
                     else:
                         if rest.find(']') < rest.find('['):
                             rest1, rest2 = str(rest).split(']', 1)
+                            print(final_key, rest1+rest2)
                             aux[final_key][rest1+rest2] = i
                         else:
                             print(
@@ -288,7 +289,6 @@ class app:
                     aux[final_key] = i
                 del var[k]
             elif k == '':
-                print(final_key, i)
                 final_key = len(var_copy)-1
                 aux[final_key] = i
                 del var[k]

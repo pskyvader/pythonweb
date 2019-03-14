@@ -247,7 +247,7 @@ class app:
                     post[key] = p[key]
         except Exception as error:
             #print('Error al obtener post: ' + repr(error) + repr(p)+ app.environ['PATH_INFO'])
-            raise RuntimeError('Error al obtener post: ' + repr(error) + repr(p)+ app.environ['PATH_INFO'])
+            raise RuntimeError('Error al obtener post: ' + repr(error) +key + repr(p)+ app.environ['PATH_INFO'])
             pass
         return post
 

@@ -174,7 +174,7 @@ class database():
         sql += ") "
 
         if len(where) > 0:
-            row = self.consulta(sql, False, delete_cache)
+            #row = self.consulta(sql, False, delete_cache)
             if (row):
                 if len(image) > 0:
                     self.process_image(image, table, idname, where[idname])

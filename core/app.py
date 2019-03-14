@@ -304,11 +304,11 @@ class app:
                     try:
                         aux_var = json.loads(i)
                         if isinstance(aux_var, dict) or isinstance(aux_var, list):
-                            var_copy[k] = aux_var
+                            i = aux_var
                     except:
                         pass
                 elif isinstance(i, dict) or isinstance(i, list):
-                    var_copy[k] = app.parse_values(i)
+                    i = app.parse_values(i)
         elif isinstance(var_copy, dict):
             for k, i in var_copy.items():
                 if isinstance(i, str):

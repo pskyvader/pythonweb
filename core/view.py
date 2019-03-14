@@ -18,15 +18,22 @@ class view:
         '''Renderiza las vistas de la lista enviadas, las comprime y la retorna en un string'''
         from .app import app
         from .cache import cache
-        from jinja2 import Environment, FileSystemLoader, FileSystemBytecodeCache
+        from jinja2 import Environment, FileSystemLoader, FileSystemBytecodeCache,MemcachedBytecodeCache
+        from pymemcache.client.base import Client
+        client = Client(('localhost', 11211))
         theme = view.get_theme()
 
+
+        print('environment')
         env = Environment(
             loader=FileSystemLoader(theme),
-            bytecode_cache=FileSystemBytecodeCache(directory=app.get_dir(True) + 'tmp/'),
+            #bytecode_cache=FileSystemBytecodeCache(directory=app.get_dir(True) + 'tmp/'),
+            bytecode_cache=MemcachedBytecodeCache(client=client),
             trim_blocks=True,
             lstrip_blocks=True
         )
+        
+        print('env listo')
 
         for template, data in template_list:
             template_url = theme + template + "." + view.extension

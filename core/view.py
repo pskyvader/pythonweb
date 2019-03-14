@@ -23,7 +23,7 @@ class view:
 
         env = Environment(
             loader=FileSystemLoader(theme),
-            bytecode_cache=FileSystemBytecodeCache(directory=app.get_dir(True) + 'cache/'),
+            bytecode_cache=FileSystemBytecodeCache(directory=app.get_dir(True) + 'tmp/'),
             trim_blocks=True,
             lstrip_blocks=True
         )

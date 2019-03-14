@@ -26,11 +26,10 @@ class detalle:
         campos = data['campos']
         row_data = data['row']
         row = []
-        for k,v in campos.items():
+        for k, v in campos.items():
             content = self.field(v, row_data)
-            row.append( {'content': content, 'content_field': v['field'], 'class': 'hidden' if 'hidden' == v['type'] else ''})
-
-
+            row.append(
+                {'content': content, 'content_field': v['field'], 'class': 'hidden' if 'hidden' == v['type'] else ''})
 
         data['row'] = row
         data['title'] = self.metadata['title']
@@ -47,7 +46,7 @@ class detalle:
         asi = aside()
         ret['body'] += asi.normal()['body']
 
-        ret['body'].append(('detail',data))
+        ret['body'].append(('detail', data))
 
         f = footer()
         ret['body'] += f.normal()['body']
@@ -74,7 +73,7 @@ class detalle:
 
         return {'campos': campos}
 
-    def field(self, campos:dict, fila:dict, parent='', idparent=0, level=0):
+    def field(self, campos: dict, fila: dict, parent='', idparent=0, level=0):
         editor_count = 0
         if campos['type'] == 'active':
             data = {
@@ -120,7 +119,7 @@ class detalle:
             data['help'] += " (Tamaño máximo de archivo " + \
                 self.max_upload + ")"
             if 0 == editor_count:
-                theme = app.get_url() +'static/' + 'assets/ckeditor/'
+                theme = app.get_url() + 'static/' + 'assets/ckeditor/'
                 t = '?t=I8BG'
                 data['preload'] = [
                     {'url': 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css', 'type': 'style'},
@@ -194,7 +193,8 @@ class detalle:
 
         elif campos['type'] == 'multiple':
             fields = []
-            count = len(fila[campos['field']]) if campos['field'] in fila and isinstance( fila[campos['field']], list) else 0
+            count = len(fila[campos['field']]) if campos['field'] in fila and isinstance(
+                fila[campos['field']], list) else 0
             if count > 0:
                 for key, f in enumerate(fila[campos['field']]):
                     td = []
@@ -211,7 +211,7 @@ class detalle:
                 new_field = True
 
             new_line = []
-            #new fields, without values
+            # new fields, without values
             for v in campos['columnas'].values():
                 content = self.field(v, {}, campos['field'])
                 new_line.append(
@@ -263,9 +263,10 @@ class detalle:
                 'value': fila[campos['field']] if campos['field'] in fila else '',
             }
         elif campos['type'] == 'multiple_select':
-            options=[]
+            options = []
             for option in campos['option'].values():
-                option['selected'] = (campos['field'] in fila and fila[campos['field']] == option['value'])
+                option['selected'] = (
+                    campos['field'] in fila and fila[campos['field']] == option['value'])
                 options.append(option.copy())
 
             data = {
@@ -296,12 +297,15 @@ class detalle:
                 'icon': ('fa-check' if fila[campos['field']] == 'true' else 'fa-close') if campos['field'] in fila else 'fa-question-circle',
             }
         elif campos['type'] == 'multiple_active_array':
-            array_campos=[]
+            array_campos = []
             for key in campos['array'].keys():
-                key_copy=str(key)
-                campos['array'][key]['active'] = str(fila[campos['field']][key_copy]) if campos['field'] in fila and key_copy in fila[campos['field']] else 'true'
-                campos['array'][key]['class'] = ('btn-success' if fila[campos['field']][key_copy] == 'true' else 'btn-danger') if campos['field'] in fila and key_copy in fila[campos['field']] else 'btn-success'
-                campos['array'][key]['icon'] = ('fa-check' if fila[campos['field']][key_copy] == 'true' else 'fa-close') if campos['field'] in fila and key_copy in fila[campos['field']] else 'fa-check'
+                key_copy = str(key)
+                campos['array'][key]['active'] = str(
+                    fila[campos['field']][key_copy]) if campos['field'] in fila and key_copy in fila[campos['field']] else 'true'
+                campos['array'][key]['class'] = ('btn-success' if fila[campos['field']][key_copy] ==
+                                                 'true' else 'btn-danger') if campos['field'] in fila and key_copy in fila[campos['field']] else 'btn-success'
+                campos['array'][key]['icon'] = ('fa-check' if fila[campos['field']][key_copy] ==
+                                                'true' else 'fa-close') if campos['field'] in fila and key_copy in fila[campos['field']] else 'fa-check'
                 array_campos.append(campos['array'][key].copy())
 
             data = {
@@ -451,7 +455,8 @@ class detalle:
                     'count': count if count > 0 else '',
                 }
                 for children in campos['parent']:
-                    data['children'] += self.field(campos, fila, '', children[0], 1)
+                    data['children'] += self.field(campos,
+                                                   fila, '', children[0], 1)
 
             else:
                 parent = campos['parent']
@@ -477,7 +482,8 @@ class detalle:
                     campos['parent'] = parent[idparent]['children'].copy()
 
                     for children in campos['parent']:
-                        data['children'] += self.field(campos, fila, '', children[0], level + 1)
+                        data['children'] += self.field(campos,
+                                                       fila, '', children[0], level + 1)
 
         elif campos['type'] == 'select':
             data = {
@@ -496,7 +502,8 @@ class detalle:
                 else:
                     selected = (children[0] == fila[campos['field']])
 
-                data['option'].append( {'value': children[0], 'selected': selected, 'text': children['titulo']})
+                data['option'].append(
+                    {'value': children[0], 'selected': selected, 'text': children['titulo']})
 
         elif campos['type'] == 'textarea':
             data = {
@@ -523,7 +530,7 @@ class detalle:
                 'help': campos['help'] if 'help' in campos else '',
             }
 
-        content=('detail/'+campos['type'],data)
+        content = ('detail/'+campos['type'], data)
         return content
 
     @staticmethod
@@ -531,11 +538,11 @@ class detalle:
         campos = app.post['campos']
         respuesta = {'exito': False, 'mensaje': ''}
 
-        if campos['id']=='':
+        if campos['id'] == '':
             respuesta['id'] = class_name.insert(campos)
             respuesta['mensaje'] = "Creado correctamente"
         else:
-            respuesta['id']=campos['id']
+            respuesta['id'] = campos['id']
             respuesta['id'] = class_name.update(campos)
             respuesta['mensaje'] = "Actualizado correctamente"
 
@@ -543,4 +550,3 @@ class detalle:
         if isinstance(respuesta['id'], dict):
             return respuesta['id']
         return respuesta
-        

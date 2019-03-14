@@ -408,9 +408,9 @@ class database():
             for key, multiple in data['multiple'].items():
                 row = {}
                 for k, e in multiple.items():
-                    print(k)
                     if isinstance(e, dict):
                         for a, f in e.items():
+                            print(a,k)
                             if key == "image" or key == "file":
                                 for ke, va in f.items():
                                     row[k][ke][a] = va

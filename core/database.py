@@ -422,8 +422,16 @@ class database():
                                 if not a in row:
                                     row[a]={}
                                 row[a][k] = f
+                    elif isinstance(e, list):
+                        for a, f in enumerate(e):
+                            if key == "image" or key == "file":
+                                for ke, va in f.items():
+                                    row[k][ke][a] = va
+                            else:
+                                if not a in row:
+                                    row[a]={}
+                                row[a][k] = f
                     else:
-                        print(k,e)
                         row[k] = e
 
                 if key != "image" and key != "file":

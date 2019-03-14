@@ -222,6 +222,7 @@ class app:
 
             p = FieldStorage( fp=post_env2['wsgi.input'], environ=post_env, keep_blank_values=True )
             try:
+                print(p)
                 for key in p.keys():
                     post[key] = p[key].value
             except Exception as error:

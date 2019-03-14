@@ -232,17 +232,17 @@ class app:
         from cgi import MiniFieldStorage
         post={}
         try:
-                for key in p.keys():
-                    if isinstance(p[key], MiniFieldStorage):
-                        post[key] = p[key].value
-                    elif isinstance(p[key],list):
-
-                    else:
-                        post[key] = p[key]
-            except Exception as error:
-                #print('Error al obtener post: ' + repr(error) + repr(p)+ app.environ['PATH_INFO'])
-                raise RuntimeError('Error al obtener post: ' + repr(error) + repr(p)+ app.environ['PATH_INFO'])
-                pass
+            for key in p.keys():
+                if isinstance(p[key], MiniFieldStorage):
+                    post[key] = p[key].value
+                elif isinstance(p[key],list):
+                    p[key]=app.post_field(enumerate(p[key]))
+                else:
+                    post[key] = p[key]
+        except Exception as error:
+            #print('Error al obtener post: ' + repr(error) + repr(p)+ app.environ['PATH_INFO'])
+            raise RuntimeError('Error al obtener post: ' + repr(error) + repr(p)+ app.environ['PATH_INFO'])
+            pass
         return post
 
     @staticmethod

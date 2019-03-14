@@ -260,8 +260,6 @@ class app:
         var_copy = var.copy()
         aux = {}
         for k, i in var_copy.items():
-            if k=='0':
-                print(i)
             # si existe simbolo de array
             if "[" in k:
                 # separar key principal de key dentro de array
@@ -295,6 +293,8 @@ class app:
                 del var[k]
 
         var = app.merge(var, aux)
+        if len(var)==1:
+            print('valor unico',var)
         return var
 
     @staticmethod

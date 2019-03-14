@@ -146,7 +146,7 @@ class database():
         set_query = self.process_multiple(set_query)
         print('FINAL {')
         for x,y in set_query.items():
-            print('"',x,'":',y)
+            print('"',x,'":',y,',')
         
         print('}')
         image = []

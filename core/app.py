@@ -294,7 +294,7 @@ class app:
 
         var = app.merge(var, aux)
         if len(var)==1:
-            print('valor unico',var)
+            print('valor unico',next(iter(var.items())))
         return var
 
     @staticmethod

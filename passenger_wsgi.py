@@ -7,15 +7,14 @@ sys.path.insert(0, os.path.dirname(__file__))
 
 
 def application2(environ, start_response):
-    from datetime import datetime
-    init_time = datetime.now()
+    #from datetime import datetime
+    #init_time = datetime.now()
     
     app_web = app(os.path.dirname(__file__))
     main_data = app_web.init(environ)
     ret = main_data['response_body']
 
 
-    print('total', (datetime.now()-init_time).total_seconds()*1000)
 
     if isinstance(ret, str) and ret != '':
         ret = bytes(ret, 'utf-8')
@@ -24,8 +23,9 @@ def application2(environ, start_response):
         main_data['headers'].append(('Accept-encoding', 'gzip,deflate'))
         main_data['headers'].append(('Content-Encoding', 'gzip'))
 
-    start_response(main_data['status'], main_data['headers'])
+    #start_response(main_data['status'], main_data['headers'])
 
+    print('total', (datetime.now()-init_time).total_seconds()*1000)
     if 'is_file' in main_data and main_data['is_file']:
         f = open(main_data['file'], 'rb')
         if 'wsgi.file_wrapper' in environ:

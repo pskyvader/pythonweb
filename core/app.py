@@ -222,13 +222,13 @@ class app:
             if p.list!=None:
                 post=app.post_field(p)
         
-        post = app.format_array(post)
         if 'campos' in post:
             print('antes',post['campos']['multiple']['detalle'])
-        post = app.parse_values(post)
-        
+        post = app.format_array(post)
         if 'campos' in post:
             print('despues',post['campos']['multiple']['detalle'])
+        post = app.parse_values(post)
+        
         return post
 
     @staticmethod
@@ -260,6 +260,8 @@ class app:
         var_copy = var.copy()
         aux = {}
         for k, i in var_copy.items():
+            if k=='0':
+                print(i)
             # si existe simbolo de array
             if "[" in k:
                 # separar key principal de key dentro de array

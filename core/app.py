@@ -224,8 +224,11 @@ class app:
         
         post = app.format_array(post)
         if 'campos' in post:
-            print(post['campos']['multiple']['detalle'])
+            print('antes',post['campos']['multiple']['detalle'])
         post = app.parse_values(post)
+        
+        if 'campos' in post:
+            print('despues',post['campos']['multiple']['detalle'])
         return post
 
     @staticmethod

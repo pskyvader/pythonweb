@@ -28,8 +28,8 @@ class app:
     def init(self, environ):
         from .cache import cache
         from .functions import functions
-        from datetime import datetime
-        init_time = datetime.now()
+        #from datetime import datetime
+        #init_time = datetime.now()
 
         app.environ = environ
         data_return = {}
@@ -154,9 +154,9 @@ class app:
         if 'file' in response:
             data_return['file'] = response['file']
 
-        if data_return['status']=='200 OK':
-            print('antes de render', (datetime.now()-init_time).total_seconds()*1000)
-            init_time=datetime.now()
+        #if data_return['status']=='200 OK':
+            #print('antes de render', (datetime.now()-init_time).total_seconds()*1000)
+            #init_time=datetime.now()
 
         if isinstance(response['body'], list):
             data_return['response_body'] = view.render(response['body'])
@@ -167,8 +167,8 @@ class app:
         data_return['headers'] = response['headers']
         for cookie in functions.cookies:
             data_return['headers'].append(('Set-Cookie', cookie))
-        if data_return['status']=='200 OK':
-            print('despues de render', (datetime.now()-init_time).total_seconds()*1000)
+        #if data_return['status']=='200 OK':
+            #print('despues de render', (datetime.now()-init_time).total_seconds()*1000)
         return data_return
 
     @staticmethod

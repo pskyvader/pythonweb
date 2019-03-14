@@ -24,7 +24,7 @@ class view:
         env = Environment(
             loader=FileSystemLoader(theme),
             #bytecode_cache=FileSystemBytecodeCache(directory=app.get_dir(True) + 'tmp/'),
-            bytecode_cache=MemcachedBytecodeCache(client=),
+            bytecode_cache=MemcachedBytecodeCache(client=MinimalClientInterface()),
             trim_blocks=True,
             lstrip_blocks=True
         )

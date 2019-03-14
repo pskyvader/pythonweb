@@ -295,7 +295,7 @@ class app:
         var = app.merge(var, aux)
         if len(var)==1:
             key,value=next(iter(var.items()))
-            if isinstance(key,int):
+            if isinstance(key,int) and key==0:
                 var=value
         return var
 

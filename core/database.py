@@ -144,7 +144,7 @@ class database():
 
     def update(self, table, idname, set_query, where, delete_cache=True):
         set_query = self.process_multiple(set_query)
-        print('{')
+        print('FINAL {')
         for x,y in set_query.items():
             print('"',x,'":',y)
         

@@ -224,9 +224,11 @@ class app:
             p = FieldStorage( fp=post_env2['wsgi.input'], environ=post_env, keep_blank_values=True )
             try:
                 for key in p.keys():
-                    print(key,type(p[key]),p[key])
-                    if isinstance(p[key], MiniFieldStorage)
-                    post[key] = p[key].value
+                    if isinstance(p[key], MiniFieldStorage):
+                        post[key] = p[key].value
+                    else:
+                        post[key] = p[key]
+
             except Exception as error:
                 print('Error al obtener post: ' + repr(error) + repr(p)+ app.environ['PATH_INFO'])
                 #raise RuntimeError('Error al obtener post: ' + repr(error) + repr(p)+ app.environ['PATH_INFO'])

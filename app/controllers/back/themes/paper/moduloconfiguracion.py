@@ -6,7 +6,7 @@ from app.models.administrador import administrador as administrador_model
 #from app.models.modulo import modulo as modulo_model
 #from app.models.moduloconfiguracion import moduloconfiguracion as moduloconfiguracion_model
 
-#from .detalle import detalle as detalle_class
+from .detalle import detalle as detalle_class
 from .lista import lista as lista_class
 #from .head import head
 #from .header import header
@@ -122,4 +122,88 @@ class moduloconfiguracion(base):
         data.update(respuesta)
         data.update(menu)
         ret = lista.normal(data)
+        return ret
+
+
+
+    @classmethod
+    def detail(cls, var=[]):
+        '''Controlador de detalle de elementos base, puede ser sobreescrito en el controlador de cada modulo'''
+        ret = {'body': ''}
+        # Clase para enviar a controlador de detalle
+        class_name = cls.class_name
+        url_list = cls.url.copy()
+        url_save = cls.url.copy()
+        url_final = cls.url.copy()
+        metadata=cls.metadata.copy()
+        url_save.append('guardar')
+        url_final.append('detail')
+        if len(var)>0:
+            id = int(var[0])
+            url_final.append(id)
+            metadata['title'] = 'Editar ' + metadata['title']
+        else:
+            id = 0
+            metadata['title'] = 'Nuevo ' + metadata['title']
+
+        cls.breadcrumb.append({'url': functions.generar_url( url_final), 'title': metadata['title'], 'active': 'active'})
+        
+        if not administrador_model.verificar_sesion():
+            url_final = ['login', 'index'] + url_final
+        # verificar sesion o redireccionar a login
+        url_return = functions.url_redirect(url_final)
+        if url_return != '':
+            ret['error'] = 301
+            ret['redirect'] = url_return
+            return ret
+
+        # cabeceras y campos que se muestran en el detalle:
+        # titulo,campo de la tabla a usar, tipo (ver archivo detalle.py funcion "field")
+
+
+        columnas_mostrar = {
+            'orden' : {'title_field' : 'Orden', 'field' : 'orden', 'type' : 'multiple_order', 'required' : True, 'col' : 1},
+            'field' : {'title_field' : 'Campo', 'field' : 'field', 'type' : 'multiple_text', 'required' : True, 'col' : 2},
+            'titulo' : {'title_field' : 'Titulo', 'field' : 'titulo', 'type' : 'multiple_text', 'required' : True, 'col' : 3},
+            'tipo' : {'title_field' : 'Tipo', 'field' : 'tipo', 'type' : 'multiple_select', 'required' : True, 'option' : cls.tipos_mostrar, 'col' : 3},
+            'button' : {'field' : '', 'type' : 'multiple_button', 'col' : 3},
+        }
+        columnas_detalle = {
+            'orden' : {'title_field' : 'Orden', 'field' : 'orden', 'type' : 'multiple_order', 'required' : True, 'col' : 1},
+            'field' : {'title_field' : 'Campo', 'field' : 'field', 'type' : 'multiple_text', 'required' : True, 'col' : 2},
+            'titulo' : {'title_field' : 'Titulo', 'field' : 'titulo', 'type' : 'multiple_text', 'required' : True, 'col' : 3},
+            'tipo' : {'title_field' : 'Tipo', 'field' : 'tipo', 'type' : 'multiple_select', 'required' : True, 'option' : cls.tipos_detalle, 'col' : 3},
+            'button' : {'field' : '', 'type' : 'multiple_button', 'col' : 3},
+        }
+        campos = {
+            'module' : {'title_field' : 'Modulo', 'field' : 'module', 'type' : 'url', 'required' : True, 'help' : 'Modulo asociado'},
+            'titulo' : {'title_field' : 'Titulo', 'field' : 'titulo', 'type' : 'text', 'required' : True},
+            'icono' : {'title_field' : 'Icono', 'field' : 'icono', 'type' : 'icon', 'required' : True, 'help' : 'Icono para barra lateral'},
+            'sub' : {'title_field' : 'Sub seccion', 'field' : 'sub', 'type' : 'url', 'required' : False, 'help' : 'Modulo de subseccion, si existe'},
+            'padre' : {'title_field' : 'Modulo padre', 'field' : 'padre', 'type' : 'text', 'required' : False, 'help' : 'Nombre del modulo padre, si existe'},
+            'mostrar' : {'title_field' : 'Mostrar', 'field' : 'mostrar', 'type' : 'multiple', 'required' : True, 'columnas' : columnas_mostrar},
+            'detalle' : {'title_field' : 'Detalle', 'field' : 'detalle', 'type' : 'multiple', 'required' : True, 'columnas' : columnas_detalle},
+            'orden' : {'title_field' : 'Orden', 'field' : 'orden', 'type' : 'number', 'required' : True},
+            'estado' : {'title_field' : 'Estado', 'field' : 'estado', 'type' : 'active', 'required' : True},
+            'aside' : {'title_field' : 'Aside', 'field' : 'aside', 'type' : 'active', 'required' : True},
+            'tipos' : {'title_field' : 'Contiene Tipos', 'field' : 'tipos', 'type' : 'active', 'required' : True},
+        }
+
+
+        # controlador de detalle
+        detalle = detalle_class(metadata)
+        row = class_name.getById(id) if id != 0 else []
+        
+        # informacion para generar la vista del detalle
+        data = {
+            'breadcrumb': cls.breadcrumb,
+            'campos': campos,
+            'row': row,
+            'id': id if id != 0 else '',
+            'current_url': functions.generar_url(url_final),
+            'save_url': functions.generar_url(url_save),
+            'list_url': functions.generar_url(url_list),
+        }
+
+        ret=detalle.normal(data)
         return ret

@@ -65,7 +65,8 @@ class database():
         return rows
 
     def get_last_insert_id(self):
-        print(self.last_insert_id)
+        print(self.last_insert_id,self._connection.insert_id())
+        return self.last_insert_id
         return self._connection.insert_id()
 
     def get(self, table: str, idname: str, where: dict, condiciones={}, select=""):

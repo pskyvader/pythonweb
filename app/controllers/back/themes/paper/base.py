@@ -272,7 +272,7 @@ class base:
             idparent = class_parent.idname
 
             is_array = True
-            fields = table.getByname(class_name.table)
+            fields = table_model.getByname(class_name.table)
             if idparent in fields and fields[idparent]['tipo'] != 'longtext':
                 is_array = False
 

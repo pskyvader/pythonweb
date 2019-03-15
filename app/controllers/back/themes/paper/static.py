@@ -9,7 +9,7 @@ import socket
 
 class static:
     def init(self, var):
-        from os import path,makedirs
+        from os import path, makedirs
         if len(var) == 0:
             return {'error': 404}
 

@@ -14,8 +14,8 @@ class static_file:
             ret = {
                 'headers': [('Content-Type', mime+'; charset=utf-8')],
                 'body': '',
-                'is_file':True,
-                'file':resource_url
+                'is_file': True,
+                'file': resource_url
             }
 
             my_file = Path(resource_url)

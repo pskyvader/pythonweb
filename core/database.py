@@ -44,6 +44,7 @@ class database():
             self._connection.commit()
             if return_query:
                 rows = cursor.fetchall()
+                print(type(rows))
                 for r in rows:
                     for k, v in enumerate(list(r.values())):
                         r[k] = v

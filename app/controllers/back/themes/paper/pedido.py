@@ -461,9 +461,9 @@ class pedido(base):
         total_pedido = 0
 
         # procesar direcciones
+        print(direcciones)
         for d in direcciones:
-            print(d,direcciones_usuario)
-            if int(d['iddireccion']) in direcciones_usuario:
+            if d['iddireccion'] in direcciones_usuario:
                 respuesta['exito'] = False
                 respuesta['mensaje'] = 'Una dirección no es valida, por favor recarga la pagina e intenta nuevamente'
                 break

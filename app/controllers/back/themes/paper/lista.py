@@ -25,7 +25,7 @@ class lista:
         even = False
         for fila in row_data:
             td = []
-            for k,v in th.items():
+            for k, v in th.items():
                 content = self.field(v, fila)
                 td.append({'content': content, 'content_field': v['field']})
 
@@ -54,7 +54,7 @@ class lista:
         asi = aside()
         ret['body'] += asi.normal()['body']
 
-        ret['body'].append(('list',data))
+        ret['body'].append(('list', data))
 
         f = footer()
         ret['body'] += f.normal()['body']
@@ -150,8 +150,8 @@ class lista:
         return data
 
     def field(self, th: dict, fila: dict):
-        if th['field']=='0':
-            th['field']=int(th['field'])
+        if th['field'] == '0':
+            th['field'] = int(th['field'])
         if th['type'] == 'active':
             data = {
                 'field': th['field'],
@@ -198,7 +198,7 @@ class lista:
         else:
             return fila[th['field']]
 
-        content=('list/'+th['type'],data)
+        content = ('list/'+th['type'], data)
         return content
 
     @staticmethod
@@ -217,7 +217,8 @@ class lista:
         th = {}
         for m in modulo['mostrar']:
             if 'true' == m['estado'][tipo_admin]:
-                th[m['field']] = {'title_th': m['titulo'], 'field': m['field'], 'type': m['tipo']}
+                th[m['field']] = {'title_th': m['titulo'],
+                                  'field': m['field'], 'type': m['tipo']}
 
         menu = {}
         for m in modulo['menu']:

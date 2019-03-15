@@ -10,11 +10,13 @@ class header:
     def normal(self):
         ret = {'body': []}
         if 'ajax' not in app.post:
-            logo = logo_model.getById(3);
-            self.data['logo_max'] = image.generar_url(logo['foto'][0], 'panel_max');
-            logo = logo_model.getById(4);
-            self.data['logo_min'] = image.generar_url(logo['foto'][0], 'panel_min');
+            logo = logo_model.getById(3)
+            self.data['logo_max'] = image.generar_url(
+                logo['foto'][0], 'panel_max')
+            logo = logo_model.getById(4)
+            self.data['logo_min'] = image.generar_url(
+                logo['foto'][0], 'panel_min')
             self.data['url_exit'] = functions.generar_url(['logout'], False)
             self.data['date'] = functions.current_time()
-            ret['body'].append(('header',self.data))
+            ret['body'].append(('header', self.data))
         return ret

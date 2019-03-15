@@ -23,7 +23,8 @@ from app.models.log import log as log_model
 
 class log(base):
     url = ['log']
-    metadata = {'title' : 'log','modulo':'log'}
+    metadata = {'title': 'log', 'modulo': 'log'}
     breadcrumb = []
+
     def __init__(self):
         super().__init__(log_model)

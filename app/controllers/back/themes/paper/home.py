@@ -38,7 +38,8 @@ class home(base):
         ret['body'] += asi.normal()['body']
         data = {}
         data['title'] = cls.metadata['title']
-        cls.breadcrumb = [ {'url': functions.generar_url( url_final), 'title': cls.metadata['title'], 'active':'active'} ]
+        cls.breadcrumb = [{'url': functions.generar_url(
+            url_final), 'title': cls.metadata['title'], 'active':'active'}]
         data['breadcrumb'] = cls.breadcrumb
         ret['body'].append(('home', data))
 

@@ -33,7 +33,7 @@ class moduloconfiguracion(base_model):
             return_total = True
 
         row = connection.get(cls.table, cls.idname, where, condiciones, select)
-        if return_total != None:
+        if return_total == None:
             for r in row:
                 if 'mostrar' in r and r['mostrar']!='':
                     r['mostrar'] = json.loads(r['mostrar'])

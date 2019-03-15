@@ -1,4 +1,3 @@
-from core.app import app
 from core.functions import functions
 from core.view import view
 import json
@@ -7,7 +6,6 @@ class sw():
         ret={ 'headers': [('Content-Type', 'application/javascript; charset=utf-8')], 'body': []}
 
         version_application=1
-        config = app.get_config()
 
         lista_cache = []
         lista_cache.append(functions.generar_url(["application","index",version_application], False))
@@ -27,6 +25,6 @@ class sw():
         data['lista_cache']=json.dumps(lista_cache)
         data['cache']=True
         data['version']=str(js[1])+'-'+str(css[1])
-        
+
         ret['body'].append(('sw',data))
         return ret

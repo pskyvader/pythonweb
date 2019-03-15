@@ -39,5 +39,5 @@ class manifest(base):
             "display": "standalone",
             "theme_color": config['color_primario'],
         }
-        ret['body'] = json.dumps(manifest)
+        ret['body'] = json.dumps(manifest,ensure_ascii=False)
         return ret

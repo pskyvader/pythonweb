@@ -68,5 +68,5 @@ class head:
             else:
                 ret['headers'] = [
                     ('Content-Type', 'application/json; charset=utf-8')]
-                ret['body'] = json.dumps(self.data)
+                ret['body'] = json.dumps(self.data,ensure_ascii=False)
         return ret

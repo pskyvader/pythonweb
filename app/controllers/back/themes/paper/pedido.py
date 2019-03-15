@@ -462,7 +462,7 @@ class pedido(base):
 
         # procesar direcciones
         for d in direcciones.values():
-            if d['iddireccion'] in direcciones_usuario:
+            if int(d['iddireccion']) in direcciones_usuario:
                 respuesta['exito'] = False
                 respuesta['mensaje'] = 'Una dirección no es valida, por favor recarga la pagina e intenta nuevamente'
                 break

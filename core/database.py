@@ -13,6 +13,7 @@ class database():
 
     _prefix = ''
     _errors = ''
+    last_insert_id=0
 
     def __init__(self):
         try:
@@ -48,6 +49,7 @@ class database():
                     for k, v in enumerate(list(r.values())):
                         r[k] = v
             else:
+                self.last_insert_id = cursor.lastrowid
                 if delete_cache:
                     cache.delete_cache()
         except pymysql.InternalError as error:
@@ -63,6 +65,7 @@ class database():
         return rows
 
     def get_last_insert_id(self):
+        print(self.last_insert_id)
         return self._connection.insert_id()
 
     def get(self, table: str, idname: str, where: dict, condiciones={}, select=""):

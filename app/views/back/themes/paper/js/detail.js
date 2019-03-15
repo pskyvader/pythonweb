@@ -30,6 +30,7 @@ function inicio_detail() {
     }
     var iconos = $('select.icons');
     if (iconos.length > 0) {
+        console.log(path + 'icon.txt');
         $.get(path + 'icon.txt', function(data) {
             var data = data.split("\n");
             $(data).each(function(k, v) {

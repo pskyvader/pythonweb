@@ -40,8 +40,8 @@ class aside:
                         {'tipo': 1}, {'order': 'orden ASC'})
                     tmp = mod[cm[0]]
                     mod[cm[0]] = []
-                    print(tmp)
                     for t in tmp:
+                        print(t)
                         t['idpedidoestado'] = 0
                         t['titulo'] = 'Todos'
                         mod[cm[0]].append(t)

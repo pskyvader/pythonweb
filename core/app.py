@@ -230,10 +230,7 @@ class app:
                 post=app.post_field(p)
 
         post = app.format_array(post)
-        post = app.parse_values(post)
-
-        print(post)
-        
+        post = app.parse_values(post)        
         return post
 
     @staticmethod

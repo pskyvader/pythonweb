@@ -183,7 +183,7 @@ class app:
                 elif url[0] == 'sw.js':
                     url[0] = 'sw'
                 elif url[0] == 'log.json':
-                    url[0] = 'logging'
+                    url=['static_file']+url
                 elif url[0] == 'favicon.ico':
                     url[0] = 'favicon'
                 elif len(url) > 1:

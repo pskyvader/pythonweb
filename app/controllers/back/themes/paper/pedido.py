@@ -92,7 +92,7 @@ class pedido(base):
         if 'idpedidoestado' in configuracion['th']:
             pe           = pedidoestado_model.getAll()
             pedidoestado = {}
-            for p in pe.values():
+            for p in pe:
                 pedidoestado[p[0]] = {'background' : p['color'], 'text' : p['titulo'],'color' : functions.getContrastColor(p['color'])}
             
             for v in respuesta['row']:

@@ -10,7 +10,7 @@ from app.models.usuario import usuario as usuario_model
 from app.models.mediopago import mediopago as mediopago_model
 from app.models.comuna import comuna as comuna_model
 from app.models.region import region as region_model
-from app.models.pedido import pedido as pedido_model
+from app.models.producto import producto as producto_model
 
 
 from .detalle import detalle as detalle_class

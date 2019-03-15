@@ -120,67 +120,17 @@ class moduloconfiguracion(base):
         for value in respuesta['row']:
             value['url_subseccion'] = functions.generar_url(['modulo'], {class_name.idname :value[0]});
         
-
-        if 'copy' in configuracion['th']:
-            configuracion['th']['copy']['action'] = configuracion['th']['copy']['field']
-            configuracion['th']['copy']['field'] = 0
-            configuracion['th']['copy']['mensaje'] = 'Copiando'
-
-        if cls.contiene_hijos:
-            if cls.contiene_tipos:
-                for v in respuesta['row']:
-                    v['url_children'] = functions.generar_url(
-                        url_final, {'idpadre': v[0], 'tipo': get['tipo']})
-
-            else:
-                for v in respuesta['row']:
-                    v['url_children'] = functions.generar_url(
-                        url_final, {'idpadre': v[0]})
-
-        else:
-            if 'url_children' in configuracion['th']:
-                del configuracion['th']['url_children']
-
-        if cls.sub != '':
-            if cls.contiene_tipos:
-                for v in respuesta['row']:
-                    v['url_sub'] = functions.generar_url(
-                        [cls.sub], {class_name.idname: v[0], 'tipo': get['tipo']})
-
-            else:
-                for v in respuesta['row']:
-                    v['url_sub'] = functions.generar_url(
-                        [cls.sub], {class_name.idname: v[0]})
-
-        else:
-            if 'url_sub' in configuracion['th']:
-                del configuracion['th']['url_sub']
+        menu = {'new' : True, 'excel' : False, 'regenerar' : false}
 
         # informacion para generar la vista de lista_class
         data = {
             'breadcrumb': cls.breadcrumb,
-            'th': configuracion['th'],
+            'th': th,
             'current_url': functions.generar_url(url_final),
             'new_url': functions.generar_url(url_detalle),
         }
 
         data.update(respuesta)
-        data.update(configuracion['menu'])
+        data.update(menu)
         ret = lista.normal(data)
         return ret
-
-
-
-        foreach ($respuesta['row'] as $key => $value) {
-            $respuesta['row'][$key]['url_subseccion'] = functions::generar_url(array('modulo'), array($class::$idname => $value[0]));
-        }
-        $menu = array('new' => true, 'excel' => false, 'regenerar' => false);
-        $data = array( //informacion para generar la vista de la lista, arrays SIEMPRE antes de otras variables!!!!
-            'breadcrumb' => $this->breadcrumb,
-            'th' => $th,
-            'current_url' => functions::generar_url($this->url),
-            'new_url' => functions::generar_url($url_detalle),
-        );
-        $data = array_merge($data, $respuesta, $menu);
-        $list->normal($data);
-    }

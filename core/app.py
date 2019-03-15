@@ -42,7 +42,7 @@ class app:
         app.title = config['title']
         app.prefix_site = functions.url_amigable(app.title)
 
-        site=environ['SERVER_NAME'].replace("www.",'')
+        site = environ['SERVER_NAME'].replace("www.", '')
         subdirectorio = config['dir']
         https = "https://" if config['https'] else "http://"
         www = "www." if config['www'] else ""
@@ -154,9 +154,9 @@ class app:
         if 'file' in response:
             data_return['file'] = response['file']
 
-        #if data_return['status']=='200 OK':
+        # if data_return['status']=='200 OK':
             #print('antes de render', (datetime.now()-init_time).total_seconds()*1000)
-            #init_time=datetime.now()
+            # init_time=datetime.now()
 
         if isinstance(response['body'], list):
             data_return['response_body'] = view.render(response['body'])
@@ -167,7 +167,7 @@ class app:
         data_return['headers'] = response['headers']
         for cookie in functions.cookies:
             data_return['headers'].append(('Set-Cookie', cookie))
-        #if data_return['status']=='200 OK':
+        # if data_return['status']=='200 OK':
             #print('despues de render', (datetime.now()-init_time).total_seconds()*1000)
         return data_return
 
@@ -183,7 +183,7 @@ class app:
                 elif url[0] == 'sw.js':
                     url[0] = 'sw'
                 elif url[0] == 'log.json' or url[0] == 'icon.txt':
-                    url=['static_file']+url
+                    url = ['static_file']+url
                 elif url[0] == 'favicon.ico':
                     url[0] = 'favicon'
                 elif len(url) > 1:
@@ -192,9 +192,9 @@ class app:
                     elif url[1] == 'sw.js':
                         url[1] = 'sw'
                     elif url[1] == 'log.json' or url[1] == 'icon.txt':
-                        url_tmp=[url[0]]
+                        url_tmp = [url[0]]
                         del url[0]
-                        url=url_tmp+['static_file']+url
+                        url = url_tmp+['static_file']+url
                     elif url[1] == 'favicon.ico':
                         url[1] = 'favicon'
 
@@ -223,39 +223,40 @@ class app:
         if app.environ['REQUEST_METHOD'] == 'POST':
             post_env = app.environ.copy()
             post_env['QUERY_STRING'] = ''
-            post_env['CONTENT_LENGTH'] = int(app.environ.get('CONTENT_LENGTH', 0))
+            post_env['CONTENT_LENGTH'] = int(
+                app.environ.get('CONTENT_LENGTH', 0))
 
-            p = FieldStorage( fp=post_env['wsgi.input'], environ=post_env, keep_blank_values=True )
-            if p.list!=None:
-                post=app.post_field(p)
+            p = FieldStorage(
+                fp=post_env['wsgi.input'], environ=post_env, keep_blank_values=True)
+            if p.list != None:
+                post = app.post_field(p)
 
         post = app.format_array(post)
-        post = app.parse_values(post)      
-        if 'campos' in post:
-            print(post['campos']['multiple']['detalle'])  
+        post = app.parse_values(post)
         return post
 
     @staticmethod
     def post_field(p):
         from cgi import MiniFieldStorage
-        post={}
+        post = {}
         try:
             for key in p.keys():
                 if isinstance(p[key], MiniFieldStorage):
                     post[key] = p[key].value
-                elif isinstance(p[key],list):
-                    tmp_list=[]
+                elif isinstance(p[key], list):
+                    tmp_list = []
                     for a in p[key]:
                         if isinstance(a, MiniFieldStorage):
                             tmp_list.append(a.value)
                         else:
                             tmp_list.append(a)
-                    post[key]=tmp_list
+                    post[key] = tmp_list
                 else:
                     post[key] = p[key]
         except Exception as error:
             #print('Error al obtener post: ' + repr(error) + repr(p)+ app.environ['PATH_INFO'])
-            raise RuntimeError('Error al obtener post: ' + repr(error) + repr(p)+ app.environ['PATH_INFO'])
+            raise RuntimeError('Error al obtener post: ' +
+                               repr(error) + repr(p) + app.environ['PATH_INFO'])
         return post
 
     @staticmethod
@@ -297,10 +298,10 @@ class app:
                 del var[k]
 
         var = app.merge(var, aux)
-        if len(var)==1:
-            key,value=next(iter(var.items()))
-            if isinstance(key,int) and key==0:
-                var=value
+        if len(var) == 1:
+            key, value = next(iter(var.items()))
+            if isinstance(key, int) and key == 0:
+                var = value
         return var
 
     @staticmethod

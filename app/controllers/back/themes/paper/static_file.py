@@ -6,7 +6,7 @@ import mimetypes
 
 class static_file:
     def init(self,var=[]):
-        if 0 in var:
+        if len(var)>0:
             resource_url=app.get_dir(True)+var[0]
             mime = mimetypes.guess_type(resource_url, False)[0]
             if mime == None:

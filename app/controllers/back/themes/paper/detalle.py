@@ -66,9 +66,9 @@ class detalle:
 
         campos = {}
         for m in modulo['detalle']:
+            print(m)
             if 'true' == m['estado'][tipo_admin]:
-                campos[m['field']] = {'title_field': m['titulo'], 'field': m['field'],
-                                      'type': m['tipo'], 'required': 'true' == m['required'], 'help': m['texto_ayuda']}
+                campos[m['field']] = {'title_field': m['titulo'], 'field': m['field'], 'type': m['tipo'], 'required': 'true' == m['required'], 'help': m['texto_ayuda']}
 
         return {'campos': campos}
 

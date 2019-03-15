@@ -41,14 +41,13 @@ class aside:
                     tmp = mod[cm[0]]
                     mod[cm[0]] = []
                     for t in tmp:
-                        print(t)
                         t['idpedidoestado'] = 0
                         t['titulo'] = 'Todos'
-                        mod[cm[0]].append(t)
+                        mod[cm[0]].append(t.copy())
                         for pe in pedidoestado:
                             t['idpedidoestado'] = pe[0]
                             t['titulo'] = pe['titulo']
-                            mod[cm[0]].append(t)
+                            mod[cm[0]].append(t.copy())
 
                 if cm[0] not in mod:
                     if cm['module'] == 'separador':

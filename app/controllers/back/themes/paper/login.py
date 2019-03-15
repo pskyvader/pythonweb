@@ -15,9 +15,9 @@ class login(base):
     @classmethod
     def index(cls, var):
         from time import time
-        url=var
+        url = var
         ret = {'body': []}
-        url_final=cls.url.copy()
+        url_final = cls.url.copy()
         url_final = url_final+url
 
         cookie_admin = functions.get_cookie('cookieadmin'+app.prefix_site)
@@ -29,11 +29,14 @@ class login(base):
                 else:
                     url_final = url
         if 'bloqueo_administrador' in app.session and app.session['bloqueo_administrador'] > time():
-            ret['body'] = "IP Bloqueada por intentos fallidos. Intente más tarde. tiempo: " +  str(int(app.session['bloqueo_administrador']-time()))+" segundos"
+            ret['body'] = "IP Bloqueada por intentos fallidos. Intente más tarde. tiempo: " + \
+                str(int(
+                    app.session['bloqueo_administrador']-time()))+" segundos"
             return ret
 
         if 'intento_administrador' in app.session and int(app.session['intento_administrador']) % 5 == 0:
-            app.session['bloqueo_administrador'] = time() + 60*int(app.session['intento_administrador'])
+            app.session['bloqueo_administrador'] = time(
+            ) + 60*int(app.session['intento_administrador'])
             # if app.session['intento_administrador']>=15) bloquear_ip(getRealIP())
             #app.session['intento_administrador'] += 1
 
@@ -44,7 +47,8 @@ class login(base):
                     if time()-int(app.session['login_token']['time']) <= 120:
                         if not 'recordar' in app.post:
                             app.post['recordar'] = ''
-                        logueado = administrador_model.login( app.post['email'], app.post['pass'], app.post['recordar'])
+                        logueado = administrador_model.login(
+                            app.post['email'], app.post['pass'], app.post['recordar'])
                         if logueado:
                             if 'intento_administrador' in app.session:
                                 app.session['intento_administrador'] = 0
@@ -82,13 +86,13 @@ class login(base):
             return ret_head
         ret['body'] += ret_head['body']
 
-        data={}
-        data['error_login']=error_login
-        data['token']=token
-        data['url_recuperar']=functions.generar_url(["recuperar"])
-        logo=logo_model.getById(2)
-        data['logo']=image.generar_url(logo['foto'][0], 'login')
-        ret['body'].append(('login',data))
+        data = {}
+        data['error_login'] = error_login
+        data['token'] = token
+        data['url_recuperar'] = functions.generar_url(["recuperar"])
+        logo = logo_model.getById(2)
+        data['logo'] = image.generar_url(logo['foto'][0], 'login')
+        ret['body'].append(('login', data))
 
         f = footer()
         ret['body'] += f.normal()['body']

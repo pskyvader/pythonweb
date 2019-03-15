@@ -21,13 +21,12 @@ from core.functions import functions
 #import json
 
 class logout(base):
-    url = ['login','index']
+    url = ['login', 'index']
 
-    def init(self,var=[]):
+    def init(self, var=[]):
         ret = {'body': []}
         administrador_model.logout()
         url_return = functions.url_redirect(self.url)
         ret['error'] = 301
         ret['redirect'] = url_return
         return ret
-    

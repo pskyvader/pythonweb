@@ -23,7 +23,8 @@ from app.models.logo import logo as logo_model
 
 class logo(base):
     url = ['logo']
-    metadata = {'title' : 'logo','modulo':'logo'}
+    metadata = {'title': 'logo', 'modulo': 'logo'}
     breadcrumb = []
+
     def __init__(self):
         super().__init__(logo_model)

@@ -11,6 +11,7 @@ class base_model:
     def getAll(cls, where={}, condiciones={}, select=""):
         from .table import table as table_model
         condiciones=condiciones.copy()
+        where=where.copy()
         limit = None
         idpadre = None
         return_total = None

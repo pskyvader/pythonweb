@@ -344,7 +344,7 @@ class pedido(base):
                 for d in pedidodirecciones:
                     new_d     = {'idpedidodireccion' : d['idpedidodireccion'], 'idusuariodireccion' : d['idusuariodireccion'], 'precio' : d['precio'], 'fecha_entrega' : d['fecha_entrega']}
                     prod      = pedidoproducto_model.getAll({'idpedido' : id, 'idpedidodireccion' : d[0]})
-                    productos = {}
+                    productos = []
                     for p in prod:
                         portada     = image.portada(p['foto'])
                         thumb_url   = image.generar_url(portada, '')

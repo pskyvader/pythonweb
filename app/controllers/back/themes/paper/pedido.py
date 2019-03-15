@@ -465,6 +465,7 @@ class pedido(base):
         # procesar direcciones
         for d in direcciones.values():
             d['iddireccion']=int(d['iddireccion'])
+            d['iddireccionpedido']=int(d['iddireccionpedido'])
             if not d['iddireccion'] in direcciones_usuario:
                 respuesta['exito'] = False
                 respuesta['mensaje'] = 'Una dirección no es valida, por favor recarga la pagina e intenta nuevamente'
@@ -473,7 +474,7 @@ class pedido(base):
                 du = direcciones_usuario[d['iddireccion']]
 
             productos = d['productos']
-            if int(d['iddireccionpedido']) in direcciones_pedido:
+            if d['iddireccionpedido'] in direcciones_pedido:
                 existe_direccion = True
                 fields = table_model.getByname(pedidodireccion_model.table)
                 new_d = database.create_data(

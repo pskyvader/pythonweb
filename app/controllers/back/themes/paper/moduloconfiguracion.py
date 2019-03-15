@@ -7,7 +7,7 @@ from app.models.administrador import administrador as administrador_model
 #from app.models.moduloconfiguracion import moduloconfiguracion as moduloconfiguracion_model
 
 #from .detalle import detalle as detalle_class
-#from .lista import lista as lista_class
+from .lista import lista as lista_class
 #from .head import head
 #from .header import header
 #from .aside import aside
@@ -101,16 +101,6 @@ class moduloconfiguracion(base):
         lista = lista_class(cls.metadata)
 
         where = {}
-        if cls.contiene_tipos:
-            where['tipo'] = get['tipo']
-        if cls.contiene_hijos:
-            where['idpadre'] = get['idpadre']
-        if cls.class_parent != None:
-            class_parent = cls.class_parent
-
-            if class_parent.idname in get:
-                where[class_parent.idname] = get[class_parent.idname]
-
         condiciones = {}
         url_detalle = url_final.copy()
         url_detalle.append('detail')

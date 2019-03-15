@@ -432,6 +432,7 @@ class image:
         if '' != subfolder:
             subfolder += '/'
         elif file['parent'] != '':
+            print(file['parent'])
             subfolder = file['parent'] + '/'
             if file['subfolder'] != '':
                 subfolder += file['subfolder'] + '/'

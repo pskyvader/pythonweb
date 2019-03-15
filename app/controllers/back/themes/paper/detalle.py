@@ -57,7 +57,7 @@ class detalle:
         moduloconfiguracion = moduloconfiguracion_model.getByModulo(modulo)
         var = {'idmoduloconfiguracion': moduloconfiguracion[0]}
         if 'tipo' in app.get:
-            var['tipo'] = app.get['tipo'])
+            var['tipo'] = app.get['tipo']
         modulo = modulo_model.getAll(var, {'limit': 1})
         modulo = modulo[0]
         estados = modulo['estado'][0]['estado']

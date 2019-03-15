@@ -83,7 +83,7 @@ class pedido(base):
             if class_parent.idname in get:
                 where[class_parent.idname] = get[class_parent.idname]
 
-        if 'idpedidoestado' in get and get['idpedidoestado']!=0:
+        if 'idpedidoestado' in get and int(get['idpedidoestado'])!=0:
             where['idpedidoestado'] = get['idpedidoestado']
         
         condiciones = {'order' : 'fecha_pago DESC,fecha_creacion DESC'}

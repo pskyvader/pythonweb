@@ -10,7 +10,7 @@ class base_model:
     @classmethod
     def getAll(cls, where={}, condiciones={}, select=""):
         from .table import table as table_model
-        print(cls,'condiciones antes',condiciones)
+        condiciones=condiciones.copy()
         limit = None
         idpadre = None
         return_total = None

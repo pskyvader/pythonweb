@@ -5,7 +5,7 @@ from core.file import file
 from app.models.moduloconfiguracion import moduloconfiguracion as moduloconfiguracion_model
 from app.models.modulo import modulo as modulo_model
 from app.models.administrador import administrador as administrador_model
-from app.models.table import table
+from app.models.table import table as table_model
 
 from .lista import lista as lista_class
 from .detalle import detalle as detalle_class

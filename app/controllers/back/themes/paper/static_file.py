@@ -9,7 +9,7 @@ import datetime
 import socket
 
 
-class logging:
+class static_file:
     def init(self,var=[]):
         print(var)
         resource=app.get_dir(True)+'log.json'

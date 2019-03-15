@@ -12,7 +12,7 @@ class static_file:
             if mime == None:
                 mime = 'text/plain'
             ret = {
-                'headers': ['Content-Type', mime+'; charset=utf-8'],
+                'headers': [('Content-Type', mime+'; charset=utf-8')],
                 'body': '',
                 'is_file':True,
                 'file':resource_url

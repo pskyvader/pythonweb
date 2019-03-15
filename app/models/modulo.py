@@ -39,7 +39,9 @@ class modulo(base_model):
             else:
                 r['mostrar'] = []
             if 'detalle' in r and r['detalle'] != '':
+                print('detalle antes',r['detalle'])
                 r['detalle'] = json.loads(r['detalle'])
+                print('detalle despues',r['detalle'])
             else:
                 r['detalle'] = []
             if 'recortes' in r and r['recortes'] != '':

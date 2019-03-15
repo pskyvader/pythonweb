@@ -1,9 +1,10 @@
 from core.app import app
 from core.functions import functions
 from core.view import view
+import json
 class sw():
     def init(self,var=[]):
-        ret={'body':[]}
+        ret={ 'headers': [('Content-Type', 'application/javascript; charset=utf-8')], 'body': []}
 
         version_application=1
         config = app.get_config()
@@ -15,20 +16,17 @@ class sw():
         css = view.css(True, True) 
         #array(js,fecha modificacion mas reciente)
         js = view.js(True, True)
-        
-        foreach (css[0] as key => c) {
-            lista_cache[] = c['url']
-        }
-        foreach (js[0] as key => j) {
-            lista_cache[] = j['url']
-        }
-        
-        
-        view.set('lista_cache',functions.encode_json(lista_cache))
-        view.set('cache',True)
-        view.set('version',js[1].'-'.css[1])
-        header('Content-Type: application/javascript')
-        view.render('sw',False)
 
+        for c in css[0]:
+            lista_cache.append(c['url'])
 
+        for j in js[0]:
+            lista_cache.append(j['url'])
+        
+        data={}
+        data['lista_cache']=json.dumps(lista_cache)
+        data['cache']=True
+        data['version']=js[1]+'-'+css[1]
+
+        data['body'].append(('sw',data))
         return ret

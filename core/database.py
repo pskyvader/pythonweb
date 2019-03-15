@@ -429,7 +429,10 @@ class database():
                 if key != "image" and key != "file":
                     if all(isinstance(item, int) for item in row.keys()):
                         print('antes',row)
-                        row=list(row.values())
+                        row_tmp=[]
+                        for key in sorted(row.keys()):
+                            row_tmp.append(row[key])
+                        row=row_tmp
                         print('despues',row)
                     data[key] = json.dumps(row,ensure_ascii=False)
                 else:

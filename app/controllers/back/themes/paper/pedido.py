@@ -8,7 +8,7 @@ from app.models.administrador import administrador as administrador_model
 from app.models.pedidoestado import pedidoestado as pedidoestado_model
 from app.models.usuario import usuario as usuario_model
 
-from app.models.usuario import usuario as usuario_model
+from app.models.mediopago import mediopago as mediopago_model
 
 
 

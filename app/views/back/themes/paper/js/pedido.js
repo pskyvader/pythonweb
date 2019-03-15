@@ -78,6 +78,7 @@ function inicio_usuarios_pedido(e) {
             post_basic(create_url(modulo, 'get_usuario'), {
                 idusuario: idusuario
             }, "Recuperando informacion del usuario", function(data) {
+                console.log(data);
                 try {
                     data = JSON.parse(data);
                 } catch (e) {

@@ -203,7 +203,7 @@ class view:
         my_file = Path(dir_resources+file)
         if my_file.is_file():
             if functions.get_cookie('loaded_'+type_resource) != False:
-                defer = True
+                defer = False
             else:
                 functions.set_cookie('loaded_'+type_resource, True, (31536000))
                 defer = True

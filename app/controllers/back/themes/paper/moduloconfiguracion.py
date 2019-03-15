@@ -110,7 +110,7 @@ class moduloconfiguracion(base):
         for value in respuesta['row']:
             value['url_subseccion'] = functions.generar_url(['modulo'], {class_name.idname :value[0]});
         
-        menu = {'new' : True, 'excel' : False, 'regenerar' : false}
+        menu = {'new' : True, 'excel' : False, 'regenerar' : False}
 
         # informacion para generar la vista de lista_class
         data = {

@@ -25,8 +25,7 @@ class database():
             self.conect()
         except:
             print('error DB connection')
-            self._errors = 'Error DB connection ' + self._dbHost + ',' + \
-                self._dbUser + ','+self._dbPassword + ','+self._dbName
+            self._errors = 'Error DB connection ' + self._dbHost + ',' + self._dbUser + ','+self._dbPassword + ','+self._dbName
 
     def conect(self):
         self._connection = pymysql.connect(
@@ -55,7 +54,7 @@ class database():
             code, message = error.args
             self._connection.rollback()
             print('error DB query:', code, message)
-            raise RuntimeError('error DB query: ')
+            raise RuntimeError('error DB query: ', code, message)
 
         if rows is None:
             if return_query:

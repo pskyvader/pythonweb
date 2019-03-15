@@ -7,6 +7,7 @@ from app.models.administrador import administrador as administrador_model
 #from app.models.moduloconfiguracion import moduloconfiguracion as moduloconfiguracion_model
 from app.models.pedidoestado import pedidoestado as pedidoestado_model
 from app.models.pedidodireccion import pedidodireccion as pedidodireccion_model
+from app.models.pedidoproducto import pedidoproducto as pedidoproducto_model
 from app.models.usuario import usuario as usuario_model
 from app.models.usuariodireccion import usuariodireccion as usuariodireccion_model
 from app.models.mediopago import mediopago as mediopago_model
@@ -352,7 +353,7 @@ class pedido(base):
                         productos.append(new_p)
                     
                     new_d['productos'] = productos
-                    new_d['cantidad']  = count(productos)
+                    new_d['cantidad']  = len(productos)
                     if new_d['cantidad'] == 0:
                         new_d['cantidad'] = ''
                     
@@ -379,13 +380,3 @@ class pedido(base):
             'save_url': functions.generar_url(url_save),
             'list_url': functions.generar_url(url_list),
         }
-
-        ret=detalle.normal(data)
-        return ret
-
-
-
-
-
-
-        

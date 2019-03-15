@@ -43,6 +43,7 @@ class app:
         app.prefix_site = functions.url_amigable(app.title)
 
         site = environ['SERVER_NAME']
+        site=str(site).strip('www.')
         subdirectorio = config['dir']
         https = "https://" if config['https'] else "http://"
         www = "www" if config['www'] else ""

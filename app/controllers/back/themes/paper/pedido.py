@@ -274,6 +274,7 @@ class pedido(base):
                         row[idparent] = row[idparent]
 
         if 'idusuario' in configuracion['campos']:
+            print(id,row['idusuario'])
             if id == 0 or row['idusuario'] == 0:
                 usuarios = usuario_model.getAll({}, {'order' : 'nombre ASC'})
                 for u in usuarios:

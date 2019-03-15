@@ -107,8 +107,7 @@ class moduloconfiguracion(base):
         respuesta = lista.get_row(class_name, where, condiciones, url_detalle)
 
         for value in respuesta['row']:
-            value['url_subseccion'] = functions.generar_url(
-                ['modulo'], {class_name.idname: value[0]})
+            value['url_subseccion'] = functions.generar_url( ['modulo'], {class_name.idname: value[0]})
 
         menu = {'new': True, 'excel': False, 'regenerar': False}
 

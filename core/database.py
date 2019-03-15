@@ -43,8 +43,7 @@ class database():
             cursor.execute(sql)
             self._connection.commit()
             if return_query:
-                rows = cursor.fetchall()
-                print(type(rows),len(rows))
+                rows = list(cursor.fetchall())
                 for r in rows:
                     for k, v in enumerate(list(r.values())):
                         r[k] = v
@@ -58,7 +57,7 @@ class database():
 
         if rows is None:
             if return_query:
-                rows = {}
+                rows = []
             else:
                 rows = True
         return rows

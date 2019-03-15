@@ -45,7 +45,7 @@ class app:
         site = environ['SERVER_NAME']
         subdirectorio = config['dir']
         https = "https://" if config['https'] else "http://"
-        www = "www---"+site+'---' if config['www'] else ""
+        www = "www" if config['www'] else ""
 
         app.path = https + www + site + "/"
         if subdirectorio != '':

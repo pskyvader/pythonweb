@@ -230,6 +230,7 @@ class app:
                 post=app.post_field(p)
 
         post = app.format_array(post)
+        print(post['campos']['multiple']['detalle'])
         post = app.parse_values(post)        
         return post
 

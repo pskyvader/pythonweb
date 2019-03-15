@@ -95,8 +95,7 @@ class base_model:
                 row = row[0:limit]
             else:
                 row = row[limit:limit2+1]
-        where={}
-        condiciones={}
+
         if return_total != None:
             return len(row)
         else:

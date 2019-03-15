@@ -535,9 +535,9 @@ class pedido(base):
 
             for p in productos:
                 cantidad_antigua = 0
-                if isset(productos_antiguos[p['idproductopedido']]):
+                if p['idproductopedido'] in productos_antiguos:
                     existe = True
-                    fields = table.getByname(pedidoproducto_model.table)
+                    fields = table_model.getByname(pedidoproducto_model.table)
                     new_p  = database.create_data(fields, productos_antiguos[p['idproductopedido']])
                     unset(productos_antiguos[p['idproductopedido']])
                     if new_p['idproducto'] != p['idproducto']:

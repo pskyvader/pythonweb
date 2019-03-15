@@ -533,8 +533,7 @@ class pedido(base):
                 if p['idproductopedido'] in productos_antiguos:
                     existe = True
                     fields = table_model.getByname(pedidoproducto_model.table)
-                    new_p = database.create_data(
-                        fields, productos_antiguos[p['idproductopedido']])
+                    new_p = database.create_data( fields, productos_antiguos[p['idproductopedido']])
                     del productos_antiguos[p['idproductopedido']]
                     if new_p['idproducto'] != p['idproducto']:
                         change = True
@@ -559,9 +558,10 @@ class pedido(base):
                     respuesta['mensaje'] = 'Un producto no es valido, por favor recarga la pagina e intenta nuevamente'
                     ret['body'] = json.dumps(respuesta, ensure_ascii=False)
                     return ret
+                
+                print(type(producto_detalle['stock']),type(new_p['cantidad']),type(cantidad_antigua))
 
-                producto_detalle['stock'] -= (new_p['cantidad'] -
-                                              cantidad_antigua)
+                producto_detalle['stock'] -= (new_p['cantidad'] - cantidad_antigua)
 
                 if change:
                     new_p['titulo'] = producto_detalle['titulo']

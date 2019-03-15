@@ -26,6 +26,7 @@ class sw():
         data={}
         data['lista_cache']=json.dumps(lista_cache)
         data['cache']=True
+        print(type(js[1]),type(css[1]))
         data['version']=js[1]+'-'+css[1]
 
         data['body'].append(('sw',data))

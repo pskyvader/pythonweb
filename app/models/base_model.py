@@ -36,6 +36,8 @@ class base_model:
         if 'order' not in condiciones and 'orden' in fields:
             print('orden',fields['orden'])
             condiciones['order'] = 'orden ASC'
+        else:
+            print('condiciones',condiciones)
 
         if 'palabra' in condiciones:
             condiciones['buscar'] = {}

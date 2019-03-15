@@ -7,7 +7,8 @@ import json
 
 class manifest(base):
     def index(self):
-        ret = {'headers': [ ('Content-Type', 'application/json; charset=utf-8') ], 'body': ''}
+        ret = {'headers': [
+            ('Content-Type', 'application/json; charset=utf-8')], 'body': ''}
         version_application = 1
         config = app.get_config()
         logo = logo_model.getById(7)

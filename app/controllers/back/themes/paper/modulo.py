@@ -46,11 +46,13 @@ class modulo(base):
             cls.url = ['home']
         else:
             cls.url = ['modulo']
-            cls.parent = parent_class.getById( app.get['idmoduloconfiguracion'])
+            cls.parent = parent_class.getById(app.get['idmoduloconfiguracion'])
             cls.breadcrumb.pop()
-            cls.breadcrumb.append({'url': functions.generar_url( ['moduloconfiguracion']), 'title': cls.parent['titulo'], 'active': ''})
+            cls.breadcrumb.append({'url': functions.generar_url(
+                ['moduloconfiguracion']), 'title': cls.parent['titulo'], 'active': ''})
             cls.metadata['title'] = cls.parent['titulo'] + ' - Modulos'
-            cls.breadcrumb.append({'url': functions.generar_url( cls.url), 'title': (cls.metadata['title']), 'active': 'active'})
+            cls.breadcrumb.append({'url': functions.generar_url(
+                cls.url), 'title': (cls.metadata['title']), 'active': 'active'})
 
     @classmethod
     def index(cls):
@@ -95,7 +97,8 @@ class modulo(base):
         # obtener unicamente elementos de la pagina actual
         respuesta = lista.get_row(class_name, where, condiciones, url_detalle)
 
-        menu = {'new': (parent['tipos'] or len( respuesta['row']) == 0), 'excel': False, 'regenerar': False}
+        menu = {'new': (parent['tipos'] or len(
+            respuesta['row']) == 0), 'excel': False, 'regenerar': False}
 
         # informacion para generar la vista de lista_class
         data = {
@@ -120,7 +123,7 @@ class modulo(base):
         url_list = cls.url.copy()
         url_save = cls.url.copy()
         url_final = cls.url.copy()
-        metadata=cls.metadata.copy()
+        metadata = cls.metadata.copy()
         url_save.append('guardar')
         url_final.append('detail')
 
@@ -132,7 +135,8 @@ class modulo(base):
             id = 0
             metadata['title'] = 'Nuevo ' + metadata['title']
 
-        cls.breadcrumb.append({'url': functions.generar_url( url_final), 'title': metadata['title'], 'active': 'active'})
+        cls.breadcrumb.append({'url': functions.generar_url(
+            url_final), 'title': metadata['title'], 'active': 'active'})
 
         if not administrador_model.verificar_sesion():
             url_final = ['login', 'index'] + url_final
@@ -143,7 +147,7 @@ class modulo(base):
             ret['redirect'] = url_return
             return ret
 
-        metadata['title'] = parent['titulo'] +  ' - ' + metadata['title']
+        metadata['title'] = parent['titulo'] + ' - ' + metadata['title']
         # cabeceras y campos que se muestran en el detalle:
         # titulo,campo de la tabla a usar, tipo (ver archivo detalle.py funcion "field")
 
@@ -208,12 +212,11 @@ class modulo(base):
             campos['tipo']['type'] = 'hidden'
             row['tipo'] = 0
 
-       
         if 'menu' in row:
-            menu_copy={}
+            menu_copy = {}
             for m in row['menu']:
                 menu_copy[m['field']] = m
-            row['menu']=menu_copy
+            row['menu'] = menu_copy
 
         menu = []
         for p in cls.tipos_menu.values():
@@ -225,12 +228,11 @@ class modulo(base):
 
         row['menu'] = menu
 
-        
         if 'mostrar' in row:
-            mostrar_copy={}
+            mostrar_copy = {}
             for m in row['mostrar']:
                 mostrar_copy[m['field']] = m
-            row['mostrar']=mostrar_copy
+            row['mostrar'] = mostrar_copy
 
         mostrar = []
         if isinstance(parent['mostrar'], list):
@@ -243,12 +245,11 @@ class modulo(base):
 
         row['mostrar'] = mostrar
 
-        
         if 'detalle' in row:
-            detalle_copy={}
+            detalle_copy = {}
             for m in row['detalle']:
                 detalle_copy[m['field']] = m
-            row['detalle']=detalle_copy
+            row['detalle'] = detalle_copy
 
         det = []
         if isinstance(parent['detalle'], list):
@@ -260,7 +261,6 @@ class modulo(base):
                 det.append(t)
 
         row['detalle'] = det
-
 
         if id == 0:
             estados = {}
@@ -281,7 +281,6 @@ class modulo(base):
             'save_url': functions.generar_url(url_save),
             'list_url': functions.generar_url(url_list),
         }
-
 
         ret = detalle.normal(data)
         return ret

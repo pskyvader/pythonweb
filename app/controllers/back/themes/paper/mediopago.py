@@ -23,7 +23,8 @@ from app.models.mediopago import mediopago as mediopago_model
 
 class mediopago(base):
     url = ['mediopago']
-    metadata = {'title' : 'Medios de pago','modulo':'mediopago'}
+    metadata = {'title': 'Medios de pago', 'modulo': 'mediopago'}
     breadcrumb = []
+
     def __init__(self):
         super().__init__(mediopago_model)

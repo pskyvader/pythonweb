@@ -9,7 +9,7 @@ class base_model:
 
     @classmethod
     def getAll(cls, where={}, condiciones={}, select=""):
-        from .table import table
+        from .table import table as table_model
         limit = None
         idpadre = None
         return_total = None

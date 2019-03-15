@@ -365,7 +365,7 @@ class backup(base):
                 log_file = {
                     'mensaje': 'Respaldando Base de datos ', 'porcentaje': 90}
                 file_write = open(self.archivo_log, 'w')
-                file_write.write(json.dumps(log_file))
+                file_write.write(json.dumps(log_file,ensure_ascii=False))
                 file_write.close()
             respuesta = self.bdd(False, respuesta['archivo_backup'])
 
@@ -374,7 +374,7 @@ class backup(base):
                 log_file = {'mensaje': 'Restauracion finalizada',
                             'porcentaje': 100}
                 file_write = open(self.archivo_log, 'w')
-                file_write.write(json.dumps(log_file))
+                file_write.write(json.dumps(log_file,ensure_ascii=False))
                 file_write.close()
 
         if logging:
@@ -405,7 +405,7 @@ class backup(base):
                                 'mensaje': 'Recuperando archivo ...' + fichero_final[-30:], 'porcentaje': 10
                             }
                             file_write = open(self.archivo_log, 'w+')
-                            file_write.write(json.dumps(log_file))
+                            file_write.write(json.dumps(log_file,ensure_ascii=False))
                             file_write.close()
 
                 if len(file) == 0 and len(dirs) == 0:
@@ -495,7 +495,7 @@ class backup(base):
                     'porcentaje': 10 + ((total - len(lista)) / total) * 40
                 }
                 file_write = open(self.archivo_log, 'w')
-                file_write.write(json.dumps(log_file))
+                file_write.write(json.dumps(log_file,ensure_ascii=False))
                 file_write.close()
                 tiempo = functions.current_time(as_string=False)
 
@@ -506,7 +506,7 @@ class backup(base):
                 'porcentaje': 10 + ((total - len(lista)) / total) * 40
             }
             file_write = open(self.archivo_log, 'w')
-            file_write.write(json.dumps(log_file))
+            file_write.write(json.dumps(log_file,ensure_ascii=False))
             file_write.close()
 
         zip.close()

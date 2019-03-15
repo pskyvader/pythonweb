@@ -7,6 +7,7 @@ from app.models.administrador import administrador as administrador_model
 #from app.models.moduloconfiguracion import moduloconfiguracion as moduloconfiguracion_model
 from app.models.pedidoestado import pedidoestado as pedidoestado_model
 from app.models.usuario import usuario as usuario_model
+from app.models.usuariodireccion import usuariodireccion as usuariodireccion_model
 from app.models.mediopago import mediopago as mediopago_model
 from app.models.comuna import comuna as comuna_model
 from app.models.region import region as region_model

@@ -206,7 +206,7 @@ class modulo(base):
         # controlador de detalle
         detalle = detalle_class(metadata)
 
-        row = class_name.getById(id) if id != 0 else []
+        row = class_name.getById(id) if id != 0 else {}
 
         if not parent['tipos']:
             campos['tipo']['type'] = 'hidden'

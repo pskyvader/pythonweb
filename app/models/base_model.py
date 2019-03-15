@@ -36,11 +36,7 @@ class base_model:
             del where['idpadre']
 
         if 'order' not in condiciones and 'orden' in fields:
-            print(cls,'orden',fields['orden'])
             condiciones['order'] = 'orden ASC'
-            print(cls,'condiciones despues',condiciones)
-        else:
-            print(cls,'condiciones despues',condiciones)
 
         if 'palabra' in condiciones:
             condiciones['buscar'] = {}

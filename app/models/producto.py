@@ -79,9 +79,13 @@ class producto(base_model):
             if return_total == None:
                 if not deleted and 'foto' in r and r['foto']!='':
                     r['foto'] = json.loads(r['foto'])
+                else:
+                    r['foto']=[]
 
                 if not deleted and 'archivo' in r and r['archivo']!='':
                     r['archivo'] = json.loads(r['archivo'])
+                else:
+                    r['archivo']=[]
 
         if limit != None:
             if limit2 == 0:
@@ -140,10 +144,14 @@ class producto(base_model):
         if len(row) == 1:
             row[0]['idproductocategoria'] = json.loads(
                 row[0]['idproductocategoria'])
-            if 'foto' in row[0]:
+            if 'foto' in row[0] and row[0]['foto']!='':
                 row[0]['foto'] = json.loads(row[0]['foto'])
-            if 'archivo' in row[0]:
+            else:
+                row[0]['foto'] = []
+            if 'archivo' in row[0] and row[0]['archivo']!='':
                 row[0]['archivo'] = json.loads(row[0]['archivo'])
+            else:
+                row[0]['archivo'] = []
 
             if 'precio' in row[0]:
                 cat = productocategoria.getById(

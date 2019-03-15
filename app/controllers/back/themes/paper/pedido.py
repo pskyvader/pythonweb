@@ -555,11 +555,11 @@ class pedido(base):
                     change            = True
                     new_p             = p
                     new_p['idpedido'] = pedido[0]
-                    unset(new_p['idproductopedido'])
+                    del new_p['idproductopedido']
                 
 
                 producto_detalle = producto_model.getById(new_p['idproducto'])
-                if count(producto_detalle) == 0:
+                if len(producto_detalle) == 0:
                     respuesta['exito']   = False
                     respuesta['mensaje'] = 'Un producto no es valido, por favor recarga la pagina e intenta nuevamente'
                     ret['body'] = json.dumps(respuesta)

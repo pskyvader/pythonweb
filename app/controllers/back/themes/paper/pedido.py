@@ -412,7 +412,9 @@ class pedido(base):
         class_name = self.class_name
         campos = app.post['campos']
         respuesta = {'exito': False, 'mensaje': ''}
-
+        if 'cookie_pedido_repetir' in campos:
+            del campos['cookie_pedido_repetir']
+        
         if 'datos_direcciones' in campos:
             direcciones = campos['datos_direcciones']
             del campos['datos_direcciones']

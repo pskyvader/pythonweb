@@ -477,7 +477,7 @@ class pedido(base):
 
         total_pedido = 0
 
-        fields_producto = table.getByname(producto_model.table)
+        fields_producto = table_model.getByname(producto_model.table)
 
         #procesar direcciones
         for d in direcciones:
@@ -491,7 +491,7 @@ class pedido(base):
             productos = d['productos']
             if d['iddireccionpedido'] in direcciones_pedido:
                 existe_direccion  = True
-                fields            = table.getByname(pedidodireccion_model.table)
+                fields            = table_model.getByname(pedidodireccion_model.table)
                 new_d             = database.create_data(fields, direcciones_pedido[d['iddireccionpedido']])
                 iddirecionpeddido = direcciones_pedido[d['iddireccionpedido']][0]
                 del direcciones_pedido[d['iddireccionpedido']]

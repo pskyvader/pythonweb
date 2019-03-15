@@ -53,8 +53,7 @@ class database():
         except pymysql.InternalError as error:
             code, message = error.args
             self._connection.rollback()
-            print('error DB query:', code, message)
-            raise RuntimeError('error DB query: ', code, message)
+            raise RuntimeError('error DB query: ', code, message,sql)
 
         if rows is None:
             if return_query:

@@ -46,7 +46,7 @@ class app:
         site=str(site).strip('www.')
         subdirectorio = config['dir']
         https = "https://" if config['https'] else "http://"
-        www = "www" if config['www'] else ""
+        www = "www." if config['www'] else ""
 
         app.path = https + www + site + "/"
         if subdirectorio != '':

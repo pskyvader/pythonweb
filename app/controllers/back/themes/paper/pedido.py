@@ -209,7 +209,7 @@ class pedido(base):
             ret['redirect']=configuracion['redirect']
             return ret
 
-        row = class_name.getById(id) if id != 0 else []
+        row = class_name.getById(id) if id != 0 else {}
         if cls.contiene_tipos:
             configuracion['campos']['tipo'] = { 'title_field': 'tipo', 'field': 'tipo', 'type': 'hidden', 'required': True}
             row['tipo'] = get['tipo']

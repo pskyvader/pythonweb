@@ -431,7 +431,9 @@ class database():
                 if key != "image" and key != "file":
                     if all(isinstance(item, int) for item in row.keys()):
                         row=list(row.values())
+                    print('antes',key,row)
                     data[key] = json.dumps(row)
+                    print('despues',key,data[key])
                 else:
                     data[key] = row
             del data['multiple']

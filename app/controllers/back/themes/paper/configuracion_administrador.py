@@ -85,7 +85,7 @@ class configuracion_administrador(base):
         else:
             respuesta = {'exito': False,
                          'mensaje': 'Debe seleccionar una tabla para vaciar'}
-        ret['body'] = json.dumps(respuesta)
+        ret['body'] = json.dumps(respuesta,ensure_ascii=False)
         return ret
 
     def json(self, responder=True):
@@ -140,7 +140,7 @@ class configuracion_administrador(base):
         file_write.close()
 
         if responder:
-            ret['body'] = json.dumps(respuesta)
+            ret['body'] = json.dumps(respuesta,ensure_ascii=False)
             return ret
         else:
             return respuesta
@@ -275,7 +275,7 @@ class configuracion_administrador(base):
 
         cache.delete_cache()
         if responder:
-            ret['body'] = json.dumps(respuesta)
+            ret['body'] = json.dumps(respuesta,ensure_ascii=False)
             return ret
         else:
             return responder

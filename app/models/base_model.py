@@ -61,7 +61,7 @@ class base_model:
             return_total = True
             if idpadre != None:
                 select = ''
-
+        print(cls)
         row = connection.get(cls.table, cls.idname, where, condiciones, select)
         deleted = False
         for r in row:

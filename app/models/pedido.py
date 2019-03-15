@@ -14,8 +14,7 @@ class pedido(base_model):
     @classmethod
     def insert(cls, set_query: dict,  loggging=True):
         fields     = table.getByname(cls.table)
-        if not 'fecha_creacion' in set_query:
-            set_query['fecha_creacion'] = functions.current_time()
+        if not 'fecha_creacion' in set_query: set_query['fecha_creacion'] = functions.current_time()
 
         insert = database.create_data(fields, set_query)
         connection = database.instance()

@@ -430,7 +430,6 @@ class pedido(base):
             ret['body'] = json.dumps(respuesta, ensure_ascii=False)
             return ret
         respuesta['exito'] = True
-        print(respuesta)
         pedido = pedido_model.getById(respuesta['id'])
 
         com = comuna_model.getAll()

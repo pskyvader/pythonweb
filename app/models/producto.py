@@ -77,10 +77,10 @@ class producto(base_model):
                     del r
 
             if return_total == None:
-                if not deleted and 'foto' in r:
+                if not deleted and 'foto' in r and r['foto']!='':
                     r['foto'] = json.loads(r['foto'])
 
-                if not deleted and 'archivo' in r:
+                if not deleted and 'archivo' in r and r['archivo']!='':
                     r['archivo'] = json.loads(r['archivo'])
 
         if limit != None:

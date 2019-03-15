@@ -529,11 +529,13 @@ class pedido(base):
 
             for p in productos.values():
                 p['idproductopedido']=int(p['idproductopedido'])
+                p['cantidad']=int(p['cantidad'])
                 cantidad_antigua = 0
                 if p['idproductopedido'] in productos_antiguos:
                     existe = True
                     fields = table_model.getByname(pedidoproducto_model.table)
                     new_p = database.create_data( fields, productos_antiguos[p['idproductopedido']])
+
                     del productos_antiguos[p['idproductopedido']]
                     if new_p['idproducto'] != p['idproducto']:
                         change = True
@@ -559,7 +561,6 @@ class pedido(base):
                     ret['body'] = json.dumps(respuesta, ensure_ascii=False)
                     return ret
                 
-                print(type(producto_detalle['stock']),type(new_p['cantidad']),type(cantidad_antigua))
 
                 producto_detalle['stock'] -= (new_p['cantidad'] - cantidad_antigua)
 

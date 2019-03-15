@@ -1,12 +1,6 @@
-from core.view import view
 from core.app import app
-
-import os
 from pathlib import Path
-from core.functions import functions
-import mimetypes
-import datetime
-import socket
+import os
 
 
 class static_file:

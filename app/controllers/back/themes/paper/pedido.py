@@ -416,6 +416,8 @@ class pedido(base):
         if 'datos_direcciones' in campos:
             direcciones = campos['datos_direcciones']
             del campos['datos_direcciones']
+        else:
+            direcciones=[]
 
         campos['total_original'] = campos['total']
 

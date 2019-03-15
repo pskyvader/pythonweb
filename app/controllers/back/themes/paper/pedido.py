@@ -386,6 +386,7 @@ class pedido(base):
         return ret
 
     def get_usuario(self):
+        ret = {'headers': [ ('Content-Type', 'application/json charset=utf-8')], 'body': ''}
         respuesta = {'exito' : False, 'mensaje' : ''}
         campos    = app.post
         if 'idusuario' in campos:
@@ -399,23 +400,228 @@ class pedido(base):
                         c['precio'] = r['precio']
                     comunas[c[0]] = c
                 
-                usuario              = {usuario[0], 'nombre' : usuario['nombre'], 'email' : usuario['email'], 'telefono' : usuario['telefono']}
+                usuario              = {0:usuario[0], 'nombre' : usuario['nombre'], 'email' : usuario['email'], 'telefono' : usuario['telefono']}
                 respuesta['usuario'] = usuario
-                direcciones          = usuariodireccion_model.getAll(array('idusuario' : usuario[0]))
-                foreach (direcciones as key : d:
-                    direcciones[key]['precio'] = comunas[d['idcomuna']]['precio']
-                }
+                direcciones          = usuariodireccion_model.getAll({'idusuario' : usuario[0]})
+                for d in direcciones:
+                    d['precio'] = comunas[d['idcomuna']]['precio']
+                
                 respuesta['direcciones'] = direcciones
-                respuesta['exito']       = true
-            } else {
+                respuesta['exito']       = True
+            else:
                 respuesta['mensaje'] = 'El usuario seleccionado no existe o esta desactivado'
-            }
-        } else {
+            
+        else:
             respuesta['mensaje'] = 'No se ha seleccionado un usuario'
+        
+        ret['body'] = json.dumps(respuesta)
+        return ret
+
+
+
+
+
+    def guardar(self):
+        ret = {'headers': [ ('Content-Type', 'application/json charset=utf-8')], 'body': ''}
+        # Clase para enviar a controlador de detalle
+        class_name = cls.class_name
+        campos = app.post['campos']
+        url_final = cls.url.copy()
+        respuesta = {'exito' : False, 'mensaje' : ''}
+
+        if 'datos_direcciones' in campos:
+            direcciones = campos['datos_direcciones']
+            unset(campos['datos_direcciones'])
+        
+        campos['total_original'] = campos['total']
+
+        if campos['id'] == '':
+            respuesta['id']      = class_name.insert(campos)
+            respuesta['mensaje'] = "Creado correctamente"
+        else:
+            respuesta['id']      = class_name.update(campos)
+            respuesta['mensaje'] = "Actualizado correctamente"
+
+        if not isinstance(respuesta['id'],int):
+            ret['body'] = json.dumps(respuesta)
+            return ret
+        respuesta['exito'] = True
+        pedido             = pedido_model.getById(respuesta['id'])
+
+        com     = comuna_model.getAll()
+        comunas = []
+        for 
+        foreach (com as key : c:
+            if c['precio'] > 1:
+                r           = region_model.getById(c['idregion'])
+                c['precio'] = r['precio']
+            }
+            comunas[c[0]] = c
         }
+
+        dp                 = pedidodireccion_model.getAll(array('idpedido' : pedido[0]))
+        direcciones_pedido = array()
+        foreach (dp as key : d:
+            direcciones_pedido[d[0]] = d
+        }
+
+        du                  = usuariodireccion_model.getAll(array('idusuario' : pedido['idusuario']))
+        direcciones_usuario = array()
+        foreach (du as key : d:
+            d['comuna']                = comunas[d['idcomuna']]
+            direcciones_usuario[d[0]] = d
+        }
+
+        pa                 = pedidoproducto_model.getAll(array('idpedido' : pedido[0]))
+        productos_antiguos = array()
+        foreach (pa as key : p:
+            productos_antiguos[p[0]] = p
+        }
+
+        total_pedido = 0
+
+        fields_producto = table.getByname(producto_model.table)
+
+        //procesar direcciones
+        foreach (direcciones as key : d:
+            if !isset(direcciones_usuario[d['iddireccion']]):
+                respuesta['exito']   = False
+                respuesta['mensaje'] = 'Una dirección no es valida, por favor recarga la pagina e intenta nuevamente'
+                break
+            else:
+                du = direcciones_usuario[d['iddireccion']]
+            }
+            productos = d['productos']
+            if isset(direcciones_pedido[d['iddireccionpedido']]):
+                existe_direccion  = True
+                fields            = table.getByname(pedidodireccion_model.table)
+                new_d             = database.create_data(fields, direcciones_pedido[d['iddireccionpedido']])
+                iddirecionpeddido = direcciones_pedido[d['iddireccionpedido']][0]
+                unset(direcciones_pedido[d['iddireccionpedido']])
+                new_d['fecha_entrega'] = d['fecha_entrega']
+            else:
+                existe_direccion            = False
+                new_d                       = d
+                new_d['cookie_direccion']   = pedido['cookie_pedido'] . '-' . functions.generar_pass(2)
+                new_d['idpedido']           = pedido[0]
+                new_d['idusuariodireccion'] = du[0]
+            }
+            //4= pedido pagado
+            if pedido['idpedidoestado'] != 4:
+                //9=envio no pagado aun
+                new_d['idpedidoestado'] = 9
+            else:
+                //5=preparango producto
+                new_d['idpedidoestado'] = 5
+            }
+
+            new_d['precio'] = du['comuna']['precio']
+
+            new_d['nombre']             = du['nombre']
+            new_d['telefono']           = du['telefono']
+            new_d['referencias']        = du['referencias']
+            new_d['direccion_completa'] = du['direccion'] . ', ' . du['comuna']['titulo'] . ''
+            new_d['direccion_completa'] .= (du['villa'] != '') ? ', villa ' . du['villa'] : ''
+            new_d['direccion_completa'] .= (du['edificio'] != '') ? ', edificio ' . du['edificio'] : ''
+            new_d['direccion_completa'] .= (du['departamento'] != '') ? ', departamento ' . du['departamento'] : ''
+            new_d['direccion_completa'] .= (du['condominio'] != '') ? ', condominio ' . du['condominio'] : ''
+            new_d['direccion_completa'] .= (du['casa'] != '') ? ', casa ' . du['casa'] : ''
+            new_d['direccion_completa'] .= (du['empresa'] != '') ? ', empresa ' . du['empresa'] : ''
+
+            if existe_direccion:
+                new_d['id']       = iddirecionpeddido
+                idpedidodireccion = pedidodireccion_model.update(new_d)
+            else:
+                idpedidodireccion = pedidodireccion_model.insert(new_d)
+            }
+            total_pedido += new_d['precio']
+
+            foreach (productos as key : p:
+                cantidad_antigua = 0
+                if isset(productos_antiguos[p['idproductopedido']]):
+                    existe = True
+                    fields = table.getByname(pedidoproducto_model.table)
+                    new_p  = database.create_data(fields, productos_antiguos[p['idproductopedido']])
+                    unset(productos_antiguos[p['idproductopedido']])
+                    if new_p['idproducto'] != p['idproducto']:
+                        change = True
+                    else:
+                        change = False
+                    }
+                    cantidad_antigua            = new_p['cantidad']
+                    new_p['idproducto']         = p['idproducto']
+                    new_p['cantidad']           = p['cantidad']
+                    new_p['idproductoatributo'] = p['idproductoatributo']
+                    new_p['mensaje']            = p['mensaje']
+                else:
+                    existe            = False
+                    change            = True
+                    new_p             = p
+                    new_p['idpedido'] = pedido[0]
+                    unset(new_p['idproductopedido'])
+                }
+
+                producto_detalle = producto_model.getById(new_p['idproducto'])
+                if count(producto_detalle) == 0:
+                    respuesta['exito']   = False
+                    respuesta['mensaje'] = 'Un producto no es valido, por favor recarga la pagina e intenta nuevamente'
+                    break 2 // salir de ambos foreach
+                }
+                producto_detalle['stock'] -= (new_p['cantidad'] - cantidad_antigua)
+
+                if change:
+                    new_p['titulo'] = producto_detalle['titulo']
+                    new_p['precio'] = producto_detalle['precio_final']
+                }
+
+                new_p['idpedidodireccion'] = idpedidodireccion
+                atributo                   = producto_model.getById(new_p['idproductoatributo'])
+                new_p['titulo_atributo']   = atributo['titulo']
+                new_p['total']             = new_p['precio'] * new_p['cantidad']
+
+                if existe:
+                    new_p['id']      = p['idproductopedido']
+                    new_p['foto']    = json_encode(new_p['foto'])
+                    idpedidoproducto = pedidoproducto_model.update(new_p)
+                else:
+                    idpedidoproducto = pedidoproducto_model.insert(new_p)
+                }
+
+                if change:
+                    new_p['id'] = idpedidoproducto
+                    portada     = image.portada(producto_detalle['foto'])
+                    copiar      = image.copy(portada, new_p['id'], pedidoproducto_model.table, '', '', 'cart')
+                    if copiar['exito']:
+                        new_p['foto']    = json_encode(copiar['file'])
+                        idpedidoproducto = pedidoproducto_model.update(new_p)
+                    else:
+                        respuesta = copiar
+                        break 2 // salir de ambos foreach
+                    }
+                }
+
+                producto_model.update(array('id' : new_p['idproducto'], 'stock' : producto_detalle['stock']))
+                total_pedido += new_p['total']
+            }
+        }
+
+        //borrar productos y direcciones si fueron eliminados en la vista
+        foreach (productos_antiguos as key : pa:
+            producto_detalle = producto_model.getById(pa['idproducto'])
+            producto_detalle['stock'] += (pa['cantidad'])
+            producto_detalle['id'] = pa['idproducto']
+            producto_model.update(array('id' : pa['idproducto'], 'stock' : producto_detalle['stock']))
+            pedidoproducto_model.delete(pa[0])
+        }
+        foreach (direcciones_pedido as key : dp:
+            pedidodireccion_model.delete(dp[0])
+        }
+
+        if pedido['total'] != total_pedido:
+            campos['total_original'] = total_pedido
+            campos['id']             = pedido[0]
+            respuesta['id']          = class_name.update(campos)
+        }
+
         echo json_encode(respuesta)
     }
-
-
-
-        

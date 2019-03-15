@@ -13,17 +13,15 @@ class static_file:
                 mime = 'text/plain'
             ret = {
                 'headers': ['Content-Type', mime+'; charset=utf-8'],
-                'body': ''
+                'body': '',
+                'is_file':True,
+                'file':resource_url
             }
 
             my_file = Path(resource_url)
-            ret['is_file'] = True
-            if my_file.is_file():
-                ret['file'] = resource_url
-            else:
+            if not my_file.is_file():
                 file_write = open(resource_url, 'w+')
                 file_write.close()
-                ret['file'] = resource_url
             return ret
         else:
             ret = {

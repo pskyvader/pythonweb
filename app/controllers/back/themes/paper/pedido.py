@@ -7,7 +7,6 @@ from app.models.administrador import administrador as administrador_model
 #from app.models.moduloconfiguracion import moduloconfiguracion as moduloconfiguracion_model
 from app.models.pedidoestado import pedidoestado as pedidoestado_model
 from app.models.usuario import usuario as usuario_model
-
 from app.models.mediopago import mediopago as mediopago_model
 
 
@@ -22,7 +21,7 @@ from .lista import lista as lista_class
 from core.app import app
 #from core.database import database
 from core.functions import functions
-#from core.image import image
+from core.image import image
 
 
 import json

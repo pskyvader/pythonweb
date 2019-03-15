@@ -230,8 +230,9 @@ class app:
                 post=app.post_field(p)
 
         post = app.format_array(post)
-        print(post['campos']['multiple']['detalle'])
-        post = app.parse_values(post)        
+        post = app.parse_values(post)      
+        if 'campos' in post:
+            print(post['campos']['multiple']['detalle'])  
         return post
 
     @staticmethod

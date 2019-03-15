@@ -23,7 +23,8 @@ from app.models.galeria import galeria as galeria_model
 
 class galeria(base):
     url = ['galeria']
-    metadata = {'title' : 'Galería','modulo':'galeria'}
+    metadata = {'title': 'Galería', 'modulo': 'galeria'}
     breadcrumb = []
+
     def __init__(self):
         super().__init__(galeria_model)

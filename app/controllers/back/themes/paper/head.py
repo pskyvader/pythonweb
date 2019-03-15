@@ -51,8 +51,9 @@ class head:
             head.data['image'] = metadata['image']
         else:
             logo = logo_model.getById(3)
-            head.data['image']=image.generar_url(logo['foto'][0], 'panel_max')
-        
+            head.data['image'] = image.generar_url(
+                logo['foto'][0], 'panel_max')
+
         logo = logo_model.getById(1)
         head.data['favicon'] = image.generar_url(logo['foto'][0], 'favicon')
 
@@ -63,8 +64,9 @@ class head:
         if 'ajax' not in app.post:
             if 'ajax_header' not in app.post:
                 head.data['css'] = view.css()
-                ret['body'].append(('head',head.data))
+                ret['body'].append(('head', head.data))
             else:
-                ret['headers'] = [ ('Content-Type', 'application/json; charset=utf-8') ]
+                ret['headers'] = [
+                    ('Content-Type', 'application/json; charset=utf-8')]
                 ret['body'] = json.dumps(self.data)
         return ret

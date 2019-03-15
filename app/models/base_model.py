@@ -10,6 +10,7 @@ class base_model:
     @classmethod
     def getAll(cls, where={}, condiciones={}, select=""):
         from .table import table as table_model
+        print(cls,'condiciones antes',condiciones)
         limit = None
         idpadre = None
         return_total = None
@@ -36,9 +37,9 @@ class base_model:
         if 'order' not in condiciones and 'orden' in fields:
             print(cls,'orden',fields['orden'])
             condiciones['order'] = 'orden ASC'
-            print(cls,'condiciones',condiciones)
+            print(cls,'condiciones despues',condiciones)
         else:
-            print(cls,'condiciones',condiciones)
+            print(cls,'condiciones despues',condiciones)
 
         if 'palabra' in condiciones:
             condiciones['buscar'] = {}

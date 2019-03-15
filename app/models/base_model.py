@@ -34,10 +34,10 @@ class base_model:
             del where['idpadre']
 
         if 'order' not in condiciones and 'orden' in fields:
-            print('orden',fields['orden'])
+            print(cls,'orden',fields['orden'])
             condiciones['order'] = 'orden ASC'
         else:
-            print('condiciones',condiciones)
+            print(cls,'condiciones',condiciones)
 
         if 'palabra' in condiciones:
             condiciones['buscar'] = {}
@@ -63,7 +63,6 @@ class base_model:
             return_total = True
             if idpadre != None:
                 select = ''
-        print(cls)
         row = connection.get(cls.table, cls.idname, where, condiciones, select)
         deleted = False
         for r in row:

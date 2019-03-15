@@ -422,6 +422,7 @@ class pedido(base):
 
 
     def guardar(self):
+        '''Guarda un pedido comprobando las direcciones y productos'''
         ret = {'headers': [ ('Content-Type', 'application/json charset=utf-8')], 'body': ''}
         # Clase para enviar a controlador de detalle
         class_name = cls.class_name
@@ -449,60 +450,57 @@ class pedido(base):
         pedido             = pedido_model.getById(respuesta['id'])
 
         com     = comuna_model.getAll()
-        comunas = []
-        for 
-        foreach (com as key : c:
+        comunas = {}
+        for c in com:
             if c['precio'] > 1:
                 r           = region_model.getById(c['idregion'])
                 c['precio'] = r['precio']
-            }
             comunas[c[0]] = c
-        }
 
-        dp                 = pedidodireccion_model.getAll(array('idpedido' : pedido[0]))
-        direcciones_pedido = array()
-        foreach (dp as key : d:
+        dp                 = pedidodireccion_model.getAll({'idpedido' : pedido[0]})
+        direcciones_pedido = {}
+        for d in dp:
             direcciones_pedido[d[0]] = d
-        }
+        
 
         du                  = usuariodireccion_model.getAll(array('idusuario' : pedido['idusuario']))
-        direcciones_usuario = array()
-        foreach (du as key : d:
+        direcciones_usuario = {}
+        for d in du:
             d['comuna']                = comunas[d['idcomuna']]
             direcciones_usuario[d[0]] = d
-        }
+        
 
-        pa                 = pedidoproducto_model.getAll(array('idpedido' : pedido[0]))
-        productos_antiguos = array()
-        foreach (pa as key : p:
+        pa                 = pedidoproducto_model.getAll({'idpedido' : pedido[0]})
+        productos_antiguos = {}
+        for p in pa:
             productos_antiguos[p[0]] = p
-        }
+        
 
         total_pedido = 0
 
         fields_producto = table.getByname(producto_model.table)
 
-        //procesar direcciones
-        foreach (direcciones as key : d:
-            if !isset(direcciones_usuario[d['iddireccion']]):
+        #procesar direcciones
+        for d in direcciones:
+            if d['iddireccion'] in direcciones_usuario:
                 respuesta['exito']   = False
                 respuesta['mensaje'] = 'Una dirección no es valida, por favor recarga la pagina e intenta nuevamente'
                 break
             else:
                 du = direcciones_usuario[d['iddireccion']]
-            }
+            
             productos = d['productos']
-            if isset(direcciones_pedido[d['iddireccionpedido']]):
+            if d['iddireccionpedido'] in direcciones_pedido:
                 existe_direccion  = True
                 fields            = table.getByname(pedidodireccion_model.table)
                 new_d             = database.create_data(fields, direcciones_pedido[d['iddireccionpedido']])
                 iddirecionpeddido = direcciones_pedido[d['iddireccionpedido']][0]
-                unset(direcciones_pedido[d['iddireccionpedido']])
+                del direcciones_pedido[d['iddireccionpedido']]
                 new_d['fecha_entrega'] = d['fecha_entrega']
             else:
                 existe_direccion            = False
                 new_d                       = d
-                new_d['cookie_direccion']   = pedido['cookie_pedido'] . '-' . functions.generar_pass(2)
+                new_d['cookie_direccion']   = pedido['cookie_pedido'] + '-' + functions.generar_pass(2)
                 new_d['idpedido']           = pedido[0]
                 new_d['idusuariodireccion'] = du[0]
             }

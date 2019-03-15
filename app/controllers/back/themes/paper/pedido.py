@@ -8,6 +8,10 @@ from app.models.administrador import administrador as administrador_model
 from app.models.pedidoestado import pedidoestado as pedidoestado_model
 from app.models.usuario import usuario as usuario_model
 
+from app.models.usuario import usuario as usuario_model
+
+
+
 from .detalle import detalle as detalle_class
 from .lista import lista as lista_class
 #from .head import head
@@ -278,16 +282,15 @@ class pedido(base):
 
 
 
-        if isset(configuracion['campos']['idpedidoestado']):
+        if 'idpedidoestado' in configuracion['campos']:
             estados                                             = pedidoestado_model.getAll({'tipo' : get['tipo']})
             configuracion['campos']['idpedidoestado']['parent'] = estados
-        
-        if isset(configuracion['campos']['idmediopago']):
+        if 'idmediopago' in configuracion['campos']:
             estados                                          = mediopago_model.getAll()
             configuracion['campos']['idmediopago']['parent'] = estados
         
 
-        if isset(configuracion['campos']['cookie_pedido']) and id != 0:
+        if 'cookie_pedido' in configuracion['campos'] and id != 0:
             configuracion['campos']['cookie_pedido']['type'] = 'text'
         
 

@@ -210,6 +210,7 @@ class pedido(base):
             return ret
 
         row = class_name.getById(id) if id != 0 else {}
+        print(row)
         if cls.contiene_tipos:
             configuracion['campos']['tipo'] = { 'title_field': 'tipo', 'field': 'tipo', 'type': 'hidden', 'required': True}
             row['tipo'] = get['tipo']

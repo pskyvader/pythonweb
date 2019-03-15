@@ -14,7 +14,7 @@ class base_model:
         idpadre = None
         return_total = None
         connection = database.instance()
-        fields = table.getByname(cls.table)
+        fields = table_model.getByname(cls.table)
         if 'estado' not in where and app.front and 'estado' in fields:
             where['estado'] = True
 

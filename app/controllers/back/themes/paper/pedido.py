@@ -463,7 +463,7 @@ class pedido(base):
             direcciones_pedido[d[0]] = d
         
 
-        du                  = usuariodireccion_model.getAll(array('idusuario' : pedido['idusuario']))
+        du                  = usuariodireccion_model.getAll({'idusuario' : pedido['idusuario']})
         direcciones_usuario = {}
         for d in du:
             d['comuna']                = comunas[d['idcomuna']]
@@ -503,38 +503,38 @@ class pedido(base):
                 new_d['cookie_direccion']   = pedido['cookie_pedido'] + '-' + functions.generar_pass(2)
                 new_d['idpedido']           = pedido[0]
                 new_d['idusuariodireccion'] = du[0]
-            }
-            //4= pedido pagado
+            
+            #4= pedido pagado
             if pedido['idpedidoestado'] != 4:
-                //9=envio no pagado aun
+                #9=envio no pagado aun
                 new_d['idpedidoestado'] = 9
             else:
-                //5=preparango producto
+                #5=preparango producto
                 new_d['idpedidoestado'] = 5
-            }
-
+            
+            #NEW_D= Direccion de envio actualizada en el pedido
             new_d['precio'] = du['comuna']['precio']
 
             new_d['nombre']             = du['nombre']
             new_d['telefono']           = du['telefono']
             new_d['referencias']        = du['referencias']
-            new_d['direccion_completa'] = du['direccion'] . ', ' . du['comuna']['titulo'] . ''
-            new_d['direccion_completa'] .= (du['villa'] != '') ? ', villa ' . du['villa'] : ''
-            new_d['direccion_completa'] .= (du['edificio'] != '') ? ', edificio ' . du['edificio'] : ''
-            new_d['direccion_completa'] .= (du['departamento'] != '') ? ', departamento ' . du['departamento'] : ''
-            new_d['direccion_completa'] .= (du['condominio'] != '') ? ', condominio ' . du['condominio'] : ''
-            new_d['direccion_completa'] .= (du['casa'] != '') ? ', casa ' . du['casa'] : ''
-            new_d['direccion_completa'] .= (du['empresa'] != '') ? ', empresa ' . du['empresa'] : ''
+            new_d['direccion_completa'] = du['direccion'] + ', ' + du['comuna']['titulo'] + ''
+            new_d['direccion_completa'] +=  ', villa ' + du['villa'] if du['villa'] != '' else  ''
+            new_d['direccion_completa'] +=', edificio ' + du['edificio'] if du['edificio'] != '' else ''
+            new_d['direccion_completa'] += ', departamento ' + du['departamento'] if du['departamento'] != '' else ''
+            new_d['direccion_completa'] += ', condominio ' + du['condominio'] if du['condominio'] != '' else ''
+            new_d['direccion_completa'] += ', casa ' + du['casa'] if du['casa'] != '' else ''
+            new_d['direccion_completa'] += ', empresa ' + du['empresa'] if du['empresa'] != '' else ''
 
             if existe_direccion:
                 new_d['id']       = iddirecionpeddido
                 idpedidodireccion = pedidodireccion_model.update(new_d)
             else:
                 idpedidodireccion = pedidodireccion_model.insert(new_d)
-            }
+            
             total_pedido += new_d['precio']
 
-            foreach (productos as key : p:
+            for p in productos:
                 cantidad_antigua = 0
                 if isset(productos_antiguos[p['idproductopedido']]):
                     existe = True
@@ -545,7 +545,7 @@ class pedido(base):
                         change = True
                     else:
                         change = False
-                    }
+                    
                     cantidad_antigua            = new_p['cantidad']
                     new_p['idproducto']         = p['idproducto']
                     new_p['cantidad']           = p['cantidad']
@@ -557,20 +557,21 @@ class pedido(base):
                     new_p             = p
                     new_p['idpedido'] = pedido[0]
                     unset(new_p['idproductopedido'])
-                }
+                
 
                 producto_detalle = producto_model.getById(new_p['idproducto'])
                 if count(producto_detalle) == 0:
                     respuesta['exito']   = False
                     respuesta['mensaje'] = 'Un producto no es valido, por favor recarga la pagina e intenta nuevamente'
-                    break 2 // salir de ambos foreach
-                }
+                    ret['body'] = json.dumps(respuesta)
+                    return ret
+                
                 producto_detalle['stock'] -= (new_p['cantidad'] - cantidad_antigua)
 
                 if change:
                     new_p['titulo'] = producto_detalle['titulo']
                     new_p['precio'] = producto_detalle['precio_final']
-                }
+                
 
                 new_p['idpedidodireccion'] = idpedidodireccion
                 atributo                   = producto_model.getById(new_p['idproductoatributo'])
@@ -579,47 +580,43 @@ class pedido(base):
 
                 if existe:
                     new_p['id']      = p['idproductopedido']
-                    new_p['foto']    = json_encode(new_p['foto'])
+                    new_p['foto']    = json.dumps(new_p['foto'])
                     idpedidoproducto = pedidoproducto_model.update(new_p)
                 else:
                     idpedidoproducto = pedidoproducto_model.insert(new_p)
-                }
+                
 
                 if change:
                     new_p['id'] = idpedidoproducto
                     portada     = image.portada(producto_detalle['foto'])
                     copiar      = image.copy(portada, new_p['id'], pedidoproducto_model.table, '', '', 'cart')
                     if copiar['exito']:
-                        new_p['foto']    = json_encode(copiar['file'])
+                        new_p['foto']    = json.dumps(copiar['file'])
                         idpedidoproducto = pedidoproducto_model.update(new_p)
                     else:
                         respuesta = copiar
-                        break 2 // salir de ambos foreach
-                    }
-                }
+                        ret['body'] = json.dumps(respuesta)
+                        return ret
 
-                producto_model.update(array('id' : new_p['idproducto'], 'stock' : producto_detalle['stock']))
+                producto_model.update({'id' : new_p['idproducto'], 'stock' : producto_detalle['stock']})
                 total_pedido += new_p['total']
-            }
-        }
-
-        //borrar productos y direcciones si fueron eliminados en la vista
-        foreach (productos_antiguos as key : pa:
+                
+        #borrar productos y direcciones si fueron eliminados en la vista
+        for pa in productos_antiguos:
             producto_detalle = producto_model.getById(pa['idproducto'])
             producto_detalle['stock'] += (pa['cantidad'])
             producto_detalle['id'] = pa['idproducto']
-            producto_model.update(array('id' : pa['idproducto'], 'stock' : producto_detalle['stock']))
+            producto_model.update({'id' : pa['idproducto'], 'stock' : producto_detalle['stock']})
             pedidoproducto_model.delete(pa[0])
-        }
-        foreach (direcciones_pedido as key : dp:
+            
+        for dp in direcciones_pedido:
             pedidodireccion_model.delete(dp[0])
-        }
+        
 
         if pedido['total'] != total_pedido:
             campos['total_original'] = total_pedido
             campos['id']             = pedido[0]
             respuesta['id']          = class_name.update(campos)
-        }
-
-        echo json_encode(respuesta)
-    }
+        
+        ret['body'] = json.dumps(respuesta)
+        return ret

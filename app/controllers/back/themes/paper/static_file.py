@@ -17,6 +17,7 @@ class static_file:
                 'is_file':True,
                 'file':resource_url
             }
+            print(ret)
 
             my_file = Path(resource_url)
             if not my_file.is_file():

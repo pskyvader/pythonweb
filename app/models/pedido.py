@@ -33,8 +33,7 @@ class pedido(base_model):
         where = {cls.idname: set_query['id']}
         del set_query['id']
         connection = database.instance()
-        row = connection.update(cls.table, cls.idname,
-                                set_query, where, cls.delete_cache)
+        row = connection.update(cls.table, cls.idname, set_query, where, cls.delete_cache)
         if loggging:
             log_register=set_query
             log_register.update(where)

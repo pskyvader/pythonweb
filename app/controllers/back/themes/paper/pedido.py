@@ -266,15 +266,98 @@ class pedido(base):
 
         if 'idusuario' in configuracion['campos']:
             if id == 0 or row['idusuario'] == 0:
-                usuarios = usuario_model.getAll({}, array('order' => 'nombre ASC'))
-                foreach (usuarios as key => u:
-                    usuarios[key]['titulo'] = u['nombre'] . ' (' . u['email'] . ')' . ((!u['estado']) ? ': desactivado' : '')
-                }
+                usuarios = usuario_model.getAll({}, {'order' : 'nombre ASC'})
+                for u in usuarios:
+                    u['titulo'] = u['nombre'] + ' (' + u['email'] + ')' + (  ': desactivado' if not u['estado'] else '')
+                
                 configuracion['campos']['idusuario']['parent'] = usuarios
-            } else {
+            else:
                 configuracion['campos']['idusuario']['type'] = 'hidden'
+
+
+
+
+
+        if isset(configuracion['campos']['idpedidoestado']):
+            estados                                             = pedidoestado_model.getAll({'tipo' : get['tipo']})
+            configuracion['campos']['idpedidoestado']['parent'] = estados
+        
+        if isset(configuracion['campos']['idmediopago']):
+            estados                                          = mediopago_model.getAll()
+            configuracion['campos']['idmediopago']['parent'] = estados
+        
+
+        if isset(configuracion['campos']['cookie_pedido']) and id != 0:
+            configuracion['campos']['cookie_pedido']['type'] = 'text'
+        
+
+
+
+
+
+        if isset(configuracion['campos']['direcciones']):
+            com     = comuna_model.getAll()
+            comunas = {}
+            for c in com:
+                if c['precio'] > 1:
+                    r           = region_model.getById(c['idregion'])
+                    c['precio'] = r['precio']
+                comunas[c[0]] = c
+            
+
+            configuracion['campos']['direcciones']['direccion_entrega'] = []
+            lista_productos                                             = producto_model.getAll({'tipo' : 1}, {'order' : 'titulo ASC'})
+            for lp in lista_productos:
+                portada               = image.portada(lp['foto'])
+                thumb_url             = image.generar_url(portada, 'cart')
+                lp = {'titulo' : lp['titulo'], 'idproducto' : lp['idproducto'], 'foto' : thumb_url, 'precio' : lp['precio_final'], 'stock' : lp['stock']}
+            
+            configuracion['campos']['direcciones']['lista_productos'] = lista_productos
+
+            lista_atributos = producto_model.getAll(array('tipo' : 2), array('order' : 'titulo ASC'))
+            foreach (lista_atributos as key : lp:
+                portada               = image.portada(lp['foto'])
+                thumb_url             = image.generar_url(portada, 'cart')
+                lista_atributos[key] = array('titulo' : lp['titulo'], 'idproducto' : lp['idproducto'], 'foto' : thumb_url)
+            }
+            configuracion['campos']['direcciones']['lista_atributos'] = lista_atributos
+
+            if id != 0:
+                if isset(row['idusuario']) and row['idusuario'] != '':
+                    direcciones_entrega = usuariodireccion_model.getAll(array('idusuario' : row['idusuario']))
+                    foreach (direcciones_entrega as key : de:
+                        direcciones_entrega[key]['precio'] = comunas[de['idcomuna']]['precio']
+                        direcciones_entrega[key]['titulo'] = de['titulo'] . ' (' . de['direccion'] . ')'
+                    }
+                    configuracion['campos']['direcciones']['direccion_entrega'] = direcciones_entrega
+                }
+
+                dir         = pedidodireccion_model.getAll(array('idpedido' : id))
+                direcciones = array()
+                foreach (dir as key : d:
+                    new_d     = array('idpedidodireccion' : d['idpedidodireccion'], 'idusuariodireccion' : d['idusuariodireccion'], 'precio' : d['precio'], 'fecha_entrega' : d['fecha_entrega'])
+                    prod      = pedidoproducto_model.getAll(array('idpedido' : id, 'idpedidodireccion' : d[0]))
+                    productos = array()
+                    foreach (prod as v : p:
+                        portada     = image.portada(p['foto'])
+                        thumb_url   = image.generar_url(portada, '')
+                        new_p       = array('idpedidoproducto' : p['idpedidoproducto'], 'idproductoatributo' : p['idproductoatributo'], 'titulo' : p['titulo'], 'mensaje' : p['mensaje'], 'idproducto' : p['idproducto'], 'foto' : thumb_url, 'precio' : p['precio'], 'cantidad' : p['cantidad'], 'total' : p['total'])
+                        productos[] = new_p
+                    }
+                    new_d['productos'] = productos
+                    new_d['cantidad']  = count(productos)
+                    if new_d['cantidad'] == 0:
+                        new_d['cantidad'] = ''
+                    }
+
+                    direcciones[] = new_d
+                }
+                row['direcciones'] = direcciones
             }
         }
+
+
+
 
 
 
@@ -299,94 +382,20 @@ class pedido(base):
 
         
 
-
-
-        if isset(configuracion['campos']['idpedidoestado']):
-            estados                                             = pedidoestado_model.getAll(array('tipo' => _GET['tipo']))
-            configuracion['campos']['idpedidoestado']['parent'] = estados
-        }
-        if isset(configuracion['campos']['idmediopago']):
-            estados                                          = mediopago_model.getAll()
-            configuracion['campos']['idmediopago']['parent'] = estados
-        }
-
-        if isset(configuracion['campos']['cookie_pedido']) && id != 0:
-            configuracion['campos']['cookie_pedido']['type'] = 'text'
-        }
         
-        if isset(configuracion['campos']['direcciones']):
-            com     = comuna_model.getAll()
-            comunas = array()
-            foreach (com as key => c:
-                if c['precio'] > 1:
-                    r           = region_model.getById(c['idregion'])
-                    c['precio'] = r['precio']
-                }
-                comunas[c[0]] = c
-            }
-
-            configuracion['campos']['direcciones']['direccion_entrega'] = array()
-            lista_productos                                             = producto_model.getAll(array('tipo' => 1), array('order' => 'titulo ASC'))
-            foreach (lista_productos as key => lp:
-                portada               = image.portada(lp['foto'])
-                thumb_url             = image.generar_url(portada, 'cart')
-                lista_productos[key] = array('titulo' => lp['titulo'], 'idproducto' => lp['idproducto'], 'foto' => thumb_url, 'precio' => lp['precio_final'], 'stock' => lp['stock'])
-            }
-            configuracion['campos']['direcciones']['lista_productos'] = lista_productos
-
-            lista_atributos = producto_model.getAll(array('tipo' => 2), array('order' => 'titulo ASC'))
-            foreach (lista_atributos as key => lp:
-                portada               = image.portada(lp['foto'])
-                thumb_url             = image.generar_url(portada, 'cart')
-                lista_atributos[key] = array('titulo' => lp['titulo'], 'idproducto' => lp['idproducto'], 'foto' => thumb_url)
-            }
-            configuracion['campos']['direcciones']['lista_atributos'] = lista_atributos
-
-            if id != 0:
-                if isset(row['idusuario']) && row['idusuario'] != '':
-                    direcciones_entrega = usuariodireccion_model.getAll(array('idusuario' => row['idusuario']))
-                    foreach (direcciones_entrega as key => de:
-                        direcciones_entrega[key]['precio'] = comunas[de['idcomuna']]['precio']
-                        direcciones_entrega[key]['titulo'] = de['titulo'] . ' (' . de['direccion'] . ')'
-                    }
-                    configuracion['campos']['direcciones']['direccion_entrega'] = direcciones_entrega
-                }
-
-                dir         = pedidodireccion_model.getAll(array('idpedido' => id))
-                direcciones = array()
-                foreach (dir as key => d:
-                    new_d     = array('idpedidodireccion' => d['idpedidodireccion'], 'idusuariodireccion' => d['idusuariodireccion'], 'precio' => d['precio'], 'fecha_entrega' => d['fecha_entrega'])
-                    prod      = pedidoproducto_model.getAll(array('idpedido' => id, 'idpedidodireccion' => d[0]))
-                    productos = array()
-                    foreach (prod as v => p:
-                        portada     = image.portada(p['foto'])
-                        thumb_url   = image.generar_url(portada, '')
-                        new_p       = array('idpedidoproducto' => p['idpedidoproducto'], 'idproductoatributo' => p['idproductoatributo'], 'titulo' => p['titulo'], 'mensaje' => p['mensaje'], 'idproducto' => p['idproducto'], 'foto' => thumb_url, 'precio' => p['precio'], 'cantidad' => p['cantidad'], 'total' => p['total'])
-                        productos[] = new_p
-                    }
-                    new_d['productos'] = productos
-                    new_d['cantidad']  = count(productos)
-                    if new_d['cantidad'] == 0:
-                        new_d['cantidad'] = ''
-                    }
-
-                    direcciones[] = new_d
-                }
-                row['direcciones'] = direcciones
-            }
-        }
-        if(isset(row['fecha_pago']) && row['fecha_pago']==0){
+        
+        if(isset(row['fecha_pago']) and row['fecha_pago']==0){
             row['fecha_pago']=''
         }
 
         data = array( //informacion para generar la vista del detalle, arrays SIEMPRE antes de otras variables!!!!
-            'breadcrumb'  => this->breadcrumb,
-            'campos'      => configuracion['campos'],
-            'row'         => row,
-            'id'          => (id != 0) ? id : '',
-            'current_url' => functions.generar_url(this->url),
-            'save_url'    => functions.generar_url(url_save),
-            'list_url'    => functions.generar_url(url_list),
+            'breadcrumb'  : this->breadcrumb,
+            'campos'      : configuracion['campos'],
+            'row'         : row,
+            'id'          : (id != 0) ? id : '',
+            'current_url' : functions.generar_url(this->url),
+            'save_url'    : functions.generar_url(url_save),
+            'list_url'    : functions.generar_url(url_list),
         )
 
         detalle->normal(data, class)

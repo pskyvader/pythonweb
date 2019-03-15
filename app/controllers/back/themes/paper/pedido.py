@@ -539,7 +539,7 @@ class pedido(base):
                     existe = True
                     fields = table_model.getByname(pedidoproducto_model.table)
                     new_p  = database.create_data(fields, productos_antiguos[p['idproductopedido']])
-                    unset(productos_antiguos[p['idproductopedido']])
+                    del productos_antiguos[p['idproductopedido']]
                     if new_p['idproducto'] != p['idproducto']:
                         change = True
                     else:

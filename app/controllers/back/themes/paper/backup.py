@@ -196,8 +196,10 @@ class backup(base):
                         respuesta['errores'].append('bdd.sql')
                 else:
                     if respuesta['mensaje'] == '':
-                        respuesta['mensaje'] = 'Restaurando ...' + nombre[-30:] + ' (' + str(i + 1) + '/' + str(total) + ')'
-                        respuesta['porcentaje']= ((i + 1) / total) * 90
+                        respuesta['mensaje'] = 'Restaurando ...' + \
+                            nombre[-30:] + \
+                            ' (' + str(i + 1) + '/' + str(total) + ')'
+                        respuesta['porcentaje'] = ((i + 1) / total) * 90
                 respuesta['exito'] = True
             else:
                 respuesta['mensaje'] = 'Error al abrir archivo, o archivo no valido'
@@ -348,14 +350,15 @@ class backup(base):
             respuesta['exito'] = False
 
         if respuesta['exito']:
-            respuesta = self.get_files( self.base_dir)
+            respuesta = self.get_files(self.base_dir)
 
         if respuesta['exito']:
             total = len(respuesta['lista'])
             if total > 0:
                 respuesta['exito'] = True
                 while len(respuesta['lista']) > 0 and respuesta['exito']:
-                    respuesta = self.zipData(  self.base_dir, respuesta['archivo_backup'], respuesta['lista'], total, logging)
+                    respuesta = self.zipData(
+                        self.base_dir, respuesta['archivo_backup'], respuesta['lista'], total, logging)
 
         if respuesta['exito']:
             if logging:
@@ -453,7 +456,8 @@ class backup(base):
             ('Content-Type', 'application/json; charset=utf-8')], 'body': ''}
         # lista=json.loads(app.post['lista'])
         lista = app.post['lista']
-        respuesta = self.zipData( self.base_dir, app.post['archivo_backup'], lista, app.post['total'])
+        respuesta = self.zipData(
+            self.base_dir, app.post['archivo_backup'], lista, app.post['total'])
         ret['body'] = json.dumps(respuesta)
         return ret
 

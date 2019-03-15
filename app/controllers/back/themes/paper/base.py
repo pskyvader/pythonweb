@@ -24,8 +24,7 @@ class base:
     contiene_tipos = False
     contiene_hijos = False
 
-    
-    def init(self, var:list):
+    def init(self, var: list):
         from inspect import signature
         import inspect
 
@@ -40,7 +39,7 @@ class base:
             params = sig.parameters
             if 'self' in params:
                 if 'var' in params:
-                    ret = method(self,var=var)
+                    ret = method(self, var=var)
                 else:
                     ret = method(self)
             else:
@@ -56,7 +55,8 @@ class base:
 
     @classmethod
     def __init__(cls, class_name=None):
-        moduloconfiguracion = moduloconfiguracion_model.getByModulo( cls.metadata['modulo'])
+        moduloconfiguracion = moduloconfiguracion_model.getByModulo(
+            cls.metadata['modulo'])
         if 0 in moduloconfiguracion:
             cls.contiene_tipos = moduloconfiguracion['tipos'] if 'tipos' in moduloconfiguracion else False
             cls.sub = moduloconfiguracion['sub'] if 'sub' in moduloconfiguracion else ''
@@ -67,8 +67,9 @@ class base:
             else:
                 tipo = 0
 
-            modulo = modulo_model.getAll( {'idmoduloconfiguracion': moduloconfiguracion[0], 'tipo': tipo})
-            
+            modulo = modulo_model.getAll(
+                {'idmoduloconfiguracion': moduloconfiguracion[0], 'tipo': tipo})
+
             cls.contiene_hijos = modulo[0]['hijos'] if 'hijos' in modulo[0] else False
             cls.metadata['title'] = modulo[0]['titulo']
 
@@ -87,8 +88,10 @@ class base:
 
         cls.class_name = class_name
         cls.breadcrumb = [
-            {'url': functions.generar_url( ["home"]), 'title': 'Home', 'active': ''},
-            {'url': functions.generar_url(cls.url), 'title': ( cls.metadata['title']), 'active': 'active'},
+            {'url': functions.generar_url(
+                ["home"]), 'title': 'Home', 'active': ''},
+            {'url': functions.generar_url(cls.url), 'title': (
+                cls.metadata['title']), 'active': 'active'},
         ]
 
     @classmethod
@@ -97,7 +100,7 @@ class base:
         ret = {'body': ''}
         # Clase para enviar a controlador de lista_class
         class_name = cls.class_name
-        url_final=cls.url.copy()
+        url_final = cls.url.copy()
         get = app.get
         if cls.contiene_tipos and not 'tipo' in get:
             url_final = ['home']
@@ -119,8 +122,8 @@ class base:
         lista = lista_class(cls.metadata)
         configuracion = lista.configuracion(cls.metadata['modulo'])
         if 'error' in configuracion:
-            ret['error']=configuracion['error']
-            ret['redirect']=configuracion['redirect']
+            ret['error'] = configuracion['error']
+            ret['redirect'] = configuracion['redirect']
             return ret
 
         where = {}
@@ -198,10 +201,10 @@ class base:
         url_list = cls.url.copy()
         url_save = cls.url.copy()
         url_final = cls.url.copy()
-        metadata=cls.metadata.copy()
+        metadata = cls.metadata.copy()
         url_save.append('guardar')
         url_final.append('detail')
-        if len(var)>0:
+        if len(var) > 0:
             id = int(var[0])
             url_final.append(id)
             metadata['title'] = 'Editar ' + metadata['title']
@@ -209,7 +212,8 @@ class base:
             id = 0
             metadata['title'] = 'Nuevo ' + metadata['title']
 
-        cls.breadcrumb.append({'url': functions.generar_url( url_final), 'title': metadata['title'], 'active': 'active'})
+        cls.breadcrumb.append({'url': functions.generar_url(
+            url_final), 'title': metadata['title'], 'active': 'active'})
         if cls.contiene_tipos and 'tipo' not in get:
             url_final = ['home']
 
@@ -228,10 +232,10 @@ class base:
         # controlador de detalle
         detalle = detalle_class(metadata)
         configuracion = detalle.configuracion(metadata['modulo'])
-        
+
         if 'error' in configuracion:
-            ret['error']=configuracion['error']
-            ret['redirect']=configuracion['redirect']
+            ret['error'] = configuracion['error']
+            ret['redirect'] = configuracion['redirect']
             return ret
 
         row = class_name.getById(id) if id != 0 else []
@@ -249,7 +253,8 @@ class base:
 
             raiz = {0: 0, 'titulo': 'Raíz', 'idpadre': [-1]}
             categorias = raiz+categorias
-            configuracion['campos']['idpadre']['parent'] = functions.crear_arbol( categorias, -1)
+            configuracion['campos']['idpadre']['parent'] = functions.crear_arbol(
+                categorias, -1)
         elif cls.contiene_hijos or 'idpadre' in configuracion['campos']:
             configuracion['campos']['idpadre'] = {
                 'title_field': 'idpadre', 'field': 'idpadre', 'type': 'hidden', 'required': True}
@@ -310,109 +315,129 @@ class base:
             'list_url': functions.generar_url(url_list),
         }
 
-        ret=detalle.normal(data)
+        ret = detalle.normal(data)
         return ret
 
     @classmethod
     def orden(cls):
-        respuesta = {'headers': [ ('Content-Type', 'application/json; charset=utf-8') ], 'body': ''}
+        respuesta = {'headers': [
+            ('Content-Type', 'application/json; charset=utf-8')], 'body': ''}
         respuesta['body'] = json.dumps(lista_class.orden(cls.class_name))
         return respuesta
 
     @classmethod
     def estado(cls):
-        respuesta = {'headers': [ ('Content-Type', 'application/json; charset=utf-8') ], 'body': ''}
+        respuesta = {'headers': [
+            ('Content-Type', 'application/json; charset=utf-8')], 'body': ''}
         respuesta['body'] = json.dumps(lista_class.estado(cls.class_name))
         return respuesta
+
     @classmethod
     def eliminar(cls):
-        respuesta = {'headers': [ ('Content-Type', 'application/json; charset=utf-8') ], 'body': ''}
+        respuesta = {'headers': [
+            ('Content-Type', 'application/json; charset=utf-8')], 'body': ''}
         respuesta['body'] = json.dumps(lista_class.eliminar(cls.class_name))
         return respuesta
+
     @classmethod
     def copy(cls):
-        respuesta = {'headers': [ ('Content-Type', 'application/json; charset=utf-8') ], 'body': ''}
+        respuesta = {'headers': [
+            ('Content-Type', 'application/json; charset=utf-8')], 'body': ''}
         respuesta['body'] = json.dumps(lista_class.copy(cls.class_name))
         return respuesta
+
     @classmethod
     def excel(cls):
-        get=app.get
-        respuesta = {'headers': [ ('Content-Type', 'application/json; charset=utf-8') ], 'body': ''}
-        respuesta['body'] = {'exito': False, 'mensaje' : 'Debes recargar la pagina'}
+        get = app.get
+        respuesta = {'headers': [
+            ('Content-Type', 'application/json; charset=utf-8')], 'body': ''}
+        respuesta['body'] = {'exito': False,
+                             'mensaje': 'Debes recargar la pagina'}
         if cls.contiene_tipos and 'tipo' not in get:
-            respuesta['body']=json.dumps(respuesta['body'])
+            respuesta['body'] = json.dumps(respuesta['body'])
             return respuesta
-        
+
         if cls.contiene_hijos and 'idpadre' not in get:
-            respuesta['body']=json.dumps(respuesta['body'])
+            respuesta['body'] = json.dumps(respuesta['body'])
             return respuesta
-        
+
         where = {}
         if cls.contiene_tipos:
             where['tipo'] = get['tipo']
-        
+
         if cls.contiene_hijos:
             where['idpadre'] = get['idpadre']
-        
-        if cls.class_parent!=None:
+
+        if cls.class_parent != None:
             class_parent = cls.class_parent
             if class_parent.idname in get:
                 where[class_parent.idname] = get[class_parent.idname]
-            
-        
+
         select = ""
-        respuesta['body'] = json.dumps(lista_class.excel(cls.class_name, where, select, cls.metadata['title']))
+        respuesta['body'] = json.dumps(lista_class.excel(
+            cls.class_name, where, select, cls.metadata['title']))
         return respuesta
+
     @classmethod
     def get_all(cls):
-        get=app.get
-        respuesta = {'headers': [ ('Content-Type', 'application/json; charset=utf-8') ], 'body': ''}
-        respuesta['body'] = {'exito': False, 'mensaje' : 'Debes recargar la pagina'}
+        get = app.get
+        respuesta = {'headers': [
+            ('Content-Type', 'application/json; charset=utf-8')], 'body': ''}
+        respuesta['body'] = {'exito': False,
+                             'mensaje': 'Debes recargar la pagina'}
         if cls.contiene_tipos and 'tipo' not in get:
-            respuesta['body']=json.dumps(respuesta['body'])
+            respuesta['body'] = json.dumps(respuesta['body'])
             return
-        
+
         if cls.contiene_hijos and 'idpadre' not in get:
-            respuesta['body']=json.dumps(respuesta['body'])
+            respuesta['body'] = json.dumps(respuesta['body'])
             return
-        
+
         where = {}
         if cls.contiene_tipos:
             where['tipo'] = get['tipo']
-        
+
         if cls.contiene_hijos:
             where['idpadre'] = get['idpadre']
-        
-        if cls.class_parent!= None:
+
+        if cls.class_parent != None:
             class_parent = cls.class_parent
             if class_parent.idname in get:
                 where[class_parent.idname] = get[class_parent.idname]
-            
-        
+
         condiciones = {}
         select = ""
         class_name = cls.class_name
         row = class_name.getAll(where, condiciones, select)
-        
-        respuesta['body']=json.dumps(row)
+
+        respuesta['body'] = json.dumps(row)
         return respuesta
+
     @classmethod
     def regenerar(cls):
-        respuesta = {'headers': [ ('Content-Type', 'application/json; charset=utf-8') ], 'body': ''}
+        respuesta = {'headers': [
+            ('Content-Type', 'application/json; charset=utf-8')], 'body': ''}
         respuesta['body'] = json.dumps(image.regenerar(app.post))
         return respuesta
+
     @classmethod
     def guardar(cls):
-        respuesta = {'headers': [ ('Content-Type', 'application/json; charset=utf-8') ], 'body': ''}
+        respuesta = {'headers': [
+            ('Content-Type', 'application/json; charset=utf-8')], 'body': ''}
         respuesta['body'] = json.dumps(detalle_class.guardar(cls.class_name))
         return respuesta
+
     @classmethod
     def upload(cls):
-        respuesta = {'headers': [ ('Content-Type', 'application/json; charset=utf-8') ], 'body': ''}
-        respuesta['body'] = json.dumps(image.upload_tmp(cls.metadata['modulo']))
+        respuesta = {'headers': [
+            ('Content-Type', 'application/json; charset=utf-8')], 'body': ''}
+        respuesta['body'] = json.dumps(
+            image.upload_tmp(cls.metadata['modulo']))
         return respuesta
+
     @classmethod
     def upload_file(cls):
-        respuesta = {'headers': [ ('Content-Type', 'application/json; charset=utf-8') ], 'body': ''}
+        respuesta = {'headers': [
+            ('Content-Type', 'application/json; charset=utf-8')], 'body': ''}
         respuesta['body'] = json.dumps(file.upload_tmp())
         return respuesta

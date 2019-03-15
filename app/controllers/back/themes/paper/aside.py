@@ -13,15 +13,17 @@ class aside:
     def normal(self):
         ret = {'body': []}
         if 'ajax' not in app.post:
-            administrador = administrador_model.getById( app.session[administrador_model.idname + app.prefix_site])
+            administrador = administrador_model.getById(
+                app.session[administrador_model.idname + app.prefix_site])
             tipo_admin = administrador["tipo"]
-            moduloconfiguracion = moduloconfiguracion_model.getAll( {'estado': True, 'aside': True})
+            moduloconfiguracion = moduloconfiguracion_model.getAll(
+                {'estado': True, 'aside': True})
             modulo = modulo_model.getAll({'aside': True})
 
             mod = {}
             for m in modulo:
                 if not m['idmoduloconfiguracion'] in mod:
-                    mod[m['idmoduloconfiguracion']]=[]
+                    mod[m['idmoduloconfiguracion']] = []
                 mod[m['idmoduloconfiguracion']].append(m)
 
             current_url = functions.current_url()
@@ -34,7 +36,8 @@ class aside:
 
             for cm in moduloconfiguracion:
                 if cm['module'] == "pedido":
-                    pedidoestado = pedidoestado_model.getAll( {'tipo': 1}, {'order': 'orden ASC'})
+                    pedidoestado = pedidoestado_model.getAll(
+                        {'tipo': 1}, {'order': 'orden ASC'})
                     tmp = mod[cm[0]]
                     mod[cm[0]] = []
                     for t in tmp:
@@ -111,11 +114,13 @@ class aside:
                 me['submenu'].append(
                     {'url': url, 'sub_title': 'TODOS', 'active': active})
 
-                mc=moduloconfiguracion_model.getAll()
+                mc = moduloconfiguracion_model.getAll()
                 for m in mc:
-                    url = functions.generar_url( ['modulo'], {'idmoduloconfiguracion': m[0]})
+                    url = functions.generar_url(
+                        ['modulo'], {'idmoduloconfiguracion': m[0]})
                     active = (url == current_url)
-                    me['submenu'].append( {'url': url, 'sub_title': m['titulo'], 'active': active})
+                    me['submenu'].append(
+                        {'url': url, 'sub_title': m['titulo'], 'active': active})
 
                 menu.append(me)
 
@@ -130,12 +135,14 @@ class aside:
                 menu.append({'url': url, 'icon': 'settings_applications', 'title': 'Configuracion Administrador',
                              'has_submenu': False, 'active': active, 'separador': False})
 
-            data={}
-            data['menu']=menu
-            data['name']=administrador["nombre"]
-            data['email']=administrador["email"]
-            data['url_admin']=functions.generar_url( ["administrador", "detail", administrador[0], 'profile'], {'tipo': tipo_admin})
-            data['img_admin']=image.generar_url( administrador["foto"][0], 'profile')
+            data = {}
+            data['menu'] = menu
+            data['name'] = administrador["nombre"]
+            data['email'] = administrador["email"]
+            data['url_admin'] = functions.generar_url(
+                ["administrador", "detail", administrador[0], 'profile'], {'tipo': tipo_admin})
+            data['img_admin'] = image.generar_url(
+                administrador["foto"][0], 'profile')
 
-            ret['body'].append(('aside',data))
+            ret['body'].append(('aside', data))
         return ret

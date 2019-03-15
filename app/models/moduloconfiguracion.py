@@ -71,8 +71,8 @@ class moduloconfiguracion(base_model):
         from core.image import image
         row = cls.getById(id)
 
-        row['mostrar'] = json.dumps(row['mostrar'])
-        row['detalle'] = json.dumps(row['detalle'])
+        row['mostrar'] = json.dumps(row['mostrar'],ensure_ascii=False)
+        row['detalle'] = json.dumps(row['detalle'],ensure_ascii=False)
 
         fields     = table.getByname(cls.table)
         insert = database.create_data(fields, row)

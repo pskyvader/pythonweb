@@ -414,7 +414,7 @@ class pedido(base):
         else:
             respuesta['mensaje'] = 'No se ha seleccionado un usuario'
         
-        ret['body'] = json.dumps(respuesta)
+        ret['body'] = json.dumps(respuesta,ensure_ascii=False)
         return ret
 
 
@@ -443,7 +443,7 @@ class pedido(base):
             respuesta['mensaje'] = "Actualizado correctamente"
 
         if not isinstance(respuesta['id'],int):
-            ret['body'] = json.dumps(respuesta)
+            ret['body'] = json.dumps(respuesta,ensure_ascii=False)
             return ret
         respuesta['exito'] = True
         pedido             = pedido_model.getById(respuesta['id'])
@@ -560,7 +560,7 @@ class pedido(base):
                 if len(producto_detalle) == 0:
                     respuesta['exito']   = False
                     respuesta['mensaje'] = 'Un producto no es valido, por favor recarga la pagina e intenta nuevamente'
-                    ret['body'] = json.dumps(respuesta)
+                    ret['body'] = json.dumps(respuesta,ensure_ascii=False)
                     return ret
                 
                 producto_detalle['stock'] -= (new_p['cantidad'] - cantidad_antigua)
@@ -592,7 +592,7 @@ class pedido(base):
                         idpedidoproducto = pedidoproducto_model.update(new_p)
                     else:
                         respuesta = copiar
-                        ret['body'] = json.dumps(respuesta)
+                        ret['body'] = json.dumps(respuesta,ensure_ascii=False)
                         return ret
 
                 producto_model.update({'id' : new_p['idproducto'], 'stock' : producto_detalle['stock']})
@@ -615,5 +615,5 @@ class pedido(base):
             campos['id']             = pedido[0]
             respuesta['id']          = class_name.update(campos)
         
-        ret['body'] = json.dumps(respuesta)
+        ret['body'] = json.dumps(respuesta,ensure_ascii=False)
         return ret

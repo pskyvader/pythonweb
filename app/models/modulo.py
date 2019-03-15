@@ -91,11 +91,11 @@ class modulo(base_model):
     @classmethod
     def copy(cls, id: int, loggging=True):
         row = cls.getById(id)
-        row['menu'] = json.dumps(row['menu'])
-        row['mostrar'] = json.dumps(row['mostrar'])
-        row['detalle'] = json.dumps(row['detalle'])
-        row['recortes'] = json.dumps(row['recortes'])
-        row['estado'] = json.dumps(row['estado'])
+        row['menu'] = json.dumps(row['menu'],ensure_ascii=False)
+        row['mostrar'] = json.dumps(row['mostrar'],ensure_ascii=False)
+        row['detalle'] = json.dumps(row['detalle'],ensure_ascii=False)
+        row['recortes'] = json.dumps(row['recortes'],ensure_ascii=False)
+        row['estado'] = json.dumps(row['estado'],ensure_ascii=False)
 
         fields = table.getByname(cls.table)
         insert = database.create_data(fields, row)

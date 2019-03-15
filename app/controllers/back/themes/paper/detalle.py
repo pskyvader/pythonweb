@@ -152,7 +152,7 @@ class detalle:
         elif campos['type'] == 'grupo_pedido':
             direcciones = []
             if campos['field'] in fila:
-                count = count(fila[campos['field']])
+                count = len(fila[campos['field']])
                 for field in fila[campos['field']]:
                     field['title_field'] = campos['title_field']
                     field['field'] = campos['field']

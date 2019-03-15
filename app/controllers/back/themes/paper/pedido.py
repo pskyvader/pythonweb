@@ -337,7 +337,7 @@ class pedido(base):
                         de['precio'] = comunas[de['idcomuna']]['precio']
                         de['titulo'] = de['titulo'] + ' (' + de['direccion'] + ')'
                     
-                    configuracion['campos']['direcciones']['direccion_entrega'] = direcciones_entrega
+                    #configuracion['campos']['direcciones']['direccion_entrega'] = direcciones_entrega
                 
 
                 pedidodirecciones         = pedidodireccion_model.getAll({'idpedido' : id})

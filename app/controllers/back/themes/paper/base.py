@@ -322,28 +322,32 @@ class base:
     def orden(cls):
         respuesta = {'headers': [
             ('Content-Type', 'application/json; charset=utf-8')], 'body': ''}
-        respuesta['body'] = json.dumps(lista_class.orden(cls.class_name),ensure_ascii=False)
+        respuesta['body'] = json.dumps(
+            lista_class.orden(cls.class_name), ensure_ascii=False)
         return respuesta
 
     @classmethod
     def estado(cls):
         respuesta = {'headers': [
             ('Content-Type', 'application/json; charset=utf-8')], 'body': ''}
-        respuesta['body'] = json.dumps(lista_class.estado(cls.class_name),ensure_ascii=False)
+        respuesta['body'] = json.dumps(
+            lista_class.estado(cls.class_name), ensure_ascii=False)
         return respuesta
 
     @classmethod
     def eliminar(cls):
         respuesta = {'headers': [
             ('Content-Type', 'application/json; charset=utf-8')], 'body': ''}
-        respuesta['body'] = json.dumps(lista_class.eliminar(cls.class_name),ensure_ascii=False)
+        respuesta['body'] = json.dumps(
+            lista_class.eliminar(cls.class_name), ensure_ascii=False)
         return respuesta
 
     @classmethod
     def copy(cls):
         respuesta = {'headers': [
             ('Content-Type', 'application/json; charset=utf-8')], 'body': ''}
-        respuesta['body'] = json.dumps(lista_class.copy(cls.class_name),ensure_ascii=False)
+        respuesta['body'] = json.dumps(
+            lista_class.copy(cls.class_name), ensure_ascii=False)
         return respuesta
 
     @classmethod
@@ -354,11 +358,13 @@ class base:
         respuesta['body'] = {'exito': False,
                              'mensaje': 'Debes recargar la pagina'}
         if cls.contiene_tipos and 'tipo' not in get:
-            respuesta['body'] = json.dumps(respuesta['body'],ensure_ascii=False)
+            respuesta['body'] = json.dumps(
+                respuesta['body'], ensure_ascii=False)
             return respuesta
 
         if cls.contiene_hijos and 'idpadre' not in get:
-            respuesta['body'] = json.dumps(respuesta['body'],ensure_ascii=False)
+            respuesta['body'] = json.dumps(
+                respuesta['body'], ensure_ascii=False)
             return respuesta
 
         where = {}
@@ -374,7 +380,8 @@ class base:
                 where[class_parent.idname] = get[class_parent.idname]
 
         select = ""
-        respuesta['body'] = json.dumps(lista_class.excel( cls.class_name, where, select, cls.metadata['title']),ensure_ascii=False)
+        respuesta['body'] = json.dumps(lista_class.excel(
+            cls.class_name, where, select, cls.metadata['title']), ensure_ascii=False)
         return respuesta
 
     @classmethod
@@ -385,11 +392,13 @@ class base:
         respuesta['body'] = {'exito': False,
                              'mensaje': 'Debes recargar la pagina'}
         if cls.contiene_tipos and 'tipo' not in get:
-            respuesta['body'] = json.dumps(respuesta['body'],ensure_ascii=False)
+            respuesta['body'] = json.dumps(
+                respuesta['body'], ensure_ascii=False)
             return
 
         if cls.contiene_hijos and 'idpadre' not in get:
-            respuesta['body'] = json.dumps(respuesta['body'],ensure_ascii=False)
+            respuesta['body'] = json.dumps(
+                respuesta['body'], ensure_ascii=False)
             return
 
         where = {}
@@ -409,21 +418,23 @@ class base:
         class_name = cls.class_name
         row = class_name.getAll(where, condiciones, select)
 
-        respuesta['body'] = json.dumps(row,ensure_ascii=False)
+        respuesta['body'] = json.dumps(row, ensure_ascii=False)
         return respuesta
 
     @classmethod
     def regenerar(cls):
         respuesta = {'headers': [
             ('Content-Type', 'application/json; charset=utf-8')], 'body': ''}
-        respuesta['body'] = json.dumps(image.regenerar(app.post),ensure_ascii=False)
+        respuesta['body'] = json.dumps(
+            image.regenerar(app.post), ensure_ascii=False)
         return respuesta
 
     @classmethod
     def guardar(cls):
         respuesta = {'headers': [
             ('Content-Type', 'application/json; charset=utf-8')], 'body': ''}
-        respuesta['body'] = json.dumps(detalle_class.guardar(cls.class_name),ensure_ascii=False)
+        respuesta['body'] = json.dumps(
+            detalle_class.guardar(cls.class_name), ensure_ascii=False)
         return respuesta
 
     @classmethod
@@ -431,12 +442,12 @@ class base:
         respuesta = {'headers': [
             ('Content-Type', 'application/json; charset=utf-8')], 'body': ''}
         respuesta['body'] = json.dumps(
-            image.upload_tmp(cls.metadata['modulo']),ensure_ascii=False)
+            image.upload_tmp(cls.metadata['modulo']), ensure_ascii=False)
         return respuesta
 
     @classmethod
     def upload_file(cls):
         respuesta = {'headers': [
             ('Content-Type', 'application/json; charset=utf-8')], 'body': ''}
-        respuesta['body'] = json.dumps(file.upload_tmp(),ensure_ascii=False)
+        respuesta['body'] = json.dumps(file.upload_tmp(), ensure_ascii=False)
         return respuesta

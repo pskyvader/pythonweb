@@ -527,9 +527,9 @@ class pedido(base):
 
             total_pedido += new_d['precio']
 
-            for p in productos:
+            for p in productos.values():
                 cantidad_antigua = 0
-                if p['idproductopedido'] in productos_antiguos:
+                if int(p['idproductopedido']) in productos_antiguos:
                     existe = True
                     fields = table_model.getByname(pedidoproducto_model.table)
                     new_p = database.create_data(

@@ -203,7 +203,7 @@ class pedido(base):
         # controlador de detalle
         detalle = detalle_class(metadata)
         configuracion = detalle.configuracion(metadata['modulo'])
-        for c in configuracion.keys():
+        for c in configuracion['campos'].keys():
             print(c)
         
         if 'error' in configuracion:

@@ -194,7 +194,6 @@ class app:
                     elif url[1] == 'log.json':
                         url_tmp=[url[0]]
                         url=url_tmp+['static_file']+url
-                        url[1] = 'logging'
                     elif url[1] == 'favicon.ico':
                         url[1] = 'favicon'
 

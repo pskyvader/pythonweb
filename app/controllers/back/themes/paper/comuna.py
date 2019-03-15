@@ -15,15 +15,14 @@ from core.app import app
 from core.functions import functions
 #from core.image import image
 
+
 class comuna(base):
     url = ['comuna']
-    metadata = {'title' : 'comuna','modulo':'comuna'}
+    metadata = {'title': 'comuna', 'modulo': 'comuna'}
     breadcrumb = []
+
     def __init__(self):
         super().__init__(comuna_model)
-
-
-
 
     @classmethod
     def index(cls):
@@ -31,7 +30,7 @@ class comuna(base):
         ret = {'body': ''}
         # Clase para enviar a controlador de lista_class
         class_name = cls.class_name
-        url_final=cls.url.copy()
+        url_final = cls.url.copy()
         get = app.get
         if cls.contiene_tipos and not 'tipo' in get:
             url_final = ['home']
@@ -53,8 +52,8 @@ class comuna(base):
         lista = lista_class(cls.metadata)
         configuracion = lista.configuracion(cls.metadata['modulo'])
         if 'error' in configuracion:
-            ret['error']=configuracion['error']
-            ret['redirect']=configuracion['redirect']
+            ret['error'] = configuracion['error']
+            ret['redirect'] = configuracion['redirect']
             return ret
 
         where = {}
@@ -68,7 +67,7 @@ class comuna(base):
             if class_parent.idname in get:
                 where[class_parent.idname] = get[class_parent.idname]
 
-        condiciones = {'order':'titulo ASC'}
+        condiciones = {'order': 'titulo ASC'}
         url_detalle = url_final.copy()
         url_detalle.append('detail')
         # obtener unicamente elementos de la pagina actual

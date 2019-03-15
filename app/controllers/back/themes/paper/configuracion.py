@@ -23,7 +23,8 @@ from app.models.configuracion import configuracion as configuracion_model
 
 class configuracion(base):
     url = ['configuracion']
-    metadata = {'title' : 'configuracion','modulo':'configuracion'}
+    metadata = {'title': 'configuracion', 'modulo': 'configuracion'}
     breadcrumb = []
+
     def __init__(self):
         super().__init__(configuracion_model)

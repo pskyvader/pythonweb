@@ -75,7 +75,8 @@ class configuracion_administrador(base):
         return ret
 
     def vaciar(self):
-        ret = {'headers': [ ('Content-Type', 'application/json; charset=utf-8') ], 'body': ''}
+        ret = {'headers': [
+            ('Content-Type', 'application/json; charset=utf-8')], 'body': ''}
         post = app.post
         if 'campos' in post:
             campos = post['campos']
@@ -89,7 +90,8 @@ class configuracion_administrador(base):
 
     def json(self, responder=True):
         respuesta = {'exito': True, 'mensaje': 'JSON generado correctamente'}
-        ret = {'headers': [ ('Content-Type', 'application/json; charset=utf-8') ], 'body': ''}
+        ret = {'headers': [
+            ('Content-Type', 'application/json; charset=utf-8')], 'body': ''}
 
         base_dir = app.get_dir(True) + 'app/config/'
         row = table_model.getAll()
@@ -146,7 +148,8 @@ class configuracion_administrador(base):
     def json_update(self, responder=True):
         respuesta = {'exito': True, 'mensaje': [
             'JSON actualizado correctamente']}
-        ret = {'headers': [ ('Content-Type', 'application/json; charset=utf-8') ], 'body': ''}
+        ret = {'headers': [
+            ('Content-Type', 'application/json; charset=utf-8')], 'body': ''}
 
         base_dir = app.get_dir(True) + 'app/config/'
 
@@ -232,7 +235,8 @@ class configuracion_administrador(base):
                 moduloconfiguracion['detalle'])
             if len(row) == 1:
                 moduloconfiguracion['id'] = row[0][0]
-                moduloconfiguracion_model.update(moduloconfiguracion.copy(), False)
+                moduloconfiguracion_model.update(
+                    moduloconfiguracion.copy(), False)
                 for h in hijo:
                     h['idmoduloconfiguracion'] = moduloconfiguracion['id']
                     row2 = modulo_model.getAll(

@@ -266,7 +266,7 @@ class pedido(base):
 
         if 'idusuario' in configuracion['campos']:
             if id == 0 or row['idusuario'] == 0:
-                usuarios = usuario_model.getAll(array(), array('order' => 'nombre ASC'))
+                usuarios = usuario_model.getAll({}, array('order' => 'nombre ASC'))
                 foreach (usuarios as key => u:
                     usuarios[key]['titulo'] = u['nombre'] . ' (' . u['email'] . ')' . ((!u['estado']) ? ': desactivado' : '')
                 }

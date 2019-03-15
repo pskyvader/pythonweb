@@ -63,6 +63,7 @@ class view:
         elif isinstance(data, tuple):
             print(data)
             data = view.render_unit(env, data[0], data[1])
+            print('exito')
 
         if template != '' and isinstance(data, dict):
             template = env.get_template(template + "." + view.extension)

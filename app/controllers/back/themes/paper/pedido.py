@@ -385,8 +385,36 @@ class pedido(base):
         ret=detalle.normal(data)
         return ret
 
-
-
+    def get_usuario(self):
+        respuesta = {'exito' : False, 'mensaje' : ''}
+        campos    = app.post
+        if 'idusuario' in campos:
+            usuario = usuario_model.getById(campos['idusuario'])
+            if len(usuario) > 0:
+                com     = comuna_model.getAll()
+                comunas = {}
+                for c in com:
+                    if c['precio'] > 1:
+                        r           = region_model.getById(c['idregion'])
+                        c['precio'] = r['precio']
+                    comunas[c[0]] = c
+                
+                usuario              = {usuario[0], 'nombre' : usuario['nombre'], 'email' : usuario['email'], 'telefono' : usuario['telefono']}
+                respuesta['usuario'] = usuario
+                direcciones          = usuariodireccion_model.getAll(array('idusuario' : usuario[0]))
+                foreach (direcciones as key : d:
+                    direcciones[key]['precio'] = comunas[d['idcomuna']]['precio']
+                }
+                respuesta['direcciones'] = direcciones
+                respuesta['exito']       = true
+            } else {
+                respuesta['mensaje'] = 'El usuario seleccionado no existe o esta desactivado'
+            }
+        } else {
+            respuesta['mensaje'] = 'No se ha seleccionado un usuario'
+        }
+        echo json_encode(respuesta)
+    }
 
 
 

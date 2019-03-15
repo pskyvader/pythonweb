@@ -425,14 +425,13 @@ class pedido(base):
         '''Guarda un pedido comprobando las direcciones y productos'''
         ret = {'headers': [ ('Content-Type', 'application/json charset=utf-8')], 'body': ''}
         # Clase para enviar a controlador de detalle
-        class_name = cls.class_name
+        class_name = self.class_name
         campos = app.post['campos']
-        url_final = cls.url.copy()
         respuesta = {'exito' : False, 'mensaje' : ''}
 
         if 'datos_direcciones' in campos:
             direcciones = campos['datos_direcciones']
-            unset(campos['datos_direcciones'])
+            del campos['datos_direcciones']
         
         campos['total_original'] = campos['total']
 

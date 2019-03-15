@@ -169,7 +169,7 @@ class backup(base):
                         log = {'mensaje': 'Restaurando ...' + nombre[-30:] + ' (' + str(
                             i + 1) + '/' + str(total) + ')', 'porcentaje': ((i + 1) / total) * 90}
                         file_write = open(self.archivo_log, 'w')
-                        file_write.write(json.dumps(log))
+                        file_write.write(json.dumps(log,ensure_ascii=False))
                         file_write.close()
 
                     if functions.current_time(as_string=False) - tiempo > 15:
@@ -183,7 +183,7 @@ class backup(base):
                         log = {'mensaje': 'Restaurando Base de datos',
                                'porcentaje': 95}
                         file_write = open(self.archivo_log, 'w')
-                        file_write.write(json.dumps(log))
+                        file_write.write(json.dumps(log,ensure_ascii=False))
                         file_write.close()
                         connection = database.instance()
                         exito = connection.restore_backup(
@@ -212,7 +212,7 @@ class backup(base):
 
             log = {'mensaje': 'Restauracion finalizada', 'porcentaje': 100}
             file_write = open(self.archivo_log, 'w')
-            file_write.write(json.dumps(log))
+            file_write.write(json.dumps(log,ensure_ascii=False))
             file_write.close()
         ret['body'] = json.dumps(respuesta)
         return ret

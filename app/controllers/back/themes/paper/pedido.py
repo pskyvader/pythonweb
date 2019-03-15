@@ -291,7 +291,7 @@ class pedido(base):
             estados                                             = pedidoestado_model.getAll({'tipo' : get['tipo']})
             configuracion['campos']['idpedidoestado']['parent'] = estados
         if 'idmediopago' in configuracion['campos']:
-            estados                                          = mediopago_model.getAll(condiciones={})
+            estados                                          = mediopago_model.getAll()
             configuracion['campos']['idmediopago']['parent'] = estados
         
 

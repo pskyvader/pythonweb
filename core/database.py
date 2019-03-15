@@ -62,7 +62,7 @@ class database():
                 rows = {}
             else:
                 rows = True
-        print sql
+        print(sql)
         return rows
 
     def get_last_insert_id(self):

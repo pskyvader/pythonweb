@@ -380,3 +380,13 @@ class pedido(base):
             'save_url': functions.generar_url(url_save),
             'list_url': functions.generar_url(url_list),
         }
+
+        ret=detalle.normal(data)
+        return ret
+
+
+
+
+
+
+        

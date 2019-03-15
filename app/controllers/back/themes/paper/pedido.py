@@ -477,8 +477,6 @@ class pedido(base):
 
         total_pedido = 0
 
-        fields_producto = table_model.getByname(producto_model.table)
-
         #procesar direcciones
         for d in direcciones:
             if d['iddireccion'] in direcciones_usuario:

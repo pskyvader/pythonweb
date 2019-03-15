@@ -1,13 +1,14 @@
 from .base import base
 from app.models.pedido import pedido as pedido_model
 
-#from app.models.table import table as table_model
+from app.models.table import table as table_model
 from app.models.administrador import administrador as administrador_model
 #from app.models.modulo import modulo as modulo_model
 #from app.models.moduloconfiguracion import moduloconfiguracion as moduloconfiguracion_model
 from app.models.pedidoestado import pedidoestado as pedidoestado_model
+from app.models.usuario import usuario as usuario_model
 
-#from .detalle import detalle as detalle_class
+from .detalle import detalle as detalle_class
 from .lista import lista as lista_class
 #from .head import head
 #from .header import header
@@ -20,7 +21,7 @@ from core.functions import functions
 #from core.image import image
 
 
-#import json
+import json
 
 class pedido(base):
     url = ['pedido']
@@ -140,3 +141,253 @@ class pedido(base):
         data.update(configuracion['menu'])
         ret = lista.normal(data)
         return ret
+
+
+
+
+
+
+
+
+
+
+
+
+
+    @classmethod
+    def detail(cls, var=[]):
+        '''Controlador de detalle de elementos base, puede ser sobreescrito en el controlador de cada modulo'''
+        ret = {'body': ''}
+        # Clase para enviar a controlador de detalle
+        class_name = cls.class_name
+        get = app.get
+        url_list = cls.url.copy()
+        url_save = cls.url.copy()
+        url_final = cls.url.copy()
+        metadata=cls.metadata.copy()
+        url_save.append('guardar')
+        url_final.append('detail')
+        if len(var)>0:
+            id = int(var[0])
+            url_final.append(id)
+            metadata['title'] = 'Editar ' + metadata['title']
+        else:
+            id = 0
+            metadata['title'] = 'Nuevo ' + metadata['title']
+
+        cls.breadcrumb.append({'url': functions.generar_url( url_final), 'title': metadata['title'], 'active': 'active'})
+        if cls.contiene_tipos and 'tipo' not in get:
+            url_final = ['home']
+
+        if not administrador_model.verificar_sesion():
+            url_final = ['login', 'index'] + url_final
+        # verificar sesion o redireccionar a login
+        url_return = functions.url_redirect(url_final)
+        if url_return != '':
+            ret['error'] = 301
+            ret['redirect'] = url_return
+            return ret
+
+        # cabeceras y campos que se muestran en el detalle:
+        # titulo,campo de la tabla a usar, tipo (ver archivo detalle.py funcion "field")
+
+        # controlador de detalle
+        detalle = detalle_class(metadata)
+        configuracion = detalle.configuracion(metadata['modulo'])
+        
+        if 'error' in configuracion:
+            ret['error']=configuracion['error']
+            ret['redirect']=configuracion['redirect']
+            return ret
+
+        row = class_name.getById(id) if id != 0 else []
+        if cls.contiene_tipos:
+            configuracion['campos']['tipo'] = { 'title_field': 'tipo', 'field': 'tipo', 'type': 'hidden', 'required': True}
+            row['tipo'] = get['tipo']
+
+        if cls.contiene_hijos and 'idpadre' in configuracion['campos']:
+            categorias = class_name.getAll()
+            for c in categorias:
+                if c[0] == id:
+                    del c
+                    break
+
+            raiz = {0: 0, 'titulo': 'Raíz', 'idpadre': [-1]}
+            categorias = raiz+categorias
+            configuracion['campos']['idpadre']['parent'] = functions.crear_arbol( categorias, -1)
+        elif cls.contiene_hijos or 'idpadre' in configuracion['campos']:
+            configuracion['campos']['idpadre'] = {
+                'title_field': 'idpadre', 'field': 'idpadre', 'type': 'hidden', 'required': True}
+            if id == 0:
+                if 'idpadre' in get:
+                    row['idpadre'] = json.dumps([get['idpadre']])
+                else:
+                    row['idpadre'] = json.dumps([0])
+        else:
+            if 'idpadre' in configuracion['campos']:
+                del configuracion['campos']['idpadre']
+
+        if cls.class_parent != None:
+            class_parent = cls.class_parent
+            idparent = class_parent.idname
+
+            is_array = True
+            fields = table_model.getByname(class_name.table)
+            if idparent in fields and fields[idparent]['tipo'] != 'longtext':
+                is_array = False
+
+            if idparent in configuracion['campos']:
+                categorias = class_parent.getAll()
+                if is_array:
+                    configuracion['campos'][idparent]['parent'] = functions.crear_arbol(
+                        categorias)
+                else:
+                    configuracion['campos'][idparent]['parent'] = categorias
+
+            else:
+                configuracion['campos'][idparent] = {
+                    'title_field': idparent, 'field': idparent, 'type': 'hidden', 'required': True}
+                if id == 0:
+                    if idparent in get:
+                        if is_array:
+                            row[idparent] = json.dumps([get[idparent]])
+                        else:
+                            row[idparent] = int(get[idparent])
+                    else:
+                        if is_array:
+                            row[idparent] = json.dumps([0])
+                        else:
+                            row[idparent] = 0
+                else:
+                    if is_array:
+                        row[idparent] = json.dumps(row[idparent])
+                    else:
+                        row[idparent] = row[idparent]
+
+        if 'idusuario' in configuracion['campos']:
+            if id == 0 or row['idusuario'] == 0:
+                usuarios = usuario_model.getAll(array(), array('order' => 'nombre ASC'))
+                foreach (usuarios as key => u:
+                    usuarios[key]['titulo'] = u['nombre'] . ' (' . u['email'] . ')' . ((!u['estado']) ? ': desactivado' : '')
+                }
+                configuracion['campos']['idusuario']['parent'] = usuarios
+            } else {
+                configuracion['campos']['idusuario']['type'] = 'hidden'
+            }
+        }
+
+
+
+        # informacion para generar la vista del detalle
+        data = {
+            'breadcrumb': cls.breadcrumb,
+            'campos': configuracion['campos'],
+            'row': row,
+            'id': id if id != 0 else '',
+            'current_url': functions.generar_url(url_final),
+            'save_url': functions.generar_url(url_save),
+            'list_url': functions.generar_url(url_list),
+        }
+
+        ret=detalle.normal(data)
+        return ret
+
+
+
+
+
+
+        
+
+
+
+        if isset(configuracion['campos']['idpedidoestado']):
+            estados                                             = pedidoestado_model.getAll(array('tipo' => _GET['tipo']))
+            configuracion['campos']['idpedidoestado']['parent'] = estados
+        }
+        if isset(configuracion['campos']['idmediopago']):
+            estados                                          = mediopago_model.getAll()
+            configuracion['campos']['idmediopago']['parent'] = estados
+        }
+
+        if isset(configuracion['campos']['cookie_pedido']) && id != 0:
+            configuracion['campos']['cookie_pedido']['type'] = 'text'
+        }
+        
+        if isset(configuracion['campos']['direcciones']):
+            com     = comuna_model.getAll()
+            comunas = array()
+            foreach (com as key => c:
+                if c['precio'] > 1:
+                    r           = region_model.getById(c['idregion'])
+                    c['precio'] = r['precio']
+                }
+                comunas[c[0]] = c
+            }
+
+            configuracion['campos']['direcciones']['direccion_entrega'] = array()
+            lista_productos                                             = producto_model.getAll(array('tipo' => 1), array('order' => 'titulo ASC'))
+            foreach (lista_productos as key => lp:
+                portada               = image.portada(lp['foto'])
+                thumb_url             = image.generar_url(portada, 'cart')
+                lista_productos[key] = array('titulo' => lp['titulo'], 'idproducto' => lp['idproducto'], 'foto' => thumb_url, 'precio' => lp['precio_final'], 'stock' => lp['stock'])
+            }
+            configuracion['campos']['direcciones']['lista_productos'] = lista_productos
+
+            lista_atributos = producto_model.getAll(array('tipo' => 2), array('order' => 'titulo ASC'))
+            foreach (lista_atributos as key => lp:
+                portada               = image.portada(lp['foto'])
+                thumb_url             = image.generar_url(portada, 'cart')
+                lista_atributos[key] = array('titulo' => lp['titulo'], 'idproducto' => lp['idproducto'], 'foto' => thumb_url)
+            }
+            configuracion['campos']['direcciones']['lista_atributos'] = lista_atributos
+
+            if id != 0:
+                if isset(row['idusuario']) && row['idusuario'] != '':
+                    direcciones_entrega = usuariodireccion_model.getAll(array('idusuario' => row['idusuario']))
+                    foreach (direcciones_entrega as key => de:
+                        direcciones_entrega[key]['precio'] = comunas[de['idcomuna']]['precio']
+                        direcciones_entrega[key]['titulo'] = de['titulo'] . ' (' . de['direccion'] . ')'
+                    }
+                    configuracion['campos']['direcciones']['direccion_entrega'] = direcciones_entrega
+                }
+
+                dir         = pedidodireccion_model.getAll(array('idpedido' => id))
+                direcciones = array()
+                foreach (dir as key => d:
+                    new_d     = array('idpedidodireccion' => d['idpedidodireccion'], 'idusuariodireccion' => d['idusuariodireccion'], 'precio' => d['precio'], 'fecha_entrega' => d['fecha_entrega'])
+                    prod      = pedidoproducto_model.getAll(array('idpedido' => id, 'idpedidodireccion' => d[0]))
+                    productos = array()
+                    foreach (prod as v => p:
+                        portada     = image.portada(p['foto'])
+                        thumb_url   = image.generar_url(portada, '')
+                        new_p       = array('idpedidoproducto' => p['idpedidoproducto'], 'idproductoatributo' => p['idproductoatributo'], 'titulo' => p['titulo'], 'mensaje' => p['mensaje'], 'idproducto' => p['idproducto'], 'foto' => thumb_url, 'precio' => p['precio'], 'cantidad' => p['cantidad'], 'total' => p['total'])
+                        productos[] = new_p
+                    }
+                    new_d['productos'] = productos
+                    new_d['cantidad']  = count(productos)
+                    if new_d['cantidad'] == 0:
+                        new_d['cantidad'] = ''
+                    }
+
+                    direcciones[] = new_d
+                }
+                row['direcciones'] = direcciones
+            }
+        }
+        if(isset(row['fecha_pago']) && row['fecha_pago']==0){
+            row['fecha_pago']=''
+        }
+
+        data = array( //informacion para generar la vista del detalle, arrays SIEMPRE antes de otras variables!!!!
+            'breadcrumb'  => this->breadcrumb,
+            'campos'      => configuracion['campos'],
+            'row'         => row,
+            'id'          => (id != 0) ? id : '',
+            'current_url' => functions.generar_url(this->url),
+            'save_url'    => functions.generar_url(url_save),
+            'list_url'    => functions.generar_url(url_list),
+        )
+
+        detalle->normal(data, class)
+    }

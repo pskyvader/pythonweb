@@ -10,10 +10,12 @@ from .detalle import detalle as detalle_class
 
 import json
 
+
 class administrador(base):
     url = ['administrador']
-    metadata = {'title' : 'administrador','modulo':'administrador'}
+    metadata = {'title': 'administrador', 'modulo': 'administrador'}
     breadcrumb = []
+
     def __init__(self):
         super().__init__(administrador_model)
 
@@ -30,7 +32,7 @@ class administrador(base):
         url_final = cls.url.copy()
         url_save.append('guardar')
         url_final.append('detail')
-        if len(var)>0:
+        if len(var) > 0:
             id = int(var[0])
             url_final.append(id)
             cls.metadata['title'] = 'Editar ' + cls.metadata['title']
@@ -38,7 +40,8 @@ class administrador(base):
             id = 0
             cls.metadata['title'] = 'Nuevo ' + cls.metadata['title']
 
-        cls.breadcrumb.append({'url': functions.generar_url( url_final), 'title': cls.metadata['title'], 'active': 'active'})
+        cls.breadcrumb.append({'url': functions.generar_url(
+            url_final), 'title': cls.metadata['title'], 'active': 'active'})
         if cls.contiene_tipos and 'tipo' not in get:
             url_final = ['home']
 
@@ -57,10 +60,10 @@ class administrador(base):
         # controlador de detalle
         detalle = detalle_class(cls.metadata)
         configuracion = detalle.configuracion(cls.metadata['modulo'])
-        
+
         if 'error' in configuracion:
-            ret['error']=configuracion['error']
-            ret['redirect']=configuracion['redirect']
+            ret['error'] = configuracion['error']
+            ret['redirect'] = configuracion['redirect']
             return ret
 
         row = class_name.getById(id) if id != 0 else []
@@ -78,7 +81,8 @@ class administrador(base):
 
             raiz = {0: 0, 'titulo': 'Raíz', 'idpadre': [-1]}
             categorias = raiz+categorias
-            configuracion['campos']['idpadre']['parent'] = functions.crear_arbol( categorias, -1)
+            configuracion['campos']['idpadre']['parent'] = functions.crear_arbol(
+                categorias, -1)
         elif cls.contiene_hijos or 'idpadre' in configuracion['campos']:
             configuracion['campos']['idpadre'] = {
                 'title_field': 'idpadre', 'field': 'idpadre', 'type': 'hidden', 'required': True}
@@ -139,5 +143,5 @@ class administrador(base):
             'list_url': functions.generar_url(url_list),
         }
 
-        ret=detalle.normal(data)
+        ret = detalle.normal(data)
         return ret

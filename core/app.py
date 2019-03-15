@@ -42,7 +42,7 @@ class app:
         app.title = config['title']
         app.prefix_site = functions.url_amigable(app.title)
 
-        site=str(environ['SERVER_NAME']).strip("www.")
+        site=str(environ['SERVER_NAME']).replace("www.",'')
         subdirectorio = config['dir']
         https = "https://" if config['https'] else "http://"
         www = "www." if config['www'] else ""

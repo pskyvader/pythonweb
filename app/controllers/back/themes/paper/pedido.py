@@ -333,7 +333,7 @@ class pedido(base):
             if id != 0:
                 if 'idusuario' in row and row['idusuario'] != '':
                     direcciones_entrega = usuariodireccion_model.getAll({'idusuario' : row['idusuario']})
-                    print(direcciones_antega)
+                    print(direcciones_entrega)
                     for de  in direcciones_entrega:
                         de['precio'] = comunas[de['idcomuna']]['precio']
                         de['titulo'] = de['titulo'] + ' (' + de['direccion'] + ')'

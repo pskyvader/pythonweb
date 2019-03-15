@@ -36,6 +36,7 @@ class base_model:
         if 'order' not in condiciones and 'orden' in fields:
             print(cls,'orden',fields['orden'])
             condiciones['order'] = 'orden ASC'
+            print(cls,'condiciones',condiciones)
         else:
             print(cls,'condiciones',condiciones)
 

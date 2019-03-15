@@ -89,17 +89,15 @@ class pedido(base):
 
 
 
-        if if 'idpedidoestado' in configuracion['th']:
-            pe           = pedidoestado_model::getAll()
-            pedidoestado = array()
-            foreach (pe as key => p) {
-                pedidoestado[p[0]] = array('background' => p['color'], 'text' => p['titulo'],'color' => functions::getContrastColor(p['color']))
-            }
-
-            foreach (respuesta['row'] as k => v) {
-                respuesta['row'][k]['idpedidoestado'] = pedidoestado[v['idpedidoestado']]
-            }
-        }
+        if 'idpedidoestado' in configuracion['th']:
+            pe           = pedidoestado_model.getAll()
+            pedidoestado = {}
+            for p in pe.values():
+                pedidoestado[p[0]] = {'background' : p['color'], 'text' : p['titulo'],'color' : functions.getContrastColor(p['color'])}
+            
+            for v in respuesta['row']:
+                v['idpedidoestado'] = pedidoestado[v['idpedidoestado']]
+                
 
         if cls.contiene_hijos:
             if cls.contiene_tipos:
@@ -124,8 +122,7 @@ class pedido(base):
 
             else:
                 for v in respuesta['row']:
-                    v['url_sub'] = functions.generar_url(
-                        [cls.sub], {class_name.idname: v[0]})
+                    v['url_sub'] = functions.generar_url( [cls.sub], {class_name.idname: v[0]})
 
         else:
             if 'url_sub' in configuracion['th']:
@@ -143,51 +140,3 @@ class pedido(base):
         data.update(configuracion['menu'])
         ret = lista.normal(data)
         return ret
-
-
-
-
-
-
-
-
-
-
-        if (this->contiene_hijos) {
-            if (this->contiene_tipos) {
-                foreach (respuesta['row'] as k => v) {
-                    respuesta['row'][k]['url_children'] = functions::generar_url(this->url, array('idpadre' => v[0], 'tipo' => _GET['tipo']))
-                }
-            } else {
-                foreach (respuesta['row'] as k => v) {
-                    respuesta['row'][k]['url_children'] = functions::generar_url(this->url, array('idpadre' => v[0]))
-                }
-            }
-        } else {
-            unset(configuracion['th']['url_children'])
-        }
-
-        if (this->sub != '') {
-            if (this->contiene_tipos) {
-                foreach (respuesta['row'] as k => v) {
-                    respuesta['row'][k]['url_sub'] = functions::generar_url(array(this->sub), array(class::idname => v[0], 'tipo' => _GET['tipo']))
-                }
-            } else {
-                foreach (respuesta['row'] as k => v) {
-                    respuesta['row'][k]['url_sub'] = functions::generar_url(array(this->sub), array(class::idname => v[0]))
-                }
-            }
-        } else {
-            unset(configuracion['th']['url_sub'])
-        }
-
-        data = array( //informacion para generar la vista de la lista, arrays SIEMPRE antes de otras variables!!!!
-            'breadcrumb'  => this->breadcrumb,
-            'th'          => configuracion['th'],
-            'current_url' => functions::generar_url(this->url),
-            'new_url'     => functions::generar_url(url_detalle),
-        )
-        data = array_merge(data, respuesta, configuracion['menu'])
-
-        list->normal(data)
-    }

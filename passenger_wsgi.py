@@ -23,7 +23,6 @@ def application2(environ, start_response):
         main_data['headers'].append(('Accept-encoding', 'gzip,deflate'))
         main_data['headers'].append(('Content-Encoding', 'gzip'))
 
-    print(main_data['status'], main_data['headers'])
     start_response(main_data['status'], main_data['headers'])
     #if main_data['status']=='200 OK':
         #print(environ['PATH_INFO'],'total', (datetime.now()-init_time).total_seconds()*1000)

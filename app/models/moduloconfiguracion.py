@@ -34,7 +34,6 @@ class moduloconfiguracion(base_model):
 
         row = connection.get(cls.table, cls.idname, where, condiciones, select)
         for r in row:
-            print(r)
             r['mostrar'] = json.loads(r['mostrar'])
             r['detalle'] = json.loads(r['detalle'])
 

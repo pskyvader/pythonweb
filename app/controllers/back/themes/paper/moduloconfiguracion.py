@@ -118,7 +118,7 @@ class moduloconfiguracion(base):
         respuesta = lista.get_row(class_name, where, condiciones, url_detalle)
 
         for value in respuesta['row']:
-            value['url_subseccion'] = functions.generar_url(['modulo'], array($class::$idname => $value[0]));
+            value['url_subseccion'] = functions.generar_url(['modulo'], {class_name.idname :value[0]});
         
 
         if 'copy' in configuracion['th']:

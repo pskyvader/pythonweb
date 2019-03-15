@@ -65,7 +65,7 @@ setInterval(function() {
 
 function register_sw() {
     if ('serviceWorker' in navigator) {
-        //console.log('sw');
+        console.log('sw');
         navigator.serviceWorker.register(path + 'sw.js').then(function(registration) {
             // Registration was successful
             console.log('ServiceWorker registration successful with scope: ', registration.scope);
@@ -74,6 +74,6 @@ function register_sw() {
             console.log('ServiceWorker registration failed: ', err);
         });
     } else {
-        //console.log('no sw');
+        console.log('no sw');
     }
 }

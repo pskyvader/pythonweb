@@ -214,7 +214,7 @@ class backup(base):
             file_write = open(self.archivo_log, 'w')
             file_write.write(json.dumps(log,ensure_ascii=False))
             file_write.close()
-        ret['body'] = json.dumps(respuesta)
+        ret['body'] = json.dumps(respuesta,ensure_ascii=False)
         return ret
 
     def eliminar(self):
@@ -239,7 +239,7 @@ class backup(base):
             respuesta['exito'] = True
             respuesta['mensaje'] = "Eliminado correctamente."
 
-        ret['body'] = json.dumps(respuesta)
+        ret['body'] = json.dumps(respuesta,ensure_ascii=False)
         return ret
 
     def vaciar_log(self):
@@ -282,7 +282,7 @@ class backup(base):
             respuesta['mensaje'] = 'tiempo: ' + \
                 str(tiempo) + ', cantidad: ' + str(cantidad)
 
-        ret['body'] = json.dumps(respuesta)
+        ret['body'] = json.dumps(respuesta,ensure_ascii=False)
         return ret
 
     def eliminar_error(self):
@@ -302,7 +302,7 @@ class backup(base):
 
         for f in files:
             os.remove(url + f)
-        ret['body'] = json.dumps(respuesta)
+        ret['body'] = json.dumps(respuesta,ensure_ascii=False)
         return ret
 
     def generar(self):
@@ -326,7 +326,7 @@ class backup(base):
         if respuesta['exito']:
             respuesta = self.get_files(self.base_dir)
 
-        ret['body'] = json.dumps(respuesta)
+        ret['body'] = json.dumps(respuesta,ensure_ascii=False)
         return ret
 
     def generar_backup(self, logging=True):
@@ -378,7 +378,7 @@ class backup(base):
                 file_write.close()
 
         if logging:
-            ret['body'] = json.dumps(respuesta)
+            ret['body'] = json.dumps(respuesta,ensure_ascii=False)
 
         return ret
 
@@ -445,7 +445,7 @@ class backup(base):
                 respuesta['mensaje'] = 'Ocurrio un error al intentar guardar la base de datos en archivo zip ' + \
                     str(archivo_backup)
         if log:
-            ret['body'] = json.dumps(respuesta)
+            ret['body'] = json.dumps(respuesta,ensure_ascii=False)
             return ret
         else:
             return respuesta
@@ -458,7 +458,7 @@ class backup(base):
         lista = app.post['lista']
         respuesta = self.zipData(
             self.base_dir, app.post['archivo_backup'], lista, app.post['total'])
-        ret['body'] = json.dumps(respuesta)
+        ret['body'] = json.dumps(respuesta,ensure_ascii=False)
         return ret
 
     def zipData(self, source, destination, lista, total=1, log=True):

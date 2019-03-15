@@ -33,6 +33,7 @@ class base_model:
                     del condiciones['limit2']
             del where['idpadre']
 
+        print(fields)
         if 'order' not in condiciones and 'orden' in fields:
             condiciones['order'] = 'orden ASC'
 

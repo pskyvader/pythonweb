@@ -32,6 +32,7 @@ class recuperar(base):
             #app.session['intento_bloqueo'] += 1
 
         error_recuperar = False
+        exito=False
         if 'email' in app.post and 'token' in app.post:
             if 'recuperar_token' in app.session:
                 if app.session['recuperar_token']['token'] == app.post['token']:
@@ -40,10 +41,7 @@ class recuperar(base):
                         if recuperar:
                             if 'intento_bloqueo' in app.session:
                                 app.session['intento_bloqueo'] = 0
-                            if not url:
-                                url_final = ['home']
-                            else:
-                                url_final = url
+                            exito=True
                         else:
                             error_recuperar = True
                             if not 'intento_bloqueo' in app.session:

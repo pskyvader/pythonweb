@@ -19,7 +19,7 @@ from core.functions import functions
 #from core.image import image
 
 
-#import json
+import json
 from pathlib import Path
 import os
 
@@ -90,72 +90,51 @@ class sitemap(base):
         data['progreso'] = total
         data['mensaje_error'] = mensaje_error
         data['url_sitemap'] = functions.generar_url(['sitemap.xml'], front_auto=False)
-
-
-        ret['body'].append(('home', data))
-
-
-
-        view.set('is_error', is_error)
-        view.set('mensaje_error', mensaje_error)
-        view.set('url_sitemap', 
-        view.render('sitemap')
-
-
-
-
-
-
-
+        ret['body'].append(('sitemap', data))
         f = footer()
         ret['body'] += f.normal()['body']
-
         return ret
 
-
-
-    public function vaciar()
-    {
-        class = this->class
+    def vaciar(self):
+        ret = {'headers': [ ('Content-Type', 'application/json; charset=utf-8')], 'body': ''}
+        class_name = self.class_name
         respuesta          = class_name.truncate()
         respuesta['vacio'] = True
-        echo json_encode(respuesta)
-    }
-
-    public function generar()
-    {
-        class = this->class
-        respuesta  = array('exito' : False, 'mensaje' : '')
+        ret['body'] = json.dumps(respuesta,ensure_ascii=False)
+        return ret
+        
+    def generar(self):
+        ret = {'headers': [ ('Content-Type', 'application/json; charset=utf-8')], 'body': ''}
+        class_name = self.class_name
+        respuesta  = {'exito' : False, 'mensaje' : ''}
         row        = class_name.getAll()
         sitio_base = app.get_url(True)
         if count(row) == 0:
-            r      = this->head(sitio_base, sitio_base)
+            r      = self.head(sitio_base, sitio_base)
             valido = r['mensaje']
-            ready  = (valido != '') ? True : False
-            if isset(r['new_url']) and r['new_url'] != '':
-                valido .= " redirect " . r['new_url']
+            ready  = (valido != '')
+            if 'new_url' in r and r['new_url'] != '':
+                valido += " redirect " + r['new_url']
                 ready = True
-            }
-            insert = array('idpadre' : 0, 'url' : sitio_base, 'depth' : 0, 'valid' : valido, 'ready' : ready)
+            
+            insert = {'idpadre' : 0, 'url' : sitio_base, 'depth' : 0, 'valid' : valido, 'ready' : ready}
             id     = class_name.insert(insert)
-            if !r['exito'] and isset(r['new_url']) and r['new_url'] != '':
-                existe = class_name.getAll(array('url' : r['new_url']), array('limit' : 1))
+            if not r['exito'] and 'new_url' in r and r['new_url'] != '':
+                existe = class_name.getAll({'url' : r['new_url']}, {'limit' : 1})
                 if count(existe) == 0:
-                    insert = array('idpadre' : id, 'url' : r['new_url'], 'depth' : 1, 'valid' : "", 'ready' : False)
+                    insert = {'idpadre' : id, 'url' : r['new_url'], 'depth' : 1, 'valid' : "", 'ready' : False}
                     id     = class_name.insert(insert)
-                }
-            }
             respuesta['exito'] = True
         else:
             row = class_name.getAll(array('ready' : False))
             if count(row) == 0:
-                respuesta = this->generar_sitemap()
+                respuesta = self.generar_sitemap()
             else:
                 sitio = row[0]
                 depth = sitio['depth']
                 url   = sitio['url']
                 if sitio['valid'] == '':
-                    sub_sitios = this->generar_url(url, sitio_base)
+                    sub_sitios = self.generar_url(url, sitio_base)
                 else:
                     sub_sitios = False
                 }
@@ -168,16 +147,16 @@ class sitemap(base):
                     foreach (sub_sitios as key : sitios:
                         existe = class_name.getAll(array('url' : sitios), array('limit' : 1))
                         if count(existe) == 0:
-                            r      = this->head(sitios, sitio_base)
+                            r      = self.head(sitios, sitio_base)
                             valido = r['mensaje']
                             ready  = (valido != '') ? True : False
-                            if isset(r['new_url']) and r['new_url'] != '':
+                            if 'new_url' in r and r['new_url'] != '':
                                 valido .= " redirect " . r['new_url']
                                 ready = True
                             }
                             insert = array('idpadre' : id_padre, 'url' : sitios, 'depth' : depth, 'valid' : valido, 'ready' : ready)
                             id     = class_name.insert(insert)
-                            if !r['exito'] and isset(r['new_url']) and r['new_url'] != '':
+                            if not r['exito'] and 'new_url' in r and r['new_url'] != '':
                                 existe = class_name.getAll(array('url' : r['new_url']), array('limit' : 1))
                                 if count(existe) == 0:
                                     insert = array('idpadre' : id, 'url' : r['new_url'], 'depth' : depth + 1, 'valid' : "", 'ready' : False)
@@ -211,7 +190,7 @@ class sitemap(base):
     }
     public function generar_sitemap()
     {
-        class = this->class
+        class = self.class
         respuesta = array('exito' : True, 'mensaje' : '', 'generado' : True)
         lista     = class_name.getAll(array('valid' : ''), array('order' : 'depth'))
 
@@ -237,7 +216,7 @@ class sitemap(base):
         body .= '</urlset>'
         dir                = app.get_dir(True)
         respuesta['exito'] = file_put_contents(dir . 'sitemap.xml', body)
-        if !respuesta['exito']:
+        if not respuesta['exito']:
             respuesta['mensaje'] = 'Error al guardar el archivo en ' . dir . 'sitemap.xml'
         }
         cache.delete_cache()
@@ -263,12 +242,12 @@ class sitemap(base):
             url  = href->getAttribute('href')
             url  = filter_var(url, FILTER_SANITIZE_URL)
             // validate url
-            if !filter_var(url, FILTER_VALIDATE_URL) === False:
+            if not filter_var(url, FILTER_VALIDATE_URL) === False:
                 if strpos(url, sitio_base) == 0:
                     sublista[] = url
                 }
 
-            } elseif !filter_var(sitio . url, FILTER_VALIDATE_URL) === False:
+            } elseif not filter_var(sitio . url, FILTER_VALIDATE_URL) === False:
                 if strpos(sitio . url, sitio_base) == 0:
                     sublista[] = sitio . url
                 }
@@ -279,7 +258,7 @@ class sitemap(base):
     }
     private function head(sitio, sitio_base, count=0)
     {
-        respuesta = array('exito' : True, 'mensaje' : this->validar_url(sitio, sitio_base))
+        respuesta = array('exito' : True, 'mensaje' : self.validar_url(sitio, sitio_base))
         if respuesta['mensaje'] == '':
             headers = get_headers(sitio, 1)
             if stripos(headers[0], 'OK') === False:
@@ -287,7 +266,7 @@ class sitemap(base):
                     if is_array(headers['Location']):
                         headers['Location'] = headers['Location'][0]
                     }
-                    location             = this->head(headers['Location'], sitio_base,count+1)
+                    location             = self.head(headers['Location'], sitio_base,count+1)
                     respuesta['new_url'] = ((isset(location['new_url'])) ? location['new_url'] : headers['Location'])
                     if is_array(respuesta['new_url']):
                         respuesta['new_url'] = respuesta['new_url'][0]

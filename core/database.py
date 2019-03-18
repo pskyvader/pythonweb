@@ -257,6 +257,7 @@ class database():
             sql += "TRUNCATE TABLE " + self._prefix + table + " "
         print(sql)
         row = self.consulta(sql, False)
+        print(row)
         return row
 
     def restore_backup(self, backup):

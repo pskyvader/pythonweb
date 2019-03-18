@@ -126,8 +126,7 @@ class database():
 
         for key, value in insert.items():
             sql += ","
-
-            sql += value if (value == "true" or value == "True" or value == "false" or value == "False") else "'" + str(value).replace("'", "\\'") + "'"
+            sql += str(value).lower() if (str(value).lower() == "true" or str(value).lower() == "false") else "'" + str(value).replace("'", "\\'") + "'"
 
         sql += ")"
         row = self.consulta(sql, False, delete_cache)

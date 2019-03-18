@@ -116,7 +116,9 @@ class sitemap(base):
         row = class_name.getAll()
         sitio_base = app.get_url(True)
         if len(row) == 0:
+            print(respuesta)
             r = self.head(sitio_base, sitio_base)
+            print(respuesta)
             valido = r['mensaje']
             ready = (valido != '')
             if 'new_url' in r and r['new_url'] != '':

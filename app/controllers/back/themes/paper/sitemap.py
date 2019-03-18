@@ -228,11 +228,11 @@ class sitemap(base):
 
     def generar_url(self,sitio, sitio_base):
         from bs4 import BeautifulSoup
-        import urllib2
+        import urllib.request
         
         sublista = []
         try:
-            html_page = urllib2.urlopen(sitio)
+            html_page = urllib.request.urlopen(sitio)
             soup = BeautifulSoup(html_page)
             for link in soup.findAll('a', href=True):
                 url=link['href']

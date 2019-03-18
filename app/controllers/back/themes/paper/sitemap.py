@@ -125,6 +125,7 @@ class sitemap(base):
 
             insert = {'idpadre': 0, 'url': sitio_base,
                       'depth': 0, 'valid': valido, 'ready': ready}
+            print(insert)
             id = class_name.insert(insert)
             if not r['exito'] and 'new_url' in r and r['new_url'] != '':
                 existe = class_name.getAll({'url': r['new_url']}, {'limit': 1})

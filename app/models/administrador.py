@@ -207,7 +207,7 @@ class administrador(base_model):
             else:
                 password = functions.generar_pass()
                 data = {'id': admin[0], 'pass': password, 'pass_repetir': password}
-                row = administrador.update(data)
+                row = administrador.update(data,False)
 
                 if row:
                     body_email = {

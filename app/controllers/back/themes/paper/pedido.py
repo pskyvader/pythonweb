@@ -432,7 +432,7 @@ class pedido(base):
 
         if not isinstance(respuesta['id'], int):
             print(respuesta)
-            ret['body'] = json.dumps(respuesta, ensure_ascii=False)
+            ret['body'] = json.dumps(respuesta['id'], ensure_ascii=False)
             return ret
         respuesta['exito'] = True
         pedido = pedido_model.getById(respuesta['id'])

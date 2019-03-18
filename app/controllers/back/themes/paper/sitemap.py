@@ -261,22 +261,25 @@ class sitemap(base):
         import urllib.request
         respuesta = {'exito': True, 'mensaje': self.validar_url(sitio, sitio_base)}
         if respuesta['mensaje'] == '':
-            response = urllib.request.urlopen(sitio)
-            response.getcode()
-            if response.getcode() != 200:
-                if response.getcode() >= 300 and response.getcode() < 400:
-                    if isinstance(response.headers['Location'], list):
-                        response.headers['Location'] = response.headers['Location'][0]
+            try:
+                response = urllib.request.urlopen(sitio)
+                response.getcode()
+                if response.getcode() != 200:
+                    if response.getcode() >= 300 and response.getcode() < 400:
+                        if isinstance(response.headers['Location'], list):
+                            response.headers['Location'] = response.headers['Location'][0]
 
-                    location = self.head(
-                        response.headers['Location'], sitio_base, count+1)
-                    respuesta['new_url'] = location['new_url'] if 'new_url' in location else response.headers['Location']
-                    if isinstance(respuesta['new_url'], list):
-                        respuesta['new_url'] = respuesta['new_url'][0]
-                    respuesta['mensaje'] = location['mensaje']
-                    respuesta['exito'] = False
-                else:
-                    respuesta['mensaje'] = 'status: ' + response.getcode()
+                        location = self.head(
+                            response.headers['Location'], sitio_base, count+1)
+                        respuesta['new_url'] = location['new_url'] if 'new_url' in location else response.headers['Location']
+                        if isinstance(respuesta['new_url'], list):
+                            respuesta['new_url'] = respuesta['new_url'][0]
+                        respuesta['mensaje'] = location['mensaje']
+                        respuesta['exito'] = False
+                    else:
+                        respuesta['mensaje'] = 'status: ' + response.getcode()
+            except:
+                respuesta['exito']=False
         return respuesta
 
     def validar_url(self, sitio, sitio_base):

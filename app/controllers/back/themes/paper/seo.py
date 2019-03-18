@@ -34,13 +34,11 @@ class seo(base):
         respuesta = {'headers': [ ('Content-Type', 'application/json; charset=utf-8')], 'body': ''}
         respuesta['body'] = {'exito': False, 'mensaje': 'Debes recargar la pagina'}
         if cls.contiene_tipos and 'tipo' not in get:
-            respuesta['body'] = json.dumps(
-                respuesta['body'], ensure_ascii=False)
+            respuesta['body'] = json.dumps( respuesta['body'], ensure_ascii=False)
             return
 
         if cls.contiene_hijos and 'idpadre' not in get:
-            respuesta['body'] = json.dumps(
-                respuesta['body'], ensure_ascii=False)
+            respuesta['body'] = json.dumps( respuesta['body'], ensure_ascii=False)
             return
 
         where = {}

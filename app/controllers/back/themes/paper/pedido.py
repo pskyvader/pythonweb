@@ -614,5 +614,6 @@ class pedido(base):
             campos['id'] = pedido[0]
             respuesta['id'] = class_name.update(campos)
 
+        print(respuesta)
         ret['body'] = json.dumps(respuesta, ensure_ascii=False)
         return ret

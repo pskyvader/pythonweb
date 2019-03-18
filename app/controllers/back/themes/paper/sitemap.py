@@ -230,7 +230,7 @@ class sitemap(base):
         from bs4 import BeautifulSoup
         import urllib2
         
-        html_page = urllib2.urlopen("http://arstechnica.com")
+        html_page = urllib2.urlopen(sitio)
         soup = BeautifulSoup(html_page)
         for link in soup.findAll('a', attrs={'href': re.compile("^http://")}):
             print link.get('href')

@@ -63,7 +63,7 @@ class seo(base):
         class_name = cls.class_name
         row = class_name.getAll(where, condiciones, select)
 
-        for key, value in enumerate(row):
+        for key in range(len(row)):
             row[key]['foto'] = row[key]['foto']+row[key]['banner']
 
         respuesta['body'] = json.dumps(row, ensure_ascii=False)

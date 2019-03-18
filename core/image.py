@@ -470,6 +470,7 @@ class image:
         if len(fotos) > 0:
             portada = fotos[0]
             for f in fotos:
+                print(f)
                 if 'true' == f['portada']:
                     portada = f
                     break

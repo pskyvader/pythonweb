@@ -15,6 +15,7 @@ from .footer import footer
 
 from core.app import app
 #from core.database import database
+from core.cache import cache
 from core.functions import functions
 #from core.image import image
 
@@ -109,7 +110,7 @@ class sitemap(base):
         respuesta  = {'exito' : False, 'mensaje' : ''}
         row        = class_name.getAll()
         sitio_base = app.get_url(True)
-        if count(row) == 0:
+        if len(row) == 0:
             r      = self.head(sitio_base, sitio_base)
             valido = r['mensaje']
             ready  = (valido != '')
@@ -121,13 +122,13 @@ class sitemap(base):
             id     = class_name.insert(insert)
             if not r['exito'] and 'new_url' in r and r['new_url'] != '':
                 existe = class_name.getAll({'url' : r['new_url']}, {'limit' : 1})
-                if count(existe) == 0:
+                if len(existe) == 0:
                     insert = {'idpadre' : id, 'url' : r['new_url'], 'depth' : 1, 'valid' : "", 'ready' : False}
                     id     = class_name.insert(insert)
             respuesta['exito'] = True
         else:
-            row = class_name.getAll(array('ready' : False))
-            if count(row) == 0:
+            row = class_name.getAll({'ready' : False})
+            if len(row) == 0:
                 respuesta = self.generar_sitemap()
             else:
                 sitio = row[0]
@@ -137,93 +138,93 @@ class sitemap(base):
                     sub_sitios = self.generar_url(url, sitio_base)
                 else:
                     sub_sitios = False
-                }
+                
 
-                if is_array(sub_sitios):
-                    update = array('id' : sitio[0], 'idpadre' : sitio['idpadre'], 'url' : sitio['url'], 'depth' : depth, 'valid' : sitio['valid'], 'ready' : True)
+                if isinstance(sub_sitios,list):
+                    update = {'id' : sitio[0], 'idpadre' : sitio['idpadre'], 'url' : sitio['url'], 'depth' : depth, 'valid' : sitio['valid'], 'ready' : True}
                     class_name.update(update)
                     id_padre = sitio[0]
-                    depth++
-                    foreach (sub_sitios as key : sitios:
-                        existe = class_name.getAll(array('url' : sitios), array('limit' : 1))
-                        if count(existe) == 0:
+                    depth+=1
+                    for sitios in sub_sitios:
+                        existe = class_name.getAll({'url' : sitios}, {'limit' : 1})
+                        if len(existe) == 0:
                             r      = self.head(sitios, sitio_base)
                             valido = r['mensaje']
-                            ready  = (valido != '') ? True : False
+                            ready  = (valido != '')
                             if 'new_url' in r and r['new_url'] != '':
-                                valido .= " redirect " . r['new_url']
+                                valido += " redirect " + r['new_url']
                                 ready = True
-                            }
-                            insert = array('idpadre' : id_padre, 'url' : sitios, 'depth' : depth, 'valid' : valido, 'ready' : ready)
+                            
+                            insert = {'idpadre' : id_padre, 'url' : sitios, 'depth' : depth, 'valid' : valido, 'ready' : ready}
                             id     = class_name.insert(insert)
                             if not r['exito'] and 'new_url' in r and r['new_url'] != '':
-                                existe = class_name.getAll(array('url' : r['new_url']), array('limit' : 1))
-                                if count(existe) == 0:
-                                    insert = array('idpadre' : id, 'url' : r['new_url'], 'depth' : depth + 1, 'valid' : "", 'ready' : False)
+                                existe = class_name.getAll({'url' : r['new_url']}, {'limit' : 1})
+                                if len(existe) == 0:
+                                    insert = {'idpadre' : id, 'url' : r['new_url'], 'depth' : depth + 1, 'valid' : "", 'ready' : False}
                                     id     = class_name.insert(insert)
-                                }
-                            }
-                        }
-                    }
                 else:
-                    update = array('id' : sitio[0], 'idpadre' : sitio['idpadre'], 'url' : sitio['url'], 'depth' : depth, 'valid' : sitio['valid'], 'ready' : True)
+                    update = {'id' : sitio[0], 'idpadre' : sitio['idpadre'], 'url' : sitio['url'], 'depth' : depth, 'valid' : sitio['valid'], 'ready' : True}
                     class_name.update(update)
-                }
+                
                 respuesta['exito'] = True
-            }
-        }
-        listos = class_name.getAll(array('ready' : True), array(), 'total')
-        row    = class_name.getAll(array('ready' : True, 'valid' : ''), array('limit' : 1, 'order' : 'idsitemap DESC'))
-        if count(row) == 1:
+            
+        
+        listos = class_name.getAll({'ready' : True}, select='total')
+        row    = class_name.getAll({'ready' : True, 'valid' : ''}, {'limit' : 1, 'order' : 'idsitemap DESC'})
+        if len(row) == 1:
             respuesta['ultimo'] = row[0]
         else:
-            respuesta['ultimo'] = null
-        }
-        pendientes = class_name.getAll(array('ready' : False), array(), 'total')
+            respuesta['ultimo'] = None
+        
+        pendientes = class_name.getAll({'ready' : False}, select='total')
         if listos == 0 and pendientes == 0:
             total = 0
         else:
             total = (listos * 100) / (listos + pendientes)
-        }
+        
         respuesta['progreso'] = total
-        echo json_encode(respuesta)
-    }
-    public function generar_sitemap()
-    {
-        class = self.class
-        respuesta = array('exito' : True, 'mensaje' : '', 'generado' : True)
-        lista     = class_name.getAll(array('valid' : ''), array('order' : 'depth'))
+        ret['body'] = json.dumps(respuesta,ensure_ascii=False)
+        return ret
+    
+    def generar_sitemap(self):
+        class_name = self.class_name
+        respuesta  = {'exito' : False, 'mensaje' : '', 'generado' : True}
+        lista     = class_name.getAll({'valid' : ''}, {'order' : 'depth'})
 
-        body = '<?xml version="1.0" encoding="UTF-8"?>' . "\n"
-        body .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . "\n"
+        body = '<?xml version="1.0" encoding="UTF-8"?>' + "\n"
+        body += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' + "\n"
 
         count = -1
-        total = count(lista)
-        foreach (lista as key : value:
-            count++
+        total = len(lista)
+        for value in lista:
+            count+=1
             prioridad = (total - count) / total
-            prioridad = (prioridad >= 0.1) ? prioridad : 0.1
+            prioridad = prioridad if prioridad >= 0.1 else 0.1
 
-            elemento = '<url>' . "\n"
-            elemento .= '<loc>' . value['url'] . '</loc>' . "\n"
-            elemento .= '<changefreq>monthly</changefreq>' . "\n"
-            elemento .= '<priority>' . round(prioridad, 2) . '</priority>' . "\n"
-            //elemento.='<lastmod>'.value['profundidad'].'</lastmod>' //<lastmod>2005-01-01</lastmod>
-            elemento .= '</url>' . "\n"
-            body .= elemento
-        }
+            elemento = '<url>' + "\n"
+            elemento += '<loc>' + value['url'] + '</loc>' + "\n"
+            elemento += '<changefreq>monthly</changefreq>' + "\n"
+            elemento += '<priority>' + round(prioridad, 2) + '</priority>' + "\n"
+            #elemento+='<lastmod>'+value['profundidad']+'</lastmod>' //<lastmod>2005-01-01</lastmod>
+            elemento += '</url>' + "\n"
+            body += elemento
+        
 
-        body .= '</urlset>'
+        body += '</urlset>'
         dir                = app.get_dir(True)
-        respuesta['exito'] = file_put_contents(dir . 'sitemap.xml', body)
-        if not respuesta['exito']:
-            respuesta['mensaje'] = 'Error al guardar el archivo en ' . dir . 'sitemap.xml'
-        }
+
+        try:
+            file_write = open(dir + 'sitemap.xml', 'w')
+            file_write.write(body)
+            file_write.close()
+            respuesta['exito'] = True
+        except:
+            respuesta['exito'] = False
+            respuesta['mensaje'] = 'Error al guardar el archivo en ' + dir + 'sitemap.xml'
         cache.delete_cache()
 
-
         return respuesta
-    }
+    
 
     public function generar_url(sitio, sitio_base)
     {

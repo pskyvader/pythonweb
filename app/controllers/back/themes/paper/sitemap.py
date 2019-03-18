@@ -116,9 +116,7 @@ class sitemap(base):
         row = class_name.getAll()
         sitio_base = app.get_url(True)
         if len(row) == 0:
-            print(respuesta)
             r = self.head(sitio_base, sitio_base)
-            print(respuesta)
             valido = r['mensaje']
             ready = (valido != '')
             if 'new_url' in r and r['new_url'] != '':
@@ -261,10 +259,11 @@ class sitemap(base):
 
     def head(self, sitio, sitio_base, count=0):
         import urllib.request
-        respuesta = {'exito': True,
-                     'mensaje': self.validar_url(sitio, sitio_base)}
+        respuesta = {'exito': True, 'mensaje': self.validar_url(sitio, sitio_base)}
         if respuesta['mensaje'] == '':
+            print(sitio)
             response = urllib.request.urlopen(sitio)
+            print(response)
             response.getcode()
             if response.getcode() != 200:
                 if response.getcode() >= 300 and response.getcode() < 400:

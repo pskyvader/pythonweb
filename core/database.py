@@ -126,6 +126,7 @@ class database():
 
         for key, value in insert.items():
             sql += ","
+            
             sql += value if (value.lower == "true" or value.lower == "True" or value == "false" or value == "False") else "'" + str(value).replace("'", "\\'") + "'"
 
         sql += ")"

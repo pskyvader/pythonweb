@@ -66,7 +66,6 @@ class login(base):
                 else:
                     error_login = True
             else:
-                print('no token')
                 error_login = True
                 if not 'intento_administrador' in app.session:
                     app.session['intento_administrador'] = 0

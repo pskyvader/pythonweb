@@ -226,8 +226,22 @@ class sitemap(base):
         return respuesta
     
 
-    public function generar_url(sitio, sitio_base)
-    {
+    def generar_url(sitio, sitio_base):
+        from bs4 import BeautifulSoup
+        import urllib2
+        import re
+        
+        html_page = urllib2.urlopen("http://arstechnica.com")
+        soup = BeautifulSoup(html_page)
+        for link in soup.findAll('a', attrs={'href': re.compile("^http://")}):
+            print link.get('href')
+
+
+
+
+
+        import urllib
+        import re
         urlContent = file_get_contents(sitio)
         if urlContent === False:
             return False

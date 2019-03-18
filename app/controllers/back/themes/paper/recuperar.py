@@ -37,7 +37,7 @@ class recuperar(base):
             if 'recuperar_token' in app.session:
                 if app.session['recuperar_token']['token'] == app.post['token']:
                     if time()-int(app.session['recuperar_token']['time']) <= 120:
-                        recuperar = administrador_model.recuperar( app.post['email'])
+                        recuperar = administrador_model.recuperar(app.post['email'])
                         if recuperar:
                             if 'intento_bloqueo' in app.session:
                                 app.session['intento_bloqueo'] = 0

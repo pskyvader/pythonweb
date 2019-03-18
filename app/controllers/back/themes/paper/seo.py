@@ -13,7 +13,7 @@ from app.models.seo import seo as seo_model
 #from .aside import aside
 #from .footer import footer
 
-#from core.app import app
+from core.app import app
 #from core.database import database
 #from core.functions import functions
 #from core.image import image
@@ -32,8 +32,7 @@ class seo(base):
     def get_all(cls):
         get = app.get
         respuesta = {'headers': [ ('Content-Type', 'application/json; charset=utf-8')], 'body': ''}
-        respuesta['body'] = {'exito': False,
-                             'mensaje': 'Debes recargar la pagina'}
+        respuesta['body'] = {'exito': False, 'mensaje': 'Debes recargar la pagina'}
         if cls.contiene_tipos and 'tipo' not in get:
             respuesta['body'] = json.dumps(
                 respuesta['body'], ensure_ascii=False)

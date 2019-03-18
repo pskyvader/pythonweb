@@ -57,7 +57,7 @@ class recuperar(base):
                 error_recuperar = True
                 if not 'intento_bloqueo' in app.session:
                     app.session['intento_bloqueo'] = 0
-                app.session['intento_bloqueo'] += 1
+                app.session['intento_bloqueo'] += 5
 
         url_return = functions.url_redirect(url_final)
         if url_return != '':

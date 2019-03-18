@@ -75,10 +75,11 @@ class recuperar(base):
 
         data = {}
         data['error_recuperar'] = error_recuperar
+        data['exito'] = exito
         data['token'] = token
         data['url_login'] = functions.generar_url(["login"])
         logo = logo_model.getById(2)
-        data['logo'] = image.generar_url(logo['foto'][0], 'recuperar')
+        data['logo'] = image.generar_url(logo['foto'][0], 'login')
         ret['body'].append(('recuperar', data))
 
         f = footer()

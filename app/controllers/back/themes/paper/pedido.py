@@ -304,8 +304,7 @@ class pedido(base):
             for lp in lista_productos:
                 portada = image.portada(lp['foto'])
                 thumb_url = image.generar_url(portada, 'cart')
-                lp = {'titulo': lp['titulo'], 'idproducto': lp['idproducto'],
-                      'foto': thumb_url, 'precio': lp['precio_final'], 'stock': lp['stock']}
+                lp = {'titulo': lp['titulo'], 'idproducto': lp['idproducto'], 'foto': thumb_url, 'precio': lp['precio_final'], 'stock': lp['stock']}
 
             configuracion['campos']['direcciones']['lista_productos'] = lista_productos
 
@@ -314,8 +313,7 @@ class pedido(base):
             for la in lista_productos:
                 portada = image.portada(la['foto'])
                 thumb_url = image.generar_url(portada, 'cart')
-                la = {'titulo': la['titulo'],
-                      'idproducto': la['idproducto'], 'foto': thumb_url}
+                la = {'titulo': la['titulo'], 'idproducto': la['idproducto'], 'foto': thumb_url}
 
             configuracion['campos']['direcciones']['lista_atributos'] = lista_atributos
 

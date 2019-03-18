@@ -68,8 +68,7 @@ class base:
                 tipo = 0
 
             modulo = modulo_model.getAll( {'idmoduloconfiguracion': moduloconfiguracion[0], 'tipo': tipo})
-
-            print(modulo)
+            
             cls.contiene_hijos = modulo[0]['hijos'] if 'hijos' in modulo[0] else False
             cls.metadata['title'] = modulo[0]['titulo']
 

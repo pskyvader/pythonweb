@@ -308,10 +308,11 @@ class pedido(base):
 
             lista_atributos = producto_model.getAll(
                 {'tipo': 2}, {'order': 'titulo ASC'})
-            for la in lista_productos:
+
+            for key,la in enumerate(lista_atributos):
                 portada = image.portada(la['foto'])
                 thumb_url = image.generar_url(portada, 'cart')
-                la = {'titulo': la['titulo'], 'idproducto': la['idproducto'], 'foto': thumb_url}
+                lista_atributos[key] = {'titulo': la['titulo'], 'idproducto': la['idproducto'], 'foto': thumb_url}
 
             configuracion['campos']['direcciones']['lista_atributos'] = lista_atributos
 

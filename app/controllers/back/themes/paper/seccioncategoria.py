@@ -23,7 +23,7 @@ from app.models.seccioncategoria import seccioncategoria as seccioncategoria_mod
 
 class seccioncategoria(base):
     url = ['seccioncategoria']
-    metadata = {'title' : 'seccioncategoria','modulo':'seccioncategoria'}
+    metadata = {'title' : 'Categoría de secciones','modulo':'seccioncategoria'}
     breadcrumb = []
     def __init__(self):
         super().__init__(seccioncategoria_model)

@@ -266,7 +266,6 @@ class sitemap(base):
         return respuesta
     
     def validar_url(self,sitio, sitio_base):
-
         list_test = ['#', "../", 'javascript', 'whatsapp', 'facebook', 'mailto:', 'tel:']
         if any(s in sitio for s in list_test):
             return 'invalid'

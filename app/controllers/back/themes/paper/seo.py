@@ -18,8 +18,7 @@ from app.models.seo import seo as seo_model
 #from core.functions import functions
 #from core.image import image
 
-
-#import json
+import json
 
 class seo(base):
     url = ['seo']
@@ -27,3 +26,40 @@ class seo(base):
     breadcrumb = []
     def __init__(self):
         super().__init__(seo_model)
+
+
+    @classmethod
+    def get_all(cls):
+        get = app.get
+        respuesta = {'headers': [ ('Content-Type', 'application/json; charset=utf-8')], 'body': ''}
+        respuesta['body'] = {'exito': False,
+                             'mensaje': 'Debes recargar la pagina'}
+        if cls.contiene_tipos and 'tipo' not in get:
+            respuesta['body'] = json.dumps(
+                respuesta['body'], ensure_ascii=False)
+            return
+
+        if cls.contiene_hijos and 'idpadre' not in get:
+            respuesta['body'] = json.dumps(
+                respuesta['body'], ensure_ascii=False)
+            return
+
+        where = {}
+        if cls.contiene_tipos:
+            where['tipo'] = get['tipo']
+
+        if cls.contiene_hijos:
+            where['idpadre'] = get['idpadre']
+
+        if cls.class_parent != None:
+            class_parent = cls.class_parent
+            if class_parent.idname in get:
+                where[class_parent.idname] = get[class_parent.idname]
+
+        condiciones = {}
+        select = ""
+        class_name = cls.class_name
+        row = class_name.getAll(where, condiciones, select)
+
+        respuesta['body'] = json.dumps(row, ensure_ascii=False)
+        return respuesta

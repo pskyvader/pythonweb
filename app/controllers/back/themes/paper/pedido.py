@@ -583,8 +583,7 @@ class pedido(base):
                 if change:
                     new_p['id'] = idpedidoproducto
                     portada = image.portada(producto_detalle['foto'])
-                    copiar = image.copy(
-                        portada, new_p['id'], pedidoproducto_model.table, '', '', 'cart')
+                    copiar = image.copy( portada, new_p['id'], pedidoproducto_model.table, '', '', 'cart')
                     if copiar['exito']:
                         new_p['foto'] = json.dumps(copiar['file'])
                         idpedidoproducto = pedidoproducto_model.update(new_p)

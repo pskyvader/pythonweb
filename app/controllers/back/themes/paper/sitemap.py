@@ -238,87 +238,39 @@ class sitemap(base):
                 url=link['href']
                 if url.startswith(sitio_base):
                     sublista.append(sitio + url)
-        except Exception e:
+            
+            return sublista
+        except Exception as e:
             print('error:',e)
             return False
 
-
-
-
-        import urllib
-        import re
-        urlContent = file_get_contents(sitio)
-        if urlContent === False:
-            return False
-        }
-        sublista = array()
-        dom      = new \DOMDocument()
-        @dom->loadHTML(urlContent)
-        xpath = new \DOMXPath(dom)
-        hrefs = xpath->evaluate("/html/body//a")
-
-        for (i = 0 i < hrefs->length i++:
-            href = hrefs->item(i)
-            url  = href->getAttribute('href')
-            url  = filter_var(url, FILTER_SANITIZE_URL)
-            // validate url
-            if not filter_var(url, FILTER_VALIDATE_URL) === False:
-                if strpos(url, sitio_base) == 0:
-                    sublista[] = url
-                }
-
-            } elseif not filter_var(sitio . url, FILTER_VALIDATE_URL) === False:
-                if strpos(sitio . url, sitio_base) == 0:
-                    sublista[] = sitio . url
-                }
-
-            }
-        }
-        return sublista
-    }
-    private function head(sitio, sitio_base, count=0)
-    {
-        respuesta = array('exito' : True, 'mensaje' : self.validar_url(sitio, sitio_base))
+    def head(self,sitio, sitio_base, count=0):
+        import urllib.request
+        respuesta = {'exito' : True, 'mensaje' : self.validar_url(sitio, sitio_base)}
         if respuesta['mensaje'] == '':
-            headers = get_headers(sitio, 1)
-            if stripos(headers[0], 'OK') === False:
-                if stripos(headers[0], 'Moved') !== False:
-                    if is_array(headers['Location']):
-                        headers['Location'] = headers['Location'][0]
-                    }
-                    location             = self.head(headers['Location'], sitio_base,count+1)
-                    respuesta['new_url'] = ((isset(location['new_url'])) ? location['new_url'] : headers['Location'])
-                    if is_array(respuesta['new_url']):
+            response =  urllib.request.urlopen(sitio)
+            response.getcode()
+            if response.getcode() != 200:
+                if response.getcode() >=300 and response.getcode()<400:
+                    if isinstance(response.headers['Location'],list):
+                        response.headers['Location'] = response.headers['Location'][0]
+                    
+                    location             = self.head(response.headers['Location'], sitio_base,count+1)
+                    respuesta['new_url'] = location['new_url'] if 'new_url' in location else response.headers['Location']
+                    if isinstance(respuesta['new_url'],list):
                         respuesta['new_url'] = respuesta['new_url'][0]
-                    }
-
                     respuesta['mensaje'] = location['mensaje']
                     respuesta['exito']   = False
                 else:
-                    respuesta['mensaje'] = 'status: ' . headers[0]
-                }
-            }
-        }
+                    respuesta['mensaje'] = 'status: ' + response.getcode()
         return respuesta
-    }
-    public function validar_url(sitio, sitio_base)
-    {
-        if 
-            strpos(sitio, "#") !== False ||
-            strpos(sitio, "../") !== False ||
-            strpos(sitio, "") !== False ||
-            strpos(sitio, "javascript") !== False ||
-            strpos(sitio, "whatsapp") !== False ||
-            strpos(sitio, "facebook") !== False ||
-            strpos(sitio, "mailto:") !== False ||
-            strpos(sitio, "tel:") !== False ||
-            strpos(sitio, sitio_base) === False
-        :
+    
+    def validar_url(self,sitio, sitio_base):
+
+        list_test = ['#', "../", 'javascript', 'whatsapp', 'facebook', 'mailto:', 'tel:']
+        if any(s in sitio for s in list_test):
             return 'invalid'
-        } elseif strpos(sitio, sitio_base) == 0:
+        elif sitio.startswith(sitio_base):
             return ''
         else:
             return 'domain'
-        }
-    }
-}

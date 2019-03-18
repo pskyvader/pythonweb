@@ -226,7 +226,7 @@ class sitemap(base):
         return respuesta
     
 
-    def generar_url(sitio, sitio_base):
+    def generar_url(self,sitio, sitio_base):
         from bs4 import BeautifulSoup
         import urllib2
         

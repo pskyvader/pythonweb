@@ -133,6 +133,7 @@ class sitemap(base):
                         'idpadre': id, 'url': r['new_url'], 'depth': 1, 'valid': "", 'ready': False}
                     id = class_name.insert(insert)
             respuesta['exito'] = True
+            print(respuesta)
         else:
             row = class_name.getAll({'ready': False})
             if len(row) == 0:

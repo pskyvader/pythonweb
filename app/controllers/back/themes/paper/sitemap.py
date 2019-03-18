@@ -101,8 +101,7 @@ class sitemap(base):
         return ret
 
     def vaciar(self):
-        ret = {'headers': [
-            ('Content-Type', 'application/json; charset=utf-8')], 'body': ''}
+        ret = {'headers': [ ('Content-Type', 'application/json; charset=utf-8')], 'body': ''}
         class_name = self.class_name
         respuesta = class_name.truncate()
         respuesta['vacio'] = True

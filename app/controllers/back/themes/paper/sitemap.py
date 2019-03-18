@@ -261,9 +261,7 @@ class sitemap(base):
         import urllib.request
         respuesta = {'exito': True, 'mensaje': self.validar_url(sitio, sitio_base)}
         if respuesta['mensaje'] == '':
-            print(sitio)
             response = urllib.request.urlopen(sitio)
-            print(response)
             response.getcode()
             if response.getcode() != 200:
                 if response.getcode() >= 300 and response.getcode() < 400:

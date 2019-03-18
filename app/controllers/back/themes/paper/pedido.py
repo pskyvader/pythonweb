@@ -341,6 +341,8 @@ class pedido(base):
                     for p in prod:
                         portada = image.portada(p['foto'])
                         thumb_url = image.generar_url(portada, '')
+                        
+                        print(thumb_url)
                         new_p = {'idpedidoproducto': p['idpedidoproducto'], 'idproductoatributo': p['idproductoatributo'], 'titulo': p['titulo'], 'mensaje': p['mensaje'],
                                  'idproducto': p['idproducto'], 'foto': thumb_url, 'precio': p['precio'], 'cantidad': p['cantidad'], 'total': p['total']}
                         productos.append(new_p)

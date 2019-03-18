@@ -20,25 +20,30 @@ from core.app import app
 
 import json
 
+
 class seo(base):
     url = ['seo']
-    metadata = {'title' : 'seo','modulo':'seo'}
+    metadata = {'title': 'seo', 'modulo': 'seo'}
     breadcrumb = []
+
     def __init__(self):
         super().__init__(seo_model)
-
 
     @classmethod
     def get_all(cls):
         get = app.get
-        respuesta = {'headers': [ ('Content-Type', 'application/json; charset=utf-8')], 'body': ''}
-        respuesta['body'] = {'exito': False, 'mensaje': 'Debes recargar la pagina'}
+        respuesta = {'headers': [
+            ('Content-Type', 'application/json; charset=utf-8')], 'body': ''}
+        respuesta['body'] = {'exito': False,
+                             'mensaje': 'Debes recargar la pagina'}
         if cls.contiene_tipos and 'tipo' not in get:
-            respuesta['body'] = json.dumps( respuesta['body'], ensure_ascii=False)
+            respuesta['body'] = json.dumps(
+                respuesta['body'], ensure_ascii=False)
             return
 
         if cls.contiene_hijos and 'idpadre' not in get:
-            respuesta['body'] = json.dumps( respuesta['body'], ensure_ascii=False)
+            respuesta['body'] = json.dumps(
+                respuesta['body'], ensure_ascii=False)
             return
 
         where = {}
@@ -57,6 +62,9 @@ class seo(base):
         select = ""
         class_name = cls.class_name
         row = class_name.getAll(where, condiciones, select)
+
+        for key, value in enumerate(row):
+            row[key]['foto'] = row[key]['foto']+row[key]['banner']
 
         respuesta['body'] = json.dumps(row, ensure_ascii=False)
         return respuesta

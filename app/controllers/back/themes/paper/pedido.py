@@ -299,8 +299,7 @@ class pedido(base):
                 comunas[c[0]] = c
 
             configuracion['campos']['direcciones']['direccion_entrega'] = []
-            lista_productos = producto_model.getAll(
-                {'tipo': 1}, {'order': 'titulo ASC'})
+            lista_productos = producto_model.getAll( {'tipo': 1}, {'order': 'titulo ASC'})
             for lp in lista_productos:
                 portada = image.portada(lp['foto'])
                 thumb_url = image.generar_url(portada, 'cart')

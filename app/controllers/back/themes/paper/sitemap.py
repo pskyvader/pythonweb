@@ -77,32 +77,28 @@ class sitemap(base):
         mensaje_error = ''
         my_file = Path(dir + 'sitemap.xml')
         if my_file.is_file():
-            if !is_writable(dir . 'sitemap.xml'):
-                mensaje_error = 'Debes dar permisos de escritura o eliminar el archivo ' . dir . 'sitemap.xml'
-            }
-        } elseif !is_writable(dir):
-            mensaje_error = 'Debes dar permisos de escritura en ' . dir . ' o crear el archivo sitemap.xml con permisos de escritura'
-        }
-        is_error = (mensaje_error != '')
-
-
-
-
+            if not os.access(dir + 'sitemap.xml', os.W_OK):
+                mensaje_error = 'Debes dar permisos de escritura o eliminar el archivo ' + dir + 'sitemap.xml'
+        elif not os.access(dir , os.W_OK):
+            mensaje_error = 'Debes dar permisos de escritura en ' + dir + ' o crear el archivo sitemap.xml con permisos de escritura'
+        
         data = {}
         data['title'] = cls.metadata['title']
-        cls.breadcrumb = [{'url': functions.generar_url( url_final), 'title': cls.metadata['title'], 'active':'active'}]
+        cls.breadcrumb = [{'url': functions.generar_url( url_final), 'title': cls.metadata['title'], 'active':'active'}] 
         data['breadcrumb'] = cls.breadcrumb
+        data['log'] = log
+        data['progreso'] = total
+        data['mensaje_error'] = mensaje_error
+        data['url_sitemap'] = functions.generar_url(['sitemap.xml'], front_auto=False)
+
+
         ret['body'].append(('home', data))
 
 
 
-        view.set('breadcrumb', this->breadcrumb)
-        view.set('log', log)
-        view.set('title', this->metadata['title'])
-        view.set('progreso', total)
         view.set('is_error', is_error)
         view.set('mensaje_error', mensaje_error)
-        view.set('url_sitemap', functions.generar_url(array('sitemap.xml'), array(), False, True))
+        view.set('url_sitemap', 
         view.render('sitemap')
 
 

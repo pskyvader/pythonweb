@@ -431,6 +431,7 @@ class pedido(base):
             respuesta['mensaje'] = "Actualizado correctamente"
 
         if not isinstance(respuesta['id'], int):
+            print(respuesta)
             ret['body'] = json.dumps(respuesta, ensure_ascii=False)
             return ret
         respuesta['exito'] = True

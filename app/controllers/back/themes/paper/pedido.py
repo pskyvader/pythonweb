@@ -427,11 +427,10 @@ class pedido(base):
             respuesta['id'] = class_name.insert(campos)
             respuesta['mensaje'] = "Creado correctamente"
         else:
-            respuesta['id'] = class_name.update(campos)
+            respuesta['id'] = int(class_name.update(campos))
             respuesta['mensaje'] = "Actualizado correctamente"
 
         if not isinstance(respuesta['id'], int):
-            print(respuesta)
             ret['body'] = json.dumps(respuesta['id'], ensure_ascii=False)
             return ret
         respuesta['exito'] = True
@@ -614,6 +613,5 @@ class pedido(base):
             campos['id'] = pedido[0]
             respuesta['id'] = class_name.update(campos)
 
-        print(respuesta)
         ret['body'] = json.dumps(respuesta, ensure_ascii=False)
         return ret

@@ -130,6 +130,7 @@ class database():
                              "false") else "'" + str(value).replace("'", "\\'") + "'"
 
         sql += ")"
+        print(sql)
         row = self.consulta(sql, False, delete_cache)
         if (row):
             last_id = self.get_last_insert_id()

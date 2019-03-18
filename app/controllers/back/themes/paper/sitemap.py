@@ -106,7 +106,6 @@ class sitemap(base):
         respuesta = class_name.truncate()
         respuesta['vacio'] = True
         ret['body'] = json.dumps(respuesta, ensure_ascii=False)
-        print(ret)
         return ret
 
     def generar(self):

@@ -187,14 +187,14 @@ class administrador(base_model):
         return False
 
     @staticmethod
-    def recuperar(email):
+    def recuperar(email_recuperar):
         """recuperar contraseña"""
         from core.view import view
         nombre_sitio = app.title
-        if email == '':
+        if email_recuperar == '':
             return False
 
-        where = {'email': email.lower()}
+        where = {'email': email_recuperar.lower()}
         condiciones = {'limit': 1}
         row = administrador.getAll(where, condiciones)
 
@@ -206,8 +206,7 @@ class administrador(base_model):
                 return False
             else:
                 password = functions.generar_pass()
-                data = {'id': admin[0], 'pass': password,
-                        'pass_repetir': password}
+                data = {'id': admin[0], 'pass': password, 'pass_repetir': password}
                 row = administrador.update(data)
 
                 if row:
@@ -219,8 +218,7 @@ class administrador(base_model):
                         'campos_largos': {},
                     }
                     body = email.body_email(body_email)
-                    respuesta = email.enviar_email(
-                        [email], 'Recuperación de contraseña', body)
+                    respuesta = email.enviar_email([email_recuperar], 'Recuperación de contraseña', body)
 
                     log.insert_log(administrador.table, administrador.idname, administrador, admin)
                     return respuesta

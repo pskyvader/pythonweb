@@ -88,7 +88,7 @@ class login(base):
         data = {}
         data['error_login'] = error_login
         data['token'] = token
-        data['url_recuperar'] = functions.generar_url(["recuperar"])
+        data['url_recuperar'] = functions.generar_url(["recuperar","index"])
         logo = logo_model.getById(2)
         data['logo'] = image.generar_url(logo['foto'][0], 'login')
         ret['body'].append(('login', data))

@@ -230,11 +230,17 @@ class sitemap(base):
         from bs4 import BeautifulSoup
         import urllib2
         
-        html_page = urllib2.urlopen(sitio)
-        soup = BeautifulSoup(html_page)
-        for link in soup.findAll('a', href=True):
-            print link.get('href')
-
+        sublista = []
+        try:
+            html_page = urllib2.urlopen(sitio)
+            soup = BeautifulSoup(html_page)
+            for link in soup.findAll('a', href=True):
+                url=link['href']
+                if url.startswith(sitio_base):
+                    sublista.append(sitio + url)
+        except Exception e:
+            print('error:',e)
+            return False
 
 
 

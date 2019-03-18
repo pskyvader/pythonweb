@@ -76,7 +76,7 @@ class recuperar(base):
         data = {}
         data['error_recuperar'] = error_recuperar
         data['token'] = token
-        data['url_recuperar'] = functions.generar_url(["recuperar"])
+        data['url_login'] = functions.generar_url(["login"])
         logo = logo_model.getById(2)
         data['logo'] = image.generar_url(logo['foto'][0], 'recuperar')
         ret['body'].append(('recuperar', data))

@@ -164,9 +164,13 @@ class pedido(base):
         url_save.append('guardar')
         url_final.append('detail')
         if len(var) > 0:
-            id = int(var[0])
-            url_final.append(id)
-            metadata['title'] = 'Editar ' + metadata['title']
+            try:
+                id = int(var[0])
+                url_final.append(id)
+                metadata['title'] = 'Editar ' + metadata['title']
+            except:
+                ret['error'] = 404
+                return ret
         else:
             id = 0
             metadata['title'] = 'Nuevo ' + metadata['title']

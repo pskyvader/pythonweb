@@ -305,7 +305,8 @@ class pedido(base):
                 portada = image.portada(lp['foto'])
                 thumb_url = image.generar_url(portada, 'cart')
                 lp = {'titulo': lp['titulo'], 'idproducto': lp['idproducto'], 'foto': thumb_url, 'precio': lp['precio_final'], 'stock': lp['stock']}
-
+            
+            print(lista_productos)
             configuracion['campos']['direcciones']['lista_productos'] = lista_productos
 
             lista_atributos = producto_model.getAll(

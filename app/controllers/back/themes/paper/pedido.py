@@ -313,6 +313,8 @@ class pedido(base):
             for la in lista_productos:
                 portada = image.portada(la['foto'])
                 thumb_url = image.generar_url(portada, 'cart')
+                
+                print(thumb_url)
                 la = {'titulo': la['titulo'], 'idproducto': la['idproducto'], 'foto': thumb_url}
 
             configuracion['campos']['direcciones']['lista_atributos'] = lista_atributos

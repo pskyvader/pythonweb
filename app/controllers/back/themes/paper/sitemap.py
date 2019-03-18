@@ -277,8 +277,9 @@ class sitemap(base):
                         respuesta['exito'] = False
                     else:
                         respuesta['mensaje'] = 'status: ' + response.getcode()
-            except:
+            except Exception as e:
                 respuesta['exito']=False
+                respuesta['mensaje'] = 'error: ' + e
         return respuesta
 
     def validar_url(self, sitio, sitio_base):

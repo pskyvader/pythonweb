@@ -229,7 +229,6 @@ class sitemap(base):
     def generar_url(sitio, sitio_base):
         from bs4 import BeautifulSoup
         import urllib2
-        import re
         
         html_page = urllib2.urlopen("http://arstechnica.com")
         soup = BeautifulSoup(html_page)

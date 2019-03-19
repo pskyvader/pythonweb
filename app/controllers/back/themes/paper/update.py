@@ -2,6 +2,7 @@ from .base import base
 
 #from app.models.table import table as table_model
 from app.models.administrador import administrador as administrador_model
+from app.models.configuracion import configuracion as configuracion_model
 #from app.models.modulo import modulo as modulo_model
 #from app.models.moduloconfiguracion import moduloconfiguracion as moduloconfiguracion_model
 
@@ -85,7 +86,7 @@ class update(base):
         ret['body'] += f.normal()['body']
 
         return ret
-    
+
     def vaciar_log(self):
         ret = {'body': ''}
         my_file = Path(self.archivo_log)
@@ -94,33 +95,29 @@ class update(base):
         ret['body'] = "'True'"
         return ret
 
-    
-
-    def  get_update(self):
+    def get_update(self):
         '''Obtener nuevas actualizaciones desde url_update'''
         import urllib.request
-        from distutils.version import LooseVersion, StrictVersion
-        ret = {'headers': [ ('Content-Type', 'application/json charset=utf-8')], 'body': ''}
-        respuesta     = {'exito' : False}
-        url           = self.url_update
+        from distutils.version import LooseVersion
+        ret = {'headers': [
+            ('Content-Type', 'application/json charset=utf-8')], 'body': ''}
+        respuesta = {'exito': False}
+        url = self.url_update
         file = urllib.request.urlopen(url).read()
-        file          = json.loads(file)
-        version_mayor = {'version' : '0.0.0'}
+        file = json.loads(file)
+        version_mayor = {'version': '0.0.0'}
 
         for f in file:
-            if (version_compare(f['version'], version_mayor['version'], '>')) {
-                unset(f['archivo'])
+            if LooseVersion(f['version']) > LooseVersion(version_mayor['version']):
+                del f['archivo']
                 version_mayor = f
-            }
-        }
 
-        version = configuracion_model::getByVariable('version')
-        if (is_bool(version) || version_compare(version_mayor['version'], version, '>')) {
+        version = configuracion_model.getByVariable('version')
+        if isinstance(version, bool) or LooseVersion(version_mayor['version']) > LooseVersion(version):
             respuesta['version'] = version_mayor
-            respuesta['exito']   = true
-        } else {
+            respuesta['exito'] = True
+        else:
             respuesta['mensaje'] = 'No hay nuevas actualizaciones'
-        }
-        echo json_encode(respuesta)
-        exit()
-    }
+
+        ret['body'] = json.dumps(respuesta, ensure_ascii=False)
+        return ret

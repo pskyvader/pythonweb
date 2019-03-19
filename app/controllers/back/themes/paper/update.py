@@ -72,12 +72,14 @@ class update(base):
 
         mensaje_error = ''
         my_file = Path(cls.dir_update)
-        if my_file.is_file():
+        if my_file.is_dir():
             if not os.access(cls.dir_update, os.W_OK):
                 mensaje_error = 'Debes dar permisos de escritura al directorio ' + cls.dir_update
         elif not os.access(cls.dir, os.W_OK):
             mensaje_error = 'Debes dar permisos de escritura en ' + cls.dir + \
                 ' o crear el directorio update/ con permisos de escritura'
+        else:
+            os.makedirs(cls.dir_update)
 
         data['mensaje_error'] = mensaje_error
         data['progreso'] = 0

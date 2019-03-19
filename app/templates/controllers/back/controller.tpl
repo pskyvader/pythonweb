@@ -18,7 +18,6 @@ from app.models.{{class}} import {{class}} as {{class}}_model
 #from core.functions import functions
 #from core.image import image
 
-
 #import json
 
 class {{class}}(base):

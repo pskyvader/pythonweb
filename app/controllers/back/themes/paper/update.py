@@ -132,7 +132,7 @@ class update(base):
         file = 'v' + app.post['file'] + '.zip'
         url = self.url_update + file
         path = self.dir_update + file
-        if os.access(self.dir_update, os.W_OK):
+        if not os.access(path, os.W_OK):
             exito = self.download(url, path)
             if not isinstance(exito, bool):
                 respuesta['mensaje'] = exito
@@ -140,8 +140,7 @@ class update(base):
                 respuesta['exito'] = exito
                 respuesta['archivo'] = app.post['file']
         else:
-            respuesta['mensaje'] = 'Debes dar permiso de escritura a ' + \
-                self.dir_update
+            respuesta['mensaje'] = 'Debes dar permiso de escritura a ' + path
         ret['body'] = json.dumps(respuesta, ensure_ascii=False)
         return ret
 
@@ -179,10 +178,10 @@ class update(base):
                     nombre = file_list[i].filename
                     if nombre not in self.no_update:
                         try:
-                            zip.extract(file_list[i], self.dir)
-                        except Exception as e:
-                            print(e)
+                            zip.extract(file_list[i], self.base_dir)
+                        except:
                             respuesta['errores'].append(nombre)
+                    respuesta['errores'].append(nombre)
 
                     if i % 500 == 0:
                         log = {'mensaje': 'Actualizando ...' + nombre[-30:] + ' (' + str(
@@ -196,12 +195,7 @@ class update(base):
                         break
 
                 zip.close()
-                if len(respuesta['errores']) == 0:
-                    respuesta['exito'] = True
-                else:
-                    respuesta['mensaje'] = [
-                        'Se encontraron errores de extraccion:']
-                    respuesta['mensaje'] += respuesta['errores']
+                respuesta['exito'] = True
             else:
                 respuesta['mensaje'] = 'Error al abrir archivo, o archivo no valido'
         else:

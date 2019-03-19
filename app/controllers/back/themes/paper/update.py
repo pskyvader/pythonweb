@@ -79,9 +79,7 @@ class update(base):
 
         data['mensaje_error'] = mensaje_error
         data['progreso'] = 0
-        ret['body'].append(('sitemap', data))
-
-        ret['body'].append(('home', data))
+        ret['body'].append(('update', data))
 
         f = footer()
         ret['body'] += f.normal()['body']

@@ -2,7 +2,7 @@
 <div class="col-sm-8">
     <select id="{{field}}" name="{{field}}" class="form-control" {% if required %} required="required" {% endif %}>
         <option value="" selected="selected" {% if required %} hidden="" disabled="" {% endif %}}>Selecciona</option>
-        {% for o in option%}
+        {% for o in option %}
         <option value="{{o.value}}" {{o.selected}}>{{o.text}}</option>
         {% endfor %}
     </select>

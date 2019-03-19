@@ -35,9 +35,9 @@ class update(base):
     no_update = ['app\\config\\config.json', 'app/config/config.json']
 
     def __init__(self):
-        self.dir = app.get_dir(True)
-        self.dir_update = self.dir + 'update/'
-        self.archivo_log = app.get_dir() + '/log.json'
+        update.dir = app.get_dir(True)
+        update.dir_update = self.dir + 'update/'
+        update.archivo_log = app.get_dir() + '/log.json'
 
     @classmethod
     def index(cls):

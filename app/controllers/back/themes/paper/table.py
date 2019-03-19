@@ -25,6 +25,13 @@ class table(base):
     url = ['table']
     metadata = {'title': 'Tablas', 'modulo': 'table'}
     breadcrumb = []
+    tipos = {
+        'char(255)' : {'text' : 'Texto', 'value' : 'char(255)'},
+        'int(11)' : {'text' : 'Numero', 'value' : 'int(11)'},
+        'tinyint(1)' : {'text' : 'Bool', 'value' : 'tinyint(1)'},
+        'longtext' : {'text' : 'Texto largo', 'value' : 'longtext'},
+        'datetime' : {'text' : 'Fecha y hora', 'value' : 'datetime'},
+    }
 
     def __init__(self):
         super().__init__(table_model)

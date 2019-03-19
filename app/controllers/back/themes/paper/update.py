@@ -126,8 +126,7 @@ class update(base):
         return ret
 
     def get_file(self):
-        ret = {'headers': [
-            ('Content-Type', 'application/json charset=utf-8')], 'body': ''}
+        ret = {'headers': [ ('Content-Type', 'application/json charset=utf-8')], 'body': ''}
         respuesta = {'exito': False, 'mensaje': ''}
         file = 'v' + app.post['file'] + '.zip'
         url = self.url_update + file
@@ -139,7 +138,6 @@ class update(base):
             else:
                 respuesta['exito'] = exito
                 respuesta['archivo'] = app.post['file']
-
         else:
             respuesta['mensaje'] = 'Debes dar permiso de escritura a ' + path
         ret['body'] = json.dumps(respuesta, ensure_ascii=False)

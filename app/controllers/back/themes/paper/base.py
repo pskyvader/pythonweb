@@ -77,12 +77,9 @@ class base:
                 parent = 'app.models.' + cls.padre
                 current_module  = importlib.import_module(parent)
                 cls.class_parent= getattr(current_module, cls.padre)
-                print(current_module)
-                print(cls.class_parent)
 
                 if cls.class_parent.idname in app.get:
-                    p = cls.class_parent.getById(
-                        app.get[cls.class_parent.idname])
+                    p = cls.class_parent.getById( app.get[cls.class_parent.idname])
                     if len(p) > 0:
                         if 'titulo' in p and p['titulo'] != '':
                             cls.metadata['title'] += ' - '+p['titulo']

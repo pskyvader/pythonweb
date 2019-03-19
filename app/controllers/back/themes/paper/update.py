@@ -145,7 +145,9 @@ class update(base):
 
     def download(self, url, path):
         import urllib.request
+        #open(path, 'w+').close()
         final_path, result = urllib.request.urlretrieve(url, path)
+        print(final_path, result)
         return True
 
     def update_file(self):

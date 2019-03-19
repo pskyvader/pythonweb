@@ -93,7 +93,7 @@ class base:
             {'url': functions.generar_url(
                 ["home"]), 'title': 'Home', 'active': ''},
             {'url': functions.generar_url(cls.url), 'title': (
-                cls.metadata['title']), 'active': 'active'},
+                cls.metadata['title']), 'active': 'active'}
         ]
 
     @classmethod

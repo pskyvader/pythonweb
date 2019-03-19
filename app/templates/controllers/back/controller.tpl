@@ -1,5 +1,5 @@
 from .base import base
-from app.models.{{class}} import {{class}} as {{class}}_model
+from app.models.{{name}} import {{name}} as {{name}}_model
 
 #from app.models.table import table as table_model
 #from app.models.administrador import administrador as administrador_model
@@ -20,9 +20,9 @@ from app.models.{{class}} import {{class}} as {{class}}_model
 
 #import json
 
-class {{class}}(base):
-    url = ['{{class}}']
-    metadata = {'title' : '{{class}}','modulo':'{{class}}'}
+class {{name}}(base):
+    url = ['{{name}}']
+    metadata = {'title' : '{{name}}','modulo':'{{name}}'}
     breadcrumb = []
     def __init__(self):
-        super().__init__({{class}}_model)
+        super().__init__({{name}}_model)

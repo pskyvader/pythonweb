@@ -195,7 +195,8 @@ class update(base):
                         break
 
                 zip.close()
-                respuesta['exito'] = True
+                if len(respuesta['errores'])==0:
+                    respuesta['exito'] = True
             else:
                 respuesta['mensaje'] = 'Error al abrir archivo, o archivo no valido'
         else:

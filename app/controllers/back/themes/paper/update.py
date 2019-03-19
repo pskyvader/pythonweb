@@ -140,7 +140,8 @@ class update(base):
                 respuesta['exito'] = exito
                 respuesta['archivo'] = app.post['file']
         else:
-            respuesta['mensaje'] = 'Debes dar permiso de escritura a ' + self.dir_update
+            respuesta['mensaje'] = 'Debes dar permiso de escritura a ' + \
+                self.dir_update
         ret['body'] = json.dumps(respuesta, ensure_ascii=False)
         return ret
 
@@ -195,10 +196,11 @@ class update(base):
                         break
 
                 zip.close()
-                if len(respuesta['errores'])==0:
+                if len(respuesta['errores']) == 0:
                     respuesta['exito'] = True
                 else:
-                    respuesta['mensaje']=['Se encontraron errores de extraccion:']
+                    respuesta['mensaje'] = [
+                        'Se encontraron errores de extraccion:']
                     respuesta['mensaje'] += respuesta['errores']
             else:
                 respuesta['mensaje'] = 'Error al abrir archivo, o archivo no valido'

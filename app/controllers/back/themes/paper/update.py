@@ -141,8 +141,6 @@ class update(base):
         else:
             respuesta['mensaje'] = 'Debes dar permiso de escritura a ' + self.dir_update
         ret['body'] = json.dumps(respuesta, ensure_ascii=False)
-        
-        print('respuesta', respuesta)
         return ret
 
     def download(self, url, path):

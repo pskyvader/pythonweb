@@ -131,7 +131,7 @@ class update(base):
         file = 'v' + app.post['file'] + '.zip'
         url = self.url_update + file
         path = self.dir_update + "/" + file
-        if not os.access(self.dir_update, os.W_OK):
+        if not os.access(self.dir_update+ "/", os.W_OK):
             exito = self.download(url, path)
             if not isinstance(exito, bool):
                 respuesta['mensaje'] = exito

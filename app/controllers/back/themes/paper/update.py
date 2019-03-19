@@ -13,7 +13,7 @@ from app.models.update import update as update_model
 #from .aside import aside
 #from .footer import footer
 
-#from core.app import app
+from core.app import app
 #from core.database import database
 #from core.functions import functions
 #from core.image import image
@@ -24,5 +24,13 @@ class update(base):
     url = ['update']
     metadata = {'title' : 'update','modulo':'update'}
     breadcrumb = []
+    url_update  = "http://update.mysitio.cl/"
+    dir         = ''
+    dir_update  = ''
+    archivo_log = ''
+    no_update   = ['app\\config\\config.json','app/config/config.json']
+
     def __init__(self):
-        super().__init__(update_model)
+        self.dir         = app.get_dir(True);
+        self.dir_update  = self.dir + 'update';
+        self.archivo_log = app.get_dir() + '/log.json';

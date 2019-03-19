@@ -182,7 +182,6 @@ class update(base):
                             zip.extract(file_list[i], self.base_dir)
                         except:
                             respuesta['errores'].append(nombre)
-                    respuesta['errores'].append(nombre)
 
                     if i % 500 == 0:
                         log = {'mensaje': 'Actualizando ...' + nombre[-30:] + ' (' + str(

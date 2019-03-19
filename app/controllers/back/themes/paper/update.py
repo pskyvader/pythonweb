@@ -139,7 +139,7 @@ class update(base):
                 respuesta['exito'] = exito
                 respuesta['archivo'] = app.post['file']
         else:
-            respuesta['mensaje'] = 'Debes dar permiso de escritura a ' + path
+            respuesta['mensaje'] = 'Debes dar permiso de escritura a ' + self.dir_update
         ret['body'] = json.dumps(respuesta, ensure_ascii=False)
         
         print('respuesta', respuesta)

@@ -67,19 +67,21 @@ class base:
             else:
                 tipo = 0
 
-            modulo = modulo_model.getAll( {'idmoduloconfiguracion': moduloconfiguracion[0], 'tipo': tipo})
+            modulo = modulo_model.getAll(
+                {'idmoduloconfiguracion': moduloconfiguracion[0], 'tipo': tipo})
 
-            if len(modulo)>0:
+            if len(modulo) > 0:
                 cls.contiene_hijos = modulo[0]['hijos'] if 'hijos' in modulo[0] else False
                 cls.metadata['title'] = modulo[0]['titulo']
 
             if cls.padre != '':
                 parent = 'app.models.' + cls.padre
-                current_module  = importlib.import_module(parent)
-                cls.class_parent= getattr(current_module, cls.padre)
+                current_module = importlib.import_module(parent)
+                cls.class_parent = getattr(current_module, cls.padre)
 
                 if cls.class_parent.idname in app.get:
-                    p = cls.class_parent.getById( app.get[cls.class_parent.idname])
+                    p = cls.class_parent.getById(
+                        app.get[cls.class_parent.idname])
                     if len(p) > 0:
                         if 'titulo' in p and p['titulo'] != '':
                             cls.metadata['title'] += ' - '+p['titulo']

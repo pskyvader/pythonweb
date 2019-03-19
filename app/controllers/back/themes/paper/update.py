@@ -18,20 +18,23 @@ from core.functions import functions
 #from core.image import image
 
 #import json
+import os
+from pathlib import Path
+
 
 class update(base):
     url = ['update']
-    metadata = {'title' : 'update','modulo':'update'}
+    metadata = {'title': 'update', 'modulo': 'update'}
     breadcrumb = []
-    url_update  = "http://update.mysitio.cl/"
-    dir         = ''
-    dir_update  = ''
+    url_update = "http://update.mysitio.cl/"
+    dir = ''
+    dir_update = ''
     archivo_log = ''
-    no_update   = ['app\\config\\config.json','app/config/config.json']
+    no_update = ['app\\config\\config.json', 'app/config/config.json']
 
     def __init__(self):
-        self.dir         = app.get_dir(True)
-        self.dir_update  = self.dir + 'update/'
+        self.dir = app.get_dir(True)
+        self.dir_update = self.dir + 'update/'
         self.archivo_log = app.get_dir() + '/log.json'
 
     @classmethod
@@ -61,11 +64,9 @@ class update(base):
         data = {}
 
         data['title'] = cls.metadata['title']
-        cls.breadcrumb = [{'url': functions.generar_url( url_final), 'title': cls.metadata['title'], 'active':'active'}]
+        cls.breadcrumb = [{'url': functions.generar_url(
+            url_final), 'title': cls.metadata['title'], 'active':'active'}]
         data['breadcrumb'] = cls.breadcrumb
-
-
-
 
         mensaje_error = ''
         my_file = Path(cls.dir_update)
@@ -73,13 +74,12 @@ class update(base):
             if not os.access(cls.dir_update, os.W_OK):
                 mensaje_error = 'Debes dar permisos de escritura al directorio ' + cls.dir_update
         elif not os.access(dir, os.W_OK):
-            mensaje_error = 'Debes dar permisos de escritura en ' + dir +  ' o crear el directorio update/ con permisos de escritura'
+            mensaje_error = 'Debes dar permisos de escritura en ' + dir + \
+                ' o crear el directorio update/ con permisos de escritura'
 
         data['mensaje_error'] = mensaje_error
         data['progreso'] = 0
         ret['body'].append(('sitemap', data))
-
-
 
         ret['body'].append(('home', data))
 

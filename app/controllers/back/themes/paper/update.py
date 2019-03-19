@@ -28,7 +28,7 @@ class update(base):
     url = ['update']
     metadata = {'title': 'update', 'modulo': 'update'}
     breadcrumb = []
-    url_update = "http://pythonupdate.mysitio.cl/"
+    url_update = "https://pythonupdate.mysitio.cl/"
     dir = ''
     dir_update = ''
     archivo_log = ''

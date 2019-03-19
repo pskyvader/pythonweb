@@ -201,7 +201,7 @@ class update(base):
             c = configuracion_administrador()
             c.json_update(False)
 
-            log = {'mensaje': 'Restauracion finalizada', 'porcentaje': 100}
+            log = {'mensaje': 'Actualización finalizada', 'porcentaje': 100}
             file_write = open(self.archivo_log, 'w')
             file_write.write(json.dumps(log,ensure_ascii=False))
             file_write.close()

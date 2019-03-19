@@ -122,7 +122,7 @@ class update(base):
         else:
             respuesta['mensaje'] = 'No hay nuevas actualizaciones'
 
-        ret['body'] = json.dumps(respuesta, ensure_ascii=False)
+        ret['body'] = json.dumps(respuesta)
         return ret
 
     def get_file(self):
@@ -141,7 +141,7 @@ class update(base):
                 respuesta['archivo'] = app.post['file']
         else:
             respuesta['mensaje'] = 'Debes dar permiso de escritura a ' + self.dir_update
-        ret['body'] = json.dumps(respuesta, ensure_ascii=False)
+        ret['body'] = json.dumps(respuesta)
         return ret
 
     def download(self, url, path):
@@ -187,7 +187,7 @@ class update(base):
                         log = {'mensaje': 'Actualizando ...' + nombre[-30:] + ' (' + str(
                             i + 1) + '/' + str(total) + ')', 'porcentaje': ((i + 1) / total) * 90}
                         file_write = open(self.archivo_log, 'w+')
-                        file_write.write(json.dumps(log, ensure_ascii=False))
+                        file_write.write(json.dumps(log))
                         file_write.close()
 
                     if functions.current_time(as_string=False) - tiempo > 15:
@@ -207,7 +207,7 @@ class update(base):
 
             log = {'mensaje': 'Actualización finalizada', 'porcentaje': 100}
             file_write = open(self.archivo_log, 'w+')
-            file_write.write(json.dumps(log, ensure_ascii=False))
+            file_write.write(json.dumps(log))
             file_write.close()
-        ret['body'] = json.dumps(respuesta, ensure_ascii=False)
+        ret['body'] = json.dumps(respuesta)
         return ret

@@ -76,7 +76,8 @@ class base:
             if cls.padre != '':
                 parent = 'app.models.' + cls.padre
                 cls.class_parent = importlib.import_module(parent)
-                print(class_name)
+                current_module = getattr(cls.class_parent, cls.padre)
+                print(current_module)
                 print(cls.class_parent)
 
                 if cls.class_parent.idname in app.get:

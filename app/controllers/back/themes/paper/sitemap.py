@@ -226,7 +226,7 @@ class sitemap(base):
         dir = app.get_dir(True)
 
         try:
-            file_write = open(dir + 'sitemap.xml', 'w')
+            file_write = open(dir + 'sitemap.xml', 'w+')
             file_write.write(body)
             file_write.close()
             respuesta['exito'] = True

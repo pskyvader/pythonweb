@@ -196,6 +196,8 @@ class update(base):
 
                 zip.close()
                 if len(respuesta['errores'])==0:
+                    respuesta['mensaje']=['Se encontraron errores de extraccion:']
+                    respuesta['mensaje'] += respuesta['errores']
                     respuesta['exito'] = True
             else:
                 respuesta['mensaje'] = 'Error al abrir archivo, o archivo no valido'

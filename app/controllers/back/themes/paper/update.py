@@ -131,17 +131,21 @@ class update(base):
         file = 'v' + app.post['file'] + '.zip'
         url = self.url_update + file
         path = self.dir_update+ file
-        exito = self.download(url, path)
-        if not isinstance(exito, bool):
-            respuesta['mensaje'] = exito
+        if not os.access(path, os.W_OK):
+            exito = self.download(url, path)
+            if not isinstance(exito, bool):
+                respuesta['mensaje'] = exito
+            else:
+                respuesta['exito'] = exito
+                respuesta['archivo'] = app.post['file']
         else:
-            respuesta['exito'] = exito
-            respuesta['archivo'] = app.post['file']
+            respuesta['mensaje'] = 'Debes dar permiso de escritura a ' + path
         ret['body'] = json.dumps(respuesta, ensure_ascii=False)
         return ret
 
     def download(self, url, path):
         import urllib.request
+        #open(path, 'w+').close()
         final_path, result = urllib.request.urlretrieve(url, path)
         print(final_path, result)
         return True

@@ -100,7 +100,8 @@ class update(base):
         '''Obtener nuevas actualizaciones desde url_update'''
         import urllib.request
         from distutils.version import LooseVersion
-        ret = {'headers': [ ('Content-Type', 'application/json charset=utf-8')], 'body': ''}
+        ret = {'headers': [
+            ('Content-Type', 'application/json charset=utf-8')], 'body': ''}
         respuesta = {'exito': False}
         url = self.url_update
         file = urllib.request.urlopen(url).read()
@@ -122,42 +123,42 @@ class update(base):
         ret['body'] = json.dumps(respuesta, ensure_ascii=False)
         return ret
 
-
-
     def get_file(self):
-        ret = {'headers': [ ('Content-Type', 'application/json charset=utf-8')], 'body': ''}
-        respuesta = {'exito' : False, 'mensaje' : ''}
-        file      = 'v' + app.post['file'] + '.zip'
-        url       = self.url_update + file
-        path      = self.dir_update + "/" + file
+        ret = {'headers': [
+            ('Content-Type', 'application/json charset=utf-8')], 'body': ''}
+        respuesta = {'exito': False, 'mensaje': ''}
+        file = 'v' + app.post['file'] + '.zip'
+        url = self.url_update + file
+        path = self.dir_update + "/" + file
         if not os.access(self.dir_update, os.W_OK):
             exito = self.download(url, path)
-            if not isinstance(exito,bool):
+            if not isinstance(exito, bool):
                 respuesta['mensaje'] = exito
             else:
-                respuesta['exito']   = exito
+                respuesta['exito'] = exito
                 respuesta['archivo'] = app.post['file']
-            
+
         else:
             respuesta['mensaje'] = 'Debes dar permiso de escritura a ' . path
         ret['body'] = json.dumps(respuesta, ensure_ascii=False)
         return ret
 
-    def download(self,url, path):
+    def download(self, url, path):
         import urllib.request
-        final_path,result=urllib.request.urlretrieve(url, path)
-        print(final_path,result)
+        final_path, result = urllib.request.urlretrieve(url, path)
+        print(final_path, result)
         return True
 
     def update_file(self):
         from time import time
         import zipfile
-        ret = {'headers': [ ('Content-Type', 'application/json charset=utf-8')], 'body': ''}
-        respuesta = {'exito' : False, 'mensaje' : '','errores':[]}
+        ret = {'headers': [
+            ('Content-Type', 'application/json charset=utf-8')], 'body': ''}
+        respuesta = {'exito': False, 'mensaje': '', 'errores': []}
         file = None
-        tiempo    = time()
-        id        = 'v' + app.post['file'] + '.zip'
-        inicio    = int(app.post['inicio']) - 1 if 'inicio' in app.post else 0
+        tiempo = time()
+        id = 'v' + app.post['file'] + '.zip'
+        inicio = int(app.post['inicio']) - 1 if 'inicio' in app.post else 0
         for root, dirs, files in os.walk(self.dir_update):
             for fichero in files:
                 if id in fichero:
@@ -183,7 +184,7 @@ class update(base):
                         log = {'mensaje': 'Actualizando ...' + nombre[-30:] + ' (' + str(
                             i + 1) + '/' + str(total) + ')', 'porcentaje': ((i + 1) / total) * 90}
                         file_write = open(self.archivo_log, 'w')
-                        file_write.write(json.dumps(log,ensure_ascii=False))
+                        file_write.write(json.dumps(log, ensure_ascii=False))
                         file_write.close()
 
                     if functions.current_time(as_string=False) - tiempo > 15:
@@ -203,7 +204,7 @@ class update(base):
 
             log = {'mensaje': 'Actualización finalizada', 'porcentaje': 100}
             file_write = open(self.archivo_log, 'w')
-            file_write.write(json.dumps(log,ensure_ascii=False))
+            file_write.write(json.dumps(log, ensure_ascii=False))
             file_write.close()
-        ret['body'] = json.dumps(respuesta,ensure_ascii=False)
+        ret['body'] = json.dumps(respuesta, ensure_ascii=False)
         return ret

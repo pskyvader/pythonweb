@@ -20,14 +20,14 @@ from core.functions import functions
 
 import json
 
+
 class table(base):
     url = ['table']
-    metadata = {'title' : 'Tablas','modulo':'table'}
+    metadata = {'title': 'Tablas', 'modulo': 'table'}
     breadcrumb = []
+
     def __init__(self):
         super().__init__(table_model)
-
-
 
     @classmethod
     def index(cls):
@@ -36,7 +36,6 @@ class table(base):
         # Clase para enviar a controlador de lista_class
         class_name = cls.class_name
         url_final = cls.url.copy()
-        
 
         if not administrador_model.verificar_sesion():
             url_final = ['login', 'index'] + url_final
@@ -50,16 +49,14 @@ class table(base):
         # cabeceras y campos que se muestran en la lista_class:
         # titulo,campo de la tabla a usar, tipo (ver archivo lista_class.py funcion "field")
         th = {
-            'id' : {'title_th' : 'ID', 'field' : 0, 'type' : 'text'},
-            'tablename' : {'title_th' : 'Titulo', 'field' : 'tablename', 'type' : 'text'},
-            'truncate' : {'title_th' : 'Permite vaciar', 'field' : 'truncate', 'type' : 'active'},
-            'validar' : {'title_th' : 'Validar', 'field' : 0, 'type' : 'action','action':'validar','mensaje':'Validando Tabla'},
-            'generar' : {'title_th' : 'Generar mvc', 'field' : 0, 'type' : 'action','action':'generar','mensaje':'Generando mvc'},
-            'copy' : {'title_th' : 'Copiar', 'field' : 0, 'type' : 'action','action':'copy','mensaje':'Copiando Elemento'},
-            'editar' : {'title_th' : 'Editar', 'field' : 'url_detalle', 'type' : 'link'},
+            'id': {'title_th': 'ID', 'field': 0, 'type': 'text'},
+            'tablename': {'title_th': 'Titulo', 'field': 'tablename', 'type': 'text'},
+            'truncate': {'title_th': 'Permite vaciar', 'field': 'truncate', 'type': 'active'},
+            'validar': {'title_th': 'Validar', 'field': 0, 'type': 'action', 'action': 'validar', 'mensaje': 'Validando Tabla'},
+            'generar': {'title_th': 'Generar mvc', 'field': 0, 'type': 'action', 'action': 'generar', 'mensaje': 'Generando mvc'},
+            'copy': {'title_th': 'Copiar', 'field': 0, 'type': 'action', 'action': 'copy', 'mensaje': 'Copiando Elemento'},
+            'editar': {'title_th': 'Editar', 'field': 'url_detalle', 'type': 'link'},
         }
-
-
 
         # controlador de lista_class
         lista = lista_class(cls.metadata)
@@ -70,7 +67,7 @@ class table(base):
         # obtener unicamente elementos de la pagina actual
         respuesta = lista.get_row(class_name, where, condiciones, url_detalle)
 
-        menu = {'new' : True, 'regenerar' : False, 'excel' : False}
+        menu = {'new': True, 'regenerar': False, 'excel': False}
 
         # informacion para generar la vista de lista_class
         data = {
@@ -105,7 +102,8 @@ class table(base):
             id = 0
             metadata['title'] = 'Nuevo ' + metadata['title']
 
-        cls.breadcrumb.append({'url': functions.generar_url( url_final), 'title': metadata['title'], 'active': 'active'})
+        cls.breadcrumb.append({'url': functions.generar_url(
+            url_final), 'title': metadata['title'], 'active': 'active'})
 
         if not administrador_model.verificar_sesion():
             url_final = ['login', 'index'] + url_final
@@ -120,22 +118,22 @@ class table(base):
         # titulo,campo de la tabla a usar, tipo (ver archivo detalle.py funcion "field")
 
         columnas = {
-            'orden' : {'title_field' : 'Orden', 'field' : 'orden', 'type' : 'multiple_order', 'required' : True, 'col' : 2},
-            'titulo' : {'title_field' : 'Titulo', 'field' : 'titulo', 'type' : 'multiple_text', 'required' : True, 'col' : 3},
-            'tipo' : {'title_field' : 'Tipo', 'field' : 'tipo', 'type' : 'multiple_select', 'required' : True, 'option' : cls.tipos, 'col' : 3},
-            'button' : {'field' : '', 'type' : 'multiple_button', 'col' : 4},
+            'orden': {'title_field': 'Orden', 'field': 'orden', 'type': 'multiple_order', 'required': True, 'col': 2},
+            'titulo': {'title_field': 'Titulo', 'field': 'titulo', 'type': 'multiple_text', 'required': True, 'col': 3},
+            'tipo': {'title_field': 'Tipo', 'field': 'tipo', 'type': 'multiple_select', 'required': True, 'option': cls.tipos, 'col': 3},
+            'button': {'field': '', 'type': 'multiple_button', 'col': 4},
         }
         campos = {
-            'tablename' : {'title_field' : 'Titulo', 'field' : 'tablename', 'type' : 'text', 'required' : True},
-            'idname' : {'title_field' : 'ID tablas', 'field' : 'idname', 'type' : 'text', 'required' : True},
-            'fields' : {'title_field' : 'Campos', 'field' : 'fields', 'type' : 'multiple', 'required' : True, 'columnas' : columnas},
-            'truncate' : {'title_field' : 'Permite vaciar', 'field' : 'truncate', 'type' : 'active', 'required' : True},
+            'tablename': {'title_field': 'Titulo', 'field': 'tablename', 'type': 'text', 'required': True},
+            'idname': {'title_field': 'ID tablas', 'field': 'idname', 'type': 'text', 'required': True},
+            'fields': {'title_field': 'Campos', 'field': 'fields', 'type': 'multiple', 'required': True, 'columnas': columnas},
+            'truncate': {'title_field': 'Permite vaciar', 'field': 'truncate', 'type': 'active', 'required': True},
         }
 
         # controlador de detalle
         detalle = detalle_class(metadata)
         row = class_name.getById(id) if id != 0 else []
-        
+
         # informacion para generar la vista del detalle
         data = {
             'breadcrumb': cls.breadcrumb,
@@ -150,21 +148,20 @@ class table(base):
         ret = detalle.normal(data)
         return ret
 
-
     def validar(self):
-        ret = {'headers': [ ('Content-Type', 'application/json; charset=utf-8')], 'body': ''}
+        ret = {'headers': [
+            ('Content-Type', 'application/json; charset=utf-8')], 'body': ''}
         campos = app.post['campos']
-        class_name=self.class_name
-        respuesta=class_name.validate(campos['id'])
+        class_name = self.class_name
+        respuesta = class_name.validate(campos['id'])
         ret['body'] = json.dumps(respuesta, ensure_ascii=False)
         return ret
-    
 
     def generar(self):
-        ret = {'headers': [ ('Content-Type', 'application/json; charset=utf-8')], 'body': ''}
+        ret = {'headers': [
+            ('Content-Type', 'application/json; charset=utf-8')], 'body': ''}
         campos = app.post['campos']
-        class_name=self.class_name
-        respuesta=class_name.generar(campos['id'])
+        class_name = self.class_name
+        respuesta = class_name.generar(campos['id'])
         ret['body'] = json.dumps(respuesta, ensure_ascii=False)
         return ret
-    

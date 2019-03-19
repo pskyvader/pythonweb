@@ -99,7 +99,7 @@ class update(base):
     def  get_update(self):
         '''Obtener nuevas actualizaciones desde url_update'''
         import urllib.request
-        from packaging import version
+        from distutils.version import LooseVersion, StrictVersion
         ret = {'headers': [ ('Content-Type', 'application/json charset=utf-8')], 'body': ''}
         respuesta     = {'exito' : False}
         url           = self.url_update

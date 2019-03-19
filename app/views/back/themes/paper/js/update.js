@@ -79,7 +79,7 @@ function archivo_listo(data) {
             }
         }, 3000);
     } else {
-        notificacion('Oh no!', 'Ha ocurrido un error, por favor actualiza la pagina e intentalo nuevamente', 'error');
+        notificacion('Oh no!', 'Ha ocurrido un error, por favor actualiza la pagina e intentalo nuevamente'+data.mensaje, 'error');
     }
 }
 

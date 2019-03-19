@@ -125,7 +125,16 @@ function leer_log_update() {
 function fin_update(data) {
     //console.log(data);
     if (!update_finalizado) {
-        var data = JSON.parse(data);
+        if (typeof(data) != 'object') {
+            try {
+                data = JSON.parse(data);
+            } catch (e) {
+                data = {
+                    mensaje: data,
+                    exito: false
+                };
+            }
+        }
         if (data.exito) {
             if (data.inicio) {
                 var archivo = $('input[name=id_update]').val();

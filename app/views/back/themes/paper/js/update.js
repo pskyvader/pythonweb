@@ -2,13 +2,15 @@ var update_finalizado = false;
 
 function get_update() {
     $.get(create_url(modulo, 'get_update')).done(function(data) {
-        try {
-            data = JSON.parse(data);
-        } catch (e) {
-            data = {
-                mensaje: data,
-                exito: false
-            };
+        if (typeof(data) != 'object') {
+            try {
+                data = JSON.parse(data);
+            } catch (e) {
+                data = {
+                    mensaje: data,
+                    exito: false
+                };
+            }
         }
         if (data.version) {
             var mensaje = "Version " + data.version.version + "<br/>" + data.version.descripcion;

@@ -1,4 +1,5 @@
 var update_finalizado = false;
+
 function get_update() {
     $.get(create_url(modulo, 'get_update')).done(function(data) {
         try {
@@ -20,7 +21,7 @@ function get_update() {
     });
 }
 
-function iniciar_update(){
+function iniciar_update() {
     post_basic(create_url(modulo, 'vaciar_log'), {}, 'Iniciando', function(data) {
         update_elemento();
     });
@@ -50,13 +51,15 @@ function update_elemento() {
 }
 
 function archivo_listo(data) {
-    try {
-        data = JSON.parse(data);
-    } catch (e) {
-        data = {
-            mensaje: data,
-            exito: false
-        };
+    if (typeof(data) != 'object') {
+        try {
+            data = JSON.parse(data);
+        } catch (e) {
+            data = {
+                mensaje: data,
+                exito: false
+            };
+        }
     }
     if (data.exito) {
         var archivo = $('input[name=id_update]').val();
@@ -90,7 +93,7 @@ function leer_log_update() {
                 //end();
                 if (typeof(data) == 'object') {
                     if (data.mensaje) {
-                        update_content.prepend($('<p>' + data.mensaje+ '</p>'));
+                        update_content.prepend($('<p>' + data.mensaje + '</p>'));
                         notificacion_footer(data.mensaje);
                     }
                     if (data.porcentaje) {

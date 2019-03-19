@@ -19,7 +19,7 @@ from core.app import app
 from core.functions import functions
 #from core.image import image
 
-#import json
+import json
 
 
 class usuariodireccion(base):

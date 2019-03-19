@@ -126,11 +126,12 @@ class update(base):
         return ret
 
     def get_file(self):
-        ret = {'headers': [ ('Content-Type', 'application/json charset=utf-8')], 'body': ''}
+        ret = {'headers': [
+            ('Content-Type', 'application/json charset=utf-8')], 'body': ''}
         respuesta = {'exito': False, 'mensaje': ''}
         file = 'v' + app.post['file'] + '.zip'
         url = self.url_update + file
-        path = self.dir_update+ file
+        path = self.dir_update + file
         if not os.access(path, os.W_OK):
             exito = self.download(url, path)
             if not isinstance(exito, bool):
@@ -145,9 +146,10 @@ class update(base):
 
     def download(self, url, path):
         import urllib.request
-        #open(path, 'w+').close()
-        final_path, result = urllib.request.urlretrieve(url, path)
-        print(final_path, result)
+        try:
+            urllib.request.urlretrieve(url, path)
+        except:
+            return 'Error al obtener el archivo '+url+'. Intenta mas tarde'
         return True
 
     def update_file(self):

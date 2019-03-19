@@ -6,7 +6,7 @@ from app.models.administrador import administrador as administrador_model
 #from app.models.modulo import modulo as modulo_model
 #from app.models.moduloconfiguracion import moduloconfiguracion as moduloconfiguracion_model
 
-#from .detalle import detalle as detalle_class
+from .detalle import detalle as detalle_class
 #from .lista import lista as lista_class
 #from .head import head
 #from .header import header
@@ -18,7 +18,7 @@ from core.app import app
 from core.functions import functions
 #from core.image import image
 
-#import json
+import json
 class usuario(base):
     url = ['usuario']
     metadata = {'title' : 'usuario','modulo':'usuario'}

@@ -132,7 +132,7 @@ class update(base):
         file = 'v' + app.post['file'] + '.zip'
         url = self.url_update + file
         path = self.dir_update + file
-        if not os.access(path, os.W_OK):
+        if os.access(self.dir_update, os.W_OK):
             exito = self.download(url, path)
             if not isinstance(exito, bool):
                 respuesta['mensaje'] = exito
@@ -140,7 +140,7 @@ class update(base):
                 respuesta['exito'] = exito
                 respuesta['archivo'] = app.post['file']
         else:
-            respuesta['mensaje'] = 'Debes dar permiso de escritura a ' + path
+            respuesta['mensaje'] = 'Debes dar permiso de escritura a ' + self.dir_update
         ret['body'] = json.dumps(respuesta, ensure_ascii=False)
         return ret
 

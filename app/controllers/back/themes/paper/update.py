@@ -17,7 +17,7 @@ from core.app import app
 from core.functions import functions
 #from core.image import image
 
-#import json
+import json
 import os
 from pathlib import Path
 
@@ -85,3 +85,42 @@ class update(base):
         ret['body'] += f.normal()['body']
 
         return ret
+    
+    def vaciar_log(self):
+        ret = {'body': ''}
+        my_file = Path(self.archivo_log)
+        if my_file.is_file():
+            os.remove(self.archivo_log)
+        ret['body'] = "'True'"
+        return ret
+
+    
+
+    def  get_update(self):
+        '''Obtener nuevas actualizaciones desde url_update'''
+        import urllib.request
+        from packaging import version
+        ret = {'headers': [ ('Content-Type', 'application/json charset=utf-8')], 'body': ''}
+        respuesta     = {'exito' : False}
+        url           = self.url_update
+        file = urllib.request.urlopen(url).read()
+        file          = json.loads(file)
+        version_mayor = {'version' : '0.0.0'}
+
+        for f in file:
+            if (version_compare(f['version'], version_mayor['version'], '>')) {
+                unset(f['archivo'])
+                version_mayor = f
+            }
+        }
+
+        version = configuracion_model::getByVariable('version')
+        if (is_bool(version) || version_compare(version_mayor['version'], version, '>')) {
+            respuesta['version'] = version_mayor
+            respuesta['exito']   = true
+        } else {
+            respuesta['mensaje'] = 'No hay nuevas actualizaciones'
+        }
+        echo json_encode(respuesta)
+        exit()
+    }

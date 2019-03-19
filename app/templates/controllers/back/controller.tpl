@@ -20,6 +20,7 @@ from app.models.{{name}} import {{name}} as {{name}}_model
 
 #import json
 
+
 class {{name}}(base):
     url = ['{{name}}']
     metadata = {'title' : '{{name}}','modulo':'{{name}}'}

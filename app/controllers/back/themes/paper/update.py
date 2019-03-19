@@ -75,8 +75,8 @@ class update(base):
         if my_file.is_file():
             if not os.access(cls.dir_update, os.W_OK):
                 mensaje_error = 'Debes dar permisos de escritura al directorio ' + cls.dir_update
-        elif not os.access(dir, os.W_OK):
-            mensaje_error = 'Debes dar permisos de escritura en ' + dir + \
+        elif not os.access(cls.dir, os.W_OK):
+            mensaje_error = 'Debes dar permisos de escritura en ' + cls.dir + \
                 ' o crear el directorio update/ con permisos de escritura'
 
         data['mensaje_error'] = mensaje_error

@@ -180,7 +180,8 @@ class update(base):
                     if nombre not in self.no_update:
                         try:
                             zip.extract(file_list[i], self.base_dir)
-                        except:
+                        except Exception as e:
+                            print(e)
                             respuesta['errores'].append(nombre)
 
                     if i % 500 == 0:

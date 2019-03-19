@@ -139,7 +139,7 @@ class update(base):
                 respuesta['archivo'] = app.post['file']
 
         else:
-            respuesta['mensaje'] = 'Debes dar permiso de escritura a ' . path
+            respuesta['mensaje'] = 'Debes dar permiso de escritura a ' + path
         ret['body'] = json.dumps(respuesta, ensure_ascii=False)
         return ret
 
@@ -173,7 +173,7 @@ class update(base):
                 total = len(file_list)
                 for i in range(inicio, total):
                     nombre = file_list[i].filename
-                    if nombre not in self.no_restore:
+                    if nombre not in self.no_update:
                         try:
                             zip.extract(file_list[i], self.base_dir)
                         except:

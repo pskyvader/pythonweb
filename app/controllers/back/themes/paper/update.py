@@ -37,7 +37,7 @@ class update(base):
     def __init__(self):
         update.dir = app.get_dir(True)
         update.dir_update = self.dir + 'update/'
-        update.archivo_log = app.get_dir() + '/log.json'
+        update.archivo_log = app.get_dir(True) + '/log.json'
 
     @classmethod
     def index(cls):

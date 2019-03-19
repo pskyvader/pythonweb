@@ -168,7 +168,7 @@ class backup(base):
                     if i % 500 == 0:
                         log = {'mensaje': 'Restaurando ...' + nombre[-30:] + ' (' + str(
                             i + 1) + '/' + str(total) + ')', 'porcentaje': ((i + 1) / total) * 90}
-                        file_write = open(self.archivo_log, 'w')
+                        file_write = open(self.archivo_log, 'w+')
                         file_write.write(json.dumps(log,ensure_ascii=False))
                         file_write.close()
 
@@ -182,7 +182,7 @@ class backup(base):
                     if my_file.is_file():
                         log = {'mensaje': 'Restaurando Base de datos',
                                'porcentaje': 95}
-                        file_write = open(self.archivo_log, 'w')
+                        file_write = open(self.archivo_log, 'w+')
                         file_write.write(json.dumps(log,ensure_ascii=False))
                         file_write.close()
                         connection = database.instance()
@@ -211,7 +211,7 @@ class backup(base):
             c.json_update(False)
 
             log = {'mensaje': 'Restauracion finalizada', 'porcentaje': 100}
-            file_write = open(self.archivo_log, 'w')
+            file_write = open(self.archivo_log, 'w+')
             file_write.write(json.dumps(log,ensure_ascii=False))
             file_write.close()
         ret['body'] = json.dumps(respuesta,ensure_ascii=False)
@@ -364,7 +364,7 @@ class backup(base):
             if logging:
                 log_file = {
                     'mensaje': 'Respaldando Base de datos ', 'porcentaje': 90}
-                file_write = open(self.archivo_log, 'w')
+                file_write = open(self.archivo_log, 'w+')
                 file_write.write(json.dumps(log_file,ensure_ascii=False))
                 file_write.close()
             respuesta = self.bdd(False, respuesta['archivo_backup'])
@@ -373,7 +373,7 @@ class backup(base):
             if logging:
                 log_file = {'mensaje': 'Restauracion finalizada',
                             'porcentaje': 100}
-                file_write = open(self.archivo_log, 'w')
+                file_write = open(self.archivo_log, 'w+')
                 file_write.write(json.dumps(log_file,ensure_ascii=False))
                 file_write.close()
 
@@ -494,7 +494,7 @@ class backup(base):
                     'mensaje': '...'+final_file[-30:] + ' (' + str(total - len(lista)) + '/' + str(total) + ')',
                     'porcentaje': 10 + ((total - len(lista)) / total) * 40
                 }
-                file_write = open(self.archivo_log, 'w')
+                file_write = open(self.archivo_log, 'w+')
                 file_write.write(json.dumps(log_file,ensure_ascii=False))
                 file_write.close()
                 tiempo = functions.current_time(as_string=False)
@@ -505,7 +505,7 @@ class backup(base):
                 'notificacion': 'Guardando archivo, Esta operacion puede tomar algun tiempo',
                 'porcentaje': 10 + ((total - len(lista)) / total) * 40
             }
-            file_write = open(self.archivo_log, 'w')
+            file_write = open(self.archivo_log, 'w+')
             file_write.write(json.dumps(log_file,ensure_ascii=False))
             file_write.close()
 

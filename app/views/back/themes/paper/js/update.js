@@ -153,6 +153,7 @@ function fin_update(data) {
         } else {
             habilitar(true);
             update_finalizado = true;
+            console.log(data['mensaje']);
             var mensaje = (($.isArray(data['mensaje'])) ? data['mensaje'].join('<br/>') : data['mensaje']);
             notificacion('Oh no!', mensaje, 'error');
             barra(0);

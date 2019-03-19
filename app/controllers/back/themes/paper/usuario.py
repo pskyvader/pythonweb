@@ -19,6 +19,8 @@ from core.functions import functions
 #from core.image import image
 
 import json
+
+
 class usuario(base):
     url = ['usuario']
     metadata = {'title' : 'usuario','modulo':'usuario'}

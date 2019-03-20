@@ -234,6 +234,7 @@ class image:
             return respuesta
 
         im = Image.open(ruta_imagen)
+        print(im.size)
         ancho, alto = im.size
 
         ancho_maximo = 0

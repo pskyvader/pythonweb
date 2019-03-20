@@ -252,7 +252,7 @@ class image:
                     alto_valido = alto_maximo
 
         # si es valido, se crea una imagen intermedia para acelerar el proceso de recorte de las demas imagenes
-        if False and (alto > (alto_valido * 1.5) and alto_valido > 0) or (ancho > (ancho_valido * 1.5) and ancho_valido > 0):
+        if False and (alto > (alto_valido * 1.5) and alto_valido > 0) or False and (ancho > (ancho_valido * 1.5) and ancho_valido > 0):
             # alto proporcional segun mayor ancho valido
             #alto_final = (alto / ancho) * ancho_valido
             # ancho proporcional segun mayor alto valido

@@ -360,8 +360,8 @@ class image:
 
         if tipo == "recortar":
             box = (x, y, ancho_maximo, alto_maximo)
-            im.thumbnail((miniatura_ancho, miniatura_alto))
             print(tipo,box,etiqueta,foto)
+            im.thumbnail((miniatura_ancho, miniatura_alto))
             new_im = im.crop(box)
         elif "rellenar" == tipo:
             new_im = Image.new( 'RGBA', (miniatura_ancho, miniatura_alto), (255, 255, 255, 0))

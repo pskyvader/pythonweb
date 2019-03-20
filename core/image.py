@@ -324,7 +324,7 @@ class image:
             else:
                 x = (ancho_maximo - miniatura_ancho) / 2
                 y = (alto_maximo - miniatura_alto) / 2
-        return int(x), int(y), int(miniatura_ancho),  int(miniatura_alto)
+        return int(round(x)), int(round(y)), int(round(miniatura_ancho)),  int(round(miniatura_alto))
 
     @staticmethod
     def recortar_foto(recorte, datos):

@@ -256,7 +256,7 @@ class image:
             # alto proporcional segun mayor ancho valido
             #alto_final = (alto / ancho) * ancho_valido
             # ancho proporcional segun mayor alto valido
-            ancho_final = (ancho / alto) * alto_valido
+            ancho_final = int(round((ancho / alto) * alto_valido))
             if ancho_final >= ancho_valido:
                 respuesta = image.recortar_foto( {'tag': 'recorte_previo', 'ancho': None, 'alto': alto_valido, 'calidad': 100, 'tipo': 'rellenar'}, archivo)
             else:

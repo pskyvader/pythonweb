@@ -371,7 +371,7 @@ class image:
                 new_im = Image.new( 'RGBA', (miniatura_ancho, miniatura_alto), (255, 255, 255, 0))
                 box = (x, y)
                 im=im.resize((miniatura_ancho, miniatura_alto))
-                print(box,etiqueta,im.size)
+                print(box,etiqueta,im.size,ruta_imagen)
                 new_im.paste(im, (box))
             else:
                 new_im = Image.new( 'RGBA', (ancho_maximo, alto_maximo), (255, 255, 255, 0))

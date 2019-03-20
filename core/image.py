@@ -337,12 +337,12 @@ class image:
         respuesta = {'exito': False, 'mensaje': 'error al recortar imagen'}
         ancho_maximo = recorte['ancho']
         alto_maximo = recorte['alto']
-        ruta = image.get_upload_dir() + datos['folder']
+        ruta = image.get_upload_dir() + datos['folder'] + '/'
         foto = datos['name']
         etiqueta = recorte['tag']
         tipo = recorte['tipo']
 
-        ruta_imagen = ruta + '/' + foto
+        ruta_imagen = ruta + foto
         my_file = Path(ruta_imagen)
         if not my_file.is_file():
             respuesta['mensaje'] = 'Archivo ' + ruta_imagen + ' no existe'

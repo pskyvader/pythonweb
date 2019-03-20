@@ -392,6 +392,8 @@ class image:
         if my_file.is_file():
             my_file.unlink()
 
+        print(new_im)
+
         new_im.save(ruta + foto_recorte)
         if "png" != imagen_tipo:
             new_im.save(ruta + foto_webp)

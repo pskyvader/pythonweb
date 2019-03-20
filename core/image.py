@@ -223,7 +223,7 @@ class image:
     @staticmethod
     def recortes_foto(archivo, recortes_foto):
         """Genera recortes de las fotos"""
-        from PIL import Image
+        import cv2
         respuesta = {'exito': False}
         ruta = image.get_upload_dir() + archivo['folder']
         foto = archivo['name']

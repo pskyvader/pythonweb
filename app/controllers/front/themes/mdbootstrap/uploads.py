@@ -1,13 +1,12 @@
-from core.view import view
+from core.app import app
 from core.cache import cache
 
 
-class static:
+class uploads:
     def init(self, var):
         if len(var) == 0:
             return {'error': 404}
-
-        theme = view.get_theme()
+        theme =  app.get_dir(True)+'uploads/'
         resource = '/'.join(var)
         resource_url = theme + resource
         ret=cache.serve_cache(resource_url,theme,resource)

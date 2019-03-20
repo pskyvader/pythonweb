@@ -175,8 +175,7 @@ class app:
     def parse_url(url):
         url = url.lstrip('/')
         if url != '':
-            url = url.split('/')
-            url = ' '.join(url).split()
+            url = ' '.join(url.split('/')).split()
             if len(url) > 0:
                 if url[0] == 'manifest.js':
                     url[0] = 'manifest'

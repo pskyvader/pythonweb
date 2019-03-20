@@ -13,7 +13,7 @@ class database():
 
     _prefix = ''
     _errors = ''
-    last_insert_id=0
+    last_insert_id = 0
 
     def __init__(self):
         try:
@@ -26,7 +26,8 @@ class database():
             self.conect()
         except:
             print('error DB connection')
-            self._errors = 'Error DB connection ' + self._dbHost + ',' + self._dbUser + ','+self._dbPassword + ','+self._dbName
+            self._errors = 'Error DB connection ' + self._dbHost + ',' + \
+                self._dbUser + ','+self._dbPassword + ','+self._dbName
 
     def conect(self):
         self._connection = pymysql.connect(
@@ -55,7 +56,7 @@ class database():
         except pymysql.InternalError as error:
             code, message = error.args
             self._connection.rollback()
-            raise RuntimeError('error DB query: ', code, message,sql)
+            raise RuntimeError('error DB query: ', code, message, sql)
 
         if rows is None:
             if return_query:
@@ -126,7 +127,8 @@ class database():
 
         for key, value in insert.items():
             sql += ","
-            sql += str(value).lower() if (str(value).lower() == "true" or str(value).lower() == "false") else "'" + str(value).replace("'", "\\'") + "'"
+            sql += str(value).lower() if (str(value).lower() == "true" or str(value).lower()
+                                          == "false") else "'" + str(value).replace("'", "\\'") + "'"
 
         sql += ")"
         row = self.consulta(sql, False, delete_cache)
@@ -262,18 +264,18 @@ class database():
         import io
 
         f = io.open(backup, 'r', encoding='utf8')
-        sql=f.read()
+        sql = f.read()
         f.close()
 
         sql_list = sql.split(';\n')
         for s in sql_list:
-            s=str(s).strip()
-            if s=='':
+            s = str(s).strip()
+            if s == '':
                 continue
-            
+
             exito = self.consulta(s, False)
             if not exito:
-                print('error consulta:',s)
+                print('error consulta:', s)
 
         if exito:
             os.remove(backup)
@@ -406,13 +408,13 @@ class database():
                 for k, e in multiple.items():
                     if isinstance(e, dict):
                         for a, f in e.items():
-                            a=int(a)
+                            a = int(a)
                             if key == "image" or key == "file":
                                 for ke, va in f.items():
                                     row[k][ke][a] = va
                             else:
                                 if not a in row:
-                                    row[a]={}
+                                    row[a] = {}
                                 row[a][k] = f
                     elif isinstance(e, list):
                         for a, f in enumerate(e):
@@ -421,15 +423,15 @@ class database():
                                     row[k][ke][a] = va
                             else:
                                 if not a in row:
-                                    row[a]={}
+                                    row[a] = {}
                                 row[a][k] = f
                     else:
                         row[k] = e
 
                 if key != "image" and key != "file":
                     if all(isinstance(item, int) for item in row.keys()):
-                        row=[row[key] for key in sorted(row.keys())]
-                    data[key] = json.dumps(row,ensure_ascii=False)
+                        row = [row[key] for key in sorted(row.keys())]
+                    data[key] = json.dumps(row, ensure_ascii=False)
                 else:
                     data[key] = row
             del data['multiple']
@@ -441,11 +443,13 @@ class database():
         data = {}
         ids = {}
         for key, img in image_list.items():
-            row = {}
+            row = []
             portada = False
-            for k, f in img.items():
+            for f in img.values():
                 if 'tmp' in f and f['tmp'] != '':
                     f = image.move(f, table, key, id_image)
+                if not key in ids:
+                    ids[key] = {}
 
                 ids[key][f['id']] = f['url']
                 if f['portada'] == 'true':
@@ -455,19 +459,18 @@ class database():
                         portada = True
                 f['parent'] = id_image
                 f['folder'] = table
-                row[k] = f
+                row.append(f)
 
             if not portada:
                 row[0]['portada'] = 'true'
             data[key] = json.dumps(row)
-
-        row = self.get(table, idname, {'idname': id_image}, {'limit': 1})
-        self.update(table, idname, data, {'idname': id_image})
+        row = self.get(table, idname, {idname: id_image}, {'limit': 1})
+        self.update(table, idname, data, {idname: id_image})
         for key, value in ids.items():
             images = json.loads(row[0][key])
             if isinstance(images, list):
                 for img in images:
-                    if img['id'] in value or value[img['id']] != img['url']:
+                    if img['id'] not in value or value[img['id']] != img['url']:
                         image.delete(table, img, id_image, key)
 
         image.delete_temp()
@@ -497,7 +500,7 @@ class database():
             files = json.loads(row[0][key])
             if isinstance(files, list):
                 for fi in files:
-                    if fi['id'] in value or value[fi['id']] != fi['url']:
+                    if fi['id'] not in value or value[fi['id']] != fi['url']:
                         file.delete(table, fi, id_file, key)
 
         file.delete_temp()

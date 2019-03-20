@@ -20,8 +20,7 @@ class static_file:
 
             my_file = Path(resource_url)
             if not my_file.is_file():
-                file_write = open(resource_url, 'w+')
-                file_write.close()
+                open(resource_url, 'w+').close()
             return ret
         else:
             ret = {

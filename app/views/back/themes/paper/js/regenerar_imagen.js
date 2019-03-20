@@ -15,7 +15,9 @@ function preparar_regenerar() {
     }, 3000);
     post_basic(url, {}, 'Recuperando lista de imagenes', function(data) {
         var error = false;
-        var data = JSON.parse(data);
+        if (typeof(data)!='object'){
+            var data = JSON.parse(data);
+        }
         total = 0;
         $(data).each(function(k, v) {
             if (typeof(v.foto) == 'undefined') {
@@ -46,7 +48,9 @@ function regenerar_imagenes(secciones, total) {
                 barra(10 + (count / total) * 90);
                 var mensaje = "Regenerando ID " + v[0] + ' Foto ' + f.url;
                 post_basic(url, f, mensaje, function(data) {
-                    var data = JSON.parse(data);
+                    if (typeof(data)!='object'){
+                        var data = JSON.parse(data);
+                    }
                     if (data.exito) {
                         f.ready = true;
                         if (count < total) {

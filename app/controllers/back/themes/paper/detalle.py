@@ -316,8 +316,7 @@ class detalle:
                 'required': campos['required'],
             }
         elif campos['type'] == 'image':
-            image_url = image.generar_url(
-                fila[campos['field']][0], 'thumb') if campos['field'] in fila and 0 in fila[campos['field']] else ''
+            image_url = image.generar_url( fila[campos['field']][0], 'thumb') if campos['field'] in fila and len(fila[campos['field']])>0 else ''
             data = {
                 'title_field': campos['title_field'],
                 'field': campos['field'],
@@ -359,7 +358,7 @@ class detalle:
             }
         elif campos['type'] == 'file':
             file_url = file.generar_url(
-                fila[campos['field']][0], '') if campos['field'] in fila and 0 in fila[campos['field']] else ''
+                fila[campos['field']][0], '') if campos['field'] in fila and len(fila[campos['field']])>0 else ''
             data = {
                 'title_field': campos['title_field'],
                 'field': campos['field'],

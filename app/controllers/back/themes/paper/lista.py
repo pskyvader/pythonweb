@@ -175,7 +175,7 @@ class lista:
             data = {'text': th['title_th'], 'url': fila[th['field']]}
 
         elif th['type'] == 'image':
-            if th['field'] in fila and isinstance(fila[th['field']], dict) and len(fila[th['field']]) > 0:
+            if th['field'] in fila and isinstance(fila[th['field']], list) and len(fila[th['field']]) > 0:
                 portada = image.portada(fila[th['field']])
                 thumb_url = image.generar_url(portada, 'thumb')
                 zoom_url = image.generar_url(portada, 'zoom')

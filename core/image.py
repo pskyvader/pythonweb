@@ -271,7 +271,7 @@ class image:
             archivo_recorte['name'] = image.nombre_archivo(
                 archivo_recorte['name'], 'recorte_previo')
             for recorte in recortes_foto:
-                if recorte['ancho'] <= ancho_valido and recorte['alto'] <= alto_valido:
+                if recorte['ancho']!=None and recorte['ancho'] <= ancho_valido and recorte['alto']!=None and recorte['alto'] <= alto_valido:
                     respuesta = image.recortar_foto(recorte, archivo_recorte)
                 else:
                     respuesta = image.recortar_foto(recorte, archivo)

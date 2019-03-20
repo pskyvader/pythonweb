@@ -365,7 +365,7 @@ class image:
             box = (x, y, ancho_maximo-x, alto_maximo-y)
             im = im.crop(box)
             new_im = im.thumbnail((miniatura_ancho, miniatura_alto))
-            print(new_im)
+            print(new_im,im)
         elif "rellenar" == tipo:
             new_im = Image.new(
                 'RGBA', (miniatura_ancho, miniatura_alto), (255, 255, 255, 0))

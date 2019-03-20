@@ -223,7 +223,7 @@ class image:
     @staticmethod
     def recortes_foto(archivo, recortes_foto):
         """Genera recortes de las fotos"""
-        import cv2
+        from PIL import Image
         respuesta = {'exito': False}
         ruta = image.get_upload_dir() + archivo['folder']
         foto = archivo['name']
@@ -232,7 +232,8 @@ class image:
         if not my_file.is_file():
             respuesta['mensaje'] = 'Archivo ' + ruta_imagen + ' no existe'
             return respuesta
-        im = cv2.imread(ruta_imagen)
+
+        im = Image.open(ruta_imagen)
         ancho, alto = im.size
 
         ancho_maximo = 0

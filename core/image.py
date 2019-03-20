@@ -359,7 +359,7 @@ class image:
             ancho_maximo, alto_maximo, ancho, alto, tipo)
 
         if tipo == "recortar":
-            box = (x, y, ancho_maximo, alto_maximo)
+            box = (x, y, ancho_maximo+x, alto_maximo+y)
             print(tipo,box,etiqueta,foto)
             print(im.size)
             new_im = im.crop(box)

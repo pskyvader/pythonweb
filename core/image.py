@@ -223,7 +223,7 @@ class image:
     @staticmethod
     def recortes_foto(archivo, recortes_foto):
         """Genera recortes de las fotos"""
-        import cv2
+        from wand.image import Image
         respuesta = {'exito': False}
         ruta = image.get_upload_dir() + archivo['folder']
         foto = archivo['name']

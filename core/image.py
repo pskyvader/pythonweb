@@ -391,6 +391,7 @@ class image:
         
 
         new_im.save(ruta + foto_recorte)
+        print(imagen_tipo)
         if "png" != imagen_tipo:
             new_im.save(ruta + foto_webp)
 

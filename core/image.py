@@ -151,7 +151,7 @@ class image:
         recortes.append({'tag': 'zoom', 'titulo': 'Zoom', 'ancho': 600,
                          'alto': 600, 'calidad': 90, 'tipo': 'centrar'})
         recortes.append({'tag': 'color', 'titulo': 'Color', 'ancho': 30,
-                         'alto': 30, 'calidad': 99, 'tipo': 'recortar'})
+                         'alto': None, 'calidad': 99, 'tipo': 'recortar'})
 
         if 0 in modulo and 'recortes' in modulo[0]:
             for recorte in modulo[0]['recortes']:

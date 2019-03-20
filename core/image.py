@@ -342,7 +342,7 @@ class image:
         etiqueta = recorte['tag']
         tipo = recorte['tipo']
 
-        ruta_imagen = ruta + '/' + foto
+        ruta_imagen = ruta + '/' + foto+'/'
         my_file = Path(ruta_imagen)
         if not my_file.is_file():
             respuesta['mensaje'] = 'Archivo ' + ruta_imagen + ' no existe'
@@ -391,7 +391,6 @@ class image:
         if my_file.is_file():
             my_file.unlink()
 
-        print(ruta+foto_recorte)
         new_im.save(ruta + foto_recorte)
         if "png" != imagen_tipo:
             new_im.save(ruta + foto_webp)

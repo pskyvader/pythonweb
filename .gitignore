@@ -116,6 +116,7 @@ upload/images/*
 uploads/img/*
 backup/*
 cache/*
+update/*
 .autogit
 **/cache/*
 **/custom_resources/*

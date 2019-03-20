@@ -324,7 +324,6 @@ class image:
             else:
                 x = (ancho_maximo - miniatura_ancho) / 2
                 y = (alto_maximo - miniatura_alto) / 2
-        print(miniatura_ancho,miniatura_alto)
         return int(x), int(y), int(miniatura_ancho),  int(miniatura_alto)
 
     @staticmethod
@@ -363,12 +362,12 @@ class image:
             im.thumbnail((miniatura_ancho, miniatura_alto))
             new_im = im.crop(box)
         elif "rellenar" == tipo:
-            new_im = Image.new( 'RGBA', (miniatura_ancho, miniatura_alto), (255, 255, 255, 0))
+            new_im = Image.new( 'RGBA', (ancho_maximo, alto_maximo), (255, 255, 255, 0))
             box = (x, y)
             new_im.paste(im.resize((miniatura_ancho, miniatura_alto)), (box))
         else:
             if ancho >= miniatura_ancho or alto >= miniatura_alto:
-                new_im = Image.new( 'RGBA', (miniatura_ancho, miniatura_alto), (255, 255, 255, 0))
+                new_im = Image.new( 'RGBA', (ancho_maximo, alto_maximo), (255, 255, 255, 0))
                 box = (x, y)
                 im=im.resize((miniatura_ancho, miniatura_alto))
                 new_im.paste(im, (box))

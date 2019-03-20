@@ -328,7 +328,7 @@ class image:
                 x = (ancho_maximo - miniatura_ancho) / 2
                 y = (alto_maximo - miniatura_alto) / 2
 
-        return x, y, miniatura_ancho,  miniatura_alto
+        return int(x), int(y), int(miniatura_ancho),  int(miniatura_alto)
 
     @staticmethod
     def recortar_foto(recorte, datos):
@@ -374,7 +374,6 @@ class image:
                 new_im = Image.new(
                     'RGBA', (miniatura_ancho, miniatura_alto), (255, 255, 255, 0))
                 box = (x, y)
-                print(box)
                 new_im.paste(im, (box))
             else:
                 new_im = Image.new(

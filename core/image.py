@@ -342,7 +342,7 @@ class image:
         etiqueta = recorte['tag']
         tipo = recorte['tipo']
 
-        ruta_imagen = ruta + '/' + foto+'/'
+        ruta_imagen = ruta + '/' + foto
         my_file = Path(ruta_imagen)
         if not my_file.is_file():
             respuesta['mensaje'] = 'Archivo ' + ruta_imagen + ' no existe'

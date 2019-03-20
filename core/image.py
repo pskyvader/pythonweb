@@ -360,6 +360,7 @@ class image:
 
         if tipo == "recortar":
             box = (x, y, ancho_maximo-x, alto_maximo-y)
+            print(box,etiqueta,foto)
             new_im = im.resize((ancho_maximo-x, alto_maximo-y))
             new_im.thumbnail((miniatura_ancho, miniatura_alto))
         elif "rellenar" == tipo:

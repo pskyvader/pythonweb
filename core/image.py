@@ -252,24 +252,21 @@ class image:
                     alto_valido = alto_maximo
 
         # si es valido, se crea una imagen intermedia para acelerar el proceso de recorte de las demas imagenes
-        if (alto > (alto_valido * 1.5) and alto_valido > 0) or (ancho > (ancho_valido * 1.5) and ancho_valido > 0):
+        if False and (alto > (alto_valido * 1.5) and alto_valido > 0) or (ancho > (ancho_valido * 1.5) and ancho_valido > 0):
             # alto proporcional segun mayor ancho valido
             #alto_final = (alto / ancho) * ancho_valido
             # ancho proporcional segun mayor alto valido
             ancho_final = (ancho / alto) * alto_valido
             if ancho_final >= ancho_valido:
-                respuesta = image.recortar_foto(
-                    {'tag': 'recorte_previo', 'ancho': None, 'alto': alto_valido, 'calidad': 100, 'tipo': 'recortar'}, archivo)
+                respuesta = image.recortar_foto( {'tag': 'recorte_previo', 'ancho': None, 'alto': alto_valido, 'calidad': 100, 'tipo': 'recortar'}, archivo)
             else:
-                respuesta = image.recortar_foto(
-                    {'tag': 'recorte_previo', 'ancho': ancho_valido, 'alto': None, 'calidad': 100, 'tipo': 'recortar'}, archivo)
+                respuesta = image.recortar_foto( {'tag': 'recorte_previo', 'ancho': ancho_valido, 'alto': None, 'calidad': 100, 'tipo': 'recortar'}, archivo)
 
             if not respuesta['exito']:
                 return respuesta
 
             archivo_recorte = archivo
-            archivo_recorte['name'] = image.nombre_archivo(
-                archivo_recorte['name'], 'recorte_previo')
+            archivo_recorte['name'] = image.nombre_archivo(archivo_recorte['name'], 'recorte_previo')
             for recorte in recortes_foto:
                 if recorte['ancho']!=None and recorte['ancho'] <= ancho_valido and recorte['alto']!=None and recorte['alto'] <= alto_valido:
                     respuesta = image.recortar_foto(recorte, archivo_recorte)

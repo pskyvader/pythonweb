@@ -324,7 +324,7 @@ class image:
             else:
                 x = (ancho_maximo - miniatura_ancho) / 2
                 y = (alto_maximo - miniatura_alto) / 2
-
+        print(miniatura_ancho,miniatura_alto)
         return int(x), int(y), int(miniatura_ancho),  int(miniatura_alto)
 
     @staticmethod

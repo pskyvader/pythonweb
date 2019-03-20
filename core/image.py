@@ -365,6 +365,7 @@ class image:
             box = (x, y, ancho_maximo-x, alto_maximo-y)
             im = im.crop(box)
             new_im = im.thumbnail((miniatura_ancho, miniatura_alto))
+            print(new_im)
         elif "rellenar" == tipo:
             new_im = Image.new(
                 'RGBA', (miniatura_ancho, miniatura_alto), (255, 255, 255, 0))
@@ -392,7 +393,6 @@ class image:
         if my_file.is_file():
             my_file.unlink()
 
-        print(new_im)
 
         new_im.save(ruta + foto_recorte)
         if "png" != imagen_tipo:

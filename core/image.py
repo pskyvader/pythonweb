@@ -351,9 +351,9 @@ class image:
 
         proporcion_imagen = ancho / alto
         if None == ancho_maximo or 0 == ancho_maximo:
-            ancho_maximo = float(alto_maximo * proporcion_imagen)
+            ancho_maximo = int(alto_maximo * proporcion_imagen)
         if None == alto_maximo or 0 == alto_maximo:
-            alto_maximo = float(ancho_maximo / proporcion_imagen)
+            alto_maximo = int(ancho_maximo / proporcion_imagen)
 
         x, y, miniatura_ancho, miniatura_alto = image.proporcion_foto(
             ancho_maximo, alto_maximo, ancho, alto, tipo)

@@ -246,7 +246,7 @@ class image:
                 ancho_maximo = recorte['ancho']
                 if ancho_maximo > ancho_valido and ancho_maximo <= ancho:
                     ancho_valido = ancho_maximo
-
+            print(recorte['alto'], alto_maximo)
             if recorte['alto'] > alto_maximo:
                 alto_maximo = recorte['alto']
                 if alto_maximo > alto_valido and alto_maximo <= alto:

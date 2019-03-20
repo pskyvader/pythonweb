@@ -389,7 +389,7 @@ class image:
 
         new_im.save(ruta + foto_recorte)
         print(imagen_tipo)
-        if "png" != imagen_tipo:
+        if "png" != imagen_tipo.lower():
             new_im.save(ruta + foto_webp)
 
         respuesta['exito'] = True

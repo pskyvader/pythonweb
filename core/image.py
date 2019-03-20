@@ -232,8 +232,10 @@ class image:
         if not my_file.is_file():
             respuesta['mensaje'] = 'Archivo ' + ruta_imagen + ' no existe'
             return respuesta
-        im = cv2.imread(ruta_imagen)
-        ancho, alto = im.size
+
+        with Image(filename=ruta_imagen) as img:
+            ancho = img.width
+            alto = img.height
 
         ancho_maximo = 0
         alto_maximo = 0

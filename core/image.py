@@ -242,12 +242,11 @@ class image:
         alto_valido = 0
 
         for recorte in recortes_foto:
-            if recorte['ancho'] > ancho_maximo:
+            if recorte['ancho']!=None and recorte['ancho'] > ancho_maximo:
                 ancho_maximo = recorte['ancho']
                 if ancho_maximo > ancho_valido and ancho_maximo <= ancho:
                     ancho_valido = ancho_maximo
-            print(int(recorte['alto']), alto_maximo)
-            if recorte['alto'] > alto_maximo:
+            if recorte['alto']!=None and recorte['alto'] > alto_maximo:
                 alto_maximo = recorte['alto']
                 if alto_maximo > alto_valido and alto_maximo <= alto:
                     alto_valido = alto_maximo

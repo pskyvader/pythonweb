@@ -370,10 +370,10 @@ class image:
             if ancho >= miniatura_ancho or alto >= miniatura_alto:
                 new_im = Image.new( 'RGBA', (miniatura_ancho, miniatura_alto), (255, 255, 255, 0))
                 box = (x, y)
-                new_im.paste(im, (box))
+                new_im.paste(im.resize((miniatura_ancho, miniatura_alto)), (box))
             else:
                 new_im = Image.new( 'RGBA', (ancho_maximo, alto_maximo), (255, 255, 255, 0))
-                box = (x, y, miniatura_ancho-x, miniatura_alto-y)
+                box = (x, y, miniatura_ancho+x, miniatura_alto+y)
                 new_im.paste(im, (box))
 
         foto_recorte = image.nombre_archivo(foto, etiqueta, '', True)

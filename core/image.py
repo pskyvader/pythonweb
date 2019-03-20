@@ -223,7 +223,7 @@ class image:
     @staticmethod
     def recortes_foto(archivo, recortes_foto):
         """Genera recortes de las fotos"""
-        from wand.image import Image
+        from PIL import Image
         respuesta = {'exito': False}
         ruta = image.get_upload_dir() + archivo['folder']
         foto = archivo['name']
@@ -233,9 +233,8 @@ class image:
             respuesta['mensaje'] = 'Archivo ' + ruta_imagen + ' no existe'
             return respuesta
 
-        with Image(filename=ruta_imagen) as img:
-            ancho = img.width
-            alto = img.height
+        im = Image.open(ruta_imagen)
+        ancho, alto = im.size
 
         ancho_maximo = 0
         alto_maximo = 0

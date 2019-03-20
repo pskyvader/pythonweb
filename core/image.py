@@ -370,6 +370,7 @@ class image:
             if ancho >= miniatura_ancho or alto >= miniatura_alto:
                 new_im = Image.new( 'RGBA', (miniatura_ancho, miniatura_alto), (255, 255, 255, 0))
                 box = (x, y)
+                print(box,etiqueta,new_im.size)
                 im=im.resize((miniatura_ancho, miniatura_alto))
                 new_im.paste(im, (box))
             else:

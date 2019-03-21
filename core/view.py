@@ -72,6 +72,8 @@ class view:
                         print('list',d)
                 data2.append(d)
             data=data2
+            if all(isinstance(x,str) for x in data):
+                data=''.join(data)
             if p:
                 print('total list',data)
         elif isinstance(data, tuple):

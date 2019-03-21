@@ -63,8 +63,8 @@ class view:
                     d = view.render_unit(env, '', d)
                 data2.append(d)
             data=data2
-            #if all(isinstance(x,str) for x in data):
-            #    data=''.join(data)
+            if all(isinstance(x,str) for x in data):
+                data=''.join(data)
         elif isinstance(data, tuple):
             data = view.render_unit(env, data[0], data[1])
 

@@ -61,6 +61,7 @@ class view:
                 if isinstance(d, dict) or isinstance(d, list) or isinstance(d, tuple):
                     d = view.render_unit(env, '', d)
         elif isinstance(data, tuple):
+            print(data[0])
             data = view.render_unit(env, data[0], data[1])
 
         if template != '' and isinstance(data, dict):

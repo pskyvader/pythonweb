@@ -456,7 +456,7 @@ class detalle:
             else:
                 parent = campos['parent']
                 checked = True if 0 == idparent else False
-                print(app.get)
+                print(app.get,campos['field'],idparent)
                 if campos['field'] not in fila:
                     if campos['field'] in app.get:
                         checked = True if str(idparent) == app.get[campos['field']] else False

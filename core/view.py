@@ -80,7 +80,7 @@ class view:
                 #print('RENDER',data,'FINAL',content)
             return content
         else:
-            if not isinstance(data,str):
+            if not isinstance(data,str) and template != '':
                 print('NO STR',data)
             return data
 

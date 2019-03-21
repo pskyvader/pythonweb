@@ -73,6 +73,7 @@ class base_model:
                 else:
                     r['idpadre'] = []
                 if idpadre != None and idpadre not in r['idpadre']:
+                    print('eliminado')
                     deleted = True
                     del r
 

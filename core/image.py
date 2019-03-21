@@ -61,6 +61,7 @@ class image:
         for fl in glob(image.get_upload_dir() + file['folder'] + "/" + file['id'] + "-*.*"):
             remove(fl)
         respuesta = image.recortes_foto(file, recortes)
+        print(respuesta)
         return respuesta
 
     @staticmethod

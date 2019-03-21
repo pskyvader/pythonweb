@@ -57,7 +57,7 @@ class view:
                 if isinstance(d, dict) or isinstance(d, list) or isinstance(d, tuple):
                     if k=='children':
                         data[k] = view.render_unit(env, '', d,True)
-                        print('children',type(d),d,data[k])
+                        print('children',data[k])
                     else:
                         data[k] = view.render_unit(env, '', d,p)
                     if p:
@@ -70,7 +70,6 @@ class view:
                     d = view.render_unit(env, '', d,p)
                     if p:
                         print('list',d)
-                
                 data2.append(d)
             data=data2
             if p:

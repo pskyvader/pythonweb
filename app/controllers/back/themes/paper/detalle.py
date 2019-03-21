@@ -451,8 +451,8 @@ class detalle:
                     'children': [],
                     'count': count if count > 0 else '',
                 }
-                for children in campos['parent'].copy().values():
-                    data['children'].append(self.field(campos, fila, '', children[0], 1))
+                for children in campos['parent'].values():
+                    data['children'].append(self.field(campos.copy(), fila, '', children[0], 1))
             else:
                 parent = campos['parent']
                 checked = True if 0 == idparent else False

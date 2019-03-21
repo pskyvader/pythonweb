@@ -64,13 +64,13 @@ class seccion(base_model):
 
         row = connection.get(cls.table, cls.idname, where, condiciones, select)
         deleted = False
-        for r in row:
+        for k, r in enumerate(row.copy()):
             deleted = False
             if 'idseccioncategoria' in r:
                 r['idseccioncategoria'] = json.loads(r['idseccioncategoria'])
                 if idseccioncategoria != None and idseccioncategoria not in r['idseccioncategoria']:
                     deleted = True
-                    del r
+                    del row[k]
 
             if return_total == None:
                 if not deleted and 'foto' in r and r['foto']!='':

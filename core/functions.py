@@ -249,7 +249,7 @@ class functions():
                 tree['root'][id] = tree['children'][id]
             else:
                 tree['children'][node['idpadre'][0]]['children'][id] = tree['children'][id]
-        print(tree)
+        print(tree['root'])
         return tree['root']
 
     @staticmethod

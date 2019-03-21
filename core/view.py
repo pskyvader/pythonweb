@@ -69,7 +69,7 @@ class view:
             if template=='detail/recursive_checkbox':
                 template = env.get_template(template + "." + view.extension)
                 content = template.render(data)
-                print(content)
+                print(template,data,content)
             else:
                 template = env.get_template(template + "." + view.extension)
                 content = template.render(data)

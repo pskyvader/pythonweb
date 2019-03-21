@@ -451,9 +451,10 @@ class detalle:
                     'children': [],
                     'count': count if count > 0 else '',
                 }
-                print(campos['parent'])
                 for children in campos['parent'].values():
                     data['children'].append(self.field(campos, fila, '', children[0], 1))
+                
+                print(data['children'])
             else:
                 parent = campos['parent']
                 checked = True if 0 == idparent else False

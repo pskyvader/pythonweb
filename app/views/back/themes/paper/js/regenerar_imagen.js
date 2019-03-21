@@ -11,6 +11,7 @@ function preparar_regenerar() {
         return false;
     }
     barra(10);
+    regenerar_completado=false
     var url = create_url(modulo, 'get_all');
     setTimeout(function() {
         if(!regenerar_completado){

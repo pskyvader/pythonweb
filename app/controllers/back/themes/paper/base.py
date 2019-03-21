@@ -252,9 +252,8 @@ class base:
                 if c[0] == id:
                     del c
                     break
-            raiz = {0: 0, 'titulo': 'Raíz', 'idpadre': [-1]}
-            raiz.update(enumerate(categorias))
-            categorias = raiz
+            raiz = [{0: 0, 'titulo': 'Raíz', 'idpadre': [-1]}]
+            categorias = raiz+categorias
             configuracion['campos']['idpadre']['parent'] = functions.crear_arbol( categorias, -1)
         elif cls.contiene_hijos or 'idpadre' in configuracion['campos']:
             configuracion['campos']['idpadre'] = {

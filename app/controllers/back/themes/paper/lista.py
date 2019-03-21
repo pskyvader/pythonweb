@@ -106,7 +106,7 @@ class lista:
         if data['limit'] in limits:
             limits[data['limit']]['active'] = 'selected'
 
-        data['limits'] = limits
+        data['limits'] = limits.values()
 
         pagination = []
         rango = 5

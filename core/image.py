@@ -346,7 +346,7 @@ class image:
 
         im = Image.open(ruta_imagen)
         ancho, alto = im.size
-        imagen_tipo = im.format
+        imagen_tipo = im.format.lower()
 
         proporcion_imagen = ancho / alto
         if None == ancho_maximo or 0 == ancho_maximo:
@@ -390,7 +390,7 @@ class image:
         
 
         new_im.save(ruta + foto_recorte)
-        #if "png" != imagen_tipo.lower():
+        #if "png" != imagen_tipo:
         new_im.save(ruta + foto_webp)
 
         respuesta['exito'] = True

@@ -252,7 +252,7 @@ class base:
                 if c[0] == id:
                     del c
                     break
-
+            print(categorias)
             raiz = {0: 0, 'titulo': 'Raíz', 'idpadre': [-1]}
             categorias = raiz+categorias
             configuracion['campos']['idpadre']['parent'] = functions.crear_arbol( categorias, -1)

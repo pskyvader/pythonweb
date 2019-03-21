@@ -86,6 +86,7 @@ class database():
         if 'buscar' in condiciones and isinstance(condiciones['buscar'], dict):
             sql += " AND ("
             count = 0
+            print(condiciones['buscar'])
             for key, value in condiciones['buscar']:
                 count += 1
                 sql += key + " LIKE '%" + value + "%'"

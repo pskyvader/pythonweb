@@ -63,7 +63,6 @@ class base_model:
             if idpadre != None:
                 select = ''
         row = connection.get(cls.table, cls.idname, where, condiciones, select)
-        print('antes',len(row))
         deleted = False
         for k, r in enumerate(row.copy()):
             deleted = False
@@ -97,7 +96,6 @@ class base_model:
         if return_total != None:
             return len(row)
         else:
-            print('despues',len(row))
             return row
 
     @classmethod

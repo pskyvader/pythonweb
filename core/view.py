@@ -64,11 +64,15 @@ class view:
                         print('dict',d,data[k])
 
         elif isinstance(data, list):
+            data2=[]
             for d in data:
                 if isinstance(d, dict) or isinstance(d, list) or isinstance(d, tuple):
                     d = view.render_unit(env, '', d,p)
                     if p:
                         print('list',d)
+                
+                data2.append(d)
+            data=data2
             if p:
                 print('total list',data)
         elif isinstance(data, tuple):

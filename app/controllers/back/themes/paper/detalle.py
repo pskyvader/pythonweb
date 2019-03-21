@@ -452,7 +452,7 @@ class detalle:
                     'count': count if count > 0 else '',
                 }
                 for children in campos['parent']:
-                    print(campos, fila, '', children[0], 1)
+                    print(campos, fila, '', children, 1)
                     data['children'] += self.field(campos, fila, '', children[0], 1)
 
             else:

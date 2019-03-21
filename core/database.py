@@ -86,8 +86,7 @@ class database():
         if 'buscar' in condiciones and isinstance(condiciones['buscar'], dict):
             sql += " AND ("
             count = 0
-            print(condiciones['buscar'])
-            for key, value in condiciones['buscar']:
+            for key, value in condiciones['buscar'].items():
                 count += 1
                 sql += key + " LIKE '%" + value + "%'"
                 sql += " OR " if (count < len(condiciones['buscar'])) else ""

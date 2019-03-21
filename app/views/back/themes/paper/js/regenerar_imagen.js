@@ -18,6 +18,7 @@ function preparar_regenerar() {
         if (typeof(data)!='object'){
             var data = JSON.parse(data);
         }
+        console.log(data)
         total = 0;
         $(data).each(function(k, v) {
             if (typeof(v.foto) == 'undefined') {
@@ -42,7 +43,6 @@ function regenerar_imagenes(secciones, total) {
     var count = 0;
     var ready = false;
     $(secciones).each(function(k, v) {
-        console.log(v.foto);
         $(v.foto).each(function(key, f) {
             count++;
             if (typeof(f.ready) == 'undefined' || !f.ready) {

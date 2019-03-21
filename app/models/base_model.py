@@ -73,7 +73,7 @@ class base_model:
                     r['idpadre'] = []
                 if idpadre != None and idpadre not in r['idpadre']:
                     deleted = True
-                    print(k,row)
+                    print(k,len(row))
                     del row[k]
 
             if return_total == None:

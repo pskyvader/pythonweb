@@ -42,6 +42,7 @@ function regenerar_imagenes(secciones, total) {
     var count = 0;
     var ready = false;
     $(secciones).each(function(k, v) {
+        console.log(v);
         $(v.foto).each(function(key, f) {
             count++;
             if (typeof(f.ready) == 'undefined' || !f.ready) {

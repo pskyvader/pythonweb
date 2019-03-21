@@ -56,15 +56,18 @@ class view:
             for k, d in data.items():
                 if isinstance(d, dict) or isinstance(d, list) or isinstance(d, tuple):
                     data[k] = view.render_unit(env, '', d)
-                    if k=='children':
-                        print(d,data[k])
         elif isinstance(data, list):
             for d in data:
                 if isinstance(d, dict) or isinstance(d, list) or isinstance(d, tuple):
                     d = view.render_unit(env, '', d)
-
         elif isinstance(data, tuple):
+            if data[0]=='detail/recursive_checkbox':
+                print(data,data[0],data[1])
                 data = view.render_unit(env, data[0], data[1])
+                print(data,type(data))
+            else:
+                data = view.render_unit(env, data[0], data[1])
+
 
         if template != '' and isinstance(data, dict):
             template = env.get_template(template + "." + view.extension)

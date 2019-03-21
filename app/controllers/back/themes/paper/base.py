@@ -248,6 +248,10 @@ class base:
 
         if cls.contiene_hijos and 'idpadre' in configuracion['campos']:
             categorias = class_name.getAll()
+            for c in categorias:
+                if c[0] == id:
+                    del c
+                    break
             print(categorias)
             raiz = {0: 0, 'titulo': 'Raíz', 'idpadre': [-1]}
             categorias = raiz+categorias

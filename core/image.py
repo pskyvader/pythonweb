@@ -330,7 +330,7 @@ class image:
     def recortar_foto(recorte, datos):
         """Recorta una foto"""
         from PIL import Image
-        respuesta = {'exito': False, 'mensaje': 'error al recortar imagen'}
+        respuesta = {'exito': False, 'mensaje': ''}
         ancho_maximo = recorte['ancho']
         alto_maximo = recorte['alto']
         ruta = image.get_upload_dir() + datos['folder'] + '/'

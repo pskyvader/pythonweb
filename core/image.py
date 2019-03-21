@@ -362,18 +362,27 @@ class image:
             im.thumbnail((miniatura_ancho, miniatura_alto), Image.ANTIALIAS)
             new_im = im.crop(box)
         elif "rellenar" == tipo:
-            new_im = Image.new( 'RGBA', (ancho_maximo, alto_maximo), (255, 255, 255, 0))
+            if "png" == imagen_tipo:
+                new_im = Image.new( 'RGBA', (ancho_maximo, alto_maximo), (255, 255, 255, 0))
+            else:
+                new_im = Image.new( 'RGB', (ancho_maximo, alto_maximo), (255, 255, 255))
             box = (x, y)
             im.thumbnail((miniatura_ancho, miniatura_alto), Image.ANTIALIAS)
             new_im.paste(im, (box))
         else:
             if ancho >= miniatura_ancho or alto >= miniatura_alto:
-                new_im = Image.new( 'RGBA', (ancho_maximo, alto_maximo), (255, 255, 255, 0))
+                if "png" == imagen_tipo:
+                    new_im = Image.new( 'RGBA', (ancho_maximo, alto_maximo), (255, 255, 255, 0))
+                else:
+                    new_im = Image.new( 'RGB', (ancho_maximo, alto_maximo), (255, 255, 255))
                 box = (x, y)
                 im.thumbnail((miniatura_ancho, miniatura_alto), Image.ANTIALIAS)
                 new_im.paste(im, (box))
             else:
-                new_im = Image.new( 'RGBA', (ancho_maximo, alto_maximo), (255, 255, 255, 0))
+                if "png" == imagen_tipo:
+                    new_im = Image.new( 'RGBA', (ancho_maximo, alto_maximo), (255, 255, 255, 0))
+                else:
+                    new_im = Image.new( 'RGB', (ancho_maximo, alto_maximo), (255, 255, 255))
                 box = (x, y, miniatura_ancho+x, miniatura_alto+y)
                 im.thumbnail((miniatura_ancho, miniatura_alto), Image.ANTIALIAS)
                 new_im.paste(im, (box))

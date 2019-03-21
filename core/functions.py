@@ -111,7 +111,8 @@ class functions():
     def generar_pass(length=8):
         import string
         import secrets
-        password = ''.join(secrets.choice( string.ascii_uppercase + string.digits) for _ in range(length))
+        password = ''.join(secrets.choice(
+            string.ascii_uppercase + string.digits) for _ in range(length))
         return password
 
     @staticmethod
@@ -163,7 +164,7 @@ class functions():
             return archivo + c + str(int(getmtime(ac))) if my_file.is_file() else ""
 
     @staticmethod
-    def current_time(formato = "%Y-%m-%d %H:%M:%S",as_string=True):
+    def current_time(formato="%Y-%m-%d %H:%M:%S", as_string=True):
         '''fecha actual en zona horaria santiago, formato opcional'''
         import datetime
         import pytz
@@ -174,23 +175,22 @@ class functions():
             return fecha.timestamp()
 
     @staticmethod
-    def formato_fecha(fecha_string:str, formato = '', original_format='', as_string=True):
+    def formato_fecha(fecha_string: str, formato='', original_format='', as_string=True):
         '''Fecha con formato opcional'''
         import datetime
 
-        if formato=='':
+        if formato == '':
             formato = '%d de %B del %Y'
-        if original_format=='':
+        if original_format == '':
             original_format = "%Y-%m-%d %H:%M:%S"
-        if not isinstance(fecha_string,str):
-            fecha=datetime.datetime.fromtimestamp(fecha_string)
+        if not isinstance(fecha_string, str):
+            fecha = datetime.datetime.fromtimestamp(fecha_string)
         else:
-            fecha=datetime.datetime.strptime(fecha_string,original_format)
+            fecha = datetime.datetime.strptime(fecha_string, original_format)
         if as_string:
             return fecha.strftime(formato)
         else:
             return fecha.timestamp()
-    
 
     @staticmethod
     def getContrastColor(hexColor: str):
@@ -247,20 +247,21 @@ class functions():
             if node['idpadre'][0] == idpadre:
                 tree['root'][id] = tree['children'][id]
             else:
-                print(tree['children'][id])
-                tree['children'][node['idpadre'][0]]['children'][id] = tree['children'][id]
+                tree['children'][node['idpadre'][0]
+                                 ]['children'][
+                                     id] = tree['children'][id]
 
         return tree['root']
 
     @staticmethod
-    def file_size(file_url, only_size = False):
+    def file_size(file_url, only_size=False):
         from os import stat
         if not only_size:
             size = stat(file_url).st_size
         else:
             size = file_url
-        
-        unit       = ['b', 'kb', 'mb', 'gb', 'tb', 'pb']
+
+        unit = ['b', 'kb', 'mb', 'gb', 'tb', 'pb']
         for u in unit:
             if abs(size) < 1024.0:
                 return "%3.2f %s" % (size, u)

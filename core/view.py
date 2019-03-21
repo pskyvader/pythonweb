@@ -51,30 +51,39 @@ class view:
         return body
 
     @staticmethod
-    def render_unit(env, template, data):
+    def render_unit(env, template, data,p=False):
         if isinstance(data, dict):
             for k, d in data.items():
                 if isinstance(d, dict) or isinstance(d, list) or isinstance(d, tuple):
-                    data[k] = view.render_unit(env, '', d)
                     if k=='children':
-                        print(d,data[k])
+                        data[k] = view.render_unit(env, '', d,True)
+                    else:
+                        data[k] = view.render_unit(env, '', d)
+                    if p:
+                        print('dict',d,data[k])
+
         elif isinstance(data, list):
             for d in data:
                 if isinstance(d, dict) or isinstance(d, list) or isinstance(d, tuple):
                     d = view.render_unit(env, '', d)
+                    if p:
+                        print('list',d)
         elif isinstance(data, tuple):
             data = view.render_unit(env, data[0], data[1])
+            if p:
+                print('tuple',data)
 
         
 
         if template != '' and isinstance(data, dict):
             templ = env.get_template(template + "." + view.extension)
             content = templ.render(data)
-            
-            #if template=='detail/recursive_checkbox':
-                #print('RENDER',data,'FINAL',content)
+            if p:
+                print('render',content)
             return content
         else:
+            if p:
+                print('no-render',data)
             return data
 
     @staticmethod

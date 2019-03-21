@@ -237,7 +237,7 @@ class functions():
         return ruta
 
     @staticmethod
-    def crear_arbol(data: dict, idpadre=0):
+    def crear_arbol(data: list, idpadre=0):
         tree = {'children': {}, 'root': {}}
         for node in data:
             id = int(node[0])

@@ -70,8 +70,7 @@ class view:
             else:
                 data = view.render_unit(env, data[0], data[1])
 
-        if 'children' in data:
-            print(data)
+        
 
         if template != '' and isinstance(data, dict):
             templ = env.get_template(template + "." + view.extension)

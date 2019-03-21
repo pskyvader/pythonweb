@@ -281,7 +281,6 @@ class base:
                 categorias = class_parent.getAll()
                 if is_array:
                     configuracion['campos'][idparent]['parent'] = functions.crear_arbol( categorias)
-                    print(configuracion['campos'][idparent]['parent'])
                 else:
                     configuracion['campos'][idparent]['parent'] = categorias
 

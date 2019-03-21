@@ -59,12 +59,9 @@ class view:
                     if k=='children':
                         print(d,data[k])
         elif isinstance(data, list):
-            for d in data:
-                if isinstance(d, dict) or isinstance(d, list) or isinstance(d, tuple):
-                    d = view.render_unit(env, '', d)
-                
-                if not isinstance(d,str):
-                    print('NO STR',d)
+            #for d in data:
+                #if isinstance(d, dict) or isinstance(d, list) or isinstance(d, tuple):
+                    #d = view.render_unit(env, '', d)
         elif isinstance(data, tuple):
             data = view.render_unit(env, data[0], data[1])
 

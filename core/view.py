@@ -60,9 +60,6 @@ class view:
                         print(d,data[k])
         elif isinstance(data, list):
             pass
-            for d in data:
-                if isinstance(d, dict) or isinstance(d, list) or isinstance(d, tuple):
-                    d = view.render_unit(env, '', d)
         elif isinstance(data, tuple):
             data = view.render_unit(env, data[0], data[1])
 

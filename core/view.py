@@ -51,12 +51,12 @@ class view:
         return body
 
     @staticmethod
-    def render_unit(env, template, data,p=False):
+    def render_unit(env, template, data):
         if isinstance(data, dict):
             for k, d in data.items():
                 if isinstance(d, dict) or isinstance(d, list) or isinstance(d, tuple):
                     if k=='children':
-                        data[k] = view.render_unit(env, '', d,True)
+                        data[k] = view.render_unit(env, '', d)
                         print('children',data[k])
                     else:
                         data[k] = view.render_unit(env, '', d,p)

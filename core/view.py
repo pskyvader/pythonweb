@@ -83,7 +83,7 @@ class view:
             return content
         else:
             if p:
-                print('no-render',data)
+                print('no-render',data,type(data))
             return data
 
     @staticmethod

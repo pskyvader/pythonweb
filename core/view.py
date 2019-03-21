@@ -74,7 +74,7 @@ class view:
             content = templ.render(data)
             
             if template=='detail/recursive_checkbox':
-                print(content)
+                print('RENDER',data,content)
             return content
         else:
             return data

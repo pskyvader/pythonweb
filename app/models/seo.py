@@ -64,13 +64,13 @@ class seo(base_model):
 
         row = connection.get(cls.table, cls.idname, where, condiciones, select)
         deleted = False
-        for k, r in enumerate(row.copy()):
+        row_copy=[]
+        for r in row:
             deleted = False
             if 'idpadre' in r:
                 r['idpadre'] = json.loads(r['idpadre'])
                 if idpadre != None and idpadre not in r['idpadre']:
                     deleted = True
-                    del row[k]
 
             if return_total == None:
                 if not deleted and 'foto' in r and r['foto']!='':
@@ -79,6 +79,11 @@ class seo(base_model):
                     r['banner'] = json.loads(r['banner'])
                 if not deleted and 'archivo' in r and r['archivo']!='':
                     r['archivo'] = json.loads(r['archivo'])
+
+            if not deleted:
+                row_copy.append(r)
+                
+        row=row_copy
 
         if limit != None:
             if limit2 == 0:

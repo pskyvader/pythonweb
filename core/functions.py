@@ -247,7 +247,7 @@ class functions():
             if node['idpadre'][0] == idpadre:
                 tree['root'][id] = tree['children'][id]
             else:
-                print(node['idpadre'])
+                print(node['idpadre'][0])
                 if not 'children' in tree['children'][node['idpadre'][0]]:
                     tree['children'][node['idpadre'][0]]['children']=[]
                 tree['children'][node['idpadre'][0]]['children'][id] = tree['children'][id]

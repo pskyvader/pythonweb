@@ -65,7 +65,7 @@ class base_model:
         row = connection.get(cls.table, cls.idname, where, condiciones, select)
         print('antes',len(row))
         deleted = False
-        for r in row:
+        for k, r in enumerate(row.copy()):
             deleted = False
             if 'idpadre' in r:
                 if r['idpadre'] != '':
@@ -73,9 +73,8 @@ class base_model:
                 else:
                     r['idpadre'] = []
                 if idpadre != None and idpadre not in r['idpadre']:
-                    print('eliminado')
                     deleted = True
-                    del r
+                    del row[k]
 
             if return_total == None:
                 if not deleted and 'foto' in r:

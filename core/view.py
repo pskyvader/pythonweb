@@ -65,15 +65,17 @@ class view:
 
         
         if template != '' and isinstance(data, dict):
-            template = env.get_template(template + "." + view.extension)
-            content = template.render(data)
             
             if template=='detail/recursive_checkbox':
+                template = env.get_template(template + "." + view.extension)
+                content = template.render(data)
                 print(template,type(data),content)
+            else:
+                template = env.get_template(template + "." + view.extension)
+                content = template.render(data)
+
             return content
         else:
-            if template=='detail/recursive_checkbox':
-                print(template,type(data))
             return data
 
     @staticmethod

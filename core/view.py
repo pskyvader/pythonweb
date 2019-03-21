@@ -59,18 +59,18 @@ class view:
                         data[k] = view.render_unit(env, '', d,True)
                         print('children',d,data[k])
                     else:
-                        data[k] = view.render_unit(env, '', d)
+                        data[k] = view.render_unit(env, '', d,p)
                     if p:
                         print('dict',d,data[k])
 
         elif isinstance(data, list):
             for d in data:
                 if isinstance(d, dict) or isinstance(d, list) or isinstance(d, tuple):
-                    d = view.render_unit(env, '', d)
+                    d = view.render_unit(env, '', d,p)
                     if p:
                         print('list',d)
         elif isinstance(data, tuple):
-            data = view.render_unit(env, data[0], data[1])
+            data = view.render_unit(env, data[0], data[1],p)
             if p:
                 print('tuple',data)
 

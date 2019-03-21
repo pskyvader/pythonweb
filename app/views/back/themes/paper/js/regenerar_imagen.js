@@ -18,7 +18,6 @@ function preparar_regenerar() {
         if (typeof(data)!='object'){
             var data = JSON.parse(data);
         }
-        console.log(data)
         total = 0;
         $(data).each(function(k, v) {
             if (typeof(v.foto) == 'undefined') {

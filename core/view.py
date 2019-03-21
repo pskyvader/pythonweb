@@ -53,9 +53,12 @@ class view:
     @staticmethod
     def render_unit(env, template, data):
         if isinstance(data, dict):
+            data2={}
             for k, d in data.items():
                 if isinstance(d, dict) or isinstance(d, list) or isinstance(d, tuple):
-                    data[k] = view.render_unit(env, '', d)
+                    d = view.render_unit(env, '', d)
+                data2[k]=d
+            data=data2
         elif isinstance(data, list):
             data2=[]
             for d in data:

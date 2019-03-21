@@ -456,11 +456,10 @@ class detalle:
             else:
                 parent = campos['parent']
                 checked = True if 0 == idparent else False
+                print(app.get)
                 if campos['field'] not in fila:
                     if campos['field'] in app.get:
-                        print(app.get[campos['field']])
                         checked = True if str(idparent) == app.get[campos['field']] else False
-
                 else:
                     checked = True if idparent in fila[campos['field']] else False
                 data = {

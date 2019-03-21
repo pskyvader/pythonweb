@@ -62,9 +62,9 @@ class view:
                     d = view.render_unit(env, '', d)
         elif isinstance(data, tuple):
             if data[0]=='detail/recursive_checkbox':
-                print(data,data[0],data[1])
+                #print(data,data[0],data[1])
                 data = view.render_unit(env, data[0], data[1])
-                print(data,type(data))
+                #print(data,type(data))
             else:
                 data = view.render_unit(env, data[0], data[1])
 
@@ -75,8 +75,8 @@ class view:
             templ = env.get_template(template + "." + view.extension)
             content = templ.render(data)
             
-            if template=='detail/recursive_checkbox':
-                print('RENDER',data,'FINAL',content)
+            #if template=='detail/recursive_checkbox':
+                #print('RENDER',data,'FINAL',content)
             return content
         else:
             return data

@@ -256,7 +256,7 @@ class base:
             raiz = {0: 0, 'titulo': 'Raíz', 'idpadre': [-1]}
             categorias = raiz+categorias
             configuracion['campos']['idpadre']['parent'] = functions.crear_arbol( categorias, -1)
-                    print(configuracion['campos'][idparent]['parent'])
+            print(configuracion['campos']['idpadre']['parent'])
         elif cls.contiene_hijos or 'idpadre' in configuracion['campos']:
             configuracion['campos']['idpadre'] = {
                 'title_field': 'idpadre', 'field': 'idpadre', 'type': 'hidden', 'required': True}

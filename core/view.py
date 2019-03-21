@@ -57,6 +57,7 @@ class view:
                 if isinstance(d, dict) or isinstance(d, list) or isinstance(d, tuple):
                     if k=='children':
                         data[k] = view.render_unit(env, '', d,True)
+                        print('children',d,data[k])
                     else:
                         data[k] = view.render_unit(env, '', d)
                     if p:

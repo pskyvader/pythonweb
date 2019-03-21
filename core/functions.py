@@ -252,7 +252,7 @@ class functions():
                 if not 'children' in tree['children'][node['idpadre'][0]]:
                     tree['children'][node['idpadre'][0]]['children']={}
                 tree['children'][node['idpadre'][0]]['children'][id] = tree['children'][id]
-
+        print(tree['root'])
         return tree['root']
 
     @staticmethod

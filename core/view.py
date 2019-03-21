@@ -80,6 +80,8 @@ class view:
                 #print('RENDER',data,'FINAL',content)
             return content
         else:
+            if not isinstance(data,str):
+                print('NO STR',data)
             return data
 
     @staticmethod

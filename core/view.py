@@ -69,6 +69,8 @@ class view:
                     d = view.render_unit(env, '', d,p)
                     if p:
                         print('list',d)
+            if p:
+                print('total list',data)
         elif isinstance(data, tuple):
             data = view.render_unit(env, data[0], data[1],p)
             if p:

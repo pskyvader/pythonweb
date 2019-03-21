@@ -477,9 +477,8 @@ class detalle:
                 if idparent in parent:
                     campos['parent'] = parent[idparent]['children'].copy()
 
-                    for children in campos['parent']:
-                        data['children'] += self.field(campos,
-                                                       fila, '', children[0], level + 1)
+                    for children in campos['parent'].values():
+                        data['children'] += self.field(campos, fila, '', children[0], level + 1)
 
         elif campos['type'] == 'select':
             data = {

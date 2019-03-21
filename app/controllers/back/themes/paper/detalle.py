@@ -452,7 +452,7 @@ class detalle:
                     'count': count if count > 0 else '',
                 }
                 for children in campos['parent'].values():
-                    data['children'] += self.field(campos, fila, '', children[0], 1)
+                    data['children'].append(self.field(campos, fila, '', children[0], 1))
 
             else:
                 parent = campos['parent']
@@ -478,7 +478,7 @@ class detalle:
                     campos['parent'] = parent[idparent]['children'].copy()
 
                     for children in campos['parent'].values():
-                        data['children'] += self.field(campos, fila, '', children[0], level + 1)
+                        data['children'].append(self.field(campos, fila, '', children[0], level + 1))
 
         elif campos['type'] == 'select':
             data = {

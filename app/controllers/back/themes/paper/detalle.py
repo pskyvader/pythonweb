@@ -460,7 +460,7 @@ class detalle:
                     if campos['field'] in app.get:
                         checked = True if idparent == int(app.get[campos['field']]) else False
                 else:
-                    checked = True if idparent in fila[campos['field']] else False
+                    checked = True if str(idparent) in fila[campos['field']] else False
                 data = {
                     'is_children': True,
                     'field': campos['field'],

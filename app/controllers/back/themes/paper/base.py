@@ -255,8 +255,7 @@ class base:
 
             raiz = {0: 0, 'titulo': 'Raíz', 'idpadre': [-1]}
             categorias = raiz+categorias
-            configuracion['campos']['idpadre']['parent'] = functions.crear_arbol(
-                categorias, -1)
+            configuracion['campos']['idpadre']['parent'] = functions.crear_arbol( categorias, -1)
         elif cls.contiene_hijos or 'idpadre' in configuracion['campos']:
             configuracion['campos']['idpadre'] = {
                 'title_field': 'idpadre', 'field': 'idpadre', 'type': 'hidden', 'required': True}
@@ -281,14 +280,13 @@ class base:
             if idparent in configuracion['campos']:
                 categorias = class_parent.getAll()
                 if is_array:
-                    configuracion['campos'][idparent]['parent'] = functions.crear_arbol(
-                        categorias)
+                    print(configuracion['campos'][idparent]['parent'])
+                    configuracion['campos'][idparent]['parent'] = functions.crear_arbol( categorias)
                 else:
                     configuracion['campos'][idparent]['parent'] = categorias
 
             else:
-                configuracion['campos'][idparent] = {
-                    'title_field': idparent, 'field': idparent, 'type': 'hidden', 'required': True}
+                configuracion['campos'][idparent] = { 'title_field': idparent, 'field': idparent, 'type': 'hidden', 'required': True}
                 if id == 0:
                     if idparent in get:
                         if is_array:

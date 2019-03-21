@@ -68,13 +68,13 @@ class producto(base_model):
 
         row = connection.get(cls.table, cls.idname, where, condiciones, select)
         deleted = False
-        for r in row:
+        for k, r in enumerate(row.copy()):
             deleted = False
             if 'idproductocategoria' in r:
                 r['idproductocategoria'] = json.loads(r['idproductocategoria'])
                 if idproductocategoria != None and idproductocategoria not in r['idproductocategoria']:
                     deleted = True
-                    del r
+                    del row[k]
 
             if return_total == None:
                 if not deleted and 'foto' in r and r['foto']!='':

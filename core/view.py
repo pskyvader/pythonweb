@@ -59,8 +59,6 @@ class view:
                     d = view.render_unit(env, '', d)
                 data2[k]=d
             data=data2
-            if all(isinstance(x,str) for x in data.values()):
-                data=''.join(data)
         elif isinstance(data, list):
             data2=[]
             for d in data:

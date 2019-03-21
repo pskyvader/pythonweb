@@ -65,24 +65,14 @@ class view:
             data=data2
             if all(isinstance(x,str) for x in data):
                 data=''.join(data)
-            if p:
-                print('total list',data)
         elif isinstance(data, tuple):
-            data = view.render_unit(env, data[0], data[1],p)
-            if p:
-                print('tuple',data)
-
-        
+            data = view.render_unit(env, data[0], data[1])
 
         if template != '' and isinstance(data, dict):
             templ = env.get_template(template + "." + view.extension)
             content = templ.render(data)
-            if p:
-                print('render',content)
             return content
         else:
-            if p:
-                print('no-render',data,type(data))
             return data
 
     @staticmethod

@@ -76,6 +76,7 @@ class base_model:
                     del r
 
             if return_total == None:
+                print(deleted)
                 if not deleted and 'foto' in r:
                     if r['foto'] != '':
                         r['foto'] = json.loads(r['foto'])

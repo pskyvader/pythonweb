@@ -248,7 +248,6 @@ class functions():
             if int(node['idpadre'][0]) == idpadre:
                 tree['root'][id] = tree['children'][id]
             else:
-                print(tree)
                 tree['children'][node['idpadre'][0]]['children'][id] = tree['children'][id]
         return tree['root']
 

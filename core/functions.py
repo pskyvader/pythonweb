@@ -240,8 +240,7 @@ class functions():
     def crear_arbol(data: dict, idpadre=0):
         tree = {'children': {}, 'root': {}}
         for node in data:
-            id = node[0]
-            print(id)
+            id = int(node[0])
             # Puede que exista el children creado si los hijos entran antes que el padre
             node['children'] = tree['children'][id]['children'] if id in tree['children'] else {}
             tree['children'][id] = node

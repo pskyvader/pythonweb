@@ -10,8 +10,8 @@ class base_model:
     @classmethod
     def getAll(cls, where={}, condiciones={}, select=""):
         from .table import table as table_model
-        condiciones=condiciones.copy()
-        where=where.copy()
+        condiciones = condiciones.copy()
+        where = where.copy()
         limit = None
         idpadre = None
         return_total = None
@@ -64,6 +64,7 @@ class base_model:
                 select = ''
         row = connection.get(cls.table, cls.idname, where, condiciones, select)
         deleted = False
+        row_copy = []
         for r in row:
             deleted = False
             if 'idpadre' in r:
@@ -73,7 +74,6 @@ class base_model:
                     r['idpadre'] = []
                 if idpadre != None and idpadre not in r['idpadre']:
                     deleted = True
-                    del r
 
             if return_total == None:
                 if not deleted and 'foto' in r:
@@ -86,6 +86,11 @@ class base_model:
                         r['archivo'] = json.loads(r['archivo'])
                     else:
                         r['archivo'] = []
+
+            if not deleted:
+                row_copy.append(r)
+
+        row = row_copy
 
         if limit != None:
             if limit2 == 0:

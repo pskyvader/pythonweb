@@ -15,7 +15,7 @@ class seccion(base_model):
         idseccioncategoria = None
         return_total = None
         connection = database.instance()
-        fields     = table.getByname(cls.table)
+        fields = table.getByname(cls.table)
         if 'estado' not in where and app.front and 'estado' in fields:
             where['estado'] = True
 
@@ -64,20 +64,24 @@ class seccion(base_model):
 
         row = connection.get(cls.table, cls.idname, where, condiciones, select)
         deleted = False
-        for k, r in enumerate(row.copy()):
+        row_copy = []
+        for r in row:
             deleted = False
             if 'idseccioncategoria' in r:
                 r['idseccioncategoria'] = json.loads(r['idseccioncategoria'])
                 if idseccioncategoria != None and idseccioncategoria not in r['idseccioncategoria']:
                     deleted = True
-                    del row[k]
 
             if return_total == None:
-                if not deleted and 'foto' in r and r['foto']!='':
+                if not deleted and 'foto' in r and r['foto'] != '':
                     r['foto'] = json.loads(r['foto'])
 
-                if not deleted and 'archivo' in r and r['archivo']!='':
+                if not deleted and 'archivo' in r and r['archivo'] != '':
                     r['archivo'] = json.loads(r['archivo'])
+            if not deleted:
+                row_copy.append(r)
+
+        row = row_copy
 
         if limit != None:
             if limit2 == 0:
@@ -90,26 +94,24 @@ class seccion(base_model):
         else:
             return row
 
-
-
     @classmethod
     def getById(cls, id: int):
         where = {cls.idname: id}
         if app.front:
-            fields     = table.getByname(cls.table)
+            fields = table.getByname(cls.table)
             if 'estado' in fields:
                 where['estado'] = True
 
         connection = database.instance()
         row = connection.get(cls.table, cls.idname, where)
         if len(row) == 1:
-            row[0]['idseccioncategoria'] = json.loads(row[0]['idseccioncategoria'])
+            row[0]['idseccioncategoria'] = json.loads(
+                row[0]['idseccioncategoria'])
             if 'foto' in row[0]:
                 row[0]['foto'] = json.loads(row[0]['foto'])
             if 'archivo' in row[0]:
                 row[0]['archivo'] = json.loads(row[0]['archivo'])
         return row[0] if len(row) == 1 else row
-
 
     @classmethod
     def copy(cls, id: int, loggging=True):
@@ -125,8 +127,8 @@ class seccion(base_model):
 
         if 'archivo' in row:
             del row['archivo']
-        row['idseccioncategoria']=json.dumps(row['idseccioncategoria'])
-        fields     = table.getByname(cls.table)
+        row['idseccioncategoria'] = json.dumps(row['idseccioncategoria'])
+        fields = table.getByname(cls.table)
         insert = database.create_data(fields, row)
         connection = database.instance()
         row = connection.insert(cls.table, cls.idname, insert)

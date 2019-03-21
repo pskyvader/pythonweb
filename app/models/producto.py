@@ -19,7 +19,7 @@ class producto(base_model):
         idproductocategoria = None
         return_total = None
         connection = database.instance()
-        fields     = table.getByname(cls.table)
+        fields = table.getByname(cls.table)
         if 'estado' not in where and app.front and 'estado' in fields:
             where['estado'] = True
 
@@ -68,7 +68,7 @@ class producto(base_model):
 
         row = connection.get(cls.table, cls.idname, where, condiciones, select)
         deleted = False
-        row_copy=[]
+        row_copy = []
         for r in row:
             deleted = False
             if 'idproductocategoria' in r:
@@ -77,20 +77,20 @@ class producto(base_model):
                     deleted = True
 
             if return_total == None:
-                if not deleted and 'foto' in r and r['foto']!='':
+                if not deleted and 'foto' in r and r['foto'] != '':
                     r['foto'] = json.loads(r['foto'])
                 else:
-                    r['foto']=[]
+                    r['foto'] = []
 
-                if not deleted and 'archivo' in r and r['archivo']!='':
+                if not deleted and 'archivo' in r and r['archivo'] != '':
                     r['archivo'] = json.loads(r['archivo'])
                 else:
-                    r['archivo']=[]
+                    r['archivo'] = []
 
             if not deleted:
                 row_copy.append(r)
-                
-        row=row_copy
+
+        row = row_copy
 
         if limit != None:
             if limit2 == 0:
@@ -124,8 +124,10 @@ class producto(base_model):
                                             [0]]['descuento_fecha']
                     if descuento > 0 and descuento < 100:
                         fechas = fechas.split(' - ')
-                        fecha1= functions.formato_fecha(fechas[0], original_format="%d/%m/%Y %H:%M", as_string=False)
-                        fecha2= functions.formato_fecha(fechas[1], original_format="%d/%m/%Y %H:%M", as_string=False)
+                        fecha1 = functions.formato_fecha(
+                            fechas[0], original_format="%d/%m/%Y %H:%M", as_string=False)
+                        fecha2 = functions.formato_fecha(
+                            fechas[1], original_format="%d/%m/%Y %H:%M", as_string=False)
                         now = functions.current_time(as_string=False)
                         if fecha1 < now and now < fecha2:
                             precio_descuento = (
@@ -140,7 +142,7 @@ class producto(base_model):
     def getById(cls, id: int):
         where = {cls.idname: id}
         if app.front:
-            fields     = table.getByname(cls.table)
+            fields = table.getByname(cls.table)
             if 'estado' in fields:
                 where['estado'] = True
 
@@ -149,11 +151,11 @@ class producto(base_model):
         if len(row) == 1:
             row[0]['idproductocategoria'] = json.loads(
                 row[0]['idproductocategoria'])
-            if 'foto' in row[0] and row[0]['foto']!='':
+            if 'foto' in row[0] and row[0]['foto'] != '':
                 row[0]['foto'] = json.loads(row[0]['foto'])
             else:
                 row[0]['foto'] = []
-            if 'archivo' in row[0] and row[0]['archivo']!='':
+            if 'archivo' in row[0] and row[0]['archivo'] != '':
                 row[0]['archivo'] = json.loads(row[0]['archivo'])
             else:
                 row[0]['archivo'] = []
@@ -179,8 +181,10 @@ class producto(base_model):
 
                 if descuento > 0 and descuento < 100:
                     fechas = fechas.split(' - ')
-                    fecha1= functions.formato_fecha(fechas[0], original_format="%d/%m/%Y %H:%M", as_string=False)
-                    fecha2= functions.formato_fecha(fechas[1], original_format="%d/%m/%Y %H:%M", as_string=False)
+                    fecha1 = functions.formato_fecha(
+                        fechas[0], original_format="%d/%m/%Y %H:%M", as_string=False)
+                    fecha2 = functions.formato_fecha(
+                        fechas[1], original_format="%d/%m/%Y %H:%M", as_string=False)
                     now = functions.current_time(as_string=False)
                     if fecha1 < now and now < fecha2:
                         precio_descuento = (
@@ -204,7 +208,7 @@ class producto(base_model):
             row = connection.update(cls.table, cls.idname, set_query, where)
 
         if loggging:
-            log_register=set_query
+            log_register = set_query
             log_register.update(where)
             log.insert_log(cls.table, cls.idname, cls, log_register)
         if isinstance(row, bool) and row:
@@ -227,7 +231,7 @@ class producto(base_model):
             del row['archivo']
 
         row['idproductocategoria'] = json.dumps(row['idproductocategoria'])
-        fields     = table.getByname(cls.table)
+        fields = table.getByname(cls.table)
         insert = database.create_data(fields, row)
         connection = database.instance()
         row = connection.insert(cls.table, cls.idname, insert)

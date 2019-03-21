@@ -15,7 +15,7 @@ class texto(base_model):
         idpadre = None
         return_total = None
         connection = database.instance()
-        fields     = table.getByname(cls.table)
+        fields = table.getByname(cls.table)
         if 'estado' not in where and app.front and 'estado' in fields:
             where['estado'] = True
 
@@ -64,7 +64,7 @@ class texto(base_model):
 
         row = connection.get(cls.table, cls.idname, where, condiciones, select)
         deleted = False
-        row_copy=[]
+        row_copy = []
         for r in row:
             deleted = False
             if 'idpadre' in r:
@@ -73,17 +73,17 @@ class texto(base_model):
                     deleted = True
 
             if return_total == None:
-                if not deleted and 'foto' in r and r['foto']!='':
+                if not deleted and 'foto' in r and r['foto'] != '':
                     r['foto'] = json.loads(r['foto'])
-                if not deleted and 'archivo' in r and r['archivo']!='':
+                if not deleted and 'archivo' in r and r['archivo'] != '':
                     r['archivo'] = json.loads(r['archivo'])
-                if not deleted and 'mapa' in r and r['mapa']!='':
+                if not deleted and 'mapa' in r and r['mapa'] != '':
                     r['mapa'] = json.loads(r['mapa'])
 
             if not deleted:
                 row_copy.append(r)
-                
-        row=row_copy
+
+        row = row_copy
 
         if limit != None:
             if limit2 == 0:
@@ -100,7 +100,7 @@ class texto(base_model):
     def getById(cls, id: int):
         where = {cls.idname: id}
         if app.front:
-            fields     = table.getByname(cls.table)
+            fields = table.getByname(cls.table)
             if 'estado' in fields:
                 where['estado'] = True
 

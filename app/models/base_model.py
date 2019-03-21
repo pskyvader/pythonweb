@@ -80,7 +80,6 @@ class base_model:
                     if r['foto'] != '':
                         r['foto'] = json.loads(r['foto'])
                     else:
-                        print(r)
                         r['foto'] = []
                 if not deleted and 'archivo' in r:
                     if r['archivo'] != '':

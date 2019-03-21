@@ -454,7 +454,6 @@ class detalle:
                 for children in campos['parent'].values():
                     data['children'] += self.field(campos, fila, '', children[0], 1)
 
-                print(data)
             else:
                 parent = campos['parent']
                 checked = True if 0 == idparent else False
@@ -473,7 +472,7 @@ class detalle:
                     'checked': checked,
                     'required': campos['required'],
                     'level': (level - 1) * 20,
-                    'children': '',
+                    'children': [],
                 }
                 if idparent in parent:
                     campos['parent'] = parent[idparent]['children'].copy()

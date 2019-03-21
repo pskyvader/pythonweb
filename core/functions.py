@@ -244,8 +244,7 @@ class functions():
             # Puede que exista el children creado si los hijos entran antes que el padre
             node['children'] = tree['children'][id]['children'] if id in tree['children'] else {}
             tree['children'][id] = node
-            print(node['idpadre'][0],idpadre)
-            if node['idpadre'][0] == idpadre:
+            if int(node['idpadre'][0]) == idpadre:
                 tree['root'][id] = tree['children'][id]
             else:
                 if not node['idpadre'][0] in tree['children']:

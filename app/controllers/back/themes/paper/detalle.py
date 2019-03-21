@@ -464,6 +464,7 @@ class detalle:
                 else:
                     checked = True if idparent in fila[campos['field']] else False
 
+                print(parent)
                 data = {
                     'is_children': True,
                     'field': campos['field'],

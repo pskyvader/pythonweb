@@ -62,7 +62,7 @@ class view:
                     d = view.render_unit(env, '', d)
         elif isinstance(data, tuple):
             if data[0]=='detail/recursive_checkbox':
-                print(data,data[0],data[1])
+                print(data[0],data[1])
                 data = view.render_unit(env, data[0], data[1])
                 print(data,type(data))
             else:

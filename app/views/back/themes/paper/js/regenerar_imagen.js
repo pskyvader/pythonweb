@@ -1,9 +1,11 @@
 $('body').on('click', 'button.regenerar', preparar_regenerar);
 
+regenerar_completado=false
 
 function preparar_regenerar() {
     var total = parseInt($('#count_elementos').text());
     if (total == 0) {
+        regenerar_completado=true
         notificacion('Oh no!', 'No existen imagenes para regenerar', 'warning');
         barra(100);
         return false;
@@ -11,7 +13,9 @@ function preparar_regenerar() {
     barra(10);
     var url = create_url(modulo, 'get_all');
     setTimeout(function() {
-        notificacion('Advertencia', 'La regeneracion puede tomar un tiempo <br/> <b>por favor no cierres esta ventana<b/>', 'warning');
+        if(!regenerar_completado){
+            notificacion('Advertencia', 'La regeneracion puede tomar un tiempo <br/> <b>por favor no cierres esta ventana<b/>', 'warning');
+        }
     }, 3000);
     post_basic(url, {}, 'Recuperando lista de imagenes', function(data) {
         var error = false;
@@ -28,6 +32,7 @@ function preparar_regenerar() {
         });
 
         if (error) {
+            regenerar_completado=true
             notificacion('Oh no!', 'No existen imagenes para regenerar', 'warning');
             barra(100);
             return false;
@@ -57,6 +62,7 @@ function regenerar_imagenes(secciones, total) {
                             regenerar_imagenes(secciones, total);
                         }
                     } else {
+                        regenerar_completado=true
                         notificacion('Oh no!', 'Ha ocurrido un error al regenerar la imagen, intenta mas tarde' + '<br/>' + data.mensaje, 'error');
                         barra(100);
                     }
@@ -68,6 +74,7 @@ function regenerar_imagenes(secciones, total) {
         if (ready) return false;
     });
     if (count == total) {
+        regenerar_completado=true
         notificacion('Confirmacion', 'Regeneracion de imagenes completada', 'success');
         barra(100);
     }

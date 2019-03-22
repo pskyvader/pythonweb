@@ -1,7 +1,9 @@
 
 websocket=null
 function log_socket(){
-    websocket = new WebSocket("ws://" + path + ":5678/");
+    ws=path.replace("https", "ws");
+    ws=ws.replace("http", "ws");
+    websocket = new WebSocket(path + ":5678/");
     console.log(websocket);
     websocket.onmessage = function(event) {
         data=event.data

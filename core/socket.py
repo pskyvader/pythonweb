@@ -32,6 +32,11 @@ class socket:
             message = await self.producer_function
             await websocket.send(message)
 
+    async def send(self):
+        while True:
+            if self.message!='':
+                return self.message
+
     async def handler(self, websocket, path):
         # Register.
         self.USERS.add(websocket)

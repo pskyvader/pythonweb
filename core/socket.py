@@ -19,11 +19,9 @@ class socket:
 
     async def register(self,websocket):
         self.USERS.add(websocket)
-        await self.notify_users()
 
     async def unregister(self,websocket):
         self.USERS.remove(websocket)
-        await self.notify_users()
 
     
 

@@ -56,4 +56,5 @@ class socket:
     @staticmethod
     def send(data):
         instance=socket.init()
-        instance.notify(data)
+        try:
+            await instance.notify(data)

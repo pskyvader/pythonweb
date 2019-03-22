@@ -10,7 +10,7 @@ class websocket:
         if len(var)==0:
             var=[5678]
         import socket
-        socket.getaddrinfo('localhost', 8080)
+        socket.getaddrinfo('localhost', var[0])
 
         loop = asyncio.get_event_loop()
         loop.run_until_complete(websockets.serve(self.handler, app.get_url(True)+'localhost/websocket/', var[0]))

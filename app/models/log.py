@@ -35,6 +35,7 @@ class log(base_model):
 
         row = connection.get(cls.table, cls.idname, where, condiciones, select)
         for v in row:
+            print(v)
             v['fecha']=v[4]=v['fecha'].strftime("%Y-%m-%d %H:%M:%S")
         print(row)
         if return_total != None:

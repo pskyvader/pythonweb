@@ -381,7 +381,10 @@ class base:
         excel_data=lista_class.excel(cls.class_name, where, select, cls.metadata['title'])
         exportar=''
         for e in excel_data['exportar']:
-            exportar+=json.dumps(e, ensure_ascii=False)
+            try:
+                exportar+=json.dumps(e, ensure_ascii=False)
+            except Exception as ex:
+                print(e,ex)
         
         respuesta['body'] = json.dumps(excel_data, ensure_ascii=False)
         return respuesta

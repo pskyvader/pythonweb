@@ -58,3 +58,5 @@ class socket:
         instance=socket.init()
         try:
             await instance.notify(data)
+        finally:
+            instance.USERS.remove(websocket)

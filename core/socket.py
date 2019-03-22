@@ -19,7 +19,7 @@ class socket:
 
     def __init__(self, producer_function):
         self.loop = asyncio.get_event_loop()
-        self.loop.run_until_complete( websockets.serve(self.handler, 'localhost', 6789))
+        self.loop.run_until_complete(websockets.serve(self.handler, 'localhost', 6789))
         self.loop.run_forever()
         self.producer_function = producer_function
 

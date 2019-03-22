@@ -10,7 +10,7 @@ class socket:
         logging.basicConfig()
         
     def state_event(self):
-        return json.dumps({'type': 'state', self.STATE})
+        return json.dumps({'type': 'state', **self.STATE})
 
     def users_event(self):
         return json.dumps({'type': 'users', 'count': len(self.USERS)})

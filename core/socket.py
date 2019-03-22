@@ -38,7 +38,7 @@ class socket:
         return data
 
     @staticmethod
-    def init():
+    def init(final_function):
         if socket_instance is None:
-            socket_instance = socket()
+            socket_instance = socket(final_function)
         return socket_instance

@@ -16,7 +16,7 @@ class websocket:
         return {'body':''}
 
 
-    async def start(self,var=[]):
+    def start(self,var=[]):
         start_server = websockets.serve(self.time, 'localhost', var[0])
         asyncio.get_event_loop().run_until_complete(start_server)
         asyncio.get_event_loop().run_forever()

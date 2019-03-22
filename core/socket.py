@@ -14,9 +14,12 @@ class socket:
     USERS = set()
     message=None
     socket_instance = None
+    loop=None
 
     async def __init__(self):
         self.loop = asyncio.get_event_loop()
+        self.loop.run_until_complete(websockets.serve(self.handler, 'localhost', 6789))
+        self.loop.run_forever()
 
     async def notify(self, message):
         if self.USERS:       # asyncio.wait doesn't accept an empty list

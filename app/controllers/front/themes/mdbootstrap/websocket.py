@@ -9,10 +9,9 @@ class websocket:
     
 
     def init(self, var=[]):
-        proc = Process()              # Start a worker processes.
+        proc = Process(self.start)              # Start a worker processes.
         if len(var)==0:
             var=[5678]
-        proc.append(self.start, var) # Evaluate "f(10)" asynchronously calling callback when finished.
         proc.start()
         return {'body':''}
 

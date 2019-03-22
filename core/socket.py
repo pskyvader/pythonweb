@@ -5,11 +5,10 @@ import websockets
 
 
 def init():
-    if socket.socket_instance== None:
-        socket.socket_instance \
-        = socket()
+    #if socket.socket_instance== None:
+    #    socket.socket_instance = socket()
     
-    return socket.socket_instance
+    return socket()
 
 class socket:
     USERS = set()

@@ -39,7 +39,6 @@ class log(base_model):
         else:
             for v in row:
                 v['fecha']=v[4]=v['fecha'].strftime("%Y-%m-%d %H:%M:%S")
-            print(row)
             return row
 
     @classmethod

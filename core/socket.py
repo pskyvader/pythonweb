@@ -8,14 +8,15 @@ class socket:
     USERS = set()
     def __init__(self):
         logging.basicConfig()
+        
     def state_event(self):
         return json.dumps({'type': 'state', self.STATE})
 
     def users_event(self):
-        return json.dumps({'type': 'users', 'count': len(USERS)})
+        return json.dumps({'type': 'users', 'count': len(self.USERS)})
 
     async def notify_state(self):
-        if USERS:       # asyncio.wait doesn't accept an empty list
+        if self.USERS:       # asyncio.wait doesn't accept an empty list
             message = state_event()
             await asyncio.wait([user.send(message) for user in USERS])
 

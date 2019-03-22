@@ -2,6 +2,7 @@ import asyncio
 import websockets
 
 class socket:
+    
     async def hello(websocket, path):
         name = await websocket.recv()
         print(f"< {name}")

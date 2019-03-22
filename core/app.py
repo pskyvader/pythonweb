@@ -108,7 +108,7 @@ class app:
                 # returns {'body':[],'headers':str} or {'error':int,...'redirect':str}
                 response = current_module.init(url)
                 if type(response)=='coroutine':
-                    return response
+                    response={'body':''}
             else:
                 response = {'error': 404}
 

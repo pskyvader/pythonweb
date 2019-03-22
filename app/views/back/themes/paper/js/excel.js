@@ -43,7 +43,16 @@ function procesar_excel(url, page, limit, total_excel) {
     if (progress < 10) progress = 10;
     barra(progress);
     post_basic(url, info, mensaje, function(data) {
-        var data = JSON.parse(data);
+        if (typeof(data) != 'object') {
+            try {
+                data = JSON.parse(data);
+            } catch (e) {
+                data = {
+                    mensaje: data,
+                    exito: false
+                };
+            }
+        }
         if (!fin) {
             procesar_excel(url, page + 1, limit, total_excel);
             add_ws(data);

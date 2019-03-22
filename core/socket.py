@@ -9,7 +9,7 @@ def init():
         socket.socket_instance = socket()
         socket.loop = asyncio.get_event_loop()
         socket.loop.run_until_complete(websockets.serve(socket.handler, 'localhost', 6789))
-        socket.loop.run_forever()
+        #socket.loop.run_forever()
 
     return socket.socket_instance
 

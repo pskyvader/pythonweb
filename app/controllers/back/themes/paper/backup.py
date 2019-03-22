@@ -369,7 +369,7 @@ class backup(base):
                 file_write = open(self.archivo_log, 'w+')
                 file_write.write(json.dumps(log_file,ensure_ascii=False))
                 file_write.close()
-                socket.message=json.dumps(log_file,ensure_ascii=False)
+                socket.socket.message=json.dumps(log_file,ensure_ascii=False)
             respuesta = self.bdd(False, respuesta['archivo_backup'])
 
         if respuesta['exito']:
@@ -379,11 +379,11 @@ class backup(base):
                 file_write = open(self.archivo_log, 'w+')
                 file_write.write(json.dumps(log_file,ensure_ascii=False))
                 file_write.close()
-                socket.message=json.dumps(log_file,ensure_ascii=False)
+                socket.socket.message=json.dumps(log_file,ensure_ascii=False)
 
         if logging:
             ret['body'] = json.dumps(respuesta,ensure_ascii=False)
-            socket.message=json.dumps(respuesta,ensure_ascii=False)
+            socket.socket.message=json.dumps(respuesta,ensure_ascii=False)
 
         return ret
 

@@ -1,4 +1,5 @@
 function inicio_list() {
+    inicio_sitemap();
     // Sortable rows
     var table = $('.sorted_table').sortable_jquery({
         containerSelector: 'table',

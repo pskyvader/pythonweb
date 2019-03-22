@@ -107,7 +107,7 @@ class app:
                 del url[0]
                 # returns {'body':[],'headers':str} or {'error':int,...'redirect':str}
                 response = current_module.init(url)
-                print(str(type(response)))
+                print(str(type(response)),str(type(response))=="<class 'coroutine'>")
                 if str(type(response))=="<class 'coroutine'>":
                     response={'body':''}
             else:

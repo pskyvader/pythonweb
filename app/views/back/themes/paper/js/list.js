@@ -46,7 +46,7 @@ $('body').on('change', 'select[name=limit]', function() {
 });
 $('body').on('submit', 'form.search', function() {
     var data = createObjFromURI();
-    if ($(this).val() != '') {
+    if ($('input[name=search]', $(this)).val() != '') {
         data.search = $('input[name=search]', $(this)).val();
     }else{
         delete(data.search)

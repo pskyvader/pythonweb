@@ -1,7 +1,7 @@
 from core.app import app
 import asyncio
 import websockets
-from multiprocessing import Pool
+from multiprocessing import Process
 
 class websocket:
     USERS = set()

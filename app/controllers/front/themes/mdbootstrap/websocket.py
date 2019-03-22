@@ -13,6 +13,7 @@ class websocket:
         if len(var)==0:
             var=[5678]
         pool.apply_async(self.start, var) # Evaluate "f(10)" asynchronously calling callback when finished.
+        return {'body':''}
 
 
     def start(self,var=[]):

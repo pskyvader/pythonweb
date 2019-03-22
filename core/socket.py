@@ -47,8 +47,7 @@ class socket:
                     self.STATE['value'] += 1
                     await self.notify_state()
                 else:
-                    logging.error(
-                        "unsupported event: {}", data)
+                    logging.error( "unsupported event: {}", data)
         finally:
             await self.unregister(websocket)
 

@@ -31,7 +31,7 @@ class socket:
     async def producer_handler(self, websocket, path):
         while True:
             message = await self.send
-            await websocket.send(message)
+            await self.notify(message)
 
     async def send(self):
         while True:

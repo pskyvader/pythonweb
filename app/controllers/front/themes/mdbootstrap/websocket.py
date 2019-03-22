@@ -10,8 +10,7 @@ class websocket:
         if len(var)==0:
             var=[5678]
         loop = asyncio.get_event_loop()
-        print(app.get_url(True)+'websocket/',var)
-        loop.run_until_complete(websockets.serve(self.handler, app.get_url(True)+'websocket/', var[0]))
+        loop.run_until_complete(websockets.serve(self.handler, app.get_url(True)+'localhost/websocket/', var[0]))
         loop.run_forever()
 
 

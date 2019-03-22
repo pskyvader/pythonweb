@@ -6,7 +6,7 @@ class websocket:
     USERS = set()
     message=None
 
-    async def init(self, var=[]):
+    def init(self, var=[]):
         if len(var)==0:
             var=[5678]
 

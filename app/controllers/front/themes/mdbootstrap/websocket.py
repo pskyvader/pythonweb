@@ -9,7 +9,7 @@ class websocket:
     
 
     def init(self, var=[]):
-        proc = Process(self.start)              # Start a worker processes.
+        proc = Process(target=self.start)              # Start a worker processes.
         if len(var)==0:
             var=[5678]
         proc.start()

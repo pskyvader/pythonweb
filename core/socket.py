@@ -9,7 +9,7 @@ def init():
         socket.socket_instance = socket()
         socket.loop = asyncio.get_event_loop()
         socket.loop.run_until_complete(websockets.serve(socket.handler, 'localhost', 6789))
-        #socket.loop.run_forever()
+        socket.loop.run_forever()
 
     return socket.socket_instance
 
@@ -32,12 +32,9 @@ class socket:
 
 
     async def handler(self, websocket, path):
-        print('inicio')
         # Register.
         self.USERS.add(websocket)
         producer_task = asyncio.ensure_future( self.producer_handler(websocket, path))
         done, pending = await asyncio.wait([producer_task], return_when=asyncio.FIRST_COMPLETED)
         for task in pending:
             task.cancel()
-        
-        print('fin')

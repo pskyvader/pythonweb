@@ -36,7 +36,9 @@ class socket:
     async def send(self):
         while True:
             if self.message!=None:
-                return self.message
+                message=self.message
+                self.message=None
+                return message
 
     async def handler(self, websocket, path):
         # Register.

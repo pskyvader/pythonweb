@@ -334,8 +334,7 @@ class backup(base):
     def generar_backup(self, logging=True):
         '''genera respaldo del sitio en zip, en formato "Respaldo rapido" (usa mas recursos)'''
         socket=core_socket.init()
-        ret = {'headers': [
-            ('Content-Type', 'application/json; charset=utf-8')], 'body': ''}
+        ret = {'headers': [ ('Content-Type', 'application/json; charset=utf-8')], 'body': ''}
         c = configuracion_administrador()
         c.json(False)
         respuesta = {'exito': True, 'mensaje': ''}
@@ -365,11 +364,11 @@ class backup(base):
 
         if respuesta['exito']:
             if logging:
-                log_file = {
-                    'mensaje': 'Respaldando Base de datos ', 'porcentaje': 90}
+                log_file = { 'mensaje': 'Respaldando Base de datos ', 'porcentaje': 90}
                 file_write = open(self.archivo_log, 'w+')
                 file_write.write(json.dumps(log_file,ensure_ascii=False))
                 file_write.close()
+                socket.message=json.dumps(log_file,ensure_ascii=False)
             respuesta = self.bdd(False, respuesta['archivo_backup'])
 
         if respuesta['exito']:

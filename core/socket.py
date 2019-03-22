@@ -4,13 +4,10 @@ import logging
 import websockets
 
 class socket:
-
-    logging.basicConfig()
-
     STATE = {'value': 0}
-
     USERS = set()
-
+    def __init__(self):
+        logging.basicConfig()
     def state_event(self):
         return json.dumps({'type': 'state', self.STATE})
 

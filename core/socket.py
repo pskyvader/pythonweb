@@ -4,9 +4,9 @@ import logging
 import websockets
 
 
-def init(final_function):
+def init():
     if socket_instance is None:
-        socket_instance = socket(final_function)
+        socket_instance = socket()
     return socket_instance
 
 
@@ -15,14 +15,12 @@ socket_instance = None
 
 class socket:
     USERS = set()
-    producer_function = None
     message=None
 
-    def __init__(self, producer_function):
+    def __init__(self):
         self.loop = asyncio.get_event_loop()
         self.loop.run_until_complete(websockets.serve(self.handler, 'localhost', 6789))
         self.loop.run_forever()
-        self.producer_function = producer_function
 
     async def notify(self, message):
         if self.USERS:       # asyncio.wait doesn't accept an empty list

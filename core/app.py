@@ -107,6 +107,8 @@ class app:
                 del url[0]
                 # returns {'body':[],'headers':str} or {'error':int,...'redirect':str}
                 response = current_module.init(url)
+                if type(response)=='coroutine':
+                    return response
             else:
                 response = {'error': 404}
 
@@ -114,7 +116,7 @@ class app:
             response['headers'] = [
                 ('Content-Type', 'text/html; charset=utf-8')
             ]
-
+        
         if 'error' in response:
             if response['error'] == 301:
                 if config['debug']:

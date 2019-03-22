@@ -49,7 +49,7 @@ $('body').on('submit', 'form.search', function() {
     if ($(this).val() != '') {
         data.search = $('input[name=search]', $(this)).val();
     }else{
-        remove(data.search)
+        delete(data.search)
     }
     data.page = 1;
     var url = create_url(null, null, data);

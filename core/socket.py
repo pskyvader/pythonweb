@@ -5,17 +5,14 @@ import websockets
 
 
 def init():
-    if socket_instance is None:
-        socket_instance = socket()
-    return socket_instance
-
-
-socket_instance = None
-
+    if socket.socket_instance is None:
+        socket.socket_instance = socket()
+    return socket.socket_instance
 
 class socket:
     USERS = set()
     message=None
+    socket_instance = None
 
     def __init__(self):
         self.loop = asyncio.get_event_loop()

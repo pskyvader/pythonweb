@@ -9,10 +9,10 @@ class websocket:
     
 
     def init(self, var=[]):
-        pool = Pool(processes=1)              # Start a worker processes.
+        pool = Process()              # Start a worker processes.
         if len(var)==0:
             var=[5678]
-        pool.apply_async(self.start, var) # Evaluate "f(10)" asynchronously calling callback when finished.
+        pool.append(self.start, var) # Evaluate "f(10)" asynchronously calling callback when finished.
         return {'body':''}
 
 

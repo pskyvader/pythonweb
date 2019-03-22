@@ -6,6 +6,8 @@ class websocket:
     USERS = set()
 
     def init(self, var=[]):
+        if len(var)==0:
+            var[0]=5678
         loop = asyncio.get_event_loop()
         loop.run_until_complete(websockets.serve(self.handler, app.get_url(True)+'websocket/', var[0]))
         loop.run_forever()

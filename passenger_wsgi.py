@@ -74,4 +74,4 @@ session_opts = {
 
 app2 = LoggingMiddleware(application2)
 application = SessionMiddleware(app2, session_opts)
-print(__name__)
+print(__name__,__init__)

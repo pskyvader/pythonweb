@@ -15,7 +15,7 @@ from core.app import app
 from core.database import database
 from core.functions import functions
 
-from core import socket as core_socket
+from core.socket import socket as core_socket
 
 from pathlib import Path
 import os

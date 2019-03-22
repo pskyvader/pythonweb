@@ -4,9 +4,9 @@ import logging
 import websockets
 
 class socket:
+    instance=None
     USERS = set()
     def __init__(self):
-        logging.basicConfig()
         
 
     async def notify_state(self,message):
@@ -24,7 +24,6 @@ class socket:
         # register(websocket) sends user_event() to websocket
         await self.register(websocket)
         try:
-            await websocket.send(self.state_event())
             async for message in websocket:
                 data = json.loads(message)
                 await self.notify_state(message)

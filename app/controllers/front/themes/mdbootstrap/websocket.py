@@ -5,7 +5,8 @@ import websockets
 class websocket:
     USERS = set()
     message=None
-
+    
+    
     def init(self, var=[]):
         if len(var)==0:
             var=[5678]

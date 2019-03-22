@@ -15,12 +15,11 @@ from core.app import app
 from core.database import database
 from core.functions import functions
 
-from core import socket 
+from core import socket as core_socket
 
 from pathlib import Path
 import os
 import json
-import socket
 
 
 class backup(base):

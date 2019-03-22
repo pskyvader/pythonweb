@@ -333,6 +333,7 @@ class backup(base):
 
     def generar_backup(self, logging=True):
         '''genera respaldo del sitio en zip, en formato "Respaldo rapido" (usa mas recursos)'''
+        socket=core_socket.init()
         ret = {'headers': [
             ('Content-Type', 'application/json; charset=utf-8')], 'body': ''}
         c = configuracion_administrador()

@@ -35,7 +35,7 @@ class socket:
 
     async def send(self):
         while True:
-            if self.message!='':
+            if self.message!=None:
                 return self.message
 
     async def handler(self, websocket, path):

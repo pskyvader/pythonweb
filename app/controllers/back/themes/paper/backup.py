@@ -20,6 +20,7 @@ from core import socket
 from pathlib import Path
 import os
 import json
+import socket
 
 
 class backup(base):

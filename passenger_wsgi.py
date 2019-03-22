@@ -74,5 +74,3 @@ session_opts = {
 
 app2 = LoggingMiddleware(application2)
 application = SessionMiddleware(app2, session_opts)
-if __name__ == "__main__":
-    

@@ -4,6 +4,11 @@ import logging
 import websockets
 
 
+def init(final_function):
+    if socket_instance is None:
+        socket_instance = socket(final_function)
+    return socket_instance
+
 socket_instance = None
 
 
@@ -37,8 +42,4 @@ class socket:
     def send(self, data):
         return data
 
-    @staticmethod
-    def init(final_function):
-        if socket_instance is None:
-            socket_instance = socket(final_function)
-        return socket_instance
+    

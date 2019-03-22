@@ -42,13 +42,6 @@ class log(base_model):
     @classmethod
     def insert(cls, set_query: dict,  loggging=True):
         fields     = table.getByname(cls.table)
-        fields = {
-            'administrador' : {'titulo': 'administrador', 'tipo' : 'char(255)'},
-            'tabla'    : {'titulo': 'tabla', 'tipo' : 'char(255)'},
-            'accion'    : {'titulo': 'accion', 'tipo' : 'char(255)'},
-            'fecha'  : {'titulo': 'fecha', 'tipo' : 'datetime'},
-        }
-
         insert = database.create_data(fields, set_query)
         connection = database.instance()
         row = connection.insert(cls.table, cls.idname, insert, cls.delete_cache)

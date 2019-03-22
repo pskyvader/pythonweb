@@ -74,6 +74,7 @@ function generar_backup_rapido(e) {
     tiempo_guardar = 0;
     var accion = 'generar_backup';
     barra(5);
+    log_socket();
     post_basic(create_url(modulo, accion), {}, 'Recuperando lista de archivos', fin_backup);
     leer_log(false);
     setTimeout(function() {
@@ -92,7 +93,6 @@ function generar_backup(e) {
     var accion = 'generar';
     barra(5);
     post_basic(create_url(modulo, accion), {}, 'Recuperando lista de archivos', lista_backup);
-    log_socket();
     leer_log(false);
     setTimeout(function() {
         if (!respaldo_finalizado) {

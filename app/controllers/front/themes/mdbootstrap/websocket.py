@@ -6,14 +6,14 @@ class websocket:
     USERS = set()
     message=None
     
-    
-    def init(self, var=[]):
+
+    async def init(self, var=[]):
         if len(var)==0:
             var=[5678]
 
-        loop = asyncio.get_event_loop()
-        loop.run_until_complete(websockets.serve(self.time,'localhost', var[0]))
-        loop.run_forever()
+        start_server = websockets.serve(self.time, 'localhost', var[0])
+        asyncio.get_event_loop().run_until_complete(start_server)
+        asyncio.get_event_loop().run_forever()
 
 
     async def time(self,websocket, path):

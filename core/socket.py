@@ -13,7 +13,7 @@ class socket:
     socket_instance = None
     loop=None
 
-    async def init():
+    def init():
         socket.loop = asyncio.get_event_loop()
         socket.loop.run_until_complete(websockets.serve(socket.handler, 'localhost', 6789))
         socket.loop.run_forever()

@@ -38,17 +38,14 @@ class socket:
 
     async def start(self,websocket, path):
         # register(websocket) sends user_event() to websocket
-        await self.register(websocket)
+        self.USERS.add(websocket)
         try:
             async for message in websocket:
                 data = json.loads(message)
                 await self.notify(message)
         finally:
-            await self.unregister(websocket)
+            self.USERS.remove(websocket)
 
-
-        producer_task = asyncio.ensure_future( self.producer_handler(websocket, path))
-        done, pending = await asyncio.wait( [producer_task], return_when=asyncio.FIRST_COMPLETED)
     
     @staticmethod
     def init():
@@ -60,10 +57,3 @@ class socket:
     def send(data):
         instance=socket.init()
         instance.notify(data)
-
-
-    @staticmethod
-    def stop():
-
-
-    

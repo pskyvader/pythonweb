@@ -4,7 +4,7 @@ import logging
 import websockets
 
 
-def init():
+async def init():
     if socket.socket_instance== None:
         socket.socket_instance = socket()
         socket.loop = asyncio.get_event_loop()

@@ -16,6 +16,7 @@ socket_instance = None
 class socket:
     USERS = set()
     producer_function = None
+    message=None
 
     def __init__(self, producer_function):
         self.loop = asyncio.get_event_loop()
@@ -29,7 +30,7 @@ class socket:
 
     async def producer_handler(self, websocket, path):
         while True:
-            message = await self.producer_function
+            message = await self.send
             await websocket.send(message)
 
     async def send(self):

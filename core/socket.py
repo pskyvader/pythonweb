@@ -7,7 +7,9 @@ class socket:
     instance=None
     USERS = set()
     def __init__(self):
-        
+        self.loop=asyncio.get_event_loop()
+        self.loop.run_until_complete(websockets.serve(self.counter, 'localhost', 6789))
+        self.loop.run_forever()
 
     async def notify_state(self,message):
         if self.USERS:       # asyncio.wait doesn't accept an empty list
@@ -29,7 +31,6 @@ class socket:
                 await self.notify_state(message)
         finally:
             await self.unregister(websocket)
+    
 
-    loop=asyncio.get_event_loop()
-    loop.run_until_complete(websockets.serve(counter, 'localhost', 6789))
-    loop.run_forever()
+    

@@ -41,7 +41,6 @@ class socket:
         self.USERS.add(websocket)
         try:
             async for message in websocket:
-                data = json.loads(message)
                 await self.notify(message)
         finally:
             self.USERS.remove(websocket)

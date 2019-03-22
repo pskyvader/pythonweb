@@ -48,6 +48,8 @@ $('body').on('submit', 'form.search', function() {
     var data = createObjFromURI();
     if ($(this).val() != '') {
         data.search = $('input[name=search]', $(this)).val();
+    }else{
+        remove(data.search)
     }
     data.page = 1;
     var url = create_url(null, null, data);

@@ -7,7 +7,10 @@ import websockets
 def init():
     if socket.socket_instance== None:
         socket.socket_instance = socket()
-    
+        socket.loop = asyncio.get_event_loop()
+        socket.loop.run_until_complete(websockets.serve(self.handler, 'localhost', 6789))
+        socket.loop.run_forever()
+
     return socket.socket_instance
 
 class socket:
@@ -15,9 +18,6 @@ class socket:
     message=None
     socket_instance = None
     loop=None
-
-    async def __init__(self):
-        self.loop = asyncio.get_event_loop()
 
     async def notify(self, message):
         if self.USERS:       # asyncio.wait doesn't accept an empty list

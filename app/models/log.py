@@ -34,13 +34,12 @@ class log(base_model):
             return_total = True
 
         row = connection.get(cls.table, cls.idname, where, condiciones, select)
-        for v in row:
-            print(v)
-            v['fecha']=v[4]=v['fecha'].strftime("%Y-%m-%d %H:%M:%S")
-        print(row)
         if return_total != None:
             return len(row)
         else:
+            for v in row:
+                v['fecha']=v[4]=v['fecha'].strftime("%Y-%m-%d %H:%M:%S")
+            print(row)
             return row
 
     @classmethod

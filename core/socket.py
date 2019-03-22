@@ -6,15 +6,10 @@ import websockets
 
 def init():
     if socket.socket_instance== None:
-        print(1)
         socket.socket_instance = socket()
-        print(2)
         socket.loop = asyncio.get_event_loop()
-        print(3)
         socket.loop.run_until_complete(websockets.serve(socket.handler, 'localhost', 6789))
-        print(4)
         socket.loop.run_forever()
-        print(5)
 
     return socket.socket_instance
 

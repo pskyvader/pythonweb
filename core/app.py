@@ -181,7 +181,7 @@ class app:
                     url[0] = 'manifest'
                 elif url[0] == 'sw.js':
                     url[0] = 'sw'
-                elif url[0] == 'log.json' or url[0] == 'icon.txt':
+                elif url[0] == 'log.json' or url[0] == 'icon.txt' or url[0] == 'sitemap.xml':
                     url = ['static_file']+url
                 elif url[0] == 'favicon.ico':
                     url[0] = 'favicon'
@@ -190,7 +190,7 @@ class app:
                         url[1] = 'manifest'
                     elif url[1] == 'sw.js':
                         url[1] = 'sw'
-                    elif url[1] == 'log.json' or url[1] == 'icon.txt':
+                    elif url[1] == 'log.json' or url[1] == 'icon.txt' or url[1] == 'sitemap.xml':
                         url_tmp = [url[0]]
                         del url[0]
                         url = url_tmp+['static_file']+url

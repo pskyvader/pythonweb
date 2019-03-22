@@ -5,8 +5,9 @@ import websockets
 
 
 def init():
-    if socket.socket_instance is None:
+    if socket.socket_instance== None:
         socket.socket_instance = socket()
+    
     return socket.socket_instance
 
 class socket:

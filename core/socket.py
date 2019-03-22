@@ -9,18 +9,19 @@ def init(final_function):
         socket_instance = socket(final_function)
     return socket_instance
 
+
 socket_instance = None
 
 
 class socket:
     USERS = set()
-    producer_function=None
+    producer_function = None
 
-    def __init__(self,producer_function):
+    def __init__(self, producer_function):
         self.loop = asyncio.get_event_loop()
         self.loop.run_until_complete( websockets.serve(self.handler, 'localhost', 6789))
         self.loop.run_forever()
-        self.producer_function=producer_function
+        self.producer_function = producer_function
 
     async def notify(self, message):
         if self.USERS:       # asyncio.wait doesn't accept an empty list
@@ -34,12 +35,8 @@ class socket:
     async def handler(self, websocket, path):
         # Register.
         self.USERS.add(websocket)
-        producer_task = asyncio.ensure_future( self.producer_handler(websocket, path))
+        producer_task = asyncio.ensure_future(
+            self.producer_handler(websocket, path))
         done, pending = await asyncio.wait([producer_task], return_when=asyncio.FIRST_COMPLETED)
         for task in pending:
             task.cancel()
-
-    def send(self, data):
-        return data
-
-    

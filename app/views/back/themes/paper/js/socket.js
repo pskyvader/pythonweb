@@ -12,5 +12,6 @@ function log_socket(){
     };
 }
 function close_socket(){
+    websocket.close_socket()
     websocket=null
 }

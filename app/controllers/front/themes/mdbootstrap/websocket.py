@@ -1,3 +1,4 @@
+from core.app import app
 import asyncio
 import websockets
 
@@ -6,7 +7,7 @@ class websocket:
 
     def init(self, var=[]):
         loop = asyncio.get_event_loop()
-        loop.run_until_complete(websockets.serve(self.handler, 'http://example.com/admin/', 5678))
+        loop.run_until_complete(websockets.serve(self.handler, app.get_url(True), 5678))
         loop.run_forever()
 
 

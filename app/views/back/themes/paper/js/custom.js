@@ -53,6 +53,8 @@ function inicio() {
     if (update_content.length > 0) {
         setTimeout(get_update, 1000);
     }
+    
+    log_socket();
 }
 
 var day = moment($('#time').data('time'), 'YYYY-MM-DD HH:mm:ss');

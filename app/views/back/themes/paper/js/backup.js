@@ -65,7 +65,6 @@ function restaurar_elemento() {
     }, 3000);
 }
 
-log_socket();
 
 function generar_backup_rapido(e) {
     habilitar(false);

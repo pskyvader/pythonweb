@@ -14,7 +14,7 @@ class socket:
     message=None
     socket_instance = None
 
-    def __init__(self):
+    async def __init__(self):
         self.loop = asyncio.get_event_loop()
         self.loop.run_until_complete(websockets.serve(self.handler, 'localhost', 6789))
         self.loop.run_forever()

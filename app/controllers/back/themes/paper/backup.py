@@ -359,8 +359,7 @@ class backup(base):
             if total > 0:
                 respuesta['exito'] = True
                 while len(respuesta['lista']) > 0 and respuesta['exito']:
-                    respuesta = self.zipData(
-                        self.base_dir, respuesta['archivo_backup'], respuesta['lista'], total, logging)
+                    respuesta = self.zipData( self.base_dir, respuesta['archivo_backup'], respuesta['lista'], total, logging)
 
         if respuesta['exito']:
             if logging:
@@ -378,9 +377,11 @@ class backup(base):
                 file_write = open(self.archivo_log, 'w+')
                 file_write.write(json.dumps(log_file,ensure_ascii=False))
                 file_write.close()
+                socket.message=json.dumps(log_file,ensure_ascii=False)
 
         if logging:
             ret['body'] = json.dumps(respuesta,ensure_ascii=False)
+            socket.message=json.dumps(respuesta,ensure_ascii=False)
 
         return ret
 

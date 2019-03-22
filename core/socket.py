@@ -17,11 +17,6 @@ class socket:
         if self.USERS:       # asyncio.wait doesn't accept an empty list
             await asyncio.wait([user.send(message) for user in self.USERS])
 
-    async def register(self,websocket):
-        self.USERS.add(websocket)
-
-    async def unregister(self,websocket):
-        self.USERS.remove(websocket)
 
 
     async def handler(self,websocket, path):
@@ -29,11 +24,17 @@ class socket:
         self.USERS.add(websocket)
         try:
             # Implement logic here.
-            await asyncio.wait([ws.send("Hello!") for ws in self.USERS])
+            await asyncio.wait([user.send("Hello!") for user in self.USERS])
             await asyncio.sleep(10)
         finally:
             # Unregister.
             self.USERS.remove(websocket)
+
+
+    async def producer_handler(self,websocket, path):
+        while True:
+            message = await producer()
+            await websocket.send(message)
 
     async def start(self,websocket, path):
         # register(websocket) sends user_event() to websocket
@@ -46,7 +47,7 @@ class socket:
             await self.unregister(websocket)
 
 
-        producer_task = asyncio.ensure_future( producer_handler(websocket, path)) 
+        producer_task = asyncio.ensure_future( self.producer_handler(websocket, path))
         done, pending = await asyncio.wait( [producer_task], return_when=asyncio.FIRST_COMPLETED)
     
     @staticmethod
@@ -59,6 +60,8 @@ class socket:
     def send(data):
         instance=socket.init()
         instance.notify(data)
+
+
     @staticmethod
     def stop():
 

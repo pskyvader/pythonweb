@@ -34,6 +34,7 @@ class log(base_model):
             return_total = True
 
         row = connection.get(cls.table, cls.idname, where, condiciones, select)
+        print(row)
         if return_total != None:
             return len(row)
         else:

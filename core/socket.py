@@ -11,31 +11,31 @@ class socket:
 
     USERS = set()
 
-    def state_event():
+    def state_event(self):
         return json.dumps({'type': 'state', **STATE})
 
-    def users_event():
+    def users_event(self):
         return json.dumps({'type': 'users', 'count': len(USERS)})
 
-    async def notify_state():
+    async def notify_state(self):
         if USERS:       # asyncio.wait doesn't accept an empty list
             message = state_event()
             await asyncio.wait([user.send(message) for user in USERS])
 
-    async def notify_users():
+    async def notify_users(self):
         if USERS:       # asyncio.wait doesn't accept an empty list
             message = users_event()
             await asyncio.wait([user.send(message) for user in USERS])
 
-    async def register(websocket):
+    async def register(self,websocket):
         USERS.add(websocket)
         await notify_users()
 
-    async def unregister(websocket):
+    async def unregister(self,websocket):
         USERS.remove(websocket)
         await notify_users()
 
-    async def counter(websocket, path):
+    async def counter(self,websocket, path):
         # register(websocket) sends user_event() to websocket
         await register(websocket)
         try:

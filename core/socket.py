@@ -12,7 +12,7 @@ class socket:
     USERS = set()
 
     def state_event(self):
-        return json.dumps({'type': 'state', **STATE})
+        return json.dumps({'type': 'state', self.STATE})
 
     def users_event(self):
         return json.dumps({'type': 'users', 'count': len(USERS)})

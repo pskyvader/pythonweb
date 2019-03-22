@@ -1,7 +1,6 @@
 import asyncio
 import websockets
 
-
 class websocket:
     USERS = set()
 

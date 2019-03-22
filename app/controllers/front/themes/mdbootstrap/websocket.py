@@ -11,10 +11,18 @@ class websocket:
             var=[5678]
 
         loop = asyncio.get_event_loop()
-        loop.run_until_complete(websockets.serve(self.handler,'localhost', var[0]))
+        loop.run_until_complete(websockets.serve(self.time,'localhost', var[0]))
         loop.run_forever()
 
 
+    async def time(self,websocket, path):
+        import datetime
+import random
+        while True:
+            now = datetime.datetime.utcnow().isoformat() + 'Z'
+            await websocket.send(now)
+            await asyncio.sleep(random.random() * 3)
+        
     async def notify(self, message):
         if self.USERS:       # asyncio.wait doesn't accept an empty list
             await asyncio.wait([user.send(message) for user in self.USERS])

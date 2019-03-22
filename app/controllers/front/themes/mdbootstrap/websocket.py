@@ -12,7 +12,7 @@ class websocket:
         pool = Pool(processes=1)              # Start a worker processes.
         if len(var)==0:
             var=[5678]
-        result = pool.apply_async(self.start, var) # Evaluate "f(10)" asynchronously calling callback when finished.
+        pool.apply_async(self.start, var) # Evaluate "f(10)" asynchronously calling callback when finished.
 
 
     def start(self,var=[]):

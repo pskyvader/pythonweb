@@ -24,16 +24,12 @@ class socket:
             await asyncio.wait([user.send(message) for user in self.USERS])
 
     async def producer_handler(self, websocket, path):
-        while True:
-            message = await self.send
-            await self.notify(message)
-
-    async def send(self):
-        while True:
+        while True and self.USERS:
             if self.message!=None:
                 message=self.message
                 self.message=None
-                return message
+                await self.notify(message)
+
 
     async def handler(self, websocket, path):
         # Register.

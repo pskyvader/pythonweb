@@ -18,19 +18,19 @@ class socket:
     async def notify_state(self):
         if self.USERS:       # asyncio.wait doesn't accept an empty list
             message = state_event()
-            await asyncio.wait([user.send(message) for user in USERS])
+            await asyncio.wait([user.send(message) for user in self.USERS])
 
     async def notify_users(self):
-        if USERS:       # asyncio.wait doesn't accept an empty list
+        if self.USERS:       # asyncio.wait doesn't accept an empty list
             message = users_event()
-            await asyncio.wait([user.send(message) for user in USERS])
+            await asyncio.wait([user.send(message) for user in self.USERS])
 
     async def register(self,websocket):
-        USERS.add(websocket)
+        self.USERS.add(websocket)
         await notify_users()
 
     async def unregister(self,websocket):
-        USERS.remove(websocket)
+        self.USERS.remove(websocket)
         await notify_users()
 
     async def counter(self,websocket, path):
@@ -41,10 +41,10 @@ class socket:
             async for message in websocket:
                 data = json.loads(message)
                 if data['action'] == 'minus':
-                    STATE['value'] -= 1
+                    self.STATE['value'] -= 1
                     await notify_state()
                 elif data['action'] == 'plus':
-                    STATE['value'] += 1
+                    self.STATE['value'] += 1
                     await notify_state()
                 else:
                     logging.error(

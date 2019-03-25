@@ -366,7 +366,7 @@ class database():
         respuesta['exito'] = True
         # except Exception as e:
         #    respuesta['mensaje'] = str(e)
-        #    raise RuntimeError('Error al obtener respaldo en base de datos: ' + repr(e)+ app.environ['PATH_INFO'])
+        #    raise RuntimeError('Error al obtener respaldo en base de datos: ' + repr(e)
 
         return respuesta
 

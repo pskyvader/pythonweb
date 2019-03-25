@@ -339,9 +339,9 @@ class backup(base):
         c = configuracion_administrador()
         c.json(False)
         respuesta = {'exito': True, 'mensaje': ''}
-        self.sock.connect((self.host,self.port))
-        self.sock.sendall("PRUEBA".encode())
-        print(self.sock)
+        #self.sock.connect((self.host,self.port))
+        #self.sock.sendall("PRUEBA".encode())
+        #print(self.sock)
 
         my_file = Path(self.dir_backup)
         if my_file.is_dir():
@@ -369,7 +369,7 @@ class backup(base):
             if logging:
                 log_file = { 'mensaje': 'Respaldando Base de datos ', 'porcentaje': 90}
                 log_file=json.dumps(log_file,ensure_ascii=False)
-                self.sock.send(log_file.encode())
+                #self.sock.send(log_file.encode())
                 print('send',log_file)
                 file_write = open(self.archivo_log, 'w+')
                 file_write.write(log_file)
@@ -383,13 +383,13 @@ class backup(base):
                 file_write = open(self.archivo_log, 'w+')
                 file_write.write(log_file)
                 file_write.close()
-                self.sock.send(bytes(log_file, 'utf-8'))
+                #self.sock.send(bytes(log_file, 'utf-8'))
 
         if logging:
             ret['body'] = json.dumps(respuesta,ensure_ascii=False)
-            self.sock.send(bytes(ret['body'], 'utf-8'))
+            #self.sock.send(bytes(ret['body'], 'utf-8'))
 
-        self.sock.close()
+        #self.sock.close()
         return ret
 
     def get_files(self, source: str, log=True):
@@ -413,7 +413,6 @@ class backup(base):
                         if log and count % 1000 == 0:
                             log_file = { 'mensaje': 'Recuperando archivo ...' + fichero_final[-30:], 'porcentaje': 10 }
                             log_file=json.dumps(log_file,ensure_ascii=False)
-                            self.sock.send(log_file.encode())
                             file_write = open(self.archivo_log, 'w+')
                             file_write.write(log_file)
                             file_write.close()

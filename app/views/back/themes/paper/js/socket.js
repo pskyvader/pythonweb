@@ -11,6 +11,7 @@ function log_socket() {
         websocket.send("Hello, world");
     };
     websocket.onmessage = function(event) {
+        console.log('mensaje',event)
         data = event.data
         console.log(data);
         notificacion_footer('SOCKET: ' + data + ' ');

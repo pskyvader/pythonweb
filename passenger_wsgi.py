@@ -5,7 +5,7 @@ import tornado.httpserver
 import tornado.ioloop
 import tornado.web
 import tornado.websocket
-import tornado.netutil.bind_sockets  
+from tornado.netutil import bind_sockets
 from core.app import app
 import pprint
 from beaker.middleware import SessionMiddleware

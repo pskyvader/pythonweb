@@ -87,7 +87,7 @@ class HelloHandler(tornado.web.RequestHandler):
     def get(self):
         self.write('Hello from tornado')
 
-        
+
 
 class SimpleWebSocket(tornado.websocket.WebSocketHandler):
     connections = set()
@@ -124,7 +124,7 @@ ws_app = tornado.web.Application(
     ]
 )
 
-http_sockets = bind_sockets(80)
+http_sockets = bind_sockets(8080)
 http_server = tornado.httpserver.HTTPServer(tornado_app)
 http_server.add_sockets(http_sockets)
 

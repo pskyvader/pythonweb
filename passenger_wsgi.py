@@ -78,7 +78,7 @@ session_opts = {
 app2 = LoggingMiddleware(application2)
 wsgi_app = SessionMiddleware(app2, session_opts)
 
-#application = wsgi_app
+application = wsgi_app
 
 
 class HelloHandler(tornado.web.RequestHandler):
@@ -86,11 +86,11 @@ class HelloHandler(tornado.web.RequestHandler):
         self.write('Hello from tornado')
 
 
-application = tornado.wsgi.WSGIContainer(wsgi_app)
+container = tornado.wsgi.WSGIContainer(application)
 tornado_app = tornado.web.Application(
     [
         ('/hello-tornado', HelloHandler),
-        ('.*', tornado.web.FallbackHandler, dict(fallback=application))
+        ('.*', tornado.web.FallbackHandler, dict(fallback=container))
     ]
 )
 

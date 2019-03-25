@@ -30,7 +30,7 @@ class backup(base):
     archivo_log = ''
     no_restore = ['backup/']
     sock=None
-    host ="localhost/websocket"
+    host ="localhost"
     port =80
 
     def __init__(self):

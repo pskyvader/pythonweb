@@ -5,6 +5,7 @@ $(window).on('scroll', activar_imagen);
 $(window).on('resize', activar_imagen);
 
 var application_name = $("meta[name='application-name']");
+var websocket_url = application_name.data("websocket_url");
 var path = application_name.data("path");
 var modulo = application_name.data("modulo");
 var url = application_name.data("url");

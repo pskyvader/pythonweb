@@ -391,6 +391,7 @@ class backup(base):
         print('fin',self.sock)
         data_socket = self.sock.recv(1024)
         self.sock.close()
+        print(data_socket)
         print ('Received', repr(data_socket))
         return ret
 

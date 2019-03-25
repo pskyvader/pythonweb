@@ -19,7 +19,7 @@ function log_socket() {
 }
 
 function close_socket() {
-    console.log('cerrar socket');
-    websocket.close();
-    websocket = null
+    //console.log('cerrar socket');
+    //websocket.close();
+    //websocket = null
 }

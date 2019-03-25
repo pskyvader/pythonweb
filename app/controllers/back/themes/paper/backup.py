@@ -414,7 +414,6 @@ class backup(base):
                             log_file = { 'mensaje': 'Recuperando archivo ...' + fichero_final[-30:], 'porcentaje': 10 }
                             log_file=json.dumps(log_file,ensure_ascii=False)
                             self.sock.send(log_file.encode())
-                            print('send',log_file)
                             file_write = open(self.archivo_log, 'w+')
                             file_write.write(log_file)
                             file_write.close()

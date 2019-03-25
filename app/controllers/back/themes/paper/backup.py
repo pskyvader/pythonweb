@@ -388,6 +388,8 @@ class backup(base):
             ret['body'] = json.dumps(respuesta,ensure_ascii=False)
             self.sock.send(bytes(ret['body'], 'utf-8'))
 
+        data = self.sock.recv(1024)
+        print ('Received', repr(data))
         self.sock.close()
         return ret
 

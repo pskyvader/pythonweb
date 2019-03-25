@@ -13,6 +13,7 @@ function log_socket(){
     };
 }
 function close_socket(){
+    console.log('cerrar socket');
     websocket.close_socket()
     websocket=null
 }

@@ -40,7 +40,6 @@ class backup(base):
             os.makedirs(backup.dir_backup)
         backup.archivo_log = app.get_dir(True) + '/log.json'
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
     @classmethod
     def index(cls):
         '''Controlador de lista_class de elementos base, puede ser sobreescrito en el controlador de cada modulo'''

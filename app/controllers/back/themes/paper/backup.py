@@ -335,18 +335,13 @@ class backup(base):
 
     def generar_backup(self, logging=True):
         '''genera respaldo del sitio en zip, en formato "Respaldo rapido" (usa mas recursos)'''
-        import time
         ret = {'headers': [ ('Content-Type', 'application/json; charset=utf-8')], 'body': ''}
         c = configuracion_administrador()
         c.json(False)
         respuesta = {'exito': True, 'mensaje': ''}
         self.sock.connect((self.host,self.port))
-        time.sleep(3)
         self.sock.sendall("PRUEBA".encode())
         print(self.sock)
-        
-        time.sleep(3)
-
         my_file = Path(self.dir_backup)
         if my_file.is_dir():
             if os.access(self.dir_backup, os.W_OK) is not True:

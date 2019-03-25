@@ -55,7 +55,7 @@ function inicio() {
     }
     setTimeout(() => {
         log_socket();
-    }, 30000);
+    }, 10000);
 }
 
 var day = moment($('#time').data('time'), 'YYYY-MM-DD HH:mm:ss');

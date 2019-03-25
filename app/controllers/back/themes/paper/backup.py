@@ -342,7 +342,7 @@ class backup(base):
         self.sock.connect((self.host,self.port))
         self.sock.sendall("PRUEBA".encode())
         print(self.sock)
-        
+
         my_file = Path(self.dir_backup)
         if my_file.is_dir():
             if os.access(self.dir_backup, os.W_OK) is not True:
@@ -370,6 +370,7 @@ class backup(base):
                 log_file = { 'mensaje': 'Respaldando Base de datos ', 'porcentaje': 90}
                 log_file=json.dumps(log_file,ensure_ascii=False)
                 self.sock.send(log_file.encode())
+                print('send',log_file)
                 file_write = open(self.archivo_log, 'w+')
                 file_write.write(log_file)
                 file_write.close()

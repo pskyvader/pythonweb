@@ -342,6 +342,7 @@ class backup(base):
         self.sock.connect((self.host,self.port))
         self.sock.sendall("PRUEBA".encode())
         print(self.sock)
+        
         my_file = Path(self.dir_backup)
         if my_file.is_dir():
             if os.access(self.dir_backup, os.W_OK) is not True:

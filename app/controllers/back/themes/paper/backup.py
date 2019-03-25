@@ -390,8 +390,8 @@ class backup(base):
 
         print('fin',self.sock)
         data = self.sock.recv(1024)
-        print ('Received', repr(data))
         self.sock.close()
+        print ('Received', repr(data))
         return ret
 
     def get_files(self, source: str, log=True):

@@ -104,27 +104,29 @@ container = tornado.wsgi.WSGIContainer(application)
 tornado_app = tornado.web.Application(
     [
         ('/hello-tornado', HelloHandler),
-        ('/websocket', SimpleWebSocket),
         ('.*', tornado.web.FallbackHandler, dict(fallback=container))
+    ]
+)
+
+
+ws_app = tornado.web.Application(
+    [
+        ('/websocket', SimpleWebSocket)
     ]
 )
 
 
 
 
-hello_sockets = bind_sockets(8881)
-main_sockets = bind_sockets(8882)
+http_sockets = bind_sockets(80)
+web_sockets = bind_sockets(5678)
 
 http_server = tornado.httpserver.HTTPServer(tornado_app)
-http_server.listen(80)
+hello_server.add_sockets(http_sockets)
 
-hello_server = HTTPServer(helloApp)
-hello_server.add_sockets(hello_sockets)
 
 main_server = HTTPServer(mainApp)
-main_server.add_sockets(main_sockets)
-
-IOLoop.current().start()
+main_server.add_sockets(web_sockets)
 
 
 tornado.ioloop.IOLoop.current().start()

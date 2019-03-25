@@ -102,7 +102,7 @@ container = tornado.wsgi.WSGIContainer(application)
 tornado_app = tornado.web.Application(
     [
         ('/hello-tornado', HelloHandler),
-        ('/websocket', SimpleWebSocket)
+        ('/websocket', SimpleWebSocket),
         ('.*', tornado.web.FallbackHandler, dict(fallback=container))
     ]
 )

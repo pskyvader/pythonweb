@@ -389,9 +389,9 @@ class backup(base):
             self.sock.send(bytes(ret['body'], 'utf-8'))
 
         print('fin',self.sock)
-        data = self.sock.recv(1024)
+        data_socket = self.sock.recv(1024)
         self.sock.close()
-        print ('Received', repr(data))
+        print ('Received', repr(data_socket))
         return ret
 
     def get_files(self, source: str, log=True):

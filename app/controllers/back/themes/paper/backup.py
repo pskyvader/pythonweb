@@ -340,6 +340,8 @@ class backup(base):
         c = configuracion_administrador()
         c.json(False)
         respuesta = {'exito': True, 'mensaje': ''}
+        
+        self.sock.connect((self.host,self.port))
 
         my_file = Path(self.dir_backup)
         if my_file.is_dir():
@@ -369,6 +371,7 @@ class backup(base):
                 file_write = open(self.archivo_log, 'w+')
                 file_write.write(json.dumps(log_file,ensure_ascii=False))
                 file_write.close()
+                self.sock.send(json.dumps(log_file,ensure_ascii=False))
             respuesta = self.bdd(False, respuesta['archivo_backup'])
 
         if respuesta['exito']:
@@ -378,10 +381,13 @@ class backup(base):
                 file_write = open(self.archivo_log, 'w+')
                 file_write.write(json.dumps(log_file,ensure_ascii=False))
                 file_write.close()
+                self.sock.send(json.dumps(log_file,ensure_ascii=False))
 
         if logging:
             ret['body'] = json.dumps(respuesta,ensure_ascii=False)
+            self.sock.send(json.dumps(log_file,ensure_ascii=False))
 
+        self.sock.close()
         return ret
 
     def get_files(self, source: str, log=True):

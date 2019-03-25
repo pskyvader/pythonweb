@@ -1,5 +1,9 @@
 import sys
 import os
+import tornado.wsgi
+import tornado.httpserver
+import tornado.ioloop
+import tornado.web
 from core.app import app
 import pprint
 from beaker.middleware import SessionMiddleware
@@ -9,12 +13,10 @@ sys.path.insert(0, os.path.dirname(__file__))
 def application2(environ, start_response):
     #from datetime import datetime
     #init_time = datetime.now()
-    
+
     app_web = app(os.path.dirname(__file__))
     main_data = app_web.init(environ)
     ret = main_data['response_body']
-
-
 
     if isinstance(ret, str) and ret != '':
         ret = bytes(ret, 'utf-8')
@@ -24,8 +26,8 @@ def application2(environ, start_response):
         main_data['headers'].append(('Content-Encoding', 'gzip'))
 
     start_response(main_data['status'], main_data['headers'])
-    #if main_data['status']=='200 OK':
-        #print(environ['PATH_INFO'],'total', (datetime.now()-init_time).total_seconds()*1000)
+    # if main_data['status']=='200 OK':
+    #print(environ['PATH_INFO'],'total', (datetime.now()-init_time).total_seconds()*1000)
 
     if 'is_file' in main_data and main_data['is_file']:
         f = open(main_data['file'], 'rb')
@@ -59,7 +61,8 @@ class LoggingMiddleware:
         def _start_response(status, headers, *args):
             if status != "200 OK":
                 #pprint.pprint(('REQUEST', environ), stream=errors)
-                pprint.pprint(('REQUEST:', environ['PATH_INFO']), stream=errors)
+                pprint.pprint(
+                    ('REQUEST:', environ['PATH_INFO']), stream=errors)
                 #pprint.pprint(('RESPONSE', status, headers), stream=errors)
                 pprint.pprint(('RESPONSE:', status), stream=errors)
             return start_response(status, headers, *args)
@@ -73,4 +76,25 @@ session_opts = {
 }
 
 app2 = LoggingMiddleware(application2)
-application = SessionMiddleware(app2, session_opts)
+wsgi_app = SessionMiddleware(app2, session_opts)
+
+#application = wsgi_app
+
+
+class HelloHandler(tornado.web.RequestHandler):
+    def get(self):
+        self.write('Hello from tornado')
+
+
+application = tornado.wsgi.WSGIContainer(wsgi_app)
+tornado_app = tornado.web.Application(
+    [
+        ('/hello-tornado', HelloHandler),
+        ('.*', tornado.web.FallbackHandler, dict(fallback=application))
+    ]
+)
+
+
+http_server = tornado.httpserver.HTTPServer(tornado_app)
+http_server.listen(80)
+tornado.ioloop.IOLoop.current().start()

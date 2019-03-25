@@ -30,6 +30,8 @@ class backup(base):
     archivo_log = ''
     no_restore = ['backup/']
     sock=None
+    host ="localhost/websocket"
+    port =80
 
     def __init__(self):
         backup.base_dir = app.get_dir(True)
@@ -37,10 +39,7 @@ class backup(base):
         if not os.path.exists(backup.dir_backup):
             os.makedirs(backup.dir_backup)
         backup.archivo_log = app.get_dir(True) + '/log.json'
-
-        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        host ="localhost/websocket"
-        port =80
+        self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
     @classmethod
     def index(cls):

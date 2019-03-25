@@ -91,9 +91,11 @@ class SimpleWebSocket(tornado.websocket.WebSocketHandler):
     connections = set()
 
     def check_origin(self, origin):
+        print('check',origin)
         return True
 
     def open(self):
+        print('open',self)
         self.connections.add(self)
  
     def on_message(self, message):
@@ -101,6 +103,7 @@ class SimpleWebSocket(tornado.websocket.WebSocketHandler):
         [client.write_message(message) for client in self.connections]
  
     def on_close(self):
+        print('close',self)
         self.connections.remove(self)
 
 

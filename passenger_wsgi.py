@@ -4,6 +4,7 @@ import tornado.wsgi
 import tornado.httpserver
 import tornado.ioloop
 import tornado.web
+import tornado.websocket
 from core.app import app
 import pprint
 from beaker.middleware import SessionMiddleware

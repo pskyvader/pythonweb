@@ -272,6 +272,7 @@ function fin_restaurar(data) {
             var mensaje = (($.isArray(data['mensaje'])) ? data['mensaje'].join('<br/>') : data['mensaje']);
             notificacion('Oh no!', mensaje, 'error');
             barra(0);
+            close_socket();
         }
     }
 }

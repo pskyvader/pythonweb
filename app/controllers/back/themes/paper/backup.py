@@ -388,11 +388,7 @@ class backup(base):
             ret['body'] = json.dumps(respuesta,ensure_ascii=False)
             self.sock.send(bytes(ret['body'], 'utf-8'))
 
-        print('fin',self.sock)
-        data_socket = self.sock.recv(1024)
         self.sock.close()
-        print(data_socket)
-        print ('Received', repr(data_socket))
         return ret
 
     def get_files(self, source: str, log=True):

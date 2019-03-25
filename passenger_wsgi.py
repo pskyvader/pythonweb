@@ -130,4 +130,6 @@ web_sockets = bind_sockets(8001)
 socket_server = tornado.httpserver.HTTPServer(ws_app)
 socket_server.add_sockets(web_sockets)
 
+http_server.start(4)
+
 tornado.ioloop.IOLoop.current().start()

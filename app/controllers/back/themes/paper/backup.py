@@ -340,6 +340,7 @@ class backup(base):
         c.json(False)
         respuesta = {'exito': True, 'mensaje': ''}
         self.sock.connect((self.host,self.port))
+        print(self.sock)
 
         my_file = Path(self.dir_backup)
         if my_file.is_dir():

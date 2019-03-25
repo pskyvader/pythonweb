@@ -84,12 +84,25 @@ application = wsgi_app
 class HelloHandler(tornado.web.RequestHandler):
     def get(self):
         self.write('Hello from tornado')
+        
+class SimpleWebSocket(tornado.websocket.WebSocketHandler):
+    connections = set()
+ 
+    def open(self):
+        self.connections.add(self)
+ 
+    def on_message(self, message):
+        [client.write_message(message) for client in self.connections]
+ 
+    def on_close(self):
+        self.connections.remove(self)
 
 
 container = tornado.wsgi.WSGIContainer(application)
 tornado_app = tornado.web.Application(
     [
         ('/hello-tornado', HelloHandler),
+        ("/websocket", SimpleWebSocket)
         ('.*', tornado.web.FallbackHandler, dict(fallback=container))
     ]
 )

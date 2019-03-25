@@ -18,6 +18,7 @@ from core.functions import functions
 from pathlib import Path
 import os
 import json
+import socket
 
 
 class backup(base):
@@ -28,6 +29,7 @@ class backup(base):
     dir_backup = ''
     archivo_log = ''
     no_restore = ['backup/']
+    sock=None
 
     def __init__(self):
         backup.base_dir = app.get_dir(True)
@@ -35,6 +37,10 @@ class backup(base):
         if not os.path.exists(backup.dir_backup):
             os.makedirs(backup.dir_backup)
         backup.archivo_log = app.get_dir(True) + '/log.json'
+
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        host ="localhost/websocket"
+        port =80
 
     @classmethod
     def index(cls):

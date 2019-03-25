@@ -14,13 +14,18 @@ function log_socket() {
         notificacion_footer('SOCKET: ' + data + ' ');
     };
     window.onbeforeunload = function() {
-        websocket.onclose = function () {};
-        websocket.close();
+        if (websocket != null) {
+            websocket.onclose = function() {};
+            websocket.close();
+            websocket = null
+        }
     };
 }
 
 function close_socket() {
     //console.log('cerrar socket');
-    websocket.close();
-    websocket = null
+    if (websocket != null) {
+        websocket.close();
+        websocket = null;
+    }
 }

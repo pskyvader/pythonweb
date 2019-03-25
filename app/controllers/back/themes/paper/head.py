@@ -34,7 +34,6 @@ class head:
         # size=functions::get_max_size()
         #head.data['max_size'] = size
         # head.data['max_size_format'] = (size<0)?"Ilimitado":functions::file_size(size,true)}
-        https = "https://" if config['https'] else "http://"
         head.data['websocket']='ws://'+app.root_url +':5678'
 
         titulo = head.data['title'] + ' - ' + config['title']

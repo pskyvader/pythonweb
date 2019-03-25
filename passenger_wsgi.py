@@ -36,7 +36,7 @@ def application2(environ, start_response):
         if 'wsgi.file_wrapper' in environ:
             return environ['wsgi.file_wrapper'](f, 1024)
         else:
-            print('no filewrapper')
+            #print('no filewrapper')
             return file_wrapper(f, 1024)
     else:
         return [ret]

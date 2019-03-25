@@ -127,7 +127,7 @@ def fork_processes(num_processes: Optional[int], max_restarts: int = None) -> in
     children = {}
 
     def start_child(i: int) -> Optional[int]:
-        #pid = os.fork()
+        pid = os.fork()
         pid=0
         if pid == 0:
             # child process

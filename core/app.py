@@ -205,9 +205,9 @@ class app:
         return url
 
     @staticmethod
-    def parse_get():
+    def parse_get(query_string):
         from cgi import parse_qs
-        get = dict(parse_qs(app.environ['QUERY_STRING']))
+        get = dict(parse_qs(query_string))
         if 'url' in get:
             del get['url']
         for k, u in get.items():
@@ -228,8 +228,7 @@ class app:
             post_env['CONTENT_LENGTH'] = int(
                 app.environ.get('CONTENT_LENGTH', 0))
 
-            p = FieldStorage(
-                fp=post_env['wsgi.input'], environ=post_env, keep_blank_values=True)
+            p = FieldStorage( fp=post_env['wsgi.input'], environ=post_env, keep_blank_values=True)
             if p.list != None:
                 post = app.post_field(p)
 

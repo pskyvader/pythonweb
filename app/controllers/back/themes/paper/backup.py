@@ -30,7 +30,7 @@ class backup(base):
     archivo_log = ''
     no_restore = ['backup/']
     sock=None
-    host ="localhost"
+    host ="127.0.0.1"
     port =80
 
     def __init__(self):

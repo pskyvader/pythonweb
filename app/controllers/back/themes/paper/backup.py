@@ -411,11 +411,12 @@ class backup(base):
                         lista_archivos.append(fichero_final)
 
                         if log and count % 1000 == 0:
-                            log_file = {
-                                'mensaje': 'Recuperando archivo ...' + fichero_final[-30:], 'porcentaje': 10
-                            }
+                            log_file = { 'mensaje': 'Recuperando archivo ...' + fichero_final[-30:], 'porcentaje': 10 }
+                            log_file=json.dumps(log_file,ensure_ascii=False)
+                            self.sock.send(log_file.encode())
+                            print('send',log_file)
                             file_write = open(self.archivo_log, 'w+')
-                            file_write.write(json.dumps(log_file,ensure_ascii=False))
+                            file_write.write(log_file)
                             file_write.close()
 
                 if len(file) == 0 and len(dirs) == 0:

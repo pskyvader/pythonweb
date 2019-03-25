@@ -91,7 +91,6 @@ class SimpleWebSocket(tornado.websocket.WebSocketHandler):
     connections = set()
 
     def check_origin(self, origin):
-        print(origin)
         return True
 
     def open(self):

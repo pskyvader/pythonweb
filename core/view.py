@@ -156,7 +156,7 @@ class view:
         return view.theme
 
     @staticmethod
-    def recorrer(type_resource='css', combine=False, theme='', base_url=''):
+    def recorrer(type_resource='css', combine: bool, theme='', base_url=''):
         from core.functions import functions
         from core.app import app
         if(len(view.resources) == 0):

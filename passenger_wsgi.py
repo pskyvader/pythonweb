@@ -111,7 +111,7 @@ tornado_app = tornado.web.Application(
 
 ws_app = tornado.web.Application(
     [
-        ('/websocket', SimpleWebSocket)
+        ('.*', SimpleWebSocket)
     ]
 )
 

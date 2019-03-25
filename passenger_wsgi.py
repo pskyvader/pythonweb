@@ -107,16 +107,13 @@ class SimpleWebSocket(tornado.websocket.WebSocketHandler):
         self.connections.remove(self)
 
 
-#container = tornado.wsgi.WSGIContainer(application)
-#tornado_app = tornado.web.Application( [ ('/hello-tornado', HelloHandler), ('.*', tornado.web.FallbackHandler, dict(fallback=container)) ] )
-
+container = tornado.wsgi.WSGIContainer(application)
 tornado_app = tornado.web.Application(
     [
         ('/hello-tornado', HelloHandler),
-        ('.*', application)
+        ('.*', tornado.web.FallbackHandler, dict(fallback=container))
     ]
 )
-
 
 
 ws_app = tornado.web.Application(

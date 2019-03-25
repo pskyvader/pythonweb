@@ -341,6 +341,7 @@ class backup(base):
         c.json(False)
         respuesta = {'exito': True, 'mensaje': ''}
         self.sock.connect((self.host,self.port))
+        time.sleep(3)
         self.sock.sendall("PRUEBA".encode())
         print(self.sock)
 
@@ -374,7 +375,6 @@ class backup(base):
                 file_write = open(self.archivo_log, 'w+')
                 file_write.write(log_file)
                 file_write.close()
-                time.sleep(1)
             respuesta = self.bdd(False, respuesta['archivo_backup'])
 
         if respuesta['exito']:

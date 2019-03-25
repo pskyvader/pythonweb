@@ -36,7 +36,7 @@ class app:
         data_return = {}
         app.get = self.parse_get()
         app.post = self.parse_post()
-        app.session = self.parse_session()
+        app.session = app.environ['beaker.session']
         url = self.parse_url(environ['PATH_INFO'])
 
         config = self.get_config()

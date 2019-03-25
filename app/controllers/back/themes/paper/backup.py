@@ -339,8 +339,8 @@ class backup(base):
         c = configuracion_administrador()
         c.json(False)
         respuesta = {'exito': True, 'mensaje': ''}
-        #self.sock.connect((self.host,self.port))
-        self.sock.send("PRUEBA".encode())
+        self.sock.connect((self.host,self.port))
+        self.sock.sendall("PRUEBA".encode())
         print(self.sock)
 
         my_file = Path(self.dir_backup)
@@ -389,7 +389,7 @@ class backup(base):
             ret['body'] = json.dumps(respuesta,ensure_ascii=False)
             self.sock.send(bytes(ret['body'], 'utf-8'))
 
-        #self.sock.close()
+        self.sock.close()
         return ret
 
     def get_files(self, source: str, log=True):

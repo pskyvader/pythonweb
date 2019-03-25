@@ -1,5 +1,6 @@
 from core.app import app
 from core.functions import functions
+from core.image import image
 from .base import base
 from app.models.logo import logo as logo_model
 import json
@@ -12,25 +13,24 @@ class manifest(base):
         version_application = 1
         config = app.get_config()
         logo = logo_model.getById(7)
-        logo=logo['foto'][0].values()
         manifest = {
             'short_name': config['short_title'],
             'name': config['title'],
             'icons': [
                 {
-                    'src': functions.generar_url(logo, 'icono50'),
+                    'src': image.generar_url(logo['foto'][0], 'icono50'),
                     'type': 'image/png',
                     'sizes': '50x50'
                 }, {
-                    'src': functions.generar_url(logo, 'icono100'),
+                    'src': image.generar_url(logo['foto'][0], 'icono100'),
                     'type': 'image/png',
                     'sizes': '100x100'
                 }, {
-                    'src': functions.generar_url(logo, 'icono200'),
+                    'src': image.generar_url(logo['foto'][0], 'icono200'),
                     'type': 'image/png',
                     'sizes': '200x200'
                 }, {
-                    'src': functions.generar_url(logo, 'icono600'),
+                    'src': image.generar_url(logo['foto'][0], 'icono600'),
                     'type': 'image/png',
                     'sizes': '600x600'
                 }

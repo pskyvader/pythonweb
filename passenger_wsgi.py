@@ -125,8 +125,7 @@ http_server = tornado.httpserver.HTTPServer(tornado_app)
 http_server.add_sockets(http_sockets)
 
 
-main_server = HTTPServer(mainApp)
-main_server.add_sockets(web_sockets)
-
+socket_server = tornado.httpserver.HTTPServer(ws_app)
+socket_server.add_sockets(web_sockets)
 
 tornado.ioloop.IOLoop.current().start()

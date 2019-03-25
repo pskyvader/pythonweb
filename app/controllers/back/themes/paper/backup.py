@@ -377,8 +377,7 @@ class backup(base):
 
         if respuesta['exito']:
             if logging:
-                log_file = {'mensaje': 'Restauracion finalizada',
-                            'porcentaje': 100}
+                log_file = {'mensaje': 'Restauracion finalizada', 'porcentaje': 100}
                 log_file=json.dumps(log_file,ensure_ascii=False)
                 file_write = open(self.archivo_log, 'w+')
                 file_write.write(log_file)

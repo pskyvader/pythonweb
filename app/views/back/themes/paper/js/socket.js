@@ -1,7 +1,6 @@
 websocket = null
 
 function log_socket() {
-    return true;
     ws = path.replace("https", "ws");
     ws = ws.replace("http", "ws");
     ws = ws.replace("/admin/", "");

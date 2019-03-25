@@ -344,6 +344,8 @@ class backup(base):
         time.sleep(3)
         self.sock.sendall("PRUEBA".encode())
         print(self.sock)
+        
+        time.sleep(3)
 
         my_file = Path(self.dir_backup)
         if my_file.is_dir():

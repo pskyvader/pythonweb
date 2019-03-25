@@ -13,6 +13,10 @@ function log_socket() {
         console.log(data);
         notificacion_footer('SOCKET: ' + data + ' ');
     };
+    window.onbeforeunload = function() {
+        websocket.onclose = function () {};
+        websocket.close();
+    };
 }
 
 function close_socket() {

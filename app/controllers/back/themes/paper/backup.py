@@ -368,11 +368,10 @@ class backup(base):
             if logging:
                 log_file = { 'mensaje': 'Respaldando Base de datos ', 'porcentaje': 90}
                 log_file=json.dumps(log_file,ensure_ascii=False)
+                self.sock.send(log_file.encode())
                 file_write = open(self.archivo_log, 'w+')
                 file_write.write(log_file)
                 file_write.close()
-                print('enviar',log_file.encode())
-                print(self.sock.send(log_file.encode()))
             respuesta = self.bdd(False, respuesta['archivo_backup'])
 
         if respuesta['exito']:

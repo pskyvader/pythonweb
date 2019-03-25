@@ -97,6 +97,7 @@ class SimpleWebSocket(tornado.websocket.WebSocketHandler):
         self.connections.add(self)
  
     def on_message(self, message):
+        console.log('mensaje',message)
         [client.write_message(message) for client in self.connections]
  
     def on_close(self):

@@ -4,7 +4,7 @@ function log_socket(){
     ws=path.replace("https", "ws");
     ws=ws.replace("http", "ws");
     ws=ws.replace("admin/", "");
-    websocket = new WebSocket(ws + "hello-tornado");
+    websocket = new WebSocket(ws + "websocket");
     console.log(websocket);
     websocket.onmessage = function(event) {
         data=event.data

@@ -99,6 +99,7 @@ class SimpleWebSocket(tornado.websocket.WebSocketHandler):
         self.connections.add(self)
  
     def on_message(self, message):
+        print('conexiones',self.connections)
         print('mensaje',message)
         [client.write_message(message) for client in self.connections]
  

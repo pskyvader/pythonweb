@@ -19,6 +19,7 @@ class app:
     root = ''
     environ = {}
     get = {}
+    root_url=''
 
     def __init__(self, root):
         import locale
@@ -42,12 +43,12 @@ class app:
         app.title = config['title']
         app.prefix_site = functions.url_amigable(app.title)
 
-        site = environ['SERVER_NAME'].replace("www.", '')
+        root_url = environ['SERVER_NAME'].replace("www.", '')
         subdirectorio = config['dir']
         https = "https://" if config['https'] else "http://"
         www = "www." if config['www'] else ""
 
-        app.path = https + www + site + "/"
+        app.path = https + www + root_url + "/"
         if subdirectorio != '':
             app.path += subdirectorio + "/"
             subdirectorio = "/" + subdirectorio + "/"

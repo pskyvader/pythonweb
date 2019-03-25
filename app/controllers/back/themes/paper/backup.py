@@ -339,9 +339,9 @@ class backup(base):
         c = configuracion_administrador()
         c.json(False)
         respuesta = {'exito': True, 'mensaje': ''}
-        print(self.sock)
+        print('socket',self.sock)
         self.sock.connect((self.host,self.port))
-        print(self.sock)
+        print('socket',self.sock)
 
         my_file = Path(self.dir_backup)
         if my_file.is_dir():

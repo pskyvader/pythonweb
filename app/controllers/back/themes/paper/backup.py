@@ -367,24 +367,26 @@ class backup(base):
         if respuesta['exito']:
             if logging:
                 log_file = { 'mensaje': 'Respaldando Base de datos ', 'porcentaje': 90}
+                log_file=json.dumps(log_file,ensure_ascii=False)
                 file_write = open(self.archivo_log, 'w+')
-                file_write.write(json.dumps(log_file,ensure_ascii=False))
+                file_write.write(log_file)
                 file_write.close()
-                self.sock.send(json.dumps(log_file,ensure_ascii=False))
+                self.sock.send(bytes(log_file, 'utf-8'))
             respuesta = self.bdd(False, respuesta['archivo_backup'])
 
         if respuesta['exito']:
             if logging:
                 log_file = {'mensaje': 'Restauracion finalizada',
                             'porcentaje': 100}
+                log_file=json.dumps(log_file,ensure_ascii=False)
                 file_write = open(self.archivo_log, 'w+')
-                file_write.write(json.dumps(log_file,ensure_ascii=False))
+                file_write.write(log_file)
                 file_write.close()
-                self.sock.send(json.dumps(log_file,ensure_ascii=False))
+                self.sock.send(bytes(log_file, 'utf-8'))
 
         if logging:
             ret['body'] = json.dumps(respuesta,ensure_ascii=False)
-            self.sock.send(json.dumps(log_file,ensure_ascii=False))
+            self.sock.send(bytes(ret['body'], 'utf-8'))
 
         self.sock.close()
         return ret

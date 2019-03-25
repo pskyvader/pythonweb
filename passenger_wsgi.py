@@ -122,9 +122,6 @@ ws_app = tornado.web.Application(
     ]
 )
 
-
-print('connect')
-
 http_sockets = bind_sockets(80)
 http_server = tornado.httpserver.HTTPServer(tornado_app)
 http_server.add_sockets(http_sockets)

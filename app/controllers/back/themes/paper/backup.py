@@ -372,7 +372,7 @@ class backup(base):
                 file_write.write(log_file)
                 file_write.close()
                 print('enviar',log_file.encode())
-                print(self.sock.send(bytes(log_file, 'utf-8')))
+                print(self.sock.send(log_file.encode()))
             respuesta = self.bdd(False, respuesta['archivo_backup'])
 
         if respuesta['exito']:

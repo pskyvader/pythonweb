@@ -335,6 +335,7 @@ class backup(base):
 
     def generar_backup(self, logging=True):
         '''genera respaldo del sitio en zip, en formato "Respaldo rapido" (usa mas recursos)'''
+        import time
         ret = {'headers': [ ('Content-Type', 'application/json; charset=utf-8')], 'body': ''}
         c = configuracion_administrador()
         c.json(False)
@@ -373,6 +374,7 @@ class backup(base):
                 file_write = open(self.archivo_log, 'w+')
                 file_write.write(log_file)
                 file_write.close()
+                time.sleep(1)
             respuesta = self.bdd(False, respuesta['archivo_backup'])
 
         if respuesta['exito']:

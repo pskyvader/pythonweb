@@ -54,6 +54,7 @@ function restaurar_elemento() {
     respaldo_finalizado = false;
     var accion = 'restaurar';
     barra(5);
+    log_socket();
     post_basic(create_url(modulo, accion), {
         id: $('.modal-restaurar input[name=id_restaurar]').val()
     }, 'Restaurando', fin_restaurar);
@@ -232,6 +233,8 @@ function fin_backup(data) {
             notificacion('Oh no!', mensaje, 'error');
             barra(0);
         }
+        
+        close_socket();
     }
 }
 

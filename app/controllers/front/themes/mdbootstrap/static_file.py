@@ -18,6 +18,8 @@ class static_file:
                 'file': resource_url
             }
 
+            print(resource_url)
+
             my_file = Path(resource_url)
             if not my_file.is_file():
                 open(resource_url, 'w+').close()

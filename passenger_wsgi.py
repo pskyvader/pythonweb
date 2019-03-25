@@ -5,7 +5,7 @@ import tornado.httpserver
 import tornado.ioloop
 import tornado.web
 import tornado.websocket
-from tornado.netutil import bind_sockets
+import tornado.netutil.bind_sockets  
 from core.app import app
 import pprint
 from beaker.middleware import SessionMiddleware
@@ -114,14 +114,17 @@ tornado_app = tornado.web.Application(
 
 hello_sockets = bind_sockets(8881)
 main_sockets = bind_sockets(8882)
-tornado.process.fork_processes(0)
-hello_server = HTTPServer(helloApp)
-hello_server.add_sockets(hello_sockets)
-main_server = HTTPServer(mainApp)
-main_server.add_sockets(main_sockets)
-IOLoop.current().start()
-
 
 http_server = tornado.httpserver.HTTPServer(tornado_app)
 http_server.listen(80)
+
+hello_server = HTTPServer(helloApp)
+hello_server.add_sockets(hello_sockets)
+
+main_server = HTTPServer(mainApp)
+main_server.add_sockets(main_sockets)
+
+IOLoop.current().start()
+
+
 tornado.ioloop.IOLoop.current().start()

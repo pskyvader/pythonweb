@@ -35,7 +35,7 @@ class head:
         #head.data['max_size'] = size
         # head.data['max_size_format'] = (size<0)?"Ilimitado":functions::file_size(size,true)}
         https = "https://" if config['https'] else "http://"
-        head.data['websocket']=app.get_url(True).replace(https,'ws://') +':5678'
+        head.data['websocket']=app.get_url(True).replace(https,'ws://')[:-1] +':5678'
 
         titulo = head.data['title'] + ' - ' + config['title']
         if (len(titulo) > 75):

@@ -8,6 +8,7 @@ function log_socket() {
     console.log(websocket);
     websocket.onopen = function(event) {
         console.log('open', event);
+        websocket.send("Hello, world");
     };
     websocket.onmessage = function(event) {
         data = event.data

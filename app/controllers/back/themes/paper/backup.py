@@ -15,8 +15,6 @@ from core.app import app
 from core.database import database
 from core.functions import functions
 
-from core.socket import socket as core_socket
-
 from pathlib import Path
 import os
 import json
@@ -333,9 +331,6 @@ class backup(base):
 
     def generar_backup(self, logging=True):
         '''genera respaldo del sitio en zip, en formato "Respaldo rapido" (usa mas recursos)'''
-        print('antes')
-        core_socket.init()
-        print('despues')
         ret = {'headers': [ ('Content-Type', 'application/json; charset=utf-8')], 'body': ''}
         c = configuracion_administrador()
         c.json(False)

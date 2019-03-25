@@ -256,9 +256,8 @@ class app:
                 else:
                     post[key] = p[key]
         except Exception as error:
-            #print('Error al obtener post: ' + repr(error) + repr(p)+ app.environ['PATH_INFO'])
-            raise RuntimeError('Error al obtener post: ' +
-                               repr(error) + repr(p) + app.environ['PATH_INFO'])
+            #print('Error al obtener post: ' + repr(error) + repr(p)
+            raise RuntimeError('Error al obtener post: ' + repr(error) + repr(p))
         return post
 
     @staticmethod
@@ -359,10 +358,6 @@ class app:
                 a[key] = b[key]
         return a
 
-    @staticmethod
-    def parse_session():
-        session = app.environ['beaker.session']
-        return session
 
     @staticmethod
     def get_config():

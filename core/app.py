@@ -43,12 +43,12 @@ class app:
         app.title = config['title']
         app.prefix_site = functions.url_amigable(app.title)
 
-        root_url = environ['SERVER_NAME'].replace("www.", '')
+        app.root_url = environ['SERVER_NAME'].replace("www.", '')
         subdirectorio = config['dir']
         https = "https://" if config['https'] else "http://"
         www = "www." if config['www'] else ""
 
-        app.path = https + www + root_url + "/"
+        app.path = https + www + app.root_url + "/"
         if subdirectorio != '':
             app.path += subdirectorio + "/"
             subdirectorio = "/" + subdirectorio + "/"

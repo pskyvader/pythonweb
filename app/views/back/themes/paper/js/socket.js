@@ -4,7 +4,7 @@ function log_socket() {
     ws = path.replace("https", "ws");
     ws = ws.replace("http", "ws");
     ws = ws.replace("/admin/", "");
-    websocket = new WebSocket(ws + ":5678");
+    websocket = new WebSocket(websocket_url);
     console.log(websocket);
     websocket.onopen = function(event) {
         console.log('open', event);

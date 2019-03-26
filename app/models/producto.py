@@ -161,8 +161,7 @@ class producto(base_model):
                 row[0]['archivo'] = []
 
             if 'precio' in row[0]:
-                cat = productocategoria.getById(
-                    row[0]['idproductocategoria'][0])
+                cat = productocategoria.getById(int(row[0]['idproductocategoria'][0]))
                 categorias = {}
                 if len(cat) > 0:
                     categorias[cat[0]] = {

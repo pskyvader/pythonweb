@@ -112,12 +112,13 @@ class producto(base_model):
 
             for v in row:
                 if 'precio' in v:
+                    v['idproductocategoria'][0]=int(v['idproductocategoria'][0])
                     v['precio_final'] = v['precio']
                     descuento = 0
                     if v['descuento'] != 0:
                         descuento = v['descuento']
                         fechas = v['descuento_fecha']
-                    elif len(v['idproductocategoria'])>0 and categorias[int(v['idproductocategoria'][0])]['descuento'] != 0:
+                    elif len(v['idproductocategoria'])>0 and categorias[v['idproductocategoria'][0]]['descuento'] != 0:
 
                         descuento = categorias[v['idproductocategoria'] [0]]['descuento']
                         fechas = categorias[v['idproductocategoria'] [0]]['descuento_fecha']

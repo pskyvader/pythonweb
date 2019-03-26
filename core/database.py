@@ -420,8 +420,6 @@ class database():
                     for k, e in loop:
                         subloop = None
                         
-                        if key == "image" or key == "file":
-                            print(k,e)
                         if isinstance(e, dict):
                             subloop = e.items()
                         elif isinstance(e, list):
@@ -444,6 +442,8 @@ class database():
                                             if not ke in row[k]:
                                                 row[k][ke] = {}
                                             row[k][ke][a] = va
+                                    else:
+                                        print(k,e)
                                 else:
                                     if not a in row:
                                         row[a] = {}

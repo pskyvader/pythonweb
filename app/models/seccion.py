@@ -128,6 +128,7 @@ class seccion(base_model):
 
         if 'archivo' in row:
             del row['archivo']
+        
         row['idseccioncategoria'] = json.dumps(row['idseccioncategoria'])
         fields = table.getByname(cls.table)
         insert = database.create_data(fields, row)

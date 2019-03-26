@@ -457,6 +457,7 @@ class database():
                         row = [row[key] for key in sorted(row.keys())]
                     data[key] = json.dumps(row, ensure_ascii=False)
                 else:
+                    print(row)
                     data[key] = row
 
             del data['multiple']

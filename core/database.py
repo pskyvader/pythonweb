@@ -435,14 +435,18 @@ class database():
                                 except:
                                     a = tmpa
                                 if key == "image" or key == "file":
-                                    print(k,e,a,f)
+                                    if not k in row:
+                                        row[k] = {}
                                     if isinstance(f,list):
                                         for ke, va in enumerate(f):
-                                            if not k in row:
-                                                row[k] = {}
                                             if not ke in row[k]:
                                                 row[k][ke] = {}
                                             row[k][ke][a] = va
+                                    else:
+                                        if not 0 in row[k]:
+                                            row[k][0] = {}
+                                        row[k][0][a] = f
+
                                 else:
                                     if not a in row:
                                         row[a] = {}

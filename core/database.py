@@ -410,6 +410,8 @@ class database():
             for key, multiple in data['multiple'].items():
                 row = {}
                 loop = None
+                if key == "image" or key == "file":
+                    print(multiple)
                 if isinstance(multiple, dict):
                     loop = multiple.items()
                 elif isinstance(multiple, list):

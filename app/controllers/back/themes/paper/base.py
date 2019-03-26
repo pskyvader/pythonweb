@@ -437,8 +437,8 @@ class base:
 
     @classmethod
     def upload(cls):
-        respuesta = {'headers': [
-            ('Content-Type', 'application/json; charset=utf-8')], 'body': ''}
+        print(app.post)
+        respuesta = {'headers': [ ('Content-Type', 'application/json; charset=utf-8')], 'body': ''}
         respuesta['body'] = json.dumps(
             image.upload_tmp(cls.metadata['modulo']), ensure_ascii=False)
         return respuesta

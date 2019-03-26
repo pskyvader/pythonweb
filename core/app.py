@@ -248,7 +248,8 @@ class app:
                     print(tmpfile)
                     if not key in post:
                         post[key]=[]
-                    mime = mimetypes.guess_type(tmpfile, False)[0]
+                    mime = mimetypes.guess_type(tmpfile)
+                    #mime = mimetypes.guess_type(tmpfile, False)[0]
                     if mime == None:
                         mime = 'text/plain'
                     post[key].append({'name':p[key].filename, 'file':tmpfile,'type':mime})

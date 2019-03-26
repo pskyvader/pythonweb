@@ -361,8 +361,7 @@ class app:
                 elif a[key] == b[key]:
                     pass  # same leaf value
                 else:
-                    raise Exception('Conflict at %s' %
-                                    '.'.join(path + [str(key)]))
+                    raise Exception('Conflict at %s' % '.'.join(path + [str(key)]))
             else:
                 a[key] = b[key]
         return a

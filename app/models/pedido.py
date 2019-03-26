@@ -94,7 +94,10 @@ class pedido(base_model):
                         r['archivo'] = []
                 if not deleted and 'fecha_creacion' in r:
                     if r['fecha_creacion'] != '':
-                        r['fecha_creacion']=r[4]=r['fecha_creacion'].strftime("%Y-%m-%d %H:%M:%S")
+                        r['fecha_creacion']=r[3]=r['fecha_creacion'].strftime("%Y-%m-%d %H:%M:%S")
+                if not deleted and 'fecha_pago' in r:
+                    if r['fecha_pago'] != '':
+                        r['fecha_pago']=r[3]=r['fecha_pago'].strftime("%Y-%m-%d %H:%M:%S")
 
             if not deleted:
                 row_copy.append(r)

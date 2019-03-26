@@ -86,15 +86,21 @@ class image:
         rename(folder_tmp + '/' + file_move['tmp'], folder + '/' + file_move['url'])
 
         for recorte in recortes:
-            rename(folder_tmp + '/' + image.nombre_archivo(
-                file_move['tmp'], recorte['tag']), folder + '/' + image.nombre_archivo(file_move['url'], recorte['tag']))
-            my_file = Path(
-                folder_tmp + '/' + image.nombre_archivo(file_move['tmp'], recorte['tag'], 'webp'))
+            final_file=folder + '/' + image.nombre_archivo(file_move['url'], recorte['tag'])
+            my_file = Path(final_file)
+            if my_file.is_file():
+                my_file.unlink()
+
+            rename(folder_tmp + '/' + image.nombre_archivo( file_move['tmp'], recorte['tag']), final_file)
+
+            final_file=folder + '/' + image.nombre_archivo(file_move['url'], recorte['tag'], 'webp')
+            my_file = Path(final_file)
+            if my_file.is_file():
+                my_file.unlink()
+
+            my_file = Path( folder_tmp + '/' + image.nombre_archivo(file_move['tmp'], recorte['tag'], 'webp'))
             if not my_file.is_dir():
-                rename(
-                    folder_tmp + '/' +
-                    image.nombre_archivo(file_move['tmp'], recorte['tag'], 'webp'),
-                    folder + '/' + image.nombre_archivo(file_move['url'], recorte['tag'], 'webp'))
+                rename( folder_tmp + '/' + image.nombre_archivo(file_move['tmp'], recorte['tag'], 'webp'), final_file)
 
         del file_move['tmp']
         file_move['subfolder'] = subfolder
@@ -496,6 +502,8 @@ class image:
         import shutil
         if "" == file and '' != subfolder:
             url = image.get_upload_dir() + folder + '/' + subfolder + '/'
+            if '' != sub:
+                url += sub+'/'
             my_file = Path(url)
             if my_file.is_dir():
                 shutil.rmtree(url)

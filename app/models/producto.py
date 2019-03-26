@@ -247,8 +247,7 @@ class producto(base_model):
             if foto_copy != None:
                 new_fotos = []
                 for foto in foto_copy:
-                    copiar = image.copy(
-                        foto, last_id, foto['folder'], foto['subfolder'], last_id, '')
+                    copiar = image.copy(foto, foto['id'], foto['folder'], foto['subfolder'], last_id, '')
                     new_fotos.append(copiar['file'][0])
                     image.regenerar(copiar['file'][0])
 
@@ -262,6 +261,7 @@ class producto(base_model):
                     name_final.pop()
                     name_final='.'.join(name_final)
                     name_final=name_final.split('-',1)[1]
+
                     copiar = image.copy( archivo, last_id, archivo['folder'], archivo['subfolder'], last_id, '')
                     new_archivos.append(copiar['file'][0])
                 update = {'id': last_id, 'archivo': json.dumps(new_archivos)}

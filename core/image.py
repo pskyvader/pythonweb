@@ -26,7 +26,6 @@ class image:
                 #file_ary = files  # functions.reArrayFiles(files['file'])
             #else:
             file_ary = files
-            print(file_ary)
             for files in file_ary:
                 archivo = image.upload(files, 'tmp')
                 respuesta['exito'] = archivo['exito']
@@ -173,7 +172,6 @@ class image:
         import stat
         import os
         folder = image.get_upload_dir() + folder_upload
-
         respuesta = image.validate(file)
         if respuesta['exito']:
             if '' == name_final:

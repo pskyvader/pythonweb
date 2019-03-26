@@ -242,10 +242,10 @@ class app:
         post = {}
         try:
             for key in p.keys():
-                if isinstance(p[key], FieldStorage):
+                if isinstance(p[key], FieldStorage) and p[key].file:
                     if not key in post:
                         post[key]=[]
-                    post[key].append(p[key].file)
+                    post[key].append({'name':p[key].filename, 'file':p[key].file})
                 elif isinstance(p[key], MiniFieldStorage):
                     post[key] = p[key].value
                 elif isinstance(p[key], list):

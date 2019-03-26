@@ -70,7 +70,6 @@ class pedido(base_model):
         row = connection.get(cls.table, cls.idname, where, condiciones, select)
         deleted = False
         row_copy = []
-        print(row)
         for r in row:
             deleted = False
             if 'idpadre' in r:

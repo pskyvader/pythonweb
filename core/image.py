@@ -172,6 +172,7 @@ class image:
         import stat
         import os
         folder = image.get_upload_dir() + folder_upload
+        print('file',file)
         respuesta = image.validate(file)
         if respuesta['exito']:
             if '' == name_final:
@@ -187,7 +188,6 @@ class image:
             if not my_file.is_dir():
                 makedirs(folder, 777)
 
-            print('file',file)
             #respuesta['exito'] = move_uploaded_file(file['tmp_name'], folder + '/' + name_final + extension)
             respuesta['exito'] = rename(
                 file['tmp_name'], folder + '/' + name_final + extension)

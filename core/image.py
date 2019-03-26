@@ -73,8 +73,8 @@ class image:
         base_folder = folder
         folder = image.get_upload_dir() + base_folder + '/' + str(name_final) + '/' + subfolder
 
-        image.delete(base_folder, '', str(name_final), subfolder)
-        
+        image.delete(base_folder, file_move, str(name_final), subfolder)
+
         my_file = Path(folder)
         if not my_file.is_dir():
             makedirs(folder, 777)

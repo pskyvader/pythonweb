@@ -18,7 +18,7 @@ class image:
         '''Subir a carpeta temporal, durante la creacion de la seccion. al guardar el archivo se mueve a la carpeta definitiva'''
         respuesta = {'exito': False, 'mensaje': ''}
         if 'file' in app.post:
-            files = app.post['files']
+            files = app.post['file']
             recortes = image.get_recortes(modulo)
             archivos = []
 

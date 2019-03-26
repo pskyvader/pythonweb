@@ -242,7 +242,6 @@ class app:
         post = {}
         try:
             for key in p.keys():
-                print(key)
                 if isinstance(p[key], MiniFieldStorage):
                     post[key] = p[key].value
                 elif isinstance(p[key], list):

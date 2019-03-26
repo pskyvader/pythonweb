@@ -415,6 +415,7 @@ class database():
                 elif isinstance(multiple, list):
                     loop = enumerate(multiple)
                 else:
+                    print('asdfadsffads',key,multiple)
                     data[key] = multiple
                 if loop != None:
                     for k, e in loop:

@@ -49,7 +49,7 @@ class file(image):
         from os.path import splitext
         folder_tmp = file.get_upload_dir() + folder_tmp
         base_folder = file.get_upload_dir() + folder
-        folder = base_folder + '/' + name_final + '/' + subfolder
+        folder = base_folder + '/' + str(name_final) + '/' + subfolder
 
         my_file = Path(folder)
         if not my_file.is_dir():

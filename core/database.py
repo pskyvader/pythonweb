@@ -419,6 +419,8 @@ class database():
                                 a=tmpa
                             if key == "image" or key == "file":
                                 for ke, va in enumerate(f):
+                                    if not k in row:
+                                        row[k]={}
                                     row[k][ke][a] = va
                             else:
                                 if not a in row:

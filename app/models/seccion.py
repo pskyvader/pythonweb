@@ -107,9 +107,9 @@ class seccion(base_model):
         if len(row) == 1:
             row[0]['idseccioncategoria'] = json.loads(
                 row[0]['idseccioncategoria'])
-            if 'foto' in row[0] and row[0]['foto']!='':
+            if 'foto' in row[0] and row[0]['foto'] != '':
                 row[0]['foto'] = json.loads(row[0]['foto'])
-            if 'archivo' in row[0] and row[0]['archivo']!='':
+            if 'archivo' in row[0] and row[0]['archivo'] != '':
                 row[0]['archivo'] = json.loads(row[0]['archivo'])
         return row[0] if len(row) == 1 else row
 
@@ -143,6 +143,7 @@ class seccion(base_model):
                     image.regenerar(copiar['file'][0])
 
                 update = {'id': last_id, 'foto': json.dumps(new_fotos)}
+                print(update)
                 cls.update(update)
 
             if loggging:

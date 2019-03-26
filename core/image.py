@@ -75,8 +75,7 @@ class image:
         my_file = Path(folder)
         if not my_file.is_dir():
             makedirs(folder, 777)
-
-        print(file)
+)
         name, extension = splitext(file['tmp'])
 
         file['url'] = file['id'] + extension

@@ -50,8 +50,9 @@ class image:
         return respuesta
 
     @staticmethod
-    def regenerar(file):
+    def regenerar(file_original):
         '''regenerar imagenes ya guardadas'''
+        file=file_original.copy()
         from glob import glob
         from os import remove
         recortes = image.get_recortes(file['folder'])

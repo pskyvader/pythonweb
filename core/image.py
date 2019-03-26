@@ -63,7 +63,7 @@ class image:
         return respuesta
 
     @staticmethod
-    def move(file, folder, subfolder, name_final, folder_tmp='tmp'):
+    def move(file_move, folder, subfolder, name_final, folder_tmp='tmp'):
         '''mover archivo (normalmente) desde la carpeta temporal a la definitiva'''
         from os.path import splitext
 
@@ -76,25 +76,25 @@ class image:
         if not my_file.is_dir():
             makedirs(folder, 777)
 
-        name, extension = splitext(file['tmp'])
+        name, extension = splitext(file_move['tmp'])
 
-        file['url'] = file['id'] + extension
-        rename(folder_tmp + '/' + file['tmp'], folder + '/' + file['url'])
+        file_move['url'] = file_move['id'] + extension
+        rename(folder_tmp + '/' + file_move['tmp'], folder + '/' + file_move['url'])
 
         for recorte in recortes:
             rename(folder_tmp + '/' + image.nombre_archivo(
-                file['tmp'], recorte['tag']), folder + '/' + image.nombre_archivo(file['url'], recorte['tag']))
+                file_move['tmp'], recorte['tag']), folder + '/' + image.nombre_archivo(file_move['url'], recorte['tag']))
             my_file = Path(
-                folder_tmp + '/' + image.nombre_archivo(file['tmp'], recorte['tag'], 'webp'))
+                folder_tmp + '/' + image.nombre_archivo(file_move['tmp'], recorte['tag'], 'webp'))
             if not my_file.is_dir():
                 rename(
                     folder_tmp + '/' +
-                    image.nombre_archivo(file['tmp'], recorte['tag'], 'webp'),
-                    folder + '/' + image.nombre_archivo(file['url'], recorte['tag'], 'webp'))
+                    image.nombre_archivo(file_move['tmp'], recorte['tag'], 'webp'),
+                    folder + '/' + image.nombre_archivo(file_move['url'], recorte['tag'], 'webp'))
 
-        del file['tmp']
-        file['subfolder'] = subfolder
-        return file
+        del file_move['tmp']
+        file_move['subfolder'] = subfolder
+        return file_move
 
     @staticmethod
     def copy(original_file, id_final, folder, subfolder="", name_final="", tag='thumb'):

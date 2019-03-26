@@ -48,9 +48,9 @@ class database():
             if return_query:
                 rows = list(cursor.fetchall())
                 for r in rows:
-                    for k,v in r.items():
-                        if isinstance(v,datetime):
-                            r[k]=v.strftime("%Y-%m-%d %H:%M:%S")
+                    for k, v in r.items():
+                        if isinstance(v, datetime):
+                            r[k] = v.strftime("%Y-%m-%d %H:%M:%S")
                     for k, v in enumerate(list(r.values())):
                         r[k] = v
             else:
@@ -409,46 +409,41 @@ class database():
         if 'multiple' in data:
             for key, multiple in data['multiple'].items():
                 row = {}
+                loop = None
                 if isinstance(multiple, dict):
-                    loop=multiple.items()
+                    loop = multiple.items()
                 elif isinstance(multiple, list):
-                    loop=enumerate(multiple)
+                    loop = enumerate(multiple)
                 else:
-                    row[key]=multiple
+                    row[key] = multiple
+                if loop != None:
+                    for k, e in loop:
+                        subloop = None
+                        if isinstance(e, dict):
+                            subloop = e.items()
+                        elif isinstance(e, list):
+                            subloop = enumerate(e)
+                        else:
+                            row[k] = e
 
-                for k, e in loop:
-                    if isinstance(e, dict):
-                        for a, f in e.items():
-                            tmpa=a
-                            try:
-                                a = int(a)
-                            except:
-                                a=tmpa
-                            if key == "image" or key == "file":
-                                for ke, va in enumerate(f):
-                                    if not k in row:
-                                        row[k]={}
-                                    if not ke in row[k]:
-                                        row[k][ke]={}
-                                    row[k][ke][a] = va
-                            else:
-                                if not a in row:
-                                    row[a] = {}
-                                row[a][k] = f
-                    elif isinstance(e, list):
-                        for a, f in enumerate(e):
-                            if key == "image" or key == "file":
-                                for ke, va in f.items():
-                                    row[k][ke][a] = va
-                            else:
-                                if not a in row:
-                                    row[a] = {}
-                                row[a][k] = f
-                    else:
-                        row[k] = e
-
-
-
+                        if subloop != None:
+                            for a, f in subloop:
+                                tmpa = a
+                                try:
+                                    a = int(a)
+                                except:
+                                    a = tmpa
+                                if key == "image" or key == "file":
+                                    for ke, va in enumerate(f):
+                                        if not k in row:
+                                            row[k] = {}
+                                        if not ke in row[k]:
+                                            row[k][ke] = {}
+                                        row[k][ke][a] = va
+                                else:
+                                    if not a in row:
+                                        row[a] = {}
+                                    row[a][k] = f
 
                 if key != "image" and key != "file":
                     if all(isinstance(item, int) for item in row.keys()):
@@ -456,6 +451,7 @@ class database():
                     data[key] = json.dumps(row, ensure_ascii=False)
                 else:
                     data[key] = row
+
             del data['multiple']
         return data
 

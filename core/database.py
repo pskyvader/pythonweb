@@ -50,7 +50,7 @@ class database():
                 keys_date=[]
                 if len(rows)>0:
                     base_row=rows[0]
-                    for k,v in r.items():
+                    for k,v in base_row.items():
                         if isinstance(v,datetime):
                             keys_date.append(k)
                 for r in rows:

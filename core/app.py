@@ -240,6 +240,7 @@ class app:
     def post_field(p):
         from cgi import MiniFieldStorage,FieldStorage,escape
         import mimetypes
+        import openxmllib
         post = {}
         try:
             for key in p.keys():

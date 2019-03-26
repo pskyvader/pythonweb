@@ -527,7 +527,10 @@ class database():
         row = self.get(table, idname, {'idname': id_file}, {'limit': 1})
         self.update(table, idname, data, {'idname': id_file})
         for key, value in ids.items():
-            files = json.loads(row[0][key])
+            if row[0][key]!='':
+                files = json.loads(row[0][key])
+            else:
+                files=''
             if isinstance(files, list):
                 for fi in files:
                     if fi['id'] not in value or value[fi['id']] != fi['url']:

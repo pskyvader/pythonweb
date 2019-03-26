@@ -52,10 +52,6 @@ function post(url_post, info, mensaje_inicial, importante, archivo, callback, ex
         });
         process=false
         type=false
-        
-        process=true
-        type='application/x-www-form-urlencoded; charset=UTF-8'
-
     }else{
         process=true
         type='application/x-www-form-urlencoded; charset=UTF-8'

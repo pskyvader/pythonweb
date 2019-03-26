@@ -71,8 +71,8 @@ class image:
         recortes = image.get_recortes(folder)
         folder_tmp = image.get_upload_dir() + folder_tmp
         base_folder = folder
-        folder = image.get_upload_dir() + base_folder + '/' + str(name_final) + '/' + subfolder
-
+        folder = image.get_upload_dir() + base_folder + '/' + \
+            str(name_final) + '/' + subfolder
 
         my_file = Path(folder)
         if not my_file.is_dir():
@@ -80,11 +80,11 @@ class image:
 
         name, extension = splitext(file_move['tmp'])
         file_move['url'] = file_move['id'] + extension
-        
+
         image.delete(base_folder, file_move, str(name_final), subfolder)
 
-
-        rename(folder_tmp + '/' + file_move['tmp'], folder + '/' + file_move['url'])
+        rename(folder_tmp + '/' +
+               file_move['tmp'], folder + '/' + file_move['url'])
 
         for recorte in recortes:
             final_file = folder + '/' + \
@@ -115,7 +115,8 @@ class image:
 
         name, extension = os.path.splitext(original_file['url'])
 
-        new_file = {'portada': True, 'id': original_file['id'], 'url': str(name_final) + extension, 'parent': parent_final, 'folder': folder, 'subfolder': subfolder, 'tmp': ''}
+        new_file = {'portada': True, 'id': original_file['id'], 'url': str(
+            name_final) + extension, 'parent': parent_final, 'folder': folder, 'subfolder': subfolder, 'tmp': ''}
         original = image.generar_dir(original_file, tag)
 
         if original != '':
@@ -367,6 +368,11 @@ class image:
 
         x, y, miniatura_ancho, miniatura_alto = image.proporcion_foto(
             ancho_maximo, alto_maximo, ancho, alto, tipo)
+
+        if "png" == imagen_tipo:
+            im = im.convert('RGBA')
+        else:
+            im = im.convert('RGB')
 
         if tipo == "recortar":
             box = (x, y, ancho_maximo+x, alto_maximo+y)

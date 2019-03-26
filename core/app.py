@@ -244,7 +244,7 @@ class app:
         try:
             for key in p.keys():
                 if isinstance(p[key], FieldStorage) and p[key].file:
-                    tmpfile=p[key].file.read()
+                    tmpfile=p[key].file
                     if not key in post:
                         post[key]=[]
                     mime = mimetypes.guess_type(p[key].filename, False)[0]

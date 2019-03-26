@@ -188,6 +188,7 @@ class image:
                 makedirs(folder, 777)
             with open(folder + '/' + name_final + extension, 'wb') as output_file:
                 while 1:
+                    print(file['tmp_name'])
                     data = file['tmp_name'].read(1024)
                     if not data:
                         respuesta['exito']=True

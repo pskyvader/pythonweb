@@ -22,9 +22,9 @@ class image:
             recortes = image.get_recortes(modulo)
             archivos = []
 
-            #if 'file' in files:
-                #file_ary = files  # functions.reArrayFiles(files['file'])
-            #else:
+            # if 'file' in files:
+            # file_ary = files  # functions.reArrayFiles(files['file'])
+            # else:
             file_ary = files
             for files in file_ary:
                 archivo = image.upload(files, 'tmp')
@@ -51,12 +51,13 @@ class image:
     @staticmethod
     def regenerar(file_original):
         '''regenerar imagenes ya guardadas'''
-        file=file_original.copy()
+        file = file_original.copy()
         from glob import glob
         from os import remove
         recortes = image.get_recortes(file['folder'])
         file['name'] = file['url']
-        file['folder'] = file['folder'] + '/' + str(file['parent']) + '/' + str(file['subfolder'])
+        file['folder'] = file['folder'] + '/' + \
+            str(file['parent']) + '/' + str(file['subfolder'])
         for fl in glob(image.get_upload_dir() + file['folder'] + "/" + str(file['id']) + "-*.*"):
             remove(fl)
         respuesta = image.recortes_foto(file, recortes)
@@ -79,28 +80,26 @@ class image:
         name, extension = splitext(file_move['tmp'])
         file_move['url'] = file_move['id'] + extension
 
-        my_file = Path(folder + '/' + file_move['url'])
-        if my_file.is_file():
-            my_file.unlink()
+        image.delete(base_folder, '', str(name_final), subfolder)
 
-        rename(folder_tmp + '/' + file_move['tmp'], folder + '/' + file_move['url'])
+        rename(folder_tmp + '/' +
+               file_move['tmp'], folder + '/' + file_move['url'])
 
         for recorte in recortes:
-            final_file=folder + '/' + image.nombre_archivo(file_move['url'], recorte['tag'])
-            my_file = Path(final_file)
-            if my_file.is_file():
-                my_file.unlink()
+            final_file = folder + '/' + \
+                image.nombre_archivo(file_move['url'], recorte['tag'])
 
-            rename(folder_tmp + '/' + image.nombre_archivo( file_move['tmp'], recorte['tag']), final_file)
+            rename(folder_tmp + '/' +
+                   image.nombre_archivo(file_move['tmp'], recorte['tag']), final_file)
 
-            final_file=folder + '/' + image.nombre_archivo(file_move['url'], recorte['tag'], 'webp')
-            my_file = Path(final_file)
-            if my_file.is_file():
-                my_file.unlink()
-
-            my_file = Path( folder_tmp + '/' + image.nombre_archivo(file_move['tmp'], recorte['tag'], 'webp'))
+            my_file = Path(
+                folder_tmp + '/' + image.nombre_archivo(file_move['tmp'], recorte['tag'], 'webp'))
             if not my_file.is_dir():
-                rename( folder_tmp + '/' + image.nombre_archivo(file_move['tmp'], recorte['tag'], 'webp'), final_file)
+                final_file = folder + '/' + \
+                    image.nombre_archivo(
+                        file_move['url'], recorte['tag'], 'webp')
+                rename(folder_tmp + '/' + image.nombre_archivo(
+                    file_move['tmp'], recorte['tag'], 'webp'), final_file)
 
         del file_move['tmp']
         file_move['subfolder'] = subfolder
@@ -115,7 +114,8 @@ class image:
 
         name, extension = os.path.splitext(original_file['url'])
 
-        new_file = {'portada': True, 'id': 1, 'url': str( id_final) + extension, 'parent': name_final, 'folder': folder, 'subfolder': subfolder, 'tmp': ''}
+        new_file = {'portada': True, 'id': 1, 'url': str(
+            id_final) + extension, 'parent': name_final, 'folder': folder, 'subfolder': subfolder, 'tmp': ''}
         original = image.generar_dir(original_file, tag)
 
         if original != '':
@@ -216,7 +216,7 @@ class image:
     def validate(cls, file):
         from os.path import splitext
         name, extension = splitext(file['name'])
-        extension=extension.lower();
+        extension = extension.lower()
         respuesta = {'exito': False, 'mensaje': 'Error: formato no valido'}
         if 'error' in file and 0 != file['error']:
             respuesta['mensaje'] = 'Error al subir archivo: ' + file['error']
@@ -276,7 +276,8 @@ class image:
                 return respuesta
 
             archivo_recorte = archivo.copy()
-            archivo_recorte['name'] = image.nombre_archivo( archivo_recorte['name'], 'recorte_previo')
+            archivo_recorte['name'] = image.nombre_archivo(
+                archivo_recorte['name'], 'recorte_previo')
             for recorte in recortes_foto:
                 if recorte['ancho'] != None and recorte['ancho'] <= ancho_valido and recorte['alto'] != None and recorte['alto'] <= alto_valido:
                     respuesta = image.recortar_foto(recorte, archivo_recorte)

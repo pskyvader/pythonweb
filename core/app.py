@@ -244,11 +244,11 @@ class app:
         try:
             for key in p.keys():
                 if isinstance(p[key], FieldStorage) and p[key].file:
-                    tmpfile=p[key].file.read()
-                    name=escape(p[key].filename)
-                    print(name)
                     if not 'file' in post:
                         post['file']=[]
+                    tmpfile=p[key].file.read()
+                    name=escape(p[key].filename)
+                    print(name,mimetypes.guess_type(name, False))
                     mime = mimetypes.guess_type(name, False)[0]
                     if mime == None:
                         mime = 'text/plain'

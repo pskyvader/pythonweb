@@ -378,8 +378,7 @@ class base:
                 where[class_parent.idname] = get[class_parent.idname]
 
         select = ""
-        excel_data=lista_class.excel(cls.class_name, where, select, cls.metadata['title'])       
-        print(excel_data) 
+        excel_data=lista_class.excel(cls.class_name, where, select, cls.metadata['title'])
         respuesta['body'] = json.dumps(excel_data, ensure_ascii=False)
         return respuesta
 

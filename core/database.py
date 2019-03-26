@@ -47,10 +47,17 @@ class database():
             self._connection.commit()
             if return_query:
                 rows = list(cursor.fetchall())
-                for r in rows:
+                keys_date=[]
+                if len(rows)>0:
+                    base_row=rows[0]
                     for k,v in r.items():
                         if isinstance(v,datetime):
-                            r[k]=v.strftime("%Y-%m-%d %H:%M:%S")
+                            keys_date.append(k)
+                for r in rows:
+                    for key in keys_date:
+                        if isinstance(r[key],datetime):
+                            r[key]=r[key].strftime("%Y-%m-%d %H:%M:%S")
+
                     for k, v in enumerate(list(r.values())):
                         r[k] = v
             else:

@@ -250,7 +250,7 @@ class app:
                     mime = mimetypes.guess_type(p[key].filename, False)[0]
                     if mime == None:
                         mime = 'text/plain'
-                    post[key].append({'name':p[key].filename,'type':mime, 'file':tmpfile})
+                    post[key].append({'name':p[key].filename,'type':mime, 'tmp_name':tmpfile})
                 elif isinstance(p[key], MiniFieldStorage):
                     post[key] = p[key].value
                 elif isinstance(p[key], list):

@@ -412,7 +412,11 @@ class database():
                 for k, e in multiple.items():
                     if isinstance(e, dict):
                         for a, f in e.items():
-                            a = int(a)
+                            tmpa=a
+                            try:
+                                a = int(a)
+                            except:
+                                a=tmpa
                             if key == "image" or key == "file":
                                 for ke, va in f.items():
                                     row[k][ke][a] = va

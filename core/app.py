@@ -239,8 +239,7 @@ class app:
     @staticmethod
     def post_field(p):
         from cgi import MiniFieldStorage,FieldStorage,escape
-        import mimetypes
-        import openxmllib
+        from .functions import functions
         post = {}
         try:
             for key in p.keys():
@@ -249,8 +248,7 @@ class app:
                         post['file']=[]
                     tmpfile=p[key].file.read()
                     name=escape(p[key].filename)
-                    print(name,mimetypes.guess_type(name))
-                    mime = mimetypes.guess_type(name, False)[0]
+                    mime = functions.get_content_type_by_filename(name)
                     if mime == None:
                         mime = 'text/plain'
                     post['file'].append({'name':name,'type':mime, 'tmp_name':tmpfile})

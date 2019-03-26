@@ -49,7 +49,7 @@ class database():
                 rows = list(cursor.fetchall())
                 for r in rows:
                     for k,v in r.items():
-                        if isinstance(v,datetime)=='datetime.datetime':
+                        if isinstance(v,datetime):
                             r[k]=v
                     for k, v in enumerate(list(r.values())):
                         r[k] = v

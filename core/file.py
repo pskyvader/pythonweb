@@ -73,6 +73,8 @@ class file(image):
         import shutil
         if "" == file_name and '' != subfolder:
             url = file.get_upload_dir() + folder + '/' + subfolder + '/'
+            if '' != sub:
+                url += sub+'/'
             my_file = Path(url)
             if my_file.is_dir():
                 shutil.rmtree(url)

@@ -68,7 +68,6 @@ class seccion(base_model):
         for r in row:
             deleted = False
             if 'idseccioncategoria' in r and r['idseccioncategoria']!='':
-                print('sc',r['idseccioncategoria'],type(r['idseccioncategoria']))
                 r['idseccioncategoria'] = json.loads(r['idseccioncategoria'])
                 if idseccioncategoria != None and idseccioncategoria not in r['idseccioncategoria']:
                     deleted = True

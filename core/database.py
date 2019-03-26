@@ -413,9 +413,10 @@ class database():
                     loop=multiple.items()
                 elif isinstance(multiple, list):
                     loop=enumerate(multiple)
+                else:
+                    row[key]=multiple
 
-
-                for k, e in multiple.items():
+                for k, e in loop:
                     if isinstance(e, dict):
                         for a, f in e.items():
                             tmpa=a

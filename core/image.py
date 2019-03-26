@@ -56,8 +56,7 @@ class image:
         from os import remove
         recortes = image.get_recortes(file['folder'])
         file['name'] = file['url']
-        file['folder'] = file['folder'] + '/' + \
-            str(file['parent']) + '/' + str(file['subfolder'])
+        file['folder'] = file['folder'] + '/' + str(file['parent']) + '/' + str(file['subfolder'])
         for fl in glob(image.get_upload_dir() + file['folder'] + "/" + str(file['id']) + "-*.*"):
             remove(fl)
         respuesta = image.recortes_foto(file, recortes)

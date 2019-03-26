@@ -452,9 +452,10 @@ class database():
                                         row[a] = {}
                                     row[a][k] = f
 
+                if isinstance(row,dict) and all(isinstance(item, int) for item in row.keys()):
+                    row = [row[key] for key in sorted(row.keys())]
+
                 if key != "image" and key != "file":
-                    if all(isinstance(item, int) for item in row.keys()):
-                        row = [row[key] for key in sorted(row.keys())]
                     data[key] = json.dumps(row, ensure_ascii=False)
                 else:
                     print(row)

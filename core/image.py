@@ -187,7 +187,7 @@ class image:
             if not my_file.is_dir():
                 makedirs(folder, 777)
 
-            print(file)
+            print('file',file)
             #respuesta['exito'] = move_uploaded_file(file['tmp_name'], folder + '/' + name_final + extension)
             respuesta['exito'] = rename(
                 file['tmp_name'], folder + '/' + name_final + extension)

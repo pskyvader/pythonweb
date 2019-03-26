@@ -238,7 +238,7 @@ class app:
 
     @staticmethod
     def post_field(p):
-        from cgi import MiniFieldStorage
+        from cgi import MiniFieldStorage,FieldStorage
         post = {}
         try:
             for key in p.keys():

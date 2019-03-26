@@ -269,6 +269,7 @@ class functions():
 
     @staticmethod
     def get_content_type_by_filename(file_name):
+        from os.path import basename
         mime_type = ""
         mime_map = {}
         mime_map["js"] = "application/javascript"
@@ -285,7 +286,7 @@ class functions():
         mime_map["apk"] = "application/vnd.android.package-archive"
         try:
             suffix = ""
-            name = os.path.basename(file_name)
+            name = basename(file_name)
             suffix = name.split('.')[-1]
             if suffix in mime_map.keys():
                 mime_type = mime_map[suffix] 

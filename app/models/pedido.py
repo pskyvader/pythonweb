@@ -70,6 +70,7 @@ class pedido(base_model):
         row = connection.get(cls.table, cls.idname, where, condiciones, select)
         deleted = False
         row_copy = []
+        print(row)
         for r in row:
             deleted = False
             if 'idpadre' in r:
@@ -94,8 +95,6 @@ class pedido(base_model):
                 if not deleted and 'fecha_creacion' in r:
                     if r['fecha_creacion'] != '':
                         r['fecha_creacion']=r[4]=r['fecha_creacion'].strftime("%Y-%m-%d %H:%M:%S")
-                    else:
-                        r['fecha_creacion'] = []
 
             if not deleted:
                 row_copy.append(r)

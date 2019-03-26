@@ -50,7 +50,7 @@ class database():
                 for r in rows:
                     for k,v in r.items():
                         if isinstance(v,datetime):
-                            r[k]=v
+                            r[k]=v.strftime("%Y-%m-%d %H:%M:%S")
                     for k, v in enumerate(list(r.values())):
                         r[k] = v
             else:

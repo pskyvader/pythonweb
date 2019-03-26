@@ -89,7 +89,7 @@ function exportar_excel(data) {
     var ws_name = "Hoja 1";
     var workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, ws_name);
-    XLSX.writeFile(workbook, filename, { type: "base64" });
+    XLSX.writeFile(workbook, filename);
     notificacion('Confirmación', 'Documento Exportado', 'success');
     notificacion_footer(false);
     barra(100);

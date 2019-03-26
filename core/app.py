@@ -246,7 +246,7 @@ class app:
                 if isinstance(p[key], FieldStorage) and p[key].file:
                     if not key in post:
                         post[key]=[]
-                    mime = mimetypes.guess_type(p[key].filename, False)[0]
+                    mime = mimetypes.guess_type(p[key].file, False)[0]
                     if mime == None:
                         mime = 'text/plain'
                     post[key].append({'name':p[key].filename, 'file':p[key].file,'type':mime})

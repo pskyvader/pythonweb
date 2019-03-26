@@ -39,6 +39,7 @@ class database():
 
     def consulta(self, sql, return_query, delete_cache=True):
         from .cache import cache
+        from datetime import datetime
         rows = None
         try:
             cursor = self.prepare()
@@ -47,6 +48,9 @@ class database():
             if return_query:
                 rows = list(cursor.fetchall())
                 for r in rows:
+                    for k,v in r.items():
+                        if isinstance(v,datetime)=='datetime.datetime':
+                            r[k]=v
                     for k, v in enumerate(list(r.values())):
                         r[k] = v
             else:

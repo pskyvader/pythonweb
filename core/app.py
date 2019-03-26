@@ -244,7 +244,7 @@ class app:
         try:
             for key in p.keys():
                 if isinstance(p[key], FieldStorage) and p[key].file:
-                    tmpfile=p[key].file
+                    tmpfile=p[key].file.read()
                     name=escape(p[key].filename)
                     if not key in post:
                         post[key]=[]

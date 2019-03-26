@@ -208,7 +208,7 @@ class image:
         from os.path import splitext
         name, extension = splitext(file['name'])
         respuesta = {'exito': False, 'mensaje': 'Error: formato no valido'}
-        if 0 != file['error']:
+        if 'error' in file and 0 != file['error']:
             respuesta['mensaje'] = 'Error al subir archivo: ' + file['error']
         elif file['type'] not in cls.types:
             respuesta['mensaje'] += '. Extension: ' + file['type']

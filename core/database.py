@@ -409,6 +409,12 @@ class database():
         if 'multiple' in data:
             for key, multiple in data['multiple'].items():
                 row = {}
+                if isinstance(multiple, dict):
+                    loop=multiple.items()
+                elif isinstance(multiple, list):
+                    loop=enumerate(multiple)
+
+
                 for k, e in multiple.items():
                     if isinstance(e, dict):
                         for a, f in e.items():
@@ -439,6 +445,9 @@ class database():
                                 row[a][k] = f
                     else:
                         row[k] = e
+
+
+
 
                 if key != "image" and key != "file":
                     if all(isinstance(item, int) for item in row.keys()):

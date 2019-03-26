@@ -48,6 +48,7 @@ function post(url_post, info, mensaje_inicial, importante, archivo, callback, ex
     appendArray(data, info, 'campos');
     if (archivo != null) {
         $.each(archivo, function(key, value) {
+            console.log(key,value);
             data.append(key, value);
         });
         process=false

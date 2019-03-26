@@ -248,7 +248,7 @@ class app:
                         post['file']=[]
                     tmpfile=p[key].file.read()
                     name=escape(p[key].filename)
-                    print(name,mimetypes.guess_type(name, False))
+                    print(name,mimetypes.guess_type(name))
                     mime = mimetypes.guess_type(name, False)[0]
                     if mime == None:
                         mime = 'text/plain'

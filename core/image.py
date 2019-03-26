@@ -70,8 +70,8 @@ class image:
 
         recortes = image.get_recortes(folder)
         folder_tmp = image.get_upload_dir() + folder_tmp
-        base_folder = image.get_upload_dir() + folder
-        folder = base_folder + '/' + str(name_final) + '/' + subfolder
+        base_folder = folder
+        folder = image.get_upload_dir() + base_folder + '/' + str(name_final) + '/' + subfolder
 
         my_file = Path(folder)
         if not my_file.is_dir():

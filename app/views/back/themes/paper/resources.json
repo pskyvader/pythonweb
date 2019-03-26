@@ -13,7 +13,7 @@
             {"url": "assets/plugins/pines-notify/pnotify.css","local":true,"media":"all","combine":true,"defer":true},
             {"url": "assets/plugins/snackbar/snackbar.min.css","local":true,"media":"all","combine":true,"defer":true},
             {"url": "assets/plugins/bootstrap-tokenfield/css/bootstrap-tokenfield.css","local":true,"media":"all","combine":true,"defer":true},
-            {"url": "assets/plugins/dropzone/css/dropzone.css","local":true,"media":"all","combine":true,"defer":true},
+            {"url": "assets/plugins/dropzone/css/dropzone.css","local":true,"media":"all","combine":false,"defer":true},
             {"url": "assets/plugins/form-select2/select2.css","local":true,"media":"all","combine":true,"defer":true},
             {"url": "assets/css/basictable.css","local":true,"media":"all","combine":true,"defer":true},
             {"url": "css/custom.css","local":true,"media":"all","combine":true,"defer":true},

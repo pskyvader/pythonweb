@@ -112,16 +112,19 @@ class producto(base_model):
 
             for v in row:
                 if 'precio' in v:
-                    v['idproductocategoria'][0]=int(v['idproductocategoria'][0])
+                    v['idproductocategoria'][0] = int(
+                        v['idproductocategoria'][0])
                     v['precio_final'] = v['precio']
                     descuento = 0
                     if v['descuento'] != 0:
                         descuento = v['descuento']
                         fechas = v['descuento_fecha']
-                    elif len(v['idproductocategoria'])>0 and v['idproductocategoria'][0] in categorias and categorias[v['idproductocategoria'][0]]['descuento'] != 0:
+                    elif len(v['idproductocategoria']) > 0 and v['idproductocategoria'][0] in categorias and categorias[v['idproductocategoria'][0]]['descuento'] != 0:
 
-                        descuento = categorias[v['idproductocategoria'] [0]]['descuento']
-                        fechas = categorias[v['idproductocategoria'] [0]]['descuento_fecha']
+                        descuento = categorias[v['idproductocategoria']
+                                               [0]]['descuento']
+                        fechas = categorias[v['idproductocategoria']
+                                            [0]]['descuento_fecha']
                     if descuento > 0 and descuento < 100:
                         fechas = fechas.split(' - ')
                         fecha1 = functions.formato_fecha(
@@ -149,7 +152,8 @@ class producto(base_model):
         connection = database.instance()
         row = connection.get(cls.table, cls.idname, where)
         if len(row) == 1:
-            row[0]['idproductocategoria'] = json.loads(row[0]['idproductocategoria'])
+            row[0]['idproductocategoria'] = json.loads(
+                row[0]['idproductocategoria'])
             if 'foto' in row[0] and row[0]['foto'] != '':
                 row[0]['foto'] = json.loads(row[0]['foto'])
             else:
@@ -160,7 +164,8 @@ class producto(base_model):
                 row[0]['archivo'] = []
 
             if 'precio' in row[0]:
-                cat = productocategoria.getById( row[0]['idproductocategoria'][0])
+                cat = productocategoria.getById(
+                    row[0]['idproductocategoria'][0])
                 categorias = {}
                 if len(cat) > 0:
                     categorias[cat[0]] = {
@@ -226,7 +231,10 @@ class producto(base_model):
             foto_copy = None
 
         if 'archivo' in row:
+            archivo_copy = row['archivo']
             del row['archivo']
+        else:
+            archivo_copy = None
 
         row['idproductocategoria'] = json.dumps(row['idproductocategoria'])
         fields = table.getByname(cls.table)
@@ -235,6 +243,7 @@ class producto(base_model):
         row = connection.insert(cls.table, cls.idname, insert)
         if isinstance(row, int) and row > 0:
             last_id = row
+            
             if foto_copy != None:
                 new_fotos = []
                 for foto in foto_copy:
@@ -244,6 +253,15 @@ class producto(base_model):
                     image.regenerar(copiar['file'][0])
 
                 update = {'id': last_id, 'foto': json.dumps(new_fotos)}
+                cls.update(update)
+
+            if archivo_copy != None:
+                new_archivos = []
+                for archivo in archivo_copy:
+                    copiar = image.copy(
+                        archivo, last_id, archivo['folder'], archivo['subfolder'], last_id, '')
+                    new_archivos.append(copiar['file'][0])
+                update = {'id': last_id, 'archivo': json.dumps(new_archivos)}
                 cls.update(update)
 
             if loggging:

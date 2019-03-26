@@ -188,7 +188,10 @@ class base_model:
             foto_copy = None
 
         if 'archivo' in row:
+            archivo_copy = row['archivo']
             del row['archivo']
+        else:
+            archivo_copy = None
 
         fields = table.getByname(cls.table)
         insert = database.create_data(fields, row)
@@ -196,6 +199,7 @@ class base_model:
         row = connection.insert(cls.table, cls.idname, insert)
         if isinstance(row, int) and row > 0:
             last_id = row
+
             if foto_copy != None:
                 new_fotos = []
                 for foto in foto_copy:
@@ -205,6 +209,15 @@ class base_model:
                     image.regenerar(copiar['file'][0])
 
                 update = {'id': last_id, 'foto': json.dumps(new_fotos)}
+                cls.update(update)
+
+            if archivo_copy != None:
+                new_archivos = []
+                for archivo in archivo_copy:
+                    copiar = image.copy(
+                        archivo, last_id, archivo['folder'], archivo['subfolder'], last_id, '')
+                    new_archivos.append(copiar['file'][0])
+                update = {'id': last_id, 'archivo': json.dumps(new_archivos)}
                 cls.update(update)
 
             if loggging:

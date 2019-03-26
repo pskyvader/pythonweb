@@ -66,7 +66,6 @@ class image:
     def move(file_move, folder, subfolder, name_final, folder_tmp='tmp'):
         '''mover archivo (normalmente) desde la carpeta temporal a la definitiva'''
         from os.path import splitext
-        from os import remove
 
         recortes = image.get_recortes(folder)
         folder_tmp = image.get_upload_dir() + folder_tmp
@@ -82,7 +81,8 @@ class image:
 
         my_file = Path(folder + '/' + file_move['url'])
         if my_file.is_file():
-            remove(folder + '/' + file_move['url'])
+            my_file.unlink()
+
         rename(folder_tmp + '/' + file_move['tmp'], folder + '/' + file_move['url'])
 
         for recorte in recortes:

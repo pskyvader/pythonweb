@@ -243,7 +243,7 @@ class producto(base_model):
         row = connection.insert(cls.table, cls.idname, insert)
         if isinstance(row, int) and row > 0:
             last_id = row
-            
+
             if foto_copy != None:
                 new_fotos = []
                 for foto in foto_copy:
@@ -258,8 +258,11 @@ class producto(base_model):
             if archivo_copy != None:
                 new_archivos = []
                 for archivo in archivo_copy:
-                    copiar = image.copy(
-                        archivo, last_id, archivo['folder'], archivo['subfolder'], last_id, '')
+                    name_final=archivo['url'].split('.')
+                    name_final.pop()
+                    name_final='.'.join(name_final)
+                    name_final=name_final.split('-',1)[1]
+                    copiar = image.copy( archivo, last_id, archivo['folder'], archivo['subfolder'], name_final, '')
                     new_archivos.append(copiar['file'][0])
                 update = {'id': last_id, 'archivo': json.dumps(new_archivos)}
                 cls.update(update)

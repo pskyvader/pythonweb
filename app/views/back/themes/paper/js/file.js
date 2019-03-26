@@ -66,8 +66,10 @@ function inicio_file_multiple(e) {
                 this.on("removedfile", function(e, i) {
                     var a = $.inArray(e.name, archivos_temporal); - 1 != a && archivos_temporal.splice(a, 1), 0 == archivos_temporal.length && habilitar(!0);
                 }),
-                this.on("success", function(file, data) {
-                    var datos = $.parseJSON(data);
+                this.on("success", function(file, datos) {
+                    if (typeof(datos) != 'object') {
+                        var datos = JSON.parse(datos);
+                    }
                     if (typeof(datos['exito']) != 'undefined' && datos['exito']) {
                         var mensaje = 'filen ' + (($.isArray(datos['mensaje'])) ? datos['mensaje'].join('<br/>') : datos['mensaje']) + ' añadida correctamente';
                         notificacion_footer(mensaje);

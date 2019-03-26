@@ -186,13 +186,11 @@ class image:
             my_file = Path(folder)
             if not my_file.is_dir():
                 makedirs(folder, 777)
-
-            #respuesta['exito'] = move_uploaded_file(file['tmp_name'], folder + '/' + name_final + extension)
-            respuesta['exito'] = rename(file['tmp_name'], folder + '/' + name_final + extension)
             with open(folder + '/' + name_final + extension, 'wb') as output_file:
                 while 1:
                     data = file['tmp_name'].read(1024)
                     if not data:
+                        respuesta['exito']=True
                         break
                     output_file.write(data)
 

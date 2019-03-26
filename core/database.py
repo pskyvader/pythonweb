@@ -440,13 +440,13 @@ class database():
                                         if not ke in row[k]:
                                             row[k][ke] = {}
                                         row[k][ke][a] = va
-                                    print(row)
                                 else:
                                     if not a in row:
                                         row[a] = {}
                                     row[a][k] = f
 
                 if key != "image" and key != "file":
+                    print(row)
                     if all(isinstance(item, int) for item in row.keys()):
                         row = [row[key] for key in sorted(row.keys())]
                     data[key] = json.dumps(row, ensure_ascii=False)

@@ -131,9 +131,6 @@ class image:
                     folder + ' no tiene permisos de escritura'
         else:
             respuesta['mensaje'] = 'El archivo original no existe'
-        
-        print(respuesta)
-
         return respuesta
 
     @staticmethod

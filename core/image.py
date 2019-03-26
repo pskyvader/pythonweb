@@ -172,7 +172,6 @@ class image:
         import stat
         import os
         folder = image.get_upload_dir() + folder_upload
-        print('file',file)
         respuesta = image.validate(file)
         if respuesta['exito']:
             if '' == name_final:
@@ -207,6 +206,7 @@ class image:
     def validate(cls, file):
         from os.path import splitext
         name, extension = splitext(file['name'])
+        extension=extension.lower();
         respuesta = {'exito': False, 'mensaje': 'Error: formato no valido'}
         if 'error' in file and 0 != file['error']:
             respuesta['mensaje'] = 'Error al subir archivo: ' + file['error']

@@ -421,6 +421,8 @@ class database():
                                 for ke, va in enumerate(f):
                                     if not k in row:
                                         row[k]={}
+                                    if not ke in row[k]:
+                                        row[k][ke]={}
                                     row[k][ke][a] = va
                             else:
                                 if not a in row:

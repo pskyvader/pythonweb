@@ -22,7 +22,6 @@ class image:
             recortes = image.get_recortes(modulo)
             archivos = []
 
-            print(type(files),files)
             if 'file' in files:
                 file_ary = files  # functions.reArrayFiles(files['file'])
             else:

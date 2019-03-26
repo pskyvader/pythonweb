@@ -106,7 +106,6 @@ class image:
         name, extension = os.path.splitext(original_file['url'])
 
         new_file = {'portada': True, 'id': 1, 'url': str( id_final) + extension, 'parent': name_final, 'folder': folder, 'subfolder': subfolder, 'tmp': ''}
-        print(new_file)
         original = image.generar_dir(original_file, tag)
 
         if original != '':
@@ -132,6 +131,8 @@ class image:
                     folder + ' no tiene permisos de escritura'
         else:
             respuesta['mensaje'] = 'El archivo original no existe'
+        
+        print(respuesta)
 
         return respuesta
 

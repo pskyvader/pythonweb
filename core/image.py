@@ -26,7 +26,7 @@ class image:
                 #file_ary = files  # functions.reArrayFiles(files['file'])
             #else:
             file_ary = files
-
+            print(file_ary)
             for files in file_ary:
                 archivo = image.upload(files, 'tmp')
                 respuesta['exito'] = archivo['exito']

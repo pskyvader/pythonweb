@@ -421,7 +421,7 @@ class database():
                         subloop = None
                         
                         if key == "image" or key == "file":
-                            print(multiple)
+                            print(k,e)
                         if isinstance(e, dict):
                             subloop = e.items()
                         elif isinstance(e, list):

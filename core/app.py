@@ -243,8 +243,9 @@ class app:
         try:
             for key in p.keys():
                 if isinstance(p[key], FieldStorage):
-
-                    print(key,p[key].file)
+                    if not key in post:
+                        post[key]=[]
+                    post[key].append(p[key].file)
 
                 if isinstance(p[key], MiniFieldStorage):
                     post[key] = p[key].value

@@ -150,7 +150,6 @@ class producto(base_model):
         row = connection.get(cls.table, cls.idname, where)
         if len(row) == 1:
             row[0]['idproductocategoria'] = json.loads(row[0]['idproductocategoria'])
-            row[0]['idproductocategoria'][0]=int(row[0]['idproductocategoria'][0])
             if 'foto' in row[0] and row[0]['foto'] != '':
                 row[0]['foto'] = json.loads(row[0]['foto'])
             else:

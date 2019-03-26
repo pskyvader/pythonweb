@@ -246,8 +246,7 @@ class app:
                     if not key in post:
                         post[key]=[]
                     post[key].append(p[key].file)
-
-                if isinstance(p[key], MiniFieldStorage):
+                elif isinstance(p[key], MiniFieldStorage):
                     post[key] = p[key].value
                 elif isinstance(p[key], list):
                     tmp_list = []

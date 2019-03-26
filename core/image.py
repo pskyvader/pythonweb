@@ -115,8 +115,7 @@ class image:
 
         name, extension = os.path.splitext(original_file['url'])
 
-        new_file = {'portada': True, 'id': 1, 'url': str(
-            id_final) + extension, 'parent': name_final, 'folder': folder, 'subfolder': subfolder, 'tmp': ''}
+        new_file = {'portada': True, 'id': original_file['id'], 'url': str(id_final) + extension, 'parent': name_final, 'folder': folder, 'subfolder': subfolder, 'tmp': ''}
         original = image.generar_dir(original_file, tag)
 
         if original != '':

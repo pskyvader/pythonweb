@@ -446,11 +446,11 @@ class database():
                                     row[a][k] = f
 
                 if key != "image" and key != "file":
-                    print(row)
                     if all(isinstance(item, int) for item in row.keys()):
                         row = [row[key] for key in sorted(row.keys())]
                     data[key] = json.dumps(row, ensure_ascii=False)
                 else:
+                    print(row)
                     data[key] = row
 
             del data['multiple']

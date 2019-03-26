@@ -113,7 +113,7 @@ class image:
             base_folder = image.get_upload_dir() + folder
             folder = base_folder
             if name_final != '':
-                folder += '/' + name_final
+                folder += '/' + str(name_final)
 
             if subfolder != '':
                 folder += '/' + subfolder

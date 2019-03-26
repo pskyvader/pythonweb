@@ -73,6 +73,8 @@ class image:
         base_folder = folder
         folder = image.get_upload_dir() + base_folder + '/' + str(name_final) + '/' + subfolder
 
+        image.delete(base_folder, '', str(name_final), subfolder)
+        
         my_file = Path(folder)
         if not my_file.is_dir():
             makedirs(folder, 777)
@@ -80,10 +82,8 @@ class image:
         name, extension = splitext(file_move['tmp'])
         file_move['url'] = file_move['id'] + extension
 
-        image.delete(base_folder, '', str(name_final), subfolder)
 
-        rename(folder_tmp + '/' +
-               file_move['tmp'], folder + '/' + file_move['url'])
+        rename(folder_tmp + '/' + file_move['tmp'], folder + '/' + file_move['url'])
 
         for recorte in recortes:
             final_file = folder + '/' + \

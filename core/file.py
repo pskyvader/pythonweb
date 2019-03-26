@@ -51,7 +51,6 @@ class file(image):
         base_folder = folder
         folder = file.get_upload_dir() + base_folder + '/' + str(name_final) + '/' + subfolder
 
-        
         file.delete(base_folder, '', str(name_final), subfolder)
 
         my_file = Path(folder)

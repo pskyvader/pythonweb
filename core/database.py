@@ -440,6 +440,7 @@ class database():
                                         if not ke in row[k]:
                                             row[k][ke] = {}
                                         row[k][ke][a] = va
+                                    print(row)
                                 else:
                                     if not a in row:
                                         row[a] = {}

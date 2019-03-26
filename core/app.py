@@ -229,6 +229,7 @@ class app:
                 app.environ.get('CONTENT_LENGTH', 0))
 
             p = FieldStorage( fp=post_env['wsgi.input'], environ=post_env, keep_blank_values=True)
+            print(p)
             if p.list != None:
                 post = app.post_field(p)
 

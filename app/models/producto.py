@@ -149,8 +149,8 @@ class producto(base_model):
         connection = database.instance()
         row = connection.get(cls.table, cls.idname, where)
         if len(row) == 1:
-            row[0]['idproductocategoria'] = json.loads(
-                row[0]['idproductocategoria'])
+            row[0]['idproductocategoria'] = json.loads( row[0]['idproductocategoria'])
+            row[0]['idproductocategoria'][0]=int(row[0]['idproductocategoria'][0])
             if 'foto' in row[0] and row[0]['foto'] != '':
                 row[0]['foto'] = json.loads(row[0]['foto'])
             else:
@@ -161,7 +161,7 @@ class producto(base_model):
                 row[0]['archivo'] = []
 
             if 'precio' in row[0]:
-                cat = productocategoria.getById(int(row[0]['idproductocategoria'][0]))
+                cat = productocategoria.getById( row[0]['idproductocategoria'][0])
                 categorias = {}
                 if len(cat) > 0:
                     categorias[cat[0]] = {

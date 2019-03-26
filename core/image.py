@@ -57,7 +57,7 @@ class image:
         recortes = image.get_recortes(file['folder'])
         file['name'] = file['url']
         file['folder'] = file['folder'] + '/' + \
-            file['parent'] + '/' + str(file['subfolder'])
+            str(file['parent']) + '/' + str(file['subfolder'])
         for fl in glob(image.get_upload_dir() + file['folder'] + "/" + file['id'] + "-*.*"):
             remove(fl)
         respuesta = image.recortes_foto(file, recortes)
@@ -77,7 +77,7 @@ class image:
         if not my_file.is_dir():
             makedirs(folder, 777)
 
-        name,extension=splitext(file['tmp'])
+        name, extension = splitext(file['tmp'])
 
         file['url'] = file['id'] + extension
         rename(folder_tmp + '/' + file['tmp'], folder + '/' + file['url'])
@@ -104,9 +104,10 @@ class image:
         from shutil import copyfile
         respuesta = {'exito': False, 'mensaje': ''}
 
-        name,extension=os.path.splitext(original_file['url'])
+        name, extension = os.path.splitext(original_file['url'])
 
-        new_file = {'portada': True, 'id': 1, 'url': str(id_final) + extension, 'parent': name_final, 'folder': folder, 'subfolder': subfolder, 'tmp': ''}
+        new_file = {'portada': True, 'id': 1, 'url': str(
+            id_final) + extension, 'parent': name_final, 'folder': folder, 'subfolder': subfolder, 'tmp': ''}
         original = image.generar_dir(original_file, tag)
 
         if original != '':
@@ -180,11 +181,11 @@ class image:
             if '' == name_final:
                 name_final = uuid.uuid4().hex
             else:
-                name_final,extension=os.path.splitext(name_final)
+                name_final, extension = os.path.splitext(name_final)
                 name_final = functions.url_amigable(''.join(name_final))
-            
-            name,extension=os.path.splitext(file['name'])
-            extension=extension.lower()
+
+            name, extension = os.path.splitext(file['name'])
+            extension = extension.lower()
 
             my_file = Path(folder)
             if not my_file.is_dir():
@@ -208,7 +209,7 @@ class image:
     @classmethod
     def validate(cls, file):
         from os.path import splitext
-        name,extension=splitext(file['name'])
+        name, extension = splitext(file['name'])
         respuesta = {'exito': False, 'mensaje': 'Error: formato no valido'}
         if 0 != file['error']:
             respuesta['mensaje'] = 'Error al subir archivo: ' + file['error']
@@ -242,11 +243,11 @@ class image:
         alto_valido = 0
 
         for recorte in recortes_foto:
-            if recorte['ancho']!=None and recorte['ancho'] > ancho_maximo:
+            if recorte['ancho'] != None and recorte['ancho'] > ancho_maximo:
                 ancho_maximo = recorte['ancho']
                 if ancho_maximo > ancho_valido and ancho_maximo <= ancho:
                     ancho_valido = ancho_maximo
-            if recorte['alto']!=None and recorte['alto'] > alto_maximo:
+            if recorte['alto'] != None and recorte['alto'] > alto_maximo:
                 alto_maximo = recorte['alto']
                 if alto_maximo > alto_valido and alto_maximo <= alto:
                     alto_valido = alto_maximo
@@ -258,17 +259,20 @@ class image:
             # ancho proporcional segun mayor alto valido
             ancho_final = int(round((ancho / alto) * alto_valido))
             if ancho_final >= ancho_valido:
-                respuesta = image.recortar_foto( {'tag': 'recorte_previo', 'ancho': None, 'alto': alto_valido, 'calidad': 100, 'tipo': 'rellenar'}, archivo)
+                respuesta = image.recortar_foto(
+                    {'tag': 'recorte_previo', 'ancho': None, 'alto': alto_valido, 'calidad': 100, 'tipo': 'rellenar'}, archivo)
             else:
-                respuesta = image.recortar_foto( {'tag': 'recorte_previo', 'ancho': ancho_valido, 'alto': None, 'calidad': 100, 'tipo': 'rellenar'}, archivo)
+                respuesta = image.recortar_foto(
+                    {'tag': 'recorte_previo', 'ancho': ancho_valido, 'alto': None, 'calidad': 100, 'tipo': 'rellenar'}, archivo)
 
             if not respuesta['exito']:
                 return respuesta
 
             archivo_recorte = archivo
-            archivo_recorte['name'] = image.nombre_archivo(archivo_recorte['name'], 'recorte_previo')
+            archivo_recorte['name'] = image.nombre_archivo(
+                archivo_recorte['name'], 'recorte_previo')
             for recorte in recortes_foto:
-                if recorte['ancho']!=None and recorte['ancho'] <= ancho_valido and recorte['alto']!=None and recorte['alto'] <= alto_valido:
+                if recorte['ancho'] != None and recorte['ancho'] <= ancho_valido and recorte['alto'] != None and recorte['alto'] <= alto_valido:
                     respuesta = image.recortar_foto(recorte, archivo_recorte)
                 else:
                     respuesta = image.recortar_foto(recorte, archivo)
@@ -363,28 +367,36 @@ class image:
             new_im = im.crop(box)
         elif "rellenar" == tipo:
             if "png" == imagen_tipo:
-                new_im = Image.new( 'RGBA', (ancho_maximo, alto_maximo), (255, 255, 255, 0))
+                new_im = Image.new(
+                    'RGBA', (ancho_maximo, alto_maximo), (255, 255, 255, 0))
             else:
-                new_im = Image.new( 'RGB', (ancho_maximo, alto_maximo), (255, 255, 255))
+                new_im = Image.new(
+                    'RGB', (ancho_maximo, alto_maximo), (255, 255, 255))
             box = (x, y)
             im.thumbnail((miniatura_ancho, miniatura_alto), Image.ANTIALIAS)
             new_im.paste(im, (box))
         else:
             if ancho >= miniatura_ancho or alto >= miniatura_alto:
                 if "png" == imagen_tipo:
-                    new_im = Image.new( 'RGBA', (ancho_maximo, alto_maximo), (255, 255, 255, 0))
+                    new_im = Image.new(
+                        'RGBA', (ancho_maximo, alto_maximo), (255, 255, 255, 0))
                 else:
-                    new_im = Image.new( 'RGB', (ancho_maximo, alto_maximo), (255, 255, 255))
+                    new_im = Image.new(
+                        'RGB', (ancho_maximo, alto_maximo), (255, 255, 255))
                 box = (x, y)
-                im.thumbnail((miniatura_ancho, miniatura_alto), Image.ANTIALIAS)
+                im.thumbnail((miniatura_ancho, miniatura_alto),
+                             Image.ANTIALIAS)
                 new_im.paste(im, (box))
             else:
                 if "png" == imagen_tipo:
-                    new_im = Image.new( 'RGBA', (ancho_maximo, alto_maximo), (255, 255, 255, 0))
+                    new_im = Image.new(
+                        'RGBA', (ancho_maximo, alto_maximo), (255, 255, 255, 0))
                 else:
-                    new_im = Image.new( 'RGB', (ancho_maximo, alto_maximo), (255, 255, 255))
+                    new_im = Image.new(
+                        'RGB', (ancho_maximo, alto_maximo), (255, 255, 255))
                 box = (x, y, miniatura_ancho+x, miniatura_alto+y)
-                im.thumbnail((miniatura_ancho, miniatura_alto), Image.ANTIALIAS)
+                im.thumbnail((miniatura_ancho, miniatura_alto),
+                             Image.ANTIALIAS)
                 new_im.paste(im, (box))
 
         foto_recorte = image.nombre_archivo(foto, etiqueta, '', True)
@@ -396,10 +408,9 @@ class image:
         my_file = Path(ruta + foto_webp)
         if my_file.is_file():
             my_file.unlink()
-        
 
         new_im.save(ruta + foto_recorte)
-        #if "png" != imagen_tipo:
+        # if "png" != imagen_tipo:
         new_im.save(ruta + foto_webp)
 
         respuesta['exito'] = True
@@ -413,7 +424,7 @@ class image:
         if'' == extension:
             extension = ext
         else:
-            extension='.'+extension
+            extension = '.'+extension
 
         if remove:
             name = (''.join(name)).split('-')
@@ -524,7 +535,7 @@ class image:
     def delete_temp():
         from os import listdir
         from os.path import getmtime
-        now = functions.current_time('',False)
+        now = functions.current_time('', False)
         horas = 1
 
         carpeta = image.get_upload_dir() + 'tmp/'  # ruta actual

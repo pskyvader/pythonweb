@@ -54,7 +54,6 @@ function restaurar_elemento() {
     respaldo_finalizado = false;
     var accion = 'restaurar';
     barra(5);
-    log_socket();
     post_basic(create_url(modulo, accion), {
         id: $('.modal-restaurar input[name=id_restaurar]').val()
     }, 'Restaurando', fin_restaurar);
@@ -75,7 +74,6 @@ function generar_backup_rapido(e) {
     tiempo_guardar = 0;
     var accion = 'generar_backup';
     barra(5);
-    log_socket();
     post_basic(create_url(modulo, accion), {}, 'Recuperando lista de archivos', fin_backup);
     leer_log(false);
     setTimeout(function() {
@@ -93,7 +91,6 @@ function generar_backup(e) {
     tiempo_guardar = 0;
     var accion = 'generar';
     barra(5);
-    log_socket();
     post_basic(create_url(modulo, accion), {}, 'Recuperando lista de archivos', lista_backup);
     leer_log(false);
     setTimeout(function() {
@@ -235,7 +232,6 @@ function fin_backup(data) {
             barra(0);
         }
         
-        close_socket();
     }
 }
 
@@ -273,7 +269,6 @@ function fin_restaurar(data) {
             var mensaje = (($.isArray(data['mensaje'])) ? data['mensaje'].join('<br/>') : data['mensaje']);
             notificacion('Oh no!', mensaje, 'error');
             barra(0);
-            close_socket();
         }
     }
 }

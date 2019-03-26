@@ -109,7 +109,7 @@ class seccion(base_model):
                 row[0]['idseccioncategoria'])
             if 'foto' in row[0] and row[0]['foto']!='':
                 row[0]['foto'] = json.loads(row[0]['foto'])
-            if 'archivo' in row[0] and row[0]['foto']!='':
+            if 'archivo' in row[0] and row[0]['archivo']!='':
                 row[0]['archivo'] = json.loads(row[0]['archivo'])
         return row[0] if len(row) == 1 else row
 

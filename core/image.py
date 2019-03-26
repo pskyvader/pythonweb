@@ -22,10 +22,10 @@ class image:
             recortes = image.get_recortes(modulo)
             archivos = []
 
-            if 'file' in files:
-                file_ary = files  # functions.reArrayFiles(files['file'])
-            else:
-                file_ary = files
+            #if 'file' in files:
+                #file_ary = files  # functions.reArrayFiles(files['file'])
+            #else:
+            file_ary = files
 
             for files in file_ary:
                 archivo = image.upload(files, 'tmp')

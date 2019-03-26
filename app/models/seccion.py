@@ -138,6 +138,7 @@ class seccion(base_model):
                 new_fotos = []
                 for foto in foto_copy:
                     copiar = image.copy( foto, last_id, foto['folder'], foto['subfolder'], last_id, '')
+                    print(copiar)
                     new_fotos.append(copiar['file'][0])
                     image.regenerar(copiar['file'][0])
 

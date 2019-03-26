@@ -187,12 +187,13 @@ class image:
             if not my_file.is_dir():
                 makedirs(folder, 777)
             with open(folder + '/' + name_final + extension, 'wb') as output_file:
-                while 1:
-                    data = file['tmp_name'].read(1024)
-                    if not data:
-                        respuesta['exito']=True
-                        break
-                    output_file.write(data)
+                with open(file['tmp_name'], "rb") as input_file:
+                    while 1:
+                        data = input_file.read(1024)
+                        if not data:
+                            respuesta['exito']=True
+                            break
+                        output_file.write(data)
 
             if not respuesta['exito']:
                 respuesta['mensaje'] = "Error al mover archivo. Permisos: " + \

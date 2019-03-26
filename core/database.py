@@ -493,8 +493,10 @@ class database():
         row = self.get(table, idname, {idname: id_image}, {'limit': 1})
         self.update(table, idname, data, {idname: id_image})
         for key, value in ids.items():
-            print(key, row[0][key],type(row[0][key]))
-            images = json.loads(row[0][key])
+            if row[0][key]!='':
+                images = json.loads(row[0][key])
+            else:
+                images=''
             if isinstance(images, list):
                 for img in images:
                     if img['id'] not in value or value[img['id']] != img['url']:

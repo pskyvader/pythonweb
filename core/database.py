@@ -525,7 +525,7 @@ class database():
             data[key] = json.dumps(row)
 
         row = self.get(table, idname, {idname: id_file}, {'limit': 1})
-        self.update(table, idname, data, {'idname': id_file})
+        self.update(table, idname, data, {idname: id_file})
         for key, value in ids.items():
             if row[0][key]!='':
                 files = json.loads(row[0][key])

@@ -260,7 +260,6 @@ class producto(base_model):
                     name_final=archivo['url'].split('.')
                     name_final.pop()
                     name_final='.'.join(name_final)
-                    name_final=name_final.split('-',1)[1]
 
                     copiar = image.copy( archivo, name_final, archivo['folder'], archivo['subfolder'], last_id, '')
                     new_archivos.append(copiar['file'][0])

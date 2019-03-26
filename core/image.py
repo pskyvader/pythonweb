@@ -107,7 +107,7 @@ class image:
         return file_move
 
     @staticmethod
-    def copy(original_file, id_final, folder, subfolder="", name_final="", tag='thumb'):
+    def copy(original_file, name_final, folder, subfolder="", parent_final="", tag='thumb'):
         """Copia un archivo y retorna la informacion del archivo nuevo """
         import os
         from shutil import copyfile
@@ -115,14 +115,14 @@ class image:
 
         name, extension = os.path.splitext(original_file['url'])
 
-        new_file = {'portada': True, 'id': original_file['id'], 'url': str(id_final) + extension, 'parent': name_final, 'folder': folder, 'subfolder': subfolder, 'tmp': ''}
+        new_file = {'portada': True, 'id': original_file['id'], 'url': str(name_final) + extension, 'parent': parent_final, 'folder': folder, 'subfolder': subfolder, 'tmp': ''}
         original = image.generar_dir(original_file, tag)
 
         if original != '':
             base_folder = image.get_upload_dir() + folder
             folder = base_folder
-            if name_final != '':
-                folder += '/' + str(name_final)
+            if parent_final != '':
+                folder += '/' + str(parent_final)
 
             if subfolder != '':
                 folder += '/' + subfolder

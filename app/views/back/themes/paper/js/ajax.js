@@ -50,8 +50,8 @@ function post(url_post, info, mensaje_inicial, importante, archivo, callback, ex
         $.each(archivo, function(key, value) {
             data.append(key, value);
         });
-        process='application/x-www-form-urlencoded; charset=UTF-8'
-        type=false
+        process=false
+        type='application/x-www-form-urlencoded; charset=UTF-8'
     }else{
         process=true
         type='application/x-www-form-urlencoded; charset=UTF-8'

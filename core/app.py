@@ -246,14 +246,12 @@ class app:
                 if isinstance(p[key], FieldStorage) and p[key].file:
                     tmpfile=p[key].file.read()
                     name=escape(p[key].filename)
-                    if not 'files' in post:
-                        post['files']={}
-                    if not key in post['files']:
-                        post['files'][key]=[]
+                    if not 'file' in post:
+                        post['file']=[]
                     mime = mimetypes.guess_type(name, False)[0]
                     if mime == None:
                         mime = 'text/plain'
-                    post['files'][key].append({'name':name,'type':mime, 'tmp_name':tmpfile})
+                    post['file'].append({'name':name,'type':mime, 'tmp_name':tmpfile})
                 elif isinstance(p[key], MiniFieldStorage):
                     post[key] = p[key].value
                 elif isinstance(p[key], list):

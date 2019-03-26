@@ -410,8 +410,6 @@ class image:
                 box = (x, y, miniatura_ancho+x, miniatura_alto+y)
                 im.thumbnail((miniatura_ancho, miniatura_alto),
                              Image.ANTIALIAS)
-                print(new_im,new_im.category,new_im.im)
-                print(im,im.category,im.im)
                 new_im.paste(im, (box))
 
         foto_recorte = image.nombre_archivo(foto, etiqueta, '', True)

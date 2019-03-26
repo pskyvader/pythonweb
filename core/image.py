@@ -171,6 +171,7 @@ class image:
         import uuid
         import stat
         import os
+        import tempfile
         folder = image.get_upload_dir() + folder_upload
         respuesta = image.validate(file)
         if respuesta['exito']:
@@ -187,13 +188,7 @@ class image:
             if not my_file.is_dir():
                 makedirs(folder, 777)
             with open(folder + '/' + name_final + extension, 'wb') as output_file:
-                while 1:
-                    print(file['tmp_name'])
-                    data = file['tmp_name'].read(1024)
-                    if not data:
-                        respuesta['exito']=True
-                        break
-                    output_file.write(data)
+                output_file.write(file['tmp_name'])
 
             if not respuesta['exito']:
                 respuesta['mensaje'] = "Error al mover archivo. Permisos: " + \

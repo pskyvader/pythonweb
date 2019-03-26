@@ -515,7 +515,8 @@ class database():
             for k, f in archivo.items():
                 if 'tmp' in f and f['tmp'] != '':
                     f = file.move(f, table, key, id_file)
-
+                if key not in ids:
+                    ids[key]={}
                 ids[key][f['id']] = f['url']
                 f['parent'] = id_file
                 f['folder'] = table

@@ -51,7 +51,6 @@ class file(image):
         base_folder = folder
         folder = file.get_upload_dir() + base_folder + '/' + str(name_final) + '/' + subfolder
 
-        file.delete(base_folder, file_move, str(name_final), subfolder)
 
         my_file = Path(folder)
         if not my_file.is_dir():
@@ -62,6 +61,8 @@ class file(image):
         nombre_final = functions.url_amigable(''.join(nombre_final))
 
         file_move['url'] = file_move['id'] + '-' + nombre_final + extension
+        file.delete(base_folder, file_move, str(name_final), subfolder)
+
         rename(folder_tmp + '/' + file_move['tmp'], folder + '/' + file_move['url'])
         del file_move['original_name'], file_move['tmp']
         file_move['subfolder'] = subfolder

@@ -112,7 +112,6 @@ class producto(base_model):
 
             for v in row:
                 if 'precio' in v:
-                    v['idproductocategoria'][0]=int(v['idproductocategoria'][0])
                     v['precio_final'] = v['precio']
                     descuento = 0
                     if v['descuento'] != 0:

@@ -511,7 +511,7 @@ class database():
         data = {}
         ids = {}
         for key, archivo in file_list.items():
-            row = {}
+            row = []
             for k, f in archivo.items():
                 if 'tmp' in f and f['tmp'] != '':
                     f = file.move(f, table, key, id_file)
@@ -520,7 +520,7 @@ class database():
                 ids[key][f['id']] = f['url']
                 f['parent'] = id_file
                 f['folder'] = table
-                row[k] = f
+                row.append(f)
 
             data[key] = json.dumps(row)
 

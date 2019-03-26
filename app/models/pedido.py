@@ -96,6 +96,7 @@ class pedido(base_model):
                         r['fecha_creacion']=r[3]=r['fecha_creacion'].strftime("%Y-%m-%d %H:%M:%S")
                 if not deleted and 'fecha_pago' in r:
                     if r['fecha_pago'] != '':
+                        print(r['fecha_pago'])
                         r['fecha_pago']=r[4]=r['fecha_pago'].strftime("%Y-%m-%d %H:%M:%S")
 
             if not deleted:

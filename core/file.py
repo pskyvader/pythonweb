@@ -44,7 +44,7 @@ class file(image):
         return respuesta
 
     @staticmethod
-    def move(file, folder, subfolder, name_final, folder_tmp='tmp'):
+    def move(file_move, folder, subfolder, name_final, folder_tmp='tmp'):
         '''mover archivo (normalmente) desde la carpeta temporal a la definitiva'''
         from os.path import splitext
         folder_tmp = file.get_upload_dir() + folder_tmp
@@ -55,15 +55,15 @@ class file(image):
         if not my_file.is_dir():
             makedirs(folder, 777)
 
-        name, extension = splitext(file['tmp'])
-        nombre_final, ext = splitext(file['original_name'])
+        name, extension = splitext(file_move['tmp'])
+        nombre_final, ext = splitext(file_move['original_name'])
         nombre_final = functions.url_amigable(''.join(nombre_final))
 
-        file['url'] = file['id'] + '-' + nombre_final + extension
-        rename(folder_tmp + '/' + file['tmp'], folder + '/' + file['url'])
-        del file['original_name'], file['tmp']
-        file['subfolder'] = subfolder
-        return file
+        file_move['url'] = file_move['id'] + '-' + nombre_final + extension
+        rename(folder_tmp + '/' + file_move['tmp'], folder + '/' + file_move['url'])
+        del file_move['original_name'], file_move['tmp']
+        file_move['subfolder'] = subfolder
+        return file_move
 
     @staticmethod
     def delete(folder, file_name='', subfolder='', sub=''):

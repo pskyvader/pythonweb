@@ -262,7 +262,7 @@ class producto(base_model):
                     name_final='.'.join(name_final)
                     name_final=name_final.split('-',1)[1]
 
-                    copiar = image.copy( archivo, last_id, archivo['folder'], archivo['subfolder'], last_id, '')
+                    copiar = image.copy( archivo, name_final, archivo['folder'], archivo['subfolder'], last_id, '')
                     new_archivos.append(copiar['file'][0])
                 update = {'id': last_id, 'archivo': json.dumps(new_archivos)}
                 cls.update(update)

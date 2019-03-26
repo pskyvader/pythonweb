@@ -493,7 +493,7 @@ class database():
         row = self.get(table, idname, {idname: id_image}, {'limit': 1})
         self.update(table, idname, data, {idname: id_image})
         for key, value in ids.items():
-            print(row[0][key])
+            print(row[0][key],type(row[0][key]))
             images = json.loads(row[0][key])
             if isinstance(images, list):
                 for img in images:

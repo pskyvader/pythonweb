@@ -21,10 +21,10 @@ class file(image):
             files = app.post['file']
             archivos = []
 
-            if 'file' in files:
-                file_ary = files  # functions.reArrayFiles(files['file'])
-            else:
-                file_ary = files
+            #if 'file' in files:
+            #    file_ary = files  # functions.reArrayFiles(files['file'])
+            #else:
+            file_ary = files
 
             for files in file_ary:
                 archivo = file.upload(files, 'tmp')

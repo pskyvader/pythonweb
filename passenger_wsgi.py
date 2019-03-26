@@ -1,11 +1,5 @@
 import sys
 import os
-import tornado.wsgi
-import tornado.httpserver
-import tornado.ioloop
-import tornado.web
-import tornado.websocket
-from tornado.netutil import bind_sockets
 from core.app import app
 import pprint
 from beaker.middleware import SessionMiddleware
@@ -78,65 +72,4 @@ session_opts = {
 }
 
 app2 = LoggingMiddleware(application2)
-wsgi_app = SessionMiddleware(app2, session_opts)
-
-application = wsgi_app
-
-
-class HelloHandler(tornado.web.RequestHandler):
-    def get(self):
-        self.write('Hello from tornado')
-
-
-
-class SimpleWebSocket(tornado.websocket.WebSocketHandler):
-    connections = set()
-
-    def check_origin(self, origin):
-        print('check',origin)
-        return True
-
-    def open(self):
-        print('open',self)
-        self.connections.add(self)
- 
-    def on_message(self, message):
-        print('mensaje',message)
-        [client.write_message(message) for client in self.connections]
- 
-    def on_close(self):
-        print('close',self)
-        self.connections.remove(self)
-
-
-container = tornado.wsgi.WSGIContainer(application)
-tornado_app = tornado.web.Application(
-    [
-        ('/hello-tornado', HelloHandler),
-        ('.*', tornado.web.FallbackHandler, dict(fallback=container))
-    ]
-)
-
-
-ws_app = tornado.web.Application(
-    [
-        ('.*', SimpleWebSocket)
-    ]
-)
-
-if False:
-
-    http_sockets = bind_sockets(80)
-    http_server = tornado.httpserver.HTTPServer(tornado_app)
-    http_server.add_sockets(http_sockets)
-
-    #http_server.start(4)
-
-
-    web_sockets = bind_sockets(8001)
-    socket_server = tornado.httpserver.HTTPServer(ws_app)
-    socket_server.add_sockets(web_sockets)
-
-    #socket_server.start(4)
-
-    tornado.ioloop.IOLoop.current().start()
+application = SessionMiddleware(app2, session_opts)

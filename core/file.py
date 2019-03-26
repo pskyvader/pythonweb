@@ -18,7 +18,7 @@ class file(image):
         respuesta = {'exito': False, 'mensaje': ''}
 
         if 'file' in app.post:
-            files = app.post['files']
+            files = app.post['file']
             archivos = []
 
             if 'file' in files:

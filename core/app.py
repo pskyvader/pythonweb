@@ -238,19 +238,20 @@ class app:
 
     @staticmethod
     def post_field(p):
-        from cgi import MiniFieldStorage,FieldStorage
+        from cgi import MiniFieldStorage,FieldStorage,escape
         import mimetypes
         post = {}
         try:
             for key in p.keys():
                 if isinstance(p[key], FieldStorage) and p[key].file:
                     tmpfile=p[key].file
+                    name=escape(p[key].filename)
                     if not key in post:
                         post[key]=[]
-                    mime = mimetypes.guess_type(p[key].filename, False)[0]
+                    mime = mimetypes.guess_type(name, False)[0]
                     if mime == None:
                         mime = 'text/plain'
-                    post[key].append({'name':p[key].filename,'type':mime, 'tmp_name':tmpfile})
+                    post[key].append({'name':name,'type':mime, 'tmp_name':tmpfile})
                 elif isinstance(p[key], MiniFieldStorage):
                     post[key] = p[key].value
                 elif isinstance(p[key], list):

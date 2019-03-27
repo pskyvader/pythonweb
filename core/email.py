@@ -65,10 +65,10 @@ class email:
                                  smtp['host'], smtp['port'], smtp['user'], smtp['pass'])
             else:
                 email.send_email(send_from, email, asunto, body, adjuntos, imagenes)
-
             respuesta['exito'] = True
         except Exception as e:
             respuesta['mensaje'] = "Mailer Error: " + repr(e)
+            respuesta['exito'] = False
 
         return respuesta
 

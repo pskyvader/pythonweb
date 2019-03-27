@@ -220,7 +220,6 @@ class administrador(base_model):
                     }
                     body = email.body_email(body_email)
                     respuesta = email.enviar_email([email_recuperar], 'Recuperación de contraseña', body)
-
                     log.insert_log(administrador.table, administrador.idname, administrador, admin)
                     return respuesta
                 else:

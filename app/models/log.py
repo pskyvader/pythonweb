@@ -27,7 +27,7 @@ class log(base_model):
     @classmethod
     def insert_log(cls, tabla: str, idname: str, funcion, row: dict):
         if tabla != cls.table and not app.front:
-            if 'nombre' + app.prefix_site in app.sesion:
+            if 'nombre' + app.prefix_site in app.session:
                 administrador = app.session['nombre' + app.prefix_site] +  ' (' + app.session['email' + app.prefix_site] + ')'
             else:
                 administrador=''

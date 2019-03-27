@@ -207,7 +207,6 @@ class administrador(base_model):
                 return False
             else:
                 password = functions.generar_pass()
-                password = '12345678'
                 data = {'id': admin[0], 'pass': password, 'pass_repetir': password}
                 row = administrador.update(data,False)
 

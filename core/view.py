@@ -14,12 +14,13 @@ class view:
     """
 
     @staticmethod
-    def render(template_list, minify=True):
+    def render(template_list, minify=True,theme=''):
         '''Renderiza las vistas de la lista enviadas, las comprime y la retorna en un string'''
         from .app import app
         from .cache import cache
         from jinja2 import Environment, FileSystemLoader, FileSystemBytecodeCache
-        theme = view.get_theme()
+        if theme=='':
+            theme = view.get_theme()
 
 
         env = Environment(

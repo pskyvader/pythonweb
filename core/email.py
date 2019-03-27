@@ -41,7 +41,8 @@ class email:
         email_from = config['email_from']
         nombre_sitio = config['title']
 
-        send_from = nombre_sitio + ', ' + asunto + " <"+email_from+">"
+        #send_from = nombre_sitio + ', ' + asunto + " <"+email_from+">"
+        send_from = email_from
 
         smtp = {}
         if config['email_smtp']!='':

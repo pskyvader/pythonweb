@@ -122,7 +122,6 @@ class email:
             smtp.quit()
             respuesta['exito'] = True
         except Exception as e:
-            print(e)
             respuesta['mensaje'] = "Mailer Error: " + repr(e)
             respuesta['exito'] = False
         

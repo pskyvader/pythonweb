@@ -19,5 +19,5 @@ class email:
         data['campos']=body_email['campos']
         data['campos_largos']=body_email['campos_largos']
         template = body_email['template']
-        body=view.render([(template, data)])
+        body=view.render([(template, data)],True,view.get_theme()+'mail/')
         return body

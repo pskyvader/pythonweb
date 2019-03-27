@@ -61,9 +61,9 @@ class email:
 
         try:
             if config['email_smtp']!='':
-                email.send_email(send_from, email_destino, asunto, body, adjuntos, imagenes, smtp['host'], smtp['port'], smtp['user'], smtp['pass'])
+                email.send_mail(send_from, email_destino, asunto, body, adjuntos, imagenes, smtp['host'], smtp['port'], smtp['user'], smtp['pass'])
             else:
-                email.send_email(send_from, email_destino, asunto, body, adjuntos, imagenes)
+                email.send_mail(send_from, email_destino, asunto, body, adjuntos, imagenes)
             respuesta['exito'] = True
         except Exception as e:
             respuesta['mensaje'] = "Mailer Error: " + repr(e)

@@ -40,9 +40,6 @@ class email:
         email_from = config['email_from']
         nombre_sitio = config['title']
 
-        asunto = utf8_decode(asunto)
-        body = utf8_decode(body)
-        nombre_sitio = utf8_decode(nombre_sitio)
 
         smtp = {}
         if config['email_smtp']:

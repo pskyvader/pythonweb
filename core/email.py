@@ -112,10 +112,19 @@ class email:
                 msg.get_payload()[1].add_related(
                     img.read(), maintype=maintype, subtype=subtype, cid=tag)
 
-        smtp = smtplib.SMTP(server, port)
-        if use_tls:
-            smtp.starttls()
-        if username != '' and password != '':
-            smtp.login(username, password)
-        smtp.sendmail(send_from, send_to, msg.as_string())
-        smtp.quit()
+
+        try:
+            smtp = smtplib.SMTP(server, port)
+            if use_tls:
+                smtp.starttls()
+            if username != '' and password != '':
+                smtp.login(username, password)
+            smtp.sendmail(send_from, send_to, msg.as_string())
+            smtp.quit()
+            respuesta['exito'] = True
+        except Exception as e:
+            respuesta['mensaje'] = "Mailer Error: " + repr(e)
+            respuesta['exito'] = False
+        
+        return respuesta
+            

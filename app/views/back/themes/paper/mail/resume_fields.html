@@ -1,3 +1,5 @@
+{% for key,value in resumen.items() %}
+
 <div style="background-color:transparent;">
     <div class="block-grid mixed-two-up" style="Margin: 0 auto; min-width: 320px; max-width: 500px; overflow-wrap: break-word; word-wrap: break-word; word-break: break-word; background-color: transparent;;">
         <div style="border-collapse: collapse;display: table;width: 100%;background-color:transparent;">
@@ -11,7 +13,7 @@
                         <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 20px; padding-left: 20px; padding-top: 5px; padding-bottom: 5px; font-family: Tahoma, Verdana, sans-serif"><![endif]-->
                         <div style="color:#000000;font-family:'Lato', Tahoma, Verdana, Segoe, sans-serif;line-height:120%;padding-top:5px;padding-right:20px;padding-bottom:5px;padding-left:20px;">
                             <div style="font-size: 12px; line-height: 14px; font-family: 'Lato', Tahoma, Verdana, Segoe, sans-serif; color: #000000;">
-                                <p style="font-size: 14px; line-height: 16px; margin: 0;"><strong>TOTAL</strong><br /></p>
+                                <p style="font-size: 14px; line-height: 16px; margin: 0;"><strong>{{key}}</strong><br /></p>
                             </div>
                         </div>
                         <!--[if mso]></td></tr></table><![endif]-->
@@ -30,7 +32,7 @@
                         <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 20px; padding-left: 20px; padding-top: 5px; padding-bottom: 5px; font-family: Tahoma, Verdana, sans-serif"><![endif]-->
                         <div style="color:#000000;font-family:'Lato', Tahoma, Verdana, Segoe, sans-serif;line-height:120%;padding-top:5px;padding-right:20px;padding-bottom:5px;padding-left:20px;">
                             <div style="font-size: 12px; line-height: 14px; font-family: 'Lato', Tahoma, Verdana, Segoe, sans-serif; color: #000000;">
-                                <p style="font-size: 14px; line-height: 16px; margin: 0;"><strong>$600</strong></p>
+                                <p style="font-size: 14px; line-height: 16px; margin: 0;"><strong>{{value}}</strong></p>
                             </div>
                         </div>
                         <!--[if mso]></td></tr></table><![endif]-->
@@ -44,3 +46,4 @@
         </div>
     </div>
 </div>
+{% endfor %}

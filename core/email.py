@@ -111,12 +111,12 @@ class email:
             tag = image['tag']
             with open(url, 'rb') as img:
                 maintype, subtype = mimetypes.guess_type(img.name)[0].split('/')
-                msg.get_payload()[1].add_related(
-                    img.read(), maintype=maintype, subtype=subtype, cid=tag)
+                msg.get_payload()[1].add_related( img.read(), maintype=maintype, subtype=subtype, cid=tag)
 
         smtp = smtplib.SMTP(server, port)
         if use_tls:
             smtp.starttls()
-        smtp.login(username, password)
+        if username!='' and password!='':
+            smtp.login(username, password)
         smtp.sendmail(send_from, send_to, msg.as_string())
         smtp.quit()

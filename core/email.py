@@ -12,7 +12,6 @@ from email.utils import COMMASPACE, formatdate
 from email import encoders
 
 
-
 class email:
     @staticmethod
     def body_email(body_email):
@@ -27,51 +26,49 @@ class email:
         data['logo'] = 'cid:logo'
         data['titulo'] = body_email['titulo']
         data['cabecera'] = body_email['cabecera']
-        data['campos']=body_email['campos']
-        data['campos_largos']=body_email['campos_largos']
+        data['campos'] = body_email['campos']
+        data['campos_largos'] = body_email['campos_largos']
         template = body_email['template']
-        body=view.render([(template, data)],True,view.get_theme()+'mail/')
-        
+        body = view.render([(template, data)], True, view.get_theme()+'mail/')
+
         return body
 
-
     @staticmethod
-    def enviar_email(email,asunto,body,adjuntos=[],imagenes=[]):
+    def enviar_email(email, asunto, body, adjuntos=[], imagenes=[]):
         config = app.get_config()
         dominio = config['domain']
         email_from = config['email_from']
         nombre_sitio = config['title']
-        
+
         asunto = utf8_decode(asunto)
         body = utf8_decode(body)
         nombre_sitio = utf8_decode(nombre_sitio)
 
-        smtp={}
+        smtp = {}
         if config['email_smtp']:
-            smtp['debug']= config['email_debug']
+            smtp['debug'] = config['email_debug']
             smtp['host'] = config['email_host']
             smtp['port'] = config['email_port']
             smtp['email'] = config['email_smtp']
             smtp['user'] = config['email_user']
             smtp['pass'] = config['email_pass']
 
-
         logo = logo.getById(8)
-        imagenes.append({'url':image.generar_dir(logo['foto'][0], 'email'),'tag':'logo'})
+        imagenes.append({'url': image.generar_dir(
+            logo['foto'][0], 'email'), 'tag': 'logo'})
 
+        respuesta = {'exito': False, 'mensaje': ''}
 
+        try:
+            email.send_email()
+            respuesta['exito'] = True
+        except Exception as e:
+            respuesta['mensaje'] = "Mailer Error: " + e
 
-        respuesta = array('exito' => false, 'mensaje' => '')
-        if (!mail->send()) {
-            respuesta['mensaje'] = "Mailer Error: " . mail->ErrorInfo
-        } else {
-            respuesta['exito'] = true
-        }
         return respuesta
 
-
     @staticmethod
-    def send_mail(send_from, send_to, subject, message, files=[],images=[], server="localhost", port=587, username='', password='', use_tls=True):
+    def send_mail(send_from, send_to, subject, message, files=[], images=[], server="localhost", port=587, username='', password='', use_tls=True):
         """Compose and send email with provided info and attachments.
 
         Args:
@@ -95,25 +92,25 @@ class email:
         msg.attach(MIMEText(message))
 
         for file in files:
-            path=file['archivo']
-            filename=file['nombre']
-            #filename=op.basename(path)
+            path = file['archivo']
+            filename = file['nombre']
+            # filename=op.basename(path)
             part = MIMEBase('application', "octet-stream")
             with open(path, 'rb') as file:
                 part.set_payload(file.read())
             encoders.encode_base64(part)
-            part.add_header('Content-Disposition', 'attachment filename="{}"'.format(filename))
+            part.add_header('Content-Disposition',
+                            'attachment filename="{}"'.format(filename))
             msg.attach(part)
 
-
         for image in images:
-            url=image['url']
-            tag=image['tag']
+            url = image['url']
+            tag = image['tag']
             with open(url, 'rb') as img:
-                maintype, subtype = mimetypes.guess_type(img.name)[0].split('/')
-                msg.get_payload()[1].add_related(img.read(), maintype=maintype, subtype=subtype, cid=tag)
-
-
+                maintype, subtype = mimetypes.guess_type(img.name)[
+                    0].split('/')
+                msg.get_payload()[1].add_related(
+                    img.read(), maintype=maintype, subtype=subtype, cid=tag)
 
         smtp = smtplib.SMTP(server, port)
         if use_tls:

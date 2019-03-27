@@ -1,6 +1,8 @@
 from .app import app
 from .view import view
 
+from app.models.logo import logo
+
 import smtplib
 import os.path as op
 from email.mime.multipart import MIMEMultipart

@@ -1,3 +1,5 @@
+{% for key,value in campos_largos.items() %}
+
 <div style="background-color:transparent;">
     <div class="block-grid" style="Margin: 0 auto; min-width: 320px; max-width: 500px; overflow-wrap: break-word; word-wrap: break-word; word-break: break-word; background-color: transparent;;">
         <div style="border-collapse: collapse;display: table;width: 100%;background-color:transparent;">
@@ -11,15 +13,14 @@
                         <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 5px; font-family: Tahoma, Verdana, sans-serif"><![endif]-->
                         <div style="color:#000000;font-family:'Lato', Tahoma, Verdana, Segoe, sans-serif;line-height:120%;padding-top:10px;padding-right:10px;padding-bottom:5px;padding-left:10px;">
                             <div style="font-size: 12px; line-height: 14px; font-family: 'Lato', Tahoma, Verdana, Segoe, sans-serif; color: #000000;">
-                                <p style="font-size: 14px; line-height: 16px; text-align: center; margin: 0;"><strong><span style="font-size: 18px; line-height: 21px;">Thank you for placing your order</span></strong></p>
-                                <p style="font-size: 14px; line-height: 16px; text-align: center; margin: 0;"><strong><span style="font-size: 18px; line-height: 21px;">with our store!</span></strong></p>
+                                <p style="font-size: 14px; line-height: 16px; text-align: center; margin: 0;"><strong><span style="font-size: 18px; line-height: 21px;">{{key}}</span></strong></p>
                             </div>
                         </div>
                         <!--[if mso]></td></tr></table><![endif]-->
                         <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 25px; font-family: Tahoma, Verdana, sans-serif"><![endif]-->
                         <div style="color:#71777D;font-family:'Lato', Tahoma, Verdana, Segoe, sans-serif;line-height:120%;padding-top:10px;padding-right:10px;padding-bottom:25px;padding-left:10px;">
                             <div style="font-size: 12px; line-height: 14px; font-family: 'Lato', Tahoma, Verdana, Segoe, sans-serif; color: #71777D;">
-                                <p style="font-size: 14px; line-height: 16px; text-align: center; margin: 0;">This email is to confirm your recent order.</p>
+                                <p style="font-size: 14px; line-height: 16px; text-align: center; margin: 0;">{{value}}</p>
                             </div>
                         </div>
                         <!--[if mso]></td></tr></table><![endif]-->
@@ -48,3 +49,4 @@
         </div>
     </div>
 </div>
+{% endfor %}

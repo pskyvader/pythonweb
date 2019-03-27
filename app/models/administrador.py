@@ -212,7 +212,7 @@ class administrador(base_model):
 
                 if row:
                     body_email = {
-                        'body': view.get_theme() + 'mail/recuperar_password.html',
+                        'template': 'recuperar_password',
                         'titulo': "Recuperación de contraseña",
                         'cabecera': "Estimado " + admin["nombre"] + ", se ha solicitado la recuperación de contraseña en " + nombre_sitio,
                         'campos': {'Contraseña (sin espacios)': password},

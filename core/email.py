@@ -38,7 +38,6 @@ class email:
     @staticmethod
     def enviar_email(email, asunto, body, adjuntos=[], imagenes=[]):
         config = app.get_config()
-        dominio = config['domain']
         email_from = config['email_from']
         nombre_sitio = config['title']
 

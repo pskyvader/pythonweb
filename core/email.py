@@ -68,7 +68,7 @@ class email:
         except Exception as e:
             respuesta['mensaje'] = "Mailer Error: " + repr(e)
             respuesta['exito'] = False
-
+        print(respuesta)
         return respuesta
 
     @staticmethod

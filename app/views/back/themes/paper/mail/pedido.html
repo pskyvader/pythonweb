@@ -8,11 +8,11 @@
                     <span style="color: #b50d78; color: {{color_primario}};">Datos del pedido</span>
                 </td>
             </tr>
-            {{campos}}
+            {% include 'campos.html' %}
         </tbody>
     </table>
 </div>
 <div>
-    {{campos_largos}}
+    {% include 'campos_largos.html' %}
 </div>
 {% endblock %}

@@ -1,6 +1,7 @@
 from app.models.logo import logo
 
 from .app import app
+from .image import image
 from .view import view
 
 import smtplib

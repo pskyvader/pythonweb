@@ -11,8 +11,8 @@
                     <!--[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td align="center" style="background-color:#FFFFFF"><![endif]-->
 					
 					{% include 'header.html' %}
-					
-
+                
+                    {% block content %}
 
 
 
@@ -446,6 +446,7 @@
                         </div>
 					</div>
 					
+                    {% endblock %}
 
 					{% include 'footer.html' %}
 

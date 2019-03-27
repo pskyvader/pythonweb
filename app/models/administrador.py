@@ -190,6 +190,7 @@ class administrador(base_model):
     def recuperar(email_recuperar):
         """recuperar contraseña"""
         from core.view import view
+        from core.email import email
         nombre_sitio = app.title
         if email_recuperar == '':
             return False

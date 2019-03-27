@@ -44,7 +44,7 @@ class email:
         send_from = nombre_sitio + ', ' + asunto + " <"+email_from+">"
 
         smtp = {}
-        if config['email_smtp']:
+        if config['email_smtp']!='':
             smtp['debug'] = config['email_debug']
             smtp['host'] = config['email_host']
             smtp['port'] = config['email_port']
@@ -60,7 +60,7 @@ class email:
         respuesta = {'exito': False, 'mensaje': ''}
 
         try:
-            if config['email_smtp']:
+            if config['email_smtp']!='':
                 email.send_email(send_from, email, asunto, body, adjuntos, imagenes, smtp['host'], smtp['port'], smtp['user'], smtp['pass'])
             else:
                 email.send_email(send_from, email, asunto, body, adjuntos, imagenes)

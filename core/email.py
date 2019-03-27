@@ -121,5 +121,6 @@ class email:
             smtp.starttls()
         if username != '' and password != '':
             smtp.login(username, password)
+        print('email ready')
         smtp.sendmail(send_from, send_to, msg.as_string())
         smtp.quit()

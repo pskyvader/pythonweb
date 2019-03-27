@@ -1,7 +1,11 @@
+
+from core.email import email
+from core.view import view
+
+
 class previewmail():
     @classmethod
     def index(cls, var):
-        from core.email import email
         body_email = {
             'body': view.get_theme() + 'mail/recuperar_password.html',
             'titulo': "Recuperación de contraseña",

@@ -38,8 +38,10 @@ class email:
     @staticmethod
     def enviar_email(email, asunto, body, adjuntos=[], imagenes=[]):
         config = app.get_config()
-        email_from = config['email_from']+','+ config['title']
+        email_from = config['email_from']
+        nombre_sitio = config['title']
 
+        send_from = nombre_sitio + ', ' + asunto + " <"+email_from+">"
 
         smtp = {}
         if config['email_smtp']:
@@ -51,16 +53,19 @@ class email:
             smtp['pass'] = config['email_pass']
 
         logo = logo_model.getById(8)
-        logo=image.portada(logo)
-        imagenes.append({'url': image.generar_dir(logo, 'email'), 'tag': 'logo'})
+        logo = image.portada(logo)
+        imagenes.append(
+            {'url': image.generar_dir(logo, 'email'), 'tag': 'logo'})
 
         respuesta = {'exito': False, 'mensaje': ''}
 
         try:
             if config['email_smtp']:
-                email.send_email(email_from,email,asunto,body,adjuntos,imagenes,smtp['host'],smtp['port'],smtp['user'],smtp['pass'])
+                email.send_email(send_from, email, asunto, body, adjuntos, imagenes,
+                                 smtp['host'], smtp['port'], smtp['user'], smtp['pass'])
             else:
-                email.send_email(email_from,email,asunto,body,adjuntos,imagenes)
+                email.send_email(send_from, email, asunto,
+                                 body, adjuntos, imagenes)
 
             respuesta['exito'] = True
         except Exception as e:
@@ -108,13 +113,15 @@ class email:
             url = image['url']
             tag = image['tag']
             with open(url, 'rb') as img:
-                maintype, subtype = mimetypes.guess_type(img.name)[0].split('/')
-                msg.get_payload()[1].add_related( img.read(), maintype=maintype, subtype=subtype, cid=tag)
+                maintype, subtype = mimetypes.guess_type(img.name)[
+                    0].split('/')
+                msg.get_payload()[1].add_related(
+                    img.read(), maintype=maintype, subtype=subtype, cid=tag)
 
         smtp = smtplib.SMTP(server, port)
         if use_tls:
             smtp.starttls()
-        if username!='' and password!='':
+        if username != '' and password != '':
             smtp.login(username, password)
         smtp.sendmail(send_from, send_to, msg.as_string())
         smtp.quit()

@@ -69,7 +69,7 @@ class email:
 
             respuesta['exito'] = True
         except Exception as e:
-            respuesta['mensaje'] = "Mailer Error: " + e
+            respuesta['mensaje'] = "Mailer Error: " + repr(e)
 
         return respuesta
 

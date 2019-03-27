@@ -61,8 +61,7 @@ class email:
 
         try:
             if config['email_smtp']:
-                email.send_email(send_from, email, asunto, body, adjuntos, imagenes,
-                                 smtp['host'], smtp['port'], smtp['user'], smtp['pass'])
+                email.send_email(send_from, email, asunto, body, adjuntos, imagenes, smtp['host'], smtp['port'], smtp['user'], smtp['pass'])
             else:
                 email.send_email(send_from, email, asunto, body, adjuntos, imagenes)
             respuesta['exito'] = True

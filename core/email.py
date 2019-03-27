@@ -9,7 +9,7 @@ import os.path as op
 from email.mime.multipart import MIMEMultipart
 from email.mime.base import MIMEBase
 from email.mime.text import MIMEText
-from email.MIMEImage import MIMEImage
+from email.mime.image import MIMEImage
 from email.utils import COMMASPACE, formatdate
 from email import encoders
 import mimetypes

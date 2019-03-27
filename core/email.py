@@ -52,8 +52,8 @@ class email:
             smtp['pass'] = config['email_pass']
 
         logo = logo.getById(8)
-        imagenes.append({'url': image.generar_dir(
-            logo['foto'][0], 'email'), 'tag': 'logo'})
+        logo=image.portada(logo)
+        imagenes.append({'url': image.generar_dir(logo, 'email'), 'tag': 'logo'})
 
         respuesta = {'exito': False, 'mensaje': ''}
 

@@ -6,6 +6,7 @@ from core.view import view
 class previewmail():
     @classmethod
     def index(cls, var):
+        ret = {'body': ''}
         nombre = 'pablo'
         nombre_sitio = 'sitio python'
         password = '123456789'
@@ -17,3 +18,6 @@ class previewmail():
             'campos_largos': {},
         }
         body = email.body_email(body_email)
+        ret['body']=body
+        return ret
+

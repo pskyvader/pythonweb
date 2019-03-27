@@ -64,8 +64,7 @@ class email:
                 email.send_email(send_from, email, asunto, body, adjuntos, imagenes,
                                  smtp['host'], smtp['port'], smtp['user'], smtp['pass'])
             else:
-                email.send_email(send_from, email, asunto,
-                                 body, adjuntos, imagenes)
+                email.send_email(send_from, email, asunto, body, adjuntos, imagenes)
 
             respuesta['exito'] = True
         except Exception as e:

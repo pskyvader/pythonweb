@@ -53,7 +53,7 @@ class email:
             smtp['pass'] = config['email_pass']
 
         logo = logo_model.getById(8)
-        logo = image.portada(logo)
+        logo = image.portada(logo['foto'])
         imagenes.append(
             {'url': image.generar_dir(logo, 'email'), 'tag': 'logo'})
 

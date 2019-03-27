@@ -5,7 +5,7 @@ from core.view import view
 
 class previewmail():
     @classmethod
-    def index(cls, var):
+    def init(cls, var={}):
         ret = {'body': ''}
         nombre = 'pablo'
         nombre_sitio = 'sitio python'

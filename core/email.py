@@ -57,18 +57,12 @@ class email:
         imagenes.append(
             {'url': image.generar_dir(logo, 'email'), 'tag': 'logo'})
 
-        respuesta = {'exito': False, 'mensaje': ''}
 
-        try:
-            if config['email_smtp']!='':
-                email.send_mail(send_from, email_destino, asunto, body, adjuntos, imagenes, smtp['host'], smtp['port'], smtp['user'], smtp['pass'])
-            else:
-                email.send_mail(send_from, email_destino, asunto, body, adjuntos, imagenes)
-            respuesta['exito'] = True
-        except Exception as e:
-            respuesta['mensaje'] = "Mailer Error: " + repr(e)
-            respuesta['exito'] = False
-        print(respuesta)
+
+        if config['email_smtp']!='':
+            respuesta=email.send_mail(send_from, email_destino, asunto, body, adjuntos, imagenes, smtp['host'], smtp['port'], smtp['user'], smtp['pass'])
+        else:
+            respuesta=email.send_mail(send_from, email_destino, asunto, body, adjuntos, imagenes)
         return respuesta
 
     @staticmethod
@@ -87,6 +81,8 @@ class email:
             password (str): server auth password
             use_tls (bool): use TLS mode
         """
+        
+        respuesta = {'exito': False, 'mensaje': ''}
         msg = MIMEMultipart()
         msg['From'] = send_from
         msg['To'] = COMMASPACE.join(send_to)

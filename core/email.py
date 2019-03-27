@@ -95,7 +95,7 @@ class email:
         msg['Date'] = formatdate(localtime=True)
         msg['Subject'] = subject
 
-        msg.attach(MIMEText(message))
+        msg.attach(MIMEText(message, 'html'))
 
         for file in files:
             path = file['archivo']

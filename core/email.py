@@ -1,4 +1,4 @@
-from app.models.logo import logo
+from app.models.logo import logo as logo_model
 
 from .app import app
 from .image import image
@@ -11,6 +11,7 @@ from email.mime.base import MIMEBase
 from email.mime.text import MIMEText
 from email.utils import COMMASPACE, formatdate
 from email import encoders
+import mimetypes
 
 
 class email:
@@ -109,8 +110,7 @@ class email:
             url = image['url']
             tag = image['tag']
             with open(url, 'rb') as img:
-                maintype, subtype = mimetypes.guess_type(img.name)[
-                    0].split('/')
+                maintype, subtype = mimetypes.guess_type(img.name)[0].split('/')
                 msg.get_payload()[1].add_related(
                     img.read(), maintype=maintype, subtype=subtype, cid=tag)
 

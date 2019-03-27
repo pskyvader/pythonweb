@@ -9,6 +9,7 @@ import os.path as op
 from email.mime.multipart import MIMEMultipart
 from email.mime.base import MIMEBase
 from email.mime.text import MIMEText
+from email.MIMEImage import MIMEImage
 from email.utils import COMMASPACE, formatdate
 from email import encoders
 import mimetypes
@@ -107,10 +108,11 @@ class email:
             url = image['url']
             tag = image['tag']
             with open(url, 'rb') as img:
-                maintype, subtype = mimetypes.guess_type(img.name)[
-                    0].split('/')
-                msg.get_payload()[1].add_related(
-                    img.read(), maintype=maintype, subtype=subtype, cid=tag)
+                #maintype, subtype = mimetypes.guess_type(img.name)[0].split('/')
+                #msg.get_payload()[1].add_related( img.read(), maintype=maintype, subtype=subtype, cid=tag)
+                msgImage = MIMEImage(img.read())
+                msgImage.add_header('Content-ID', '<'+tag+'>')
+                msg.attach(msgImage)
 
 
         try:

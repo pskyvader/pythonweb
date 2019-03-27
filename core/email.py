@@ -58,7 +58,11 @@ class email:
         respuesta = {'exito': False, 'mensaje': ''}
 
         try:
-            email.send_email()
+            if config['email_smtp']:
+                email.send_email(email_from,email,asunto,body,adjuntos,imagenes,smtp['host'],smtp['port'],smtp['user'],smtp['pass'])
+            else:
+                email.send_email(email_from,email,asunto,body,adjuntos,imagenes)
+
             respuesta['exito'] = True
         except Exception as e:
             respuesta['mensaje'] = "Mailer Error: " + e

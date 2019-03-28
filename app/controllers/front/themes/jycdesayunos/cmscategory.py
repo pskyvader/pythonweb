@@ -60,15 +60,21 @@ class cmscategory(base):
         ret["body"] += f.normal()["body"]
         return ret
 
-
     def detail(self, var=[]):
         ret = {"body": []}
         if len(var) > 0:
             id = functions.get_idseccion(var[0])
             categoria = seccioncategoria_model.getById(id)
             if 0 in categoria:
-                self.url = functions.url_seccion([self.url[0], "detail"], categoria, True)
-                self.breadcrumb.append( {"url": functions.generar_url(self.url), "title": categoria["titulo"]} )
+                self.url = functions.url_seccion(
+                    [self.url[0], "detail"], categoria, True
+                )
+                self.breadcrumb.append(
+                    {
+                        "url": functions.generar_url(self.url),
+                        "title": categoria["titulo"],
+                    }
+                )
 
         url_return = functions.url_redirect(self.url)
         if url_return != "":
@@ -93,10 +99,9 @@ class cmscategory(base):
         bc = breadcrumb()
         ret["body"] += bc.normal(self.breadcrumb)["body"]
 
-
-        data={}
-        data['title']= categoria['titulo']
-        data['description']= categoria['descripcion']
+        data = {}
+        data["title"] = categoria["titulo"]
+        data["description"] = categoria["descripcion"]
         ret["body"].append(("title-text", data.copy()))
 
         var = {}
@@ -112,11 +117,6 @@ class cmscategory(base):
         data["list"] = categories
         ret["body"].append(("grid-border-3", data.copy()))
 
-
-
-
-
-
         var = {}
         if self.seo["tipo_modulo"] != 0:
             var["tipo"] = self.seo["tipo_modulo"]
@@ -124,31 +124,16 @@ class cmscategory(base):
         if self.modulo["hijos"]:
             var[seccioncategoria_model.idname] = categoria[0]
 
-        
         row = seccion_model.getAll(var)
 
         if len(row) > 0:
-            ret["body"].append(("title", {'title':'Secciones'}))
-            secciones = self.lista(row, 'sub', 'lista')
-            ret["body"].append(("grid-3", {'list':secciones}))
+            ret["body"].append(("title", {"title": "Secciones"}))
+            secciones = self.lista(row, "sub", "lista")
+            ret["body"].append(("grid-3", {"list": secciones}))
 
         f = footer()
         ret["body"] += f.normal()["body"]
         return ret
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     def sub(self, var=[]):
         ret = {"body": []}
@@ -156,7 +141,7 @@ class cmscategory(base):
             id = functions.get_idseccion(var[0])
             seccion = seccion_model.getById(id)
             if 0 in seccion:
-                self.url = functions.url_seccion([self.url[0], "detail"], seccion, True)
+                self.url = functions.url_seccion([self.url[0], "sub"], seccion, True)
                 self.breadcrumb.append(
                     {"url": functions.generar_url(self.url), "title": seccion["titulo"]}
                 )
@@ -184,16 +169,15 @@ class cmscategory(base):
         bc = breadcrumb()
         ret["body"] += bc.normal(self.breadcrumb)["body"]
 
-
         data = {}
         data["title"] = seccion["titulo"]
         data["description"] = seccion["descripcion"]
         ret["body"].append(("title-text", data))
 
-        ret["body"].append(("title", {'title':'Galería'}))
+        ret["body"].append(("title", {"title": "Galería"}))
 
-        car =  carousel()
-        $carousel->normal($seccion['foto'], $seccion['titulo']);
+        car = carousel()
+        ret["body"] += car.normal(seccion["foto"], seccion["titulo"])["body"]
 
         f = footer()
         ret["body"] += f.normal()["body"]

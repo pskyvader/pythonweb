@@ -15,7 +15,7 @@ from .breadcrumb import breadcrumb
 from .footer import footer
 
 
-class cms(base):
+class cmssidebar(base):
     def __init__(self):
         super().__init__(app.get['idseo'])
 

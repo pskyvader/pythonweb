@@ -450,7 +450,7 @@ class cart(base):
                     if p['idpedidoproducto'] == campos['idpedidoproducto']:
                         update = {'id': p['idpedidoproducto'],
                                   'mensaje': campos['mensaje']}
-                        idpedidoproducto = pedidoproducto_model.update(update)
+                        pedidoproducto_model.update(update)
                         respuesta['exito'] = True
                         break
 

@@ -320,16 +320,16 @@ class cart(base):
             return ret
 
         id = campos['id']
-        cart = cart.current_cart(True)
-        if len(cart) == 0:
-            cart = cart.new_cart()
-            if not isinstance(cart, dict):
+        carro = cart.current_cart(True)
+        if len(carro) == 0:
+            carro = cart.new_cart()
+            if not isinstance(carro, dict):
                 respuesta['mensaje'] = 'Hubo un error al eliminar del carro, por favor actualiza la pagina e intenta nuevamente'
                 ret['body'] = json.dumps(respuesta, ensure_ascii=False)
                 return ret
 
         cantidad = 0
-        for p in cart['productos']:
+        for p in carro['productos']:
             if p['idpedidoproducto'] == id:
                 cantidad = p['cantidad']
                 producto = producto_model.getById(p['idproducto'])
@@ -341,7 +341,7 @@ class cart(base):
                 pedidoproducto_model.delete(p['idpedidoproducto'])
                 break
 
-        cart.update_cart(cart['idpedido'])
+        cart.update_cart(carro['idpedido'])
         producto_titulo = ''
 
         if producto != None:

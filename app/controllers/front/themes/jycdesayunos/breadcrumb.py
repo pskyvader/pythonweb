@@ -10,7 +10,7 @@ class breadcrumb:
         b = [
             {'url' : functions.generar_url(array(seo['url'])), 'title' :seo['titulo']},
         ]
-        b=array_merge(b,breadcrumb)
+        b=b+breadcrumb
         foreach (b as key : bread) {
             b[key]['is_active']=false
             b[key]['active']=''

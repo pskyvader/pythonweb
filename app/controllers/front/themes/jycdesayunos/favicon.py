@@ -8,8 +8,9 @@ from app.models.logo import logo as logo_model
 class favicon:
     def init(self, var):
         logo=logo_model.getById(1)
+        portada=image.portada(logo['foto'])
         theme =  app.get_dir(True)+'uploads/'
-        resource_url = image.generar_dir(logo['foto'][0], 'favicon')
+        resource_url = image.generar_dir(portada, 'favicon')
         resource = resource_url[len(theme):]
         ret=cache.serve_cache(resource_url,theme,resource)
         return ret

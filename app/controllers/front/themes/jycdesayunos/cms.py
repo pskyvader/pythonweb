@@ -2,6 +2,7 @@
 from app.models.seccion import seccion as seccion_model
 from core.app import app
 from core.file import file
+from core.image import image
 from core.functions import functions
 from core.view import view
 
@@ -22,6 +23,20 @@ class cms(base):
     def index(self):
         ret = {'body': []}
         self.meta(self.seo)
+
+        var = {}
+        if self.seo['tipo_modulo'] != 0:
+            var['tipo'] = self.seo['tipo_modulo']
+
+        if self.modulo['hijos']:
+            var['idpadre'] = 0
+
+        row = seccion_model.getAll(var)
+
+        if len(row) > 0:
+            self.url = functions.url_seccion(
+                [self.url[0], 'detail'], row[0], True)
+
         url_return = functions.url_redirect(self.url)
         if url_return != '':
             ret['error'] = 301
@@ -44,26 +59,9 @@ class cms(base):
         bc = breadcrumb()
         ret['body'] += bc.normal(self.breadcrumb)['body']
 
-        var = {}
-        if self.seo['tipo_modulo'] != 0:
-            var['tipo'] = self.seo['tipo_modulo']
-
-        if self.modulo['hijos']:
-            var['idpadre'] = 0
-
-        row = seccion_model.getAll(var)
-        sidebar = []
-        for s in row:
-            sidebar.append({'title': s['titulo'], 'active': '', 'url': functions.url_seccion(
-                [self.url[0], 'detail'], s)})
-
         data = {}
-
-        data['title_category'] = self.seo['titulo']
-        data['sidebar'] = sidebar
-
-        data['description'] = ''
-        ret['body'].append(('cms-sidebar', data))
+        data['description'] = row[0]['descripcion']
+        ret['body'].append(('cms', data))
         f = footer()
         ret['body'] += f.normal()['body']
         return ret
@@ -103,18 +101,6 @@ class cms(base):
         bc = breadcrumb()
         ret['body'] += bc.normal(self.breadcrumb)['body']
 
-        var = {}
-        if self.seo['tipo_modulo'] != 0:
-            var['tipo'] = self.seo['tipo_modulo']
-
-        if self.modulo['hijos']:
-            var['idpadre'] = 0
-
-        row = seccion_model.getAll(var)
-        sidebar = []
-        for s in row:
-            sidebar.append({'title': s['titulo'], 'active': '', 'url': functions.url_seccion(
-                [self.url[0], 'detail'], s)})
 
         extra = ''
         if len(seccion['archivo']) > 0:
@@ -128,10 +114,15 @@ class cms(base):
             extra = ('file', data.copy())
 
         data = {}
-        data['sidebar'] = sidebar
+
+
+        
+        
         data['title_category'] = self.seo['titulo']
         data['title'] = seccion['titulo']
+        data['subtitle']= seccion['subtitulo']
         data['description'] = seccion['descripcion']
+        data['image']= image.generar_url(image.portada(seccion['foto']), '')
         data['extra'] = extra
         ret['body'].append(('cms-sidebar', data))
 

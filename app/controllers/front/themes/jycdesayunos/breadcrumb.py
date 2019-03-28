@@ -6,27 +6,26 @@ from app.models.seo import seo as seo_model
 
 class breadcrumb:
     def normal(self, breadcrumb=[]):
-        ret = {'body': []}
+        ret = {"body": []}
         seo = seo_model.getById(1)
-        b = [{'url': functions.generar_url(
-            [seo['url']]), 'title':seo['titulo']}]
-        b = b+breadcrumb
+        b = [{"url": functions.generar_url([seo["url"]]), "title": seo["titulo"]}]
+        b = b + breadcrumb
         for bread in b:
-            if b.index(bread) == len(b)-1:
-                bread['active'] = True
+            if b.index(bread) == len(b) - 1:
+                bread["active"] = True
             else:
-                bread['active'] = False
+                bread["active"] = False
 
         data = {}
-        data['breadcrumb'] = b.copy()
+        data["breadcrumb"] = b.copy()
         last = b.pop()
-        data['titulo'] = last['title']
+        data["titulo"] = last["title"]
 
         if len(b) > 1:
             last = b.pop()
-            data['subtitulo'] = last['title']
+            data["subtitulo"] = last["title"]
         else:
-            data['subtitulo'] = ''
+            data["subtitulo"] = ""
 
-        ret['body'].append(('breadcrumb', data))
+        ret["body"].append(("breadcrumb", data))
         return ret

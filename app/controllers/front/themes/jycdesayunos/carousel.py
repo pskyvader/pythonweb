@@ -16,6 +16,26 @@ class carousel:
             for key, c in row_carousel:
                 foto = image.generar_url(c, 'thumb_carousel')
 
+
+                if foto!='':
+                    foto_w = image.generar_url(c, 'thumb_carousel', 'webp')
+                    if foto_w!='':
+                        srcset = [{'url' : foto_w, 'type' : 'image/webp'}]
+                    
+                    thumb.append({
+                        'srcset' : srcset,
+                        'id'     : key,
+                        'title'  : titulo,
+                        'active' : (0 == key),
+                        'foto'   : foto,
+                    })
+
+
+
+
+
+                    
+
                 portada = image.portada(b["foto"])
                 foto = image.generar_url(portada, 'foto1')
                 if foto != '':
@@ -43,71 +63,55 @@ class carousel:
 
 
 
-            foreach ($row_carousel as $key => $c) {
-                if (isset($c)) {
-                    $foto = image::generar_url($c, 'thumb_carousel');
-                } else {
-                    $foto = '';
-                }
-                if ('' != $foto) {
-                    $foto_w = image::generar_url($c, 'thumb_carousel', 'webp');
-                    if ('' != $foto_w) {
-                        $srcset = array(array('url' => $foto_w, 'type' => 'image/webp'));
-                    }
-                    $thumb[] = array(
-                        'srcset' => $srcset,
-                        'id'     => $key,
-                        'title'  => $titulo,
-                        'active' => (0 == $key) ? 'active' : '',
-                        'foto'   => $foto,
-                    );
+
+                   
                 }
             }
 
-            $carousel = array();
-            foreach ($row_carousel as $key => $c) {
-                if (isset($c)) {
-                    $foto = image::generar_url($c, 'foto1');
+            carousel = array()
+            foreach (row_carousel as key : c) {
+                if (isset(c)) {
+                    foto = image::generar_url(c, 'foto1')
                 } else {
-                    $foto = '';
+                    foto = ''
                 }
-                if ('' != $foto) {
+                if ('' != foto) {
 
-                    $srcset = $this->srcset($c);
+                    srcset = this->srcset(c)
 
-                    $carousel[] = array(
-                        'id'       => $key,
-                        'srcset'   => $srcset,
-                        'title'    => $titulo,
-                        'active'   => (0 == $key) ? 'active' : '',
-                        'data'     => (0 != $key) ? 'data-' : '',
-                        'foto'     => $foto,
-                        'original' => image::generar_url($c, ''),
-                    );
+                    carousel[] = array(
+                        'id'       : key,
+                        'srcset'   : srcset,
+                        'title'    : titulo,
+                        'active'   : (0 == key) ? 'active' : '',
+                        'data'     : (0 != key) ? 'data-' : '',
+                        'foto'     : foto,
+                        'original' : image::generar_url(c, ''),
+                    )
                 }
             }
-            view::set('thumb', $thumb);
-            view::set('carousel', $carousel);
-            view::render('carousel');
+            view::set('thumb', thumb)
+            view::set('carousel', carousel)
+            view::render('carousel')
         }
     }
 
-    public function srcset($foto_base)
+    public function srcset(foto_base)
     {
-        $images = self::$sizes;
-        $srcset = array();
-        foreach ($images as $k => $size) {
-            $foto = image::generar_url($foto_base, $size['foto'], 'webp');
-            if ('' != $foto) {
-                $srcset[] = array('media' => '(min-width: ' . $size['size'] . 'px)', 'url' => $foto, 'type' => 'image/webp');
+        images = self::sizes
+        srcset = array()
+        foreach (images as k : size) {
+            foto = image::generar_url(foto_base, size['foto'], 'webp')
+            if ('' != foto) {
+                srcset[] = array('media' : '(min-width: ' . size['size'] . 'px)', 'url' : foto, 'type' : 'image/webp')
             }
         }
-        foreach ($images as $k => $size) {
-            $foto = image::generar_url($foto_base, $size['foto']);
-            if ('' != $foto) {
-                $srcset[] = array('media' => '(min-width: ' . $size['size'] . 'px)', 'url' => $foto, 'type' => 'image/jpg');
+        foreach (images as k : size) {
+            foto = image::generar_url(foto_base, size['foto'])
+            if ('' != foto) {
+                srcset[] = array('media' : '(min-width: ' . size['size'] . 'px)', 'url' : foto, 'type' : 'image/jpg')
             }
         }
-        return $srcset;
+        return srcset
     }
 }

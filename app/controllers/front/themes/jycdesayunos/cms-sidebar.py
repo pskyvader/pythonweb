@@ -1,5 +1,6 @@
 
 from app.models.seccion import seccion as seccion_model
+from core.app import app
 from core.file import file
 from core.functions import functions
 from core.view import view

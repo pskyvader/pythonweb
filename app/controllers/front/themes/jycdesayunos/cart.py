@@ -9,6 +9,8 @@ from core.app import app
 from core.functions import functions
 from core.image import image
 
+from .base import base
+
 from .head import head
 from .header import header
 from .banner import banner

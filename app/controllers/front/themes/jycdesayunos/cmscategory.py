@@ -1,4 +1,5 @@
 from app.models.seccion import seccion as seccion_model
+from app.models.seccioncategoria import seccioncategoria as seccioncategoria_model
 from core.app import app
 from core.file import file
 from core.functions import functions
@@ -16,6 +17,74 @@ from .footer import footer
 class cmscategory(base):
     def __init__(self):
         super().__init__(app.get["idseo"])
+
+
+
+    def index(self):
+        ret = {"body": []}
+        self.meta(self.seo)
+        url_return = functions.url_redirect(self.url)
+        if url_return != "":
+            ret["error"] = 301
+            ret["redirect"] = url_return
+            return ret
+
+        h = head(self.metadata)
+        ret_head = h.normal()
+        if ret_head["headers"] != "":
+            return ret_head
+        ret["body"] += ret_head["body"]
+
+        he = header()
+        ret["body"] += he.normal()["body"]
+
+        ba = banner()
+        ret["body"] += ba.individual(
+            self.seo["banner"], self.metadata["title"]
+        )["body"]
+
+        bc = breadcrumb()
+        ret["body"] += bc.normal(self.breadcrumb)["body"]
+
+        var = {}
+        if self.seo["tipo_modulo"] != 0:
+            var["tipo"] = self.seo["tipo_modulo"]
+
+        if self.modulo["hijos"]:
+            var["idpadre"] = 0
+
+        row = seccioncategoria_model.getAll(var)
+        sidebar = []
+        for s in row:
+            sidebar.append(
+                {
+                    "title": s["titulo"],
+                    "active": "",
+                    "url": functions.url_seccion([self.url[0], "detail"], s),
+                }
+            )
+
+        data = {}
+
+        data["title_category"] = self.seo["titulo"]
+        data["sidebar"] = sidebar
+
+        data["description"] = ""
+        ret["body"].append(("cms-sidebar", data))
+        f = footer()
+        ret["body"] += f.normal()["body"]
+        return ret
+
+
+
+
+
+
+
+
+
+
+
 
     def index(self):
         ret = {"body": []}

@@ -8,7 +8,7 @@ class carousel:
     ]
 
 
-    def normal(self, row_carousel=[],titulo):
+    def normal(self, row_carousel=[],titulo=''):
         ret = {'body': []}
         if len(row_carousel) > 0:
             thumb = []

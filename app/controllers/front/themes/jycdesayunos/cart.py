@@ -286,7 +286,7 @@ class cart(base):
                 copiar = image.copy(
                     portada, new_p['id'], pedidoproducto_model.table, '', '', 'cart')
                 if copiar['exito']:
-                    new_p['foto'] = json_encode(copiar['file'])
+                    new_p['foto'] = json.dumps(copiar['file'])
                     idpedidoproducto = pedidoproducto_model.update(new_p)
 
             # comentar esto para funcionamiento tipico de actualizar cantidades en lugar de agregar siempre algo nuevo

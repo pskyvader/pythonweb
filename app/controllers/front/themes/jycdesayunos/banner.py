@@ -1,6 +1,5 @@
 
-class banner
-{
+class banner():
     public static $sizes = array(
         array('foto' => 'foto1', 'size' => '1200'),
         array('foto' => 'foto2', 'size' => '991'),

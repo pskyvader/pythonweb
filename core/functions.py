@@ -164,6 +164,12 @@ class functions():
             return archivo + c + str(int(getmtime(ac))) if my_file.is_file() else ""
 
     @staticmethod
+    def formato_precio(precio):
+        final = "$" + number_format(precio, 0, '', '.')
+        return final
+    
+
+    @staticmethod
     def current_time(formato="%Y-%m-%d %H:%M:%S", as_string=True):
         '''fecha actual en zona horaria santiago, formato opcional'''
         import datetime
@@ -191,6 +197,9 @@ class functions():
             return fecha.strftime(formato)
         else:
             return fecha.timestamp()
+
+
+        
 
     @staticmethod
     def getContrastColor(hexColor: str):

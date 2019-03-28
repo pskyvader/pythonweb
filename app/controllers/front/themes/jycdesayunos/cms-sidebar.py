@@ -42,7 +42,7 @@ class cms(base):
         row     = seccion_model.getAll(var)
         sidebar = []
         for s in row:
-            sidebar.append({'title' : s['titulo'], 'active' : '', 'url' : functions.url_seccion([self.url[0], 'detail'], s})
+            sidebar.append({'title' : s['titulo'], 'active' : '', 'url' : functions.url_seccion([self.url[0], 'detail'], s)})
         
         data={}
 

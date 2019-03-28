@@ -44,7 +44,7 @@ class cms(base):
         bc = breadcrumb()
         ret['body'] += bc.normal(self.breadcrumb)['body']
 
-        var = array()
+        var = {}
         if self.seo['tipo_modulo'] != 0:
             var['tipo'] = self.seo['tipo_modulo']
 

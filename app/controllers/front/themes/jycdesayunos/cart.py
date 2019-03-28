@@ -52,8 +52,8 @@ class cart(base):
     def current_cart(return_cart:bool = False):
         """ Description
             busca el carro actual, si no existe devuelve un array vacio
-            si return_cart es TRUE, retorna array
-            si es FALSE, retorna JSON
+            si return_cart es True, retorna array
+            si es False, retorna JSON
         :type return_cart:bool:
         :param return_cart:bool:
 
@@ -214,101 +214,105 @@ class cart(base):
     
         :rtype: json
         """
+        ret = {'headers': [ ('Content-Type', 'application/json; charset=utf-8')], 'body': ''}
         respuesta = {'exito' : False, 'mensaje' : ''}
         campos    = app.post['campos']
         if 'id' not in campos or 'cantidad' not in campos:
             respuesta['mensaje'] = 'No has agregado un producto valido'
-            echo json_encode(respuesta)
-            exit
+            ret['body'] = json.dumps(respuesta,ensure_ascii=False)
+            return ret
         
         id       = campos['id']
         cantidad = campos['cantidad']
-        cart     = self.current_cart(true)
+        cart     = self.current_cart(True)
         if len(cart) == 0:
             cart = self.new_cart()
-            if not is_array(cart):
+            if not isinstance(cart,dict):
                 respuesta['mensaje'] = 'Hubo un error al crear el carro, por favor intenta nuevamente'
-                echo json_encode(respuesta)
-                exit
+                ret['body'] = json.dumps(respuesta,ensure_ascii=False)
+                return ret
             
         
 
         producto = producto_model.getById(id)
-        if not isset(producto['precio']) || producto['precio'] <= 0:
+        if 'precio' not in producto or producto['precio'] <= 0:
             respuesta['mensaje'] = 'No se encontro el producto que estas buscando, por favor actualiza la pagina e intenta nuevamente'
-            echo json_encode(respuesta)
-            exit
+            ret['body'] = json.dumps(respuesta,ensure_ascii=False)
+            return ret
         
 
         cantidad_final = producto['stock'] - cantidad
-        if producto['stock'] < 1 || cantidad_final < 0:
+        if producto['stock'] < 1 or cantidad_final < 0:
             respuesta['mensaje'] = 'No hay suficientes productos disponibles'
-            echo json_encode(respuesta)
-            exit
+            ret['body'] = json.dumps(respuesta,ensure_ascii=False)
+            return ret
         
 
-        existe = false
-        /*foreach (cart['productos'] as key : p:
-        if(p['idproducto']==producto[0])
-        p['cantidad']+=cantidad
-        p['precio']+=producto['precio_final']
-        p['total']=cantidad*p['precio_final']
-        cart['productos'][key]=p
-        p['id']=p['idpedidoproducto']
-        existe=true
-        unset(p['foto'])
-        pedidoproducto_model.update(p)
-        break
+        existe = False
         
-        */
+        
+        # foreach (cart['productos'] as key : p:
+        # if(p['idproducto']==producto[0])
+        # p['cantidad']+=cantidad
+        # p['precio']+=producto['precio_final']
+        # p['total']=cantidad*p['precio_final']
+        # cart['productos'][key]=p
+        # p['id']=p['idpedidoproducto']
+        # existe=True
+        # unset(p['foto'])
+        # pedidoproducto_model.update(p)
+        # break
+        
+        
 
         if not existe:
-            insert = array(
+            insert = {
                 'idpedido'   : cart['idpedido'],
                 'idproducto' : producto[0],
                 'titulo'     : producto['titulo'],
                 'precio'     : producto['precio_final'],
-            )
+            }
 
-            /*
-            insert['cantidad']=cantidad
-            insert['total']=producto['precio']*cantidad
-            idpedidoproducto=pedidoproducto_model.insert(insert)
-            new_p=array()
-            new_p['id'] = idpedidoproducto
-            portada     = image.portada(producto['foto'])
-            copiar      = image.copy(portada, new_p['id'], pedidoproducto_model.table, '', '', 'cart'}
-            if copiar['exito']:
-            new_p['foto']    = json_encode(copiar['file'])
-            idpedidoproducto = pedidoproducto_model.update(new_p)
-            */
+            
+            # insert['cantidad']=cantidad
+            # insert['total']=producto['precio']*cantidad
+            # idpedidoproducto=pedidoproducto_model.insert(insert)
+            # new_p=array()
+            # new_p['id'] = idpedidoproducto
+            # portada     = image.portada(producto['foto'])
+            # copiar      = image.copy(portada, new_p['id'], pedidoproducto_model.table, '', '', 'cart'}
+            # if copiar['exito']:
+            # new_p['foto']    = json_encode(copiar['file'])
+            # idpedidoproducto = pedidoproducto_model.update(new_p)
+            
 
-            //comentar esto para funcionamiento tipico de actualizar cantidades en lugar de agregar siempre algo nuevo
-            for (i = 0 i < cantidad i++:
+
+            #comentar esto para funcionamiento tipico de actualizar cantidades en lugar de agregar siempre algo nuevo
+            for i in range(cantidad):
                 insert['cantidad'] = 1
                 insert['total']    = producto['precio_final'] * 1
                 idpedidoproducto   = pedidoproducto_model.insert(insert)
-                new_p              = array()
+                new_p              = {}
                 new_p['id']        = idpedidoproducto
                 portada            = image.portada(producto['foto'])
-                copiar             = image.copy(portada, new_p['id'], pedidoproducto_model.table, '', '', 'cart'}
+                copiar             = image.copy(portada, new_p['id'], pedidoproducto_model.table, '', '', 'cart')
                 if copiar['exito']:
                     new_p['foto']    = json_encode(copiar['file'])
                     idpedidoproducto = pedidoproducto_model.update(new_p)
                 
             
-            //comentar esto para funcionamiento tipico de actualizar cantidades en lugar de agregar siempre algo nuevo
+            #comentar esto para funcionamiento tipico de actualizar cantidades en lugar de agregar siempre algo nuevo
         
 
         self.update_cart(cart['idpedido'])
 
-        actualizar_producto = {'id' : producto[0], 'stock' : cantidad_final)
+        actualizar_producto = {'id' : producto[0], 'stock' : cantidad_final}
         producto_model.update(actualizar_producto)
-        respuesta['carro']   = self.current_cart(true)
-        respuesta['mensaje'] = producto['titulo'] . ' agregado al carro.<br/> <i class="fa fa-shopping-bag"></i> Puedes Comprar haciendo click aqui'
-        respuesta['exito']   = true
-        echo json_encode(respuesta)
-        exit
+        respuesta['carro']   = self.current_cart(True)
+        respuesta['mensaje'] = producto['titulo'] + ' agregado al carro.<br/> <i class="fa fa-shopping-bag"></i> Puedes Comprar haciendo click aqui'
+        respuesta['exito']   = True
+        ret['body'] = json.dumps(respuesta,ensure_ascii=False)
+        return ret
     
 
 
@@ -318,103 +322,22 @@ class cart(base):
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-
-
-    /**
-     * remove_cart
-     * quita un producto del carro
-     *
-     * @param  POST id
-     *
-     * @return json
-     */
-    public static function remove_cart()
-    
-        respuesta = {'exito' : false, 'mensaje' : ''}
-        campos    = functions.test_input(_POST)
+    @staticmethod
+    def remove_cart():
+        """ quita un producto del carro
+        :raises:
+
+        :rtype:
+        """
+        respuesta = {'exito' : False, 'mensaje' : ''}
+        campos    = app.post
         if not isset(campos['id']):
             respuesta['mensaje'] = 'No has agregado un producto valido'
             echo json_encode(respuesta)
             exit
         
         id   = campos['id']
-        cart = self.current_cart(true)
+        cart = self.current_cart(True)
         if len(cart) == 0:
             cart = self.new_cart()
             if not is_array(cart):
@@ -429,7 +352,7 @@ class cart(base):
             if p['idpedidoproducto'] == id:
                 cantidad = p['cantidad']
                 producto = producto_model.getById(p['idproducto'])
-                if not isset(producto['precio']) || producto['precio'] <= 0:
+                if not isset(producto['precio']) or producto['precio'] <= 0:
                     respuesta['mensaje'] = 'No se encontro el producto que estas buscando, por favor actualiza la pagina e intenta nuevamente'
                     echo json_encode(respuesta)
                     exit
@@ -449,12 +372,100 @@ class cart(base):
             producto_model.update(actualizar_producto)
             producto_titulo=producto['titulo'] 
         
-        respuesta['carro']   = self.current_cart(true)
+        respuesta['carro']   = self.current_cart(True)
         respuesta['mensaje'] = producto_titulo. ' eliminado del carro'
-        respuesta['exito']   = true
+        respuesta['exito']   = True
         echo json_encode(respuesta)
         exit
     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
 
     /**
      * update_cart
@@ -505,16 +516,16 @@ class cart(base):
     public static function change_atributo()
     
 
-        respuesta = {'exito' : false, 'mensaje' : 'No has modificado un producto valido. Por favor recarga la pagina e intenta nuevamente'}
-        campos    = functions.test_input(_POST)
+        respuesta = {'exito' : False, 'mensaje' : 'No has modificado un producto valido. Por favor recarga la pagina e intenta nuevamente'}
+        campos    = app.post
         if isset(campos['idproductoatributo']) && isset(campos['idpedidoproducto']):
-            cart = self.current_cart(true)
+            cart = self.current_cart(True)
             if isset(cart['productos']):
                 foreach (cart['productos'] as key : p:
                     if p['idpedidoproducto'] == campos['idpedidoproducto']:
                         update             = {'id' : p['idpedidoproducto'], 'idproductoatributo' : campos['idproductoatributo'])
                         idpedidoproducto   = pedidoproducto_model.update(update)
-                        respuesta['exito'] = true
+                        respuesta['exito'] = True
                         break
                     
         echo json_encode(respuesta)
@@ -535,16 +546,16 @@ class cart(base):
     public static function change_mensaje()
     
 
-        respuesta = {'exito' : false, 'mensaje' : 'No has modificado un producto valido. Por favor recarga la pagina e intenta nuevamente'}
-        campos    = functions.test_input(_POST)
+        respuesta = {'exito' : False, 'mensaje' : 'No has modificado un producto valido. Por favor recarga la pagina e intenta nuevamente'}
+        campos    = app.post
         if isset(campos['mensaje']) && isset(campos['idpedidoproducto']):
-            cart = self.current_cart(true)
+            cart = self.current_cart(True)
             if isset(cart['productos']):
                 foreach (cart['productos'] as key : p:
                     if p['idpedidoproducto'] == campos['idpedidoproducto']:
                         update             = {'id' : p['idpedidoproducto'], 'mensaje' : (campos['mensaje']))
                         idpedidoproducto   = pedidoproducto_model.update(update)
-                        respuesta['exito'] = true
+                        respuesta['exito'] = True
                         break
                     
         echo json_encode(respuesta)

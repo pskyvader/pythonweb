@@ -1,4 +1,5 @@
 from core.image import image
+from core.functions import functions
 
 class banner():
     sizes = [
@@ -8,7 +9,8 @@ class banner():
         {'foto' : 'foto4', 'size' : '0'},
     ]
     
-    def normal(row_banner = []):
+    def normal(self,row_banner = []):
+        ret = {'body': []}
         if len(row_banner) > 0:
             thumb  = []
             banner = []
@@ -16,54 +18,47 @@ class banner():
                 portada = image.portada(b["foto"])
                 foto      = image.generar_url(portada, 'foto1')
                 if foto != '':
-                    thumb[] = array('id' : key, 'active' : (key == 0) ? 'active' : '')
+                    thumb.append({'id' : key, 'active' : (key == 0)})
 
-                    srcset = this->srcset(portada)
+                    srcset = self.srcset(portada)
 
-                    banner[] = array(
+                    banner.append({
                         'srcset'     : srcset,
                         'title'      : b['titulo'],
-                        'active'     : (key == 0) ? 'active' : '',
-                        'data'       : (key != 0) ? 'data-' : '',
+                        'active'     : (key == 0),
+                        'data'       : 'data-' if (key != 0) else '',
                         'foto'       : foto,
                         'texto1'     : b['texto1'],
-                        'is_texto1'  : (b['texto1'] != ''),
                         'texto2'     : b['texto2'],
-                        'is_texto2'  : (b['texto2'] != ''),
                         'link'       : functions.ruta(b['link']),
-                        'is_link'    : (b['link'] != ''),
                         'background' : image.generar_url(portada, 'color'),
-                    )
-                }
+                    })
+                
 
-            }
-            view.set('thumb', thumb)
-            view.set('banner', banner)
-            view.render('banner')
-        }
-    }
-
-    public function individual(foto_base, titulo, subtitulo = '')
-    {
+            data={}
+            data['thumb']= thumb
+            data['banner']= banner
+            ret['body'].append(('banner', data))
+        return ret
+            
+    def individual(self,foto_base, titulo, subtitulo = ''):
         foto_base = image.portada(foto_base)
         foto      = image.generar_url(foto_base, 'foto1')
         if foto != '':
-            srcset = array()
-
-            srcset = this->srcset(foto_base)
-            banner = array(
+            srcset = self.srcset(foto_base)
+            banner = {
                 'srcset'     : srcset,
-                'title'      : strip_tags(titulo),
-                'subtitle'   : strip_tags(subtitulo),
+                'title'      : functions.remove_tags(titulo),
+                'subtitle'   : functions.remove_tags(subtitulo),
                 'foto'       : foto,
-                'background' : image.generar_url(foto_base, 'color'),
-            )
+                'background' : image.generar_url(foto_base, 'color')
+            }
             view.set_array(banner)
             view.render('banner-seccion')
         }else{
             banner = array(
-                'title'      : strip_tags(titulo),
-                'subtitle'   : strip_tags(subtitulo),
+                'title'      : functions.remove_tags(titulo),
+                'subtitle'   : functions.remove_tags(subtitulo),
             )
             view.set_array(banner)
             view.render('banner-seccion')

@@ -216,7 +216,7 @@ class cart(base):
         """
         respuesta = {'exito' : False, 'mensaje' : ''}
         campos    = app.post['campos']
-        if not isset(campos['id']) || !isset(campos['cantidad']):
+        if 'id' not in campos or 'cantidad' not in campos:
             respuesta['mensaje'] = 'No has agregado un producto valido'
             echo json_encode(respuesta)
             exit

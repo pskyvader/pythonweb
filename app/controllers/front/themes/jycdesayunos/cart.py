@@ -25,7 +25,7 @@ class cart(base):
         ret = {'body': []}
         self.meta(self.seo)
 
-        url_return = functions.url_redirect(url_final)
+        url_return = functions.url_redirect(self.url)
         if url_return != '':
             ret['error'] = 301
             ret['redirect'] = url_return

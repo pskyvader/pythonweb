@@ -8,10 +8,8 @@ class breadcrumb:
     def normal(breadcrumb=[]):
         ret = {'body': []}
         seo = seo_model.getById(1)
-        b = [
-            {'url': functions.generar_url(
-                array(seo['url'])), 'title':seo['titulo']},
-        ]
+        b = [{'url': functions.generar_url(
+            [seo['url']]), 'title':seo['titulo']} ]
         b = b+breadcrumb
         for bread in b:
             if b.index(bread) == len(b)-1:

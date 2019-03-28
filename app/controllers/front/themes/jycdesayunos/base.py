@@ -2,11 +2,11 @@ from core.cache import cache
 
 
 class base:
-    url        = []
-    metadata   = {'title' : '', 'keywords' : '', 'description' : ''}
+    url = []
+    metadata = {'title': '', 'keywords': '', 'description': ''}
     breadcrumb = []
-    modulo     = []
-    seo        = []
+    modulo = []
+    seo = []
 
     def init(self, var: list):
         from inspect import signature
@@ -37,58 +37,53 @@ class base:
             }
         return ret
 
-
-
     @classmethod
-    def __init__(cls,idseo, cache=True):
-        if not cache:
+    def __init__(cls, idseo, set_cache=True):
+        if not set_cache:
             cache.set_cache(False)
-        
-        $this->seo               = seo_model.getById($idseo)
-        $this->url               = array($this->seo['url'])
-        $this->breadcrumb[]      = array('url' : functions.generar_url(array($this->seo['url'])), 'title' : $this->seo['titulo'])
-        $this->metadata['image'] = image.generar_url(image.portada($this->seo['foto']), 'social')
-        $this->metadata['modulo'] = (new \ReflectionClass($this))->getShortName()
-        $moduloconfiguracion     = moduloconfiguracion_model.getByModulo($this->seo['modulo_back'])
-        if (isset($moduloconfiguracion[0])) {
-            $modulo = modulo_model.getAll(array('idmoduloconfiguracion' : $moduloconfiguracion[0], 'tipo' : $this->seo['tipo_modulo']), array('limit' : 1))
-            if (isset($modulo[0])) {
-                $this->modulo = $modulo[0]
-            }
-        }
-    }
-    public function meta($meta)
-    {
-        $this->metadata['title']            = (isset($meta['titulo']) && $meta['titulo'] != '') ? $meta['titulo'] : $this->metadata['title']
-        $this->metadata['keywords_text']    = (isset($meta['keywords']) && $meta['keywords'] != '') ? $meta['keywords'] : $this->metadata['keywords_text']
-        $this->metadata['description_text'] = (isset($meta['resumen']) && $meta['resumen'] != '') ? $meta['resumen'] : $this->metadata['description_text']
-        $this->metadata['description_text'] = (isset($meta['descripcion']) && $meta['descripcion'] != '') ? $meta['descripcion'] : $this->metadata['description_text']
-        $this->metadata['description_text'] = (isset($meta['metadescripcion']) && $meta['metadescripcion'] != '') ? $meta['metadescripcion'] : $this->metadata['description_text']
-        if isset($meta['foto']) && $meta['foto']!='':
-            $social=image.generar_url(image.portada($meta['foto']), 'social')
-            if $social!='':
-                $this->metadata['image'] = $social
-            }
-        }
-    }
 
-    protected function lista($row, $url = 'detail', $recorte = 'foto1')
-    {
-        $lista = array()
-        foreach ($row as $key : $v) {
-            $portada = image.portada($v['foto'])
-            $c       = array(
-                'title'       : $v['titulo'],
-                'image'       : image.generar_url($portada, $recorte),
-                'description' : $v['resumen'],
-                'srcset'      : array(),
-                'url'         : functions.url_seccion(array($this->url[0], $url), $v),
-            )
-            $src = image.generar_url($portada, $recorte, 'webp')
-            if ($src != '') {
-                $c['srcset'][] = array('media' : '', 'src' : $src, 'type' : 'image/webp')
+        cls.seo = seo_model.getById(idseo)
+        cls.url = [cls.seo['url']]
+        cls.breadcrumb.append({'url': functions.generar_url(
+            [cls.seo['url']]), 'title': cls.seo['titulo']})
+        cls.metadata['image'] = image.generar_url(
+            image.portada(cls.seo['foto']), 'social')
+        cls.metadata['modulo'] = cls.__class__.__name__
+        moduloconfiguracion = moduloconfiguracion_model.getByModulo(
+            cls.seo['modulo_back'])
+        if 0 in moduloconfiguracion:
+            modulo = modulo_model.getAll(
+                {'idmoduloconfiguracion': moduloconfiguracion[0], 'tipo': cls.seo['tipo_modulo']}, {'limit': 1})
+            if 0 in modulo:
+                cls.modulo = modulo[0]
+
+    def meta(self, meta):
+        self.metadata['title'] = meta['titulo'] if 'titulo' in meta and meta['titulo'] != '' else self.metadata['title']
+        self.metadata['keywords'] = meta['keywords'] if 'keywords' in meta and meta['keywords'] != '' else self.metadata['keywords']
+        self.metadata['description'] = meta['resumen'] if 'resumen' in meta and meta['resumen'] != '' else self.metadata['description']
+        self.metadata['description'] = meta['descripcion'] if 'descripcion' in meta and meta['descripcion'] != '' else self.metadata['description']
+        self.metadata['description'] = meta['metadescripcion'] if 'metadescripcion' in meta and meta['metadescripcion'] != '' else self.metadata['description']
+        if 'foto' in meta and meta['foto'] != '':
+            social = image.generar_url(image.portada(meta['foto']), 'social')
+            if social != '':
+                self.metadata['image'] = social
+
+    def lista(self, row, url='detail', recorte='foto1'):
+        lista = []
+        for v in row:
+            portada = image.portada(v['foto'])
+            c = {
+                'title': v['titulo'],
+                'image': image.generar_url(portada, recorte),
+                'description': v['resumen'],
+                'srcset': [],
+                'url': functions.url_seccion([self.url[0], url], v),
             }
-            $lista[] = $c
-        }
-        return $lista
-    }
+            src = image.generar_url(portada, recorte, 'webp')
+            if src != '':
+                c['srcset'].append(
+                    {'media': '', 'src': src, 'type': 'image/webp'})
+
+            lista.append(c)
+
+        return lista

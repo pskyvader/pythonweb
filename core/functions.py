@@ -170,8 +170,19 @@ class functions():
     
 
     @staticmethod
-    def current_time(formato="%Y-%m-%d %H:%M:%S", as_string=True):
-        '''fecha actual en zona horaria santiago, formato opcional'''
+    def current_time(formato:str="%Y-%m-%d %H:%M:%S", as_string:bool=True):
+        """ fecha actual en zona horaria santiago, formato opcional
+        :type formato:str:
+        :param formato:str:
+    
+        :type as_string:bool:
+        :param as_string:bool:
+    
+        :raises:
+    
+        :rtype: datetime.timestamp() or str
+        """
+
         import datetime
         import pytz
         fecha = datetime.datetime.now(pytz.timezone(functions.timezone))

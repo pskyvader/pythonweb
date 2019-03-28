@@ -111,7 +111,8 @@ class functions():
     def generar_pass(length=8):
         import string
         import secrets
-        password = ''.join(secrets.choice( string.ascii_uppercase + string.digits) for _ in range(length))
+        password = ''.join(secrets.choice(
+            string.ascii_uppercase + string.digits) for _ in range(length))
         return password
 
     @staticmethod
@@ -163,7 +164,7 @@ class functions():
             return archivo + c + str(int(getmtime(ac))) if my_file.is_file() else ""
 
     @staticmethod
-    def current_time(formato = "%Y-%m-%d %H:%M:%S",as_string=True):
+    def current_time(formato="%Y-%m-%d %H:%M:%S", as_string=True):
         '''fecha actual en zona horaria santiago, formato opcional'''
         import datetime
         import pytz
@@ -174,23 +175,22 @@ class functions():
             return fecha.timestamp()
 
     @staticmethod
-    def formato_fecha(fecha_string:str, formato = '', original_format='', as_string=True):
+    def formato_fecha(fecha_string: str, formato='', original_format='', as_string=True):
         '''Fecha con formato opcional'''
         import datetime
 
-        if formato=='':
+        if formato == '':
             formato = '%d de %B del %Y'
-        if original_format=='':
+        if original_format == '':
             original_format = "%Y-%m-%d %H:%M:%S"
-        if not isinstance(fecha_string,str):
-            fecha=datetime.datetime.fromtimestamp(fecha_string)
+        if not isinstance(fecha_string, str):
+            fecha = datetime.datetime.fromtimestamp(fecha_string)
         else:
-            fecha=datetime.datetime.strptime(fecha_string,original_format)
+            fecha = datetime.datetime.strptime(fecha_string, original_format)
         if as_string:
             return fecha.strftime(formato)
         else:
             return fecha.timestamp()
-    
 
     @staticmethod
     def getContrastColor(hexColor: str):
@@ -241,31 +241,36 @@ class functions():
         tree = {'children': {}, 'root': {}}
         for node in data:
             id = int(node[0])
-            node['idpadre'][0]=int(node['idpadre'][0])
+            node['idpadre'][0] = int(node['idpadre'][0])
             # Puede que exista el children creado si los hijos entran antes que el padre
             node['children'] = tree['children'][id]['children'] if id in tree['children'] else {}
             tree['children'][id] = node
             if int(node['idpadre'][0]) == idpadre:
                 tree['root'][id] = tree['children'][id]
             else:
-                tree['children'][node['idpadre'][0]]['children'][id] = tree['children'][id]
+                tree['children'][node['idpadre'][0]
+                                 ]['children'][id] = tree['children'][id]
         return tree['root']
 
     @staticmethod
-    def file_size(file_url, only_size = False):
+    def file_size(file_url, only_size=False):
         from os import stat
         if not only_size:
             size = stat(file_url).st_size
         else:
             size = file_url
-        
-        unit       = ['b', 'kb', 'mb', 'gb', 'tb', 'pb']
+
+        unit = ['b', 'kb', 'mb', 'gb', 'tb', 'pb']
         for u in unit:
             if abs(size) < 1024.0:
                 return "%3.2f %s" % (size, u)
             size /= 1024.0
 
         return "%.2f %s" % (size, 'Yb')
+
+    @staticmethod
+    def remove_tags(text):
+        return ''.join(xml.etree.ElementTree.fromstring(text).itertext())
 
     @staticmethod
     def get_content_type_by_filename(file_name):
@@ -289,7 +294,7 @@ class functions():
             name = basename(file_name)
             suffix = name.split('.')[-1]
             if suffix in mime_map.keys():
-                mime_type = mime_map[suffix] 
+                mime_type = mime_map[suffix]
             else:
                 import mimetypes
                 mimetypes.init()
@@ -298,4 +303,4 @@ class functions():
             mime_type = 'application/octet-stream'
         if not mime_type:
             mime_type = 'application/octet-stream'
-        return mime_type 
+        return mime_type

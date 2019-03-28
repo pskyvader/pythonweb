@@ -410,9 +410,9 @@ class cart(base):
             'exito': False, 'mensaje': 'No has modificado un producto valido. Por favor recarga la pagina e intenta nuevamente'}
         campos = app.post
         if 'idproductoatributo' in campos and 'idpedidoproducto' in campos:
-            cart = self.current_cart(True)
-            if 'productos' in cart:
-                for p in cart['productos']:
+            carro = cart.current_cart(True)
+            if 'productos' in carro:
+                for p in carro['productos']:
                     if p['idpedidoproducto'] == campos['idpedidoproducto']:
                         update = {
                             'id': p['idpedidoproducto'], 'idproductoatributo': campos['idproductoatributo']}

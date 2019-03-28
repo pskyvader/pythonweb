@@ -329,33 +329,35 @@ class cart(base):
 
         :rtype:
         """
+        ret = {'headers': [ ('Content-Type', 'application/json; charset=utf-8')], 'body': ''}
         respuesta = {'exito' : False, 'mensaje' : ''}
+        producto=None
         campos    = app.post
-        if not isset(campos['id']):
+        if 'id' not in campos:
             respuesta['mensaje'] = 'No has agregado un producto valido'
-            echo json_encode(respuesta)
-            exit
+            ret['body'] = json.dumps(respuesta,ensure_ascii=False)
+            return ret
         
         id   = campos['id']
         cart = self.current_cart(True)
         if len(cart) == 0:
             cart = self.new_cart()
-            if not is_array(cart):
+            if not isinstance(cart,dict):
                 respuesta['mensaje'] = 'Hubo un error al eliminar del carro, por favor actualiza la pagina e intenta nuevamente'
-                echo json_encode(respuesta)
-                exit
+                ret['body'] = json.dumps(respuesta,ensure_ascii=False)
+                return ret
             
         
 
         cantidad = 0
-        foreach (cart['productos'] as key : p:
+        for p in cart['productos']:
             if p['idpedidoproducto'] == id:
                 cantidad = p['cantidad']
                 producto = producto_model.getById(p['idproducto'])
-                if not isset(producto['precio']) or producto['precio'] <= 0:
+                if 'precio' not in producto or producto['precio'] <= 0:
                     respuesta['mensaje'] = 'No se encontro el producto que estas buscando, por favor actualiza la pagina e intenta nuevamente'
-                    echo json_encode(respuesta)
-                    exit
+                    ret['body'] = json.dumps(respuesta,ensure_ascii=False)
+                    return ret
                 
                 pedidoproducto_model.delete(p['idpedidoproducto'])
                 break

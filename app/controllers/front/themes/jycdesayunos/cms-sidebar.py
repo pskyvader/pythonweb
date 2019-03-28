@@ -5,6 +5,15 @@ from core.functions import functions
 from core.view import view
 
 
+from .base import base
+
+from .head import head
+from .header import header
+from .banner import banner
+from .breadcrumb import breadcrumb
+from .footer import footer
+
+
 class cms(base):
     def __init__(self):
         super().__init__(app.get['idseo'])

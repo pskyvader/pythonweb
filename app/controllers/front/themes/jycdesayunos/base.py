@@ -1,3 +1,5 @@
+from core.cache import cache
+
 
 class base:
     url        = []

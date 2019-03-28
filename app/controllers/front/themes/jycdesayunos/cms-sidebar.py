@@ -62,9 +62,9 @@ class cms(base):
         if len(var) > 0:
             id = functions.get_idseccion(var[0])
             seccion = seccion_model.getById(id)
-            if isset(seccion[0]):
+            if 0 in seccion:
                 self.url = functions.url_seccion(
-                    [self.url[0], 'detail'], seccion, true)
+                    [self.url[0], 'detail'], seccion, True)
                 self.breadcrumb.append(
                     {'url': functions.generar_url(self.url), 'title': seccion['titulo']})
 

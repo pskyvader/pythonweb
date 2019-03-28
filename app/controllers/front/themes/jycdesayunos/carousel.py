@@ -1,4 +1,4 @@
-
+from core.image import image
 class carousel:
     sizes = [
         {'foto': 'foto1', 'size': '1200'},

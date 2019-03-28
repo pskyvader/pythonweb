@@ -1,5 +1,5 @@
 from core.cache import cache
-
+from app.models.seo import seo as seo_model
 
 class base:
     url = []

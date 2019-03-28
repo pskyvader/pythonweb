@@ -42,6 +42,7 @@ class banner():
         return ret
             
     def individual(self,foto_base, titulo, subtitulo = ''):
+        ret = {'body': []}
         foto_base = image.portada(foto_base)
         foto      = image.generar_url(foto_base, 'foto1')
         if foto != '':
@@ -53,17 +54,14 @@ class banner():
                 'foto'       : foto,
                 'background' : image.generar_url(foto_base, 'color')
             }
-            view.set_array(banner)
-            view.render('banner-seccion')
-        }else{
-            banner = array(
+        else:
+            banner = {
                 'title'      : functions.remove_tags(titulo),
                 'subtitle'   : functions.remove_tags(subtitulo),
-            )
-            view.set_array(banner)
-            view.render('banner-seccion')
-        }
-    }
+            }
+        ret['body'].append(('banner-seccion', banner))
+        return ret
+            
 
     public function srcset(foto_base)
     {

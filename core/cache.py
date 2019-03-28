@@ -1,9 +1,8 @@
-
-
 class cache:
     data = []
     cacheable = None
     cacheable_config = None
+
     @staticmethod
     def set_cache(cacheable: bool):
         cache.cacheable = cacheable
@@ -11,6 +10,7 @@ class cache:
     @staticmethod
     def add_cache(content):
         from .app import app
+
         if cache.cacheable:
             cache.data.append(content)
 
@@ -20,26 +20,27 @@ class cache:
         import os
         from .app import app
         from .view import view
-        directory = app.get_dir(True) + 'cache/'
+
+        directory = app.get_dir(True) + "cache/"
         if os.path.exists(directory):
             shutil.rmtree(directory)
 
-        directory = app.get_dir(True) + 'uploads/cache/'
+        directory = app.get_dir(True) + "uploads/cache/"
         if os.path.exists(directory):
             shutil.rmtree(directory)
 
-        directory = view.get_theme() + 'cache/'
+        directory = view.get_theme() + "cache/"
         if os.path.exists(directory):
             shutil.rmtree(directory)
 
         config = app.get_config()
-        directory = app.app_dir + 'views/front/themes/' + \
-            config['theme'] + '/cache/'
+        directory = app.app_dir + "views/front/themes/" + config["theme"] + "/cache/"
         if os.path.exists(directory):
             shutil.rmtree(directory)
 
-        directory = app.app_dir + 'views/back/themes/' + \
-            config['theme_back'] + '/cache/'
+        directory = (
+            app.app_dir + "views/back/themes/" + config["theme_back"] + "/cache/"
+        )
         if os.path.exists(directory):
             shutil.rmtree(directory)
 
@@ -61,14 +62,14 @@ class cache:
             return ""
         if cache.cacheable_config == None:
             config = app.get_config()
-            cache.cacheable_config = config['cache'] if 'cache' in config else True
+            cache.cacheable_config = config["cache"] if "cache" in config else True
             if not cache.cacheable_config:
                 cache.cacheable = False
 
         if cache.cacheable:
-            folder = app.get_dir(True) + 'cache/'
+            folder = app.get_dir(True) + "cache/"
             name = cache.file_name(url)
-            my_file = Path(folder+name)
+            my_file = Path(folder + name)
             if my_file.is_file():
                 return my_file
 
@@ -80,21 +81,22 @@ class cache:
         from .functions import functions
         import os
         from gzip import compress
+
         ruta = functions.generar_url(url)
         current = functions.current_url()
         if ruta == current and cache.cacheable:
-            folder = app.get_dir(True) + 'cache/'
+            folder = app.get_dir(True) + "cache/"
             if not os.path.exists(folder):
                 os.makedirs(folder)
 
             if os.access(folder, os.W_OK):
                 name = cache.file_name(url)
-                if name != '':
-                    f = ''.join(cache.data)
-                    f = bytes(f, 'utf-8')
+                if name != "":
+                    f = "".join(cache.data)
+                    f = bytes(f, "utf-8")
                     f = compress(f)
 
-                    file_write = open(folder+name, 'wb')
+                    file_write = open(folder + name, "wb")
                     file_write.write(f)
                     file_write.close()
 
@@ -102,8 +104,9 @@ class cache:
     def file_name(url: list):
         from .app import app
         from .functions import functions
-        name = '-'.join(url)
-        n = name.split('.', 1)
+
+        name = "-".join(url)
+        n = name.split(".", 1)
         if len(n) > 1:
             return ""
 
@@ -113,8 +116,8 @@ class cache:
             name += ext
 
         post = app.post.copy()
-        if 'ajax' in post:
-            name += '__ajax'
+        if "ajax" in post:
+            name += "__ajax"
             del post
 
         if len(post) > 0:
@@ -123,55 +126,59 @@ class cache:
         return name
 
     @staticmethod
-    def serve_cache(resource_url,theme,resource):
+    def serve_cache(resource_url, theme, resource):
         from core.functions import functions
         from pathlib import Path
         import os
         import mimetypes
         import datetime
 
-        ret = {'body': ''}
+        ret = {"body": ""}
         my_file = Path(resource_url)
         if not my_file.is_file():
-            ret = {'error': 404}
+            ret = {"error": 404}
         else:
-            ret['is_file'] = True
+            ret["is_file"] = True
             mime = mimetypes.guess_type(resource_url, False)[0]
             if mime == None:
-                mime = 'text/plain'
+                mime = "text/plain"
             extension = mimetypes.guess_extension(mime)
             expiry_time = datetime.datetime.utcnow() + datetime.timedelta(100)
-            ret['headers'] = [
-                ('Content-Type', mime+'; charset=utf-8'),
-                ('Expires', expiry_time.strftime("%a, %d %b %Y %H:%M:%S GMT")),
-                ('Accept-encoding', 'gzip,deflate'),
-                ('Content-Encoding', 'gzip')
+            ret["headers"] = [
+                ("Content-Type", mime + "; charset=utf-8"),
+                ("Expires", expiry_time.strftime("%a, %d %b %Y %H:%M:%S GMT")),
+                ("Accept-encoding", "gzip,deflate"),
+                ("Content-Encoding", "gzip"),
             ]
-            cache_file = theme+'cache/' + \
-                str(functions.fecha_archivo(resource_url, True)) + \
-                '-'+resource.replace('/', '-')
+            cache_file = (
+                theme
+                + "cache/"
+                + str(functions.fecha_archivo(resource_url, True))
+                + "-"
+                + resource.replace("/", "-")
+            )
 
-            if not os.path.exists(theme+'cache/'):
-                os.makedirs(theme+'cache/')
+            if not os.path.exists(theme + "cache/"):
+                os.makedirs(theme + "cache/")
 
             my_file = Path(cache_file)
             if my_file.is_file():
-                ret['file'] = cache_file
+                ret["file"] = cache_file
             else:
                 from gzip import compress
-                test = os.listdir(theme+'cache/')
+
+                test = os.listdir(theme + "cache/")
                 for item in test:
-                    if 'resources' in resource and item.endswith(extension):
-                        os.remove(os.path.join(theme+'cache/', item))
+                    if "resources" in resource and item.endswith(extension):
+                        os.remove(os.path.join(theme + "cache/", item))
                     elif item.endswith(resource):
-                        os.remove(os.path.join(theme+'cache/', item))
+                        os.remove(os.path.join(theme + "cache/", item))
                 f = open(resource_url, "rb").read()
                 f = compress(f)
 
-                file_write = open(cache_file, 'wb')
+                file_write = open(cache_file, "wb")
                 file_write.write(f)
                 file_write.close()
-                ret['file'] = cache_file
+                ret["file"] = cache_file
 
         return ret
-        

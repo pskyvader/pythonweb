@@ -15,6 +15,8 @@ from .banner import banner
 from .breadcrumb import breadcrumb
 from .footer import footer
 
+import json
+
 
 class cart(base):
 

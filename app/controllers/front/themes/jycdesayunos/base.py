@@ -6,6 +6,7 @@ from app.models.seo import seo as seo_model
 from app.models.modulo import modulo as modulo_model
 from app.models.moduloconfiguracion import moduloconfiguracion as moduloconfiguracion_model
 
+
 class base:
     url = []
     metadata = {'title': '', 'keywords': '', 'description': ''}

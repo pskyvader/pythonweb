@@ -147,18 +147,18 @@ class cart(base):
             else:
                 total_direcciones = functions.formato_precio(total_direcciones)
             
-            pedido = array(
+            pedido = {
                 'idpedido'          : pedido[0],
                 'cookie_pedido'          : pedido['cookie_pedido'],
                 'total'             : functions.formato_precio(pedido['total']),
                 'total_original'    : functions.formato_precio(pedido['total_original']),
                 'total_direcciones' : total_direcciones,
                 'subtotal'          : functions.formato_precio(subtotal),
-            )
+            }
             pedido['productos'] = productos
             return pedido
-        
-        return array()
+        else:
+            return {}
     
 
 

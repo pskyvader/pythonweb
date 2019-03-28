@@ -2,7 +2,7 @@ from core.image import image
 from core.functions import functions
 
 
-class banner():
+class banner:
     sizes = [
         {'foto': 'foto1', 'size': '1200'},
         {'foto': 'foto2', 'size': '991'},

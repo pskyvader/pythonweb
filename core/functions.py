@@ -165,7 +165,7 @@ class functions():
 
     @staticmethod
     def formato_precio(precio):
-        final = "$" + number_format(precio, 0, '', '.')
+        final='${:.,0f}'.format(float(precio))
         return final
     
 

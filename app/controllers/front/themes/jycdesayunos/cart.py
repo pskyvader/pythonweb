@@ -339,9 +339,9 @@ class cart(base):
             return ret
         
         id   = campos['id']
-        cart = self.current_cart(True)
+        cart = cart.current_cart(True)
         if len(cart) == 0:
-            cart = self.new_cart()
+            cart = cart.new_cart()
             if not isinstance(cart,dict):
                 respuesta['mensaje'] = 'Hubo un error al eliminar del carro, por favor actualiza la pagina e intenta nuevamente'
                 ret['body'] = json.dumps(respuesta,ensure_ascii=False)
@@ -364,109 +364,25 @@ class cart(base):
             
         
 
-        self.update_cart(cart['idpedido'])
+        cart.update_cart(cart['idpedido'])
 
         producto_titulo=''
 
-        if(isset(producto))
+        if producto != None:
             cantidad_final = producto['stock'] + cantidad
-            actualizar_producto = {'id' : producto[0], 'stock' : cantidad_final)
+            actualizar_producto = {'id' : producto[0], 'stock' : cantidad_final}
             producto_model.update(actualizar_producto)
             producto_titulo=producto['titulo'] 
         
-        respuesta['carro']   = self.current_cart(True)
-        respuesta['mensaje'] = producto_titulo. ' eliminado del carro'
+        respuesta['carro']   = cart.current_cart(True)
+        respuesta['mensaje'] = producto_titulo+ ' eliminado del carro'
         respuesta['exito']   = True
-        echo json_encode(respuesta)
-        exit
+        ret['body'] = json.dumps(respuesta,ensure_ascii=False)
+        return ret
     
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
 
 
     /**
@@ -477,7 +393,8 @@ class cart(base):
      *
      * @return void
      */
-    public static function update_cart(int idpedido)
+    @staticmethod
+    def update_cart(int idpedido)
     
         pedido      = pedido_model.getById(idpedido)
         total       = 0
@@ -503,6 +420,90 @@ class cart(base):
         update['id'] = pedido[0]
         pedido_model.update(update)
     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
 
     /**
      * change_atributo

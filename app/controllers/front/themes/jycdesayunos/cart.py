@@ -54,8 +54,8 @@ class cart(base):
             busca el carro actual, si no existe devuelve un array vacio
             si return_cart es TRUE, retorna array
             si es FALSE, retorna JSON
-        :type return_cart: bool
-        :param return_cart:
+        :type return_cart:bool:
+        :param return_cart:bool:
 
         :raises:
 
@@ -73,13 +73,13 @@ class cart(base):
 
             if logueado:
                 cart = pedido_model.getByIdusuario(app.session[usuario_model.idname + prefix_site])
-                if count(cart) > 0:
+                if len(cart) > 0:
                     app.session['cookie_pedido' + prefix_site] = cart['cookie_pedido']
                     
 
         if 'cookie_pedido' + prefix_site in app.session and '' != app.session['cookie_pedido' + prefix_site]:
             cart = self.get_cart(app.session['cookie_pedido' + prefix_site])
-            if count(cart) > 0:
+            if len(cart) > 0:
                 if return_cart:
                     return cart
                 else:
@@ -104,44 +104,41 @@ class cart(base):
 
         :rtype:
         """
-        
-    
+
         pedido = pedido_model.getByCookie(cookie_pedido)
-        if count(pedido) > 0:
-            prod         = pedidoproducto_model.getAll(array('idpedido' => pedido[0]))
-            productos    = array()
+        if len(pedido) > 0:
+            prod         = pedidoproducto_model.getAll({'idpedido' : pedido[0]})
+            productos    = []
             seo_producto = seo_model.getById(8)
-            lista=producto_model.getAll(array('tipo'=>1))
-            lista_productos=array()
-            foreach (lista as key => lp:
+            lista=producto_model.getAll({'tipo':1})
+            lista_productos={}
+            for lp in lista:
                 lista_productos[lp[0]]=lp
             
-
-            foreach (prod as v => p:
+            for p in prod:
                 portada      = image.portada(p['foto'])
                 thumb_url    = image.generar_url(portada, '')
-                //producto     = producto_model.getById(p['idproducto'])
                 producto     = lista_productos[p['idproducto']]
-                url_producto = functions.url_seccion(array(seo_producto['url'], 'detail'), producto)
-                new_p        = array(
-                    'idpedidoproducto'   => p['idpedidoproducto'],
-                    'idpedidodireccion'  => p['idpedidodireccion'],
-                    'idproducto'         => p['idproducto'],
-                    'titulo'             => p['titulo'],
-                    'foto'               => thumb_url,
-                    'precio'             => functions.formato_precio(p['precio']),
-                    'cantidad'           => p['cantidad'],
-                    'mensaje'            => p['mensaje'],
-                    'idproductoatributo' => p['idproductoatributo'],
-                    'total'              => functions.formato_precio(p['total']),
-                    'url'                => url_producto,
-                    'stock'              => producto['stock'] + p['cantidad'],
-                )
-                productos[] = new_p
+                url_producto = functions.url_seccion([seo_producto['url'], 'detail'], producto)
+                new_p        = {
+                    'idpedidoproducto'   : p['idpedidoproducto'],
+                    'idpedidodireccion'  : p['idpedidodireccion'],
+                    'idproducto'         : p['idproducto'],
+                    'titulo'             : p['titulo'],
+                    'foto'               : thumb_url,
+                    'precio'             : functions.formato_precio(p['precio']),
+                    'cantidad'           : p['cantidad'],
+                    'mensaje'            : p['mensaje'],
+                    'idproductoatributo' : p['idproductoatributo'],
+                    'total'              : functions.formato_precio(p['total']),
+                    'url'                : url_producto,
+                    'stock'              : producto['stock'] + p['cantidad'],
+                }
+                productos.append(new_p)
             
             total_direcciones = 0
-            direcciones       = pedidodireccion_model.getAll(array('idpedido' => pedido[0]))
-            foreach (direcciones as key => d:
+            direcciones       = pedidodireccion_model.getAll({'idpedido' : pedido[0]})
+            for d in direcciones:
                 total_direcciones += d['precio']
             
             subtotal = pedido['total'] - total_direcciones
@@ -151,12 +148,12 @@ class cart(base):
                 total_direcciones = functions.formato_precio(total_direcciones)
             
             pedido = array(
-                'idpedido'          => pedido[0],
-                'cookie_pedido'          => pedido['cookie_pedido'],
-                'total'             => functions.formato_precio(pedido['total']),
-                'total_original'    => functions.formato_precio(pedido['total_original']),
-                'total_direcciones' => total_direcciones,
-                'subtotal'          => functions.formato_precio(subtotal),
+                'idpedido'          : pedido[0],
+                'cookie_pedido'          : pedido['cookie_pedido'],
+                'total'             : functions.formato_precio(pedido['total']),
+                'total_original'    : functions.formato_precio(pedido['total_original']),
+                'total_direcciones' : total_direcciones,
+                'subtotal'          : functions.formato_precio(subtotal),
             )
             pedido['productos'] = productos
             return pedido
@@ -217,17 +214,17 @@ class cart(base):
     
         cookie_pedido = functions.generar_pass()
         insert        = array(
-            'tipo'           => 1,
-            'idpedidoestado' => 1,
-            'fecha_creacion' => date('Y-m-d H:i:s'),
-            'total'          => 0,
-            'total_original' => 0,
-            'pedido_manual'  => false,
-            'cookie_pedido'  => cookie_pedido,
+            'tipo'           : 1,
+            'idpedidoestado' : 1,
+            'fecha_creacion' : date('Y-m-d H:i:s'),
+            'total'          : 0,
+            'total_original' : 0,
+            'pedido_manual'  : false,
+            'cookie_pedido'  : cookie_pedido,
         )
         if isset(app.session[usuario_model.idname . app.prefix_site]):
             usuario = usuario_model.getById(app.session[usuario_model.idname . app.prefix_site])
-            if count(usuario) > 0:
+            if len(usuario) > 0:
                 insert['idusuario'] = usuario[0]
                 insert['nombre']    = usuario['nombre']
                 insert['email']     = usuario['email']
@@ -257,7 +254,7 @@ class cart(base):
      */
     public function add_cart()
     
-        respuesta = array('exito' => false, 'mensaje' => '')
+        respuesta = array('exito' : false, 'mensaje' : '')
         campos    = functions.test_input(_POST)
         if not isset(campos['id']) || !isset(campos['cantidad']):
             respuesta['mensaje'] = 'No has agregado un producto valido'
@@ -267,7 +264,7 @@ class cart(base):
         id       = campos['id']
         cantidad = campos['cantidad']
         cart     = self.current_cart(true)
-        if count(cart) == 0:
+        if len(cart) == 0:
             cart = self.new_cart()
             if not is_array(cart):
                 respuesta['mensaje'] = 'Hubo un error al crear el carro, por favor intenta nuevamente'
@@ -291,7 +288,7 @@ class cart(base):
         
 
         existe = false
-        /*foreach (cart['productos'] as key => p:
+        /*foreach (cart['productos'] as key : p:
         if(p['idproducto']==producto[0])
         p['cantidad']+=cantidad
         p['precio']+=producto['precio_final']
@@ -307,10 +304,10 @@ class cart(base):
 
         if not existe:
             insert = array(
-                'idpedido'   => cart['idpedido'],
-                'idproducto' => producto[0],
-                'titulo'     => producto['titulo'],
-                'precio'     => producto['precio_final'],
+                'idpedido'   : cart['idpedido'],
+                'idproducto' : producto[0],
+                'titulo'     : producto['titulo'],
+                'precio'     : producto['precio_final'],
             )
 
             /*
@@ -345,7 +342,7 @@ class cart(base):
 
         self.update_cart(cart['idpedido'])
 
-        actualizar_producto = array('id' => producto[0], 'stock' => cantidad_final)
+        actualizar_producto = array('id' : producto[0], 'stock' : cantidad_final)
         producto_model.update(actualizar_producto)
         respuesta['carro']   = self.current_cart(true)
         respuesta['mensaje'] = producto['titulo'] . ' agregado al carro.<br/> <i class="fa fa-shopping-bag"></i> Puedes Comprar haciendo click aqui'
@@ -364,7 +361,7 @@ class cart(base):
      */
     public static function remove_cart()
     
-        respuesta = array('exito' => false, 'mensaje' => '')
+        respuesta = array('exito' : false, 'mensaje' : '')
         campos    = functions.test_input(_POST)
         if not isset(campos['id']):
             respuesta['mensaje'] = 'No has agregado un producto valido'
@@ -373,7 +370,7 @@ class cart(base):
         
         id   = campos['id']
         cart = self.current_cart(true)
-        if count(cart) == 0:
+        if len(cart) == 0:
             cart = self.new_cart()
             if not is_array(cart):
                 respuesta['mensaje'] = 'Hubo un error al eliminar del carro, por favor actualiza la pagina e intenta nuevamente'
@@ -383,7 +380,7 @@ class cart(base):
         
 
         cantidad = 0
-        foreach (cart['productos'] as key => p:
+        foreach (cart['productos'] as key : p:
             if p['idpedidoproducto'] == id:
                 cantidad = p['cantidad']
                 producto = producto_model.getById(p['idproducto'])
@@ -403,7 +400,7 @@ class cart(base):
 
         if(isset(producto))
             cantidad_final = producto['stock'] + cantidad
-            actualizar_producto = array('id' => producto[0], 'stock' => cantidad_final)
+            actualizar_producto = array('id' : producto[0], 'stock' : cantidad_final)
             producto_model.update(actualizar_producto)
             producto_titulo=producto['titulo'] 
         
@@ -426,19 +423,19 @@ class cart(base):
     
         pedido      = pedido_model.getById(idpedido)
         total       = 0
-        productos   = pedidoproducto_model.getAll(array('idpedido' => pedido[0]))
-        foreach (productos as key => p:
+        productos   = pedidoproducto_model.getAll(array('idpedido' : pedido[0]))
+        foreach (productos as key : p:
             total += p['total']
         
-        direcciones = pedidodireccion_model.getAll(array('idpedido' => pedido[0]))
-        foreach (direcciones as key => d:
+        direcciones = pedidodireccion_model.getAll(array('idpedido' : pedido[0]))
+        foreach (direcciones as key : d:
             total += d['precio']
         
 
-        update = array('total' => total, 'total_original' => total)
+        update = array('total' : total, 'total_original' : total)
         if isset(app.session[usuario_model.idname . app.prefix_site]):
             usuario = usuario_model.getById(app.session[usuario_model.idname . app.prefix_site])
-            if count(usuario) > 0:
+            if len(usuario) > 0:
                 update['idusuario'] = usuario[0]
                 update['nombre']    = usuario['nombre']
                 update['email']     = usuario['email']
@@ -463,14 +460,14 @@ class cart(base):
     public static function change_atributo()
     
 
-        respuesta = array('exito' => false, 'mensaje' => 'No has modificado un producto valido. Por favor recarga la pagina e intenta nuevamente')
+        respuesta = array('exito' : false, 'mensaje' : 'No has modificado un producto valido. Por favor recarga la pagina e intenta nuevamente')
         campos    = functions.test_input(_POST)
         if isset(campos['idproductoatributo']) && isset(campos['idpedidoproducto']):
             cart = self.current_cart(true)
             if isset(cart['productos']):
-                foreach (cart['productos'] as key => p:
+                foreach (cart['productos'] as key : p:
                     if p['idpedidoproducto'] == campos['idpedidoproducto']:
-                        update             = array('id' => p['idpedidoproducto'], 'idproductoatributo' => campos['idproductoatributo'])
+                        update             = array('id' : p['idpedidoproducto'], 'idproductoatributo' : campos['idproductoatributo'])
                         idpedidoproducto   = pedidoproducto_model.update(update)
                         respuesta['exito'] = true
                         break
@@ -493,14 +490,14 @@ class cart(base):
     public static function change_mensaje()
     
 
-        respuesta = array('exito' => false, 'mensaje' => 'No has modificado un producto valido. Por favor recarga la pagina e intenta nuevamente')
+        respuesta = array('exito' : false, 'mensaje' : 'No has modificado un producto valido. Por favor recarga la pagina e intenta nuevamente')
         campos    = functions.test_input(_POST)
         if isset(campos['mensaje']) && isset(campos['idpedidoproducto']):
             cart = self.current_cart(true)
             if isset(cart['productos']):
-                foreach (cart['productos'] as key => p:
+                foreach (cart['productos'] as key : p:
                     if p['idpedidoproducto'] == campos['idpedidoproducto']:
-                        update             = array('id' => p['idpedidoproducto'], 'mensaje' => (campos['mensaje']))
+                        update             = array('id' : p['idpedidoproducto'], 'mensaje' : (campos['mensaje']))
                         idpedidoproducto   = pedidoproducto_model.update(update)
                         respuesta['exito'] = true
                         break

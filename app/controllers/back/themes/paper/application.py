@@ -34,10 +34,11 @@ class application(base):
 
         config = app.get_config()
         logo = logo_model.getById(7)
+        portada=image.portada(logo['foto'])
         data = {}
         data['color_primario'] = config['color_primario']
         data['color_secundario'] = config['color_secundario']
-        data['logo'] = image.generar_url(logo['foto'][0], 'icono600')
+        data['logo'] = image.generar_url(portada, 'icono600')
         data['path'] = functions.generar_url(url_final)
         data['color_primario'] = config['color_primario']
 

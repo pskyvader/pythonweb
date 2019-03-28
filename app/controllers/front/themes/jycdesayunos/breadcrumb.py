@@ -1,6 +1,4 @@
 from core.functions import functions
-
-
 from app.models.seo import seo as seo_model
 
 

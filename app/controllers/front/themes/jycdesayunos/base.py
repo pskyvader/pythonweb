@@ -1,7 +1,10 @@
 from core.cache import cache
 from core.functions import functions
 from core.image import image
+
 from app.models.seo import seo as seo_model
+from app.models.modulo import modulo as modulo_model
+from app.models.moduloconfiguracion import moduloconfiguracion as moduloconfiguracion_model
 
 class base:
     url = []

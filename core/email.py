@@ -119,8 +119,13 @@ class email:
             filename = file["nombre"]
             # filename=op.basename(path)
             part = MIMEBase("application", "octet-stream")
-            with open(path, "rb") as file:
-                part.set_payload(file.read())
+            if isinstance(path, str):
+                with open(path, "rb") as file:
+                    part.set_payload(file.read())
+            else:
+                part.set_payload(path.read())
+
+            
             encoders.encode_base64(part)
             part.add_header(
                 "Content-Disposition", 'attachment filename="{}"'.format(filename)

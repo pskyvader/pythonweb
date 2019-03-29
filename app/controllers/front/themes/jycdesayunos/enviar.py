@@ -44,14 +44,8 @@ class enviar(base):
             respuesta["exito"] = False
 
         if respuesta["exito"]:
-            url = (
-                "https://www.google.com/recaptcha/api/siteverify?secret="
-                + secret
-                + "&response="
-                + campos["g-recaptcha-response"]
-                + "&remoteip="
-                + app.client_ip
-            )
+            url = "https://www.google.com/recaptcha/api/siteverify?secret={}&response={}&remoteip={}"
+            url = url.format(secret, campos["g-recaptcha-response"], app.client_ip)
 
             file = urllib.request.urlopen(url)
             captcha = json.loads(file)
@@ -68,10 +62,9 @@ class enviar(base):
             body_email = {
                 "template": "contacto",
                 "titulo": "Formulario de " + campos["titulo"],
-                "cabecera": "Estimado "
-                + campos["nombre"]
-                + ", hemos recibido su correo, el cual será respondido a la brevedad por el centro de atención al cliente de "
-                + nombre_sitio,
+                "cabecera": "Estimado {}, hemos recibido su correo, el cual será respondido a la brevedad por el centro de atención al cliente de {}".format(
+                    campos["nombre"], nombre_sitio
+                ),
             }
             titulo = campos["titulo"]
             body_email["campos_largos"] = {

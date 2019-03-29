@@ -38,8 +38,7 @@ class application(base):
         data["logo"] = image.generar_url(portada, "icono600")
 
         seo = seo_model.getById(1)
-        data["path"] = functions.generar_url(url_final)
-        data["color_primario"] = config["color_primario"]
+        data["path"] = functions.generar_url([seo['url']])
 
         ret["body"].append(("application", data))
 

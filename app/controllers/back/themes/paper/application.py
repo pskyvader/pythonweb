@@ -40,7 +40,6 @@ class application(base):
         data['color_secundario'] = config['color_secundario']
         data['logo'] = image.generar_url(portada, 'icono600')
         data['path'] = functions.generar_url(url_final)
-        data['color_primario'] = config['color_primario']
 
         ret['body'].append(('application', data))
 

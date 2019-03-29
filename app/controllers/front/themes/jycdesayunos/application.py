@@ -1,5 +1,6 @@
 from .base import base
 
+from app.models.banner import banner as banner_model
 from app.models.logo import logo as logo_model
 from app.models.seo import seo as seo_model
 
@@ -39,6 +40,37 @@ class application(base):
 
         seo = seo_model.getById(1)
         data["path"] = functions.generar_url([seo['url']])
+
+
+
+
+
+
+
+
+        row_banner = banner_model.getAll(array('tipo' => 1))
+        banner = new banner()
+        imgs = array()
+        foreach (row_banner as key => b:
+            if (isset(b["foto"][0])) {
+                foto = image.generar_url(b["foto"][0], 'foto1')
+            } else {
+                foto = ''
+            }
+            if (foto != '') {
+                srcset = banner->srcset(b["foto"][0])
+                imgs = array_merge(imgs, srcset)
+            }
+        }
+        images = array()
+        foreach (imgs as key => i) {
+            images[] = array('src' => i['url'])
+        }
+
+        view.set('images', images)
+
+
+
 
         ret["body"].append(("application", data))
 

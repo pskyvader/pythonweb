@@ -35,7 +35,7 @@ class header:
 
     def header_top(self):
         redes_sociales = array()
-        rss            = texto.getAll(array('tipo' => 2))
+        rss            = texto_model.getAll(array('tipo' => 2))
         foreach (rss as key => r) {
             redes_sociales[] = array('url' => functions.ruta(r['url']), 'icon' => r['texto'], 'title' => r['titulo'])
         }

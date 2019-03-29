@@ -22,7 +22,7 @@ class application(base):
         """Controlador de lista_class de elementos base, puede ser sobreescrito en el controlador de cada modulo"""
         ret = {"body": []}
         # Clase para enviar a controlador de lista_class
-        cls.metadata['modulo']=cls.__class__.__name__
+        cls.metadata["modulo"] = cls.__class__.__name__
 
         h = head(cls.metadata)
         ret_head = h.normal()
@@ -39,38 +39,27 @@ class application(base):
         data["logo"] = image.generar_url(portada, "icono600")
 
         seo = seo_model.getById(1)
-        data["path"] = functions.generar_url([seo['url']])
+        data["path"] = functions.generar_url([seo["url"]])
 
+        row_banner = banner_model.getAll({"tipo": 1})
+        ba = banner()
+        imgs = []
+        for b in row_banner:
+            if len(b["foto"]) > 0:
+                portada = image.portada(b["foto"])
+                foto = image.generar_url(portada, "foto1")
+            else:
+                foto = ""
 
+            if foto != "":
+                srcset = ba.srcset(portada)
+                imgs = imgs + srcset
 
+        images = []
+        for i in imgs:
+            images.append({"src": i["url"]})
 
-
-
-
-
-        row_banner = banner_model.getAll(array('tipo' => 1))
-        banner = new banner()
-        imgs = array()
-        foreach (row_banner as key => b:
-            if (isset(b["foto"][0])) {
-                foto = image.generar_url(b["foto"][0], 'foto1')
-            } else {
-                foto = ''
-            }
-            if (foto != '') {
-                srcset = banner->srcset(b["foto"][0])
-                imgs = array_merge(imgs, srcset)
-            }
-        }
-        images = array()
-        foreach (imgs as key => i) {
-            images[] = array('src' => i['url'])
-        }
-
-        view.set('images', images)
-
-
-
+        data["images"] = images
 
         ret["body"].append(("application", data))
 

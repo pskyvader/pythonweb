@@ -190,7 +190,7 @@ class app:
     @staticmethod
     def parse_url(url):
         config = app.get_config()
-        url = url.lstrip("/")
+        url = str(url).lstrip("/")
 
         if url != "":
             url = " ".join(url.split("/")).split()

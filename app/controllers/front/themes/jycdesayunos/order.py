@@ -161,6 +161,7 @@ class order(base):
         :rtype:
         """
         from datetime.datetime import strptime,strftime
+        from datetime import timedelta
 
 
         horarios_entrega = {}
@@ -168,6 +169,8 @@ class order(base):
         hora_maxima      = strptime("12:00", "%h:%m")
         hora_corte       = strptime("18:00", "%h:%m")
         hora_actual = hora_minima
+
+        hora2 = hora_actual + timedelta(hours=1)
 
 
 

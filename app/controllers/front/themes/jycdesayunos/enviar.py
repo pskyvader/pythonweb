@@ -2,13 +2,11 @@ from core.app import app
 from core.email import email
 from core.functions import functions
 
-class enviar
+from .base import base
 
-    public function __construct()
-    
-    
-    public function index()
-    
+class enviar(base):
+
+    def index():
         $campos        = functions::test_input($_POST['campos']);
         $respuesta     = array('exito' => true, 'mensaje' => '');
         $nombre_sitio  = app::$_title;

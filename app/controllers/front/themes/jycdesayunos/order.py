@@ -274,7 +274,7 @@ class order(base):
             direcciones.append(d)
         
 
-        sidebar = self.sidebar(carro)
+        sidebar = order.sidebar(carro)
         data={}
 
         data['direcciones']= direcciones
@@ -319,154 +319,153 @@ class order(base):
                     lista_productos.append(p)
                     del p
                 
-            
-
-
             fecha_entrega = strptime(dp['fecha_entrega'], "%d/%m/%y")
             fecha_entrega = "" if fecha_entrega < functions.current_time(as_string=False) else functions.formato_fecha(fecha_entrega, '%F')
 
             hora_entrega = strptime(dp['fecha_entrega'], "%R")
             hora_entrega  = "" if hora_entrega < functions.current_time(as_string=False) else  functions.formato_fecha(hora_entrega, '%R')
 
-
-
-            foreach (direcciones_entrega as key : dir) 
-                if dir[0] == dp['idusuariodireccion']) 
+            for dir in direcciones_entrega:
+                if dir[0] == dp['idusuariodireccion']:
                     direccion_entrega = dir['titulo']
                     break
-                
-            
 
-            d = array(
+            d = {
                 'idpedidodireccion' : dp['idpedidodireccion'],
                 'productos'         : lista_productos,
                 'direccion_entrega' : direccion_entrega,
                 'fecha_entrega'     : fecha_entrega,
                 'hora_entrega'      : hora_entrega,
                 'precio'            : functions.formato_precio(dp['precio']),
-            )
-            direcciones.append(d
+            }
+            direcciones.append(d)
         
 
-        view.set('direcciones', direcciones)
-        view.set('sidebar', sidebar)
-        seo_cuenta = seo_model.getById(9)
-        view.set('url_direcciones', functions.generar_url(array(seo_cuenta['url'], 'direcciones'), array('next_url' : implode('/', array(url[0], 'step', 2)))))
-        seo_producto = seo_model.getById(8)
-        view.set('url_product', functions.generar_url(array(seo_producto['url'])))
-        view.set('url_next', '')
-    
 
-    /**
-     * set_direccion
-     * crea un array con la direccion para guardar en pedidodireccion
-     *
-     * @param  array direccion
-     * @param  array comunas
-     *
-     * @return array
-     */
-    private static function set_direccion(array direccion, array comunas): array
+        data={}
+
+        data['direcciones']= direcciones
+        data['sidebar']= sidebar
+
+        seo_cuenta = seo_model.getById(9)
+        data['url_direcciones']= functions.generar_url([seo_cuenta['url'], 'direcciones'], {'next_url' : '/'.join([url[0], 'step', 2]) } )
+
+        seo_producto = seo_model.getById(8)
+        data['url_product']= functions.generar_url([seo_producto['url']] )
+        data['url_next']= ''
+        return data
     
-        new_d                       = array()
+    @staticmethod
+    def set_direccion( direccion:dict,  comunas:dict):
+        """ crea un array con la direccion para guardar en pedidodireccion
+        :type direccion:dict:
+        :param direccion:dict:
+    
+        :type comunas:dict:
+        :param comunas:dict:
+    
+        :raises:
+    
+        :rtype:
+        """
+        new_d                       = {}
         new_d['idusuariodireccion'] = direccion[0]
         new_d['precio']             = direccion['precio']
         new_d['nombre']             = direccion['nombre']
         new_d['telefono']           = direccion['telefono']
         new_d['referencias']        = direccion['referencias']
-        new_d['direccion_completa'] = direccion['direccion'] . ', ' . comunas[direccion['idcomuna']]['titulo']
-        extra                       = ''
-        extra .= ('' != direccion['villa']) ? ', villa ' . direccion['villa'] : ''
-        extra .= ('' != direccion['edificio']) ? ', edificio ' . direccion['edificio'] : ''
-        extra .= ('' != direccion['departamento']) ? ', departamento ' . direccion['departamento'] : ''
-        extra .= ('' != direccion['condominio']) ? ', condominio ' . direccion['condominio'] : ''
-        extra .= ('' != direccion['casa']) ? ', casa ' . direccion['casa'] : ''
-        extra .= ('' != direccion['empresa']) ? ', empresa ' . direccion['empresa'] : ''
+        new_d['direccion_completa'] = direccion['direccion'] + ', ' + comunas[direccion['idcomuna']]['titulo']
 
-        if '' != extra) 
-            extra = substr(extra, 1)
-            new_d['direccion_completa'] .= '' . extra
-        
+        extra                       = ''
+        extra += ', villa ' + direccion['villa'] if '' != direccion['villa'] else ''
+        extra += ', edificio ' + direccion['edificio'] if '' != direccion['edificio'] else ''
+        extra += ', departamento ' + direccion['departamento'] if '' != direccion['departamento'] else ''
+        extra += ', condominio ' + direccion['condominio'] if '' != direccion['condominio'] else ''
+        extra += ', casa ' + direccion['casa'] if '' != direccion['casa'] else ''
+        extra += ', empresa ' + direccion['empresa'] if '' != direccion['empresa'] else ''
+
+        if '' != extra:
+            extra = extra[1:]
+            new_d['direccion_completa'] += ';' + extra
 
         return new_d
     
 
-    /**
-     * get_comunas
-     * retorna array de comunas con id como key, y precio
-     *
-     * @return array
-     */
-    private static function get_comunas(): array
+    @staticmethod
+    def get_comunas():
+        """ retorna array de comunas con id como key, y precio
+        :raises:
     
+        :rtype:
+        """
         com     = comuna_model.getAll()
-        comunas = array()
-        foreach (com as key : c) 
-            if c['precio'] < 1) 
+        comunas = {}
+        for c in com:
+            if c['precio'] < 1:
                 r           = region_model.getById(c['idregion'])
                 c['precio'] = r['precio']
-            
             comunas[c[0]] = c
-        
         return comunas
     
 
-    /**
-     * change_productodireccion
-     * cambia el mensaje en el producto correspondiente al pedido actual
-     * si el producto no corresponde al pedido, lanza error
-     *
-     * @param  POST id
-     * @param  POST cantidad
-     *
-     * @return json
-     */
+    @staticmethod
+    def change_productodireccion():
+        """ cambia el mensaje en el producto correspondiente al pedido actual
+            si el producto no corresponde al pedido, lanza error
 
-    public static function change_productodireccion()
+        :param id:int: POST
+        :param cantidad:int: POST
+
+        :raises:
     
-        respuesta = array('exito' : False, 'mensaje' : 'No has modificado un producto valido. Por favor recarga la pagina e intenta nuevamente')
-        campos    = functions.test_input(_POST)
-        if isset(campos['idfinal']) and isset(campos['idpedidoproducto'])) 
+        :rtype: json
+        """
+        ret = {
+            "headers": [("Content-Type", "application/json charset=utf-8")],
+            "body": "",
+        }
+        respuesta = {'exito' : False, 'mensaje' : 'No has modificado un producto valido. Por favor recarga la pagina e intenta nuevamente'}
+        campos    = app.post
+        if 'id_final' in campos and 'idpedidoproducto' in campos :
             carro = cart.current_cart(True)
-            if isset(carro['productos'])) 
-                foreach (carro['productos'] as key : p) 
-                    if p['idpedidoproducto'] == campos['idpedidoproducto']) 
-                        update             = array('id' : p['idpedidoproducto'], 'idpedidodireccion' : (campos['idfinal']))
+            if 'productos' in carro:
+                for p in carro['productos']:
+                    if p['idpedidoproducto'] == campos['idpedidoproducto']:
+                        update             = {'id' : p['idpedidoproducto'], 'idpedidodireccion' : (campos['idfinal'])}
                         idpedidoproducto   = pedidoproducto_model.update(update)
                         respuesta['exito'] = True
                         break
                     
-                
-            
-        
-        echo json_encode(respuesta)
-        exit
+        ret["body"] = json.dumps(respuesta, ensure_ascii=False)
+        return ret
     
+    @staticmethod
+    def change_direccion():
+        """ cambia la direccion en el grupo de productos
 
-    /**
-     * change_direccion
-     * cambia la direccion en el grupo de productos
-     *
-     * @param  POST idusuariodireccion
-     * @param  POST idpedidodireccion
-     *
-     * @return json
-     */
+        :param idusuariodireccion:int: POST
+        :param idpedidodireccion:int: POST
 
-    public static function change_direccion()
+        :raises:
     
-        respuesta = array('exito' : False, 'mensaje' : 'No has modificado una direccion valida. Por favor recarga la pagina e intenta nuevamente')
-        campos    = functions.test_input(_POST)
-        if isset(campos['idusuariodireccion']) and isset(campos['idpedidodireccion'])) 
+        :rtype: json
+        """
+        ret = {
+            "headers": [("Content-Type", "application/json charset=utf-8")],
+            "body": "",
+        }
+        respuesta = {'exito' : False, 'mensaje' : 'No has modificado un producto valido. Por favor recarga la pagina e intenta nuevamente'}
+        campos    = app.post
+        if 'idusuariodireccion' in campos and 'idpedidodireccion' in campos:
             carro              = cart.current_cart(True)
-            direcciones_pedido = pedidodireccion_model.getAll(array('idpedido' : carro['idpedido']))
-            comunas            = self.get_comunas()
+            direcciones_pedido = pedidodireccion_model.getAll({'idpedido' : carro['idpedido']})
+            comunas            = order.get_comunas()
 
-            foreach (direcciones_pedido as key : d) 
-                if d['idpedidodireccion'] == campos['idpedidodireccion']) 
+            for d in direcciones_pedido:
+                if d['idpedidodireccion'] == campos['idpedidodireccion']:
                     usuario_direccion           = usuariodireccion_model.getById(campos['idusuariodireccion'])
                     usuario_direccion['precio'] = comunas[usuario_direccion['idcomuna']]['precio']
-                    update                      = self.set_direccion(usuario_direccion, comunas)
+                    update                      = order.set_direccion(usuario_direccion, comunas)
                     update['id']                = d['idpedidodireccion']
                     idpedidoproducto            = pedidodireccion_model.update(update)
                     respuesta['exito']          = True
@@ -476,8 +475,9 @@ class order(base):
             
         
         cart.update_cart(carro['idpedido'])
-        echo json_encode(respuesta)
-        exit
+        
+        ret["body"] = json.dumps(respuesta, ensure_ascii=False)
+        return ret
     
 
     /**

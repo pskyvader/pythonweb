@@ -1,7 +1,6 @@
 from core.app import app
 from core.email import email
 from core.functions import functions
-from core.view import view
 
 class enviar
 

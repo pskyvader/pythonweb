@@ -170,16 +170,16 @@ class order(base):
         hora_corte       = strptime("18:00", "%h:%m")
         hora_actual = hora_minima
 
-        hora2 = hora_actual + timedelta(hours=1)
-
-
-
-        do 
+        hora2 = (hora_actual + timedelta(hours=1)).strftime("%R")
+        
+        
+        while strptime(hora2, "%h:%m") < hora_maxima:
             hora1                    = strftime("%R", hora_actual)
             hora2                    = strftime("%R", strtotime("+1 hours", hora_actual))
             horarios_entrega[hora1] = array('hora' : hora1, 'titulo' : hora1 . '  -   ' . hora2)
             hora_actual              = strftime(strtotime("+15 minutes", hora_actual))
-        while (strtotime(hora2) < hora_maxima)
+
+
 
         fechas_bloqueadas   = array()
         fechas_bloqueadas.append(array('fecha' : '2019-01-22', 'texto' : 'Cerrado por Vacaciones')

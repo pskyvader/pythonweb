@@ -1,7 +1,6 @@
 from app.models.texto import texto
 from core.app import app
 from core.functions import functions
-from core.view import view
 
 
 class contacto(base):

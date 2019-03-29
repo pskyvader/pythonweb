@@ -13,24 +13,25 @@ class manifest(base):
         version_application = 1
         config = app.get_config()
         logo = logo_model.getById(7)
+        portada=image.portada(logo['foto'])
         manifest = {
             'short_name': config['short_title'],
             'name': config['title'],
             'icons': [
                 {
-                    'src': image.generar_url(logo['foto'][0], 'icono50'),
+                    'src': image.generar_url(portada, 'icono50'),
                     'type': 'image/png',
                     'sizes': '50x50'
                 }, {
-                    'src': image.generar_url(logo['foto'][0], 'icono100'),
+                    'src': image.generar_url(portada, 'icono100'),
                     'type': 'image/png',
                     'sizes': '100x100'
                 }, {
-                    'src': image.generar_url(logo['foto'][0], 'icono200'),
+                    'src': image.generar_url(portada, 'icono200'),
                     'type': 'image/png',
                     'sizes': '200x200'
                 }, {
-                    'src': image.generar_url(logo['foto'][0], 'icono600'),
+                    'src': image.generar_url(portada, 'icono600'),
                     'type': 'image/png',
                     'sizes': '600x600'
                 }

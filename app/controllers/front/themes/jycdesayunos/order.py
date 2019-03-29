@@ -12,7 +12,14 @@ from core.app import app
 from core.functions import functions
 from core.image import image
 
+from .base import base
+from .head import head
+from .header import header
+from .banner import banner
+from .breadcrumb import breadcrumb
+from .footer import footer
 from .cart import cart
+
 
 import json
 

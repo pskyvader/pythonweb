@@ -160,88 +160,87 @@ class order(base):
     
         :rtype:
         """
-        from datetime.datetime import strptime,strftime
+        from datetime.datetime import strptime,strftime,now
         from datetime import timedelta
 
 
         horarios_entrega = {}
-        hora_minima      = strptime("08:00", "%h:%m")
-        hora_maxima      = strptime("12:00", "%h:%m")
-        hora_corte       = strptime("18:00", "%h:%m")
+        hora_minima      = strptime("08:00", "%R")
+        hora_maxima      = strptime("12:00", "%R")
+        hora_corte       = strptime("18:00", "%R")
         hora_actual = hora_minima
 
         hora2 = (hora_actual + timedelta(hours=1)).strftime("%R")
         
         
-        while strptime(hora2, "%h:%m") < hora_maxima:
-            hora1                    = strftime("%R", hora_actual)
-            hora2                    = strftime("%R", strtotime("+1 hours", hora_actual))
-            horarios_entrega[hora1] = array('hora' : hora1, 'titulo' : hora1 . '  -   ' . hora2)
-            hora_actual              = strftime(strtotime("+15 minutes", hora_actual))
+        while strptime(hora2, "%R") < hora_maxima:
+            hora1 = hora_actual.strftime("%R")
+            hora2 = (hora_actual + timedelta(hours=1)).strftime("%R")
+
+            horarios_entrega[hora1] = {'hora' : hora1, 'titulo' : hora1 + '  -   ' + hora2}
+            hora_actual = (hora_actual + timedelta(minutes=15)).strftime("%R")
 
 
 
-        fechas_bloqueadas   = array()
-        fechas_bloqueadas.append(array('fecha' : '2019-01-22', 'texto' : 'Cerrado por Vacaciones')
-        fechas_bloqueadas.append(array('fecha' : '2019-01-23', 'texto' : 'Cerrado por Vacaciones')
-        fechas_bloqueadas.append(array('fecha' : '2019-01-24', 'texto' : 'Cerrado por Vacaciones')
+        fechas_bloqueadas   = []
+        fechas_bloqueadas.append({'fecha' : '2019-01-22', 'texto' : 'Cerrado por Vacaciones'})
+        fechas_bloqueadas.append({'fecha' : '2019-01-23', 'texto' : 'Cerrado por Vacaciones'})
+        fechas_bloqueadas.append({'fecha' : '2019-01-24', 'texto' : 'Cerrado por Vacaciones'})
 
-        if time() > hora_corte) 
-            fechas_bloqueadas.append(array('fecha' : functions.formato_fecha(strtotime("+1 day"), '%F'), 'texto' : '')
+        if time() > hora_corte:
+            fechas_bloqueadas.append({'fecha' : functions.formato_fecha(strtotime("+1 day"), '%F'), 'texto' : ''})
         
 
-        fechas_especiales   = array()
-        fechas_especiales.append(array('fecha' : '2019-02-14', 'texto' : 'Dia de los enamorados')
-        fechas_especiales.append(array('fecha' : '2019-02-13', 'texto' : 'Dia de los enamorados')
+        fechas_especiales   = []
+        fechas_especiales.append({'fecha' : '2019-02-14', 'texto' : 'Dia de los enamorados'})
+        fechas_especiales.append({'fecha' : '2019-02-13', 'texto' : 'Dia de los enamorados'})
 
         comunas             = self.get_comunas()
-        direcciones_entrega = usuariodireccion_model.getAll(array('idusuario' : app.session[usuario_model.idname . app.prefix_site]))
-        foreach (direcciones_entrega as key : de) 
-            direcciones_entrega[key]['precio'] = comunas[de['idcomuna']]['precio']
-            direcciones_entrega[key]['titulo'] = de['titulo'] . ' (' . de['direccion'] . " , " . comunas[de['idcomuna']]['titulo'] . ')'
+        direcciones_entrega = usuariodireccion_model.getAll({'idusuario' : app.session[usuario_model.idname + app.prefix_site]})
+
+        for de in direcciones_entrega:
+            de['precio'] = comunas[de['idcomuna']]['precio']
+            de['titulo'] = de['titulo'] + ' (' + de['direccion'] + " , " + comunas[de['idcomuna']]['titulo'] + ')'
         
 
-        direcciones_pedido = pedidodireccion_model.getAll(array('idpedido' : carro['idpedido']))
-        if len(direcciones_pedido) == 0) 
-            du                        = reset(direcciones_entrega)
+        direcciones_pedido = pedidodireccion_model.getAll({'idpedido' : carro['idpedido']})
+        if len(direcciones_pedido) == 0:
+            du                        = direcciones_entrega[0]
             new_d                     = self.set_direccion(du, comunas)
             new_d['idpedido']         = carro['idpedido']
-            new_d['idpedidoestado']   = 9 //pedido no pagado, porque esta en el carro
-            new_d['cookie_direccion'] = carro['cookie_pedido'] . '-' . functions.generar_pass(2)
+            new_d['idpedidoestado']   = 9 #pedido no pagado, porque esta en el carro
+            new_d['cookie_direccion'] = carro['cookie_pedido'] + '-' + functions.generar_pass(2)
 
             pedidodireccion_model.insert(new_d)
             cart.update_cart(carro['idpedido'])
             carro              = cart.current_cart(True)
-            direcciones_pedido = pedidodireccion_model.getAll(array('idpedido' : carro['idpedido']))
+            direcciones_pedido = pedidodireccion_model.getAll({'idpedido' : carro['idpedido']})
         
         
         attr = producto_model.getAll({'tipo':2}, {'order':'titulo ASC'})
-        atributos=array()
-        foreach (attr as key : at) 
+        atributos={}
+        for at in attr:
             atributos[at[0]]=at
         
+        iddireccion = direcciones_pedido[0][0]
 
-        iddireccion = reset(direcciones_pedido)
-        iddireccion = iddireccion[0]
-
-        foreach (carro['productos'] as key : p) 
-            carro['productos'][key]['atributo'] = atributos[p['idproductoatributo']]['titulo']
-            if 0 == p['idpedidodireccion']) 
-                update = array('id' : p['idpedidoproducto'], 'idpedidodireccion' : iddireccion)
+        for p in carro['productos']:
+            p['atributo'] = atributos[p['idproductoatributo']]['titulo']
+            if 0 == p['idpedidodireccion']:
+                update = {'id' : p['idpedidoproducto'], 'idpedidodireccion' : iddireccion}
                 pedidoproducto_model.update(update)
-                carro['productos'][key]['idpedidodireccion'] = iddireccion
+                p['idpedidodireccion'] = iddireccion
             
         
 
-        direcciones = array()
-        foreach (direcciones_pedido as key : dp) 
-            lista_productos = array()
-            foreach (carro['productos'] as k : p) 
-                if p['idpedidodireccion'] == dp[0]) 
-                    lista_productos.append(p
-                    unset(carro['productos'][k])
+        direcciones = []
+        for dp in direcciones_pedido:
+            lista_productos = []
+            for p in carro['productos']:
+                if p['idpedidodireccion'] == dp[0]:
+                    lista_productos.append(p)
+                    del p
                 
-            
             fecha_entrega = (strtotime(dp['fecha_entrega']) < time()) ? "" : functions.formato_fecha(strtotime(dp['fecha_entrega']), '%F')
             hora_entrega  = (strtotime(dp['fecha_entrega']) < time()) ? "" : functions.formato_fecha(strtotime(dp['fecha_entrega']), '%R')
             d             = array(

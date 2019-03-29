@@ -22,7 +22,7 @@ import json
 
 class cart(base):
     def __init__(self,):
-        super().__init__(app.get["idseo"], False)
+        super().__init__(app.idseo, False)
 
     def index(self):
         ret = {"body": []}

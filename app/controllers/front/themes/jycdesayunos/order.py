@@ -86,8 +86,9 @@ class order(base):
         else:
             steps = self.steps(current_step, self.url)
             class_name = "step" + current_step
-            self.class_name(carro, self.url)
-            ret["body"].append(('order/' + current_step, {'steps':steps}))
+            data=self.class_name(carro, self.url)
+            data['steps']=steps
+            ret["body"].append(('order/' + current_step, data))
         
 
         f = footer()
@@ -146,29 +147,36 @@ class order(base):
         
     
 
-    /**
-     * step2
-     * NO AGREGAR ELEMENTOS AL CARRO antes de update_cart
-     *
-     * @param  array carro
-     * @param  array url
-     *
-     * @return void
-     */
-    private static function step2(array carro, array url)
+    @staticmethod
+    def step2(carro:dict, url=list):
+        """ Paso 2. NO AGREGAR ELEMENTOS AL CARRO antes de update_cart
+        :type carro:dict:
+        :param carro:dict:
     
-        horarios_entrega = array()
-        hora_minima      = strtotime("08:00")
-        hora_maxima      = strtotime("12:00")
-        hora_corte       = strtotime("18:00")
+        :type url:
+        :param url:
+    
+        :raises:
+    
+        :rtype:
+        """
+        from datetime.datetime import strptime,strftime
 
+
+        horarios_entrega = {}
+        hora_minima      = strptime("08:00", "%h:%m")
+        hora_maxima      = strptime("12:00", "%h:%m")
+        hora_corte       = strptime("18:00", "%h:%m")
         hora_actual = hora_minima
+
+
+
         do 
             hora1                    = strftime("%R", hora_actual)
             hora2                    = strftime("%R", strtotime("+1 hours", hora_actual))
             horarios_entrega[hora1] = array('hora' : hora1, 'titulo' : hora1 . '  -   ' . hora2)
             hora_actual              = strftime(strtotime("+15 minutes", hora_actual))
-         while (strtotime(hora2) < hora_maxima)
+        while (strtotime(hora2) < hora_maxima)
 
         fechas_bloqueadas   = array()
         fechas_bloqueadas.append(array('fecha' : '2019-01-22', 'texto' : 'Cerrado por Vacaciones')

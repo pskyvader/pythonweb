@@ -189,6 +189,7 @@ class app:
 
     @staticmethod
     def parse_url(url):
+        from app.models.seo import seo as seo_model
         config = app.get_config()
         url = url.lstrip("/")
 

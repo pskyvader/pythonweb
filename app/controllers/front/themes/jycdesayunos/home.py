@@ -18,23 +18,10 @@ class home(base):
     def __init__(self):
         super().__init__(app.get["idseo"])
     
-    
+
     def index(self):
         ret = {"body": []}
         self.meta(self.seo)
-
-        var = {}
-        if self.seo["tipo_modulo"] != 0:
-            var["tipo"] = self.seo["tipo_modulo"]
-
-        if self.modulo["hijos"]:
-            var["idpadre"] = 0
-
-        row = seccion_model.getAll(var)
-
-        if len(row) > 0:
-            self.url = functions.url_seccion([self.url[0], "detail"], row[0], True)
-
         url_return = functions.url_redirect(self.url)
         if url_return != "":
             ret["error"] = 301

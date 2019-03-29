@@ -57,7 +57,7 @@ class header:
         return ("header-top", data)
 
     def header_cart(self):
-        return ("header-top", {})
+        return ("header-cart", {})
 
     def menu(self):
         lista_menu = []

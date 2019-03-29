@@ -8,17 +8,17 @@ import json
 
 class head:
     data = {
-        'favicon': '',
-        'keywords': '',
-        'description': '',
-        'title': '',
-        'current_url': '',
-        'image': '',
-        'logo': '',
-        'color_primario': '',
-        'manifest_url': '',
-        'path': '',
-        'modulo': '',
+        "favicon": "",
+        "keywords": "",
+        "description": "",
+        "title": "",
+        "current_url": "",
+        "image": "",
+        "logo": "",
+        "color_primario": "",
+        "manifest_url": "",
+        "path": "",
+        "modulo": "",
     }
 
     def __init__(self, metadata):
@@ -27,48 +27,48 @@ class head:
                 head.data[key] = value
 
         config = app.get_config()
-        head.data['current_url'] = functions.current_url()
-        head.data['path'] = app.path
-        head.data['color_primario'] = config['color_primario']
-        head.data['googlemaps_key'] = config['googlemaps_key']
-        head.data['google_captcha'] = config['google_captcha']
+        head.data["current_url"] = functions.current_url()
+        head.data["path"] = app.path
+        head.data["color_primario"] = config["color_primario"]
+        head.data["googlemaps_key"] = config["googlemaps_key"]
+        head.data["google_captcha"] = config["google_captcha"]
         # size=functions::get_max_size()
-        #head.data['max_size'] = size
+        # head.data['max_size'] = size
         # head.data['max_size_format'] = (size<0)?"Ilimitado":functions::file_size(size,true)}
 
-        titulo = head.data['title'] + ' - ' + config['title']
-        if (len(titulo) > 75):
-            titulo = head.data['title'] + ' - ' + config['short_title']
+        titulo = head.data["title"] + " - " + config["title"]
+        if len(titulo) > 75:
+            titulo = head.data["title"] + " - " + config["short_title"]
 
-        if (len(titulo) > 75):
-            titulo = head.data['title']
+        if len(titulo) > 75:
+            titulo = head.data["title"]
 
-        if (len(titulo) > 75):
-            titulo = head.data['title'][0:75]
+        if len(titulo) > 75:
+            titulo = head.data["title"][0:75]
 
-        head.data['title'] = titulo
-        head.data['description_text'] = functions.remove_tags(head.data['description_text'])
+        head.data["title"] = titulo
+        head.data["description"] = functions.remove_tags(head.data["description"])
 
-
-        if 'image' in metadata and metadata['image'] != '':
-            head.data['image'] = metadata['image']
+        if "image" in metadata and metadata["image"] != "":
+            head.data["image"] = metadata["image"]
         else:
-            logo = logo_model.getById(3)
-            head.data['image'] = image.generar_url( logo['foto'][0], 'panel_max')
+            logo = logo_model.getById(5)
+            portada = image.portada(logo["foto"])
+            head.data["image"] = image.generar_url(portada, "social")
 
         logo = logo_model.getById(1)
-        head.data['favicon'] = image.generar_url(logo['foto'][0], 'favicon')
-
-        head.data['manifest_url'] = app.get_url() + 'manifest.js'
+        portada = image.portada(logo["foto"])
+        head.data["favicon"] = image.generar_url(portada, "favicon")
+        head.data["manifest_url"] = app.get_url() + "manifest.js"
+        
 
     def normal(self):
-        ret = {'headers': '', 'body': []}
-        if 'ajax' not in app.post:
-            if 'ajax_header' not in app.post:
-                head.data['css'] = view.css()
-                ret['body'].append(('head', head.data))
+        ret = {"headers": "", "body": []}
+        if "ajax" not in app.post:
+            if "ajax_header" not in app.post:
+                head.data["css"] = view.css()
+                ret["body"].append(("head", head.data))
             else:
-                ret['headers'] = [
-                    ('Content-Type', 'application/json; charset=utf-8')]
-                ret['body'] = json.dumps(self.data,ensure_ascii=False)
+                ret["headers"] = [("Content-Type", "application/json; charset=utf-8")]
+                ret["body"] = json.dumps(self.data, ensure_ascii=False)
         return ret

@@ -49,10 +49,44 @@ class home(base):
         he = header()
         ret["body"] += he.normal()["body"]
 
-
-        $row_banner = banner_model::getAll(array('tipo' => 1));
-
+        row_banner = banner_model.getAll({'tipo' :1})
         ba = banner()
-        ret["body"] += ba.individual(
-            self.seo["banner"], self.metadata["title"], self.seo["subtitulo"]
-        )["body"]
+        ret["body"] += ba.normal(row_banner)["body"]
+
+        #bc = breadcrumb()
+        #ret["body"] += bc.normal(self.breadcrumb)["body"]
+
+
+        secciones_destacadas = seccion_model.getAll({'tipo' : 3, 'destacado' : True})
+        seo                  = seo.getById(7)
+        for seccion in secciones_destacadas:
+            data={}
+            data['title']= seccion['titulo']
+            data['subtitle']= seccion['subtitulo']
+            data['text']= seccion['resumen']
+            data['url']= functions.url_seccion([seo['url'], 'detail'], seccion)
+            data['image']= image.generar_url(image.portada(seccion['foto']), '')
+            ret["body"].append(("home-text", data.copy()))
+            
+        productos_destacados = producto_model.getAll({'tipo' : 1, 'destacado' : True},{'limit':6})
+        if len(productos_destacados)>0:
+            data={}
+            #seo_productos          = seo.getById(8)
+            #this->url[0] = seo_productos['url']
+            app.get['idseo']=8
+            pl              = product_list.product_list() #product_list.py
+            lista_productos = pl.lista_productos(productos_destacados, 'detail', 'foto2') #Lista de productos, renderiza vista
+            data['lista_productos']= lista_productos
+            data['col-md']= 'col-md-6'
+            data['col-lg']= 'col-lg-4'
+            product_list = ('product/grid',data.copy())
+            data={}
+            data['product_list']= product_list
+            #view.set('title',seo_productos['titulo'])
+            data['title']= "Nuestros productos destacados"
+            ret["body"].append(("home-products", data.copy()))
+            
+        
+        f = footer()
+        ret["body"] += f.normal()["body"]
+        return ret

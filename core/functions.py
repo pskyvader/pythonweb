@@ -291,6 +291,7 @@ class functions():
     @staticmethod
     def remove_tags(text):
         from xml.etree.ElementTree import fromstring
+        from bleach import clean
         print(text)
         return ''.join(fromstring(text).itertext())
 

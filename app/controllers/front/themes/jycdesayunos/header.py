@@ -98,3 +98,20 @@ class header:
         menu = self.generar_menu(lista_menu)
         return menu
     
+    def generar_menu(self, lista_menu, nivel = 0, simple = False):
+        menu_final        = []
+        nivel_maximo_hijo = 2
+        for key,menu in enumerate(lista_menu):
+            data                  = {'hijos': ''}
+            data['contiene_hijo'] = (nivel < nivel_maximo_hijo and not simple and isset(menu['hijo']) and len(menu['hijo']) > 0)
+            if data['contiene_hijo']:
+                data['hijos'] = self.generar_menu(menu['hijo'], nivel + 1, simple)
+            data['target']   =  'target="' + menu['target'] + '" rel="noopener noreferrer"'  if 'target' in menu else ''
+            data['active']   = 'active' if  nivel == 0 and not simple and functions.active(menu['active']) else ''
+            data['prefetch'] = (nivel == 0 and not simple)
+            data['url']      = menu['link']
+            data['title']    = menu['titulo']
+            data['nivel'] = nivel
+            data['key'] = key
+            menu_final.append(('menu',data))
+        return menu_final

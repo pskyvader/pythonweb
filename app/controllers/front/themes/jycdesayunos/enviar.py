@@ -40,35 +40,37 @@ class enviar(base):
             respuesta['exito'] = False
         
 
-        if (respuesta['exito']) 
+        if (respuesta['exito']) :
             url                  = 'https://www.google.com/recaptcha/api/siteverify?secret=' + secret + '&response=' + campos['g-recaptcha-response'] + '&remoteip=' + app.client_ip
             
             file = urllib.request.urlopen(url)
-            captcha              = json functions.decode_json(file)
-            respuesta['exito']   = (captcha['success'])
-            if (!respuesta['exito']) 
+            captcha              = json.loads(file)
+            respuesta['exito']   = captcha['success']
+            if not respuesta['exito']:
                 respuesta['mensaje'] = '<strong>Error!</strong>&nbsp Error en captcha. Por favor completa el captcha.'
             
             respuesta['captcha']=True
-            unset(campos['g-recaptcha-response'])
+            del campos['g-recaptcha-response']
         
 
-        if (respuesta['exito']) 
-            body_email = array(
-                'body'     : view.get_theme() . 'mail/contacto.html',
-                'titulo'   : "Formulario de " . campos['titulo'],
-                'cabecera' : "Estimado " . campos['nombre'] . ", hemos recibido su correo, el cual será respondido a la brevedad por el centro de atención al cliente de " . nombre_sitio,
-            )
+        if respuesta['exito']:
+            body_email = {
+                'body'     : 'contacto',
+                'titulo'   : "Formulario de " + campos['titulo'],
+                'cabecera' : "Estimado " + campos['nombre'] + ", hemos recibido su correo, el cual será respondido a la brevedad por el centro de atención al cliente de " + nombre_sitio,
+            }
             titulo                      = campos['titulo']
-            body_email['campos_largos'] = array('Mensaje' : nl2br(campos['mensaje']))
-            unset(campos['accion'], campos['titulo'], campos['mensaje'])
+            body_email['campos_largos'] = {'Mensaje' : campos['mensaje'].replace('\n','<br>\n')}
+            del campos['accion']
+            del campos['titulo']
+            del campos['mensaje']
             body_email['campos'] = campos
-            imagenes             = array()
+            imagenes             = []
 
-            adjuntos = array()
-            if (isset(_FILES)) 
-                foreach (_FILES as key : file) 
-                    adjuntos[] = array('archivo' : file['tmp_name'], 'nombre' : file['name'])
+            adjuntos = []
+            if 'file' in app.post:
+                for file in app.post['file']:
+                    adjuntos.append({'archivo' : file['tmp_name'], 'nombre' : file['name']})
                 
             
             body      = email.body_email(body_email)

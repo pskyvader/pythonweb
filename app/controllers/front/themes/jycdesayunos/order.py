@@ -242,11 +242,11 @@ class order(base):
                     del p
             
             fecha_entrega = strptime(dp['fecha_entrega'], "%d/%m/%y")
-            fecha_entrega = "" if fecha_entrega < now() else functions.formato_fecha(fecha_entrega), '%F')
+            fecha_entrega = "" if fecha_entrega < now() else functions.formato_fecha(fecha_entrega, '%F')
 
             hora_entrega = strptime(dp['fecha_entrega'], "%R")
             hora_entrega  = "" if hora_entrega < now() else  functions.formato_fecha(hora_entrega, '%R')
-            
+
             d             = array(
                 'idpedidodireccion' : dp['idpedidodireccion'],
                 'productos'         : lista_productos,

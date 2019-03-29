@@ -16,7 +16,7 @@ from .footer import footer
 class home(base):
 
     def __init__(self):
-        super().__init__(app.get["idseo"])
+        super().__init__(app.idseo)
     
 
     def index(self):
@@ -61,7 +61,7 @@ class home(base):
             data={}
             #seo_productos          = seo.getById(8)
             #this->url[0] = seo_productos['url']
-            app.get['idseo']=8
+            app.idseo=8
             pl              = product_list.product_list() #product_list.py
             lista_productos = pl.lista_productos(productos_destacados, 'detail', 'foto2') #Lista de productos, renderiza vista
             data['lista_productos']= lista_productos

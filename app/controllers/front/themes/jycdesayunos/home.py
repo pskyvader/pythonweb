@@ -18,7 +18,7 @@ class home(base):
     def __init__(self):
         super().__init__(app.get["idseo"])
 
-     def index(self):
+    def index(self):
         ret = {"body": []}
         self.meta(self.seo)
 

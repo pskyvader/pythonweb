@@ -12,6 +12,8 @@ from core.app import app
 from core.functions import functions
 from core.image import image
 
+import json
+
 class order(base):
     steps = {
         1 : 'Paso 1: resumen del carro',
@@ -160,7 +162,7 @@ class order(base):
     
         :rtype:
         """
-        from datetime.datetime import strptime,strftime,now
+        from datetime.datetime import strptime,strftime
         from datetime import timedelta
 
 
@@ -242,12 +244,12 @@ class order(base):
                     del p
             
             fecha_entrega = strptime(dp['fecha_entrega'], "%d/%m/%y")
-            fecha_entrega = "" if fecha_entrega < functions.curre else functions.formato_fecha(fecha_entrega, '%F')
+            fecha_entrega = "" if fecha_entrega < functions.current_time(as_string=False) else functions.formato_fecha(fecha_entrega, '%F')
 
             hora_entrega = strptime(dp['fecha_entrega'], "%R")
-            hora_entrega  = "" if hora_entrega < functions.curre else  functions.formato_fecha(hora_entrega, '%R')
+            hora_entrega  = "" if hora_entrega < functions.current_time(as_string=False) else  functions.formato_fecha(hora_entrega, '%R')
 
-            d             = {
+            d= {
                 'idpedidodireccion' : dp['idpedidodireccion'],
                 'productos'         : lista_productos,
                 'direccion_entrega' : direcciones_entrega,
@@ -255,69 +257,78 @@ class order(base):
                 'horarios_entrega'  : horarios_entrega,
                 'precio'            : functions.formato_precio(dp['precio']),
             }
-            foreach (d['direccion_entrega'] as key : dir) 
-                if dir[0] == dp['idusuariodireccion']) 
-                    d['direccion_entrega'][key]['selected'] = True
+
+            for dir in d['direccion_entrega']:
+                if dir[0] == dp['idusuariodireccion']:
+                    dir['selected'] = True
                 else:
-                    d['direccion_entrega'][key]['selected'] = False
+                    dir['selected'] = False
+                
+            for h in d['horarios_entrega']:
+                if hora_entrega == key:
+                    h['selected'] = True
+                else:
+                    h['selected'] = False
                 
             
-            foreach (d['horarios_entrega'] as key : h) 
-                if hora_entrega == key) 
-                    d['horarios_entrega'][key]['selected'] = True
-                else:
-                    d['horarios_entrega'][key]['selected'] = False
-                
-            
-            direcciones.append(d
+            direcciones.append(d)
         
 
         sidebar = self.sidebar(carro)
-        view.set('direcciones', direcciones)
-        view.set('fechas_bloqueadas', json_encode(fechas_bloqueadas))
-        view.set('fechas_especiales', json_encode(fechas_especiales))
-        view.set('sidebar', sidebar)
+        data={}
+
+        data['direcciones']= direcciones
+        data['fechas_bloqueadas']= json.dumps(fechas_bloqueadas)
+        data['fechas_especiales']= json.dumps(fechas_especiales)
+        data['sidebar']= sidebar
+
         seo_cuenta = seo_model.getById(9)
-        view.set('url_direcciones', functions.generar_url(array(seo_cuenta['url'], 'direcciones'), array('next_url' : implode('/', array(url[0], 'step', 2)))))
+        data['url_direcciones']= functions.generar_url([seo_cuenta['url'], 'direcciones'], {'next_url' : '/'.join([url[0], 'step', 2]) } )
+
         seo_producto = seo_model.getById(8)
-        view.set('url_product', functions.generar_url(array(seo_producto['url'])))
-        view.set('url_next', functions.generar_url(array(url[0], 'step', 3)))
+        data['url_product']= functions.generar_url([seo_producto['url']] )
+        data['url_next']= functions.generar_url([url[0], 'step', 3])
+        return data
     
 
-    private static function step3(carro, url)
-    
-        sidebar   = self.sidebar(carro)
+    @staticmethod
+    def step3(carro, url):
+        from datetime.datetime import strptime
+        sidebar   = order.sidebar(carro)
         atributos = producto_model.getAll({'tipo':2}, {'order':'titulo ASC'})
-        foreach (carro['productos'] as key : p) 
-            carro['productos'][key]['mensaje'] = nl2br(p['mensaje'])
-            foreach (atributos as k : a) 
-                if a['idproducto'] == p['idproductoatributo']) 
-                    carro['productos'][key]['atributo'] = a['titulo']
+        for p in carro['productos']:
+            p['mensaje'] =  p['mensaje'].replace("\n", "<br>\n")
+            for a in atributos:
+                if a['idproducto'] == p['idproductoatributo']:
+                    p['atributo'] = a['titulo']
                     break
+
+        comunas             = order.get_comunas()
+        direcciones_entrega = usuariodireccion_model.getAll({'idusuario' : app.session[usuario_model.idname . app.prefix_site]})
+        for de in direcciones_entrega:
+            de['precio'] = comunas[de['idcomuna']]['precio']
+            de['titulo'] = de['titulo'] + ' (' + de['direccion'] + " , " + comunas[de['idcomuna']]['titulo'] + ')'
+        
+        direcciones_pedido = pedidodireccion_model.getAll({'idpedido' : carro['idpedido']})
+
+        direcciones = []
+        for dp in direcciones_pedido:
+            lista_productos = []
+            for p in carro['productos']:
+                if p['idpedidodireccion'] == dp[0]:
+                    lista_productos.append(p)
+                    del p
                 
             
-        
 
-        comunas             = self.get_comunas()
-        direcciones_entrega = usuariodireccion_model.getAll(array('idusuario' : app.session[usuario_model.idname . app.prefix_site]))
-        foreach (direcciones_entrega as key : de) 
-            direcciones_entrega[key]['precio'] = comunas[de['idcomuna']]['precio']
-            direcciones_entrega[key]['titulo'] = de['titulo'] . ' (' . de['direccion'] . " , " . comunas[de['idcomuna']]['titulo'] . ')'
-        
 
-        direcciones_pedido = pedidodireccion_model.getAll(array('idpedido' : carro['idpedido']))
+            fecha_entrega = strptime(dp['fecha_entrega'], "%d/%m/%y")
+            fecha_entrega = "" if fecha_entrega < functions.current_time(as_string=False) else functions.formato_fecha(fecha_entrega, '%F')
 
-        direcciones = array()
-        foreach (direcciones_pedido as key : dp) 
-            lista_productos = array()
-            foreach (carro['productos'] as k : p) 
-                if p['idpedidodireccion'] == dp[0]) 
-                    lista_productos.append(p
-                    unset(carro['productos'][k])
-                
-            
-            fecha_entrega = (strtotime(dp['fecha_entrega']) < time()) ? "" : functions.formato_fecha(strtotime(dp['fecha_entrega']), '%F')
-            hora_entrega  = (strtotime(dp['fecha_entrega']) < time()) ? "" : functions.formato_fecha(strtotime(dp['fecha_entrega']), '%R')
+            hora_entrega = strptime(dp['fecha_entrega'], "%R")
+            hora_entrega  = "" if hora_entrega < functions.current_time(as_string=False) else  functions.formato_fecha(hora_entrega, '%R')
+
+
 
             foreach (direcciones_entrega as key : dir) 
                 if dir[0] == dp['idusuariodireccion']) 

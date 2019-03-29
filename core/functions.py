@@ -290,10 +290,9 @@ class functions():
 
     @staticmethod
     def remove_tags(text):
-        from xml.etree.ElementTree import fromstring
-        from bleach import clean
-        print(text)
-        return ''.join(fromstring(text).itertext())
+        import re
+        clean = re.compile('<.*?>')
+        return re.sub(clean, '', text)
 
     @staticmethod
     def get_content_type_by_filename(file_name):

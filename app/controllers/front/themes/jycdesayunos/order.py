@@ -53,37 +53,46 @@ class order(base):
             if len(direcciones) == 0:
                 seo_usuario      = seo_model.getById(9)
                 app.get['next_url'] = '/'.join(self.url)
-                self.url        = array(seo_usuario['url'], 'direccion')
+                self.url        = [seo_usuario['url'], 'direccion']
             
         
-        functions.url_redirect(self.url)
+        
+        url_return = functions.url_redirect(self.url)
+        if url_return != "":
+            ret["error"] = 301
+            ret["redirect"] = url_return
+            return ret
 
-        head = new head(self.metadata)
-        head->normal()
+        h = head(self.metadata)
+        ret_head = h.normal()
+        if ret_head["headers"] != "":
+            return ret_head
+        ret["body"] += ret_head["body"]
 
-        header = new header()
-        header->normal()
+        he = header()
+        ret["body"] += he.normal()["body"]
 
-        banner = new banner()
-        banner->individual(self.seo['banner'], self.metadata['title'], self.steps[current_step])
-        if len(carro) == 0 || len(carro['productos']) == 0) 
+
+        ba = banner()
+        ret["body"] += ba.individual(self.seo['banner'], self.metadata['title'], self.steps[current_step])["body"]
+
+        if len(carro) == 0 or len(carro['productos']) == 0:
             mensaje = "Tu carro está vacío. Por favor agrega productos para continuar tu compra"
             error   = True
         
 
-        if error) 
-            view.set('mensaje', mensaje)
-            view.render('order/error')
-         else 
+        if error:
+            ret["body"].append(("order/error", {'mensaje':mensaje}))
+        else:
             steps = self.steps(current_step, self.url)
-            class = "step" . current_step
-            self.class(carro, self.url)
-            view.set('steps', steps)
-            view.render('order/' . current_step)
+            class_name = "step" + current_step
+            self.class_name(carro, self.url)
+            ret["body"].append(('order/' + current_step, {'steps':steps}))
         
 
-        footer = new footer()
-        footer->normal()
+        f = footer()
+        ret["body"] += f.normal()["body"]
+        return ret
     
 
     private static function sidebar(carro)
@@ -118,7 +127,7 @@ class order(base):
             foreach (atributos as k : a) 
                 if a['idproducto'] == p['idproductoatributo']) 
                     atributos[k]['selected'] = True
-                 else 
+                else:
                     atributos[k]['selected'] = False
                 
             
@@ -133,7 +142,7 @@ class order(base):
         direcciones = usuariodireccion_model.getAll(array('idusuario' : app.session[usuario_model.idname . app.prefix_site]))
         if len(direcciones) > 0) 
             view.set('url_next', functions.generar_url(array(url[0], 'step', 2)))
-         else 
+        else:
             seo_usuario = seo_model.getById(9)
             view.set('url_next', functions.generar_url(array(seo_usuario['url'], 'direccion'), array('next_url' : implode('/', array(url[0], 'step', 2)))))
         
@@ -237,14 +246,14 @@ class order(base):
             foreach (d['direccion_entrega'] as key : dir) 
                 if dir[0] == dp['idusuariodireccion']) 
                     d['direccion_entrega'][key]['selected'] = True
-                 else 
+                else:
                     d['direccion_entrega'][key]['selected'] = False
                 
             
             foreach (d['horarios_entrega'] as key : h) 
                 if hora_entrega == key) 
                     d['horarios_entrega'][key]['selected'] = True
-                 else 
+                else:
                     d['horarios_entrega'][key]['selected'] = False
                 
             
@@ -584,7 +593,7 @@ class order(base):
             respuesta['mensaje'] = 'Tu pedido ya fue guardado, por favor ve a la seccion "Mis pedidos" en tu cuenta'
             echo json_encode(respuesta)
             exit
-         else 
+        else:
             attr      = producto_model.getAll(array('tipo' : 2), array('order' : 'titulo ASC'))
             atributos = array()
             foreach (attr as key : lp) 

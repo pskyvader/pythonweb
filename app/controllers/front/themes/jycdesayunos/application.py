@@ -1,6 +1,7 @@
 from .base import base
 
 from app.models.logo import logo as logo_model
+from app.models.seo import seo as seo_model
 
 from .head import head
 from .footer import footer
@@ -20,7 +21,6 @@ class application(base):
         """Controlador de lista_class de elementos base, puede ser sobreescrito en el controlador de cada modulo"""
         ret = {"body": []}
         # Clase para enviar a controlador de lista_class
-        url_final = cls.url.copy()
         cls.metadata['modulo']=cls.__class__.__name__
 
         h = head(cls.metadata)
@@ -30,12 +30,14 @@ class application(base):
         ret["body"] += ret_head["body"]
 
         config = app.get_config()
-        logo = logo_model.getById(7)
+        logo = logo_model.getById(5)
         portada = image.portada(logo["foto"])
         data = {}
         data["color_primario"] = config["color_primario"]
         data["color_secundario"] = config["color_secundario"]
         data["logo"] = image.generar_url(portada, "icono600")
+
+        seo = seo_model.getById(1)
         data["path"] = functions.generar_url(url_final)
         data["color_primario"] = config["color_primario"]
 

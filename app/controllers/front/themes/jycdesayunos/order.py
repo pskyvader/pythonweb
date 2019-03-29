@@ -1,4 +1,4 @@
-from .app.models.comuna import  as comuna_model
+from .app.models.comuna import comuna as comuna_model
 from .app.models.pedido  import pedido as pedido_model
 from .app.models.pedidodireccion  import pedidodireccion as pedidodireccion_model
 from .app.models.pedidoproducto  import pedidoproducto as pedidoproducto_model

@@ -18,29 +18,29 @@ class home(base):
     def __init__(self):
         super().__init__(app.get["idseo"])
     @classmethod
-    def index(cls):
+    def index(self):
         ret = {"body": []}
-        cls.meta(cls.seo)
+        self.meta(self.seo)
 
         var = {}
-        if cls.seo["tipo_modulo"] != 0:
-            var["tipo"] = cls.seo["tipo_modulo"]
+        if self.seo["tipo_modulo"] != 0:
+            var["tipo"] = self.seo["tipo_modulo"]
 
-        if cls.modulo["hijos"]:
+        if self.modulo["hijos"]:
             var["idpadre"] = 0
 
         row = seccion_model.getAll(var)
 
         if len(row) > 0:
-            cls.url = functions.url_seccion([cls.url[0], "detail"], row[0], True)
+            self.url = functions.url_seccion([self.url[0], "detail"], row[0], True)
 
-        url_return = functions.url_redirect(cls.url)
+        url_return = functions.url_redirect(self.url)
         if url_return != "":
             ret["error"] = 301
             ret["redirect"] = url_return
             return ret
 
-        h = head(cls.metadata)
+        h = head(self.metadata)
         ret_head = h.normal()
         if ret_head["headers"] != "":
             return ret_head
@@ -54,7 +54,7 @@ class home(base):
         ret["body"] += ba.normal(row_banner)["body"]
 
         #bc = breadcrumb()
-        #ret["body"] += bc.normal(cls.breadcrumb)["body"]
+        #ret["body"] += bc.normal(self.breadcrumb)["body"]
 
 
         secciones_destacadas = seccion_model.getAll({'tipo' : 3, 'destacado' : True})

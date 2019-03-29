@@ -95,7 +95,7 @@ class app:
                 'file': file_cache,
                 'is_file': True,
                 'body': '', 'headers': [
-                    ('Content-Type', 'text/html; charset=utf-8'),
+                    ('Content-Type', 'text/html charset=utf-8'),
                     ('Accept-encoding', 'gzip,deflate'),
                     ('Content-Encoding', 'gzip')]
             }
@@ -115,7 +115,7 @@ class app:
 
         if 'headers' not in response:
             response['headers'] = [
-                ('Content-Type', 'text/html; charset=utf-8')
+                ('Content-Type', 'text/html charset=utf-8')
             ]
         
         if 'error' in response:
@@ -176,19 +176,25 @@ class app:
 
     @staticmethod
     def parse_url(url):
+        config=app.get_config()
         url = url.lstrip('/')
+
         if url != '':
             url = ' '.join(url.split('/')).split()
-            if len(url) > 0:
-                if url[0] == 'manifest.js':
-                    url[0] = 'manifest'
-                elif url[0] == 'sw.js':
-                    url[0] = 'sw'
-                elif url[0] == 'log.json' or url[0] == 'icon.txt' or url[0] == 'sitemap.xml':
-                    url = ['static_file']+url
-                elif url[0] == 'favicon.ico':
-                    url[0] = 'favicon'
-                elif len(url) > 1:
+        else:
+            url=[]
+
+        if len(url) > 0:
+            if url[0] == 'manifest.js':
+                url[0] = 'manifest'
+            elif url[0] == 'sw.js':
+                url[0] = 'sw'
+            elif url[0] == 'log.json' or url[0] == 'icon.txt' or url[0] == 'sitemap.xml':
+                url = ['static_file']+url
+            elif url[0] == 'favicon.ico':
+                url[0] = 'favicon'
+            elif(url[0] == config['admin']):
+                if len(url) > 1:
                     if url[1] == 'manifest.js':
                         url[1] = 'manifest'
                     elif url[1] == 'sw.js':
@@ -199,9 +205,19 @@ class app:
                         url = url_tmp+['static_file']+url
                     elif url[1] == 'favicon.ico':
                         url[1] = 'favicon'
-
+            else:
+                seo = seo_model.getAll({'url': url[0]}, {'limit': 1})
+                if len(seo) == 1:
+                    url[0]            = seo[0]['modulo_front']
+                    app.get['idseo'] = seo[0][0]
         else:
-            url = ['home']
+            url = ['']
+            seo = seo_model.getById(1)
+            if len(seo) > 0:
+                url[0]            = seo['modulo_front']
+                app.get['idseo'] = seo[0]
+                self.current_url = {'url' :url[0]}
+            
         return url
 
     @staticmethod

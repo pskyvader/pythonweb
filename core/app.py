@@ -236,7 +236,6 @@ class app:
             if len(seo) > 0:
                 url[0] = seo["modulo_front"]
                 app.get["idseo"] = seo[0]
-                self.current_url = {"url": url[0]}
 
         return url
 

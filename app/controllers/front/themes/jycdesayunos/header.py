@@ -3,6 +3,7 @@ from core.app import app
 from core.image import image
 from app.models.logo import logo as logo_model
 from app.models.seo import seo as seo_model
+from app.models.texto import texto as texto_model
 
 
 class header:
@@ -19,27 +20,28 @@ class header:
             portada=image.portada(logo['foto'])
             self.data['logo']       = image.generar_url(portada, 'sitio')
             seo                = seo_model.getById(1)
-            self.data['path']       = functions.generar_url(array(seo['url']),false)
+            self.data['path']       = functions.generar_url([seo['url']],False)
             self.data['title']      = config['title']
 
             telefono = texto.getById(1)
-            view.set('telefono', telefono['texto'])
+            self.data['telefono']= telefono['texto']
             email = texto.getById(2)
-            view.set('email', email['texto'])
+            self.data['email']= email['texto']
             seo = seo.getById(8)
-            view.set('product_url', functions.generar_url(array(seo['url']),false))
-            view.set('search', isset(_GET['search'])?strip_tags(_GET['search']):"")
-
-            view.render('header')
-
-
-            logo = logo_model.getById(3)
-            self.data['logo_max'] = image.generar_url(
-                logo['foto'][0], 'panel_max')
-            logo = logo_model.getById(4)
-            self.data['logo_min'] = image.generar_url(
-                logo['foto'][0], 'panel_min')
-            self.data['url_exit'] = functions.generar_url(['logout'], False)
-            self.data['date'] = functions.current_time()
+            self.data['product_url']= functions.generar_url([seo['url']],False)
+            self.data['search']= functions.remove_tags(app.get['search']) if 'search' in app.get else ""
             ret['body'].append(('header', self.data))
         return ret
+
+    def header_top(self):
+        redes_sociales = array()
+        rss            = texto.getAll(array('tipo' => 2))
+        foreach (rss as key => r) {
+            redes_sociales[] = array('url' => functions.ruta(r['url']), 'icon' => r['texto'], 'title' => r['titulo'])
+        }
+
+        view.set('social', redes_sociales)
+        view.set('is_social', (count(redes_sociales) > 0))
+        view.set('is_social', false)
+        return view.render('header-top', false, true)
+    }

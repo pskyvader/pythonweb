@@ -1,5 +1,6 @@
 from core.image import image
 from core.app import app
+from core.view import view
 
 
 class footer:

@@ -20,6 +20,7 @@ class app:
     environ = {}
     get = {}
     root_url=''
+    client_ip=''
 
     def __init__(self, root):
         import locale

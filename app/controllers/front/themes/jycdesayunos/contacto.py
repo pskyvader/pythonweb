@@ -1,4 +1,4 @@
-from app.models.texto import texto
+from app.models.texto import texto as texto_model
 from core.app import app
 from core.functions import functions
 

@@ -55,7 +55,7 @@ class enviar(base):
 
         if respuesta['exito']:
             body_email = {
-                'body'     : 'contacto',
+                'template'     : 'contacto',
                 'titulo'   : "Formulario de " + campos['titulo'],
                 'cabecera' : "Estimado " + campos['nombre'] + ", hemos recibido su correo, el cual será respondido a la brevedad por el centro de atención al cliente de " + nombre_sitio,
             }
@@ -74,7 +74,7 @@ class enviar(base):
                 
             
             body      = email.body_email(body_email)
-            respuesta = email.enviar_email(array(campos['email'], email_empresa), "Formulario de " . titulo, body, adjuntos, imagenes)
+            respuesta = email.enviar_email([campos['email'], email_empresa], "Formulario de " + titulo, body, adjuntos, imagenes)
             if (respuesta['exito']) 
                 respuesta['mensaje'] = "<strong>Gracias!</strong>&nbsp Email enviado correctamente."
                 respuesta['captcha']=True

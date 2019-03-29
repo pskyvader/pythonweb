@@ -1,6 +1,4 @@
 from .base import base
-from app.models.administrador import administrador as administrador_model
-
 
 from app.models.logo import logo as logo_model
 
@@ -23,8 +21,7 @@ class application(base):
         ret = {"body": []}
         # Clase para enviar a controlador de lista_class
         url_final = cls.url.copy()
-        if not administrador_model.verificar_sesion():
-            url_final = ["login", "index", "home"]
+        cls.metadata['modulo']=cls.__class__.__name__
 
         h = head(cls.metadata)
         ret_head = h.normal()

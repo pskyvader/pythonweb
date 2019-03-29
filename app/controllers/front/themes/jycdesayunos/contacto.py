@@ -2,6 +2,13 @@ from app.models.texto import texto as texto_model
 from core.app import app
 from core.functions import functions
 
+from .base import base
+
+from .head import head
+from .header import header
+from .banner import banner
+from .breadcrumb import breadcrumb
+from .footer import footer
 
 class contacto(base):
     def __init__(self):

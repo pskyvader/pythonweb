@@ -290,6 +290,7 @@ class functions():
 
     @staticmethod
     def remove_tags(text):
+        import xml.etree.ElementTree
         return ''.join(xml.etree.ElementTree.fromstring(text).itertext())
 
     @staticmethod

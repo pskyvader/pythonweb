@@ -1,16 +1,16 @@
-from .app.models.comuna import comuna as comuna_model
-from .app.models.pedido  import pedido as pedido_model
-from .app.models.pedidodireccion  import pedidodireccion as pedidodireccion_model
-from .app.models.pedidoproducto  import pedidoproducto as pedidoproducto_model
-from .app.models.producto  import producto as producto_model
-from .app.models.region  import region as region_model
-from .app.models.seo  import seo as seo_model
-from .app.models.usuario  import usuario as usuario_model
-from .app.models.usuariodireccion  import usuariodireccion as usuariodireccion_model
+from app.models.comuna import comuna as comuna_model
+from app.models.pedido  import pedido as pedido_model
+from app.models.pedidodireccion  import pedidodireccion as pedidodireccion_model
+from app.models.pedidoproducto  import pedidoproducto as pedidoproducto_model
+from app.models.producto  import producto as producto_model
+from app.models.region  import region as region_model
+from app.models.seo  import seo as seo_model
+from app.models.usuario  import usuario as usuario_model
+from app.models.usuariodireccion  import usuariodireccion as usuariodireccion_model
 
-from .core.app import app
-from .core.functions import functions
-from .core.image import image
+from core.app import app
+from core.functions import functions
+from core.image import image
 
 class order(base):
     steps = {
@@ -242,19 +242,19 @@ class order(base):
                     del p
             
             fecha_entrega = strptime(dp['fecha_entrega'], "%d/%m/%y")
-            fecha_entrega = "" if fecha_entrega < now() else functions.formato_fecha(fecha_entrega, '%F')
+            fecha_entrega = "" if fecha_entrega < functions.curre else functions.formato_fecha(fecha_entrega, '%F')
 
             hora_entrega = strptime(dp['fecha_entrega'], "%R")
-            hora_entrega  = "" if hora_entrega < now() else  functions.formato_fecha(hora_entrega, '%R')
+            hora_entrega  = "" if hora_entrega < functions.curre else  functions.formato_fecha(hora_entrega, '%R')
 
-            d             = array(
+            d             = {
                 'idpedidodireccion' : dp['idpedidodireccion'],
                 'productos'         : lista_productos,
                 'direccion_entrega' : direcciones_entrega,
                 'fecha_entrega'     : fecha_entrega,
                 'horarios_entrega'  : horarios_entrega,
                 'precio'            : functions.formato_precio(dp['precio']),
-            )
+            }
             foreach (d['direccion_entrega'] as key : dir) 
                 if dir[0] == dp['idusuariodireccion']) 
                     d['direccion_entrega'][key]['selected'] = True

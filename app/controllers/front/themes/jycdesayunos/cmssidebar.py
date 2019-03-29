@@ -14,7 +14,7 @@ from .footer import footer
 
 class cmssidebar(base):
     def __init__(self):
-        super().__init__(app.get["idseo"])
+        super().__init__(app.idseo)
 
     def index(self):
         ret = {"body": []}

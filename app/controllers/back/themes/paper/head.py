@@ -48,7 +48,7 @@ class head:
 
         head.data['title'] = titulo
 
-        if 'image' in metadata:
+        if 'image' in metadata and metadata['image'] != '':
             head.data['image'] = metadata['image']
         else:
             logo = logo_model.getById(3)

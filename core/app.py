@@ -349,11 +349,11 @@ class app:
 
         return var_copy
     @staticmethod
-    def parse_ip(forwarded,addr):
+    def parse_ip(environ):
         try:
-            return str(forwarded.split(',')[-1]).strip()
+            return str(environ['HTTP_X_FORWARDED_FOR'].split(',')[-1]).strip()
         except KeyError:
-            return addr
+            return environ['REMOTE_ADDR']
 
 
     @staticmethod

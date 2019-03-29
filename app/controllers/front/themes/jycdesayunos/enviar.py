@@ -11,7 +11,6 @@ import json
 
 class enviar(base):
     def index(self):
-        ret = {"body": []}
         ret = {
             "headers": [("Content-Type", "application/json charset=utf-8")],
             "body": "",

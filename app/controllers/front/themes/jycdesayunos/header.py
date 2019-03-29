@@ -7,6 +7,7 @@ from app.models.moduloconfiguracion import moduloconfiguracion as moduloconfigur
 from app.models.seo import seo as seo_model
 from app.models.texto import texto as texto_model
 
+import importlib
 
 
 class header:
@@ -18,11 +19,11 @@ class header:
             self.data['header-top'] = self.header_top()
             self.data['cart']       = self.header_cart()
             self.data['menu']       = self.menu()
-            config             = app.get_config()
-            logo               = logo_model.getById(5)
+            config = app.get_config()
+            logo= logo_model.getById(5)
             portada=image.portada(logo['foto'])
-            self.data['logo']       = image.generar_url(portada, 'sitio')
-            seo                = seo_model.getById(1)
+            self.data['logo']= image.generar_url(portada, 'sitio')
+            seo= seo_model.getById(1)
             self.data['path']       = functions.generar_url([seo['url']],False)
             self.data['title']      = config['title']
 
@@ -64,43 +65,39 @@ class header:
                 else:
                     url = ''
                 
-                menu                = {'titulo' : s['titulo'], 'link' : url, 'active' : s['url']}
+                menu= {'titulo' : s['titulo'], 'link' : url, 'active' : s['url']}
                 moduloconfiguracion = moduloconfiguracion_model.getByModulo(s['modulo_back'])
-                if isset(moduloconfiguracion[0]):
-                    modulo = modulo_model.getAll(array('idmoduloconfiguracion' : moduloconfiguracion[0], 'tipo' : s['tipo_modulo']), array('limit' : 1))
-                    if isset(modulo[0]):
-                        c     = '\app\models\\' . s['modulo_back']
-                        class = new c
-                        var   = array()
+                if len(moduloconfiguracion)>0:
+                    modulo = modulo_model.getAll({'idmoduloconfiguracion' : moduloconfiguracion[0], 'tipo' : s['tipo_modulo']}, ['limit' : 1])
+                    if len(modulo)>0:
+
+
+                        parent = 'app.models.' + s['modulo_back']
+                        current_module = importlib.import_module(parent)
+                        self_class = getattr(current_module, s['modulo_back'])
+                        
+                        var   = {}
                         if s['tipo_modulo'] != 0:
                             var['tipo'] = s['tipo_modulo']
-                        }
-                        if isset(modulo[0]['hijos']) and modulo[0]['hijos']:
+                        
+                        if 'hijos' in modulo[0] and modulo[0]['hijos']:
                             var['idpadre'] = 0
-                        }
-                        row   = class.getAll(var)
-                        hijos = array()
-                        foreach (row as key : sub:
+                        
+                        row   = self_class.getAll(var)
+                        hijos = []
+                        for sub in row:
                             sub_url = "detail"
-                            if isset(s['link_menu']) and s['link_menu'] != '':
+                            if 'link_menu' in s and s['link_menu'] != '':
                                 sub_url = s['link_menu']
-                            }
-
-                            hijos[] = array('titulo' : sub['titulo'], 'link' : functions.url_seccion(array(s['url'], sub_url), sub), 'active' : sub['url'])
-                        }
+                            hijos.append({'titulo' : sub['titulo'], 'link' : functions.url_seccion([s['url'], sub_url], sub), 'active' : sub['url']})
                         menu['hijo'] = hijos
-                    }
-                }
 
-                lista_menu[] = menu
+                lista_menu.append(menu)
+
             else:
                 if s['menu']:
-                    lista_menu[] = array('titulo' : s['titulo'], 'link' : functions.generar_url(array(s['url']), False), 'active' : s['url'])
-                }
-            }
-        }
+                    lista_menu.append({'titulo' : s['titulo'], 'link' : functions.generar_url([s['url']], False), 'active' : s['url']})
 
-        menu = this->generar_menu(lista_menu)
-
+        menu = self.generar_menu(lista_menu)
         return menu
-    }
+    

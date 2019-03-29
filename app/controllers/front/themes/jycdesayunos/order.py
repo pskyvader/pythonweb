@@ -94,57 +94,55 @@ class order(base):
         ret["body"] += f.normal()["body"]
         return ret
     
+    @staticmethod
+    def sidebar(carro):
+        data={}
+        data['subtotal']= carro['subtotal']
+        data['total_direcciones']= carro['total_direcciones']
+        data['total']= carro['total']
+        return ('order/sidebar', data)
 
-    private static function sidebar(carro)
-    
-        view.set('subtotal', carro['subtotal'])
-        view.set('total_direcciones', carro['total_direcciones'])
-        view.set('total', carro['total'])
-        return view.render('order/sidebar', False, True)
-    
-    private static function steps(current_step, url)
-    
-        steps = array()
-        foreach (self.steps as key : s) 
+    @staticmethod
+    def steps(current_step, url):
+        steps = []
+        for key,s in order.steps.items():
             active   = (current_step == key)
             disabled = (current_step < key)
-            url_step = functions.generar_url(array(url[0], 'step', key))
-            steps.append(array('title' : s, 'active' : active, 'disabled' : disabled, 'url' : url_step)
+            url_step = functions.generar_url([url[0], 'step', key])
+            steps.append({'title' : s, 'active' : active, 'disabled' : disabled, 'url' : url_step})
         
-        view.set('steps', steps)
-        return view.render('order/steps', False, True)
+        return view.render('order/steps', {'steps': steps})
     
-    private static function step1(carro, url)
-    
-        attr = producto_model.getAll(array('tipo' : 2), array('order' : 'titulo ASC'))
-        foreach (attr as key : lp) 
+    @staticmethod
+    def step1(carro, url):
+        attr = producto_model.getAll({'tipo':2}, {'order':'titulo ASC'})
+        for lp in attr:
             portada    = image.portada(lp['foto'])
             thumb_url  = image.generar_url(portada, 'cart')
-            attr[key] = array('titulo' : lp['titulo'], 'idproducto' : lp['idproducto'], 'foto' : thumb_url)
+            lp = {'titulo' : lp['titulo'], 'idproducto' : lp['idproducto'], 'foto' : thumb_url}
         
-        foreach (carro['productos'] as key : p) 
-            atributos = attr
-            foreach (atributos as k : a) 
-                if a['idproducto'] == p['idproductoatributo']) 
-                    atributos[k]['selected'] = True
+        for p in carro['productos']:
+            atributos = attr.copy()
+            for a in atributos:
+                if a['idproducto'] == p['idproductoatributo']:
+                    a['selected'] = True
                 else:
-                    atributos[k]['selected'] = False
-                
-            
-            carro['productos'][key]['atributos'] = atributos
+                    a['selected'] = False
+            p['atributos'] = atributos
         
-
         sidebar = self.sidebar(carro)
-        view.set_array(carro)
-        view.set('sidebar', sidebar)
+        data=carro
+        data['sidebar']=sidebar
         seo_producto = seo_model.getById(8)
-        view.set('url_product', functions.generar_url(array(seo_producto['url'])))
-        direcciones = usuariodireccion_model.getAll(array('idusuario' : app.session[usuario_model.idname . app.prefix_site]))
-        if len(direcciones) > 0) 
-            view.set('url_next', functions.generar_url(array(url[0], 'step', 2)))
+        data['url_product']= functions.generar_url([seo_producto['url']])
+        direcciones = usuariodireccion_model.getAll({'idusuario' : app.session[usuario_model.idname + app.prefix_site]})
+        if len(direcciones) > 0:
+            data['url_next']= functions.generar_url([url[0], 'step', 2])
         else:
             seo_usuario = seo_model.getById(9)
-            view.set('url_next', functions.generar_url(array(seo_usuario['url'], 'direccion'), array('next_url' : implode('/', array(url[0], 'step', 2)))))
+            data['url_next']= functions.generar_url([seo_usuario['url'], 'direccion'], {'next_url' : '/'.join([url[0], 'step', 2]) }  )
+        
+        return data
         
     
 
@@ -206,7 +204,7 @@ class order(base):
             direcciones_pedido = pedidodireccion_model.getAll(array('idpedido' : carro['idpedido']))
         
         
-        attr = producto_model.getAll(array('tipo' : 2), array('order' : 'titulo ASC'))
+        attr = producto_model.getAll({'tipo':2}, {'order':'titulo ASC'})
         atributos=array()
         foreach (attr as key : at) 
             atributos[at[0]]=at
@@ -275,7 +273,7 @@ class order(base):
     private static function step3(carro, url)
     
         sidebar   = self.sidebar(carro)
-        atributos = producto_model.getAll(array('tipo' : 2), array('order' : 'titulo ASC'))
+        atributos = producto_model.getAll({'tipo':2}, {'order':'titulo ASC'})
         foreach (carro['productos'] as key : p) 
             carro['productos'][key]['mensaje'] = nl2br(p['mensaje'])
             foreach (atributos as k : a) 
@@ -594,7 +592,7 @@ class order(base):
             echo json_encode(respuesta)
             exit
         else:
-            attr      = producto_model.getAll(array('tipo' : 2), array('order' : 'titulo ASC'))
+            attr      = producto_model.getAll({'tipo':2}, {'order':'titulo ASC'})
             atributos = array()
             foreach (attr as key : lp) 
                 atributos[lp['idproducto']] = lp['titulo']

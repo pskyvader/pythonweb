@@ -290,9 +290,9 @@ class functions():
 
     @staticmethod
     def remove_tags(text):
-        import xml.etree.ElementTree
+        from xml.etree.ElementTree import fromstring
         print(text)
-        return ''.join(xml.etree.ElementTree.fromstring(text).itertext())
+        return ''.join(fromstring(text).itertext())
 
     @staticmethod
     def get_content_type_by_filename(file_name):

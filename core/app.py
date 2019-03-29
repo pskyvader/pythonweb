@@ -38,7 +38,7 @@ class app:
         app.get = self.parse_get(app.environ['QUERY_STRING'])
         app.post = self.parse_post()
         app.session = app.environ['beaker.session']
-        app.client_ip=self.parse_ip(app.environ['HTTP_X_FORWARDED_FOR'],app.environ['REMOTE_ADDR'])
+        app.client_ip=self.parse_ip(app.environ)
         url = self.parse_url(environ['PATH_INFO'])
 
         config = self.get_config()

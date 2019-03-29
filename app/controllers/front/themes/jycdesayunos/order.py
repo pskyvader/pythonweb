@@ -12,6 +12,8 @@ from core.app import app
 from core.functions import functions
 from core.image import image
 
+from .cart import cart
+
 import json
 
 class order(base):
@@ -475,7 +477,7 @@ class order(base):
             
         
         cart.update_cart(carro['idpedido'])
-        
+
         ret["body"] = json.dumps(respuesta, ensure_ascii=False)
         return ret
     

@@ -3,7 +3,6 @@ from core.app import app
 from core.file import file
 from core.image import image
 from core.functions import functions
-from core.view import view
 
 from .base import base
 

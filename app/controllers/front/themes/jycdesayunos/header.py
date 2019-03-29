@@ -68,7 +68,7 @@ class header:
                 menu= {'titulo' : s['titulo'], 'link' : url, 'active' : s['url']}
                 moduloconfiguracion = moduloconfiguracion_model.getByModulo(s['modulo_back'])
                 if len(moduloconfiguracion)>0:
-                    modulo = modulo_model.getAll({'idmoduloconfiguracion' : moduloconfiguracion[0], 'tipo' : s['tipo_modulo']}, ['limit' : 1])
+                    modulo = modulo_model.getAll({'idmoduloconfiguracion' : moduloconfiguracion[0], 'tipo' : s['tipo_modulo']}, {'limit' : 1})
                     if len(modulo)>0:
                         parent = 'app.models.' + s['modulo_back']
                         current_module = importlib.import_module(parent)

@@ -98,7 +98,7 @@ class contacto(base):
         data["campos"] = campos
 
         informacion = []
-        textos = texto.getAll({"tipo": 1})
+        textos = texto_model.getAll({"tipo": 1})
         for t in textos:
             icono = ""
             link = ""

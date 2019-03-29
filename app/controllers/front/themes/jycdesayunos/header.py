@@ -24,8 +24,8 @@ class header:
             portada=image.portada(logo['foto'])
             self.data['logo']= image.generar_url(portada, 'sitio')
             seo= seo_model.getById(1)
-            self.data['path']       = functions.generar_url([seo['url']],False)
-            self.data['title']      = config['title']
+            self.data['path']= functions.generar_url([seo['url']],False)
+            self.data['title']= config['title']
 
             telefono = texto_model.getById(1)
             self.data['telefono']= telefono['texto']
@@ -39,7 +39,7 @@ class header:
 
     def header_top(self):
         redes_sociales = []
-        rss            = texto_model.getAll({'tipo' : 2})
+        rss= texto_model.getAll({'tipo' : 2})
         for r in rss:
             redes_sociales.append(
                     {
@@ -70,8 +70,6 @@ class header:
                 if len(moduloconfiguracion)>0:
                     modulo = modulo_model.getAll({'idmoduloconfiguracion' : moduloconfiguracion[0], 'tipo' : s['tipo_modulo']}, ['limit' : 1])
                     if len(modulo)>0:
-
-
                         parent = 'app.models.' + s['modulo_back']
                         current_module = importlib.import_module(parent)
                         self_class = getattr(current_module, s['modulo_back'])
@@ -79,7 +77,6 @@ class header:
                         var   = {}
                         if s['tipo_modulo'] != 0:
                             var['tipo'] = s['tipo_modulo']
-                        
                         if 'hijos' in modulo[0] and modulo[0]['hijos']:
                             var['idpadre'] = 0
                         

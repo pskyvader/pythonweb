@@ -1,19 +1,19 @@
-<li class="{active}">
-    {if is_url}
-    {if prefetch}
-    <link rel="prefetch" href="{url}">
-    {/if prefetch}
-    <a class="" href="{url}" {target}>
-        {title}
-    </a>
-    {else is_url}
-    <a class="" href="javascript:;">
-        {title}
-    </a>
-    {/if is_url}
-    {if contiene_hijo}
+<li class="{{active}}">
+    {% if url!='' %}
+        {% if prefetch %}
+        <link rel="prefetch" href="{{url}}">
+        {% endif %}
+        <a class="" href="{{url}}" {{target}}>
+            {{title}}
+        </a>
+        {% else %}
+        <a class="" href="javascript:;">
+            {{title}}
+        </a>
+    {% endif %}
+    {% if contiene_hijo %}
     <ul class="sub-menu">
-        {hijos}
+        {{hijos}}
     </ul>
-    {/if contiene_hijo}
+    {% endif %}
 </li>

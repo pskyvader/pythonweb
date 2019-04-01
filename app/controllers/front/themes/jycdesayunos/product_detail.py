@@ -1,4 +1,5 @@
 from core.image import image
+from core.file import file
 from core.functions import functions
 
 
@@ -38,7 +39,7 @@ class product_detail:
         if len(self.producto['archivo']) > 0:
             files = []
             for a in self.producto['archivo']:
-                files[] = array('title' => a['url'], 'size' => functions.file_size(file.generar_dir(a, '')), 'url' => file.generar_url(a, ''))
+                files[] = {'title' : a['url'], 'size' : functions.file_size(file.generar_dir(a, '')), 'url' : file.generar_url(a, '')}
             }
             view.set('files', files)
             view.set('title', 'Archivos')

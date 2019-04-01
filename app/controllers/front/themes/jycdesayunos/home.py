@@ -48,7 +48,7 @@ class home(base):
 
 
         secciones_destacadas = seccion_model.getAll({'tipo' : 3, 'destacado' : True})
-        seo                  = seo.getById(7)
+        seo                  = seo_model.getById(7)
         for seccion in secciones_destacadas:
             data={}
             data['title']= seccion['titulo']
@@ -61,7 +61,7 @@ class home(base):
         productos_destacados = producto_model.getAll({'tipo' : 1, 'destacado' : True},{'limit':6})
         if len(productos_destacados)>0:
             data={}
-            #seo_productos          = seo.getById(8)
+            #seo_productos          = seo_model.getById(8)
             #this->url[0] = seo_productos['url']
             app.idseo=8
             pl              = product_list.product_list() #product_list.py

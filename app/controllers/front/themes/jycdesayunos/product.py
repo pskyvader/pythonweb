@@ -5,6 +5,13 @@ from app.models.productocategoria import productocategoria as productocategoria_
 from .base import base
 from .product_list import product_list
 
+
+from .head import head
+from .header import header
+from .banner import banner
+from .breadcrumb import breadcrumb
+from .footer import footer
+
 from core.app import app
 from core.functions import functions
 

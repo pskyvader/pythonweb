@@ -30,7 +30,7 @@
                     {% endif %}
                 </div>
                 {% if lp.stock>0 %}
-                <button class="btn btn-add-cart" onclick="add_cart({id});">Añadir al carro</button>
+                <button class="btn btn-add-cart" onclick="add_cart({{lp.id}});">Añadir al carro</button>
                 {% else %}
                 <button class="btn disabled">Producto agotado</button>
                 {% endif %}

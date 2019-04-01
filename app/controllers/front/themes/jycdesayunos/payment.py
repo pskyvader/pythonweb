@@ -22,7 +22,7 @@ class payment(base):
             ret["redirect"] = url_return
             return ret
     
-    def verificar_medio_pago(cookie:str = '', idmedio:int):
+    def verificar_medio_pago(self,cookie:str = '', idmedio:int=0):
     
         """ comprueba si existe el medio de pago, sino vuelve al home
         :param cookie:str:
@@ -35,18 +35,18 @@ class payment(base):
         medio_pago = None
         if '' != cookie:
             mp = mediopago_model.getById(idmedio)
-            if isset(mp['estado']):
+            if 'estado' in mp:
                 cookie       = functions.test_input(cookie)
-                this->cookie = cookie
-                this->url[]  = cookie
+                self.cookie = cookie
+                self.url.append(cookie)
                 medio_pago   = mp
-            } else {
+            else:
                 seo_home  = seo_model.getById(1)
-                this->url = array(seo_home['url'])
-            }
-        } else {
+                self.url = [seo_home['url']]
+            
+        else:
             seo_home  = seo_model.getById(1)
-            this->url = array(seo_home['url'])
-        }
+                self.url = [seo_home['url']]
+        
         return medio_pago
-    }
+    

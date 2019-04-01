@@ -1,4 +1,7 @@
 
+
+from app.models.productocategoria import productocategoria as productocategoria_model
+
 from .base import base
 from .product_list import product_list
 

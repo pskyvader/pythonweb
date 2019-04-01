@@ -29,7 +29,7 @@
                     <span class="card-price">{{price}}</span>
                     {% endif %}
                 </div>
-                {% if stock>0 %}
+                {% if lp.stock>0 %}
                 <button class="btn btn-add-cart" onclick="add_cart({id});">Añadir al carro</button>
                 {% else %}
                 <button class="btn disabled">Producto agotado</button>

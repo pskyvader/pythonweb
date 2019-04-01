@@ -6,6 +6,7 @@ from app.models.productocategoria import productocategoria as productocategoria_
 
 from core.app import app
 from core.functions import functions
+from core.image import image
 
 
 class product_list(base):

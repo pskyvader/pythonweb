@@ -1,39 +1,38 @@
 <section class="banner banner-md">
     <div id="banner-principal" class="carousel slide d-print-none" data-ride="carousel" data-interval="5000">
         <ol class="carousel-indicators">
-            {foreach thumb}
-            <li data-target="#banner-principal" data-slide-to="{id}" class="{active}"></li>
-            {/foreach thumb}
+            {% for t in thumb %}
+            <li data-target="#banner-principal" data-slide-to="{{t.id}}" class="{{t.active}}"></li>
+            {% endfor %}
         </ol>
         <div class="carousel-inner" role="listbox">
-            {foreach banner}
+            {% for b in banner %}
             <div role="option" class="carousel-item {active}">
-                <div class="card blur" data-background2="{background}" style="{data}2background-image:url({background});">
+                <div class="card blur" data-background2="{background}" style="{{b.data}}2background-image:url({{b.background}});">
                     <div class="container p-0 d-none-">
                         <picture class="imagen">
-                            {foreach srcset}
-                            <source media="{media}" {data}srcset="{url}" type="{type}">
-                            {/foreach srcset}
-                            <img class="" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{foto}" alt="{title}">
+                            {% for s in  b.srcset %}
+                            <source media="{{s.media}}" {{b.data}}srcset="{{s.url}}" type="{{s.type}}">
+                            {% endfor %}
+                            <img class="" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{{b.foto}}" alt="{{b.title}}">
                         </picture>
                     </div>
                     <div class="card-img-overlay">
                         <div class="container animated fadeInDown">
-                            {if is_texto1}
-                            <h1 class="card-title"> {texto1}</h1>
-                            {/if is_texto1}
-                            {if is_texto2}
-                            <h4>
-                                {texto2}</h4>
-                            {/if is_texto2}
-                            {if is_link}
-                            <a href="{link}" class="btn round" target="_blank" rel="noopener noreferrer">Ver más</a>
-                            {/if is_link}
+                            {% if b.texto1!='' %}
+                            <h1 class="card-title"> {{b.texto1}}</h1>
+                            {% endif %}
+                            {% if b.texto2!='' %}
+                            <h4> {{b.texto2}}</h4>
+                            {% endif %}
+                            {% if b.link!='' %}
+                            <a href="{{b.link}}" class="btn round" target="_blank" rel="noopener noreferrer">Ver más</a>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
             </div>
-            {/foreach banner}
+            {% endfor %}
         </div>
         <a class="carousel-control-prev" href="#banner-principal" role="button" data-slide="prev">
             <i class="fa fa-chevron-left fa-2x " aria-hidden="true"></i>

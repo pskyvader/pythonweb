@@ -1,6 +1,7 @@
 from app.models.logo import logo as logo_model
 from app.models.seo import seo as seo_model
 
+from core.functions import functions
 from core.image import image
 from core.app import app
 from core.view import view

@@ -33,30 +33,32 @@ class product_detail:
         data["lista_imagenes"] = lista_imagenes
         data["thumb"] = thumb
         return data
-        
+
     def tabs(self):
-        extra=''
-        if len(self.producto['archivo']) > 0:
+        extra = ""
+        if len(self.producto["archivo"]) > 0:
             files = []
-            for a in self.producto['archivo']:
-                files[] = {'title' : a['url'], 'size' : functions.file_size(file.generar_dir(a, '')), 'url' : file.generar_url(a, '')}
-            }
-            view.set('files', files)
-            view.set('title', 'Archivos')
-            extra=view.render('files',false,true)
-        }
-        
-        is_description=(strip_tags(self.producto['descripcion'])!='')
-        view.set('is_description', is_description)
-        view.set('description', self.producto['descripcion'])
-        
-        is_extra=(extra!='')
-        view.set('is_extra', is_extra)
-        view.set('extra', extra)
-        if(is_description || is_extra){
-            tabs=view.render('product/tabs',false,true)
-        }else{
-            tabs=""
-        }
+            for a in self.producto["archivo"]:
+                files.append(
+                    {
+                        "title": a["url"],
+                        "size": functions.file_size(file.generar_dir(a, "")),
+                        "url": file.generar_url(a, ""),
+                    }
+                )
+
+            data = {}
+            data["files"] = files
+            data["title"] = "Archivos"
+            extra = ("files", data.copy())
+
+        data = {}
+        is_description = functions.remove_tags(self.producto["descripcion"]) != ""
+        data["is_description"] = is_description
+        data["description"] = self.producto["descripcion"]
+        data["extra"] = extra
+        if is_description or extra != "":
+            tabs = ("product/tabs", data)
+        else:
+            tabs = ""
         return tabs
-    }

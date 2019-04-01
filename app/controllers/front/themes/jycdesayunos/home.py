@@ -4,6 +4,7 @@ from core.image import image
 from core.functions import functions
 
 from app.models.banner import banner as banner_model
+from app.models.producto import producto as producto_model
 from app.models.seccion import seccion as seccion_model
 from app.models.seo import seo as seo_model
 

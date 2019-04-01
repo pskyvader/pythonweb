@@ -1,4 +1,5 @@
 from app.models.logo import logo as logo_model
+from app.models.seccion import seccion as seccion_model
 from app.models.seo import seo as seo_model
 from app.models.texto import texto as texto_model
 

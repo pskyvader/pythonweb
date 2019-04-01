@@ -112,101 +112,120 @@ class user(base):
         return ret
 
 
-        
-    /**
-     * datos_process
-     * procesa el POST para modificacion de datos
-     *
-     * @return json
-     * 
-     */
-    public function datos_process()
-    {
-        respuesta = array('exito' : false, 'mensaje' : '')
-        verificar = self.verificar(True)
-        if(!verificar['exito']){
-            respuesta['mensaje']='Debes ingresar a tu cuenta'
-            return respuesta
-        }
-        campos    = functions.test_input(_POST['campos'])
+    def datos_process(self):
+        from time import time
+        """ procesa el POST para modificacion de datos
+        :type self:
+        :param self:
+    
+        :raises:
+    
+        :rtype: json
+        """
+        ret = {'headers': [ ('Content-Type', 'application/json; charset=utf-8')], 'body': ''}
 
-        if isset(campos['nombre']) && isset(campos['telefono']) && isset(campos['email']) && isset(campos['token']):
-            if isset(app.session['datos_token']['token']) && app.session['datos_token']['token'] == campos['token']:
+        respuesta = {'exito' : False, 'mensaje' : ''}
+        verificar = self.verificar(True)
+        if not verificar['exito']:
+            respuesta['mensaje']='Debes ingresar a tu cuenta'
+            ret['body'] = json.dumps(respuesta,ensure_ascii=False)
+            return ret
+        
+        campos    = app.post['campos']
+
+        if 'nombre' in campos and 'telefono' in campos and 'email' in campos and 'token' in campos:
+            if 'token' in app.session['datos_token'] and app.session['datos_token']['token'] == campos['token']:
                 if time() - app.session['datos_token']['time'] <= 120:
-                    datos=array(
+                    datos={
                         'nombre':campos['nombre'],
                         'telefono':campos['telefono'],
                         'email':campos['email'],
-                        'pass':(isset(campos['pass']) && campos['pass']!='')?campos['pass']:'',
-                        'pass_repetir':(isset(campos['pass_repetir']) && campos['pass_repetir']!='')?campos['pass_repetir']:'',
-                    )
+                        'pass': campos['pass'] if 'pass' in campos and campos['pass']!='' else '',
+                        'pass_repetir': campos['pass_repetir'] if 'pass_repetir' in campos and campos['pass_repetir']!='' else '',
+                    }
                     respuesta = usuario_model.actualizar(datos)
                     if respuesta['exito']:
                         respuesta['mensaje'] = "Datos modificados correctamente"
-                    }
                 else:
                     respuesta['mensaje'] = 'Error de token, recarga la pagina e intenta nuevamente'
-                }
             else:
                 respuesta['mensaje'] = 'Error de token, recarga la pagina e intenta nuevamente'
-            }
         else:
             respuesta['mensaje'] = 'Debes llenar los campos obligatorios'
-        }
 
-        echo json_encode(respuesta)
-    }
+        ret['body'] = json.dumps(respuesta,ensure_ascii=False)
+        return ret
 
-    /**
-     * lista de direcciones
-     *
-     * @return void
-     */
-    public function direcciones(){
+    def direcciones(self):
+        """ lista de direcciones
+        :type self:
+        :param self:
+    
+        :raises:
+    
+        :rtype:
+        """
+        ret = {"body": []}
         self.meta(self.seo)
         verificar = self.verificar(True)
         if verificar['exito']:
-            self.url[] = 'direcciones'
+            self.url.append('direcciones')
         else:
-            self.url[] = 'login'
-        }
-        functions.url_redirect(self.url)
+            self.url.append('login')
+        
+        url_return = functions.url_redirect(self.url)
+        if url_return != "":
+            ret["error"] = 301
+            ret["redirect"] = url_return
+            return ret
 
-        head = new head(self.metadata)
-        head->normal()
+        h = head(self.metadata)
+        ret_head = h.normal()
+        if ret_head["headers"] != "":
+            return ret_head
+        ret["body"] += ret_head["body"]
 
-        header = new header()
-        header->normal()
+        he = header()
+        ret["body"] += he.normal()["body"]
 
-        banner = new banner()
-        banner->individual(self.seo['banner'], self.metadata['title'],'Mis Direcciones')
-        sidebar   = array()
-        sidebar[] = array('title' : "Mis datos", 'active' : '', 'url' : functions.generar_url(array(self.url[0], 'datos')))
-        sidebar[] = array('title' : "Mis direcciones", 'active' : 'active', 'url' : functions.generar_url(array(self.url[0], 'direcciones')))
-        sidebar[] = array('title' : "Mis pedidos", 'active' : '', 'url' : functions.generar_url(array(self.url[0], 'pedidos')))
+        ba = banner()
+        ret["body"] += ba.individual(self.seo["banner"], self.metadata["title"],'Mis direcciones')["body"]
 
-        view.set('sidebar_user', sidebar)
-        sidebar=view.render('user/sidebar', false, True)
-        view.set('sidebar',sidebar)
-        dir=usuariodireccion_model.getAll(array('idusuario':app.session[usuario_model.idname . app.prefix_site]))
-        direcciones=array()
-        foreach (dir as key : d:
-            direcciones[]=array(
+        bc = breadcrumb()
+        ret["body"] += bc.normal(self.breadcrumb)["body"]
+
+
+
+        sidebar   = []
+        sidebar.append({'title' : "Mis datos", 'active' : '', 'url' : functions.generar_url([self.url[0], 'datos'])})
+        sidebar.append({'title' : "Mis direcciones", 'active' : 'active', 'url' : functions.generar_url([self.url[0], 'direcciones'])})
+        sidebar.append({'title' : "Mis pedidos", 'active' : '', 'url' : functions.generar_url([self.url[0], 'pedidos'])})
+
+
+
+        data={}
+        data['sidebar']=('user/sidebar', {'sidebar_user': sidebar})
+        
+        
+        dir=usuariodireccion_model.getAll({'idusuario':app.session[usuario_model.idname . app.prefix_site]})
+        direcciones=[]
+        for d in dir:
+            direcciones.append({
                 'title':d['titulo'],
                 'nombre':d['nombre'],
                 'direccion':d['direccion'],
                 'telefono':d['telefono'],
-                'url':functions.generar_url(array(self.url[0], 'direccion',d[0]))
-            )
-        }
-        view.set('direcciones',direcciones)
-        view.set('url_new',functions.generar_url(array(self.url[0], 'direccion')))
+                'url':functions.generar_url([self.url[0], 'direccion',d[0]])
+            })
         
-        view.render('user/direcciones-lista')
+        data['direcciones']=direcciones
+        data['url_new']=functions.generar_url([self.url[0], 'direccion'])
+        ret["body"].append(('user/direcciones-lista',data)
 
-        footer = new footer()
-        footer->normal()
-    }
+
+        f = footer()
+        ret["body"] += f.normal()["body"]
+        return ret
 
 
     /**
@@ -216,13 +235,13 @@ class user(base):
      *
      * @return void
      */
-    public function direccion(var=array()){
+    public function direccion(var=array():
         self.meta(self.seo)
         verificar = self.verificar(True)
         if verificar['exito']:
-            if(isset(var[0])){
+            if(isset(var[0]):
                 direccion=usuariodireccion_model.getById(var[0])
-                if(direccion['idusuario']==app.session[usuario_model.idname . app.prefix_site]){
+                if(direccion['idusuario']==app.session[usuario_model.idname . app.prefix_site]:
                     self.url[] = 'direccion'
                     self.url[] = var[0]
                 }else{
@@ -250,7 +269,7 @@ class user(base):
         sidebar[] = array('title' : "Mis pedidos", 'active' : '', 'url' : functions.generar_url(array(self.url[0], 'pedidos')))
 
         view.set('sidebar_user', sidebar)
-        sidebar=view.render('user/sidebar', false, True)
+        sidebar=view.render('user/sidebar', False, True)
         view.set('sidebar',sidebar)
 
         moduloconfiguracion = moduloconfiguracion_model.getByModulo('usuariodireccion')
@@ -265,21 +284,21 @@ class user(base):
         com=comuna_model.getAll(array(),array('order':'titulo ASC'))
         comunas=array()
         foreach (com as key : c:
-            comunas[]=array('title':c['titulo'],'value':c[0],'selected':(isset(direccion) && direccion['idcomuna']==c[0]))
+            comunas[]=array('title':c['titulo'],'value':c[0],'selected':(isset(direccion) and direccion['idcomuna']==c[0]))
         }
 
         campos_requeridos=array()
         campos_opcionales=array()
         foreach (modulo as key : m:
-            if(in_array(True,m['estado'])){
+            if(in_array(True,m['estado']):
                 unset(m['estado'])
-                if(m['field']=='idcomuna'){
+                if(m['field']=='idcomuna':
                     m['options']=comunas
                 }else{
                     m['value']=(isset(direccion))?direccion[m['field']]:''
                 }
                 m['is_text']=(m['tipo']=='text')
-                if(m['required']){
+                if(m['required']:
                     campos_requeridos[]=m
                 }else{
                     campos_opcionales[]=m
@@ -313,21 +332,21 @@ class user(base):
      */
     public function direccion_process()
     {
-        respuesta = array('exito' : false, 'mensaje' : '')
+        respuesta = array('exito' : False, 'mensaje' : '')
         verificar = self.verificar(True)
-        if(!verificar['exito']){
+        if not verificar['exito']:
             respuesta['mensaje']='Debes ingresar a tu cuenta'
             return respuesta
         }
-        campos    = functions.test_input(_POST['campos'])
+        campos    = functions.test_input(app.post['campos'])
 
-        if isset(campos['token']) && isset(campos['id']):
-            if isset(app.session['direccion_token']['token']) && app.session['direccion_token']['token'] == campos['token']:
+        if isset(campos['token']) and isset(campos['id']):
+            if isset(app.session['direccion_token']['token']) and app.session['direccion_token']['token'] == campos['token']:
                 if time() - app.session['direccion_token']['time'] <= 360:
                     unset(campos['token'])
                     campos['idusuario']=app.session[usuario_model.idname . app.prefix_site]
                     campos['tipo']=1
-                    if(campos['id']!=''){
+                    if(campos['id']!='':
                         respuesta['exito'] = usuariodireccion_model.update(campos)
                     }else{
                         respuesta['exito'] = usuariodireccion_model.insert(campos)
@@ -335,7 +354,7 @@ class user(base):
                     if respuesta['exito']:
                         respuesta['mensaje'] = "Direccion guardada correctamente"
                         
-                        if(isset(_GET['next_url'])){
+                        if(isset(_GET['next_url']):
                             respuesta['next_url'] = _GET['next_url']
                         }
                     }else{
@@ -362,7 +381,7 @@ class user(base):
      *
      * @return void
      */
-    public function pedidos(){
+    public function pedidos(:
         self.meta(self.seo)
         verificar = self.verificar(True)
         if verificar['exito']:
@@ -386,7 +405,7 @@ class user(base):
         sidebar[] = array('title' : "Mis pedidos", 'active' : 'active', 'url' : functions.generar_url(array(self.url[0], 'pedidos')))
 
         view.set('sidebar_user', sidebar)
-        sidebar=view.render('user/sidebar', false, True)
+        sidebar=view.render('user/sidebar', False, True)
         view.set('sidebar',sidebar)
         ep=pedidoestado_model.getAll(array('tipo':1))
         estados_pedido=array()
@@ -396,9 +415,9 @@ class user(base):
 
 
         usuario= usuario_model.getById(app.session[usuario_model.idname . app.prefix_site])
-        pedidos=pedido_model.getByIdusuario(usuario[0],false)//obtiene todos los pedidos del usuario actual, con cualquier estado del pedido
+        pedidos=pedido_model.getByIdusuario(usuario[0],False)//obtiene todos los pedidos del usuario actual, con cualquier estado del pedido
         foreach (pedidos as key : p:
-            if(p['idpedidoestado']==1){ //Quita cualquier pedido que este en carro
+            if(p['idpedidoestado']==1: //Quita cualquier pedido que este en carro
                 unset(pedidos[key])
             }else{
                 pedidos[key]['total']=functions.formato_precio(p['total'])
@@ -424,14 +443,14 @@ class user(base):
      *
      * @return void
      */
-    public function pedido(var=array()){
+    public function pedido(var=array():
         self.meta(self.seo)
         verificar = self.verificar(True)
         if verificar['exito']:
-            if(isset(var[0])){
-                pedido=pedido_model.getByCookie(var[0],false)
+            if(isset(var[0]):
+                pedido=pedido_model.getByCookie(var[0],False)
                 //Podria desaparecer si se necesita que cualquier pedido sea publico
-                if(isset(pedido['idusuario']) && pedido['idusuario']==app.session[usuario_model.idname . app.prefix_site]){
+                if(isset(pedido['idusuario']) and pedido['idusuario']==app.session[usuario_model.idname . app.prefix_site]:
                     self.url[] = 'pedido'
                     self.url[] = var[0]
                 }else{
@@ -460,7 +479,7 @@ class user(base):
         sidebar[] = array('title' : "Mis pedidos", 'active' : 'active', 'url' : functions.generar_url(array(self.url[0], 'pedidos')))
 
         view.set('sidebar_user', sidebar)
-        sidebar=view.render('user/sidebar', false, True)
+        sidebar=view.render('user/sidebar', False, True)
 
         ep=pedidoestado_model.getAll()
         estados_pedido=array()
@@ -498,7 +517,7 @@ class user(base):
 
         medios_pago=array()
         descripcion_pago=''
-        if(pedido['idpedidoestado']==3 || pedido['idpedidoestado']==7){ // Solo si hay pago pendiente
+        if(pedido['idpedidoestado']==3 || pedido['idpedidoestado']==7: // Solo si hay pago pendiente
             medios_pago=mediopago_model.getAll()
             seo_pago=seo_model.getById(12) //seo medios de pago
             foreach (medios_pago as key : mp:
@@ -532,8 +551,8 @@ class user(base):
         self.meta(self.seo)
         
         verificar = self.verificar(True)
-        if(verificar['exito']){
-            if(isset(_GET['next_url'])){
+        if(verificar['exito']:
+            if(isset(_GET['next_url']):
                 self.url = explode('/',_GET['next_url'])
             }else{
                 self.url[] = 'datos'
@@ -571,11 +590,11 @@ class user(base):
      */
     public function registro_process()
     {
-        respuesta = array('exito' : false, 'mensaje' : '')
-        campos    = functions.test_input(_POST['campos'])
+        respuesta = array('exito' : False, 'mensaje' : '')
+        campos    = functions.test_input(app.post['campos'])
 
-        if isset(campos['nombre']) && isset(campos['telefono']) && isset(campos['email']) && isset(campos['pass']) && isset(campos['pass_repetir']) && isset(campos['token']):
-            if isset(app.session['registro_token']['token']) && app.session['registro_token']['token'] == campos['token']:
+        if isset(campos['nombre']) and isset(campos['telefono']) and isset(campos['email']) and isset(campos['pass']) and isset(campos['pass_repetir']) and isset(campos['token']):
+            if isset(app.session['registro_token']['token']) and app.session['registro_token']['token'] == campos['token']:
                 if time() - app.session['registro_token']['time'] <= 120:
                     respuesta = usuario_model.registro(campos['nombre'], campos['telefono'], campos['email'], campos['pass'], campos['pass_repetir'])
                     if respuesta['exito']:
@@ -598,7 +617,7 @@ class user(base):
 
         echo json_encode(respuesta)
     }
-    public function recuperar(){
+    public function recuperar(:
         self.meta(self.seo)
         self.url[] = 'recuperar'
         functions.url_redirect(self.url)
@@ -632,14 +651,14 @@ class user(base):
      */
     public function recuperar_process()
     {
-        respuesta = array('exito' : false, 'mensaje' : '')
-        campos    = functions.test_input(_POST['campos'])
+        respuesta = array('exito' : False, 'mensaje' : '')
+        campos    = functions.test_input(app.post['campos'])
 
-        if(isset(campos['email']) && isset(campos['token'])){
-            if(app.session['recuperar_token']['token']==campos['token']){
-                if(time()-app.session['recuperar_token']['time']<=120){
+        if(isset(campos['email']) and isset(campos['token']):
+            if(app.session['recuperar_token']['token']==campos['token']:
+                if(time()-app.session['recuperar_token']['time']<=120:
                     respuesta=usuario_model.recuperar(campos['email'])
-                    if(respuesta["exito"]){
+                    if(respuesta["exito"]:
                         respuesta['mensaje'] = "Se ha enviado tu nueva contraseña a tu email. recuerda modificarla al ingresar."
                     }
                 }else{
@@ -658,8 +677,8 @@ class user(base):
     {
         self.meta(self.seo)
         verificar = self.verificar(True)
-        if(verificar['exito']){
-            if(isset(_GET['next_url'])){
+        if(verificar['exito']:
+            if(isset(_GET['next_url']):
                 self.url = explode('/',_GET['next_url'])
             }else{
                 self.url[] = 'datos'
@@ -698,18 +717,18 @@ class user(base):
      */
     public function login_process()
     {
-        respuesta = array('exito' : false, 'mensaje' : '')
-        campos    = functions.test_input(_POST['campos'])
+        respuesta = array('exito' : False, 'mensaje' : '')
+        campos    = functions.test_input(app.post['campos'])
 
-        if isset(campos['email']) && isset(campos['pass']) && isset(campos['token']):
-            if isset(app.session['login_token']['token']) && app.session['login_token']['token'] == campos['token']:
+        if isset(campos['email']) and isset(campos['pass']) and isset(campos['token']):
+            if isset(app.session['login_token']['token']) and app.session['login_token']['token'] == campos['token']:
                 if time() - app.session['login_token']['time'] <= 120:
                     respuesta['exito'] = usuario_model.login(campos['email'], campos['pass'], isset(campos['recordar']))
                     if not respuesta['exito']:
                         respuesta['mensaje'] = "Ha ocurrido un error al ingresar. Revisa tus datos e intenta nuevamente"
                     else:
                         respuesta['mensaje'] = "Bienvenido"
-                        if(isset(_GET['next_url'])){
+                        if(isset(_GET['next_url']):
                             respuesta['next_url'] = _GET['next_url']
                         }
                     }
@@ -732,9 +751,9 @@ class user(base):
      *
      * @return array o json
      */
-    public static function verificar(bool return = false)
+    public static function verificar(bool return = False)
     {
-        respuesta   = array('exito' : false, 'mensaje' : '')
+        respuesta   = array('exito' : False, 'mensaje' : '')
         logueado    = usuario_model.verificar_sesion()
         if not logueado:
             if isset(_COOKIE['cookieusuario' . app.prefix_site]):

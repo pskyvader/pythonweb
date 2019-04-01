@@ -1,8 +1,10 @@
 
 
+from app.models.mediopago import mediopago as mediopago_model
 from app.models.modulo import modulo as modulo_model
 from app.models.moduloconfiguracion import moduloconfiguracion as moduloconfiguracion_model
 from app.models.usuario import usuario as usuario_model
+from app.models.seo import seo as seo_model
 
 from .base import base
 
@@ -221,7 +223,7 @@ class user(base):
         data['sidebar']=('user/sidebar', {'sidebar_user': sidebar})
         
         
-        dir=usuariodireccion_model.getAll({'idusuario':app.session[usuario_model.idname . app.prefix_site]})
+        dir=usuariodireccion_model.getAll({'idusuario':app.session[usuario_model.idname + app.prefix_site]})
         direcciones=[]
         for d in dir:
             direcciones.append({
@@ -340,8 +342,6 @@ class user(base):
         token = functions.generar_pass(20)
         app.session['direccion_token'] = {'token' : token, 'time' : time()}
         data['token']= token
-
-
 
         ret["body"].append(('user/direcciones-detalle',data))
 
@@ -471,108 +471,116 @@ class user(base):
                 p['estado']=estados_pedido[p['idpedidoestado']]['titulo']
                 p['background_estado']=estados_pedido[p['idpedidoestado']]['color']
                 p['color_estado']=functions.getContrastColor(estados_pedido[p['idpedidoestado']]['color'])
-            }
-        }
-        view.set('pedidos',pedidos)        
-        view.render('user/pedidos-lista')
+           
+           
+        data['pedidos']=pedidos   
 
-        footer = new footer()
-        footer->normal()
-    }
+        ret["body"].append(('user/pedidos-lista',data))
+
+        f = footer()
+        ret["body"] += f.normal()["body"]
+        return ret
 
 
-   /**
-     * Ver o pagar pedido
-     *
-     * @param  array var
-     *
-     * @return void
-     */
-    public function pedido(var=array():
+    def pedido(self,var=[]):
+        """ Ver o pagar pedido
+        :param var:
+    
+        :raises:
+    
+        :rtype:
+        """
+        ret = {"body": []}
         self.meta(self.seo)
         verificar = self.verificar(True)
         if verificar['exito']:
-            if isset(var[0]):
+            if len(var)>0:
                 pedido=pedido_model.getByCookie(var[0],False)
                  #Podria desaparecer si se necesita que cualquier pedido sea publico
-                if isset(pedido['idusuario']) and pedido['idusuario']==app.session[usuario_model.idname . app.prefix_site]:
-                    self.url[] = 'pedido'
-                    self.url[] = var[0]
+                if 'idusuario' in pedido and pedido['idusuario']==app.session[usuario_model.idname + app.prefix_site]:
+                    self.url.append('pedido')
+                    self.url.append(var[0])
                 else:
                  #Podria desaparecer si se necesita que cualquier pedido sea publico
-                    self.url[] = 'pedidos'
-                }
+                    self.url.append('pedidos')
             else:
-                self.url[] = 'pedido'
-            }
+                self.url.append('pedido')
+            
         else:
-            self.url[] = 'login'
-        }
-        functions.url_redirect(self.url)
+            self.url.append('login')
 
-        head = new head(self.metadata)
-        head->normal()
 
-        header = new header()
-        header->normal()
+        url_return = functions.url_redirect(self.url)
+        if url_return != "":
+            ret["error"] = 301
+            ret["redirect"] = url_return
+            return ret
 
-        banner = new banner()
-        banner->individual(self.seo['banner'], self.metadata['title'],'Detalle del pedido')
-        sidebar   = array()
-        sidebar[] = array('title' : "Mis datos", 'active' : '', 'url' : functions.generar_url(array(self.url[0], 'datos')))
-        sidebar[] = array('title' : "Mis direcciones", 'active' : '', 'url' : functions.generar_url(array(self.url[0], 'direcciones')))
-        sidebar[] = array('title' : "Mis pedidos", 'active' : 'active', 'url' : functions.generar_url(array(self.url[0], 'pedidos')))
+        h = head(self.metadata)
+        ret_head = h.normal()
+        if ret_head["headers"] != "":
+            return ret_head
+        ret["body"] += ret_head["body"]
 
-        view.set('sidebar_user', sidebar)
-        sidebar=view.render('user/sidebar', False, True)
+        he = header()
+        ret["body"] += he.normal()["body"]
+
+        ba = banner()
+        ret["body"] += ba.individual(self.seo["banner"], self.metadata["title"],'Detalle del pedido')["body"]
+
+        bc = breadcrumb()
+        ret["body"] += bc.normal(self.breadcrumb)["body"]
+        
+        
+        sidebar   = []
+        sidebar.append({'title' : "Mis datos", 'active' : '', 'url' : functions.generar_url([self.url[0], 'datos'])})
+        sidebar.append({'title' : "Mis direcciones", 'active' : '', 'url' : functions.generar_url([self.url[0], 'direcciones'])})
+        sidebar.append({'title' : "Mis pedidos", 'active' : 'active', 'url' : functions.generar_url([self.url[0], 'pedidos'])})
+
+        data={}
+        data['sidebar']=('user/sidebar', {'sidebar_user': sidebar})
 
         ep=pedidoestado_model.getAll()
-        estados_pedido=array()
-        foreach (ep as key : e:
+        estados_pedido=[]
+        for e in ep:
             estados_pedido[e[0]]=e
-        }
-        direcciones_pedido = pedidodireccion_model.getAll(array('idpedido' : pedido['idpedido']))
-        productos_pedido=pedidoproducto_model.getAll(array('idpedido' : pedido['idpedido']))
-        foreach (direcciones_pedido as key : dp:
-            direcciones_pedido[key]['precio']=functions.formato_precio(dp['precio'])
-            direcciones_pedido[key]['estado']=estados_pedido[dp['idpedidoestado']]['titulo']
-            direcciones_pedido[key]['background_estado']=estados_pedido[dp['idpedidoestado']]['color']
-            direcciones_pedido[key]['color_estado']=functions.getContrastColor(estados_pedido[dp['idpedidoestado']]['color'])
-            lista_productos = array()
-            foreach (productos_pedido as k : p:
+        
+        direcciones_pedido = pedidodireccion_model.getAll({'idpedido' : pedido['idpedido']})
+        productos_pedido=pedidoproducto_model.getAll({'idpedido' : pedido['idpedido']})
+        for dp in direcciones_pedido:
+            dp['precio']=functions.formato_precio(dp['precio'])
+            dp['estado']=estados_pedido[dp['idpedidoestado']]['titulo']
+            dp['background_estado']=estados_pedido[dp['idpedidoestado']]['color']
+            dp['color_estado']=functions.getContrastColor(estados_pedido[dp['idpedidoestado']]['color'])
+            lista_productos = []
+            for p in productos_pedido:
                 if p['idpedidodireccion'] == dp[0]:
                     portada      = image.portada(p['foto'])
                     thumb_url    = image.generar_url(portada, '')
                     p['total']=functions.formato_precio(p['total'])
                     p['foto']=thumb_url
-                    lista_productos[] = p
-                    unset(productos_pedido[k])
-                }
-            }
-            direcciones_pedido[key]['lista_productos']=lista_productos
-        }
+                    lista_productos.append(p)
+                    del productos_pedido[k]
+        
         pedido['total']=functions.formato_precio(pedido['total'])
         pedido['direcciones_pedido']=direcciones_pedido
         pedido['estado']=estados_pedido[pedido['idpedidoestado']]['titulo']
         pedido['background_estado']=estados_pedido[pedido['idpedidoestado']]['color']
         pedido['color_estado']=functions.getContrastColor(estados_pedido[pedido['idpedidoestado']]['color'])
 
-        view.set_array(pedido)
-        view.set('sidebar',sidebar)
+        data.update(pedido)
 
         medios_pago=array()
         descripcion_pago=''
-        if pedido['idpedidoestado']==3 || pedido['idpedidoestado']==7:  # Solo si hay pago pendiente
+        if pedido['idpedidoestado']==3 or pedido['idpedidoestado']==7:  # Solo si hay pago pendiente
             medios_pago=mediopago_model.getAll()
             seo_pago=seo_model.getById(12)  #seo medios de pago
-            foreach (medios_pago as key : mp:
-                url=functions.generar_url(array(seo_pago['url'],'medio',mp[0],pedido['cookie_pedido']))
-                medios_pago[key]['url']=url
-            }
+            for mp in medios_pago:
+                mp['url']=functions.generar_url([seo_pago['url'],'medio',mp[0],pedido['cookie_pedido']])
         else:
             medio_pago=mediopago_model.getById(pedido['idmediopago'])
             descripcion_pago=medio_pago['descripcion']
-        }
+        
         view.set('medios_pago',medios_pago)
         view.set('descripcion_pago',descripcion_pago)
         view.set('is_descripcion_pago',(trim(strip_tags(descripcion_pago))!=''))
@@ -729,7 +737,7 @@ class user(base):
                 self.url[] = 'datos'
             }
         else:
-            self.url[] = 'login'
+            self.url.append('login')
         }
         functions.url_redirect(self.url)
 

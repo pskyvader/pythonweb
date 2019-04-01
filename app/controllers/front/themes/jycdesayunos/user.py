@@ -1,3 +1,4 @@
+from app.models.moduloconfiguracion import moduloconfiguracion as moduloconfiguracion_model
 from app.models.usuario import usuario as usuario_model
 
 from .base import base
@@ -227,57 +228,68 @@ class user(base):
         
         data['direcciones']=direcciones
         data['url_new']=functions.generar_url([self.url[0], 'direccion'])
-        ret["body"].append(('user/direcciones-lista',data)
-
+        ret["body"].append(('user/direcciones-lista',data))
 
         f = footer()
         ret["body"] += f.normal()["body"]
         return ret
 
 
-    /**
-     * modificar o crear direccion
-     *
-     * @param  mixed var
-     *
-     * @return void
-     */
-    public function direccion(var=array():
+    def direccion(self,var=[]):
+    
+        """ modificar o crear direccion
+        :type var:
+        :param var:
+    
+        :raises:
+    
+        :rtype:
+        """    
+        ret = {"body": []}
         self.meta(self.seo)
         verificar = self.verificar(True)
         if verificar['exito']:
-            if(isset(var[0]):
+            if len(var)>0:
                 direccion=usuariodireccion_model.getById(var[0])
-                if(direccion['idusuario']==app.session[usuario_model.idname . app.prefix_site]:
-                    self.url[] = 'direccion'
-                    self.url[] = var[0]
-                }else{
-                    self.url[] = 'direcciones'
-                }
-            }else{
-                self.url[] = 'direccion'
-            }
+                if direccion['idusuario']==app.session[usuario_model.idname + app.prefix_site]:
+                    self.url.append('direccion')
+                    self.url.append(var[0])
+                else:
+                    self.url.append('direcciones')
+            else:
+                self.url.append('direccion')
         else:
-            self.url[] = 'login'
-        }
-        functions.url_redirect(self.url)
+            self.url.append('login')
 
-        head = new head(self.metadata)
-        head->normal()
+        url_return = functions.url_redirect(self.url)
+        if url_return != "":
+            ret["error"] = 301
+            ret["redirect"] = url_return
+            return ret
 
-        header = new header()
-        header->normal()
+        h = head(self.metadata)
+        ret_head = h.normal()
+        if ret_head["headers"] != "":
+            return ret_head
+        ret["body"] += ret_head["body"]
 
-        banner = new banner()
-        banner->individual(self.seo['banner'], self.metadata['title'],'Modificar dirección')
-        sidebar   = array()
-        sidebar[] = array('title' : "Mis datos", 'active' : '', 'url' : functions.generar_url(array(self.url[0], 'datos')))
-        sidebar[] = array('title' : "Mis direcciones", 'active' : 'active', 'url' : functions.generar_url(array(self.url[0], 'direcciones')))
-        sidebar[] = array('title' : "Mis pedidos", 'active' : '', 'url' : functions.generar_url(array(self.url[0], 'pedidos')))
+        he = header()
+        ret["body"] += he.normal()["body"]
 
-        view.set('sidebar_user', sidebar)
-        sidebar=view.render('user/sidebar', False, True)
-        view.set('sidebar',sidebar)
+        ba = banner()
+        ret["body"] += ba.individual(self.seo["banner"], self.metadata["title"],'Modificar dirección')["body"]
+
+        bc = breadcrumb()
+        ret["body"] += bc.normal(self.breadcrumb)["body"]
+
+        sidebar   = []
+        sidebar.append({'title' : "Mis datos", 'active' : '', 'url' : functions.generar_url([self.url[0], 'datos'])})
+        sidebar.append({'title' : "Mis direcciones", 'active' : 'active', 'url' : functions.generar_url([self.url[0], 'direcciones'])})
+        sidebar.append({'title' : "Mis pedidos", 'active' : '', 'url' : functions.generar_url([self.url[0], 'pedidos'])})
+
+        data={}
+        data['sidebar']=('user/sidebar', {'sidebar_user': sidebar})
+
 
         moduloconfiguracion = moduloconfiguracion_model.getByModulo('usuariodireccion')
         if isset(moduloconfiguracion[0]):

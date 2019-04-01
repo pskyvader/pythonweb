@@ -82,6 +82,5 @@ class product_detail:
                     "url": functions.url_seccion([self.url[0], "category"], c),
                 }
             )
-
         return ("categorias", categorias)
 

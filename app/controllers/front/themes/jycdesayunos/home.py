@@ -66,7 +66,7 @@ class home(base):
             #seo_productos          = seo_model.getById(8)
             #this->url[0] = seo_productos['url']
             app.idseo=8
-            pl              = product_list.product_list() #product_list.py
+            pl              = product_list() #product_list.py
             lista_productos = pl.lista_productos(productos_destacados, 'detail', 'foto2') #Lista de productos, renderiza vista
             data['lista_productos']= lista_productos
             data['col-md']= 'col-md-6'

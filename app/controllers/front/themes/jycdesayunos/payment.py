@@ -343,6 +343,7 @@ class payment(base):
         return ret
 
     def pago2(self, var=[]):
+        ret = {"body": []}
         self.meta(self.seo)
         self.url.append("pago2")
         idmedio = 2

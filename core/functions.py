@@ -61,7 +61,7 @@ class functions():
         url = url_base
         extra = ""
         if 0 in seccion:
-            extra += seccion[0]
+            extra += str(seccion[0])
             if 'url' in seccion:
                 extra += "-" + seccion['url']
             elif 'titulo' in seccion:

@@ -133,7 +133,7 @@ class header:
             data["contiene_hijo"] = (
                 nivel < nivel_maximo_hijo
                 and not simple
-                and isset(menu["hijo"])
+                and 'hijo' in menu
                 and len(menu["hijo"]) > 0
             )
             if data["contiene_hijo"]:

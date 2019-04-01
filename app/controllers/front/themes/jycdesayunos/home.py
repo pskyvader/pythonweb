@@ -71,8 +71,9 @@ class home(base):
             data['lista_productos']= lista_productos
             data['col-md']= 'col-md-6'
             data['col-lg']= 'col-lg-4'
+            pro_list = ('product/grid',data.copy())
             data={}
-            data['product_list']= ('product/grid',data.copy())
+            data['product_list']= pro_list
             #view.set('title',seo_productos['titulo'])
             data['title']= "Nuestros productos destacados"
             ret["body"].append(("home-products", data.copy()))

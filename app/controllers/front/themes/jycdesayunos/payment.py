@@ -394,10 +394,9 @@ class payment(base):
         body_email = {
             "body": view.get_theme() + "mail/pedido+html",
             "titulo": "Pedido " + pedido["cookie_pedido"] + " Pago realizado",
-            "cabecera": "Estimado "
-            + pedido["nombre"]
-            + ", aquí enviamos su información de pago. Si tiene alguna duda, no dude en contactarse con el centro de atención al cliente de "
-            + nombre_sitio,
+            "cabecera": "Estimado {}, aquí enviamos su información de pago. Si tiene alguna duda, no dude en contactarse con el centro de atención al cliente de {}".format(
+                pedido["nombre"], nombre_sitio
+            ),
         }
         if "" != cabecera:
             body_email["cabecera"] = cabecera

@@ -474,7 +474,6 @@ class user(base):
            
            
         data['pedidos']=pedidos   
-
         ret["body"].append(('user/pedidos-lista',data))
 
         f = footer()
@@ -581,73 +580,90 @@ class user(base):
             medio_pago=mediopago_model.getById(pedido['idmediopago'])
             descripcion_pago=medio_pago['descripcion']
         
-        view.set('medios_pago',medios_pago)
-        view.set('descripcion_pago',descripcion_pago)
-        view.set('is_descripcion_pago',(trim(strip_tags(descripcion_pago))!=''))
-        view.set('pago',(count(medios_pago)>0) )
-
-        view.render('user/pedidos-detalle')
-
-        footer = new footer()
-        footer->normal()
-    }
+        data['medios_pago']=medios_pago
+        data['descripcion_pago']=descripcion_pago
+        data['is_descripcion_pago']=(functions.remove_tags(descripcion_pago)).strip()!=''
 
 
 
+        ret["body"].append(('user/pedidos-detalle',data))
+
+        f = footer()
+        ret["body"] += f.normal()["body"]
+        return ret
 
 
 
 
 
-    public function registro()
-    {
+
+
+    def registro(self):
+        from time import time
+        ret = {"body": []}
         self.meta(self.seo)
         
         verificar = self.verificar(True)
         if verificar['exito']:
-            if isset(app.get['next_url']):
-                self.url = explode('/',app.get['next_url'])
+            if 'next_url' in app.get:
+                self.url = app.get['next_url'].split('/')
             else:
-                self.url[] = 'datos'
-            }
+                self.url.append('datos')
+            
         else:
-            self.url[] = 'registro'
-        }
-        functions.url_redirect(self.url)
+            self.url.append('registro')
 
-        head = new head(self.metadata)
-        head->normal()
+        url_return = functions.url_redirect(self.url)
+        if url_return != "":
+            ret["error"] = 301
+            ret["redirect"] = url_return
+            return ret
 
-        header = new header()
-        header->normal()
+        h = head(self.metadata)
+        ret_head = h.normal()
+        if ret_head["headers"] != "":
+            return ret_head
+        ret["body"] += ret_head["body"]
 
-        banner = new banner()
-        banner->individual(self.seo['banner'], 'Registro')
+        he = header()
+        ret["body"] += he.normal()["body"]
+
+        ba = banner()
+        ret["body"] += ba.individual(self.seo["banner"], 'Registro')["body"]
+
+        bc = breadcrumb()
+        ret["body"] += bc.normal(self.breadcrumb)["body"]
+        
 
         token = functions.generar_pass(20)
-        app.session['registro_token'] = array('token' : token, 'time' : time())
-        view.set('token', token)
-        view.set('url_login', functions.generar_url(array(self.url[0], 'login')))
-        view.render('user/registro')
+        app.session['registro_token'] = {'token' : token, 'time' : time()}
+        data={}
+        data['token']= token
+        data['url_login']= functions.generar_url([self.url[0], 'login'])
 
-        footer = new footer()
-        footer->normal()
-    }
+
+        ret["body"].append(('user/registro',data))
+
+        f = footer()
+        ret["body"] += f.normal()["body"]
+        return ret
+
     
-    /**
-     * registro_process
-     * procesa el POST para registro
-     *
-     * @return json
-     * 
-     */
-    public function registro_process()
-    {
-        respuesta = array('exito' : False, 'mensaje' : '')
-        campos    = functions.test_input(app.post['campos'])
+    def registro_process(self):
+        """ procesa el POST para registro
+        :param self:
+    
+        :raises:
+    
+        :rtype: json
+        """    
+        from time import time
+        ret = {'headers': [ ('Content-Type', 'application/json; charset=utf-8')], 'body': ''}
+        respuesta = {'exito' : False, 'mensaje' : ''}
+        campos    = app.post['campos']
 
-        if isset(campos['nombre']) and isset(campos['telefono']) and isset(campos['email']) and isset(campos['pass']) and isset(campos['pass_repetir']) and isset(campos['token']):
-            if isset(app.session['registro_token']['token']) and app.session['registro_token']['token'] == campos['token']:
+        if 'nombre' in campos and 'telefono' in campos  and 'email' in campos and 'pass' in campos and 'pass_repetir' in campos and 'token' in campos:
+            if 'token' in app.session['registro_token'] and app.session['registro_token']['token'] == campos['token']:
                 if time() - app.session['registro_token']['time'] <= 120:
                     respuesta = usuario_model.registro(campos['nombre'], campos['telefono'], campos['email'], campos['pass'], campos['pass_repetir'])
                     if respuesta['exito']:
@@ -656,111 +672,135 @@ class user(base):
                             respuesta['mensaje'] = "Cuenta creada correctamente, pero ha ocurrido un error al ingresar. Intenta loguearte"
                         else:
                             respuesta['mensaje'] = "Bienvenido"
-                        }
-                    }
                 else:
                     respuesta['mensaje'] = 'Error de token, recarga la pagina e intenta nuevamente'
-                }
             else:
                 respuesta['mensaje'] = 'Error de token, recarga la pagina e intenta nuevamente'
-            }
         else:
             respuesta['mensaje'] = 'Debes llenar todos los campos'
-        }
 
-        echo json_encode(respuesta)
-    }
-    public function recuperar(:
+        ret['body'] = json.dumps(respuesta,ensure_ascii=False)
+        return ret
+        
+
+    def recuperar(self):
+        from time import time
+        ret = {"body": []}
         self.meta(self.seo)
-        self.url[] = 'recuperar'
-        functions.url_redirect(self.url)
+        self.url.append('recuperar')
 
-        head = new head(self.metadata)
-        head->normal()
+        url_return = functions.url_redirect(self.url)
+        if url_return != "":
+            ret["error"] = 301
+            ret["redirect"] = url_return
+            return ret
 
-        header = new header()
-        header->normal()
+        h = head(self.metadata)
+        ret_head = h.normal()
+        if ret_head["headers"] != "":
+            return ret_head
+        ret["body"] += ret_head["body"]
 
-        banner = new banner()
-        banner->individual(self.seo['banner'], 'Recuperar contraseña')
+        he = header()
+        ret["body"] += he.normal()["body"]
 
-        token                   = sha1(uniqid(microtime(), True))
-        app.session['recuperar_token'] = array('token' : token, 'time' : time())
-        view.set('token', token)
-        view.set('url_registro', functions.generar_url(array(self.url[0], 'registro')))
-        view.render('user/recuperar')
+        ba = banner()
+        ret["body"] += ba.individual(self.seo["banner"], 'Recuperar contraseña')["body"]
 
-        footer = new footer()
-        footer->normal()
+        bc = breadcrumb()
+        ret["body"] += bc.normal(self.breadcrumb)["body"]
 
-    }
+        token = functions.generar_pass(20)
+        app.session['recuperar_token'] = {'token' : token, 'time' : time()}
+        data={}
+        data['token']= token
+        data['url_registro']= functions.generar_url([self.url[0], 'registro'])
+        
+        ret["body"].append(('user/recuperar',data))
+
+        f = footer()
+        ret["body"] += f.normal()["body"]
+        return ret
+
     
-    /**
-     * recuperar_process
-     * procesa el POST para recuperacion de contraseña
-     *
-     * @return json
-     * 
-     */
-    public function recuperar_process()
-    {
-        respuesta = array('exito' : False, 'mensaje' : '')
-        campos    = functions.test_input(app.post['campos'])
-
-        if isset(campos['email']) and isset(campos['token']):
-            if app.session['recuperar_token']['token']==campos['token']:
+    def recuperar_process(self):
+    
+        """ procesa el POST para recuperacion de contraseña
+        :param self:
+    
+        :raises:
+    
+        :rtype: json
+        """    
+        from time import time
+        ret = {'headers': [ ('Content-Type', 'application/json; charset=utf-8')], 'body': ''}
+        respuesta = {'exito' : False, 'mensaje' : ''}
+        campos    = app.post['campos']
+        
+        if 'email' in campos and 'token' in campos:
+            if 'token' in app.session['recuperar_token'] and app.session['recuperar_token']['token']==campos['token']:
                 if time()-app.session['recuperar_token']['time']<=120:
                     respuesta=usuario_model.recuperar(campos['email'])
                     if respuesta["exito"]:
                         respuesta['mensaje'] = "Se ha enviado tu nueva contraseña a tu email. recuerda modificarla al ingresar."
-                    }
                 else:
                     respuesta['mensaje'] = 'Error de token, recarga la pagina e intenta nuevamente'
-                }
             else:
                 respuesta['mensaje'] = 'Error de token, recarga la pagina e intenta nuevamente'
-            }
         else:
             respuesta['mensaje'] = 'Debes llenar todos los campos'
-        }
 
-        echo json_encode(respuesta)
-    }
-    public function login()
-    {
+        ret['body'] = json.dumps(respuesta,ensure_ascii=False)
+        return ret
+
+
+    def login(self):
+        ret={'body'=[]}
         self.meta(self.seo)
         verificar = self.verificar(True)
         if verificar['exito']:
-            if isset(app.get['next_url']):
+            if 'next_url' in app.get:
                 self.url = explode('/',app.get['next_url'])
             else:
-                self.url[] = 'datos'
-            }
+                self.url.append('datos')
         else:
             self.url.append('login')
-        }
-        functions.url_redirect(self.url)
+        
+        url_return = functions.url_redirect(self.url)
+        if url_return != "":
+            ret["error"] = 301
+            ret["redirect"] = url_return
+            return ret
 
-        head = new head(self.metadata)
-        head->normal()
+        h = head(self.metadata)
+        ret_head = h.normal()
+        if ret_head["headers"] != "":
+            return ret_head
+        ret["body"] += ret_head["body"]
 
-        header = new header()
-        header->normal()
+        he = header()
+        ret["body"] += he.normal()["body"]
 
-        banner = new banner()
-        banner->individual(self.seo['banner'], 'Login')
+        ba = banner()
+        ret["body"] += ba.individual(self.seo["banner"], 'Login')["body"]
 
-        token                   = sha1(uniqid(microtime(), True))
-        app.session['login_token'] = array('token' : token, 'time' : time())
-        view.set('token', token)
-        view.set('url_recuperar', functions.generar_url(array(self.url[0], 'recuperar')))
-        view.set('url_registro', functions.generar_url(array(self.url[0], 'registro')))
-        view.render('user/login')
+        bc = breadcrumb()
+        ret["body"] += bc.normal(self.breadcrumb)["body"]
 
-        footer = new footer()
-        footer->normal()
-    }
-    
+        token = functions.generar_pass(20)
+        app.session['login_token'] = {'token' : token, 'time' : time()}
+        data={}
+        data['token']= token
+        data['url_recuperar']= functions.generar_url([self.url[0], 'recuperar'])
+        data['url_registro']= functions.generar_url([self.url[0], 'registro'])
+        
+        ret["body"].append(('user/login',data))
+
+        f = footer()
+        ret["body"] += f.normal()["body"]
+        return ret
+
+
     /**
      * login_process
      * procesa el POST para login

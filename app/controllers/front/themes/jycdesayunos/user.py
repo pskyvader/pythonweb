@@ -14,6 +14,7 @@ from .breadcrumb import breadcrumb
 from .footer import footer
 
 from core.app import app
+from core.functions import functions
 
 import json
 
@@ -359,100 +360,117 @@ class user(base):
     
         :rtype: json
         """    
-        respuesta = array('exito' : False, 'mensaje' : '')
+        from time import time
+        ret = {'headers': [ ('Content-Type', 'application/json; charset=utf-8')], 'body': ''}
+
+        respuesta = {'exito' : False, 'mensaje' : ''}
+        
         verificar = self.verificar(True)
         if not verificar['exito']:
             respuesta['mensaje']='Debes ingresar a tu cuenta'
-            return respuesta
-        }
-        campos    = functions.test_input(app.post['campos'])
+            ret['body'] = json.dumps(respuesta,ensure_ascii=False)
+            return ret
+        campos    = app.post['campos']
 
-        if isset(campos['token']) and isset(campos['id']):
-            if isset(app.session['direccion_token']['token']) and app.session['direccion_token']['token'] == campos['token']:
+        if 'token' in campos and 'id' in campos:
+            if 'token' in app.session['direccion_token']  and app.session['direccion_token']['token'] == campos['token']:
                 if time() - app.session['direccion_token']['time'] <= 360:
-                    unset(campos['token'])
-                    campos['idusuario']=app.session[usuario_model.idname . app.prefix_site]
+                    del campos['token']
+                    campos['idusuario']=app.session[usuario_model.idname + app.prefix_site]
                     campos['tipo']=1
-                    if(campos['id']!='':
+                    if campos['id']!='':
                         respuesta['exito'] = usuariodireccion_model.update(campos)
                     else:
                         respuesta['exito'] = usuariodireccion_model.insert(campos)
-                    }
+                    
                     if respuesta['exito']:
                         respuesta['mensaje'] = "Direccion guardada correctamente"
                         
-                        if(isset(_GET['next_url']):
-                            respuesta['next_url'] = _GET['next_url']
-                        }
+                        if 'next_url' in app.get:
+                            respuesta['next_url'] = app.get['next_url']
+                        
                     else:
                         respuesta['mensaje'] = "Hubo un error al guardar la direccion, comprueba los campos obligatorios e intentalo nuevamente"
-                    }
+                    
                 else:
                     respuesta['mensaje'] = 'Error de token, recarga la pagina e intenta nuevamente'
-                }
+                
             else:
                 respuesta['mensaje'] = 'Error de token, recarga la pagina e intenta nuevamente'
-            }
+            
         else:
             respuesta['mensaje'] = 'Debes llenar los campos obligatorios'
-        }
+        
 
-        echo json_encode(respuesta)
-    }
-
-
-
+        ret['body'] = json.dumps(respuesta,ensure_ascii=False)
+        return ret
     
-    /**
-     * lista de pedidos
-     *
-     * @return void
-     */
-    public function pedidos(:
+    def pedidos(self):
+        """ lista de pedidos
+        :type self:
+        :param self:
+    
+        :raises:
+    
+        :rtype:
+        """
+        ret = {"body": []}
         self.meta(self.seo)
         verificar = self.verificar(True)
         if verificar['exito']:
-            self.url[] = 'pedidos'
+            self.url.append('pedidos')
         else:
-            self.url[] = 'login'
-        }
-        functions.url_redirect(self.url)
+            self.url.append('login')
 
-        head = new head(self.metadata)
-        head->normal()
+        url_return = functions.url_redirect(self.url)
+        if url_return != "":
+            ret["error"] = 301
+            ret["redirect"] = url_return
+            return ret
 
-        header = new header()
-        header->normal()
+        h = head(self.metadata)
+        ret_head = h.normal()
+        if ret_head["headers"] != "":
+            return ret_head
+        ret["body"] += ret_head["body"]
 
-        banner = new banner()
-        banner->individual(self.seo['banner'], self.metadata['title'],'Mis Pedidos')
-        sidebar   = array()
-        sidebar[] = array('title' : "Mis datos", 'active' : '', 'url' : functions.generar_url(array(self.url[0], 'datos')))
-        sidebar[] = array('title' : "Mis direcciones", 'active' : '', 'url' : functions.generar_url(array(self.url[0], 'direcciones')))
-        sidebar[] = array('title' : "Mis pedidos", 'active' : 'active', 'url' : functions.generar_url(array(self.url[0], 'pedidos')))
+        he = header()
+        ret["body"] += he.normal()["body"]
 
-        view.set('sidebar_user', sidebar)
-        sidebar=view.render('user/sidebar', False, True)
-        view.set('sidebar',sidebar)
-        ep=pedidoestado_model.getAll(array('tipo':1))
-        estados_pedido=array()
-        foreach (ep as key : e:
+        ba = banner()
+        ret["body"] += ba.individual(self.seo["banner"], self.metadata["title"],'Mis Pedidos')["body"]
+
+        bc = breadcrumb()
+        ret["body"] += bc.normal(self.breadcrumb)["body"]
+
+        
+        sidebar   = []
+        sidebar.append({'title' : "Mis datos", 'active' : '', 'url' : functions.generar_url([self.url[0], 'datos'])})
+        sidebar.append({'title' : "Mis direcciones", 'active' : '', 'url' : functions.generar_url([self.url[0], 'direcciones'])})
+        sidebar.append({'title' : "Mis pedidos", 'active' : 'active', 'url' : functions.generar_url([self.url[0], 'pedidos'])})
+
+        data={}
+        data['sidebar']=('user/sidebar', {'sidebar_user': sidebar})
+        
+        ep=pedidoestado_model.getAll({'tipo':1})
+        estados_pedido={}
+        for e in ep:
             estados_pedido[e[0]]=e
-        }
+        
 
 
-        usuario= usuario_model.getById(app.session[usuario_model.idname . app.prefix_site])
-        pedidos=pedido_model.getByIdusuario(usuario[0],False)//obtiene todos los pedidos del usuario actual, con cualquier estado del pedido
-        foreach (pedidos as key : p:
-            if(p['idpedidoestado']==1: //Quita cualquier pedido que este en carro
-                unset(pedidos[key])
+        usuario= usuario_model.getById(app.session[usuario_model.idname + app.prefix_site])
+        pedidos=pedido_model.getByIdusuario(usuario[0],False) #obtiene todos los pedidos del usuario actual, con cualquier estado del pedido
+        for p in pedidos:
+            if p['idpedidoestado']==1:  #Quita cualquier pedido que este en carro
+                del p
             else:
-                pedidos[key]['total']=functions.formato_precio(p['total'])
-                pedidos[key]['fecha']=(p['fecha_pago']!=0)?p['fecha_pago']:p['fecha_creacion']
-                pedidos[key]['url']=functions.generar_url(array(self.url[0], 'pedido',p['cookie_pedido']))
-                pedidos[key]['estado']=estados_pedido[p['idpedidoestado']]['titulo']
-                pedidos[key]['background_estado']=estados_pedido[p['idpedidoestado']]['color']
-                pedidos[key]['color_estado']=functions.getContrastColor(estados_pedido[p['idpedidoestado']]['color'])
+                p['total']=functions.formato_precio(p['total'])
+                p['fecha']=p['fecha_pago'] if p['fecha_pago']!=0 else p['fecha_creacion']
+                p['url']=functions.generar_url([self.url[0], 'pedido',p['cookie_pedido']])
+                p['estado']=estados_pedido[p['idpedidoestado']]['titulo']
+                p['background_estado']=estados_pedido[p['idpedidoestado']]['color']
+                p['color_estado']=functions.getContrastColor(estados_pedido[p['idpedidoestado']]['color'])
             }
         }
         view.set('pedidos',pedidos)        
@@ -474,14 +492,14 @@ class user(base):
         self.meta(self.seo)
         verificar = self.verificar(True)
         if verificar['exito']:
-            if(isset(var[0]):
+            if isset(var[0]):
                 pedido=pedido_model.getByCookie(var[0],False)
-                //Podria desaparecer si se necesita que cualquier pedido sea publico
-                if(isset(pedido['idusuario']) and pedido['idusuario']==app.session[usuario_model.idname . app.prefix_site]:
+                 #Podria desaparecer si se necesita que cualquier pedido sea publico
+                if isset(pedido['idusuario']) and pedido['idusuario']==app.session[usuario_model.idname . app.prefix_site]:
                     self.url[] = 'pedido'
                     self.url[] = var[0]
                 else:
-                //Podria desaparecer si se necesita que cualquier pedido sea publico
+                 #Podria desaparecer si se necesita que cualquier pedido sea publico
                     self.url[] = 'pedidos'
                 }
             else:
@@ -544,9 +562,9 @@ class user(base):
 
         medios_pago=array()
         descripcion_pago=''
-        if(pedido['idpedidoestado']==3 || pedido['idpedidoestado']==7: // Solo si hay pago pendiente
+        if pedido['idpedidoestado']==3 || pedido['idpedidoestado']==7:  # Solo si hay pago pendiente
             medios_pago=mediopago_model.getAll()
-            seo_pago=seo_model.getById(12) //seo medios de pago
+            seo_pago=seo_model.getById(12)  #seo medios de pago
             foreach (medios_pago as key : mp:
                 url=functions.generar_url(array(seo_pago['url'],'medio',mp[0],pedido['cookie_pedido']))
                 medios_pago[key]['url']=url
@@ -578,9 +596,9 @@ class user(base):
         self.meta(self.seo)
         
         verificar = self.verificar(True)
-        if(verificar['exito']:
-            if(isset(_GET['next_url']):
-                self.url = explode('/',_GET['next_url'])
+        if verificar['exito']:
+            if isset(app.get['next_url']):
+                self.url = explode('/',app.get['next_url'])
             else:
                 self.url[] = 'datos'
             }
@@ -681,11 +699,11 @@ class user(base):
         respuesta = array('exito' : False, 'mensaje' : '')
         campos    = functions.test_input(app.post['campos'])
 
-        if(isset(campos['email']) and isset(campos['token']):
-            if(app.session['recuperar_token']['token']==campos['token']:
-                if(time()-app.session['recuperar_token']['time']<=120:
+        if isset(campos['email']) and isset(campos['token']):
+            if app.session['recuperar_token']['token']==campos['token']:
+                if time()-app.session['recuperar_token']['time']<=120:
                     respuesta=usuario_model.recuperar(campos['email'])
-                    if(respuesta["exito"]:
+                    if respuesta["exito"]:
                         respuesta['mensaje'] = "Se ha enviado tu nueva contraseña a tu email. recuerda modificarla al ingresar."
                     }
                 else:
@@ -704,9 +722,9 @@ class user(base):
     {
         self.meta(self.seo)
         verificar = self.verificar(True)
-        if(verificar['exito']:
-            if(isset(_GET['next_url']):
-                self.url = explode('/',_GET['next_url'])
+        if verificar['exito']:
+            if isset(app.get['next_url']):
+                self.url = explode('/',app.get['next_url'])
             else:
                 self.url[] = 'datos'
             }
@@ -755,8 +773,8 @@ class user(base):
                         respuesta['mensaje'] = "Ha ocurrido un error al ingresar. Revisa tus datos e intenta nuevamente"
                     else:
                         respuesta['mensaje'] = "Bienvenido"
-                        if(isset(_GET['next_url']):
-                            respuesta['next_url'] = _GET['next_url']
+                        if isset(app.get['next_url']):
+                            respuesta['next_url'] = app.get['next_url']
                         }
                     }
                 else:

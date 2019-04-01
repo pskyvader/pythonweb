@@ -1,4 +1,5 @@
 from core.image import image
+from core.functions import functions
 
 
 class product_detail:
@@ -15,7 +16,7 @@ class product_detail:
         for foto in self.producto["foto"]:
             li = {"srcset": []}
             th = {}
-            # li['title'] = this->producto['titulo']
+            # li['title'] = self.producto['titulo']
             li["image"] = image.generar_url(foto, recorte)
             li["thumb"] = th["thumb"] = image.generar_url(foto, "cart")
             th["url"] = image.generar_url(foto, "")
@@ -31,4 +32,30 @@ class product_detail:
         data["lista_imagenes"] = lista_imagenes
         data["thumb"] = thumb
         return data
-
+        
+    def tabs(self):
+        extra=''
+        if len(self.producto['archivo']) > 0:
+            files = []
+            for a in self.producto['archivo']:
+                files[] = array('title' => a['url'], 'size' => functions.file_size(file.generar_dir(a, '')), 'url' => file.generar_url(a, ''))
+            }
+            view.set('files', files)
+            view.set('title', 'Archivos')
+            extra=view.render('files',false,true)
+        }
+        
+        is_description=(strip_tags(self.producto['descripcion'])!='')
+        view.set('is_description', is_description)
+        view.set('description', self.producto['descripcion'])
+        
+        is_extra=(extra!='')
+        view.set('is_extra', is_extra)
+        view.set('extra', extra)
+        if(is_description || is_extra){
+            tabs=view.render('product/tabs',false,true)
+        }else{
+            tabs=""
+        }
+        return tabs
+    }

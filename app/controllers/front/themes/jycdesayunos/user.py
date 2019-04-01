@@ -2,6 +2,13 @@ from app.models.usuario import usuario as usuario_model
 
 from .base import base
 
+
+from .head import head
+from .header import header
+from .banner import banner
+from .breadcrumb import breadcrumb
+from .footer import footer
+
 from core.app import app
 
 class user(base):

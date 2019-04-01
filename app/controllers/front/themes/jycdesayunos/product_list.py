@@ -178,11 +178,11 @@ class product_list(base):
 
                 count = productocategoria_model.getAll(variables, {}, "total")
                 if count > 0:
-                    data["col-lg"] = "col-lg-6"
+                    data["col_lg"] = "col-lg-6"
                 else:
-                    data["col-lg"] = "col-lg-4"
+                    data["col_lg"] = "col-lg-4"
 
-                data["col-md"] = "col-md-12"
+                data["col_md"] = "col-md-12"
                 product_list = ("product/grid", data)
             else:
                 product_list = ("product/list", data)

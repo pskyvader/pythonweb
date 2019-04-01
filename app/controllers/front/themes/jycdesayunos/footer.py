@@ -1,4 +1,6 @@
 from app.models.logo import logo as logo_model
+from app.models.seo import seo as seo_model
+
 
 from core.image import image
 from core.app import app
@@ -14,7 +16,7 @@ class footer:
             logo = logo_model.getById(6)
             portada = image.portada(logo["foto"])
             data["logo"] = image.generar_url(portada, "sitio")
-            seo = seo.getById(1)
+            seo = seo_model.getById(1)
             data["path"] = functions.generar_url([seo["url"]], False)
             data["title"] = config["title"]
 

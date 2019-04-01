@@ -61,7 +61,7 @@ class footer:
             links_footer = []
             l = {"title": "Información", "links": [], "size": 3}
             row = seccion_model.getAll({"tipo": 3})
-            seo = seo.getById(7)
+            seo = seo_model.getById(7)
             for seccion in row:
                 l["links"].append(
                     {
@@ -74,7 +74,7 @@ class footer:
 
             l = {"title": "Productos", "links": [], "size": 3}
             row = productocategoria_model.getAll({"tipo": 1, "idpadre": 0})
-            seo = seo.getById(8)
+            seo = seo_model.getById(8)
             for productos in row:
                 l["links"].append(
                     {

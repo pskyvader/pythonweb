@@ -46,7 +46,7 @@ class footer:
             data["informacion"] = informacion
 
             redes_sociales = []
-            rss = texto.getAll({"tipo": 2})
+            rss = texto_model.getAll({"tipo": 2})
             for r in rss:
                 redes_sociales.append(
                     {

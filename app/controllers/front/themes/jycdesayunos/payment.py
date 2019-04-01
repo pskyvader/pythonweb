@@ -1,6 +1,7 @@
 from app.models.mediopago import mediopago as mediopago_model
 from app.models.pedido import pedido as pedido_model
 from app.models.pedidodireccion import pedidodireccion as pedidodireccion_model
+from app.models.seo import seo as seo_model
 
 from core.app import app
 from core.functions import functions

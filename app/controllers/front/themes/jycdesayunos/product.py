@@ -139,7 +139,7 @@ class product(base):
             ret["error"] = 301
             ret["redirect"] = url_return
             return ret
-        self.meta(categoria)
+        self.meta(producto)
 
         h = head(self.metadata)
         ret_head = h.normal()

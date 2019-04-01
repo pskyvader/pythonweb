@@ -19,7 +19,7 @@ class header:
     def normal(self):
         ret = {"body": []}
         if "ajax" not in app.post:
-            self.data["header-top"] = self.header_top()
+            self.data["header_top"] = self.header_top()
             self.data["cart"] = self.header_cart()
             self.data["menu"] = self.menu()
             config = app.get_config()

@@ -234,7 +234,8 @@ class payment(base):
         ret["body"] += f.normal()["body"]
         return ret
 
-    def process2(var = []):
+    def process2(self,var = []):
+        ret = { "body": [] }
         error   = True
         mensaje = ''
         campos  = app.post
@@ -254,92 +255,114 @@ class payment(base):
                     self.update_pedido(pedido, medio_pago, 4, result.transactionDate) # estado de pedido: pagado
                     seo_cuenta                  = seo_model.getById(9)
                     url_back                    = functions.generar_url(array(seo_cuenta['url'], 'pedido', pedido['cookie_pedido']))
-                    campos                      = array()
+                    campos                      = {}
                     campos['Estado del pedido'] = 'Pagado'
                     campos['Medio de pago']     = medio_pago['titulo']
                     campos['Código de pedido'] = pedido['cookie_pedido']
                     campos['Total del pedido']  = functions.formato_precio(pedido['total'])
 
                     respuesta = self.email(pedido, '', '', campos, url_back)
-
-                    view.set('action', result.urlRedirection)
-                    form   = array()
-                    form[] = array('field' : 'token_ws', 'value' : token)
-                    view.set('form', form)
-                    view.render('payment/post')
+                    data={}
+                    data['action']= result.urlRedirection
+                    form   = []
+                    form.append({'field' : 'token_ws', 'value' : token})
+                    data['form']= form
+                    ret['body'].append(('payment/post',data))
                     error      = False
-                } else {
+                else:
                     mensaje = 'Este pedido no se puede procesar, ya está pagado o aún no se ha completado. Por favor intenta más tarde o selecciona otro medio de pago.'
-                }
-            } else {
+                
+            else:
                 result.sessionId
                 result.transactionDate
                 result.urlRedirection
-
                 output.authorizationCode
                 output.responseCode
                 output.amount
                 output.buyOrder
                 mensaje = 'Hubo un error al procesar tu pago, por favor intenta más tarde o selecciona otro medio de pago.'
-            }
-        }
+                
 
         if error:
-            head = new head(self.metadata)
-            head.normal()
+            h = head(self.metadata)
+            ret_head = h.normal()
+            if ret_head["headers"] != "":
+                return ret_head
+            ret["body"] += ret_head["body"]
 
-            header = new header()
-            header.normal()
+            he = header()
+            ret["body"] += he.normal()["body"]
 
-            banner = new banner()
-            banner.individual(self.seo['banner'], 'Pago via ' . medio_pago['titulo'], self.metadata['title'])
-            view.set('mensaje', mensaje)
-            view.render('order/error')
-            footer = new footer()
-            footer.normal()
-        }
-    }
+            ba = banner()
+            ret["body"] += ba.individual( self.seo["banner"], 'Pago via ' . medio_pago['titulo'], self.metadata['title'] )["body"]
+            
+            pedido =('order/error',{'mensaje': mensaje})
 
-    def pago2(var = array()):
+            f = footer()
+            ret["body"] += f.normal()["body"]
+        return ret
+
+    def pago2(self,var = []):
         self.meta(self.seo)
-        self.url[] = 'pago2'
+        self.url.append('pago2')
         idmedio     = 2
         medio_pago = self.verificar_medio_pago(var[0], idmedio)
-        functions.url_redirect(self.url)
+
+        url_return = functions.url_redirect(self.url)
+        if url_return != "":
+            ret["error"] = 301
+            ret["redirect"] = url_return
+            return ret
+
+        
+        h = head(self.metadata)
+        ret_head = h.normal()
+        if ret_head["headers"] != "":
+            return ret_head
+        ret["body"] += ret_head["body"]
+
+        he = header()
+        ret["body"] += he.normal()["body"]
+
+        ba = banner()
+        ret["body"] += ba.individual( self.seo["banner"], 'Pago via ' + medio_pago['titulo'], self.metadata['title'] )["body"]
+        
 
         pedido = self.verificar_pedido(medio_pago, True, True)
-        if null != pedido:
+        if not isinstance(pedido,tuple):
             seo_cuenta = seo_model.getById(9)
-            url_back   = functions.generar_url(array(seo_cuenta['url'], 'pedido', pedido['cookie_pedido']))
-            view.set('title', medio_pago['titulo'])
-            view.set('description', medio_pago['descripcion'])
-            view.set('url_back', url_back)
-            view.render('payment/confirmation')
-        }
-        footer = new footer()
-        footer.normal()
-    }
+            url_back   = functions.generar_url([seo_cuenta['url'], 'pedido', pedido['cookie_pedido']])
+            data={}
+            data['title']= medio_pago['titulo']
+            data['description']= medio_pago['descripcion']
+            data['url_back']= url_back
+            ret["body"].append(('payment/confirmation',data))
+            
+        f = footer()
+        ret["body"] += f.normal()["body"]
+        return ret
 
-    private static function email(pedido, titulo = '', cabecera = '', campos = array(), url_pedido):
+    @staticmethod
+    def email(pedido, titulo = '', cabecera = '', campos = {}, url_pedido=''):
         nombre_sitio  = app._title
-        config        = app.getConfig()
+        config        = app.get_config()
         email_empresa = config['main_email']
-        body_email    = array(
-            'body'     : view.get_theme() . 'mail/pedido.html',
-            'titulo'   : "Pedido " . pedido['cookie_pedido'] . " Pago realizado",
-            'cabecera' : "Estimado " . pedido['nombre'] . ", aquí enviamos su información de pago. Si tiene alguna duda, no dude en contactarse con el centro de atención al cliente de " . nombre_sitio,
-        )
+        body_email    = {
+            'body'     : view.get_theme() + 'mail/pedido+html',
+            'titulo'   : "Pedido " + pedido['cookie_pedido'] + " Pago realizado",
+            'cabecera' : "Estimado " + pedido['nombre'] + ", aquí enviamos su información de pago. Si tiene alguna duda, no dude en contactarse con el centro de atención al cliente de " + nombre_sitio,
+        }
         if '' != cabecera:
             body_email['cabecera'] = cabecera
-        }
+        
         if '' != titulo:
             body_email['titulo'] = titulo
-        }
-        body_email['campos_largos'] = array('' : 'Puedes ver el detalle de tu pedido <a href="' . url_pedido . '"><b>haciendo click aquí</b></a>')
+        
+        body_email['campos_largos'] = {'' : 'Puedes ver el detalle de tu pedido <a href="' + url_pedido + '"><b>haciendo click aquí</b></a>'}
         body_email['campos']        = campos
-        imagenes                    = array()
-        adjuntos                    = array()
+        imagenes                    = []
+        adjuntos                    = []
         body                        = email.body_email(body_email)
-        respuesta                   = email.enviar_email(array(pedido['email'], email_empresa), body_email['titulo'], body, adjuntos, imagenes)
+        respuesta                   = email.enviar_email([pedido['email'], email_empresa], body_email['titulo'], body, adjuntos, imagenes)
         return respuesta
-    }
+    

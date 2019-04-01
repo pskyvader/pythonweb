@@ -8,51 +8,51 @@
         <div class="container">
             <div class="row">
                 <div class="col-12 m-b-30 text-center">
-                    <a href="{path}"> <img src="{logo}" alt="{title}" class="img-fluid"> </a>
+                    <a href="{{path}}"> <img src="{{logo}}" alt="{{title}}" class="img-fluid"> </a>
                 </div>
                 <div class="col-sm-6 col-lg-4 m-b-30">
                     <h4 class="title">Contáctanos</h4>
                     <ul>
-                        {foreach informacion}
+                        {% for i in informacion %}
                         <li>
                             <i class="fa {icono} fa-lg mr-1"></i>
-                            {if is_link}
-                            <a href="{url}">{text}</a>
-                            {else is_link}
-                            {text}
-                            {/if is_link}
+                            {% if i.url!='' %}
+                            <a href="{{url}}">{{text}}</a>
+                            {% else %}
+                            {{text}}
+                            {% endif %}
                         </li>
-                        {/foreach informacion}
+                        {% endfor %}
                     </ul>
-                    {if is_social}
+                    {% if len(social)>0 %}
                     <ul class="list list-inline m-l-ab-10">
-                        {foreach social}
+                        {% for s in social%}
                         <li>
-                            <a href="{url}" target="_blank" rel="noopener noreferrer" data-toggle="tooltip" data-placement="bottom" title="{title}" class="icon icon-35 f-20">
-                                <i class="fa {icon}"></i>
-                                <span class="sr-only">{title}</span>
+                            <a href="{{s.url}}" target="_blank" rel="noopener noreferrer" data-toggle="tooltip" data-placement="bottom" title="{{s.title}}" class="icon icon-35 f-20">
+                                <i class="fa {{s.icon}}"></i>
+                                <span class="sr-only">{{s.title}}</span>
                             </a>
                         </li>
-                        {/foreach social}
+                        {% endfor %}
                     </ul>
-                    {/if is_social}
+                    {% endif %}
                 </div>
-                {foreach links_footer}
+                {% for lf in links_footer %}
                 <div class="col-sm-6 col-lg-{size} m-b-30">
-                    <h4 class="title">{title}</h4>
+                    <h4 class="title">{{lf.title}}</h4>
                     <ul>
-                        {foreach links}
-                        <li><a href="{url}">{title}</a></li>
-                        {/foreach links}
+                        {% for l in lf.links %}
+                        <li><a href="{{l.url}}">{{l.title}}</a></li>
+                        {% endfor %}
                     </ul>
                 </div>
-                {/foreach links_footer}
+                {% endfor %}
             </div>
         </div>
     </div>
     <div class="footer-bottom">
         <div class="container">
-            <p> &copy; {title} 2018, Todos los derechos reservados. Creado por <a href="https://mysitio.cl">My Sitio.CL</a></p>
+            <p> &copy; {{title}} 2018, Todos los derechos reservados. Creado por <a href="https://mysitio.cl">My Sitio.CL</a></p>
         </div>
     </div>
 </footer>

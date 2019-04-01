@@ -3,6 +3,7 @@ from core.app import app
 from core.image import image
 
 from app.models.logo import logo as logo_model
+from app.models.modulo import modulo as modulo_model
 from app.models.moduloconfiguracion import (
     moduloconfiguracion as moduloconfiguracion_model,
 )

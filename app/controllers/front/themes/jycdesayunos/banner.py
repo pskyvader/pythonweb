@@ -15,7 +15,7 @@ class banner:
         if len(row_banner) > 0:
             thumb = []
             banner = []
-            print(banner)
+            print(row_banner)
             for key, b in row_banner:
                 portada = image.portada(b["foto"])
                 foto = image.generar_url(portada, "foto1")

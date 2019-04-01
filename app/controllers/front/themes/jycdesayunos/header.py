@@ -143,11 +143,7 @@ class header:
                 if "target" in menu
                 else ""
             )
-            data["active"] = (
-                "active"
-                if nivel == 0 and not simple and functions.active(menu["active"])
-                else ""
-            )
+            data["active"] = ( "active" if nivel == 0 and not simple and functions.active(menu["active"]) else "" )
             data["prefetch"] = nivel == 0 and not simple
             data["url"] = menu["link"]
             data["title"] = menu["titulo"]

@@ -9,6 +9,7 @@ from app.models.seccion import seccion as seccion_model
 from app.models.seo import seo as seo_model
 
 from .base import base
+from .product_list import product_list
 
 from .head import head
 from .header import header

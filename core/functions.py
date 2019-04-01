@@ -165,7 +165,7 @@ class functions():
 
     @staticmethod
     def formato_precio(precio):
-        final='${:.,0f}'.format(float(precio))
+        final='{:.,0f}'.format(float(precio))
         return final
     
 
@@ -255,6 +255,19 @@ class functions():
             ruta = "http://" + texto
 
         return ruta
+        
+    @staticmethod
+    def active(string):
+        pagina = app.environ["PATH_INFO"]
+        url    = functions.current_url()
+        if string in pagina:
+            return True
+        elif url == string:
+            return True
+        else:
+            return False
+        
+    
 
     @staticmethod
     def crear_arbol(data: list, idpadre=0):

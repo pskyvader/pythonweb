@@ -1,8 +1,8 @@
-
-
 from app.models.mediopago import mediopago as mediopago_model
 from app.models.modulo import modulo as modulo_model
-from app.models.moduloconfiguracion import moduloconfiguracion as moduloconfiguracion_model
+from app.models.moduloconfiguracion import (
+    moduloconfiguracion as moduloconfiguracion_model,
+)
 from app.models.usuario import usuario as usuario_model
 from app.models.seo import seo as seo_model
 
@@ -20,19 +20,17 @@ from core.functions import functions
 
 import json
 
-class user(base):
-    
-    def __init__(self):
-        super().__init__(app.idseo,False)
 
+class user(base):
+    def __init__(self):
+        super().__init__(app.idseo, False)
 
     def index(self):
         ret = {"body": []}
         self.meta(self.seo)
         verificar = self.verificar(True)
-        if not verificar['exito']:
-            self.url.append('login')
-        
+        if not verificar["exito"]:
+            self.url.append("login")
 
         url_return = functions.url_redirect(self.url)
         if url_return != "":
@@ -55,29 +53,47 @@ class user(base):
         bc = breadcrumb()
         ret["body"] += bc.normal(self.breadcrumb)["body"]
 
-        sidebar   = []
-        sidebar.append({'title' : "Mis datos", 'active' : '', 'url' : functions.generar_url([self.url[0], 'datos'])})
-        sidebar.append({'title' : "Mis direcciones", 'active' : '', 'url' : functions.generar_url([self.url[0], 'direcciones'])})
-        sidebar.append({'title' : "Mis pedidos", 'active' : '', 'url' : functions.generar_url([self.url[0], 'pedidos'])})
+        sidebar = []
+        sidebar.append(
+            {
+                "title": "Mis datos",
+                "active": "",
+                "url": functions.generar_url([self.url[0], "datos"]),
+            }
+        )
+        sidebar.append(
+            {
+                "title": "Mis direcciones",
+                "active": "",
+                "url": functions.generar_url([self.url[0], "direcciones"]),
+            }
+        )
+        sidebar.append(
+            {
+                "title": "Mis pedidos",
+                "active": "",
+                "url": functions.generar_url([self.url[0], "pedidos"]),
+            }
+        )
 
-        data={}
-        data['sidebar']=('user/sidebar', {'sidebar_user': sidebar})
-        ret["body"].append(('user/detail',data))
-        
+        data = {}
+        data["sidebar"] = ("user/sidebar", {"sidebar_user": sidebar})
+        ret["body"].append(("user/detail", data))
+
         f = footer()
         ret["body"] += f.normal()["body"]
         return ret
 
     def datos(self):
         from time import time
+
         ret = {"body": []}
         self.meta(self.seo)
         verificar = self.verificar(True)
-        if verificar['exito']:
-            self.url.append('datos')
+        if verificar["exito"]:
+            self.url.append("datos")
         else:
-            self.url.append('login')
-
+            self.url.append("login")
 
         url_return = functions.url_redirect(self.url)
         if url_return != "":
@@ -95,41 +111,59 @@ class user(base):
         ret["body"] += he.normal()["body"]
 
         ba = banner()
-        ret["body"] += ba.individual(self.seo["banner"], self.metadata["title"],'Mis datos')["body"]
+        ret["body"] += ba.individual(
+            self.seo["banner"], self.metadata["title"], "Mis datos"
+        )["body"]
 
         bc = breadcrumb()
         ret["body"] += bc.normal(self.breadcrumb)["body"]
-        
 
-        sidebar   = []
-        sidebar.append({'title' : "Mis datos", 'active' : 'active', 'url' : functions.generar_url([self.url[0], 'datos'])})
-        sidebar.append({'title' : "Mis direcciones", 'active' : '', 'url' : functions.generar_url([self.url[0], 'direcciones'])})
-        sidebar.append({'title' : "Mis pedidos", 'active' : '', 'url' : functions.generar_url([self.url[0], 'pedidos'])})
+        sidebar = []
+        sidebar.append(
+            {
+                "title": "Mis datos",
+                "active": "active",
+                "url": functions.generar_url([self.url[0], "datos"]),
+            }
+        )
+        sidebar.append(
+            {
+                "title": "Mis direcciones",
+                "active": "",
+                "url": functions.generar_url([self.url[0], "direcciones"]),
+            }
+        )
+        sidebar.append(
+            {
+                "title": "Mis pedidos",
+                "active": "",
+                "url": functions.generar_url([self.url[0], "pedidos"]),
+            }
+        )
 
+        data = {}
+        data["sidebar"] = ("user/sidebar", {"sidebar_user": sidebar})
+        ret["body"].append(("user/detail", data.copy()))
 
-
-        data={}
-        data['sidebar']=('user/sidebar', {'sidebar_user': sidebar})
-        ret["body"].append(('user/detail',data.copy()))
-        
-        
-        data={}
-        usuario= usuario_model.getById(app.session[usuario_model.idname + app.prefix_site])
-        data['nombre']= usuario['nombre']
-        data['telefono']=usuario['telefono']
-        data['email']=usuario['email']
+        data = {}
+        usuario = usuario_model.getById(
+            app.session[usuario_model.idname + app.prefix_site]
+        )
+        data["nombre"] = usuario["nombre"]
+        data["telefono"] = usuario["telefono"]
+        data["email"] = usuario["email"]
         token = functions.generar_pass(20)
-        app.session['datos_token'] = {'token' : token, 'time' : time()}
-        data['token']= token
-        ret["body"].append(('user/datos',data.copy()))
-        
+        app.session["datos_token"] = {"token": token, "time": time()}
+        data["token"] = token
+        ret["body"].append(("user/datos", data.copy()))
+
         f = footer()
         ret["body"] += f.normal()["body"]
         return ret
 
-
     def datos_process(self):
         from time import time
+
         """ procesa el POST para modificacion de datos
         :type self:
         :param self:
@@ -138,38 +172,57 @@ class user(base):
     
         :rtype: json
         """
-        ret = {'headers': [ ('Content-Type', 'application/json; charset=utf-8')], 'body': ''}
+        ret = {
+            "headers": [("Content-Type", "application/json; charset=utf-8")],
+            "body": "",
+        }
 
-        respuesta = {'exito' : False, 'mensaje' : ''}
+        respuesta = {"exito": False, "mensaje": ""}
         verificar = self.verificar(True)
-        if not verificar['exito']:
-            respuesta['mensaje']='Debes ingresar a tu cuenta'
-            ret['body'] = json.dumps(respuesta,ensure_ascii=False)
+        if not verificar["exito"]:
+            respuesta["mensaje"] = "Debes ingresar a tu cuenta"
+            ret["body"] = json.dumps(respuesta, ensure_ascii=False)
             return ret
-        
-        campos    = app.post['campos']
 
-        if 'nombre' in campos and 'telefono' in campos and 'email' in campos and 'token' in campos:
-            if 'token' in app.session['datos_token'] and app.session['datos_token']['token'] == campos['token']:
-                if time() - app.session['datos_token']['time'] <= 120:
-                    datos={
-                        'nombre':campos['nombre'],
-                        'telefono':campos['telefono'],
-                        'email':campos['email'],
-                        'pass': campos['pass'] if 'pass' in campos and campos['pass']!='' else '',
-                        'pass_repetir': campos['pass_repetir'] if 'pass_repetir' in campos and campos['pass_repetir']!='' else '',
+        campos = app.post["campos"]
+
+        if (
+            "nombre" in campos
+            and "telefono" in campos
+            and "email" in campos
+            and "token" in campos
+        ):
+            if (
+                "token" in app.session["datos_token"]
+                and app.session["datos_token"]["token"] == campos["token"]
+            ):
+                if time() - app.session["datos_token"]["time"] <= 120:
+                    datos = {
+                        "nombre": campos["nombre"],
+                        "telefono": campos["telefono"],
+                        "email": campos["email"],
+                        "pass": campos["pass"]
+                        if "pass" in campos and campos["pass"] != ""
+                        else "",
+                        "pass_repetir": campos["pass_repetir"]
+                        if "pass_repetir" in campos and campos["pass_repetir"] != ""
+                        else "",
                     }
                     respuesta = usuario_model.actualizar(datos)
-                    if respuesta['exito']:
-                        respuesta['mensaje'] = "Datos modificados correctamente"
+                    if respuesta["exito"]:
+                        respuesta["mensaje"] = "Datos modificados correctamente"
                 else:
-                    respuesta['mensaje'] = 'Error de token, recarga la pagina e intenta nuevamente'
+                    respuesta[
+                        "mensaje"
+                    ] = "Error de token, recarga la pagina e intenta nuevamente"
             else:
-                respuesta['mensaje'] = 'Error de token, recarga la pagina e intenta nuevamente'
+                respuesta[
+                    "mensaje"
+                ] = "Error de token, recarga la pagina e intenta nuevamente"
         else:
-            respuesta['mensaje'] = 'Debes llenar los campos obligatorios'
+            respuesta["mensaje"] = "Debes llenar los campos obligatorios"
 
-        ret['body'] = json.dumps(respuesta,ensure_ascii=False)
+        ret["body"] = json.dumps(respuesta, ensure_ascii=False)
         return ret
 
     def direcciones(self):
@@ -184,11 +237,11 @@ class user(base):
         ret = {"body": []}
         self.meta(self.seo)
         verificar = self.verificar(True)
-        if verificar['exito']:
-            self.url.append('direcciones')
+        if verificar["exito"]:
+            self.url.append("direcciones")
         else:
-            self.url.append('login')
-        
+            self.url.append("login")
+
         url_return = functions.url_redirect(self.url)
         if url_return != "":
             ret["error"] = 301
@@ -205,45 +258,63 @@ class user(base):
         ret["body"] += he.normal()["body"]
 
         ba = banner()
-        ret["body"] += ba.individual(self.seo["banner"], self.metadata["title"],'Mis direcciones')["body"]
+        ret["body"] += ba.individual(
+            self.seo["banner"], self.metadata["title"], "Mis direcciones"
+        )["body"]
 
         bc = breadcrumb()
         ret["body"] += bc.normal(self.breadcrumb)["body"]
 
+        sidebar = []
+        sidebar.append(
+            {
+                "title": "Mis datos",
+                "active": "",
+                "url": functions.generar_url([self.url[0], "datos"]),
+            }
+        )
+        sidebar.append(
+            {
+                "title": "Mis direcciones",
+                "active": "active",
+                "url": functions.generar_url([self.url[0], "direcciones"]),
+            }
+        )
+        sidebar.append(
+            {
+                "title": "Mis pedidos",
+                "active": "",
+                "url": functions.generar_url([self.url[0], "pedidos"]),
+            }
+        )
 
+        data = {}
+        data["sidebar"] = ("user/sidebar", {"sidebar_user": sidebar})
 
-        sidebar   = []
-        sidebar.append({'title' : "Mis datos", 'active' : '', 'url' : functions.generar_url([self.url[0], 'datos'])})
-        sidebar.append({'title' : "Mis direcciones", 'active' : 'active', 'url' : functions.generar_url([self.url[0], 'direcciones'])})
-        sidebar.append({'title' : "Mis pedidos", 'active' : '', 'url' : functions.generar_url([self.url[0], 'pedidos'])})
-
-
-
-        data={}
-        data['sidebar']=('user/sidebar', {'sidebar_user': sidebar})
-        
-        
-        dir=usuariodireccion_model.getAll({'idusuario':app.session[usuario_model.idname + app.prefix_site]})
-        direcciones=[]
+        dir = usuariodireccion_model.getAll(
+            {"idusuario": app.session[usuario_model.idname + app.prefix_site]}
+        )
+        direcciones = []
         for d in dir:
-            direcciones.append({
-                'title':d['titulo'],
-                'nombre':d['nombre'],
-                'direccion':d['direccion'],
-                'telefono':d['telefono'],
-                'url':functions.generar_url([self.url[0], 'direccion',d[0]])
-            })
-        
-        data['direcciones']=direcciones
-        data['url_new']=functions.generar_url([self.url[0], 'direccion'])
-        ret["body"].append(('user/direcciones-lista',data))
+            direcciones.append(
+                {
+                    "title": d["titulo"],
+                    "nombre": d["nombre"],
+                    "direccion": d["direccion"],
+                    "telefono": d["telefono"],
+                    "url": functions.generar_url([self.url[0], "direccion", d[0]]),
+                }
+            )
+
+        data["direcciones"] = direcciones
+        data["url_new"] = functions.generar_url([self.url[0], "direccion"])
+        ret["body"].append(("user/direcciones-lista", data))
 
         f = footer()
         ret["body"] += f.normal()["body"]
         return ret
 
-
-    def direccion(self,var=[]):    
+    def direccion(self, var=[]):
         """ modificar o crear direccion
         :type var:
         :param var:
@@ -251,24 +322,28 @@ class user(base):
         :raises:
     
         :rtype:
-        """    
+        """
         from time import time
+
         ret = {"body": []}
-        direccion=None
+        direccion = None
         self.meta(self.seo)
         verificar = self.verificar(True)
-        if verificar['exito']:
-            if len(var)>0:
-                direccion=usuariodireccion_model.getById(var[0])
-                if direccion['idusuario']==app.session[usuario_model.idname + app.prefix_site]:
-                    self.url.append('direccion')
+        if verificar["exito"]:
+            if len(var) > 0:
+                direccion = usuariodireccion_model.getById(var[0])
+                if (
+                    direccion["idusuario"]
+                    == app.session[usuario_model.idname + app.prefix_site]
+                ):
+                    self.url.append("direccion")
                     self.url.append(var[0])
                 else:
-                    self.url.append('direcciones')
+                    self.url.append("direcciones")
             else:
-                self.url.append('direccion')
+                self.url.append("direccion")
         else:
-            self.url.append('login')
+            self.url.append("login")
 
         url_return = functions.url_redirect(self.url)
         if url_return != "":
@@ -286,71 +361,90 @@ class user(base):
         ret["body"] += he.normal()["body"]
 
         ba = banner()
-        ret["body"] += ba.individual(self.seo["banner"], self.metadata["title"],'Modificar dirección')["body"]
+        ret["body"] += ba.individual(
+            self.seo["banner"], self.metadata["title"], "Modificar dirección"
+        )["body"]
 
         bc = breadcrumb()
         ret["body"] += bc.normal(self.breadcrumb)["body"]
 
-        sidebar   = []
-        sidebar.append({'title' : "Mis datos", 'active' : '', 'url' : functions.generar_url([self.url[0], 'datos'])})
-        sidebar.append({'title' : "Mis direcciones", 'active' : 'active', 'url' : functions.generar_url([self.url[0], 'direcciones'])})
-        sidebar.append({'title' : "Mis pedidos", 'active' : '', 'url' : functions.generar_url([self.url[0], 'pedidos'])})
+        sidebar = []
+        sidebar.append(
+            {
+                "title": "Mis datos",
+                "active": "",
+                "url": functions.generar_url([self.url[0], "datos"]),
+            }
+        )
+        sidebar.append(
+            {
+                "title": "Mis direcciones",
+                "active": "active",
+                "url": functions.generar_url([self.url[0], "direcciones"]),
+            }
+        )
+        sidebar.append(
+            {
+                "title": "Mis pedidos",
+                "active": "",
+                "url": functions.generar_url([self.url[0], "pedidos"]),
+            }
+        )
 
-        data={}
-        data['sidebar']=('user/sidebar', {'sidebar_user': sidebar})
+        data = {}
+        data["sidebar"] = ("user/sidebar", {"sidebar_user": sidebar})
 
-
-        moduloconfiguracion = moduloconfiguracion_model.getByModulo('usuariodireccion')
+        moduloconfiguracion = moduloconfiguracion_model.getByModulo("usuariodireccion")
         if 0 in moduloconfiguracion:
-            modulo= modulo_model.getAll({'idmoduloconfiguracion' : moduloconfiguracion[0], 'tipo' :1})
-            modulo=modulo[0]['detalle']
+            modulo = modulo_model.getAll(
+                {"idmoduloconfiguracion": moduloconfiguracion[0], "tipo": 1}
+            )
+            modulo = modulo[0]["detalle"]
         else:
-            modulo=[]
-        
+            modulo = []
 
-
-        com=comuna_model.getAll({},{'order':'titulo ASC'})
-        comunas=[]
+        com = comuna_model.getAll({}, {"order": "titulo ASC"})
+        comunas = []
         for c in com:
-            comunas.append({'title':c['titulo'],'value':c[0],'selected':(direccion!=None and direccion['idcomuna']==c[0]) })
-        
+            comunas.append(
+                {
+                    "title": c["titulo"],
+                    "value": c[0],
+                    "selected": (direccion != None and direccion["idcomuna"] == c[0]),
+                }
+            )
 
-        campos_requeridos=[]
-        campos_opcionales=[]
+        campos_requeridos = []
+        campos_opcionales = []
         for m in modulo:
-            if True in m['estado']:
-                del m['estado']
-                if m['field']=='idcomuna':
-                    m['options']=comunas
+            if True in m["estado"]:
+                del m["estado"]
+                if m["field"] == "idcomuna":
+                    m["options"] = comunas
                 else:
-                    m['value']=direccion[m['field']] if direccion!=None else ''
-                
-                if m['required']:
+                    m["value"] = direccion[m["field"]] if direccion != None else ""
+
+                if m["required"]:
                     campos_requeridos.append(m)
                 else:
                     campos_opcionales.append(m)
-                
-            
-        data={}
-        data['campos_requeridos']=campos_requeridos
-        data['campos_opcionales']=campos_opcionales
-        data['title']=direccion['titulo'] if direccion!=None else 'Nueva dirección'
-        data['id']=direccion[0] if direccion!=None else ''
 
+        data = {}
+        data["campos_requeridos"] = campos_requeridos
+        data["campos_opcionales"] = campos_opcionales
+        data["title"] = direccion["titulo"] if direccion != None else "Nueva dirección"
+        data["id"] = direccion[0] if direccion != None else ""
 
-        
         token = functions.generar_pass(20)
-        app.session['direccion_token'] = {'token' : token, 'time' : time()}
-        data['token']= token
+        app.session["direccion_token"] = {"token": token, "time": time()}
+        data["token"] = token
 
-        ret["body"].append(('user/direcciones-detalle',data))
+        ret["body"].append(("user/direcciones-detalle", data))
 
         f = footer()
         ret["body"] += f.normal()["body"]
         return ret
 
-
-    
     def direccion_process(self):
         """ procesa el POST para modificacion de direccion
         :type self:
@@ -359,52 +453,66 @@ class user(base):
         :raises:
     
         :rtype: json
-        """    
+        """
         from time import time
-        ret = {'headers': [ ('Content-Type', 'application/json; charset=utf-8')], 'body': ''}
 
-        respuesta = {'exito' : False, 'mensaje' : ''}
-        
+        ret = {
+            "headers": [("Content-Type", "application/json; charset=utf-8")],
+            "body": "",
+        }
+
+        respuesta = {"exito": False, "mensaje": ""}
+
         verificar = self.verificar(True)
-        if not verificar['exito']:
-            respuesta['mensaje']='Debes ingresar a tu cuenta'
-            ret['body'] = json.dumps(respuesta,ensure_ascii=False)
+        if not verificar["exito"]:
+            respuesta["mensaje"] = "Debes ingresar a tu cuenta"
+            ret["body"] = json.dumps(respuesta, ensure_ascii=False)
             return ret
-        campos    = app.post['campos']
+        campos = app.post["campos"]
 
-        if 'token' in campos and 'id' in campos:
-            if 'token' in app.session['direccion_token']  and app.session['direccion_token']['token'] == campos['token']:
-                if time() - app.session['direccion_token']['time'] <= 360:
-                    del campos['token']
-                    campos['idusuario']=app.session[usuario_model.idname + app.prefix_site]
-                    campos['tipo']=1
-                    if campos['id']!='':
-                        respuesta['exito'] = usuariodireccion_model.update(campos)
+        if "token" in campos and "id" in campos:
+            if (
+                "token" in app.session["direccion_token"]
+                and app.session["direccion_token"]["token"] == campos["token"]
+            ):
+                if time() - app.session["direccion_token"]["time"] <= 360:
+                    del campos["token"]
+                    campos["idusuario"] = app.session[
+                        usuario_model.idname + app.prefix_site
+                    ]
+                    campos["tipo"] = 1
+                    if campos["id"] != "":
+                        respuesta["exito"] = usuariodireccion_model.update(campos)
                     else:
-                        respuesta['exito'] = usuariodireccion_model.insert(campos)
-                    
-                    if respuesta['exito']:
-                        respuesta['mensaje'] = "Direccion guardada correctamente"
-                        
-                        if 'next_url' in app.get:
-                            respuesta['next_url'] = app.get['next_url']
-                        
+                        respuesta["exito"] = usuariodireccion_model.insert(campos)
+
+                    if respuesta["exito"]:
+                        respuesta["mensaje"] = "Direccion guardada correctamente"
+
+                        if "next_url" in app.get:
+                            respuesta["next_url"] = app.get["next_url"]
+
                     else:
-                        respuesta['mensaje'] = "Hubo un error al guardar la direccion, comprueba los campos obligatorios e intentalo nuevamente"
-                    
+                        respuesta[
+                            "mensaje"
+                        ] = "Hubo un error al guardar la direccion, comprueba los campos obligatorios e intentalo nuevamente"
+
                 else:
-                    respuesta['mensaje'] = 'Error de token, recarga la pagina e intenta nuevamente'
-                
-            else:
-                respuesta['mensaje'] = 'Error de token, recarga la pagina e intenta nuevamente'
-            
-        else:
-            respuesta['mensaje'] = 'Debes llenar los campos obligatorios'
-        
+                    respuesta[
+                        "mensaje"
+                    ] = "Error de token, recarga la pagina e intenta nuevamente"
 
-        ret['body'] = json.dumps(respuesta,ensure_ascii=False)
+            else:
+                respuesta[
+                    "mensaje"
+                ] = "Error de token, recarga la pagina e intenta nuevamente"
+
+        else:
+            respuesta["mensaje"] = "Debes llenar los campos obligatorios"
+
+        ret["body"] = json.dumps(respuesta, ensure_ascii=False)
         return ret
-    
+
     def pedidos(self):
         """ lista de pedidos
         :type self:
@@ -417,10 +525,10 @@ class user(base):
         ret = {"body": []}
         self.meta(self.seo)
         verificar = self.verificar(True)
-        if verificar['exito']:
-            self.url.append('pedidos')
+        if verificar["exito"]:
+            self.url.append("pedidos")
         else:
-            self.url.append('login')
+            self.url.append("login")
 
         url_return = functions.url_redirect(self.url)
         if url_return != "":
@@ -438,50 +546,75 @@ class user(base):
         ret["body"] += he.normal()["body"]
 
         ba = banner()
-        ret["body"] += ba.individual(self.seo["banner"], self.metadata["title"],'Mis Pedidos')["body"]
+        ret["body"] += ba.individual(
+            self.seo["banner"], self.metadata["title"], "Mis Pedidos"
+        )["body"]
 
         bc = breadcrumb()
         ret["body"] += bc.normal(self.breadcrumb)["body"]
 
-        
-        sidebar   = []
-        sidebar.append({'title' : "Mis datos", 'active' : '', 'url' : functions.generar_url([self.url[0], 'datos'])})
-        sidebar.append({'title' : "Mis direcciones", 'active' : '', 'url' : functions.generar_url([self.url[0], 'direcciones'])})
-        sidebar.append({'title' : "Mis pedidos", 'active' : 'active', 'url' : functions.generar_url([self.url[0], 'pedidos'])})
+        sidebar = []
+        sidebar.append(
+            {
+                "title": "Mis datos",
+                "active": "",
+                "url": functions.generar_url([self.url[0], "datos"]),
+            }
+        )
+        sidebar.append(
+            {
+                "title": "Mis direcciones",
+                "active": "",
+                "url": functions.generar_url([self.url[0], "direcciones"]),
+            }
+        )
+        sidebar.append(
+            {
+                "title": "Mis pedidos",
+                "active": "active",
+                "url": functions.generar_url([self.url[0], "pedidos"]),
+            }
+        )
 
-        data={}
-        data['sidebar']=('user/sidebar', {'sidebar_user': sidebar})
-        
-        ep=pedidoestado_model.getAll({'tipo':1})
-        estados_pedido={}
+        data = {}
+        data["sidebar"] = ("user/sidebar", {"sidebar_user": sidebar})
+
+        ep = pedidoestado_model.getAll({"tipo": 1})
+        estados_pedido = {}
         for e in ep:
-            estados_pedido[e[0]]=e
-        
+            estados_pedido[e[0]] = e
 
-
-        usuario= usuario_model.getById(app.session[usuario_model.idname + app.prefix_site])
-        pedidos=pedido_model.getByIdusuario(usuario[0],False) #obtiene todos los pedidos del usuario actual, con cualquier estado del pedido
+        usuario = usuario_model.getById(
+            app.session[usuario_model.idname + app.prefix_site]
+        )
+        pedidos = pedido_model.getByIdusuario(
+            usuario[0], False
+        )  # obtiene todos los pedidos del usuario actual, con cualquier estado del pedido
         for p in pedidos:
-            if p['idpedidoestado']==1:  #Quita cualquier pedido que este en carro
+            if p["idpedidoestado"] == 1:  # Quita cualquier pedido que este en carro
                 del p
             else:
-                p['total']=functions.formato_precio(p['total'])
-                p['fecha']=p['fecha_pago'] if p['fecha_pago']!=0 else p['fecha_creacion']
-                p['url']=functions.generar_url([self.url[0], 'pedido',p['cookie_pedido']])
-                p['estado']=estados_pedido[p['idpedidoestado']]['titulo']
-                p['background_estado']=estados_pedido[p['idpedidoestado']]['color']
-                p['color_estado']=functions.getContrastColor(estados_pedido[p['idpedidoestado']]['color'])
-           
-           
-        data['pedidos']=pedidos   
-        ret["body"].append(('user/pedidos-lista',data))
+                p["total"] = functions.formato_precio(p["total"])
+                p["fecha"] = (
+                    p["fecha_pago"] if p["fecha_pago"] != 0 else p["fecha_creacion"]
+                )
+                p["url"] = functions.generar_url(
+                    [self.url[0], "pedido", p["cookie_pedido"]]
+                )
+                p["estado"] = estados_pedido[p["idpedidoestado"]]["titulo"]
+                p["background_estado"] = estados_pedido[p["idpedidoestado"]]["color"]
+                p["color_estado"] = functions.getContrastColor(
+                    estados_pedido[p["idpedidoestado"]]["color"]
+                )
+
+        data["pedidos"] = pedidos
+        ret["body"].append(("user/pedidos-lista", data))
 
         f = footer()
         ret["body"] += f.normal()["body"]
         return ret
 
-
-    def pedido(self,var=[]):
+    def pedido(self, var=[]):
         """ Ver o pagar pedido
         :param var:
     
@@ -492,22 +625,25 @@ class user(base):
         ret = {"body": []}
         self.meta(self.seo)
         verificar = self.verificar(True)
-        if verificar['exito']:
-            if len(var)>0:
-                pedido=pedido_model.getByCookie(var[0],False)
-                 #Podria desaparecer si se necesita que cualquier pedido sea publico
-                if 'idusuario' in pedido and pedido['idusuario']==app.session[usuario_model.idname + app.prefix_site]:
-                    self.url.append('pedido')
+        if verificar["exito"]:
+            if len(var) > 0:
+                pedido = pedido_model.getByCookie(var[0], False)
+                # Podria desaparecer si se necesita que cualquier pedido sea publico
+                if (
+                    "idusuario" in pedido
+                    and pedido["idusuario"]
+                    == app.session[usuario_model.idname + app.prefix_site]
+                ):
+                    self.url.append("pedido")
                     self.url.append(var[0])
                 else:
-                 #Podria desaparecer si se necesita que cualquier pedido sea publico
-                    self.url.append('pedidos')
+                    # Podria desaparecer si se necesita que cualquier pedido sea publico
+                    self.url.append("pedidos")
             else:
-                self.url.append('pedido')
-            
-        else:
-            self.url.append('login')
+                self.url.append("pedido")
 
+        else:
+            self.url.append("login")
 
         url_return = functions.url_redirect(self.url)
         if url_return != "":
@@ -525,93 +661,117 @@ class user(base):
         ret["body"] += he.normal()["body"]
 
         ba = banner()
-        ret["body"] += ba.individual(self.seo["banner"], self.metadata["title"],'Detalle del pedido')["body"]
+        ret["body"] += ba.individual(
+            self.seo["banner"], self.metadata["title"], "Detalle del pedido"
+        )["body"]
 
         bc = breadcrumb()
         ret["body"] += bc.normal(self.breadcrumb)["body"]
-        
-        
-        sidebar   = []
-        sidebar.append({'title' : "Mis datos", 'active' : '', 'url' : functions.generar_url([self.url[0], 'datos'])})
-        sidebar.append({'title' : "Mis direcciones", 'active' : '', 'url' : functions.generar_url([self.url[0], 'direcciones'])})
-        sidebar.append({'title' : "Mis pedidos", 'active' : 'active', 'url' : functions.generar_url([self.url[0], 'pedidos'])})
 
-        data={}
-        data['sidebar']=('user/sidebar', {'sidebar_user': sidebar})
+        sidebar = []
+        sidebar.append(
+            {
+                "title": "Mis datos",
+                "active": "",
+                "url": functions.generar_url([self.url[0], "datos"]),
+            }
+        )
+        sidebar.append(
+            {
+                "title": "Mis direcciones",
+                "active": "",
+                "url": functions.generar_url([self.url[0], "direcciones"]),
+            }
+        )
+        sidebar.append(
+            {
+                "title": "Mis pedidos",
+                "active": "active",
+                "url": functions.generar_url([self.url[0], "pedidos"]),
+            }
+        )
 
-        ep=pedidoestado_model.getAll()
-        estados_pedido=[]
+        data = {}
+        data["sidebar"] = ("user/sidebar", {"sidebar_user": sidebar})
+
+        ep = pedidoestado_model.getAll()
+        estados_pedido = []
         for e in ep:
-            estados_pedido[e[0]]=e
-        
-        direcciones_pedido = pedidodireccion_model.getAll({'idpedido' : pedido['idpedido']})
-        productos_pedido=pedidoproducto_model.getAll({'idpedido' : pedido['idpedido']})
+            estados_pedido[e[0]] = e
+
+        direcciones_pedido = pedidodireccion_model.getAll(
+            {"idpedido": pedido["idpedido"]}
+        )
+        productos_pedido = pedidoproducto_model.getAll({"idpedido": pedido["idpedido"]})
         for dp in direcciones_pedido:
-            dp['precio']=functions.formato_precio(dp['precio'])
-            dp['estado']=estados_pedido[dp['idpedidoestado']]['titulo']
-            dp['background_estado']=estados_pedido[dp['idpedidoestado']]['color']
-            dp['color_estado']=functions.getContrastColor(estados_pedido[dp['idpedidoestado']]['color'])
+            dp["precio"] = functions.formato_precio(dp["precio"])
+            dp["estado"] = estados_pedido[dp["idpedidoestado"]]["titulo"]
+            dp["background_estado"] = estados_pedido[dp["idpedidoestado"]]["color"]
+            dp["color_estado"] = functions.getContrastColor(
+                estados_pedido[dp["idpedidoestado"]]["color"]
+            )
             lista_productos = []
             for p in productos_pedido:
-                if p['idpedidodireccion'] == dp[0]:
-                    portada      = image.portada(p['foto'])
-                    thumb_url    = image.generar_url(portada, '')
-                    p['total']=functions.formato_precio(p['total'])
-                    p['foto']=thumb_url
+                if p["idpedidodireccion"] == dp[0]:
+                    portada = image.portada(p["foto"])
+                    thumb_url = image.generar_url(portada, "")
+                    p["total"] = functions.formato_precio(p["total"])
+                    p["foto"] = thumb_url
                     lista_productos.append(p)
                     del productos_pedido[k]
-        
-        pedido['total']=functions.formato_precio(pedido['total'])
-        pedido['direcciones_pedido']=direcciones_pedido
-        pedido['estado']=estados_pedido[pedido['idpedidoestado']]['titulo']
-        pedido['background_estado']=estados_pedido[pedido['idpedidoestado']]['color']
-        pedido['color_estado']=functions.getContrastColor(estados_pedido[pedido['idpedidoestado']]['color'])
+
+        pedido["total"] = functions.formato_precio(pedido["total"])
+        pedido["direcciones_pedido"] = direcciones_pedido
+        pedido["estado"] = estados_pedido[pedido["idpedidoestado"]]["titulo"]
+        pedido["background_estado"] = estados_pedido[pedido["idpedidoestado"]]["color"]
+        pedido["color_estado"] = functions.getContrastColor(
+            estados_pedido[pedido["idpedidoestado"]]["color"]
+        )
 
         data.update(pedido)
 
-        medios_pago=array()
-        descripcion_pago=''
-        if pedido['idpedidoestado']==3 or pedido['idpedidoestado']==7:  # Solo si hay pago pendiente
-            medios_pago=mediopago_model.getAll()
-            seo_pago=seo_model.getById(12)  #seo medios de pago
+        medios_pago = array()
+        descripcion_pago = ""
+        if (
+            pedido["idpedidoestado"] == 3 or pedido["idpedidoestado"] == 7
+        ):  # Solo si hay pago pendiente
+            medios_pago = mediopago_model.getAll()
+            seo_pago = seo_model.getById(12)  # seo medios de pago
             for mp in medios_pago:
-                mp['url']=functions.generar_url([seo_pago['url'],'medio',mp[0],pedido['cookie_pedido']])
+                mp["url"] = functions.generar_url(
+                    [seo_pago["url"], "medio", mp[0], pedido["cookie_pedido"]]
+                )
         else:
-            medio_pago=mediopago_model.getById(pedido['idmediopago'])
-            descripcion_pago=medio_pago['descripcion']
-        
-        data['medios_pago']=medios_pago
-        data['descripcion_pago']=descripcion_pago
-        data['is_descripcion_pago']=(functions.remove_tags(descripcion_pago)).strip()!=''
+            medio_pago = mediopago_model.getById(pedido["idmediopago"])
+            descripcion_pago = medio_pago["descripcion"]
 
+        data["medios_pago"] = medios_pago
+        data["descripcion_pago"] = descripcion_pago
+        data["is_descripcion_pago"] = (
+            functions.remove_tags(descripcion_pago)
+        ).strip() != ""
 
-
-        ret["body"].append(('user/pedidos-detalle',data))
+        ret["body"].append(("user/pedidos-detalle", data))
 
         f = footer()
         ret["body"] += f.normal()["body"]
         return ret
 
-
-
-
-
-
-
     def registro(self):
         from time import time
+
         ret = {"body": []}
         self.meta(self.seo)
-        
+
         verificar = self.verificar(True)
-        if verificar['exito']:
-            if 'next_url' in app.get:
-                self.url = app.get['next_url'].split('/')
+        if verificar["exito"]:
+            if "next_url" in app.get:
+                self.url = app.get["next_url"].split("/")
             else:
-                self.url.append('datos')
-            
+                self.url.append("datos")
+
         else:
-            self.url.append('registro')
+            self.url.append("registro")
 
         url_return = functions.url_redirect(self.url)
         if url_return != "":
@@ -629,26 +789,23 @@ class user(base):
         ret["body"] += he.normal()["body"]
 
         ba = banner()
-        ret["body"] += ba.individual(self.seo["banner"], 'Registro')["body"]
+        ret["body"] += ba.individual(self.seo["banner"], "Registro")["body"]
 
         bc = breadcrumb()
         ret["body"] += bc.normal(self.breadcrumb)["body"]
-        
 
         token = functions.generar_pass(20)
-        app.session['registro_token'] = {'token' : token, 'time' : time()}
-        data={}
-        data['token']= token
-        data['url_login']= functions.generar_url([self.url[0], 'login'])
+        app.session["registro_token"] = {"token": token, "time": time()}
+        data = {}
+        data["token"] = token
+        data["url_login"] = functions.generar_url([self.url[0], "login"])
 
-
-        ret["body"].append(('user/registro',data))
+        ret["body"].append(("user/registro", data))
 
         f = footer()
         ret["body"] += f.normal()["body"]
         return ret
 
-    
     def registro_process(self):
         """ procesa el POST para registro
         :param self:
@@ -656,38 +813,66 @@ class user(base):
         :raises:
     
         :rtype: json
-        """    
+        """
         from time import time
-        ret = {'headers': [ ('Content-Type', 'application/json; charset=utf-8')], 'body': ''}
-        respuesta = {'exito' : False, 'mensaje' : ''}
-        campos    = app.post['campos']
 
-        if 'nombre' in campos and 'telefono' in campos  and 'email' in campos and 'pass' in campos and 'pass_repetir' in campos and 'token' in campos:
-            if 'token' in app.session['registro_token'] and app.session['registro_token']['token'] == campos['token']:
-                if time() - app.session['registro_token']['time'] <= 120:
-                    respuesta = usuario_model.registro(campos['nombre'], campos['telefono'], campos['email'], campos['pass'], campos['pass_repetir'])
-                    if respuesta['exito']:
-                        respuesta['exito'] = usuario_model.login(campos['email'], campos['pass'], isset(campos['recordar']))
-                        if not respuesta['exito']:
-                            respuesta['mensaje'] = "Cuenta creada correctamente, pero ha ocurrido un error al ingresar. Intenta loguearte"
+        ret = {
+            "headers": [("Content-Type", "application/json; charset=utf-8")],
+            "body": "",
+        }
+        respuesta = {"exito": False, "mensaje": ""}
+        campos = app.post["campos"]
+
+        if (
+            "nombre" in campos
+            and "telefono" in campos
+            and "email" in campos
+            and "pass" in campos
+            and "pass_repetir" in campos
+            and "token" in campos
+        ):
+            if (
+                "token" in app.session["registro_token"]
+                and app.session["registro_token"]["token"] == campos["token"]
+            ):
+                if time() - app.session["registro_token"]["time"] <= 120:
+                    respuesta = usuario_model.registro(
+                        campos["nombre"],
+                        campos["telefono"],
+                        campos["email"],
+                        campos["pass"],
+                        campos["pass_repetir"],
+                    )
+                    if respuesta["exito"]:
+                        respuesta["exito"] = usuario_model.login(
+                            campos["email"], campos["pass"], isset(campos["recordar"])
+                        )
+                        if not respuesta["exito"]:
+                            respuesta[
+                                "mensaje"
+                            ] = "Cuenta creada correctamente, pero ha ocurrido un error al ingresar. Intenta loguearte"
                         else:
-                            respuesta['mensaje'] = "Bienvenido"
+                            respuesta["mensaje"] = "Bienvenido"
                 else:
-                    respuesta['mensaje'] = 'Error de token, recarga la pagina e intenta nuevamente'
+                    respuesta[
+                        "mensaje"
+                    ] = "Error de token, recarga la pagina e intenta nuevamente"
             else:
-                respuesta['mensaje'] = 'Error de token, recarga la pagina e intenta nuevamente'
+                respuesta[
+                    "mensaje"
+                ] = "Error de token, recarga la pagina e intenta nuevamente"
         else:
-            respuesta['mensaje'] = 'Debes llenar todos los campos'
+            respuesta["mensaje"] = "Debes llenar todos los campos"
 
-        ret['body'] = json.dumps(respuesta,ensure_ascii=False)
+        ret["body"] = json.dumps(respuesta, ensure_ascii=False)
         return ret
-        
 
     def recuperar(self):
         from time import time
+
         ret = {"body": []}
         self.meta(self.seo)
-        self.url.append('recuperar')
+        self.url.append("recuperar")
 
         url_return = functions.url_redirect(self.url)
         if url_return != "":
@@ -705,67 +890,80 @@ class user(base):
         ret["body"] += he.normal()["body"]
 
         ba = banner()
-        ret["body"] += ba.individual(self.seo["banner"], 'Recuperar contraseña')["body"]
+        ret["body"] += ba.individual(self.seo["banner"], "Recuperar contraseña")["body"]
 
         bc = breadcrumb()
         ret["body"] += bc.normal(self.breadcrumb)["body"]
 
         token = functions.generar_pass(20)
-        app.session['recuperar_token'] = {'token' : token, 'time' : time()}
-        data={}
-        data['token']= token
-        data['url_registro']= functions.generar_url([self.url[0], 'registro'])
-        
-        ret["body"].append(('user/recuperar',data))
+        app.session["recuperar_token"] = {"token": token, "time": time()}
+        data = {}
+        data["token"] = token
+        data["url_registro"] = functions.generar_url([self.url[0], "registro"])
+
+        ret["body"].append(("user/recuperar", data))
 
         f = footer()
         ret["body"] += f.normal()["body"]
         return ret
 
-    
     def recuperar_process(self):
-    
+
         """ procesa el POST para recuperacion de contraseña
         :param self:
     
         :raises:
     
         :rtype: json
-        """    
+        """
         from time import time
-        ret = {'headers': [ ('Content-Type', 'application/json; charset=utf-8')], 'body': ''}
-        respuesta = {'exito' : False, 'mensaje' : ''}
-        campos    = app.post['campos']
-        
-        if 'email' in campos and 'token' in campos:
-            if 'token' in app.session['recuperar_token'] and app.session['recuperar_token']['token']==campos['token']:
-                if time()-app.session['recuperar_token']['time']<=120:
-                    respuesta=usuario_model.recuperar(campos['email'])
-                    if respuesta["exito"]:
-                        respuesta['mensaje'] = "Se ha enviado tu nueva contraseña a tu email. recuerda modificarla al ingresar."
-                else:
-                    respuesta['mensaje'] = 'Error de token, recarga la pagina e intenta nuevamente'
-            else:
-                respuesta['mensaje'] = 'Error de token, recarga la pagina e intenta nuevamente'
-        else:
-            respuesta['mensaje'] = 'Debes llenar todos los campos'
 
-        ret['body'] = json.dumps(respuesta,ensure_ascii=False)
+        ret = {
+            "headers": [("Content-Type", "application/json; charset=utf-8")],
+            "body": "",
+        }
+        respuesta = {"exito": False, "mensaje": ""}
+        campos = app.post["campos"]
+
+        if "email" in campos and "token" in campos:
+            if (
+                "token" in app.session["recuperar_token"]
+                and app.session["recuperar_token"]["token"] == campos["token"]
+            ):
+                if time() - app.session["recuperar_token"]["time"] <= 120:
+                    respuesta = usuario_model.recuperar(campos["email"])
+                    if respuesta["exito"]:
+                        respuesta[
+                            "mensaje"
+                        ] = "Se ha enviado tu nueva contraseña a tu email. recuerda modificarla al ingresar."
+                else:
+                    respuesta[
+                        "mensaje"
+                    ] = "Error de token, recarga la pagina e intenta nuevamente"
+            else:
+                respuesta[
+                    "mensaje"
+                ] = "Error de token, recarga la pagina e intenta nuevamente"
+        else:
+            respuesta["mensaje"] = "Debes llenar todos los campos"
+
+        ret["body"] = json.dumps(respuesta, ensure_ascii=False)
         return ret
 
-
     def login(self):
-        ret={'body'=[]}
+        from time import time
+
+        ret = {"body": []}
         self.meta(self.seo)
         verificar = self.verificar(True)
-        if verificar['exito']:
-            if 'next_url' in app.get:
-                self.url = explode('/',app.get['next_url'])
+        if verificar["exito"]:
+            if "next_url" in app.get:
+                self.url = explode("/", app.get["next_url"])
             else:
-                self.url.append('datos')
+                self.url.append("datos")
         else:
-            self.url.append('login')
-        
+            self.url.append("login")
+
         url_return = functions.url_redirect(self.url)
         if url_return != "":
             ret["error"] = 301
@@ -782,90 +980,114 @@ class user(base):
         ret["body"] += he.normal()["body"]
 
         ba = banner()
-        ret["body"] += ba.individual(self.seo["banner"], 'Login')["body"]
+        ret["body"] += ba.individual(self.seo["banner"], "Login")["body"]
 
         bc = breadcrumb()
         ret["body"] += bc.normal(self.breadcrumb)["body"]
 
         token = functions.generar_pass(20)
-        app.session['login_token'] = {'token' : token, 'time' : time()}
-        data={}
-        data['token']= token
-        data['url_recuperar']= functions.generar_url([self.url[0], 'recuperar'])
-        data['url_registro']= functions.generar_url([self.url[0], 'registro'])
-        
-        ret["body"].append(('user/login',data))
+        app.session["login_token"] = {"token": token, "time": time()}
+        data = {}
+        data["token"] = token
+        data["url_recuperar"] = functions.generar_url([self.url[0], "recuperar"])
+        data["url_registro"] = functions.generar_url([self.url[0], "registro"])
+
+        ret["body"].append(("user/login", data))
 
         f = footer()
         ret["body"] += f.normal()["body"]
         return ret
 
+    def login_process(self):
 
-    /**
-     * login_process
-     * procesa el POST para login
-     *
-     * @return json
-     * 
-     */
-    public function login_process()
-    {
-        respuesta = array('exito' : False, 'mensaje' : '')
-        campos    = functions.test_input(app.post['campos'])
+        """ procesa el POST para login
+        :param self:
+    
+        :raises:
+    
+        :rtype: json
+        """
+        from time import time
 
-        if isset(campos['email']) and isset(campos['pass']) and isset(campos['token']):
-            if isset(app.session['login_token']['token']) and app.session['login_token']['token'] == campos['token']:
-                if time() - app.session['login_token']['time'] <= 120:
-                    respuesta['exito'] = usuario_model.login(campos['email'], campos['pass'], isset(campos['recordar']))
-                    if not respuesta['exito']:
-                        respuesta['mensaje'] = "Ha ocurrido un error al ingresar. Revisa tus datos e intenta nuevamente"
+        ret = {
+            "headers": [("Content-Type", "application/json; charset=utf-8")],
+            "body": "",
+        }
+        respuesta = {"exito": False, "mensaje": ""}
+        campos = app.post["campos"]
+
+        if "email" in campos and "pass" in campos and "token" in campos:
+            if (
+                "token" in app.session["login_token"]
+                and app.session["login_token"]["token"] == campos["token"]
+            ):
+                if time() - app.session["login_token"]["time"] <= 120:
+                    respuesta["exito"] = usuario_model.login(
+                        campos["email"], campos["pass"], isset(campos["recordar"])
+                    )
+                    if not respuesta["exito"]:
+                        respuesta[
+                            "mensaje"
+                        ] = "Ha ocurrido un error al ingresar. Revisa tus datos e intenta nuevamente"
                     else:
-                        respuesta['mensaje'] = "Bienvenido"
-                        if isset(app.get['next_url']):
-                            respuesta['next_url'] = app.get['next_url']
-                        }
-                    }
+                        respuesta["mensaje"] = "Bienvenido"
+                        if "next_url" in app.get:
+                            respuesta["next_url"] = app.get["next_url"]
                 else:
-                    respuesta['mensaje'] = 'Error de token, recarga la pagina e intenta nuevamente'.(time() - app.session['login_token']['time'])
-                }
+                    respuesta["mensaje"] = (
+                        "Error de token, recarga la pagina e intenta nuevamente"
+                        + (time() - app.session["login_token"]["time"])
+                    )
             else:
-                respuesta['mensaje'] = 'Error de token, recarga la pagina e intenta nuevamente'
-            }
+                respuesta[
+                    "mensaje"
+                ] = "Error de token, recarga la pagina e intenta nuevamente"
         else:
-            respuesta['mensaje'] = 'Debes llenar todos los campos'
-        }
+            respuesta["mensaje"] = "Debes llenar todos los campos"
 
-        echo json_encode(respuesta)
-    }
-    /**
-     * verificar
-     *
-     * @param  mixed return
-     *
-     * @return array o json
-     */
-    public static function verificar(bool return = False)
-    {
-        respuesta   = array('exito' : False, 'mensaje' : '')
-        logueado    = usuario_model.verificar_sesion()
+        ret["body"] = json.dumps(respuesta, ensure_ascii=False)
+        return ret
+
+    @staticmethod
+    def verificar(return_response=False):
+        """ Description
+        :param return_response:
+    
+        :raises:
+    
+        :rtype:dict or json
+        """
+        ret = {
+            "headers": [("Content-Type", "application/json; charset=utf-8")],
+            "body": "",
+        }
+        respuesta = {"exito": False, "mensaje": ""}
+        logueado = usuario_model.verificar_sesion()
         if not logueado:
-            if isset(_COOKIE['cookieusuario' . app.prefix_site]):
-                logueado = usuario_model.login_cookie(_COOKIE['cookieusuario' . app.prefix_site])
-            }
-        }
-        respuesta['exito'] = logueado
+            cookie = functions.get_cookie("cookieusuario" + app.prefix_site)
+            if cookie != False:
+                logueado = usuario_model.login_cookie(cookie)
+
+        respuesta["exito"] = logueado
         if logueado:
-            nombre               = explode(" ", app.session['nombreusuario' . app.prefix_site])
-            respuesta['mensaje'] = nombre[0]
-        }
-        if return:
+            nombre = app.session["nombreusuario" + app.prefix_site].split(" ")[0]
+            respuesta["mensaje"] = nombre
+
+        if return_response:
             return respuesta
         else:
-            echo json_encode(respuesta)
+            ret["body"] = json.dumps(respuesta, ensure_ascii=False)
+            return ret
+
+    def logout(self):
+        ret = {
+            "headers": [("Content-Type", "application/json; charset=utf-8")],
+            "body": "",
         }
-    }
-    public function logout()
-    {
         usuario_model.logout()
-        echo json_encode(array('exito' : True, 'mensaje' : 'Gracias por visitar nuestro sitio'))
-    }
+        ret["body"] = json.dumps(
+            {"exito": True, "mensaje": "Gracias por visitar nuestro sitio"},
+            ensure_ascii=False,
+        )
+        return ret
+

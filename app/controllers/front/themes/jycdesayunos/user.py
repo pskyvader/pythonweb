@@ -249,6 +249,7 @@ class user(base):
         :rtype:
         """    
         ret = {"body": []}
+        direccion=None
         self.meta(self.seo)
         verificar = self.verificar(True)
         if verificar['exito']:
@@ -298,14 +299,14 @@ class user(base):
         if 0 in moduloconfiguracion:
             modulo= modulo_model.getAll({'idmoduloconfiguracion' : moduloconfiguracion[0], 'tipo' :1})
             modulo=modulo[0]['detalle']
-        }else{
-            modulo=array()
-        }
+        else:
+            modulo=[]
+        
 
 
-        com=comuna_model.getAll(array(),array('order':'titulo ASC'))
-        comunas=array()
-        foreach (com as key : c:
+        com=comuna_model.getAll({},{'order':'titulo ASC'})
+        comunas=[]
+        for c in com:
             comunas[]=array('title':c['titulo'],'value':c[0],'selected':(isset(direccion) and direccion['idcomuna']==c[0]))
         }
 
@@ -316,13 +317,13 @@ class user(base):
                 unset(m['estado'])
                 if(m['field']=='idcomuna':
                     m['options']=comunas
-                }else{
+                else:
                     m['value']=(isset(direccion))?direccion[m['field']]:''
                 }
                 m['is_text']=(m['tipo']=='text')
                 if(m['required']:
                     campos_requeridos[]=m
-                }else{
+                else:
                     campos_opcionales[]=m
                 }
             }
@@ -370,7 +371,7 @@ class user(base):
                     campos['tipo']=1
                     if(campos['id']!='':
                         respuesta['exito'] = usuariodireccion_model.update(campos)
-                    }else{
+                    else:
                         respuesta['exito'] = usuariodireccion_model.insert(campos)
                     }
                     if respuesta['exito']:
@@ -379,7 +380,7 @@ class user(base):
                         if(isset(_GET['next_url']):
                             respuesta['next_url'] = _GET['next_url']
                         }
-                    }else{
+                    else:
                         respuesta['mensaje'] = "Hubo un error al guardar la direccion, comprueba los campos obligatorios e intentalo nuevamente"
                     }
                 else:
@@ -441,7 +442,7 @@ class user(base):
         foreach (pedidos as key : p:
             if(p['idpedidoestado']==1: //Quita cualquier pedido que este en carro
                 unset(pedidos[key])
-            }else{
+            else:
                 pedidos[key]['total']=functions.formato_precio(p['total'])
                 pedidos[key]['fecha']=(p['fecha_pago']!=0)?p['fecha_pago']:p['fecha_creacion']
                 pedidos[key]['url']=functions.generar_url(array(self.url[0], 'pedido',p['cookie_pedido']))
@@ -475,11 +476,11 @@ class user(base):
                 if(isset(pedido['idusuario']) and pedido['idusuario']==app.session[usuario_model.idname . app.prefix_site]:
                     self.url[] = 'pedido'
                     self.url[] = var[0]
-                }else{
+                else:
                 //Podria desaparecer si se necesita que cualquier pedido sea publico
                     self.url[] = 'pedidos'
                 }
-            }else{
+            else:
                 self.url[] = 'pedido'
             }
         else:
@@ -546,7 +547,7 @@ class user(base):
                 url=functions.generar_url(array(seo_pago['url'],'medio',mp[0],pedido['cookie_pedido']))
                 medios_pago[key]['url']=url
             }
-        }else{
+        else:
             medio_pago=mediopago_model.getById(pedido['idmediopago'])
             descripcion_pago=medio_pago['descripcion']
         }
@@ -576,10 +577,10 @@ class user(base):
         if(verificar['exito']:
             if(isset(_GET['next_url']):
                 self.url = explode('/',_GET['next_url'])
-            }else{
+            else:
                 self.url[] = 'datos'
             }
-        }else{
+        else:
             self.url[] = 'registro'
         }
         functions.url_redirect(self.url)
@@ -683,13 +684,13 @@ class user(base):
                     if(respuesta["exito"]:
                         respuesta['mensaje'] = "Se ha enviado tu nueva contraseña a tu email. recuerda modificarla al ingresar."
                     }
-                }else{
+                else:
                     respuesta['mensaje'] = 'Error de token, recarga la pagina e intenta nuevamente'
                 }
-            }else{
+            else:
                 respuesta['mensaje'] = 'Error de token, recarga la pagina e intenta nuevamente'
             }
-        }else{
+        else:
             respuesta['mensaje'] = 'Debes llenar todos los campos'
         }
 
@@ -702,10 +703,10 @@ class user(base):
         if(verificar['exito']:
             if(isset(_GET['next_url']):
                 self.url = explode('/',_GET['next_url'])
-            }else{
+            else:
                 self.url[] = 'datos'
             }
-        }else{
+        else:
             self.url[] = 'login'
         }
         functions.url_redirect(self.url)

@@ -1,3 +1,6 @@
+
+
+from app.models.modulo import modulo as modulo_model
 from app.models.moduloconfiguracion import moduloconfiguracion as moduloconfiguracion_model
 from app.models.usuario import usuario as usuario_model
 
@@ -292,8 +295,8 @@ class user(base):
 
 
         moduloconfiguracion = moduloconfiguracion_model.getByModulo('usuariodireccion')
-        if isset(moduloconfiguracion[0]):
-            modulo= modulo_model.getAll(array('idmoduloconfiguracion' : moduloconfiguracion[0], 'tipo' :1))
+        if 0 in moduloconfiguracion:
+            modulo= modulo_model.getAll({'idmoduloconfiguracion' : moduloconfiguracion[0], 'tipo' :1})
             modulo=modulo[0]['detalle']
         }else{
             modulo=array()

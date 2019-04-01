@@ -15,6 +15,8 @@ from .footer import footer
 
 from core.app import app
 
+import json
+
 class user(base):
     
     def __init__(self):
@@ -238,8 +240,7 @@ class user(base):
         return ret
 
 
-    def direccion(self,var=[]):
-    
+    def direccion(self,var=[]):    
         """ modificar o crear direccion
         :type var:
         :param var:
@@ -248,6 +249,7 @@ class user(base):
     
         :rtype:
         """    
+        from time import time
         ret = {"body": []}
         direccion=None
         self.meta(self.seo)
@@ -307,54 +309,56 @@ class user(base):
         com=comuna_model.getAll({},{'order':'titulo ASC'})
         comunas=[]
         for c in com:
-            comunas[]=array('title':c['titulo'],'value':c[0],'selected':(isset(direccion) and direccion['idcomuna']==c[0]))
-        }
+            comunas.append({'title':c['titulo'],'value':c[0],'selected':(direccion!=None and direccion['idcomuna']==c[0]) })
+        
 
-        campos_requeridos=array()
-        campos_opcionales=array()
-        foreach (modulo as key : m:
-            if(in_array(True,m['estado']):
-                unset(m['estado'])
-                if(m['field']=='idcomuna':
+        campos_requeridos=[]
+        campos_opcionales=[]
+        for m in modulo:
+            if True in m['estado']:
+                del m['estado']
+                if m['field']=='idcomuna':
                     m['options']=comunas
                 else:
-                    m['value']=(isset(direccion))?direccion[m['field']]:''
-                }
-                m['is_text']=(m['tipo']=='text')
-                if(m['required']:
-                    campos_requeridos[]=m
+                    m['value']=direccion[m['field']] if direccion!=None else ''
+                
+                if m['required']:
+                    campos_requeridos.append(m)
                 else:
-                    campos_opcionales[]=m
-                }
-            }
-        }
-        view.set('campos_requeridos',campos_requeridos)
-        view.set('campos_opcionales',campos_opcionales)
-        view.set('title',isset(direccion)?direccion['titulo']:'Nueva dirección')
-        view.set('id',isset(direccion)?direccion[0]:'')
+                    campos_opcionales.append(m)
+                
+            
+        data={}
+        data['campos_requeridos']=campos_requeridos
+        data['campos_opcionales']=campos_opcionales
+        data['title']=direccion['titulo'] if direccion!=None else 'Nueva dirección'
+        data['id']=direccion[0] if direccion!=None else ''
 
 
         
-        token                      = sha1(uniqid(microtime(), True))
-        app.session['direccion_token'] = array('token' : token, 'time' : time())
-        view.set('token', token)
+        token = functions.generar_pass(20)
+        app.session['direccion_token'] = {'token' : token, 'time' : time()}
+        data['token']= token
 
-        view.render('user/direcciones-detalle')
 
-        footer = new footer()
-        footer->normal()
-    }
+
+        ret["body"].append(('user/direcciones-detalle',data))
+
+        f = footer()
+        ret["body"] += f.normal()["body"]
+        return ret
+
 
     
-    /**
-     * direccion_process
-     * procesa el POST para modificacion de direccion
-     *
-     * @return json
-     * 
-     */
-    public function direccion_process()
-    {
+    def direccion_process(self):
+        """ procesa el POST para modificacion de direccion
+        :type self:
+        :param self:
+    
+        :raises:
+    
+        :rtype: json
+        """    
         respuesta = array('exito' : False, 'mensaje' : '')
         verificar = self.verificar(True)
         if not verificar['exito']:
@@ -594,7 +598,7 @@ class user(base):
         banner = new banner()
         banner->individual(self.seo['banner'], 'Registro')
 
-        token                      = sha1(uniqid(microtime(), True))
+        token = functions.generar_pass(20)
         app.session['registro_token'] = array('token' : token, 'time' : time())
         view.set('token', token)
         view.set('url_login', functions.generar_url(array(self.url[0], 'login')))

@@ -261,6 +261,7 @@ class product_list(base):
                 "title": v["titulo"],
                 "price": functions.formato_precio(v["precio_final"]),
                 "old_price": functions.formato_precio(v["precio"]),
+                "stock": v["stock"],
                 "image": image.generar_url(portada, recorte),
                 "description": functions.remove_tags(v["resumen"]),
                 "srcset": [],

@@ -107,13 +107,13 @@ class seo(base_model):
         connection = database.instance()
         row = connection.get(cls.table, cls.idname, where)
         if len(row) == 1:
-            if 'idpadre' in row[0]:
+            if 'idpadre' in row[0] and row[0]['idpadre']!='':
                 row[0]['idpadre'] = json.loads(row[0]['idpadre'])
-            if 'foto' in row[0]:
+            if 'foto' in row[0] and row[0]['foto']!='':
                 row[0]['foto'] = json.loads(row[0]['foto'])
-            if 'banner' in row[0]:
+            if 'banner' in row[0] and row[0]['banner']!='':
                 row[0]['banner'] = json.loads(row[0]['banner'])
-            if 'archivo' in row[0]:
+            if 'archivo' in row[0] and row[0]['archivo']!='':
                 row[0]['archivo'] = json.loads(row[0]['archivo'])
         return row[0] if len(row) == 1 else row
 

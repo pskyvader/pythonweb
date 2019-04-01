@@ -62,3 +62,26 @@ class product_detail:
         else:
             tabs = ""
         return tabs
+
+    def resumen(self):
+        data = {}
+        data["id"] = self.producto[0]
+        data["title"] = self.producto["titulo"]
+        data["text"] = self.producto["resumen"]
+        data["old_price"] = functions.formato_precio(self.producto["precio"])
+        data["price"] = functions.formato_precio(self.producto["precio_final"])
+        data["stock"] = self.producto["stock"]
+
+        row = self.producto["idproductocategoria"]
+        categorias = []
+        for id in row:
+            c = productocategoria_model.getById(id)
+            categorias.append(
+                {
+                    "title": c["titulo"],
+                    "url": functions.url_seccion([self.url[0], "category"], c),
+                }
+            )
+
+        return ("categorias", categorias)
+

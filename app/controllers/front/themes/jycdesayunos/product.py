@@ -119,6 +119,7 @@ class product(base):
         return ret
 
     def detail(self, var=[]):
+        ret = {"body": []}
         if len(var) > 0:
             id = functions.get_idseccion(var[0])
             producto = producto_model.getById(id)

@@ -3,23 +3,21 @@
         <div class="box-lg">
             <div class="row">
                 <div class="col-lg-6">
-                    <h3 class="title">{title}</h3>
-                    <p class="card-text">{texto_contacto}</p>
-                    <form class="m-t-20" action="{action}" method="POST">
-                        <input type="hidden" name="titulo" value="{title}">
-                        {foreach campos}
-                            {if is_input}
-                                {if is_file}
-                                    <input type="{type}" id="{field}" name="{field}" class="form-control" placeholder="{title} {if is_required}*{/if is_required}" {if required} required="" {/if required}>
-                                {else is_file}
-                                    <input type="{type}" id="{field}" name="{field}" class="form-control" placeholder="{title} {if is_required}*{/if is_required}" {if required} required="" {/if required}>
-                                {/if is_file}
-                            {else is_input}
-                                {if is_textarea}
-                                    <textarea id="{field}" name="{field}" class="form-control" placeholder="{title} {if is_required}*{/if is_required}" {if required} required="" {/if required}></textarea>
-                                {/if is_textarea}
-                            {/if is_input}
-                        {/foreach campos}
+                    <h3 class="title">{{title}}</h3>
+                    <p class="card-text">{{texto_contacto}}</p>
+                    <form class="m-t-20" action="{{action}}" method="POST">
+                        <input type="hidden" name="titulo" value="{{title}}">
+                        {% for c in campos %}
+                            {% if c.campo=='input' %}
+                                {% if c.type=='file' %}
+                                <input type="{{c.type}}" id="{{c.field}}" name="{{c.field}}" class="form-control" placeholder="{{c.title}} {% if c.required %}*{% endif %}" {% if c.required %} required="" {% endif %}>
+                                {% else %}
+                                <input type="{{c.type}}" id="{{c.field}}" name="{{c.field}}" class="form-control" placeholder="{{c.title}} {% if c.required %}*{% endif %}" {% if c.required %} required="" {% endif %}>
+                                {% endif %}
+                            {% else if c.campo=='textarea' %}
+                                <textarea id="{{c.field}}" name="{{c.field}}" class="form-control" placeholder="{{c.title}} {% if c.required %}*{% endif %}" {% if c.required %} required="" {% endif %}></textarea>
+                            {% endif %}
+                        {% endfor %}
                         <div id="recaptcha" class="g-recaptcha" data-sitekey="{google_captcha}"></div>
                         <button type="submit" class="btn btn-primary">Enviar</button>
                     </form>

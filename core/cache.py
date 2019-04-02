@@ -118,7 +118,7 @@ class cache:
         post = app.post.copy()
         if "ajax" in post:
             name += "__ajax"
-            del post
+            del post['ajax']
 
         if len(post) > 0:
             return ""

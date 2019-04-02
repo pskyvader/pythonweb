@@ -16,7 +16,7 @@ from core.functions import functions
 
 class product(base):
     def __init__(self):
-        super().__init__(app.idseo)
+        super().__init__(app.idseo,False)
 
     def index(self):
         ret = {"body": []}

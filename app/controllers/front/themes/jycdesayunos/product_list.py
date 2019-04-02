@@ -19,7 +19,7 @@ class product_list(base):
     count = 0
 
     def __init__(self):
-        super().__init__(app.idseo)
+        super().__init__(app.idseo,False)
 
         self.view = (
             "list" if "view" in app.get and app.get["view"] == "list" else "grid"

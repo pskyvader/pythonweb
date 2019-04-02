@@ -168,7 +168,6 @@ class product_list(base):
                 variables = {}
                 if self.seo["tipo_modulo"] != 0:
                     variables["tipo"] = self.seo["tipo_modulo"]
-                print(self.modulo)
                 if self.modulo["hijos"]:
                     if categoria == None:
                         variables["idpadre"] = 0

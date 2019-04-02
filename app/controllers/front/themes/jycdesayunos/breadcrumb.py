@@ -7,7 +7,7 @@ class breadcrumb:
         ret = {"body": []}
         seo = seo_model.getById(1)
         b = [{"url": functions.generar_url([seo["url"]]), "title": seo["titulo"]}]
-        b = b + breadcrumb.copy()
+        b = b + breadcrumb
         for bread in b:
             if b.index(bread) == len(b) - 1:
                 bread["active"] = True

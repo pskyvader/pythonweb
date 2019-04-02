@@ -408,8 +408,7 @@ class image:
                     new_im = Image.new(
                         'RGBA', (ancho_maximo, alto_maximo), (255, 255, 255, 0))
                 else:
-                    new_im = Image.new(
-                        'RGB', (ancho_maximo, alto_maximo), (255, 255, 255))
+                    new_im = Image.new( 'RGB', (ancho_maximo, alto_maximo), (255, 255, 255))
                 box = (x, y, miniatura_ancho+x, miniatura_alto+y)
                 im.thumbnail((miniatura_ancho, miniatura_alto),
                              Image.ANTIALIAS)

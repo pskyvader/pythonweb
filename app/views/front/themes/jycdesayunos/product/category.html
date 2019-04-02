@@ -1,13 +1,13 @@
 <section class="product card-border">
     <div class="container">
         <div class="row">
-            {sidebar}
+            {{sidebar}}
             <div class="col">
-                {if is_search}
+                {% if search!='' %}
                 <h4 class="search">
-                    Buscando "{search}"
+                    Buscando "{{search}}"
                 </h4>
-                {/if is_search}
+                {% endif %}
                 <div class="product-filter">
                     <div class="row">
                         <div class="col-sm-4">

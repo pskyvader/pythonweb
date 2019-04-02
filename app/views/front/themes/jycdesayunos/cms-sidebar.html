@@ -2,24 +2,24 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-4 col-xl-3 sidebar pb-4">
-                <h3>{title_category}</h3>
+                <h3>{{title_category}}</h3>
                 <ul class="list-group">
-                    {foreach sidebar}
+                    {% for s in sidebar %}
                     <li>
-                        <a class="{active}" href="{url}">
-                            {title}
+                        <a class="{% if s.active} active {% endif %}" href="{{s.url}}">
+                            {{s.title}}
                         </a>
                     </li>
-                    {/foreach sidebar}
+                    {% endfor %}
                 </ul>
             </div>
             <div class="col-lg-8">
-                <h2>{title}</h2>
+                <h2>{{s.title}}</h2>
                 <div class="descripcion pb-5">
-                    {description}
+                    {{s.description}}
                 </div>
                 <div class="extra">
-                    {extra}
+                    {{s.extra}}
                 </div>
             </div>
         </div>

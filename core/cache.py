@@ -2,6 +2,7 @@ class cache:
     data = []
     cacheable = None
     cacheable_config = None
+    url_cache=[]
 
     @staticmethod
     def set_cache(cacheable: bool):
@@ -45,7 +46,7 @@ class cache:
             shutil.rmtree(directory)
 
     @staticmethod
-    def get_cache(url: list):
+    def get_cache():
         from .app import app
         from .functions import functions
         from pathlib import Path
@@ -55,10 +56,10 @@ class cache:
         else:
             cache.cacheable = True
 
-        ruta = functions.generar_url(url)
+        ruta = functions.generar_url(cache.url_cache)
         current = functions.current_url()
 
-        if ruta != current:
+        if cache.url_cache=='' or ruta != current:
             return ""
         if cache.cacheable_config == None:
             config = app.get_config()
@@ -68,7 +69,7 @@ class cache:
 
         if cache.cacheable:
             folder = app.get_dir(True) + "cache/"
-            name = cache.file_name(url)
+            name = cache.file_name(cache.url_cache)
             my_file = Path(folder + name)
             if my_file.is_file():
                 return my_file
@@ -76,16 +77,16 @@ class cache:
         return ""
 
     @staticmethod
-    def save_cache(url: list):
+    def save_cache():
         from .app import app
         from .functions import functions
         import os
         from gzip import compress
 
-        ruta = functions.generar_url(url)
+        ruta = functions.generar_url(cache.url_cache)
         current = functions.current_url()
         
-        if ruta == current and cache.cacheable:
+        if cache.url_cache!='' and ruta == current and cache.cacheable:
             folder = app.get_dir(True) + "cache/"
             if not os.path.exists(folder):
                 os.makedirs(folder)
@@ -103,11 +104,11 @@ class cache:
                     file_write.close()
 
     @staticmethod
-    def file_name(url: list):
+    def file_name():
         from .app import app
         from .functions import functions
 
-        name = "-".join(url)
+        name = "-".join(cache.url_cache)
         n = name.split(".", 1)
         if len(n) > 1:
             return ""

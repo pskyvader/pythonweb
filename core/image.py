@@ -63,7 +63,6 @@ class image:
             str(file['parent']) + '/' + str(file['subfolder'])
         for fl in glob(image.get_upload_dir() + file['folder'] + "/" + str(file['id']) + "-*.*"):
             remove(fl)
-        print(file)
         respuesta = image.recortes_foto(file, recortes)
         return respuesta
 
@@ -381,7 +380,6 @@ class image:
         
         foto_recorte = image.nombre_archivo(foto, etiqueta, '', True)
         foto_webp = image.nombre_archivo(foto, etiqueta, 'webp', True)
-        print(foto_recorte)
 
         if tipo == "recortar":
             box = (x, y, ancho_maximo+x, alto_maximo+y)

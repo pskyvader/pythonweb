@@ -189,7 +189,7 @@ class view:
         no_combinados = []
         nuevo = 0
         error = ""
-        for res in view.resources[type_resource]:
+        for res in resources[type_resource]:
             c = res.copy()
             c['is_content'] = False
             if c['local']:

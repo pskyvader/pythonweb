@@ -13,7 +13,7 @@ class base:
     url = []
     metadata = {"title": "", "keywords": "", "description": ""}
     breadcrumb = []
-    modulo = []
+    modulo = {}
     seo = []
 
     def init(self, var: list):

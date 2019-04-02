@@ -69,8 +69,8 @@ class home(base):
             pl              = product_list() #product_list.py
             lista_productos = pl.lista_productos(productos_destacados, 'detail', 'foto2') #Lista de productos, renderiza vista
             data['lista_productos']= lista_productos
-            data['col-md']= 'col-md-6'
-            data['col-lg']= 'col-lg-4'
+            data['col_md']= 'col-md-6'
+            data['col_lg']= 'col-lg-4'
             pro_list = ('product/grid',data.copy())
             data={}
             data['product_list']= pro_list

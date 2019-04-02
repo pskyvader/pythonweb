@@ -112,7 +112,7 @@ class contacto(base):
             )
 
         data["informacion"] = informacion
-        data["texto_contacto"] = functions.remove_tags(texto.getById(7)["descripcion"])
+        data["texto_contacto"] = functions.remove_tags(texto_model.getById(7)["descripcion"])
         data["title"] = self.seo["titulo"]
         data["action"] = functions.generar_url(["enviar"])
 

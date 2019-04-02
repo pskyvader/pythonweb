@@ -54,7 +54,11 @@ class functions():
     @staticmethod
     def get_idseccion(url: str):
         url = url.split('-', 2)
-        return int(url[0])
+        try:
+            return int(url[0])
+        except Exception:
+            return -1
+        
 
     @staticmethod
     def url_seccion(url_base: list, seccion=dict, return_url=False, extra_variables=False):

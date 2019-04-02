@@ -134,13 +134,13 @@ function inicio_pedido_atributos() {
         }, function(data) {
             $('#next_step').removeClass('disabled');
             if (typeof(data) != 'object') {
-                try {
-                    data = JSON.parse(data);
-                } catch (e) {
-                    console.log(e, data);
-                    data = {};
-                }
+            try {
+                data = JSON.parse(data);
+            } catch (e) {
+                console.log(e, data);
+                data = {};
             }
+        }
             if (!data.exito) {
                 notificacion(data.mensaje, 'error');
             }
@@ -163,11 +163,13 @@ function inicio_pedido_mensaje() {
         }, function(data) {
             pedido_proceso = false;
             $('#next_step').css('opacity', 1);
-            try {
-                data = JSON.parse(data);
-            } catch (e) {
-                console.log(e, data);
-                data = {};
+            if (typeof(data) != 'object') {
+                try {
+                    data = JSON.parse(data);
+                } catch (e) {
+                    console.log(e, data);
+                    data = {};
+                }
             }
 
             pedido_exito = data.exito;
@@ -194,11 +196,13 @@ function inicio_direccion_entrega() {
             idpedidodireccion: idpedidodireccion
         }, function(data) {
             $('#next_step').removeClass('disabled');
-            try {
-                data = JSON.parse(data);
-            } catch (e) {
-                console.log(e, data);
-                data = {};
+            if (typeof(data) != 'object') {
+                try {
+                    data = JSON.parse(data);
+                } catch (e) {
+                    console.log(e, data);
+                    data = {};
+                }
             }
             if (data.exito) {
                 $('.precio', direccion).text(formato_precio(data.precio, 0));
@@ -223,11 +227,13 @@ function new_direccion() {
         post_basic(url, {}, function(data) {
             pedido_proceso = false;
             $('#next_step').removeClass('disabled');
-            try {
-                data = JSON.parse(data);
-            } catch (e) {
-                console.log(e, data);
-                data = {};
+            if (typeof(data) != 'object') {
+                try {
+                    data = JSON.parse(data);
+                } catch (e) {
+                    console.log(e, data);
+                    data = {};
+                }
             }
             if (data.exito) {
                 direccion.data('id', data.idpedidodireccion);
@@ -387,11 +393,13 @@ function cambiar_fecha(fecha, hora, idpedidodireccion) {
     }, function(data) {
         pedido_proceso = false;
         $('#next_step').removeClass('disabled');
-        try {
-            data = JSON.parse(data);
-        } catch (e) {
-            console.log(e, data);
-            data = {};
+        if (typeof(data) != 'object') {
+            try {
+                data = JSON.parse(data);
+            } catch (e) {
+                console.log(e, data);
+                data = {};
+            }
         }
         if (!data.exito) {
             notificacion(data.mensaje, 'error');

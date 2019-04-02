@@ -248,7 +248,7 @@ class product_list(base):
         else:
             del app.get["page"]
 
-        return {"pagination", pagination}
+        return {"pagination": pagination}
 
     def lista_productos(self, row, url="detail", recorte="foto1"):
         lista = []

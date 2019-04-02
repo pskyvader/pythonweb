@@ -8,14 +8,15 @@ function inicio_login() {
     var modulo = "cuenta/";
     var url = create_url(modulo + "verificar", null, path);
     post_basic(url, "", function(data) {
-        try {
-            data = JSON.parse(data);
-        } catch (e) {
-            data = {
-                mensaje: data,
-                exito: false
-            };
+        if (typeof(data) != 'object') {
+            try {
+                data = JSON.parse(data);
+            } catch (e) {
+                console.log(e, data);
+                data = {};
+            }
         }
+        
         var b=$('<span> / </span>');
         if (data.exito) {
             logueado=true;

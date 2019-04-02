@@ -21,6 +21,7 @@ class contacto(base):
         ret = {"body": []}
         self.meta(self.seo)
         url_return = functions.url_redirect(self.url)
+        print(url_return)
         if url_return != "":
             ret["error"] = 301
             ret["redirect"] = url_return
@@ -28,7 +29,6 @@ class contacto(base):
 
         h = head(self.metadata)
         ret_head = h.normal()
-        print(ret_head)
         if ret_head["headers"] != "":
             return ret_head
         ret["body"] += ret_head["body"]

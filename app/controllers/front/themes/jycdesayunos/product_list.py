@@ -89,7 +89,7 @@ class product_list(base):
         else:
             return ""
 
-    def orden_producto():
+    def orden_producto(self):
         orden_producto = configuracion_model.getByVariable("orden_producto")
         if not isinstance(orden_producto, bool):
             orden_producto = orden_producto.split(",")

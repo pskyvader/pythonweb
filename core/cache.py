@@ -59,8 +59,6 @@ class cache:
         ruta = functions.generar_url(cache.url_cache)
         current = functions.current_url()
 
-        print(ruta,current)
-
         if cache.url_cache=='' or ruta != current:
             return ""
         if cache.cacheable_config == None:

@@ -20,6 +20,7 @@ class banner:
                 foto = image.generar_url(portada, "foto1")
                 if foto != "":
                     thumb.append({"id": key, "active": (key == 0)})
+                    print(thumb)
 
                     srcset = self.srcset(portada)
 

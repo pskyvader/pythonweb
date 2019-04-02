@@ -10,11 +10,13 @@ function inicio_cart() {
     var modulo = modulo_carro;
     var url = create_url(modulo + "current_cart", {}, path);
     post_basic(url, "", function(data) {
-        try {
-            data = JSON.parse(data);
-        } catch (e) {
-            console.log(e, data);
-            data = {};
+        if (typeof(data) != 'object') {
+            try {
+                data = JSON.parse(data);
+            } catch (e) {
+                console.log(e, data);
+                data = {};
+            }
         }
         generar_cart(data);
     });
@@ -77,12 +79,15 @@ function add_cart(id, cantidad) {
         id: id,
         cantidad: cantidad
     }, function(data) {
-        try {
-            data = JSON.parse(data);
-        } catch (e) {
-            console.log(e, data);
-            data = {};
+        if (typeof(data) != 'object') {
+            try {
+                data = JSON.parse(data);
+            } catch (e) {
+                console.log(e, data);
+                data = {};
+            }
         }
+
         if (data.exito) {
             if (logueado) {
                 notificacion(data.mensaje, 'success', create_url('pedido/step/1', {}, path));
@@ -110,11 +115,13 @@ function remove_cart(id, e) {
     post_basic(url, {
         id: id
     }, function(data) {
-        try {
-            data = JSON.parse(data);
-        } catch (error) {
-            console.log(error, data);
-            data = {};
+        if (typeof(data) != 'object') {
+            try {
+                data = JSON.parse(data);
+            } catch (e) {
+                console.log(e, data);
+                data = {};
+            }
         }
         if (data.exito) {
             notificacion(data.mensaje, 'success');

@@ -175,6 +175,8 @@ class app:
         # print('antes de render', (datetime.now()-init_time).total_seconds()*1000)
         # init_time=datetime.now()
 
+
+        print(response)
         if isinstance(response["body"], list):
             data_return["response_body"] = view.render(response["body"])
             cache.save_cache(url_cache)

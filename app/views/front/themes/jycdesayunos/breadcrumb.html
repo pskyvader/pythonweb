@@ -2,31 +2,30 @@
     <div class="container">
         <div class="row">
             <div class="col-md">
-                {if is_subtitulo}
-                    <h3>
-                        {titulo}
-                    </h3>
-                    <h6>
-                        {subtitulo}
-                    </h6>
-                    {else is_subtitulo}
-                    <h3>
-                        {titulo}
-                    </h3>
-                {/if is_subtitulo}
+                {% if subtitulo!='' %}
+                <h3>
+                    {{titulo}}
+                </h3>
+                <h6>
+                    {{subtitulo}}
+                </h6>
+                {% else %}
+                <h3>
+                    {titulo}
+                </h3>
+                {% endif %}
             </div>
             <div class="align-self-center col-md">
                 <ol class="breadcrumb float-md-right m-0 p-0">
-                    {foreach breadcrumb}
-                    <li class="breadcrumb-item {active}">
-                        {if is_active}
-                            {title}
-                        {else is_active}
-                            <a href="{url}">{title}</a>
-                            
-                        {/if is_active}
+                    {% for b in breadcrumb %}
+                    <li class="breadcrumb-item {% if b.active %} active {% endif %}">
+                        {% if b.active %}
+                        {{b.title}}
+                        {% else %}
+                        <a href="{{b.url}}"> {{b.title}}</a>
+                        {% endif %}
                     </li>
-                    {/foreach breadcrumb}
+                    {% endfor %}
                 </ol>
             </div>
         </div>

@@ -414,7 +414,7 @@ class image:
 
                 #box = (x, y, ancho_maximo+x, alto_maximo+y)
                 box = (x, y)
-                im=im.resize((miniatura_ancho, miniatura_alto), Image.ANTIALIAS)
+                #im=im.resize((miniatura_ancho, miniatura_alto), Image.ANTIALIAS)
                 new_im.paste(im, (box))
 
 

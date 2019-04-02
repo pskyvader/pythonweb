@@ -1,4 +1,4 @@
-var modulo_pedido="pedido/";
+var modulo_pedido = "pedido/";
 
 function inicio_pedido() {
     mover('.order', 300, 500);
@@ -16,7 +16,7 @@ function inicio_pedido() {
 }
 
 
-$('body').on('click','.order.step-1 #next_step', function(e) {
+$('body').on('click', '.order.step-1 #next_step', function(e) {
     if (pedido_proceso) {
         setTimeout(function() {
             $(this).trigger("click");
@@ -36,10 +36,10 @@ $('body').on('click','.order.step-1 #next_step', function(e) {
     });
     if (error) {
         return false;
-    }else{
+    } else {
         inicio_cart();
-        go_url($(this).data('href'),{});
-        mover('.order',0,500);
+        go_url($(this).data('href'), {});
+        mover('.order', 0, 500);
     }
 });
 
@@ -47,22 +47,22 @@ var pedido_proceso = false;
 var pedido_exito = true;
 
 
-$('body').on('click','.order.step-2 #next_step', function(e) {
-    var error=false;
-    $('.direccion').each(function(){
+$('body').on('click', '.order.step-2 #next_step', function(e) {
+    var error = false;
+    $('.direccion').each(function() {
         if ($('.lista_productos_pedido .producto', this).length < 1) {
-            error=true;
+            error = true;
             notificacion("Debes agregar al menos 1 producto por direccion, o eliminar las direcciones vacias", 'error');
             mover(this);
             return false;
-        }else if ($('.fecha_entrega', this).val()=='') {
-            error=true;
+        } else if ($('.fecha_entrega', this).val() == '') {
+            error = true;
             $('.fecha_entrega', this).addClass('is-invalid');
             notificacion("Debes seleccionar una fecha de envio", 'error');
             mover(this);
             return false;
-        }else if ($('.hora_entrega option:selected', this).val()=='') {
-            error=true;
+        } else if ($('.hora_entrega option:selected', this).val() == '') {
+            error = true;
             $('.hora_entrega', this).addClass('is-invalid');
             notificacion("Debes seleccionar una hora de envio", 'error');
             mover(this);
@@ -71,15 +71,15 @@ $('body').on('click','.order.step-2 #next_step', function(e) {
     });
     if (error) {
         return false;
-    }else{
+    } else {
         inicio_cart();
-        go_url($(this).data('href'),{});
-        mover('.order',0,500);
+        go_url($(this).data('href'), {});
+        mover('.order', 0, 500);
     }
 });
 
 
-$('body').on('click','.order.step-3 #next_step', function(e) {
+$('body').on('click', '.order.step-3 #next_step', function(e) {
     var modulo = modulo_pedido;
     var url = create_url(modulo + "crear_pedido", {}, path);
     notificacion("Creando tu pedido, por favor espera", 'warning');
@@ -121,7 +121,7 @@ function inicio_pedido_atributos() {
         options.minimumResultsForSearch = Infinity;
     }
     $('.producto_atributo').select2(options).on('change', function() {
-        var t=$(this);
+        var t = $(this);
         var idproductoatributo = $(this).val();
         var idpedidoproducto = $($(this).select2('data')[0].element).parent().data('id');
 
@@ -134,13 +134,13 @@ function inicio_pedido_atributos() {
         }, function(data) {
             $('#next_step').removeClass('disabled');
             if (typeof(data) != 'object') {
-            try {
-                data = JSON.parse(data);
-            } catch (e) {
-                console.log(e, data);
-                data = {};
+                try {
+                    data = JSON.parse(data);
+                } catch (e) {
+                    console.log(e, data);
+                    data = {};
+                }
             }
-        }
             if (!data.exito) {
                 notificacion(data.mensaje, 'error');
             }
@@ -293,7 +293,7 @@ function total_sidebar() {
         envio += parseInt($(this).text().substring(1).replace(".", ""));
     });
 
-    console.log(total,envio);
+    console.log(total, envio);
 
     $('.precio_envio').text(formato_precio(envio, 0));
     $('.precio_total').text(formato_precio(total + envio, 0));
@@ -421,11 +421,13 @@ function cambiar_id_productopedido(e, idfinal) {
     }, function(data) {
         pedido_proceso = false;
         $('#next_step').removeClass('disabled');
-        try {
-            data = JSON.parse(data);
-        } catch (e) {
-            console.log(e, data);
-            data = {};
+        if (typeof(data) != 'object') {
+            try {
+                data = JSON.parse(data);
+            } catch (e) {
+                console.log(e, data);
+                data = {};
+            }
         }
         if (!data.exito) {
             notificacion(data.mensaje, 'error');
@@ -435,17 +437,19 @@ function cambiar_id_productopedido(e, idfinal) {
 
 
 function remove_direccion(e) {
-    var id=$(e).parents('.direccion').data('id');
+    var id = $(e).parents('.direccion').data('id');
     var modulo = modulo_pedido;
     var url = create_url(modulo + "remove_direccion", {}, path);
     post_basic(url, {
         id: id
     }, function(data) {
-        try {
-            data = JSON.parse(data);
-        } catch (e) {
-            console.log(e, data);
-            data = {};
+        if (typeof(data) != 'object') {
+            try {
+                data = JSON.parse(data);
+            } catch (e) {
+                console.log(e, data);
+                data = {};
+            }
         }
         if (data.exito) {
             notificacion(data.mensaje, 'success');

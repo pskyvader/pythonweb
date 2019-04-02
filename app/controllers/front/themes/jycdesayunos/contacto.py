@@ -22,7 +22,7 @@ class contacto(base):
         if self.seo["tipo_modulo"] != 0:
             var["tipo"] = self.seo["tipo_modulo"]
 
-        if self.modulo["hijos"]:
+        if 'hijos' in self.modulo and self.modulo["hijos"]:
             var["idpadre"] = 0
 
         row = seccion_model.getAll(var)

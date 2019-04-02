@@ -28,6 +28,7 @@ class contacto(base):
 
         h = head(self.metadata)
         ret_head = h.normal()
+        print(ret_head)
         if ret_head["headers"] != "":
             return ret_head
         ret["body"] += ret_head["body"]

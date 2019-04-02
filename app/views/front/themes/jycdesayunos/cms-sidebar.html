@@ -6,7 +6,7 @@
                 <ul class="list-group">
                     {% for s in sidebar %}
                     <li>
-                        <a class="{% if s.active} active {% endif %}" href="{{s.url}}">
+                        <a class="{% if s.active %} active {% endif %}" href="{{s.url}}">
                             {{s.title}}
                         </a>
                     </li>

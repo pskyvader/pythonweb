@@ -6,8 +6,7 @@ import json
 class view:
     extension = 'html'
     theme = ''
-    resources_front = {}
-    resources_back = {}
+    resources = {}
     html = """
         <html>
             %(content)s

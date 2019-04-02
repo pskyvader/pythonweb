@@ -377,6 +377,12 @@ class image:
         else:
             im = im.convert('RGB')
 
+
+        
+        foto_recorte = image.nombre_archivo(foto, etiqueta, '', True)
+        foto_webp = image.nombre_archivo(foto, etiqueta, 'webp', True)
+        print(foto_recorte)
+
         if tipo == "recortar":
             box = (x, y, ancho_maximo+x, alto_maximo+y)
             im.thumbnail((miniatura_ancho, miniatura_alto), Image.ANTIALIAS)
@@ -414,8 +420,6 @@ class image:
                              Image.ANTIALIAS)
                 new_im.paste(im, (box))
 
-        foto_recorte = image.nombre_archivo(foto, etiqueta, '', True)
-        foto_webp = image.nombre_archivo(foto, etiqueta, 'webp', True)
 
         my_file = Path(ruta + foto_recorte)
         if my_file.is_file():

@@ -72,8 +72,7 @@ class base_model:
                     r['idpadre'] = json.loads(r['idpadre'])
                 else:
                     r['idpadre'] = []
-                if idpadre != None and idpadre not in r['idpadre']:
-                    print(idpadre,r['idpadre'])
+                if idpadre != None and str(idpadre) not in r['idpadre']:
                     deleted = True
 
             if return_total == None:

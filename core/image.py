@@ -383,7 +383,7 @@ class image:
 
         if tipo == "recortar":
             box = (x, y, ancho_maximo+x, alto_maximo+y)
-            im.thumbnail((miniatura_ancho, miniatura_alto), Image.ANTIALIAS)
+            im=im.resize((miniatura_ancho, miniatura_alto), Image.ANTIALIAS)
             print((miniatura_ancho, miniatura_alto),box)
             new_im = im
             #new_im = im.crop(box)

@@ -93,6 +93,7 @@ class cache:
                 name = cache.file_name(url)
                 if name != "":
                     f = "".join(cache.data)
+                    cache.data=[]
                     f = bytes(f, "utf-8")
                     f = compress(f)
 

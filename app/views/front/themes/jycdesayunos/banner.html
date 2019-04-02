@@ -2,6 +2,7 @@
     <div id="banner-principal" class="carousel slide d-print-none" data-ride="carousel" data-interval="5000">
         <ol class="carousel-indicators">
             {% for t in thumb %}
+            {{t}}
             <li data-target="#banner-principal" data-slide-to="{{t.id}}" class="{{t.active}}"></li>
             {% endfor %}
         </ol>

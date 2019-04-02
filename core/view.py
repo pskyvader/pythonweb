@@ -172,10 +172,18 @@ class view:
     def recorrer(type_resource='css', combine=True, theme='', base_url=''):
         from core.functions import functions
         from core.app import app
-        #if(len(view.resources) == 0):
-        with open(theme+'resources.json') as f:
-            view.resources = json.load(f)
-        
+
+        if app.front:
+            if(len(view.resources_front) == 0):
+                with open(theme+'resources.json') as f:
+                    view.resources_front = json.load(f)
+            resources=view.resources_front
+        else:
+            if(len(view.resources_back) == 0):
+                with open(theme+'resources.json') as f:
+                    view.resources_back = json.load(f)
+            resources=view.resources_back
+                
         resource = []
         locales = []
         no_combinados = []

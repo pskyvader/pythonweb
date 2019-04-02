@@ -127,7 +127,7 @@ class contacto(base):
         data["googlemaps_key"] = config["googlemaps_key"]
         data["google_captcha"] = config["google_captcha"]
 
-        #ret["body"].append(("contact", data))
+        ret["body"].append(("contact", data))
 
         f = footer()
         ret["body"] += f.normal()["body"]

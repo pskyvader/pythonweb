@@ -384,9 +384,8 @@ class image:
         if tipo == "recortar":
             box = (x, y, ancho_maximo+x, alto_maximo+y)
             im=im.resize((miniatura_ancho, miniatura_alto), Image.ANTIALIAS)
-            print((miniatura_ancho, miniatura_alto),box)
-            new_im = im
-            #new_im = im.crop(box)
+            #new_im = im
+            new_im = im.crop(box)
         elif "rellenar" == tipo:
             if "png" == imagen_tipo:
                 new_im = Image.new(

@@ -152,8 +152,7 @@ class image:
         if 'tipo' in app.get:
             var['tipo'] = app.get['tipo']
 
-        #modulo     = modulo_model.getAll(var, {'limit':1})
-        modulo = {}
+        modulo     = modulo_model.getAll(var, {'limit':1})
         recortes = []
         recortes.append({'tag': 'thumb', 'titulo': 'Thumb', 'ancho': 200,
                          'alto': 200, 'calidad': 90, 'tipo': 'centrar'})
@@ -162,6 +161,7 @@ class image:
         recortes.append({'tag': 'color', 'titulo': 'Color', 'ancho': 30,
                          'alto': None, 'calidad': 99, 'tipo': 'recortar'})
 
+        print(modulo,)
         if 0 in modulo and 'recortes' in modulo[0]:
             for recorte in modulo[0]['recortes']:
                 recorte['ancho'] = int(recorte['ancho'])

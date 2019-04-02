@@ -146,8 +146,7 @@ class image:
 
     @staticmethod
     def get_recortes(modulo):
-        #moduloconfiguracion = moduloconfiguracion_model.getByModulo(modulo)
-        moduloconfiguracion = [1]
+        moduloconfiguracion = moduloconfiguracion_model.getByModulo(modulo)
         var = {'idmoduloconfiguracion': moduloconfiguracion[0]}
         if 'tipo' in app.get:
             var['tipo'] = app.get['tipo']
@@ -161,7 +160,6 @@ class image:
         recortes.append({'tag': 'color', 'titulo': 'Color', 'ancho': 30,
                          'alto': None, 'calidad': 99, 'tipo': 'recortar'})
 
-        print(modulo,)
         if 0 in modulo and 'recortes' in modulo[0]:
             for recorte in modulo[0]['recortes']:
                 recorte['ancho'] = int(recorte['ancho'])

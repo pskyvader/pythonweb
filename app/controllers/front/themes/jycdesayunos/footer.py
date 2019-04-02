@@ -76,6 +76,7 @@ class footer:
 
             l = {"title": "Productos", "links": [], "size": 3}
             row = productocategoria_model.getAll({"tipo": 1, "idpadre": 0})
+            print(row)
             seo = seo_model.getById(8)
             for productos in row:
                 l["links"].append(

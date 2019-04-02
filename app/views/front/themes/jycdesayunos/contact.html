@@ -1,0 +1,51 @@
+<section class="p-b-60 p-t-60 contacto">
+    <div class="container">
+        <div class="box-lg">
+            <div class="row">
+                <div class="col-lg-6">
+                    <h3 class="title">{title}</h3>
+                    <p class="card-text">{texto_contacto}</p>
+                    <form class="m-t-20" action="{action}" method="POST">
+                        <input type="hidden" name="titulo" value="{title}">
+                        {foreach campos}
+                            {if is_input}
+                                {if is_file}
+                                    <input type="{type}" id="{field}" name="{field}" class="form-control" placeholder="{title} {if is_required}*{/if is_required}" {if required} required="" {/if required}>
+                                {else is_file}
+                                    <input type="{type}" id="{field}" name="{field}" class="form-control" placeholder="{title} {if is_required}*{/if is_required}" {if required} required="" {/if required}>
+                                {/if is_file}
+                            {else is_input}
+                                {if is_textarea}
+                                    <textarea id="{field}" name="{field}" class="form-control" placeholder="{title} {if is_required}*{/if is_required}" {if required} required="" {/if required}></textarea>
+                                {/if is_textarea}
+                            {/if is_input}
+                        {/foreach campos}
+                        <div id="recaptcha" class="g-recaptcha" data-sitekey="{google_captcha}"></div>
+                        <button type="submit" class="btn btn-primary">Enviar</button>
+                    </form>
+                </div>
+                <div class="col-lg-6">
+                    <h3 class="title">Contáctenos</h3>
+                    {foreach informacion}
+                    <div class="row py-3">
+                        <div class="col-auto"><i class="fa {icono} fa-lg"></i></div>
+                        <div class="col">
+                            <span>{title}: </span>
+                            {if is_link}
+                            <a href="{url}">{text}</a>
+                            {else is_link}
+                            {text}
+                            {/if is_link}
+                        </div>
+                    </div>
+                    {/foreach informacion}
+                    {if is_mapa}
+                    <div id="map">
+                        <iframe class="w-100 h-400" frameborder="0" style="border:0" data-src="https://www.google.com/maps/embed/v1/place?q={direccion}&key={googlemaps_key}" allowfullscreen></iframe>
+                    </div>
+                    {/if is_mapa}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

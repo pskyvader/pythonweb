@@ -94,6 +94,7 @@ class view:
             return ''
 
         theme = view.get_theme()
+        print(theme)
         base_url = app.url['base'] + \
             'static/' if app.front else app.url['admin'] + 'static/'
         css, locales, no_combinados, nuevo, error = view.recorrer(

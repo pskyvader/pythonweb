@@ -45,15 +45,12 @@ class product(base):
 
         data = {}
         pl = product_list()  # product_list.php
-        prod_list = pl.product_list()  # Lista de productos, renderiza vista
-        sidebar = pl.sidebar()  # genera sidebar, renderiza vista
+        data["product_list"] = pl.product_list()  # Lista de productos, renderiza vista
+        data["sidebar"] = pl.sidebar()  # genera sidebar, renderiza vista
         data.update(pl.orden_producto())  # genera lista de filtros
         data.update(pl.limit_producto())  # genera lista de cantidad de productos por pagina
         data.update(pl.pagination())  # genera paginador
         data.update(pl.is_search())  # Genera texto de busqueda, si existe
-
-        data["product_list"] = prod_list
-        data["sidebar"] = sidebar
 
         ret["body"].append(("product/category", data))
 

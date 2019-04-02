@@ -68,7 +68,7 @@ class base:
                 },
                 {"limit": 1},
             )
-            if 0 in modulo:
+            if len(modulo)>0:
                 cls.modulo = modulo[0]
 
     def meta(self, meta):

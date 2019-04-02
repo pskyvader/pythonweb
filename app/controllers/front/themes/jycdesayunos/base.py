@@ -45,7 +45,6 @@ class base:
 
     @classmethod
     def __init__(cls, idseo, set_cache=True):
-        print(cls,idseo,set_cache)
         if not set_cache:
             cache.set_cache(False)
 

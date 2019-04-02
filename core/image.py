@@ -404,8 +404,7 @@ class image:
                     new_im = Image.new(
                         'RGB', (ancho_maximo, alto_maximo), (255, 255, 255))
                 box = (x, y)
-                im=im.resize((miniatura_ancho, miniatura_alto),
-                             Image.ANTIALIAS)
+                im=im.resize((miniatura_ancho, miniatura_alto), Image.ANTIALIAS)
                 new_im.paste(im, (box))
             else:
                 if "png" == imagen_tipo:
@@ -413,7 +412,8 @@ class image:
                 else:
                     new_im = Image.new( 'RGB', (ancho_maximo, alto_maximo), (255, 255, 255))
 
-                box = (x, y)
+                box = (x, y, ancho_maximo+x, alto_maximo+y)
+                #box = (x, y)
                 im=im.resize((miniatura_ancho, miniatura_alto), Image.ANTIALIAS)
                 new_im.paste(im, (box))
 

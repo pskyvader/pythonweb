@@ -2,7 +2,7 @@
     <div id="banner-principal" class="carousel slide d-print-none" data-ride="carousel" data-interval="5000">
         <ol class="carousel-indicators">
             {% for t in thumb %}
-            <li data-target="#banner-principal" data-slide-to="{{t.id}}" class="{%if t.active %} ective {% endif %}"></li>
+            <li data-target="#banner-principal" data-slide-to="{{t.id}}" class="{%if t.active %} active {% endif %}"></li>
             {% endfor %}
         </ol>
         <div class="carousel-inner" role="listbox">

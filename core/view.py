@@ -163,7 +163,7 @@ class view:
         #if(len(view.resources) == 0):
         with open(theme+'resources.json') as f:
             view.resources = json.load(f)
-        print(view.resources)
+        
         resource = []
         locales = []
         no_combinados = []

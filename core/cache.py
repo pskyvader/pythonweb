@@ -71,7 +71,7 @@ class cache:
 
         if cache.cacheable:
             folder = app.get_dir(True) + "cache/"
-            name = cache.file_name(cache.url_cache)
+            name = cache.file_name()
             my_file = Path(folder + name)
             if my_file.is_file():
                 return my_file

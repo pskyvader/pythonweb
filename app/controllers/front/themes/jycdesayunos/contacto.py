@@ -1,4 +1,7 @@
+from app.models.seccion import seccion as seccion_model
 from app.models.texto import texto as texto_model
+
+
 from core.app import app
 from core.functions import functions
 

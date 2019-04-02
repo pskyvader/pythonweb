@@ -61,15 +61,15 @@ class base:
             cls.seo["modulo_back"]
         )
         if 0 in moduloconfiguracion:
-            modulo = modulo_model.getAll(
+            modulo_list = modulo_model.getAll(
                 {
                     "idmoduloconfiguracion": moduloconfiguracion[0],
                     "tipo": cls.seo["tipo_modulo"],
                 },
                 {"limit": 1},
             )
-            if len(modulo)>0:
-                cls.modulo = modulo[0]
+            if len(modulo_list)>0:
+                cls.modulo = modulo_list[0]
 
     def meta(self, meta):
         self.metadata["title"] = (

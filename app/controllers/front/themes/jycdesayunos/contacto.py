@@ -116,7 +116,7 @@ class contacto(base):
         data["title"] = self.seo["titulo"]
         data["action"] = functions.generar_url(["enviar"])
 
-        mapa = texto.getById(8)
+        mapa = texto_model.getById(8)
         data["is_mapa"] = mapa["estado"]
         data["lat"] = mapa["mapa"]["lat"]
         data["lng"] = mapa["mapa"]["lng"]

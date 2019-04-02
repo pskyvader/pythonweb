@@ -200,7 +200,7 @@ class app:
         else:
             url = []
         
-        cache.url_cache=url
+        cache.url_cache=url.copy()
 
         if len(url) > 0:
             if url[0] == "manifest.js":

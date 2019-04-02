@@ -15,11 +15,11 @@
                     <ul>
                         {% for i in informacion %}
                         <li>
-                            <i class="fa {icono} fa-lg mr-1"></i>
+                            <i class="fa {{i.icono}} fa-lg mr-1"></i>
                             {% if i.url!='' %}
-                            <a href="{{url}}">{{text}}</a>
+                            <a href="{{i.url}}">{{i.text}}</a>
                             {% else %}
-                            {{text}}
+                            {{i.text}}
                             {% endif %}
                         </li>
                         {% endfor %}

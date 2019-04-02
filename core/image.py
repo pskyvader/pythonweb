@@ -63,6 +63,7 @@ class image:
             str(file['parent']) + '/' + str(file['subfolder'])
         for fl in glob(image.get_upload_dir() + file['folder'] + "/" + str(file['id']) + "-*.*"):
             remove(fl)
+        print(file)
         respuesta = image.recortes_foto(file, recortes)
         return respuesta
 

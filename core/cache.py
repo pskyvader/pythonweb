@@ -12,7 +12,6 @@ class cache:
     @staticmethod
     def add_cache(content):
         from .app import app
-
         if cache.cacheable:
             cache.data.append(content)
 

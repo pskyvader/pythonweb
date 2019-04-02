@@ -176,7 +176,7 @@ class image:
 
                 recortes.append(recorte)
         
-        print(recortes)
+        print(modulo[0]['recortes'])
         return recortes
 
     @staticmethod

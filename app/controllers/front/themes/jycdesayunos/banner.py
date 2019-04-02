@@ -37,10 +37,11 @@ class banner:
                         }
                     )
 
-            print(thumb)
             data = {}
             data["thumb"] = thumb
             data["banner"] = banner
+            
+            print(data)
             ret["body"].append(("banner", data))
         return ret
 

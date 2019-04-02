@@ -163,7 +163,7 @@ class image:
         recortes.append({'tag': 'color', 'titulo': 'Color', 'ancho': 30,
                          'alto': None, 'calidad': 99, 'tipo': 'recortar'})
 
-        if 0 in modulo and 'recortes' in modulo[0]:
+        if len(modulo)>0 and 'recortes' in modulo[0]:
             for recorte in modulo[0]['recortes']:
                 recorte['ancho'] = int(recorte['ancho'])
                 recorte['alto'] = int(recorte['alto'])
@@ -175,9 +175,7 @@ class image:
                     recorte['calidad'] = 0
 
                 recortes.append(recorte)
-        
-            print(modulo[0]['recortes'])
-            
+
         return recortes
 
     @staticmethod

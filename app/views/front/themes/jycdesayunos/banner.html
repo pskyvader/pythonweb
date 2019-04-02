@@ -1,7 +1,6 @@
 <section class="banner banner-md">
     <div id="banner-principal" class="carousel slide d-print-none" data-ride="carousel" data-interval="5000">
         <ol class="carousel-indicators">
-            {{thumbs}}
             {% for t in thumb %}
             <li data-target="#banner-principal" data-slide-to="{{t.id}}" class="{{t.active}}"></li>
             {% endfor %}

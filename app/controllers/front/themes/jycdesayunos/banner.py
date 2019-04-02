@@ -18,7 +18,7 @@ class banner:
             for key, b in enumerate(row_banner):
                 portada = image.portada(b["foto"])
                 foto = image.generar_url(portada, "foto1")
-                print(portada)
+                print(portada,foto,'---')
                 if foto != "":
                     thumb.append({"id": key, "active": (key == 0)})
 

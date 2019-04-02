@@ -152,11 +152,21 @@ class view:
 
     @staticmethod
     def set_theme(theme):
-        view.theme = theme
+        from core.app import app
+        if app.front:
+            view.theme_front = theme
+        else:
+            view.theme_back = theme
+
 
     @staticmethod
     def get_theme():
-        return view.theme
+        from core.app import app
+        if app.front:
+            return view.theme_front
+        else:
+            return view.theme_back
+
 
     @staticmethod
     def recorrer(type_resource='css', combine=True, theme='', base_url=''):

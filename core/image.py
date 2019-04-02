@@ -155,7 +155,6 @@ class image:
             var['tipo'] = app.get['tipo']
 
         modulo     = modulo_model.getAll(var, {'limit':1})
-        print(modulo)
         recortes = []
         recortes.append({'tag': 'thumb', 'titulo': 'Thumb', 'ancho': 200,
                          'alto': 200, 'calidad': 90, 'tipo': 'centrar'})
@@ -176,6 +175,8 @@ class image:
                     recorte['calidad'] = 0
 
                 recortes.append(recorte)
+        
+        print(recortes)
         return recortes
 
     @staticmethod

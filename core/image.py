@@ -4,6 +4,9 @@ from os import rename
 from .app import app
 from .functions import functions
 
+from app.models.modulo import modulo as modulo_model
+from app.models.moduloconfiguracion import moduloconfiguracion as moduloconfiguracion_model
+
 
 class image:
     types = ["image/webp", "image/bmp", "image/gif", "image/pjpeg", "image/jpeg", "image/svg+xml", "image/png", "video/webm", "video/mp4", "application/zip", "application/x-zip-compressed", "application/octet-stream", "application/postscript", "application/msword", "application/vnd.ms-excel", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.openxmlformats-officedocument.spreadsheetml.template", "application/vnd.openxmlformats-officedocument.presentationml.template",

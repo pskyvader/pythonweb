@@ -38,7 +38,7 @@
                     {% endif %}
                 </div>
                 {% for lf in links_footer %}
-                <div class="col-sm-6 col-lg-{size} m-b-30">
+                <div class="col-sm-6 col-lg-{{lf.size}} m-b-30">
                     <h4 class="title">{{lf.title}}</h4>
                     <ul>
                         {% for l in lf.links %}

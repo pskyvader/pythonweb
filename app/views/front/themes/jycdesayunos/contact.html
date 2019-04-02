@@ -14,7 +14,7 @@
                         {% else %}
                         <input type="{{c.type}}" id="{{c.field}}" name="{{c.field}}" class="form-control" placeholder="{{c.title}} {% if c.required %}*{% endif %}" {% if c.required %} required="" {% endif %}>
                         {% endif %}
-                        {% else if c.campo=='textarea' %}
+                        {% elif  c.campo=='textarea' %}
                         <textarea id="{{c.field}}" name="{{c.field}}" class="form-control" placeholder="{{c.title}} {% if c.required %}*{% endif %}" {% if c.required %} required="" {% endif %}></textarea>
                         {% endif %}
                         {% endfor %}

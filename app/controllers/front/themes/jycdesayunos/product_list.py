@@ -96,7 +96,7 @@ class product_list(base):
             for op in orden_producto:
                 op = op.split(":")
                 for o in op:
-                    o = trim(o)
+                    o = o.strip()
 
         if not isinstance(orden_producto, list) or len(orden_producto) == 0:
             orden_producto = [

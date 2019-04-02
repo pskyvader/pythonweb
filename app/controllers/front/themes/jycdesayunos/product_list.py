@@ -2,6 +2,7 @@ from .base import base
 
 
 from app.models.configuracion import configuracion as configuracion_model
+from app.models.producto import producto as producto_model
 from app.models.productocategoria import productocategoria as productocategoria_model
 
 from core.app import app

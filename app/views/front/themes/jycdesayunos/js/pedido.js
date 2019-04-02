@@ -87,11 +87,13 @@ $('body').on('click','.order.step-3 #next_step', function(e) {
 
     post_basic(url, {}, function(data) {
         $('#next_step').removeClass('disabled');
-        try {
-            data = JSON.parse(data);
-        } catch (e) {
-            console.log(e, data);
-            data = {};
+        if (typeof(data) != 'object') {
+            try {
+                data = JSON.parse(data);
+            } catch (e) {
+                console.log(e, data);
+                data = {};
+            }
         }
         if (data.exito) {
             inicio_cart();
@@ -131,11 +133,13 @@ function inicio_pedido_atributos() {
             idpedidoproducto: idpedidoproducto
         }, function(data) {
             $('#next_step').removeClass('disabled');
-            try {
-                data = JSON.parse(data);
-            } catch (e) {
-                console.log(e, data);
-                data = {};
+            if (typeof(data) != 'object') {
+                try {
+                    data = JSON.parse(data);
+                } catch (e) {
+                    console.log(e, data);
+                    data = {};
+                }
             }
             if (!data.exito) {
                 notificacion(data.mensaje, 'error');

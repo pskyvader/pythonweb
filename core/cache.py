@@ -94,7 +94,7 @@ class cache:
                 os.makedirs(folder)
 
             if os.access(folder, os.W_OK):
-                name = cache.file_name(url)
+                name = cache.file_name()
                 if name != "":
                     f = "".join(cache.data)
                     cache.data=[]

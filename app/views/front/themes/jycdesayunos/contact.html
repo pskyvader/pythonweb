@@ -8,40 +8,40 @@
                     <form class="m-t-20" action="{{action}}" method="POST">
                         <input type="hidden" name="titulo" value="{{title}}">
                         {% for c in campos %}
-                            {% if c.campo=='input' %}
-                                {% if c.type=='file' %}
-                                <input type="{{c.type}}" id="{{c.field}}" name="{{c.field}}" class="form-control" placeholder="{{c.title}} {% if c.required %}*{% endif %}" {% if c.required %} required="" {% endif %}>
-                                {% else %}
-                                <input type="{{c.type}}" id="{{c.field}}" name="{{c.field}}" class="form-control" placeholder="{{c.title}} {% if c.required %}*{% endif %}" {% if c.required %} required="" {% endif %}>
-                                {% endif %}
-                            {% else if c.campo=='textarea' %}
-                                <textarea id="{{c.field}}" name="{{c.field}}" class="form-control" placeholder="{{c.title}} {% if c.required %}*{% endif %}" {% if c.required %} required="" {% endif %}></textarea>
-                            {% endif %}
+                        {% if c.campo=='input' %}
+                        {% if c.type=='file' %}
+                        <input type="{{c.type}}" id="{{c.field}}" name="{{c.field}}" class="form-control" placeholder="{{c.title}} {% if c.required %}*{% endif %}" {% if c.required %} required="" {% endif %}>
+                        {% else %}
+                        <input type="{{c.type}}" id="{{c.field}}" name="{{c.field}}" class="form-control" placeholder="{{c.title}} {% if c.required %}*{% endif %}" {% if c.required %} required="" {% endif %}>
+                        {% endif %}
+                        {% else if c.campo=='textarea' %}
+                        <textarea id="{{c.field}}" name="{{c.field}}" class="form-control" placeholder="{{c.title}} {% if c.required %}*{% endif %}" {% if c.required %} required="" {% endif %}></textarea>
+                        {% endif %}
                         {% endfor %}
-                        <div id="recaptcha" class="g-recaptcha" data-sitekey="{google_captcha}"></div>
+                        <div id="recaptcha" class="g-recaptcha" data-sitekey="{{google_captcha}}"></div>
                         <button type="submit" class="btn btn-primary">Enviar</button>
                     </form>
                 </div>
                 <div class="col-lg-6">
                     <h3 class="title">Contáctenos</h3>
-                    {foreach informacion}
+                    {% for i in informacion %}
                     <div class="row py-3">
-                        <div class="col-auto"><i class="fa {icono} fa-lg"></i></div>
+                        <div class="col-auto"><i class="fa {{i.icono}} fa-lg"></i></div>
                         <div class="col">
-                            <span>{title}: </span>
-                            {if is_link}
-                            <a href="{url}">{text}</a>
-                            {else is_link}
-                            {text}
-                            {/if is_link}
+                            <span>{{i.title}}: </span>
+                            {% if i.url!='' %}
+                            <a href="{{i.url}}">{{i.text}}</a>
+                            {% else %}
+                            {{i.text}}
+                            {% endif %}
                         </div>
                     </div>
-                    {/foreach informacion}
-                    {if is_mapa}
+                    {% endfor %}
+                    {% if is_mapa %}
                     <div id="map">
-                        <iframe class="w-100 h-400" frameborder="0" style="border:0" data-src="https://www.google.com/maps/embed/v1/place?q={direccion}&key={googlemaps_key}" allowfullscreen></iframe>
+                        <iframe class="w-100 h-400" frameborder="0" style="border:0" data-src="https://www.google.com/maps/embed/v1/place?q={{direccion}}&key={{googlemaps_key}}" allowfullscreen></iframe>
                     </div>
-                    {/if is_mapa}
+                    {% endif %}
                 </div>
             </div>
         </div>

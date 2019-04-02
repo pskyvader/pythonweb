@@ -384,7 +384,6 @@ class image:
         if tipo == "recortar":
             box = (x, y, ancho_maximo+x, alto_maximo+y)
             im=im.resize((miniatura_ancho, miniatura_alto), Image.ANTIALIAS)
-            #new_im = im
             new_im = im.crop(box)
         elif "rellenar" == tipo:
             if "png" == imagen_tipo:
@@ -394,7 +393,7 @@ class image:
                 new_im = Image.new(
                     'RGB', (ancho_maximo, alto_maximo), (255, 255, 255))
             box = (x, y)
-            im.thumbnail((miniatura_ancho, miniatura_alto), Image.ANTIALIAS)
+            im=im.resize((miniatura_ancho, miniatura_alto), Image.ANTIALIAS)
             new_im.paste(im, (box))
         else:
             if ancho >= miniatura_ancho or alto >= miniatura_alto:
@@ -405,7 +404,7 @@ class image:
                     new_im = Image.new(
                         'RGB', (ancho_maximo, alto_maximo), (255, 255, 255))
                 box = (x, y)
-                im.thumbnail((miniatura_ancho, miniatura_alto),
+                im=im.resize((miniatura_ancho, miniatura_alto),
                              Image.ANTIALIAS)
                 new_im.paste(im, (box))
             else:
@@ -416,7 +415,7 @@ class image:
 
                 #box = (x, y, miniatura_ancho+x, miniatura_alto+y)
                 box = (x, y)
-                im.thumbnail((miniatura_ancho, miniatura_alto), Image.ANTIALIAS)
+                im=im.resize((miniatura_ancho, miniatura_alto), Image.ANTIALIAS)
                 new_im.paste(im, (box))
 
 

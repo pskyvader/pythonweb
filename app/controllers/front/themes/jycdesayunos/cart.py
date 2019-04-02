@@ -104,6 +104,7 @@ class cart(base):
             return {}
         else:
             ret["body"] = json.dumps({}, ensure_ascii=False)
+            return ret
 
     @staticmethod
     def get_cart(cookie_pedido: str):

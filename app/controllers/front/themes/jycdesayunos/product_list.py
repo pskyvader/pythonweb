@@ -163,9 +163,7 @@ class product_list(base):
             lista_productos = self.lista_productos(productos, "detail", "foto2")
             data = {}
             data["lista_productos"] = lista_productos
-            if (
-                self.view == "grid"
-            ):  # Comprobar si existe o no sidebar, para agrandar o achicar el tamaño del producto
+            if ( self.view == "grid" ):  # Comprobar si existe o no sidebar, para agrandar o achicar el tamaño del producto
                 variables = {}
                 if self.seo["tipo_modulo"] != 0:
                     variables["tipo"] = self.seo["tipo_modulo"]

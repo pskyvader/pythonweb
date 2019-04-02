@@ -192,6 +192,7 @@ class app:
     @staticmethod
     def parse_url(url):
         from app.models.seo import seo as seo_model
+        from .cache import cache
         config = app.get_config()
         url = url.lstrip("/")
 
@@ -199,6 +200,8 @@ class app:
             url = " ".join(url.split("/")).split()
         else:
             url = []
+        
+        cache.url_cache=url
 
         if len(url) > 0:
             if url[0] == "manifest.js":

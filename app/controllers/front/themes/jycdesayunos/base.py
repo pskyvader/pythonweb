@@ -50,9 +50,9 @@ class base:
 
         cls.seo = seo_model.getById(idseo)
         cls.url = [cls.seo["url"]]
-        cls.breadcrumb.append(
+        cls.breadcrumb = [
             {"url": functions.generar_url([cls.seo["url"]]), "title": cls.seo["titulo"]}
-        )
+        ]
         cls.metadata["image"] = image.generar_url(
             image.portada(cls.seo["foto"]), "social"
         )
@@ -68,7 +68,7 @@ class base:
                 },
                 {"limit": 1},
             )
-            if len(modulo_list)>0:
+            if len(modulo_list) > 0:
                 cls.modulo = modulo_list[0]
 
     def meta(self, meta):

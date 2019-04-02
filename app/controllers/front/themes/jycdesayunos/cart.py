@@ -78,7 +78,7 @@ class cart(base):
         ):
             logueado = usuario_model.verificar_sesion()
             if not logueado:
-                cookie = functions.get_cookie()
+                cookie = functions.get_cookie('cookieusuario' + prefix_site)
                 if cookie != False:
                     logueado = usuario_model.login_cookie(cookie)
 

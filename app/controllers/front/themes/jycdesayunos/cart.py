@@ -442,6 +442,8 @@ class cart(base):
             "mensaje": "No has modificado un producto valido. Por favor recarga la pagina e intenta nuevamente",
         }
         campos = app.post
+        
+        print(campos)
         if "idproductoatributo" in campos and "idpedidoproducto" in campos:
             carro = cart.current_cart(True)
             if "productos" in carro:

@@ -99,7 +99,7 @@ class product(base):
         ret["body"] += bc.normal(self.breadcrumb)["body"]
 
         pl = product_list()  # product_list.php
-        product_list = pl.product_list(categoria)  # Lista de productos, renderiza vista
+        prod_list = pl.product_list(categoria)  # Lista de productos, renderiza vista
         sidebar = pl.sidebar(categoria)  # genera sidebar, renderiza vista
         pl.orden_producto()  # genera lista de filtros
         pl.limit_producto()  # genera lista de cantidad de productos por pagina
@@ -107,7 +107,7 @@ class product(base):
         pl.is_search()  # Genera texto de busqueda, si existe
 
         data = {}
-        data["product_list"] = product_list
+        data["product_list"] = prod_list
         data["sidebar"] = sidebar
 
         ret["body"].append(("product/category", data))

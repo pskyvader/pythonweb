@@ -277,6 +277,8 @@ class order(base):
 
         iddireccion = direcciones_pedido[0][0]
 
+        print(atributos)
+
         for p in carro["productos"]:
             p["atributo"] = atributos[p["idproductoatributo"]]["titulo"]
             if 0 == p["idpedidodireccion"]:

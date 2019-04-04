@@ -154,9 +154,9 @@ class order(base):
                     atributos[k]["selected"] = True
                 else:
                     atributos[k]["selected"] = False
-            
-            print('1',carro["productos"][key]["atributos"])
-            print('2',p["atributos"])
+        
+        for p in carro['productos']:
+            print(p["atributos"])
             
         
         sidebar = order.sidebar(carro)

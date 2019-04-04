@@ -3,14 +3,14 @@
         <div class="content">
             <div class="row">
                 <div class="col">
-                    {steps}
+                    {{steps}}
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-8">
                     <div class="m-b-30">
                         <div class="responsive_grid-">
-                            {foreach productos}
+                            {% for p in productos %}
                             <div class="producto">
                                 <div class="row grid-table-heading d-none d-md-flex">
                                     <div class="col-md-2 grid-item"></div>
@@ -21,32 +21,32 @@
                                 </div>
                                 <div class="row grid-table">
                                     <div class="col-6 d-md-none grid-item heading-item"></div>
-                                    <div class="col-6 col-md-2 grid-item img"><img src="{foto}" alt="{titulo}"></div>
+                                    <div class="col-6 col-md-2 grid-item img"><img src="{{p.foto}}" alt="{{p.titulo}}"></div>
                                     <div class="col-6 d-md-none grid-item heading-item"><b>Producto</b></div>
                                     <div class="col-6 col-md-3 grid-item">
-                                        <h3><a href="{url}">{titulo}</a></h3>
+                                        <h3><a href="{{p.url}}">{{p.titulo}}</a></h3>
                                         <!--<p class="ml"></p>-->
                                     </div>
                                     <div class="col-6 d-md-none grid-item heading-item"><b>Globo</b></div>
                                     <div class="col-6 col-md-3 grid-item">
-                                        <select name="" id="" required="" class="form-control producto_atributo" data-id="{idpedidoproducto}">
+                                        <select name="" id="" required="" class="form-control producto_atributo" data-id="{{p.idpedidoproducto}}">
                                             <option value="" selected="" disabled="" hidden="">Selecciona un globo para tu desayuno</option>
-                                            {foreach atributos}
-                                            <option value="{idproducto}" data-foto="{foto}" {if selected} selected="" {/if selected}>{titulo}</option>
-                                            {/foreach atributos}
+                                            {% for a in p.atributos %}
+                                            <option value="{{a.idproducto}}" data-foto="{{a.foto}}" {% if a.selected %} selected="" {% endfor %}>{{a.titulo}}</option>
+                                            {% endfor %}
                                         </select>
                                     </div>
                                     <div class="col-6 d-md-none grid-item d-none heading-item"><b>Cantidad</b></div>
                                     <div class="col-6 col-md-2 grid-item d-none">
-                                        <input type="number" value="{cantidad}" min="1" max="{stock}" class="form-control">
+                                        <input type="number" value="{{p.cantidad}}" min="1" max="{{p.stock}}" class="form-control">
                                     </div>
                                     <div class="col-6 d-md-none grid-item heading-item"><b>Precio total</b></div>
                                     <div class="col-6 col-md-3 grid-item">
-                                        <b class="card-price">{total}</b>
+                                        <b class="card-price">{{p.total}}</b>
                                     </div>
                                     <div class="col-6 d-md-none grid-item heading-item d-none"><b>Quitar</b></div>
                                     <div class="col-6 col-md-1 grid-item text-center d-none d-md-flex" data-toggle="tooltip" title="Quitar">
-                                        <i onclick="remove_cart({idpedidoproducto},$(this));" class="fa fa-remove"></i>
+                                        <i onclick="remove_cart({{p.idpedidoproducto}},$(this));" class="fa fa-remove"></i>
                                     </div>
                                 </div>
                                 
@@ -56,20 +56,20 @@
                                 <div class="row grid-table mb-5 last">
                                     <div class="col-6 d-md-none grid-item heading-item"><b>Mensaje</b></div>
                                     <div class="col-12 grid-item">
-                                        <textarea class="form-control mensaje_pedido" data-id="{idpedidoproducto}" name="" cols="30" rows="3" placeholder="Escribe tu mensaje para este desayuno">{mensaje}</textarea>
+                                        <textarea class="form-control mensaje_pedido" data-id="{{p.idpedidoproducto}}" name="" cols="30" rows="3" placeholder="Escribe tu mensaje para este desayuno">{{p.mensaje}}</textarea>
                                     </div>
                                     <div class="col-6 d-md-none grid-item heading-item"><b>Quitar</b></div>
                                     <div class="col-6 d-md-none col-md-1 grid-item text-center" data-toggle="tooltip" title="Quitar">
-                                        <i onclick="remove_cart({idpedidoproducto},$(this));" class="fa fa-remove"></i>
+                                        <i onclick="remove_cart({{p.idpedidoproducto}},$(this));" class="fa fa-remove"></i>
                                     </div>
                                 </div>
                             </div>
-                            {/foreach productos}
+                            {% endfor %}
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-4">
-                    {sidebar}
+                    {{sidebar}}
                 </div>
             </div>
         </div>

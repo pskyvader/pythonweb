@@ -147,7 +147,7 @@ class order(base):
         
         for key,p in enumerate(carro["productos"]):
             carro["productos"][key]["atributos"] = attr.copy()
-            print(p["atributos"])
+
 
         for key,p in enumerate(carro["productos"]):
             atributos = carro["productos"][key]["atributos"]

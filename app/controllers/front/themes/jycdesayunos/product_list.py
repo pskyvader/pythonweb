@@ -138,7 +138,7 @@ class product_list(base):
 
         if self.limit in limits:
             limits[self.limit]["active"] = True
-        return {"limit_producto": limits.items()}
+        return {"limit_producto": limits.values()}
 
     def product_list(self, categoria=None):
         where = {}

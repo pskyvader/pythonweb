@@ -237,9 +237,7 @@ class product_list(base):
         pagination.append(
             {
                 "class_page": "next " + ("" if page < total else "disabled"),
-                "url_page": functions.generar_url(self.url)
-                if page < total
-                else functions.generar_url(self.url, False),
+                "url_page": functions.generar_url(self.url) if page < total else functions.generar_url(self.url, False),
                 "text_page": '<i class="fa fa-angle-right"> </i> ',
             }
         )
@@ -248,8 +246,6 @@ class product_list(base):
             app.get["page"] = aux_page
         else:
             del app.get["page"]
-        
-        print(pagination)
 
         return {"pagination": pagination}
 

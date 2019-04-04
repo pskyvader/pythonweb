@@ -10,13 +10,13 @@
                 <div class="col-lg-8">
                     <div class="m-b-30">
                         <div class="grupo_pedido">
-                            <a href="{url_direcciones}" class="btn btn-primary">Modificar direcciones</a>
-                            <hr class="mb-5"/>
+                            <a href="{{url_direcciones}}" class="btn btn-primary">Modificar direcciones</a>
+                            <hr class="mb-5" />
                             <p>Puedes agregar direcciones adicionales a este pedido para enviar a distintas direcciones</p>
                             <button class="btn btn-info btn-xl d-block mx-auto text-white" id="new_grupo">Direccion adicional</button>
                             <div class="lista_direcciones mt-5">
-                                {foreach direcciones}
-                                <div class="direccion" data-id="{idpedidodireccion}">
+                                {% for d in direcciones %}
+                                <div class="direccion" data-id="{{d.idpedidodireccion}}">
                                     <div class="row grid-table-heading d-none d-md-flex">
                                         <div class="col-md-3 grid-item"><b>Direccion</b></div>
                                         <div class="col-md-3 grid-item"><b>Fecha de entrega</b></div>
@@ -33,27 +33,27 @@
                                         <div class="col-6 col-md-3 grid-item pt-5">
                                             <select name="" id="" class="form-control direccion_entrega">
                                                 <option value="" disabled="" hidden="" selected="">Selecciona una direccion *</option>
-                                                {foreach direccion_entrega}
-                                                <option data-precio="{precio}" value="{0}" {if selected} selected="" {/if selected}>{titulo}</option>
-                                                {/foreach direccion_entrega}
+                                                {% for de in d.direccion_entrega %}
+                                                <option data-precio="{{de.precio}}" value="{{de.0}}" {% if de.selected %} selected="" {% endif %}>{{de.titulo}}</option>
+                                                {% endfor %}
                                             </select>
                                         </div>
                                         <div class="col-6 d-md-none grid-item heading-item"><b>Fecha de entrega *</b></div>
                                         <div class="col-6 col-md-3 grid-item ">
-                                            <input type="text" name="" id="" class="form-control fecha_entrega" value="{fecha_entrega}">
+                                            <input type="text" name="" id="" class="form-control fecha_entrega" value="{{d.fecha_entrega}}">
                                         </div>
                                         <div class="col-6 d-md-none grid-item heading-item"><b>Hora de entrega *</b></div>
                                         <div class="col-6 col-md-3 grid-item ">
                                             <select name="" id="" class="form-control hora_entrega">
-                                                    <option value="" disabled="" hidden="" selected="">Selecciona un horario *</option>
-                                                {foreach horarios_entrega}
-                                                <option value="{hora}" {if selected} selected="" {/if selected}>{titulo}</option>
-                                                {/foreach horarios_entrega}
+                                                <option value="" disabled="" hidden="" selected="">Selecciona un horario *</option>
+                                                {% for he in d.horarios_entrega %}
+                                                <option value="{{he.hora}}" {% if he.selected %} selected="" {% endif %}>{{he.titulo}}</option>
+                                                {% endfor %}
                                             </select>
                                         </div>
                                         <div class="col-6 d-md-none grid-item heading-item"><b>valor de envio</b></div>
                                         <div class="col-6 col-md-2 grid-item">
-                                            <span class="precio">{precio}</span>
+                                            <span class="precio">{{d.precio}}</span>
                                         </div>
                                         <div class="col-6 d-md-none grid-item heading-item"><b>Quitar</b></div>
                                         <div class="col-6 d-md-none col-md-1 grid-item text-center remove_direccion" style="display:none;" data-toggle="tooltip" title="Quitar">
@@ -63,26 +63,26 @@
                                     <div class="row grid-table py-5 mb-5 last">
                                         <div class="col-12">
                                             <div class="lista_productos_pedido">
-                                                {foreach productos}
-                                                <div class="producto" data-id="{idpedidoproducto}">
+                                                {% for p in d.productos %}
+                                                <div class="producto" data-id="{{p.idpedidoproducto}}">
                                                     <div class="row grid-table align-items-center py-2">
                                                         <div class="col-2 col-md-1 handle text-center">
                                                             <i class="fa fa-arrows"></i>
                                                         </div>
                                                         <div class="col-10 col-md-11 titulo">
-                                                            <img src="{foto}" alt="{titulo}">
-                                                            <a class="ml-3" href="{url}">{titulo}</a>
-                                                            <span class="mx-3">({atributo})</span>
-                                                            <span>- {mensaje}</span>
+                                                            <img src="{{p.foto}}" alt="{{p.titulo}}">
+                                                            <a class="ml-3" href="{{p.url}}">{{p.titulo}}</a>
+                                                            <span class="mx-3">({{p.atributo}})</span>
+                                                            <span>- {{p.mensaje}}</span>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                {/foreach productos}
+                                                {% endfor %}
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                {/foreach direcciones}
+                                {% endfor %}
                             </div>
                         </div>
                     </div>

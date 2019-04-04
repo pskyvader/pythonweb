@@ -98,6 +98,7 @@ class product_list(base):
                 print(op)
                 for o in op:
                     o = o.strip()
+            print(orden_producto)
 
         if not isinstance(orden_producto, list) or len(orden_producto) == 0:
             orden_producto = [
@@ -125,7 +126,7 @@ class product_list(base):
                     "active": "order" in app.get and app.get["order"] == op[0],
                 }
             )
-        print(orden_producto,orden_producto_mostrar)
+        print(orden_producto_mostrar)
 
         return {"view": self.view, "orden_producto": orden_producto_mostrar}
 

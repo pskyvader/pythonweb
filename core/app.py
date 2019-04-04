@@ -283,34 +283,34 @@ class app:
         from .functions import functions
 
         post = {}
-        #try:
-        for key in p.keys():
-            if isinstance(p[key], FieldStorage) and p[key].file and p[key].filename!=None :
-                if not "file" in post:
-                    post["file"] = []
-                tmpfile = p[key].file.read()
-                name = escape(p[key].filename)
-                mime = functions.get_content_type_by_filename(name)
-                if mime == None:
-                    mime = "text/plain"
-                post["file"].append(
-                    {"name": name, "type": mime, "tmp_name": tmpfile}
-                )
-            elif isinstance(p[key], MiniFieldStorage):
-                post[key] = p[key].value
-            elif isinstance(p[key], list):
-                tmp_list = []
-                for a in p[key]:
-                    if isinstance(a, MiniFieldStorage):
-                        tmp_list.append(a.value)
-                    else:
-                        tmp_list.append(a)
-                post[key] = tmp_list
-            else:
-                post[key] = p[key]
-        #except Exception as error:
+        try:
+            for key in p.keys():
+                if isinstance(p[key], FieldStorage) and p[key].file and p[key].filename!=None :
+                    if not "file" in post:
+                        post["file"] = []
+                    tmpfile = p[key].file.read()
+                    name = escape(p[key].filename)
+                    mime = functions.get_content_type_by_filename(name)
+                    if mime == None:
+                        mime = "text/plain"
+                    post["file"].append(
+                        {"name": name, "type": mime, "tmp_name": tmpfile}
+                    )
+                elif isinstance(p[key], MiniFieldStorage):
+                    post[key] = p[key].value
+                elif isinstance(p[key], list):
+                    tmp_list = []
+                    for a in p[key]:
+                        if isinstance(a, MiniFieldStorage):
+                            tmp_list.append(a.value)
+                        else:
+                            tmp_list.append(a)
+                    post[key] = tmp_list
+                else:
+                    post[key] = p[key]
+        except Exception as error:
             # print('Error al obtener post: ' + repr(error) + repr(p)
-        #    raise RuntimeError("Error al obtener post: " + repr(error) + repr(p))
+            raise RuntimeError("Error al obtener post: " + repr(error) + repr(p))
         return post
 
     @staticmethod

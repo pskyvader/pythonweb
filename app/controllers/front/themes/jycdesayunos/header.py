@@ -19,7 +19,6 @@ class header:
     def normal(self):
         ret = {"body": []}
         if "ajax" not in app.post:
-            self.data["header_top"] = self.header_top()
             self.data["cart"] = self.header_cart()
             self.data["menu"] = self.menu()
             config = app.get_config()
@@ -39,6 +38,8 @@ class header:
             self.data["search"] = (
                 functions.remove_tags(app.get["search"]) if "search" in app.get else ""
             )
+            
+            self.data["header_top"] = self.header_top()
             ret["body"].append(("header", self.data))
         return ret
 
@@ -54,6 +55,8 @@ class header:
                 }
             )
         data = {}
+        data["telefono"]=self.data["telefono"]
+        data["email"]=self.data["email"]
         data["social"] = redes_sociales
         return ("header-top", data)
 

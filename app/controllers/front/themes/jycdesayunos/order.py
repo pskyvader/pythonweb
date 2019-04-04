@@ -100,7 +100,6 @@ class order(base):
             ret["body"].append(("order/error", {"mensaje": mensaje}))
         else:
             steps = self.steps_show(current_step, self.url)
-            data = self."step" + str(current_step)(carro, self.url)
             class_name = "step" + str(current_step)
             data = self.class_name(carro, self.url)
             data["steps"] = steps

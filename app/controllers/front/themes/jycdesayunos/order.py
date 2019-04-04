@@ -53,7 +53,7 @@ class order(base):
         self.meta(self.seo)
         self.url.append("step")
         current_step = 1
-        if 0 in var and int(var[0]) in self.steps:
+        if len(var)>0 and int(var[0]) in self.steps:
             current_step = int(var[0])
 
         self.url.append(current_step)

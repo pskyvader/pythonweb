@@ -511,7 +511,7 @@ class image:
     def delete(folder, file='', subfolder='', sub=''):
         import shutil
         if "" == file and '' != subfolder:
-            url = image.get_upload_dir() + folder + '/' + subfolder + '/'
+            url = image.get_upload_dir() + str(folder) + '/' + subfolder + '/'
             if '' != sub:
                 url += sub+'/'
             my_file = Path(url)

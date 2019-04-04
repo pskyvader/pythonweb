@@ -53,8 +53,8 @@ class order(base):
         self.meta(self.seo)
         self.url.append("step")
         current_step = 1
-        if 0 in var and var[0] in self.steps:
-            current_step = var[0]
+        if 0 in var and int(var[0]) in self.steps:
+            current_step = int(var[0])
 
         self.url.append(current_step)
         logueado = user.verificar(True)
@@ -63,7 +63,6 @@ class order(base):
             app.get["next_url"] = "/".join(self.url)
             self.url = ["cuenta", "registro"]
 
-        print(current_step,var[0])
         if 2 == current_step:
             direcciones = usuariodireccion_model.getAll(
                 {"idusuario": app.session[usuario_model.idname + app.prefix_site]}

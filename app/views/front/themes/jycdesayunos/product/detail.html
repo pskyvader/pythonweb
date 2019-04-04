@@ -36,11 +36,11 @@
                             <li><i>(1 review)</i></li>
                         </ul>-->
                         <div class="card-price-group">
-                                {% if old_price !=price %}
-                                <span class="old-price">{{old_price}}</span>
-                                {% endif %}
-                                <span class="card-price">{{price}}</span>
-                            </div>
+                            {% if old_price !=price %}
+                            <span class="old-price">{{old_price}}</span>
+                            {% endif %}
+                            <span class="card-price">{{price}}</span>
+                        </div>
                         <p id="nav-home2" class="resumen" role="tabpanel" aria-labelledby="nav-home-tab" aria-expanded="true">{{text}}</p>
                         {% if stock<=0 %}
                         <div class="alert alert-warning">Producto agotado</div>

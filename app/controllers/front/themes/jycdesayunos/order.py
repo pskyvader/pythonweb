@@ -153,8 +153,8 @@ class order(base):
                     atributos[k]["selected"] = True
                 else:
                     atributos[k]["selected"] = False
-            print(atributos)
             carro["productos"][key]["atributos"] = atributos
+            print(carro["productos"][key]["atributos"])
         
         print(carro['productos'][0]['atributos'])
             

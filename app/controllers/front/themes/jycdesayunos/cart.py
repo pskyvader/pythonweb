@@ -229,7 +229,7 @@ class cart(base):
             "body": "",
         }
         respuesta = {"exito": False, "mensaje": ""}
-        campos = app.post["campos"]
+        campos = app.post
         if "id" not in campos or "cantidad" not in campos:
             respuesta["mensaje"] = "No has agregado un producto valido"
             ret["body"] = json.dumps(respuesta, ensure_ascii=False)

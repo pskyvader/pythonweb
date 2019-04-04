@@ -5,36 +5,35 @@
             <div class="col">
                 <h2 class="title-section">{{title}}</h2>
                 <form class="direccion my-4">
-                    <input type="hidden" name="token" value="{token}" required="">
-                    <input type="hidden" name="id" value="{id}">
+                    <input type="hidden" name="token" value="{{token}}" required="">
+                    <input type="hidden" name="id" value="{{id}}">
                     <div class="row">
                         <div class="col-12 mt-5 mb-4">
                             <h5>Informacion de envio</h5>
                             <hr>
                             <p>Informacion obligatoria.</p>
                         </div>
-                        {foreach campos_requeridos}
-                        {if is_text}
+                        {% for cr in campos_requeridos %}
+                        {% if cr.tipo=='text' %}
                         <div class="col-lg-6">
-                            <label>{texto_ayuda} &nbsp;</label>
-                            <input type="{tipo}" class="form-control" name="{field}" placeholder="{titulo} {if required} * {/if required}" {if required} required="" {/if required} value="{value}">
-                            
+                            <label>{{cr.texto_ayuda}} &nbsp;</label>
+                            <input type="{{cr.tipo}}" class="form-control" name="{{cr.field}}" placeholder="{{cr.titulo}} {% if cr.required %} * {% endif %}" {% if cr,required %} required="" {% endif %} value="{{cr.value}}">
                         </div>
-                        {else is_text}
+                        {% else %}
                         <div class="col-lg-6">
-                                <label>{texto_ayuda} &nbsp;</label>
-                            <select class="form-control" name="{field}" id="{field}" {if required} required="" {/if required}>
-                                <option value="" selected="" hidden="" disabled="">{titulo} {if required} * {/if required}</option>
-                                {foreach options}
-                                <option value="{value}" {if selected} selected="" {/if selected}>{title}</option>
-                                {/foreach options}
+                            <label>{{cr.texto_ayuda}} &nbsp;</label>
+                            <select class="form-control" name="{{cr.field}}" id="{{cr.field}}" {% if required %} required="" {% endif %}>
+                                <option value="" selected="" hidden="" disabled="">{{cr.titulo}} {% if required %} * {% endif %}</option>
+                                {% for o in options %}
+                                <option value="{{o.value}}" {% if o.selected %} selected="" {% endif %}>{{o.title}}</option>
+                                {% endfor %}
                             </select>
-                           </div>
-                        {/if is_text}
-                        {/foreach campos_requeridos}
+                        </div>
+                        {% endif %}
+                        {% endfor %}
                         <div class="col-12 mt-5 mb-4">
-                                <h5>Informacion opcional</h5>
-                                <hr>
+                            <h5>Informacion opcional</h5>
+                            <hr>
                             <p>Los siguientes campos son opcionales. <br> <em>Rogamos llenar la mayor cantidad de datos para proveer un mejor servicio de entrega.</em></p>
                             <a class="btn btn-primary collapsed" data-toggle="collapse" href="#campos_opcionales" role="button" aria-expanded="false" aria-controls="campos_opcionales" onclick="$(this).hide();">
                                 Mostrar campos opcionales
@@ -42,21 +41,21 @@
                         </div>
                         <div class="collapse col-12" id="campos_opcionales">
                             <div class="row">
-                                {foreach campos_opcionales}
-                                {if is_text}
+                                {% for co in campos_opcionales %}
+                                {% if co.tipo=='text' %}
                                 <div class="col-lg-6">
-                                        <label>{texto_ayuda} &nbsp;</label>
-                                    <input type="{tipo}" class="form-control" name="{field}" placeholder="{titulo} {if required} * {/if required}" {if required} required="" {/if required} value="{value}">
+                                    <label>{{co.texto_ayuda}} &nbsp;</label>
+                                    <input type="{{co.tipo}}" class="form-control" name="{{co.field}}" placeholder="{{co.titulo}} {% if co.required %} * {% endif %}" {% if co.required %} required="" {% endif %} value="{{co.value}}">
                                 </div>
-                                {else is_text}
+                                {% else %}
                                 <div class="col-12">
-                                    <label for="{field}">{titulo} {if required} * {/if required}</label>
+                                    <label for="{{co.field}}">{{co.titulo}} {% if co.required %} * {% endif %}</label>
                                     <br />
-                                    <sub>{texto_ayuda} &nbsp;</sub>
-                                    <textarea name="{field}" class="form-control" id="{field}" cols="30" rows="10" {if required} required="" {/if required}>{value}</textarea>
+                                    <sub>{{co.texto_ayuda}} &nbsp;</sub>
+                                    <textarea name="{{co.field}}" class="form-control" id="{{co.field}}" cols="30" rows="10" {% if co.required %} required="" {% endif %}>{{co.value}}</textarea>
                                 </div>
-                                {/if is_text}
-                                {/foreach campos_opcionales}
+                                {% endif %}
+                                {% endfor %}
                             </div>
                         </div>
                     </div>

@@ -235,6 +235,7 @@ class configuracion_administrador(base):
                 moduloconfiguracion['detalle'])
             if len(row) == 1:
                 moduloconfiguracion['id'] = row[0][0]
+                moduloconfiguracion['estado'] = row[0]['estado']
                 moduloconfiguracion_model.update(
                     moduloconfiguracion.copy(), False)
                 for h in hijo:
@@ -249,13 +250,14 @@ class configuracion_administrador(base):
                     h['estado'] = json.dumps(h['estado'])
                     if len(row2) == 1:
                         h['id'] = row2[0][0]
+                        h['estado'] = row2[0]['estado']
                         modulo_model.update(h, False)
                     else:
                         modulo_model.insert(h, False)
 
             else:
-                id = moduloconfiguracion_model.insert(
-                    moduloconfiguracion, False)
+                moduloconfiguracion['estado'] = False
+                id = moduloconfiguracion_model.insert( moduloconfiguracion, False)
                 for h in hijo.values():
                     h['idmoduloconfiguracion'] = id
                     h['menu'] = json.dumps(h['menu'])

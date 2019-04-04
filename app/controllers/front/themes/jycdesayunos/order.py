@@ -156,7 +156,7 @@ class order(base):
                 else:
                     a["selected"] = False
                 print(a)
-                atributos.append(a)
+                atributos.append(a.copy())
                     
         for p in carro['productos']:
             print(p["atributos"])

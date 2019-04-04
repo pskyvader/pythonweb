@@ -93,13 +93,11 @@ class product_list(base):
         orden_producto = configuracion_model.getByVariable("orden_producto")
         if not isinstance(orden_producto, bool):
             orden_producto = orden_producto.split(",")
-            for k,op in enumerate(orden_producto):
+            for key,op in enumerate(orden_producto):
                 op = op.split(":")
-                print(op)
-                for o in op:
-                    o = o.strip()
-                orden_producto[k]=op
-            print(orden_producto)
+                for k,o in enumerate(op):
+                    op[k] = o.strip()
+                orden_producto[key]=op
 
         if not isinstance(orden_producto, list) or len(orden_producto) == 0:
             orden_producto = [
@@ -127,7 +125,6 @@ class product_list(base):
                     "active": "order" in app.get and app.get["order"] == op[0],
                 }
             )
-        print(orden_producto_mostrar)
 
         return {"view": self.view, "orden_producto": orden_producto_mostrar}
 

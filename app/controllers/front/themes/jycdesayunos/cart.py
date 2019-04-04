@@ -451,7 +451,6 @@ class cart(base):
                             "id": p["idpedidoproducto"],
                             "idproductoatributo": int(campos["idproductoatributo"]),
                         }
-                        print(update)
                         idpedidoproducto = pedidoproducto_model.update(update)
                         respuesta["exito"] = True
                         break

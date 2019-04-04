@@ -149,6 +149,7 @@ class order(base):
         for p in carro["productos"]:
             atributos = attr.copy()
             for a in atributos:
+                print(a["idproducto"],p["idproductoatributo"])
                 if a["idproducto"] == p["idproductoatributo"]:
                     a["selected"] = True
                 else:

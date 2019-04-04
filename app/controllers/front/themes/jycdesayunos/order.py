@@ -193,7 +193,6 @@ class order(base):
         hora_minima = datetime.strptime("08:00", "%H:%M")
         hora_maxima = datetime.strptime("12:00", "%H:%M")
         hora_corte=datetime.now().replace(hour=18, minute=0)
-        print(hora_corte.timestamp())
         hora_actual = hora_minima
 
         hora2 = (hora_actual + timedelta(hours=1)).strftime("%H:%M")
@@ -222,6 +221,7 @@ class order(base):
 
         
 
+        print(hora_corte.timestamp())
         print(time() , functions.current_time())
 
         if time() > hora_corte.timestamp():

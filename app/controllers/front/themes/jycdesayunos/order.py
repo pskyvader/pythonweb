@@ -133,11 +133,10 @@ class order(base):
     @staticmethod
     def step1(carro, url):
         attr = producto_model.getAll({"tipo": 2}, {"order": "titulo ASC"})
-        for lp in attr:
+        for key,lp in enumerate(attr):
             portada = image.portada(lp["foto"])
             thumb_url = image.generar_url(portada, "cart")
-            print(thumb_url)
-            lp = {
+            attr[key] = {
                 "titulo": lp["titulo"],
                 "idproducto": lp["idproducto"],
                 "foto": thumb_url,

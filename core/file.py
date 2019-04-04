@@ -72,7 +72,7 @@ class file(image):
     def delete(folder, file_name='', subfolder='', sub=''):
         import shutil
         if "" == file_name and '' != subfolder:
-            url = file.get_upload_dir() + folder + '/' + subfolder + '/'
+            url = file.get_upload_dir() + folder + '/' + str(subfolder) + '/'
             if '' != sub:
                 url += sub+'/'
             my_file = Path(url)

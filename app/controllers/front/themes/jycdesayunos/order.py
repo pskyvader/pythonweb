@@ -142,7 +142,6 @@ class order(base):
                 "foto": thumb_url,
             }
         
-        print(attr)
 
         for p in carro["productos"]:
             atributos = attr.copy()
@@ -171,7 +170,6 @@ class order(base):
                 {"next_url": "/".join([url[0], "step", 2])},
             )
 
-        print(data['url_next'])
         return data
 
     @staticmethod

@@ -3,7 +3,7 @@
         <div class="content">
             <div class="row">
                 <div class="col">
-                    {steps}
+                    {{steps}}
                 </div>
             </div>
             <div class="row">
@@ -13,59 +13,59 @@
                         <p>Si toda la información es correcta, puedes <b>cerrar</b> el pedido y seleccionar medios de pago. O puedes <b>volver</b> y modificar tu pedido.</p>
                         <div class="grupo_pedido">
                             <div class="lista_direcciones mt-5">
-                                {foreach direcciones}
-                                <div class="direccion" data-id="{idpedidodireccion}">
-                                        <div class="row grid-table-heading d-none d-md-flex">
-                                                <div class="col-md-7 grid-item"><b>Direccion</b></div>
-                                                <div class="col-md-3 grid-item"><b>Fecha de entrega</b></div>
-                                                <div class="col-md-2 grid-item"><b>Valor de envio</b></div>
-                                            </div>
+                                {% for d in direcciones %}
+                                <div class="direccion" data-id="{{d.idpedidodireccion}}">
+                                    <div class="row grid-table-heading d-none d-md-flex">
+                                        <div class="col-md-7 grid-item"><b>Direccion</b></div>
+                                        <div class="col-md-3 grid-item"><b>Fecha de entrega</b></div>
+                                        <div class="col-md-2 grid-item"><b>Valor de envio</b></div>
+                                    </div>
                                     <div class="row grid-table align-items-md-baseline">
                                         <div class="col-12 d-md-none grid-item heading-item pt-5"><b>Direccion</b></div>
                                         <div class="col-12 col-md-7 grid-item pb-5">
-                                            {direccion_entrega}
+                                            {{d.direccion_entrega}}
                                         </div>
                                         <div class="col-12 d-md-none grid-item heading-item"><b>Fecha de entrega</b></div>
                                         <div class="col-12 col-md-3 grid-item ">
-                                            {fecha_entrega} a las {hora_entrega}
+                                            {{d.fecha_entrega}} a las {{d.hora_entrega}}
                                         </div>
                                         <div class="col-12 d-md-none grid-item heading-item"><b>valor de envio</b></div>
                                         <div class="col-12 col-md-2 grid-item">
-                                            <span class="precio">{precio}</span>
+                                            <span class="precio">{{d.precio}}</span>
                                         </div>
                                     </div>
                                     <div class="row grid-table py-5 mb-5 last">
                                         <div class="col-12">
                                             <div class="lista_productos_pedido">
-                                                {foreach productos}
+                                                {% for p in d.productos %}
                                                 <div class="producto">
                                                     <div class="row grid-table align-items-center py-2 bg-white">
                                                         <div class="col-12 col-md-10 titulo mb-3">
-                                                            <img src="{foto}" alt="{titulo}">
-                                                            <a class="ml-3" href="{url}">{titulo}</a>
-                                                            <span class="mx-3">({atributo})</span>
+                                                            <img src="{{p.foto}}" alt="{{p.titulo}}">
+                                                            <a class="ml-3" href="{{p.url}}">{{p.titulo}}</a>
+                                                            <span class="mx-3">({{p.atributo}})</span>
                                                         </div>
                                                         <div class="col-12 col-md-2 text-right">
-                                                            <span>{total}</span>
+                                                            <span>{{p.total}}</span>
                                                         </div>
                                                         <div class="col-12 mt-4">
-                                                            <b>Mensaje:</b><br/>
-                                                            <span>{mensaje}</span>
+                                                            <b>Mensaje:</b><br />
+                                                            <span>{{p.mensaje}}</span>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                {/foreach productos}
+                                                {% endfor %}
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                {/foreach direcciones}
+                                {% endfor %}
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-4">
-                    {sidebar}
+                    {{sidebar}}
                 </div>
             </div>
         </div>

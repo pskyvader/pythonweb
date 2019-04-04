@@ -149,11 +149,13 @@ class order(base):
         for p in carro["productos"]:
             atributos = attr.copy()
             for a in atributos:
-                print(type(a["idproducto"]),type(p["idproductoatributo"]))
                 if a["idproducto"] == p["idproductoatributo"]:
                     a["selected"] = True
                 else:
                     a["selected"] = False
+                print(a)
+            
+            print(atributos)
             p["atributos"] = atributos
 
         sidebar = order.sidebar(carro)

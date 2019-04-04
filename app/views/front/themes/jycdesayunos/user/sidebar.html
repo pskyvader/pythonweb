@@ -2,9 +2,9 @@
     <div class="box">
         <h2 class="title">Mi cuenta</h2>
         <ul class="list list-md list-3">
-            {foreach sidebar_user}
-            <li class="{active}"><a href="{url}">{title}</a></li>
-            {/foreach sidebar_user}
+            {% for su in sidebar_user %}
+            <li class="{{su.active}}"><a href="{{su.url}}">{{su.title}}</a></li>
+            {% endfor %}
         </ul>
     </div>
 </div>

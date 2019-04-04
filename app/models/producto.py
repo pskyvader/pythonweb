@@ -73,6 +73,8 @@ class producto(base_model):
             deleted = False
             if 'idproductocategoria' in r:
                 r['idproductocategoria'] = json.loads(r['idproductocategoria'])
+                
+                print(r['idproductocategoria'],idproductocategoria)
                 if idproductocategoria != None and idproductocategoria not in r['idproductocategoria']:
                     deleted = True
 
@@ -91,7 +93,6 @@ class producto(base_model):
                 row_copy.append(r)
 
         row = row_copy
-        print(row)
 
         if limit != None:
             if limit2 == 0:

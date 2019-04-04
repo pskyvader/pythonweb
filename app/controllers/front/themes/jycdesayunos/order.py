@@ -198,6 +198,7 @@ class order(base):
         hora2 = (hora_actual + timedelta(hours=1)).strftime("%H:%M")
 
         while datetime.strptime(hora2, "%H:%M") < hora_maxima:
+            print('a')
             hora1 = hora_actual.strftime("%H:%M")
             hora2 = (hora_actual + timedelta(hours=1)).strftime("%H:%M")
 

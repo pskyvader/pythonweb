@@ -185,6 +185,7 @@ class order(base):
         """
         from datetime.datetime import strptime, strftime
         from datetime import timedelta
+        from time import time
 
         horarios_entrega = {}
         hora_minima = strptime("08:00", "%R")

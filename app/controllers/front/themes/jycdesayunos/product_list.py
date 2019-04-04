@@ -124,6 +124,7 @@ class product_list(base):
                     "active": "order" in app.get and app.get["order"] == op[0],
                 }
             )
+        print(orden_producto_mostrar)
 
         return {"view": self.view, "orden_producto": orden_producto_mostrar}
 

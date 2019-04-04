@@ -155,6 +155,7 @@ class order(base):
                     a["selected"] = True
                 else:
                     a["selected"] = False
+                print(a)
                 atributos.append(a)
                     
         for p in carro['productos']:

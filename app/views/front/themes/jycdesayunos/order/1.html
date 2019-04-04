@@ -32,7 +32,7 @@
                                         <select name="" id="" required="" class="form-control producto_atributo" data-id="{{p.idpedidoproducto}}">
                                             <option value="" selected="" disabled="" hidden="">Selecciona un globo para tu desayuno</option>
                                             {% for a in p.atributos %}
-                                            <option value="{{a.idproducto}}" data-foto="{{a.foto}}" {% if a.selected %} selected="" {% endfor %}>{{a.titulo}}</option>
+                                            <option value="{{a.idproducto}}" data-foto="{{a.foto}}" {% if a.selected %} selected="" {% endif %}>{{a.titulo}}</option>
                                             {% endfor %}
                                         </select>
                                     </div>

@@ -93,12 +93,12 @@ class cart(base):
             "cookie_pedido" + prefix_site in app.session
             and "" != app.session["cookie_pedido" + prefix_site]
         ):
-            cart = cart.get_cart(app.session["cookie_pedido" + prefix_site])
-            if len(cart) > 0:
+            carro = cart.get_cart(app.session["cookie_pedido" + prefix_site])
+            if len(carro) > 0:
                 if return_cart:
-                    return cart
+                    return carro
                 else:
-                    ret["body"] = json.dumps(cart, ensure_ascii=False)
+                    ret["body"] = json.dumps(carro, ensure_ascii=False)
                     return ret
         if return_cart:
             return {}

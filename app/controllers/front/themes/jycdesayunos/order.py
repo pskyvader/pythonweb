@@ -103,6 +103,10 @@ class order(base):
             class_name = getattr(self, "step" + str(current_step))
             data = class_name(carro, self.url)
             data["steps"] = steps
+                
+            data['sidebar'][1]['url_next']=data["url_next"]
+            data['sidebar'][1]['url_product']=data["url_product"]
+            
             ret["body"].append(("order/" + str(current_step), data))
 
         f = footer()
@@ -166,9 +170,6 @@ class order(base):
             seo_usuario = seo_model.getById(9)
             data["url_next"] = functions.generar_url( [seo_usuario["url"], "direccion"], {"next_url": "/".join([url[0], "step", 2])}, )
 
-        print(sidebar,sidebar[0],sidebar[1])        
-        sidebar[1]['url_next']=data["url_next"]
-        sidebar[1]['url_product']=data["url_product"]
         data["sidebar"] = sidebar
         return data
 

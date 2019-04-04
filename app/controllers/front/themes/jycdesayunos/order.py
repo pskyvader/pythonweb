@@ -273,11 +273,9 @@ class order(base):
         attr = producto_model.getAll({"tipo": 2}, {"order": "titulo ASC"})
         atributos = {}
         for at in attr:
-            atributos[int(at[0])] = at
+            atributos[at[0]] = at
 
         iddireccion = direcciones_pedido[0][0]
-
-        print(atributos)
 
         for p in carro["productos"]:
             p["atributo"] = atributos[p["idproductoatributo"]]["titulo"]

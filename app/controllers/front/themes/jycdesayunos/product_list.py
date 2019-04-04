@@ -192,7 +192,6 @@ class product_list(base):
         pagination = []
         rango = 5
         minimo = 1
-        print(self.count,self.limit)
         maximo = (int)(self.count / self.limit)
         if maximo < (self.count / self.limit):
             maximo += 1

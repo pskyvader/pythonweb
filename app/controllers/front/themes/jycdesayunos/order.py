@@ -103,7 +103,7 @@ class order(base):
             class_name = getattr(self, "step" + str(current_step))
             data = class_name(carro, self.url)
             data["steps"] = steps
-            ret["body"].append(("order/" + current_step, data))
+            ret["body"].append(("order/" + str(current_step), data))
 
         f = footer()
         ret["body"] += f.normal()["body"]

@@ -185,7 +185,7 @@ class order(base):
     
         :rtype:
         """
-        import datetime
+        from datetime import datetime
         from time import time
 
         horarios_entrega = {}

@@ -190,7 +190,7 @@ class order(base):
         from time import time
 
         horarios_entrega = {}
-        hora_minima = datetime.strptime("08:00", "%R")
+        hora_minima = datetime.strptime("08:00", "%H:%M")
         hora_maxima = strptime("12:00", "%R")
         hora_corte = strptime("18:00", "%R")
         hora_actual = hora_minima

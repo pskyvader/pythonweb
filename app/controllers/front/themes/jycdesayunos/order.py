@@ -145,18 +145,18 @@ class order(base):
                 "foto": thumb_url,
             }
         
-        for key,p in enumerate(carro["productos"]):
-            carro["productos"][key]["atributos"] = attr.copy()
 
 
         for key,p in enumerate(carro["productos"]):
+            carro["productos"][key]["atributos"]=[]
             atributos = carro["productos"][key]["atributos"]
-            for k,a in enumerate(atributos):
+            for a in attr:
                 if a["idproducto"] == p["idproductoatributo"]:
-                    atributos[k]["selected"] = True
+                    a["selected"] = True
                 else:
-                    atributos[k]["selected"] = False
-        del(attr)
+                    a["selected"] = False
+                atributos.append(a)
+                    
         for p in carro['productos']:
             print(p["atributos"])
             

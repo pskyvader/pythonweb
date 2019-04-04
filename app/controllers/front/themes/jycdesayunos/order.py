@@ -156,7 +156,7 @@ class order(base):
                     atributos[k]["selected"] = True
                 else:
                     atributos[k]["selected"] = False
-        
+        del(attr)
         for p in carro['productos']:
             print(p["atributos"])
             

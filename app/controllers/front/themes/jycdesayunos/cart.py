@@ -83,11 +83,11 @@ class cart(base):
                     logueado = usuario_model.login_cookie(cookie)
 
             if logueado:
-                cart = pedido_model.getByIdusuario(
+                carro = pedido_model.getByIdusuario(
                     app.session[usuario_model.idname + prefix_site]
                 )
-                if len(cart) > 0:
-                    app.session["cookie_pedido" + prefix_site] = cart["cookie_pedido"]
+                if len(carro) > 0:
+                    app.session["cookie_pedido" + prefix_site] = carro["cookie_pedido"]
 
         if (
             "cookie_pedido" + prefix_site in app.session

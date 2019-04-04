@@ -99,6 +99,7 @@ class producto(base_model):
                 row = row[limit:limit2+1]
 
         if return_total != None:
+            print(row)
             return len(row)
         else:
             variables = {}

@@ -219,13 +219,7 @@ class order(base):
         )
 
 
-        
-
-        print(hora_corte.timestamp())
-        print(time())
-        print(functions.current_time(as_string=False))
-
-        if time() > hora_corte.timestamp():
+        if functions.current_time(as_string=False) > hora_corte.timestamp():
             fechas_bloqueadas.append(
                 {
                     "fecha": functions.formato_fecha(strtotime("+1 day"), "%F"),

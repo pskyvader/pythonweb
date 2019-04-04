@@ -161,6 +161,7 @@ class order(base):
         direcciones = usuariodireccion_model.getAll(
             {"idusuario": app.session[usuario_model.idname + app.prefix_site]}
         )
+
         if len(direcciones) > 0:
             data["url_next"] = functions.generar_url([url[0], "step", 2])
         else:
@@ -170,6 +171,7 @@ class order(base):
                 {"next_url": "/".join([url[0], "step", 2])},
             )
 
+        print(data['url_next'])
         return data
 
     @staticmethod

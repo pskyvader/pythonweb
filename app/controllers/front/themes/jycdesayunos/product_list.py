@@ -141,6 +141,7 @@ class product_list(base):
         return {"limit_producto": limits.values()}
 
     def product_list(self, categoria=None):
+        print(categoria)
         where = {}
         if self.seo["tipo_modulo"] != 0:
             where["tipo"] = self.seo["tipo_modulo"]

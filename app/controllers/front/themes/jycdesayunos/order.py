@@ -154,7 +154,6 @@ class order(base):
 
         sidebar = order.sidebar(carro)
         data = carro
-        data["sidebar"] = sidebar
         seo_producto = seo_model.getById(8)
         data["url_product"] = functions.generar_url([seo_producto["url"]])
         direcciones = usuariodireccion_model.getAll(
@@ -165,11 +164,9 @@ class order(base):
             data["url_next"] = functions.generar_url([url[0], "step", 2])
         else:
             seo_usuario = seo_model.getById(9)
-            data["url_next"] = functions.generar_url(
-                [seo_usuario["url"], "direccion"],
-                {"next_url": "/".join([url[0], "step", 2])},
-            )
-
+            data["url_next"] = functions.generar_url( [seo_usuario["url"], "direccion"], {"next_url": "/".join([url[0], "step", 2])}, )
+        
+        data["sidebar"] = sidebar
         return data
 
     @staticmethod

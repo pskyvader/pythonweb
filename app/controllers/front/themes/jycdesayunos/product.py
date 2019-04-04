@@ -100,6 +100,7 @@ class product(base):
 
         data = {}
         pl = product_list()  # product_list.py
+        print(categoria)
         prod_list = pl.product_list(categoria)  # Lista de productos, renderiza vista
         sidebar = pl.sidebar(categoria)  # genera sidebar, renderiza vista
         data.update(pl.orden_producto())  # genera lista de filtros

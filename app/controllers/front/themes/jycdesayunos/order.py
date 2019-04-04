@@ -218,6 +218,8 @@ class order(base):
             {"fecha": "2019-01-24", "texto": "Cerrado por Vacaciones"}
         )
 
+
+        print(horarios_entrega)
         
         print(
         datetime.strptime(functions.current_time("%H:%M"), "%H:%M").timestamp())

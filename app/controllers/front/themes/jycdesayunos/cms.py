@@ -121,7 +121,7 @@ class cms(base):
         data["description"] = seccion["descripcion"]
         data["image"] = image.generar_url(image.portada(seccion["foto"]), "")
         data["extra"] = extra
-        ret["body"].append(("cms-sidebar", data))
+        ret["body"].append(("cms", data))
 
         f = footer()
         ret["body"] += f.normal()["body"]

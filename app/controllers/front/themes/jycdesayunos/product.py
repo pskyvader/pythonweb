@@ -98,7 +98,7 @@ class product(base):
         bc = breadcrumb()
         ret["body"] += bc.normal(self.breadcrumb)["body"]
 
-        pl = product_list()  # product_list.php
+        pl = product_list()  # product_list.py
         prod_list = pl.product_list(categoria)  # Lista de productos, renderiza vista
         sidebar = pl.sidebar(categoria)  # genera sidebar, renderiza vista
         pl.orden_producto()  # genera lista de filtros

@@ -99,7 +99,7 @@ class order(base):
         if error:
             ret["body"].append(("order/error", {"mensaje": mensaje}))
         else:
-            steps = self.steps(current_step, self.url)
+            steps = self.steps_show(current_step, self.url)
             class_name = "step" + current_step
             data = self.class_name(carro, self.url)
             data["steps"] = steps
@@ -118,7 +118,7 @@ class order(base):
         return ("order/sidebar", data)
 
     @staticmethod
-    def steps(current_step, url):
+    def steps_show(current_step, url):
         steps = []
         for key, s in order.steps.items():
             active = current_step == key

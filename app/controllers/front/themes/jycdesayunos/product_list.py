@@ -153,6 +153,7 @@ class product_list(base):
             condiciones["palabra"] = self.search
 
         self.count = producto_model.getAll(where, condiciones, "total")
+        print(self.count)
 
         condiciones["limit"] = self.limit
         if self.page > 1:

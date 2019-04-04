@@ -153,7 +153,6 @@ class product_list(base):
             condiciones["palabra"] = self.search
 
         self.count = producto_model.getAll(where, condiciones, "total")
-        print(self.count,where,condiciones)
 
         condiciones["limit"] = self.limit
         if self.page > 1:
@@ -161,7 +160,6 @@ class product_list(base):
             condiciones["limit2"] = self.limit
 
         productos = producto_model.getAll(where, condiciones)
-        print(len(productos),where,condiciones)
         product_list = ""
         if len(productos) > 0:
             lista_productos = self.lista_productos(productos, "detail", "foto2")

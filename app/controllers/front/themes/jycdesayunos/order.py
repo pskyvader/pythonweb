@@ -128,7 +128,7 @@ class order(base):
                 {"title": s, "active": active, "disabled": disabled, "url": url_step}
             )
 
-        return view.render("order/steps", {"steps": steps})
+        return ("order/steps", {"steps": steps})
 
     @staticmethod
     def step1(carro, url):

@@ -47,6 +47,7 @@ class order(base):
             return ret
 
     def step(self, var=[]):
+        ret={'body':[]}
         error = False
         mensaje = ""
         self.meta(self.seo)

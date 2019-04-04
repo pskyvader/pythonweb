@@ -298,7 +298,7 @@ class order(base):
             fecha_entrega =  0 if dp["fecha_entrega"]=='0000-00-00 00:00:00' else datetime.strptime(dp["fecha_entrega"], "%Y-%m-%d %H:%M:%S")
             fecha_entrega =  "" if fecha_entrega < functions.current_time(as_string=False) else functions.formato_fecha(fecha_entrega, "%F") 
 
-            hora_entrega = datetime.strptime(dp["fecha_entrega"], "%H:%M")
+            hora_entrega = 0 if dp["fecha_entrega"]=='0000-00-00 00:00:00' else datetime.strptime(dp["fecha_entrega"], "%Y-%m-%d %H:%M:%S")
             hora_entrega = (
                 ""
                 if hora_entrega < functions.current_time(as_string=False)

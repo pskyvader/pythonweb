@@ -145,6 +145,8 @@ class order(base):
                 "foto": thumb_url,
             }
         
+        for p in carro['productos']:
+            print(p["atributos"])
 
         for key,p in enumerate(carro["productos"]):
             carro["productos"][key]["atributos"] = attr.copy()

@@ -38,6 +38,7 @@
                 <nav>
                     <ul class="pagination">
                         {% for p in pagination %}
+                        {{p}}
                         <li class="page-item">
                             <a class="page-link {{p.class_page}}" href="{{p.url_page}}">{{p.text_page}}</a>
                         </li>

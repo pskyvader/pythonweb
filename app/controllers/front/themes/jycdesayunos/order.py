@@ -220,9 +220,9 @@ class order(base):
         )
 
 
-        functions.current_time()
+        
 
-        print(time() , hora_corte.timestamp)
+        print(time() , functions.current_time())
 
         if time() > hora_corte.timestamp():
             fechas_bloqueadas.append(

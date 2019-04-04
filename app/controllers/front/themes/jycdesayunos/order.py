@@ -63,6 +63,7 @@ class order(base):
             app.get["next_url"] = "/".join(self.url)
             self.url = ["cuenta", "registro"]
 
+        print(current_step,var[0])
         if 2 == current_step:
             direcciones = usuariodireccion_model.getAll(
                 {"idusuario": app.session[usuario_model.idname + app.prefix_site]}
@@ -103,7 +104,6 @@ class order(base):
             class_name = getattr(self, "step" + str(current_step))
             data = class_name(carro, self.url)
             data["steps"] = steps
-                
             data['sidebar'][1]['url_next']=data["url_next"]
             data['sidebar'][1]['url_product']=data["url_product"]
             

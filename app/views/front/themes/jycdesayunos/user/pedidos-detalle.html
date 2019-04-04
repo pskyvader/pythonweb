@@ -1,35 +1,35 @@
 <section class="user user-pedidos-detalle p-t-60 pb-5">
     <div class="container">
         <div class="row">
-            {sidebar}
+            {{sidebar}}
             <div class="col content">
                 <h2 class="title-section">Pedido {cookie_pedido}</h2>
-                {if pago}
-                <h4>{total}</h4>
+                {% if medios_pago|lenght>0 %}
+                <h4>{{total}}</h4>
                 <hr class="my-5">
                 <h5>Selecciona un medio de pago.</h5>
                 <p>Puedes pagar o reintentar tu pago si hubo algún error</p>
                 <div class="medios-pago">
                     <ul>
-                        {foreach medios_pago}
+                        {% for m in medios_pago %}
                         <li>
-                            <a href="{url}" class="btn btn-block btn-primary my-5 pb-5 py-5 text-white">
-                                <h6 class="mt-0">{titulo}</h6>
-                                {resumen}
+                            <a href="{{b.url}}" class="btn btn-block btn-primary my-5 pb-5 py-5 text-white">
+                                <h6 class="mt-0">{{m.titulo}}</h6>
+                                {{m.resumen}}
                             </a>
                         </li>
-                        {/foreach medios_pago}
+                        {% endfor %}
                     </ul>
                 </div>
                 <hr class="my-5">
-                {else pago}
+                {%else %}
                 <p class="card-text">Aqui puedes ver tu pedido y estados de envio</p>
-                {if is_descripcion_pago}
+                {% if is_descripcion_pago %}
                 <hr>
-                <p class="card-text">{descripcion_pago}</p>
+                <p class="card-text">{{descripcion_pago}}</p>
                 <hr>
-                {/if is_descripcion_pago}
-                {/if pago}
+                {% endif %}
+                {% endif %}
                 <div class="my-4">
                     <div class="row">
                         <div class="col-12 mt-5 mb-4">
@@ -40,33 +40,33 @@
                                     </h5>
                                 </div>
                                 <div class="col-md-4">
-                                    <span class="float-left float-md-right btn btn-sm mt-0" style="background:{background_estado};color:{color_estado};">{estado}</span>
+                                    <span class="float-left float-md-right btn btn-sm mt-0" style="background:{{background_estado}};color:{{color_estado}};">{{estado}}</span>
                                 </div>
                             </div>
                             <ul>
-                                <li>Total del pedido: {total}</li>
-                                <li>{nombre}</li>
-                                <li>{email}</li>
-                                <li>{telefono}</li>
+                                <li>Total del pedido: {{total}}</li>
+                                <li>{{nombre}}</li>
+                                <li>{{email}}</li>
+                                <li>{{telefono}}</li>
                             </ul>
                         </div>
                         <hr>
-                        {foreach direcciones_pedido}
+                        {% for dp in direcciones_pedido %}
                         <div class="border col-12 direccion mt-5 p-4">
                             <div class="row mb-4">
                                 <div class="col">
-                                    <h6 class="mt-0">Envio {cookie_direccion} </h6>
+                                    <h6 class="mt-0">Envio {{dp.cookie_direccion}} </h6>
                                 </div>
                                 <div class="col-md-4">
-                                    <span class="float-left float-md-right btn btn-sm mt-0" style="background:{background_estado};color:{color_estado};">{estado}</span>
+                                    <span class="float-left float-md-right btn btn-sm mt-0" style="background:{{dp.background_estado}};color:{{dp.color_estado}};">{{dp.estado}}</span>
                                 </div>
                             </div>
                             <ul>
-                                <li>Precio de envio: {precio}</li>
-                                <li>Envio a <b>{nombre}</b></li>
-                                <li>{fecha_entrega}</li>
-                                <li>{telefono}</li>
-                                <li>{direccion_completa}</li>
+                                <li>Precio de envio: {{dp.precio}}</li>
+                                <li>Envio a <b>{{dp.nombre}}</b></li>
+                                <li>{{dp.fecha_entrega}}</li>
+                                <li>{{dp.telefono}}</li>
+                                <li>{{dp.direccion_completa}}</li>
                             </ul>
                             <ul class="px-4 border mt-5">
                                 <li class="border-bottom-1x my-4 row">
@@ -75,20 +75,20 @@
                                     <div class="col-6 d-none d-md-flex">Mensaje</div>
                                     <div class="col-2">Total</div>
                                 </li>
-                                {foreach lista_productos}
+                                {% for lp in dp.lista_productos %}
                                 <li class="py-4 producto row border-bottom-1x">
-                                    <div class="col-2"><img src="{foto}" alt="foto producto"></div>
-                                    <div class="col-6 col-md-2">{titulo} ({titulo_atributo})</div>
+                                    <div class="col-2"><img src="{{lp.foto}}" alt="foto producto"></div>
+                                    <div class="col-6 col-md-2">{{lp.titulo}} ({{lp.titulo_atributo}})</div>
                                     <div class="col-12 col-md-6 order-3 order-md-1 mt-5 mt-md-0">
                                         <h6 class="d-md-none">Mensaje:</h6>
-                                        {mensaje}
+                                        {{lp.mensaje}}
                                     </div>
-                                    <div class="col-2 order-2">{total}</div>
+                                    <div class="col-2 order-2">{{lp.total}}</div>
                                 </li>
-                                {/foreach lista_productos}
+                                {% endfor %}
                             </ul>
                         </div>
-                        {/foreach direcciones_pedido}
+                        {% endfor %}
                     </div>
                 </div>
             </div>

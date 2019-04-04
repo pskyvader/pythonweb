@@ -185,7 +185,7 @@ class order(base):
     
         :rtype:
         """
-        from datetime import datetime
+        from datetime import strptime
         from datetime import timedelta
         from time import time
 

@@ -192,7 +192,10 @@ class order(base):
         horarios_entrega = {}
         hora_minima = datetime.strptime("08:00", "%H:%M")
         hora_maxima = datetime.strptime("12:00", "%H:%M")
-        hora_corte = datetime.strptime("18:00", "%H:%M")
+        hora_corte=datetime.now()
+        hora_corte.hour=18
+        hora_corte.minute=0
+        print(hora_corte.timestamp())
         hora_actual = hora_minima
 
         hora2 = (hora_actual + timedelta(hours=1)).strftime("%H:%M")
@@ -219,10 +222,7 @@ class order(base):
         )
 
 
-        print(horarios_entrega)
-        
-        print(
-        datetime.strptime(functions.current_time("%H:%M"), "%H:%M").timestamp())
+        functions.current_time()
 
         print(time() , hora_corte.timestamp)
 

@@ -2,23 +2,23 @@
     <div class="container">
         <div class="row">
             <div class="col">
-                <h2>{title}</h2>
+                <h2>{{title}}</h2>
                 <div class="descripcion pb-5">
-                    {description}
+                    {{description}}
                     <p><b>Confirma tu pago, se te enviará un correo con la información de tu compra.</b></p>
                 </div>
                 <div class="">
-                    <a href="{url_back}" class="btn btn-light mb-4">Otros medios de pago</a>
-                    {if is_post}
+                    <a href="{{url_back}}" class="btn btn-light mb-4">Otros medios de pago</a>
+                    {% if is_post %}
                     <form action="{action}" class="d-block d-sm-inline-block float-sm-right" method="POST">
-                        {foreach form}
-                        <input type="hidden" name="{field}" value="{value}">
-                        {/foreach form}
+                        {% for f in form %}
+                        <input type="hidden" name="{{f.field}}" value="{{f.value}}">
+                        {% endfor %}
                         <button type="submit" class="btn btn-primary float-sm-right mt-0 mb-4">Continuar</button>
                     </form>
-                    {else is_post}
-                    <a href="{url_next}" class="btn btn-primary float-sm-right mb-4">Continuar</a>
-                    {/if is_post}
+                    {% else %}
+                    <a href="{{url_next}}" class="btn btn-primary float-sm-right mb-4">Continuar</a>
+                    {% endif %}
                 </div>
             </div>
         </div>

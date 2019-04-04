@@ -148,14 +148,15 @@ class order(base):
 
         for key,p in enumerate(carro["productos"]):
             carro["productos"][key]["atributos"] = attr.copy()
-            print('1',carro["productos"][key]["atributos"])
-            print('2',p["atributos"])
             atributos = carro["productos"][key]["atributos"]
             for k,a in enumerate(atributos):
                 if a["idproducto"] == p["idproductoatributo"]:
                     atributos[k]["selected"] = True
                 else:
                     atributos[k]["selected"] = False
+            
+            print('1',carro["productos"][key]["atributos"])
+            print('2',p["atributos"])
             
         
         sidebar = order.sidebar(carro)

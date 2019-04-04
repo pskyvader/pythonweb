@@ -165,7 +165,8 @@ class order(base):
         else:
             seo_usuario = seo_model.getById(9)
             data["url_next"] = functions.generar_url( [seo_usuario["url"], "direccion"], {"next_url": "/".join([url[0], "step", 2])}, )
-        
+        sidebar[0]['url_next']=data["url_next"]
+        sidebar[0]['url_product']=data["url_product"]
         data["sidebar"] = sidebar
         return data
 

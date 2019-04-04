@@ -248,6 +248,8 @@ class product_list(base):
             app.get["page"] = aux_page
         else:
             del app.get["page"]
+        
+        print(pagination)
 
         return {"pagination": pagination}
 

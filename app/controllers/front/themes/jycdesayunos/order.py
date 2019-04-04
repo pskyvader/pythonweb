@@ -101,7 +101,7 @@ class order(base):
         else:
             steps = self.steps_show(current_step, self.url)
             class_name = getattr(self, "step" + str(current_step))
-            data = self.class_name(carro, self.url)
+            data = class_name(carro, self.url)
             data["steps"] = steps
             ret["body"].append(("order/" + current_step, data))
 

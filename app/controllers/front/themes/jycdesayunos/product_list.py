@@ -93,11 +93,12 @@ class product_list(base):
         orden_producto = configuracion_model.getByVariable("orden_producto")
         if not isinstance(orden_producto, bool):
             orden_producto = orden_producto.split(",")
-            for op in orden_producto:
+            for k,op in enumerate(orden_producto):
                 op = op.split(":")
                 print(op)
-                #for o in op:
-                #    o = o.strip()
+                for o in op:
+                    o = o.strip()
+                orden_producto[k]=op
             print(orden_producto)
 
         if not isinstance(orden_producto, list) or len(orden_producto) == 0:

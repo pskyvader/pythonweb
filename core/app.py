@@ -296,7 +296,7 @@ class app:
                     post["file"].append(
                         {"name": name, "type": mime, "tmp_name": tmpfile}
                     )
-                elif isinstance(p[key], MiniFieldStorage):
+                elif isinstance(p[key], MiniFieldStorage) or  isinstance(p[key], FieldStorage):
                     post[key] = p[key].value
                 elif isinstance(p[key], list):
                     tmp_list = []
@@ -307,7 +307,6 @@ class app:
                             tmp_list.append(a)
                     post[key] = tmp_list
                 else:
-                    print(key,p[key],p[key].value)
                     post[key] = p[key]
         except Exception as error:
             # print('Error al obtener post: ' + repr(error) + repr(p)

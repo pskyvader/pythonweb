@@ -1,7 +1,7 @@
-<form action="{action}" id="form" method="POST">
-    {foreach form}
-    <input type="hidden" name="{field}" value="{value}">
-    {/foreach form}
+<form action="{{action}}" id="form" method="POST">
+    {% for f in form %}
+    <input type="hidden" name="{{f.field}}" value="{{f.value}}">
+    {% endfor %}
 </form>
 <script>
     window.onload = function() {

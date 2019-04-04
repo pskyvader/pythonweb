@@ -151,7 +151,7 @@ class order(base):
                     a["selected"] = False
             p["atributos"] = atributos
 
-        sidebar = self.sidebar(carro)
+        sidebar = order.sidebar(carro)
         data = carro
         data["sidebar"] = sidebar
         seo_producto = seo_model.getById(8)

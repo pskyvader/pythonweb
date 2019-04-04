@@ -294,12 +294,8 @@ class order(base):
                     lista_productos.append(p)
                     del p
 
-            fecha_entrega = datetime.strptime(dp["fecha_entrega"], "%d/%m/%y")
-            fecha_entrega = (
-                ""
-                if fecha_entrega < functions.current_time(as_string=False)
-                else functions.formato_fecha(fecha_entrega, "%F")
-            )
+            fecha_entrega = datetime.strptime(dp["fecha_entrega"], "%Y-%m-%d %H:%M:%S")
+            fecha_entrega = ( "" if fecha_entrega < functions.current_time(as_string=False) else functions.formato_fecha(fecha_entrega, "%F") )
 
             hora_entrega = datetime.strptime(dp["fecha_entrega"], "%H:%M")
             hora_entrega = (

@@ -235,7 +235,7 @@ class order(base):
             {"fecha": "2019-02-13", "texto": "Dia de los enamorados"}
         )
 
-        comunas = self.get_comunas()
+        comunas = order.get_comunas()
         direcciones_entrega = usuariodireccion_model.getAll(
             {"idusuario": app.session[usuario_model.idname + app.prefix_site]}
         )
@@ -256,7 +256,7 @@ class order(base):
         )
         if len(direcciones_pedido) == 0:
             du = direcciones_entrega[0]
-            new_d = self.set_direccion(du, comunas)
+            new_d = order.set_direccion(du, comunas)
             new_d["idpedido"] = carro["idpedido"]
             new_d["idpedidoestado"] = 9  # pedido no pagado, porque esta en el carro
             new_d["cookie_direccion"] = (

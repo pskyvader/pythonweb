@@ -95,6 +95,7 @@ class product_list(base):
             orden_producto = orden_producto.split(",")
             for op in orden_producto:
                 op = op.split(":")
+                print(op)
                 for o in op:
                     o = o.strip()
 

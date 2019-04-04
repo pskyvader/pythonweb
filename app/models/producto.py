@@ -91,6 +91,7 @@ class producto(base_model):
                 row_copy.append(r)
 
         row = row_copy
+        print(row)
 
         if limit != None:
             if limit2 == 0:
@@ -99,7 +100,6 @@ class producto(base_model):
                 row = row[limit:limit2+1]
 
         if return_total != None:
-            print(row)
             return len(row)
         else:
             variables = {}

@@ -73,9 +73,7 @@ class producto(base_model):
             deleted = False
             if 'idproductocategoria' in r:
                 r['idproductocategoria'] = json.loads(r['idproductocategoria'])
-                
-                print(r['idproductocategoria'],idproductocategoria)
-                if idproductocategoria != None and idproductocategoria not in r['idproductocategoria']:
+                if idproductocategoria != None and str(idproductocategoria) not in r['idproductocategoria']:
                     deleted = True
 
             if return_total == None:

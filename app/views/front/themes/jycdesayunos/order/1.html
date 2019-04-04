@@ -31,7 +31,6 @@
                                     <div class="col-6 col-md-3 grid-item">
                                         <select name="" id="" required="" class="form-control producto_atributo" data-id="{{p.idpedidoproducto}}">
                                             <option value="" selected="" disabled="" hidden="">Selecciona un globo para tu desayuno</option>
-                                            {{p.atributos}}
                                             {% for a in p.atributos %}
                                             <option value="{{a.idproducto}}" data-foto="{{a.foto}}" {% if a.selected %} selected="" {% endif %}>{{a.titulo}}</option>
                                             {% endfor %}

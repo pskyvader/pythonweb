@@ -4,31 +4,31 @@
         <div id="carousel-thumb" class="carousel slide carousel-fade carousel-thumbnails" data-ride="carousel">
             <!--Slides-->
             <div class="carousel-inner" role="listbox">
-                {foreach carousel}
-                <div class="carousel-item {active}">
-                    <a href="{original}" data-fancybox="carousel1">
+                {% for c in carousel %}
+                <div class="carousel-item {{c.active}}">
+                    <a href="{{c.original}}" data-fancybox="carousel1">
                         <picture>
-                            {foreach srcset}
-                            <source media="{media}" {data}srcset="{url}" type="{type}">
-                            {/foreach srcset}
-                            <img class="d-block w-100" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{foto}" alt="{title}">
+                            {% for s in  c.srcset %}
+                            <source media="{{s.media}}" {{b.data}}srcset="{{s.url}}" type="{{s.type}}">
+                            {% endfor %}
+                            <img class="" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{{c.foto}}" alt="{{c.title}}">
                         </picture>
                     </a>
                 </div>
-                {/foreach carousel}
+                {% endfor %}
             </div>
             <!--/.Slides-->
             <ol class="carousel-indicators">
-                {foreach thumb}
+                {% for t in thumb %}
                 <li data-target="#carousel-thumb" data-slide-to="{id}" class="{active}">
                     <picture>
-                        {foreach srcset}
-                        <source srcset="{url}" type="{type}">
-                        {/foreach srcset}
-                        <img class="d-block w-100 img-fluid" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{foto}" alt="{title}">
+                        {% for s in  t.srcset %}
+                        <source srcset="{{s.url}}" type="{{s.type}}">
+                        {% endfor %}
+                        <img class="" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{{t.foto}}" alt="{{t.title}}">
                     </picture>
                 </li>
-                {/foreach thumb}
+                {% endfor %}
             </ol>
             <!--Controls-->
             <a class="carousel-control-prev" href="#carousel-thumb" role="button" data-slide="prev">

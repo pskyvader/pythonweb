@@ -218,6 +218,10 @@ class order(base):
             {"fecha": "2019-01-24", "texto": "Cerrado por Vacaciones"}
         )
 
+        
+        print(
+        datetime.strptime(functions.current_time("%H:%M"), "%H:%M").timestamp())
+
         print(time() , hora_corte.timestamp)
 
         if time() > hora_corte.timestamp():

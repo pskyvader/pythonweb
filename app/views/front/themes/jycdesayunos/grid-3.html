@@ -2,29 +2,29 @@
     <div class="container">
         <!--Grid row-->
         <div class="row">
-            {foreach list}
+            {% for l in list %}
             <!--Grid column-->
             <div class="col-lg-4 col-md-12 mb-4">
                 <!--Featured image-->
                 <div class="view overlay z-depth-2 mb-2">
                     <picture>
-                        {foreach srcset}
-                        <source media="{media}" srcset="{src}" type="{type}">
-                        {/foreach srcset}
-                        <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{url}" class="img-fluid rounded" alt="{title}">
+                        {% for s in  l.srcset %}
+                        <source media="{{s.media}}" {{b.data}}srcset="{{s.url}}" type="{{s.type}}">
+                        {% endfor %}
+                        <img class="" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{{l.foto}}" class="img-fluid rounded" alt="{{l.title}}">
                     </picture>
-                    <a href="{link}">
+                    <a href="{{l.link}}">
                         <div class="mask waves-effect waves-light"></div>
                     </a>
                 </div>
                 <h4 class="py-3 font-weight-bold dark-grey-text">
-                    <strong>{title}</strong>
+                    <strong>{{l.title}}</strong>
                 </h4>
-                <p class="grey-text">{description}</p>
-                <a class="btn btn-rounded btn-md waves-effect waves-light" href="{link}">Ver más</a>
+                <p class="grey-text">{{l.description}}</p>
+                <a class="btn btn-rounded btn-md waves-effect waves-light" href="{{l.link}}">Ver más</a>
             </div>
             <!--Grid column-->
-            {/foreach list}
+            {% endfor %}
         </div>
         <!--Grid row-->
     </div>

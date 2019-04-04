@@ -98,15 +98,15 @@ class product(base):
         bc = breadcrumb()
         ret["body"] += bc.normal(self.breadcrumb)["body"]
 
+        data = {}
         pl = product_list()  # product_list.py
         prod_list = pl.product_list(categoria)  # Lista de productos, renderiza vista
         sidebar = pl.sidebar(categoria)  # genera sidebar, renderiza vista
-        pl.orden_producto()  # genera lista de filtros
-        pl.limit_producto()  # genera lista de cantidad de productos por pagina
-        pl.pagination()  # genera paginador
-        pl.is_search()  # Genera texto de busqueda, si existe
+        data.update(pl.orden_producto())  # genera lista de filtros
+        data.update(pl.limit_producto())  # genera lista de cantidad de productos por pagina
+        data.update(pl.pagination())  # genera paginador
+        data.update(pl.is_search())  # Genera texto de busqueda, si existe
 
-        data = {}
         data["product_list"] = prod_list
         data["sidebar"] = sidebar
 

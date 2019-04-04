@@ -25,9 +25,9 @@
                 </ul>-->
                     <div class="card-price-group">
                         {% if lp.old_price!=lp.price %}
-                        <span class="old-price">{{old_price}}</span>
+                        <span class="old-price">{{lp.old_price}}</span>
                         {% endif %}
-                        <span class="card-price">{{price}}</span>
+                        <span class="card-price">{{lp.price}}</span>
                     </div>
                     <p>{{lp.description}}</p>
                     {% if lp.stock>0 %}

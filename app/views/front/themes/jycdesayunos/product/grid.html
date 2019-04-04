@@ -23,9 +23,9 @@
                         </ul>-->
                 <div class="card-price-group">
                     {% if lp.old_price!=lp.price %}
-                    <span class="old-price">{{old_price}}</span>
+                    <span class="old-price">{{lp.old_price}}</span>
                     {% endif %}
-                    <span class="card-price">{{price}}</span>
+                    <span class="card-price">{{lp.price}}</span>
                 </div>
                 {% if lp.stock>0 %}
                 <button class="btn btn-add-cart" onclick="add_cart({{lp.id}});">Añadir al carro</button>

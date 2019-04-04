@@ -192,9 +192,7 @@ class order(base):
         horarios_entrega = {}
         hora_minima = datetime.strptime("08:00", "%H:%M")
         hora_maxima = datetime.strptime("12:00", "%H:%M")
-        hora_corte=datetime.now()
-        hora_corte.hour=18
-        hora_corte.minute=0
+        hora_corte=datetime.now().replace(hour=18, minute=0)
         print(hora_corte.timestamp())
         hora_actual = hora_minima
 

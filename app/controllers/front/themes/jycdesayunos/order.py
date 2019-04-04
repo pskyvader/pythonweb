@@ -198,7 +198,6 @@ class order(base):
         hora2 = (hora_actual + timedelta(hours=1)).strftime("%H:%M")
 
         while datetime.strptime(hora2, "%H:%M") < hora_maxima:
-            print('a')
             hora1 = hora_actual.strftime("%H:%M")
             hora2 = (hora_actual + timedelta(hours=1)).strftime("%H:%M")
 
@@ -206,7 +205,7 @@ class order(base):
                 "hora": hora1,
                 "titulo": hora1 + "  -   " + hora2,
             }
-            hora_actual = (hora_actual + timedelta(minutes=15)).strftime("%H:%M")
+            hora_actual = (hora_actual + timedelta(minutes=15))
 
         fechas_bloqueadas = []
         fechas_bloqueadas.append(

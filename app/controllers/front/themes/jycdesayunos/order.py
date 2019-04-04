@@ -146,10 +146,9 @@ class order(base):
             }
         
         for p in carro['productos']:
-            print(p["atributos"])
+            carro["productos"][key]["atributos"] = attr.copy()
 
         for key,p in enumerate(carro["productos"]):
-            carro["productos"][key]["atributos"] = attr.copy()
             atributos = carro["productos"][key]["atributos"]
             for k,a in enumerate(atributos):
                 if a["idproducto"] == p["idproductoatributo"]:

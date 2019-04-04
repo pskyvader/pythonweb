@@ -147,9 +147,6 @@ class product_list(base):
 
         if categoria != None:
             where[productocategoria_model.idname] = categoria[0]
-        
-        
-        print(categoria,where)
 
         condiciones = {"order": self.order}
         if self.search != "":

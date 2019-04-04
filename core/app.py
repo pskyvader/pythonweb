@@ -307,7 +307,7 @@ class app:
                             tmp_list.append(a)
                     post[key] = tmp_list
                 else:
-                    print(key,p[key])
+                    print(key,p[key],p[key].value)
                     post[key] = p[key]
         except Exception as error:
             # print('Error al obtener post: ' + repr(error) + repr(p)

@@ -222,7 +222,8 @@ class order(base):
         
 
         print(hora_corte.timestamp())
-        print(time() , functions.current_time(as_string=False))
+        print(time())
+        print(functions.current_time(as_string=False))
 
         if time() > hora_corte.timestamp():
             fechas_bloqueadas.append(

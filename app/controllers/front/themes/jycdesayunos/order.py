@@ -136,12 +136,14 @@ class order(base):
         for lp in attr:
             portada = image.portada(lp["foto"])
             thumb_url = image.generar_url(portada, "cart")
-            print(thumb_url,lp)
+            print(thumb_url)
             lp = {
                 "titulo": lp["titulo"],
                 "idproducto": lp["idproducto"],
                 "foto": thumb_url,
             }
+        
+        print(attr)
 
         for p in carro["productos"]:
             atributos = attr.copy()

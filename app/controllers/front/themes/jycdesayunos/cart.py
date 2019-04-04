@@ -255,7 +255,8 @@ class cart(base):
             ret["body"] = json.dumps(respuesta, ensure_ascii=False)
             return ret
 
-        cantidad_final = producto["stock"] - cantidad
+        cantidad_final = producto["stock"] 
+        - cantidad
         if producto["stock"] < 1 or cantidad_final < 0:
             respuesta["mensaje"] = "No hay suficientes productos disponibles"
             ret["body"] = json.dumps(respuesta, ensure_ascii=False)

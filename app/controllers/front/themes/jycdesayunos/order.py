@@ -153,10 +153,8 @@ class order(base):
                     atributos[k]["selected"] = True
                 else:
                     atributos[k]["selected"] = False
-            carro["productos"][key]["atributos"] = atributos.copy()
-            print(carro["productos"][key]["atributos"])
-        
-        print(carro['productos'][0]['atributos'])
+            print(key)
+            carro["productos"][key]["atributos"] = atributos
             
         
         sidebar = order.sidebar(carro)

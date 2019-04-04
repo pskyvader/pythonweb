@@ -218,7 +218,9 @@ class order(base):
             {"fecha": "2019-01-24", "texto": "Cerrado por Vacaciones"}
         )
 
-        if time() > hora_corte:
+        print(time() , hora_corte.timestamp())
+
+        if time() > hora_corte.timestamp():
             fechas_bloqueadas.append(
                 {
                     "fecha": functions.formato_fecha(strtotime("+1 day"), "%F"),

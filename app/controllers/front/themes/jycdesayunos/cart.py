@@ -343,7 +343,7 @@ class cart(base):
             ret["body"] = json.dumps(respuesta, ensure_ascii=False)
             return ret
 
-        id = campos["id"]
+        id = int(campos["id"])
         carro = cart.current_cart(True)
         if len(carro) == 0:
             carro = cart.new_cart()
@@ -486,7 +486,7 @@ class cart(base):
             carro = cart.current_cart(True)
             if "productos" in carro:
                 for p in carro["productos"]:
-                    if p["idpedidoproducto"] == campos["idpedidoproducto"]:
+                    if p["idpedidoproducto"] == int(campos["idpedidoproducto"]):
                         update = {
                             "id": p["idpedidoproducto"],
                             "mensaje": campos["mensaje"],

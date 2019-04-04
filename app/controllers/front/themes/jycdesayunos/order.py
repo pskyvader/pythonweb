@@ -338,7 +338,7 @@ class order(base):
         seo_cuenta = seo_model.getById(9)
         data["url_direcciones"] = functions.generar_url(
             [seo_cuenta["url"], "direcciones"],
-            {"next_url": "/".join([url[0], "step", 2])},
+            {"next_url": "/".join([url[0], "step", '2'])},
         )
 
         seo_producto = seo_model.getById(8)

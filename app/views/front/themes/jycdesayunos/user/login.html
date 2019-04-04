@@ -4,7 +4,7 @@
             <h3 class="title f-30">LOGIN</h3>
             <p>Ingresa tu email y contraseña</p>
             <form class="m-t-20 login">
-                <input type="hidden" name="token" value="{token}" required="">
+                <input type="hidden" name="token" value="{{token}}" required="">
                 <input type="text" class="form-control" name="email" placeholder="E-mail" required="">
                 <input type="password" class="form-control" name="pass" placeholder="Contraseña" required="">
                 <div class="checkbox checkbox-1">
@@ -14,8 +14,8 @@
                 </div>
                 <button type="submit" class="btn btn-primary">LOGIN</button>
             </form>
-            <a class="mt-4 d-block" href="{url_registro}">Nuevo aquí? Registrate</a>
-            <a class="mt-4 d-block" href="{url_recuperar}">Olvidaste tu contraseña?</a>
+            <a class="mt-4 d-block" href="{{url_registro}}">Nuevo aquí? Registrate</a>
+            <a class="mt-4 d-block" href="{{url_recuperar}}">Olvidaste tu contraseña?</a>
         </div>
     </div>
 </section>

@@ -20,6 +20,7 @@ from .banner import banner
 from .breadcrumb import breadcrumb
 from .footer import footer
 from .cart import cart
+from .user import user
 
 
 import json

@@ -235,8 +235,8 @@ class cart(base):
             ret["body"] = json.dumps(respuesta, ensure_ascii=False)
             return ret
 
-        id = campos["id"]
-        cantidad = campos["cantidad"]
+        id = int(campos["id"])
+        cantidad = int(campos["cantidad"])
         cart = self.current_cart(True)
         if len(cart) == 0:
             cart = self.new_cart()
@@ -255,8 +255,7 @@ class cart(base):
             ret["body"] = json.dumps(respuesta, ensure_ascii=False)
             return ret
 
-        cantidad_final = producto["stock"] 
-        - cantidad
+        cantidad_final = producto["stock"] - cantidad
         if producto["stock"] < 1 or cantidad_final < 0:
             respuesta["mensaje"] = "No hay suficientes productos disponibles"
             ret["body"] = json.dumps(respuesta, ensure_ascii=False)

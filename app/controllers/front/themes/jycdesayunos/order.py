@@ -146,17 +146,16 @@ class order(base):
             }
         
 
-        for p in carro["productos"]:
+        for key,p in enumerate(carro["productos"]):
             atributos = attr.copy()
             for a in atributos:
                 if a["idproducto"] == p["idproductoatributo"]:
                     a["selected"] = True
                 else:
                     a["selected"] = False
-            p["atributos"] = atributos
-            print(atributos)
-        print(carro['productos'])
-
+            carro["productos"][key]["atributos"] = atributos
+            
+        
         sidebar = order.sidebar(carro)
         data = carro
         seo_producto = seo_model.getById(8)

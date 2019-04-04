@@ -47,13 +47,13 @@ class order(base):
             return ret
 
     def step(self, var=[]):
-        ret={'body':[]}
+        ret = {"body": []}
         error = False
         mensaje = ""
         self.meta(self.seo)
         self.url.append("step")
         current_step = 1
-        if len(var)>0 and int(var[0]) in self.steps:
+        if len(var) > 0 and int(var[0]) in self.steps:
             current_step = int(var[0])
 
         self.url.append(current_step)
@@ -103,9 +103,9 @@ class order(base):
             class_name = getattr(self, "step" + str(current_step))
             data = class_name(carro, self.url)
             data["steps"] = steps
-            data['sidebar'][1]['url_next']=data["url_next"]
-            data['sidebar'][1]['url_product']=data["url_product"]
-            
+            data["sidebar"][1]["url_next"] = data["url_next"]
+            data["sidebar"][1]["url_product"] = data["url_product"]
+
             ret["body"].append(("order/" + str(current_step), data))
 
         f = footer()
@@ -136,7 +136,7 @@ class order(base):
     @staticmethod
     def step1(carro, url):
         attr = producto_model.getAll({"tipo": 2}, {"order": "titulo ASC"})
-        for key,lp in enumerate(attr):
+        for key, lp in enumerate(attr):
             portada = image.portada(lp["foto"])
             thumb_url = image.generar_url(portada, "cart")
             attr[key] = {
@@ -144,24 +144,17 @@ class order(base):
                 "idproducto": lp["idproducto"],
                 "foto": thumb_url,
             }
-        
-
 
         for p in carro["productos"]:
-            p["atributos"]=[]
+            p["atributos"] = []
             atributos = p["atributos"]
             for a in attr:
                 if a["idproducto"] == p["idproductoatributo"]:
                     a["selected"] = True
                 else:
                     a["selected"] = False
-                print(a)
                 atributos.append(a.copy())
-                    
-        for p in carro['productos']:
-            print(p["atributos"])
-            
-        
+
         sidebar = order.sidebar(carro)
         data = carro
         seo_producto = seo_model.getById(8)
@@ -174,7 +167,10 @@ class order(base):
             data["url_next"] = functions.generar_url([url[0], "step", 2])
         else:
             seo_usuario = seo_model.getById(9)
-            data["url_next"] = functions.generar_url( [seo_usuario["url"], "direccion"], {"next_url": "/".join([url[0], "step", 2])}, )
+            data["url_next"] = functions.generar_url(
+                [seo_usuario["url"], "direccion"],
+                {"next_url": "/".join([url[0], "step", 2])},
+            )
 
         data["sidebar"] = sidebar
         return data
@@ -199,7 +195,7 @@ class order(base):
         horarios_entrega = {}
         hora_minima = datetime.strptime("08:00", "%H:%M")
         hora_maxima = datetime.strptime("12:00", "%H:%M")
-        hora_corte=datetime.now().replace(hour=18, minute=0)
+        hora_corte = datetime.now().replace(hour=18, minute=0)
         hora_actual = hora_minima
 
         hora2 = (hora_actual + timedelta(hours=1)).strftime("%H:%M")
@@ -212,7 +208,7 @@ class order(base):
                 "hora": hora1,
                 "titulo": hora1 + "  -   " + hora2,
             }
-            hora_actual = (hora_actual + timedelta(minutes=15))
+            hora_actual = hora_actual + timedelta(minutes=15)
 
         fechas_bloqueadas = []
         fechas_bloqueadas.append(
@@ -224,7 +220,6 @@ class order(base):
         fechas_bloqueadas.append(
             {"fecha": "2019-01-24", "texto": "Cerrado por Vacaciones"}
         )
-
 
         if functions.current_time(as_string=False) > hora_corte.timestamp():
             fechas_bloqueadas.append(

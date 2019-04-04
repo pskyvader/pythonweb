@@ -1022,9 +1022,7 @@ class user(base):
                 and app.session["login_token"]["token"] == campos["token"]
             ):
                 if time() - app.session["login_token"]["time"] <= 120:
-                    respuesta["exito"] = usuario_model.login(
-                        campos["email"], campos["pass"], isset(campos["recordar"])
-                    )
+                    respuesta["exito"] = usuario_model.login( campos["email"], campos["pass"], ('recordar' in campos) )
                     if not respuesta["exito"]:
                         respuesta[
                             "mensaje"

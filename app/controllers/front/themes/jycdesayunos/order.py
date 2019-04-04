@@ -191,21 +191,21 @@ class order(base):
 
         horarios_entrega = {}
         hora_minima = datetime.strptime("08:00", "%H:%M")
-        hora_maxima = strptime("12:00", "%R")
-        hora_corte = strptime("18:00", "%R")
+        hora_maxima = datetime.strptime("12:00", "%H:%M")
+        hora_corte = datetime.strptime("18:00", "%H:%M")
         hora_actual = hora_minima
 
-        hora2 = (hora_actual + timedelta(hours=1)).strftime("%R")
+        hora2 = (hora_actual + timedelta(hours=1)).strftime("%H:%M")
 
-        while strptime(hora2, "%R") < hora_maxima:
-            hora1 = hora_actual.strftime("%R")
-            hora2 = (hora_actual + timedelta(hours=1)).strftime("%R")
+        while datetime.strptime(hora2, "%H:%M") < hora_maxima:
+            hora1 = hora_actual.strftime("%H:%M")
+            hora2 = (hora_actual + timedelta(hours=1)).strftime("%H:%M")
 
             horarios_entrega[hora1] = {
                 "hora": hora1,
                 "titulo": hora1 + "  -   " + hora2,
             }
-            hora_actual = (hora_actual + timedelta(minutes=15)).strftime("%R")
+            hora_actual = (hora_actual + timedelta(minutes=15)).strftime("%H:%M")
 
         fechas_bloqueadas = []
         fechas_bloqueadas.append(
@@ -298,11 +298,11 @@ class order(base):
                 else functions.formato_fecha(fecha_entrega, "%F")
             )
 
-            hora_entrega = strptime(dp["fecha_entrega"], "%R")
+            hora_entrega = strptime(dp["fecha_entrega"], "%H:%M")
             hora_entrega = (
                 ""
                 if hora_entrega < functions.current_time(as_string=False)
-                else functions.formato_fecha(hora_entrega, "%R")
+                else functions.formato_fecha(hora_entrega, "%H:%M")
             )
 
             d = {
@@ -394,11 +394,11 @@ class order(base):
                 else functions.formato_fecha(fecha_entrega, "%F")
             )
 
-            hora_entrega = strptime(dp["fecha_entrega"], "%R")
+            hora_entrega = strptime(dp["fecha_entrega"], "%H:%M")
             hora_entrega = (
                 ""
                 if hora_entrega < functions.current_time(as_string=False)
-                else functions.formato_fecha(hora_entrega, "%R")
+                else functions.formato_fecha(hora_entrega, "%H:%M")
             )
 
             for dir in direcciones_entrega:

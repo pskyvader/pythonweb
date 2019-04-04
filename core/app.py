@@ -285,8 +285,7 @@ class app:
         post = {}
         #try:
         for key in p.keys():
-            if isinstance(p[key], FieldStorage) and p[key].file:
-                print(p[key],p[key].file,p[key].filename)
+            if isinstance(p[key], FieldStorage) and p[key].file and p[key].filename!=None :
                 if not "file" in post:
                     post["file"] = []
                 tmpfile = p[key].file.read()

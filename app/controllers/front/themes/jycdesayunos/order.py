@@ -147,9 +147,9 @@ class order(base):
         
 
 
-        for key,p in enumerate(carro["productos"]):
-            carro["productos"][key]["atributos"]=[]
-            atributos = carro["productos"][key]["atributos"]
+        for p in carro["productos"]:
+            p["atributos"]=[]
+            atributos = p["atributos"]
             for a in attr:
                 if a["idproducto"] == p["idproductoatributo"]:
                     a["selected"] = True

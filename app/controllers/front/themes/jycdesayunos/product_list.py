@@ -161,6 +161,7 @@ class product_list(base):
             condiciones["limit2"] = self.limit
 
         productos = producto_model.getAll(where, condiciones)
+        print(len(productos),where,condiciones)
         product_list = ""
         if len(productos) > 0:
             lista_productos = self.lista_productos(productos, "detail", "foto2")

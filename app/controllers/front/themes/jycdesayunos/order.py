@@ -153,10 +153,9 @@ class order(base):
                     a["selected"] = True
                 else:
                     a["selected"] = False
-                print(a)
-            
-            print(atributos)
             p["atributos"] = atributos
+            print(atributos)
+        print(carro['productos'])
 
         sidebar = order.sidebar(carro)
         data = carro

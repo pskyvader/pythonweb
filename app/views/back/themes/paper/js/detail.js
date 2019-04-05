@@ -58,19 +58,19 @@ function inicio_detail() {
     }
     inicio_pedido();
 
-    if ($('form#formulario input.url').length > 0) {
-        $('body').on('keyup', 'form#formulario input.url', function() {
+    if ($('form#formulario input.url-field').length > 0) {
+        $('body').on('keyup', 'form#formulario input.url-field', function() {
             $($(this)).val(urlamigable($(this).val()));
         });
-        $('body').on('blur', 'form#formulario input.url', function() {
+        $('body').on('blur', 'form#formulario input.url-field', function() {
             $($(this)).val(urlamigable($(this).val()));
         });
 
         $('body').on('keyup', 'form#formulario input[name=titulo]', function() {
-            $('form#formulario input.url').first().val(urlamigable($(this).val()));
+            $('form#formulario input.url-field').first().val(urlamigable($(this).val()));
         });
         $('body').on('blur', 'form#formulario input[name=titulo]', function() {
-            $('form#formulario input.url').first().val(urlamigable($(this).val()));
+            $('form#formulario input.url-field').first().val(urlamigable($(this).val()));
         });
     }
     $('body').on('change', '.recursive-input', function() {

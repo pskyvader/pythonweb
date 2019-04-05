@@ -89,6 +89,7 @@ class table(base_model):
     @classmethod
     def validate(cls, id: int, loggging=True):
         from .log import log
+        config = app.get_config()
         respuesta = {"exito": True, "mensaje": []}
         table_validate = cls.getById(id)
         idname = table_validate['idname']
@@ -122,7 +123,8 @@ class table(base_model):
             connection.set_prefix('')
 
             table = 'information_schema.columns'
-            where = {'table_name': prefix + tablename}
+            where = {'table_schema': config["database"],
+                 'table_name': prefix + tablename}
             condiciones = {}
             select = 'COLUMN_NAME,COLUMN_TYPE'
             row = connection.get(table, cls.idname, where, condiciones, select)

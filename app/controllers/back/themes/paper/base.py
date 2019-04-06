@@ -263,6 +263,8 @@ class base:
                     row['idpadre'] = json.dumps([get['idpadre']])
                 else:
                     row['idpadre'] = json.dumps([0])
+            else:
+                row['idpadre'] = json.dumps(row['idpadre'])
         else:
             if 'idpadre' in configuracion['campos']:
                 del configuracion['campos']['idpadre']

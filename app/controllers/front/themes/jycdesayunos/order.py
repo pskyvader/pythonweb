@@ -309,17 +309,18 @@ class order(base):
             d = {
                 "idpedidodireccion": dp["idpedidodireccion"],
                 "productos": lista_productos,
-                "direccion_entrega": direcciones_entrega,
+                "direccion_entrega": [],
                 "fecha_entrega": fecha_entrega,
                 "horarios_entrega": [],
                 "precio": functions.formato_precio(dp["precio"]),
             }
 
-            for dir in d["direccion_entrega"]:
+            for dir in direcciones_entrega:
                 if dir[0] == dp["idusuariodireccion"]:
                     dir["selected"] = True
                 else:
                     dir["selected"] = False
+                d["direccion_entrega"].append(dir.copy())
 
             for key,h in horarios_entrega.items():
                 if hora_entrega == key:

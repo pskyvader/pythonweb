@@ -364,7 +364,7 @@ class order(base):
 
         comunas = order.get_comunas()
         direcciones_entrega = usuariodireccion_model.getAll(
-            {"idusuario": app.session[usuario_model.idname.app.prefix_site]}
+            {"idusuario": app.session[usuario_model.idname + app.prefix_site]}
         )
         for de in direcciones_entrega:
             de["precio"] = comunas[de["idcomuna"]]["precio"]

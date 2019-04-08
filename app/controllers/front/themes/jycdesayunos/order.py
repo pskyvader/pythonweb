@@ -305,7 +305,7 @@ class order(base):
                 "productos": lista_productos,
                 "direccion_entrega": direcciones_entrega,
                 "fecha_entrega": fecha_entrega,
-                "horarios_entrega": horarios_entrega.copy(),
+                "horarios_entrega": [],
                 "precio": functions.formato_precio(dp["precio"]),
             }
 
@@ -315,13 +315,12 @@ class order(base):
                 else:
                     dir["selected"] = False
 
-            for key,h in d["horarios_entrega"].items():
+            for key,h in horarios_entrega.items():
                 if hora_entrega == key:
                     h["selected"] = True
                 else:
                     h["selected"] = False
-                print(h)
-            d["horarios_entrega"]=d["horarios_entrega"].values()
+                d["horarios_entrega"].append(h)
             direcciones.append(d)
 
         sidebar = order.sidebar(carro)

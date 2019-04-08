@@ -316,8 +316,8 @@ class order(base):
                     dir["selected"] = False
 
             for key,h in d["horarios_entrega"].items():
-                print(key,hora_entrega)
                 if hora_entrega == key:
+                    print(key,hora_entrega)
                     h["selected"] = True
                 else:
                     h["selected"] = False

@@ -623,6 +623,7 @@ class user(base):
     
         :rtype:
         """
+        print(var)
         ret = {"body": []}
         self.meta(self.seo)
         verificar = self.verificar(True)

@@ -693,6 +693,7 @@ class user(base):
 
         ep = pedidoestado_model.getAll()
         estados_pedido = []
+        print(ep)
         for e in ep:
             estados_pedido[e[0]] = e
 

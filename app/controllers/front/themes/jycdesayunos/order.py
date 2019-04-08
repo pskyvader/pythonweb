@@ -53,6 +53,12 @@ class order(base):
         self.meta(self.seo)
         self.url.append("step")
         current_step = 1
+        try:
+            if(len(var) > 0):
+                var[0]=int(var[0])
+        except:
+            ret["error"] = 404
+            return ret
         if len(var) > 0 and int(var[0]) in self.steps:
             current_step = int(var[0])
 

@@ -85,9 +85,8 @@ $('body').on('click', '.order.step-3 #next_step', function(e) {
     notificacion("Creando tu pedido, por favor espera", 'warning');
     $('#next_step').addClass('disabled');
 
-    console.log(url);
-
     post_basic(url, {}, function(data) {
+        console.log(data);
         $('#next_step').removeClass('disabled');
         if (typeof(data) != 'object') {
             try {
@@ -97,6 +96,7 @@ $('body').on('click', '.order.step-3 #next_step', function(e) {
                 data = {};
             }
         }
+
         if (data.exito) {
             inicio_cart();
             notificacion("Tu pedido esta listo para pagar", 'success');

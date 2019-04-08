@@ -605,6 +605,7 @@ class order(base):
         print(campos)
 
         if "idpedidodireccion" in campos and "fecha" in campos and "hora" in campos:
+            print(campos)
             carro = cart.current_cart(True)
             direcciones_pedido = pedidodireccion_model.getAll(
                 {"idpedido": carro["idpedido"]}

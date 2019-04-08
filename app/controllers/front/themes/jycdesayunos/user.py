@@ -417,7 +417,7 @@ class user(base):
         campos_requeridos = []
         campos_opcionales = []
         for m in modulo:
-            print(m['estado'])
+            print(m['estado'],type(m['estado']))
             if True in m["estado"] or 'true' in m["estado"]:
                 print(m['estado'],'true')
                 del m["estado"]

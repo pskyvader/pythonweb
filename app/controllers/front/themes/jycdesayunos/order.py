@@ -557,7 +557,7 @@ class order(base):
             comunas = order.get_comunas()
 
             for d in direcciones_pedido:
-                if d["idpedidodireccion"] == campos["idpedidodireccion"]:
+                if d["idpedidodireccion"] == int(campos["idpedidodireccion"]):
                     usuario_direccion = usuariodireccion_model.getById(
                         campos["idusuariodireccion"]
                     )

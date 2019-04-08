@@ -143,9 +143,7 @@ class user(base):
 
         data = {}
         data["sidebar"] = ("user/sidebar", {"sidebar_user": sidebar})
-        #ret["body"].append(("user/detail", data.copy()))
-
-        data = {}
+        
         usuario = usuario_model.getById(
             app.session[usuario_model.idname + app.prefix_site]
         )

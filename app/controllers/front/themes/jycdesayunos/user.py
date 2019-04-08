@@ -727,9 +727,7 @@ class user(base):
             estados_pedido[pedido["idpedidoestado"]]["color"]
         )
 
-        pedido = {k:p for (k,p) in pedido.items() if isinstance(k,str)}
 
-        data.update(pedido)
 
         medios_pago = []
         descripcion_pago = ""
@@ -746,6 +744,8 @@ class user(base):
             medio_pago = mediopago_model.getById(pedido["idmediopago"])
             descripcion_pago = medio_pago["descripcion"]
 
+        pedido = {k:p for (k,p) in pedido.items() if isinstance(k,str)}
+        data.update(pedido)
         data["medios_pago"] = medios_pago
         data["descripcion_pago"] = descripcion_pago
         data["is_descripcion_pago"] = (

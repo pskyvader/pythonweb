@@ -447,9 +447,11 @@ class cart(base):
             if "productos" in carro:
                 for p in carro["productos"]:
                     if p["idpedidoproducto"] == int(campos["idpedidoproducto"]):
+                        atributo = producto_model.getById(int(campos["idproductoatributo"]))
                         update = {
                             "id": p["idpedidoproducto"],
                             "idproductoatributo": int(campos["idproductoatributo"]),
+                            "titulo_atributo": atributo['titulo'],
                         }
                         idpedidoproducto = pedidoproducto_model.update(update)
                         respuesta["exito"] = True

@@ -260,7 +260,6 @@ class database():
         sql = ""
         for table in tables:
             sql += "TRUNCATE TABLE " + self._prefix + table + "; "
-        print(sql)
         row = self.consulta(sql, False)
         return row
 

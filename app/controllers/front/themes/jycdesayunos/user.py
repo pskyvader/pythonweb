@@ -719,8 +719,14 @@ class user(base):
                     p["foto"] = thumb_url
                     lista_productos.append(p)
 
+        pedido["total"] = functions.formato_precio(pedido["total"])
+        pedido["direcciones_pedido"] = direcciones_pedido
+        pedido["estado"] = estados_pedido[pedido["idpedidoestado"]]["titulo"]
+        pedido["background_estado"] = estados_pedido[pedido["idpedidoestado"]]["color"]
+        pedido["color_estado"] = functions.getContrastColor(
+            estados_pedido[pedido["idpedidoestado"]]["color"]
+        )
 
-        data.update(pedido)
 
         medios_pago = []
         descripcion_pago = ""

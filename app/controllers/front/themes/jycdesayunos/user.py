@@ -718,6 +718,7 @@ class user(base):
                     p["total"] = functions.formato_precio(p["total"])
                     p["foto"] = thumb_url
                     lista_productos.append(p)
+            dp['lista_productos']=lista_productos
 
         pedido["total"] = functions.formato_precio(pedido["total"])
         pedido["direcciones_pedido"] = direcciones_pedido

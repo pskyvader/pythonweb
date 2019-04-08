@@ -317,10 +317,10 @@ class order(base):
 
             for key,h in d["horarios_entrega"].items():
                 if hora_entrega == key:
-                    print(key,hora_entrega)
                     h["selected"] = True
                 else:
                     h["selected"] = False
+            print(d["horarios_entrega"])
             d["horarios_entrega"]=d["horarios_entrega"].values()
             direcciones.append(d)
 

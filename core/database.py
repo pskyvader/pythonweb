@@ -257,10 +257,9 @@ class database():
         return row
 
     def truncate(self, tables):
-        sql = ""
         for table in tables:
-            sql += "TRUNCATE TABLE " + self._prefix + table + "; "
-        row = self.consulta(sql, False)
+            sql = "TRUNCATE TABLE " + self._prefix + table + " "
+            row = self.consulta(sql, False)
         return row
 
     def restore_backup(self, backup):

@@ -320,7 +320,7 @@ class order(base):
                     h["selected"] = True
                 else:
                     h["selected"] = False
-                d["horarios_entrega"].append(h)
+                d["horarios_entrega"].append(h.copy())
             direcciones.append(d)
 
         sidebar = order.sidebar(carro)

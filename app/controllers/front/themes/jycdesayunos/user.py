@@ -629,13 +629,9 @@ class user(base):
         if verificar["exito"]:
             if len(var) > 0:
                 pedido = pedido_model.getByCookie(var[0], False)
-                print(pedido,var[0])
                 # Podria desaparecer si se necesita que cualquier pedido sea publico
-                if (
-                    "idusuario" in pedido
-                    and pedido["idusuario"]
-                    == app.session[usuario_model.idname + app.prefix_site]
-                ):
+                print( app.session[usuario_model.idname + app.prefix_site],pedido["idusuario"])
+                if ( "idusuario" in pedido and pedido["idusuario"] == app.session[usuario_model.idname + app.prefix_site] ):
                     self.url.append("pedido")
                     self.url.append(var[0])
                 else:

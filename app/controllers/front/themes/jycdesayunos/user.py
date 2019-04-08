@@ -591,10 +591,9 @@ class user(base):
         pedidos = pedido_model.getByIdusuario(
             usuario[0], False
         )  # obtiene todos los pedidos del usuario actual, con cualquier estado del pedido
+        pedidos_lista=[]
         for p in pedidos:
-            if p["idpedidoestado"] == 1:  # Quita cualquier pedido que este en carro
-                del p
-            else:
+            if p["idpedidoestado"] != 1:  # Quita cualquier pedido que este en carro
                 p["total"] = functions.formato_precio(p["total"])
                 p["fecha"] = (
                     p["fecha_pago"] if p["fecha_pago"] != 0 else p["fecha_creacion"]
@@ -607,8 +606,9 @@ class user(base):
                 p["color_estado"] = functions.getContrastColor(
                     estados_pedido[p["idpedidoestado"]]["color"]
                 )
+                pedidos_lista.append(p)
 
-        data["pedidos"] = pedidos
+        data["pedidos"] = pedidos_lista
         ret["body"].append(("user/pedidos-lista", data))
 
         f = footer()

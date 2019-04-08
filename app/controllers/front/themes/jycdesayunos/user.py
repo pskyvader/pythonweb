@@ -9,6 +9,7 @@ from app.models.usuariodireccion import usuariodireccion as usuariodireccion_mod
 from app.models.pedido import pedido as pedido_model
 from app.models.pedidodireccion import pedidodireccion as pedidodireccion_model
 from app.models.pedidoestado import pedidoestado as pedidoestado_model
+from app.models.pedidoproducto import pedidoproducto as pedidoproducto_model
 from app.models.seo import seo as seo_model
 
 from .base import base

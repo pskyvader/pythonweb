@@ -196,6 +196,7 @@ class usuario(base_model):
 
         datos["id"] = usuario[0]
         id = cls.update(datos)
+        print(id)
         if "exito" in id:
             respuesta = id
         else:

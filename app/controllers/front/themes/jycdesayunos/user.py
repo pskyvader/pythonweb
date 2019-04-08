@@ -711,14 +711,19 @@ class user(base):
                 estados_pedido[dp["idpedidoestado"]]["color"]
             )
             lista_productos = []
-            for k,p in enumerate(productos_pedido.copy()):
+            productos_pedido_copy=[]
+            for p in productos_pedido:
                 if p["idpedidodireccion"] == dp[0]:
                     portada = image.portada(p["foto"])
                     thumb_url = image.generar_url(portada, "")
                     p["total"] = functions.formato_precio(p["total"])
                     p["foto"] = thumb_url
                     lista_productos.append(p)
-                    del productos_pedido[k]
+                else:
+                    productos_pedido_copy.append(p)
+            productos_pedido=productos_pedido_copy
+                    
+            
             dp['lista_productos']=lista_productos
 
         pedido["total"] = functions.formato_precio(pedido["total"])

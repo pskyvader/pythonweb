@@ -727,6 +727,8 @@ class user(base):
             estados_pedido[pedido["idpedidoestado"]]["color"]
         )
 
+        print(pedido)
+
         data.update(pedido)
 
         medios_pago = []

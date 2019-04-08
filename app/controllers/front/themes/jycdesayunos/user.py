@@ -623,13 +623,13 @@ class user(base):
     
         :rtype:
         """
-        print(var)
         ret = {"body": []}
         self.meta(self.seo)
         verificar = self.verificar(True)
         if verificar["exito"]:
             if len(var) > 0:
                 pedido = pedido_model.getByCookie(var[0], False)
+                print(pedido,var[0])
                 # Podria desaparecer si se necesita que cualquier pedido sea publico
                 if (
                     "idusuario" in pedido

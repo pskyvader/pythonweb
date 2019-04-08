@@ -259,7 +259,7 @@ class database():
     def truncate(self, tables):
         sql = ""
         for table in tables:
-            sql += "TRUNCATE TABLE " + self._prefix + table + " "
+            sql += "TRUNCATE TABLE " + self._prefix + table + "; "
         row = self.consulta(sql, False)
         return row
 

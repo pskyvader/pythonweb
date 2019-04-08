@@ -750,7 +750,7 @@ class user(base):
             functions.remove_tags(descripcion_pago)
         ).strip() != ""
 
-        ret["body"].append(("user/pedidos-detalle", data))
+        #ret["body"].append(("user/pedidos-detalle", data))
 
         f = footer()
         ret["body"] += f.normal()["body"]

@@ -711,7 +711,7 @@ class user(base):
                 estados_pedido[dp["idpedidoestado"]]["color"]
             )
             lista_productos = []
-            for k,p in productos_pedido.copy().items():
+            for k,p in enumerate(productos_pedido.copy()):
                 if p["idpedidodireccion"] == dp[0]:
                     portada = image.portada(p["foto"])
                     thumb_url = image.generar_url(portada, "")

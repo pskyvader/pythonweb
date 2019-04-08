@@ -192,7 +192,7 @@ class order(base):
         from datetime import timedelta
         from time import time
 
-        horarios_entrega = []
+        horarios_entrega = {}
         hora_minima = datetime.strptime("08:00", "%H:%M")
         hora_maxima = datetime.strptime("12:00", "%H:%M")
         hora_corte = datetime.now().replace(hour=18, minute=0)
@@ -204,10 +204,10 @@ class order(base):
             hora1 = hora_actual.strftime("%H:%M")
             hora2 = (hora_actual + timedelta(hours=1)).strftime("%H:%M")
 
-            horarios_entrega.append({
+            horarios_entrega[hora1] = {
                 "hora": hora1,
                 "titulo": hora1 + "  -   " + hora2,
-            })
+            }
             hora_actual = hora_actual + timedelta(minutes=15)
 
         fechas_bloqueadas = []
@@ -309,7 +309,7 @@ class order(base):
                 "productos": lista_productos,
                 "direccion_entrega": direcciones_entrega,
                 "fecha_entrega": fecha_entrega,
-                "horarios_entrega": horarios_entrega,
+                "horarios_entrega": horarios_entrega.values(),
                 "precio": functions.formato_precio(dp["precio"]),
             }
 

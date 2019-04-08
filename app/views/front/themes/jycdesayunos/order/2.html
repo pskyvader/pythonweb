@@ -46,7 +46,7 @@
                                         <div class="col-6 col-md-3 grid-item ">
                                             <select name="" id="" class="form-control hora_entrega">
                                                 <option value="" disabled="" hidden="" selected="">Selecciona un horario *</option>
-                                                {% for he in d.horarios_entrega %}
+                                                {% for he in horarios_entrega %}
                                                 <option value="{{he.hora}}" {% if he.selected %} selected="" {% endif %}>{{he.titulo}}</option>
                                                 {% endfor %}
                                             </select>

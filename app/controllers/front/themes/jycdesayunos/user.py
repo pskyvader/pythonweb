@@ -22,6 +22,7 @@ from .breadcrumb import breadcrumb
 from .footer import footer
 
 from core.app import app
+from core.image import image
 from core.functions import functions
 
 import json

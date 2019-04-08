@@ -729,7 +729,7 @@ class user(base):
 
         data.update(pedido)
 
-        medios_pago = array()
+        medios_pago = []
         descripcion_pago = ""
         if (
             pedido["idpedidoestado"] == 3 or pedido["idpedidoestado"] == 7

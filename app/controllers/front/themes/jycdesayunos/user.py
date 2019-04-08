@@ -727,7 +727,6 @@ class user(base):
             estados_pedido[pedido["idpedidoestado"]]["color"]
         )
 
-        data.update(pedido)
 
         medios_pago = []
         descripcion_pago = ""
@@ -744,6 +743,11 @@ class user(base):
             medio_pago = mediopago_model.getById(pedido["idmediopago"])
             descripcion_pago = medio_pago["descripcion"]
 
+        data["medios_pago"] = medios_pago
+        data["descripcion_pago"] = descripcion_pago
+        data["is_descripcion_pago"] = (
+            functions.remove_tags(descripcion_pago)
+        ).strip() != ""
 
         ret["body"].append(("user/pedidos-detalle", data))
 

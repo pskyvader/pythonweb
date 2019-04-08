@@ -73,7 +73,9 @@
                                                             <img src="{{p.foto}}" alt="{{p.titulo}}">
                                                             <a class="ml-3" href="{{p.url}}">{{p.titulo}}</a>
                                                             <span class="mx-3">({{p.atributo}})</span>
-                                                            <span>- {{p.mensaje}}</span>
+                                                            {% if p.mensaje!='' %}
+                                                            <span> - {{p.mensaje}}</span>
+                                                            {% endif %}
                                                         </div>
                                                     </div>
                                                 </div>

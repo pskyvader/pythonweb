@@ -86,7 +86,6 @@ $('body').on('click', '.order.step-3 #next_step', function(e) {
     $('#next_step').addClass('disabled');
 
     post_basic(url, {}, function(data) {
-        console.log(data);
         $('#next_step').removeClass('disabled');
         if (typeof(data) != 'object') {
             try {

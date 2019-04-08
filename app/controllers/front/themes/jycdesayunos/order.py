@@ -602,17 +602,14 @@ class order(base):
         }
         campos = app.post
 
-        print(campos)
-
         if "idpedidodireccion" in campos and "fecha" in campos and "hora" in campos:
-            print(campos)
             carro = cart.current_cart(True)
             direcciones_pedido = pedidodireccion_model.getAll(
                 {"idpedido": carro["idpedido"]}
             )
 
             for d in direcciones_pedido:
-                if d["idpedidodireccion"] == campos["idpedidodireccion"]:
+                if d["idpedidodireccion"] == int(campos["idpedidodireccion"]):
                     update = {"fecha_entrega": campos["fecha"] + " " + campos["hora"]}
                     update["id"] = d["idpedidodireccion"]
                     idpedidoproducto = pedidodireccion_model.update(update)

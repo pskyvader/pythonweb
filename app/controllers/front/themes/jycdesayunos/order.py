@@ -602,6 +602,8 @@ class order(base):
         }
         campos = app.post
 
+        print(campos)
+
         if "idpedidodireccion" in campos and "fecha" in campos and "hora" in campos:
             carro = cart.current_cart(True)
             direcciones_pedido = pedidodireccion_model.getAll(

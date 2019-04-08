@@ -293,8 +293,6 @@ function total_sidebar() {
         envio += parseInt($(this).text().substring(1).replace(".", ""));
     });
 
-    console.log(total, envio);
-
     $('.precio_envio').text(formato_precio(envio, 0));
     $('.precio_total').text(formato_precio(total + envio, 0));
 }

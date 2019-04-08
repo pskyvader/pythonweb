@@ -3,6 +3,7 @@ from app.models.modulo import modulo as modulo_model
 from app.models.moduloconfiguracion import (
     moduloconfiguracion as moduloconfiguracion_model,
 )
+from app.models.comuna import comuna as comuna_model
 from app.models.usuario import usuario as usuario_model
 from app.models.usuariodireccion import usuariodireccion as usuariodireccion_model
 from app.models.seo import seo as seo_model

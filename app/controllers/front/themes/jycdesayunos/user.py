@@ -719,8 +719,6 @@ class user(base):
                     p["foto"] = thumb_url
                     lista_productos.append(p)
                     del productos_pedido[k]
-
-            
             dp['lista_productos']=lista_productos
 
         pedido["total"] = functions.formato_precio(pedido["total"])

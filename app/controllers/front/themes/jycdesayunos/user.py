@@ -692,8 +692,7 @@ class user(base):
         data["sidebar"] = ("user/sidebar", {"sidebar_user": sidebar})
 
         ep = pedidoestado_model.getAll()
-        estados_pedido = []
-        print(ep)
+        estados_pedido = {}
         for e in ep:
             estados_pedido[e[0]] = e
 

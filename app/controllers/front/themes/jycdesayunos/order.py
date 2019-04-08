@@ -309,7 +309,7 @@ class order(base):
                 "productos": lista_productos,
                 "direccion_entrega": direcciones_entrega,
                 "fecha_entrega": fecha_entrega,
-                "horarios_entrega": horarios_entrega.values(),
+                "horarios_entrega": horarios_entrega,
                 "precio": functions.formato_precio(dp["precio"]),
             }
 

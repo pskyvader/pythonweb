@@ -727,7 +727,7 @@ class user(base):
             estados_pedido[pedido["idpedidoestado"]]["color"]
         )
 
-        print(pedido)
+        pedido = {k:p for (k,p) in pedido.items() if isinstance(k,str)}
 
         data.update(pedido)
 

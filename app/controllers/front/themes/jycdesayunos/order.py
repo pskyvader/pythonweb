@@ -760,9 +760,7 @@ class order(base):
             pedido_model.update(update)
             cart.update_cart(carro["idpedido"])
             seo_cuenta = seo_model.getById(9)
-            url = functions.generar_url(
-                {seo_cuenta["url"], "pedido", carro["cookie_pedido"]}
-            )
+            url = functions.generar_url( [seo_cuenta["url"], "pedido", carro["cookie_pedido"]] )
             respuesta["url"] = url
             respuesta["exito"] = True
             ret["body"] = json.dumps(respuesta, ensure_ascii=False)

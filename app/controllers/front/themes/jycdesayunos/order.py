@@ -658,6 +658,7 @@ class order(base):
         new_d["cookie_direccion"] = (
             carro["cookie_pedido"] + "-" + functions.generar_pass(2)
         )
+        new_d["fecha_entrega"]='0000-00-00 00:00:00'
 
         id_new = pedidodireccion_model.insert(new_d)
         id_direccion = du[0]

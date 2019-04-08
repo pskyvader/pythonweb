@@ -320,7 +320,6 @@ class order(base):
                     h["selected"] = True
                 else:
                     h["selected"] = False
-            print(d["horarios_entrega"])
             d["horarios_entrega"]=d["horarios_entrega"].values()
             direcciones.append(d)
 

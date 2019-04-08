@@ -636,7 +636,7 @@ class order(base):
 
         carro = cart.current_cart(True)
 
-        comunas = self.get_comunas()
+        comunas = order.get_comunas()
         direcciones_entrega = usuariodireccion_model.getAll(
             {"idusuario": app.session[usuario_model.idname + app.prefix_site]}
         )

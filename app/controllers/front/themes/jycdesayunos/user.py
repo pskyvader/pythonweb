@@ -143,7 +143,7 @@ class user(base):
 
         data = {}
         data["sidebar"] = ("user/sidebar", {"sidebar_user": sidebar})
-        
+
         usuario = usuario_model.getById(
             app.session[usuario_model.idname + app.prefix_site]
         )
@@ -1020,7 +1020,9 @@ class user(base):
                 and app.session["login_token"]["token"] == campos["token"]
             ):
                 if time() - app.session["login_token"]["time"] <= 120:
-                    respuesta["exito"] = usuario_model.login( campos["email"], campos["pass"], ('recordar' in campos) )
+                    respuesta["exito"] = usuario_model.login(
+                        campos["email"], campos["pass"], ("recordar" in campos)
+                    )
                     if not respuesta["exito"]:
                         respuesta[
                             "mensaje"

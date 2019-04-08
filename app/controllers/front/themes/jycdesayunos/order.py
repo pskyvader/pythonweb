@@ -700,14 +700,14 @@ class order(base):
         )
 
         for d in direcciones_pedido:
-            if d["idpedidodireccion"] == campos["id"]:
+            if d["idpedidodireccion"] == int(campos["id"]):
                 pedidodireccion_model.delete(d["idpedidodireccion"])
                 respuesta["exito"] = True
                 break
 
         cantidad = 0
         for p in carro["productos"]:
-            if p["idpedidodireccion"] == campos["id"]:
+            if p["idpedidodireccion"] == int(campos["id"]):
                 producto = producto_model.getById(p["idproducto"])
                 if "precio" in producto and producto["precio"] > 0:
                     cantidad = p["cantidad"]

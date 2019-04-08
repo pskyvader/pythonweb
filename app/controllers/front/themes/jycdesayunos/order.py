@@ -192,7 +192,7 @@ class order(base):
         from datetime import timedelta
         from time import time
 
-        horarios_entrega = {}
+        horarios_entrega = []
         hora_minima = datetime.strptime("08:00", "%H:%M")
         hora_maxima = datetime.strptime("12:00", "%H:%M")
         hora_corte = datetime.now().replace(hour=18, minute=0)

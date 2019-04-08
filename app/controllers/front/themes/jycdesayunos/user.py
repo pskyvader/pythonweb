@@ -429,7 +429,7 @@ class user(base):
                 else:
                     campos_opcionales.append(m)
 
-        print(campos_opcionales)
+        print(campos_opcionales,campos_requeridos)
         data["campos_requeridos"] = campos_requeridos
         data["campos_opcionales"] = campos_opcionales
         data["title"] = direccion["titulo"] if direccion != None else "Nueva dirección"

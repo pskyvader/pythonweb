@@ -286,7 +286,7 @@ class AsyncWsgiServer(asyncore.dispatcher, WSGIServer):
         host, port = self.server_address[:2]
         print(host,port)
         self.server_name = socket.getfqdn(host)
-        self.server_port = port
+        self.server_port = 8888
         self.setup_environ()
 
     def writable(self):

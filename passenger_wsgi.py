@@ -77,3 +77,14 @@ session_opts = {
 
 app2 = LoggingMiddleware(application2)
 application = SessionMiddleware(app2, session_opts)
+
+
+class EchoWS(ws.WS):
+
+    def on_message(self, websocket, message):
+        websocket.write(message)
+
+
+wm = ws.WebSocket('/bla', EchoWS())
+app = wsgi.WsgiHandler(middleware=(...,wm))
+wsgi.WSGIServer(callable=application).start()

@@ -10,7 +10,7 @@ __version__ = version = get_version(VERSION)
 __author__ = "Luca Sbardella"
 
 
-DEFAULT_PORT = 8060
+DEFAULT_PORT = 8080
 ASYNC_TIMEOUT = None
 SERVER_NAME = 'pulsar'
 JAPANESE = b'\xe3\x83\x91\xe3\x83\xab\xe3\x82\xb5\xe3\x83\xbc'.decode('utf-8')

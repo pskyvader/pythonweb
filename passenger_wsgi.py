@@ -83,8 +83,8 @@ class EchoWS(ws.WS):
 
     def on_message(self, websocket, message):
         websocket.write(message)
-        
+
 
 wm = ws.WebSocket('/bla', EchoWS())
-app = wsgi.WsgiHandler(middleware=(wm))
+app = wsgi.WsgiHandler(middleware=(...,wm))
 wsgi.WSGIServer(callable=application).start()

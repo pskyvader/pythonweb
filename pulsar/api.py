@@ -12,18 +12,18 @@ from .utils.lib import (
     Producer, AbortEvent, isawaitable
 )
 
-from .async.access import get_actor, create_future, cfg_value, ensure_future
-from .async.futures import as_coroutine
-from .async.actor import is_actor, send, spawn, get_stream
-from .async.proxy import command, get_proxy
-from .async.lock import Lock, LockBase
-from .async.protocols import (
+from .async_app.access import get_actor, create_future, cfg_value, ensure_future
+from .async_app.futures import as_coroutine
+from .async_app.actor import is_actor, send, spawn, get_stream
+from .async_app.proxy import command, get_proxy
+from .async_app.lock import Lock, LockBase
+from .async_app.protocols import (
     Connection, PulsarProtocol, DatagramProtocol, TcpServer, DatagramServer
 )
-from .async.clients import Pool, PoolConnection, AbstractClient
-from .async.futures import chain_future, AsyncObject
-from .async.commands import async_while
-from .async.monitor import arbiter
+from .async_app.clients import Pool, PoolConnection, AbstractClient
+from .async_app.futures import chain_future, AsyncObject
+from .async_app.commands import async_while
+from .async_app.monitor import arbiter
 from .apps import Application, MultiApp, get_application
 from .apps.data import data_stores
 

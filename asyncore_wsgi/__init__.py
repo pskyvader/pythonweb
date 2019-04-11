@@ -273,8 +273,6 @@ class AsyncWsgiServer(asyncore.dispatcher, WSGIServer):
     def __init__(self, server_address,
                  RequestHandlerClass=AsyncWsgiHandler,
                  map=None):
-        server_address=(server_address[0],8888)
-        print(server_address)
         if map is None:
             map = {}
         asyncore.dispatcher.__init__(self, map=map)

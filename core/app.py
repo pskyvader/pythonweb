@@ -44,7 +44,7 @@ class app:
         app.client_ip = self.parse_ip(app.environ)
         url = self.parse_url(environ["PATH_INFO"])
 
-        print(app.get)
+        print(environ["SERVER_NAME"])
 
         config = self.get_config()
         app.title = config["title"]

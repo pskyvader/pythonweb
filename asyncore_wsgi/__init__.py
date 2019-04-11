@@ -273,6 +273,7 @@ class AsyncWsgiServer(asyncore.dispatcher, WSGIServer):
     def __init__(self, server_address,
                  RequestHandlerClass=AsyncWsgiHandler,
                  map=None):
+        print(server_address)
         if map is None:
             map = {}
         asyncore.dispatcher.__init__(self, map=map)
@@ -284,9 +285,8 @@ class AsyncWsgiServer(asyncore.dispatcher, WSGIServer):
         self.listen(5)
         self.server_address = self.socket.getsockname()
         host, port = self.server_address[:2]
-        print(host,port)
         self.server_name = socket.getfqdn(host)
-        self.server_port = 8888
+        self.server_port = port
         self.setup_environ()
 
     def writable(self):

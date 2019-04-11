@@ -4,8 +4,8 @@ from core.app import app
 import pprint
 from beaker.middleware import SessionMiddleware
 
-from pulsar.apps import wsgi, ws
 
+from asyncore_wsgi import AsyncWebSocketHandler, make_server
 
 sys.path.insert(0, os.path.dirname(__file__))
 
@@ -79,12 +79,28 @@ app2 = LoggingMiddleware(application2)
 application = SessionMiddleware(app2, session_opts)
 
 
-class EchoWS(ws.WS):
-
-    def on_message(self, websocket, message):
-        websocket.write(message)
 
 
-wm = ws.WebSocket('/bla', EchoWS())
-app = wsgi.WsgiHandler(middleware=(...,wm))
-wsgi.WSGIServer(callable=application).start()
+
+clients = []
+class SimpleChat(AsyncWebSocketHandler):
+    def handleMessage(self):
+        for client in clients:
+            if client != self:
+                client.sendMessage("log:" + self.client_address[0] + u" - " + self.data)
+
+    def handleConnected(self):
+        clients.append(self)
+        for client in clients:
+            client.sendMessage("log:" + self.client_address[0] + u" - connected")
+            client.sendMessage("connected:" + str(len(clients)))
+
+    def handleClose(self):
+        clients.remove(self)
+        for client in clients:
+            client.sendMessage("log:" + self.client_address[0] + u" - disconnected")
+            client.sendMessage("connected:" + str(len(clients)))
+
+
+httpd = make_server("", 80, application, ws_handler_class=SimpleChat)
+httpd.serve_forever()

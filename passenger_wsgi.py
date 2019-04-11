@@ -3,6 +3,10 @@ import os
 from core.app import app
 import pprint
 from beaker.middleware import SessionMiddleware
+
+from pulsar.apps import wsgi
+
+
 sys.path.insert(0, os.path.dirname(__file__))
 
 
@@ -73,3 +77,6 @@ session_opts = {
 
 app2 = LoggingMiddleware(application2)
 application = SessionMiddleware(app2, session_opts)
+
+
+wsgi.WSGIServer(callable=application).start()

@@ -1,7 +1,7 @@
 import uuid
 from asyncio import sleep
 
-from ....async.lock import LockError, LockBase
+from ....async_app.lock import LockError, LockBase
 
 
 class RedisScript:

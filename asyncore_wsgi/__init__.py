@@ -284,6 +284,7 @@ class AsyncWsgiServer(asyncore.dispatcher, WSGIServer):
         self.listen(5)
         self.server_address = self.socket.getsockname()
         host, port = self.server_address[:2]
+        print(host,port)
         self.server_name = socket.getfqdn(host)
         self.server_port = port
         self.setup_environ()

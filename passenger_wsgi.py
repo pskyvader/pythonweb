@@ -102,5 +102,5 @@ class SimpleChat(AsyncWebSocketHandler):
             client.sendMessage("connected:" + str(len(clients)))
 
 
-httpd = make_server("", 80, application, ws_handler_class=SimpleChat)
+httpd = make_server("", 25588, application, ws_handler_class=SimpleChat)
 httpd.serve_forever()

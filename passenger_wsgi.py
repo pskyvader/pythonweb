@@ -76,7 +76,7 @@ session_opts = {
 }
 
 app2 = LoggingMiddleware(application2)
-application = SessionMiddleware(app2, session_opts)
+applicationA = SessionMiddleware(app2, session_opts)
 
 
 
@@ -102,5 +102,5 @@ class SimpleChat(AsyncWebSocketHandler):
             client.sendMessage("connected:" + str(len(clients)))
 
 
-httpd = make_server("", 25588, application, ws_handler_class=SimpleChat)
-httpd.serve_forever()
+#httpd = make_server("", 25588, applicationA, ws_handler_class=SimpleChat)
+#httpd.serve_forever()

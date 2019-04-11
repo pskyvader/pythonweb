@@ -4,7 +4,7 @@ from core.app import app
 import pprint
 from beaker.middleware import SessionMiddleware
 
-from pulsar.apps import wsgi
+from pulsar.apps import wsgi, ws
 
 
 sys.path.insert(0, os.path.dirname(__file__))
@@ -79,4 +79,12 @@ app2 = LoggingMiddleware(application2)
 application = SessionMiddleware(app2, session_opts)
 
 
+class EchoWS(ws.WS):
+
+    def on_message(self, websocket, message):
+        websocket.write(message)
+        
+
+wm = ws.WebSocket('/bla', EchoWS())
+app = wsgi.WsgiHandler(middleware=(wm))
 wsgi.WSGIServer(callable=application).start()

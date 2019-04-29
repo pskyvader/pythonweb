@@ -43,9 +43,10 @@ class view:
         #custom filter
         def phone_number(number):
             """Convert a 10 character string into (xxx) xxx-xxxx."""
-            first = number[:-8]
-            second = number[-8:-4]
-            third = number[-4:]
+            base=4
+            first = number[:-2*base]
+            second = number[-2*base:-base]
+            third = number[-base:]
             return   first   + ' ' + second + ' ' + third
         env.filters['phone_number'] = phone_number
         #custom filter

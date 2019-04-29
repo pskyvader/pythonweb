@@ -46,7 +46,7 @@ class view:
             first = number[:-8]
             second = number[-8:-4]
             third = number[-4:]
-            return '(' + first + ')' + ' ' + second + '-' + third
+            return   first   + ' ' + second + ' ' + third
         env.filters['phone_number'] = phone_number
         #custom filter
 

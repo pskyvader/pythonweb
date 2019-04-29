@@ -238,7 +238,6 @@ class payment(base):
         )["body"]
 
         pedido = self.verificar_pedido(medio_pago)
-        print(pedido)
         if not isinstance(pedido, tuple):
             self.update_pedido(
                 pedido, medio_pago, 10
@@ -262,6 +261,8 @@ class payment(base):
             data["url_back"] = url_back
 
             ret["body"].append(("payment/confirmation", data))
+        else:
+            ret["body"].append(pedido)
 
         f = footer()
         ret["body"] += f.normal()["body"]

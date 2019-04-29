@@ -7,6 +7,7 @@ from app.models.seo import seo as seo_model
 from core.app import app
 from core.email import email
 from core.functions import functions
+from core.view import view
 
 from .base import base
 
@@ -427,7 +428,7 @@ class payment(base):
         for k, p in enumerate(carro["productos"]):
             data["productos"][str(k + 1) + "-" + p["titulo"]] = p["total"]
         imagenes = [
-            {'url':'images/okok.gif','tag':'ok_gif'}
+            {'url':view.get'images/okok.gif','tag':'ok_gif'}
         ]
         adjuntos = []
         data["titulos"] = {"Producto": "Total"}

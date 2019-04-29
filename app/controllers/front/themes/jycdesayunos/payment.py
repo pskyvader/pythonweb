@@ -4,6 +4,7 @@ from app.models.pedidodireccion import pedidodireccion as pedidodireccion_model
 from app.models.seo import seo as seo_model
 
 from core.app import app
+from core.email import email
 from core.functions import functions
 
 from .base import base
@@ -301,7 +302,7 @@ class payment(base):
                         pedido["total"]
                     )
 
-                    respuesta = self.email(pedido, "", "", campos, url_back)
+                    respuesta = self.email_pedido(pedido, "", "", campos, url_back)
                     data = {}
                     data["action"] = result.urlRedirection
                     form = []

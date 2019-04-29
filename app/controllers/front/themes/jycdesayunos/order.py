@@ -230,7 +230,7 @@ class order(base):
         if functions.current_time(as_string=False) > hora_corte.timestamp():
             fechas_bloqueadas.append(
                 {
-                    "fecha": functions.formato_fecha(strtotime("+1 day"), "%F"),
+                    "fecha": functions.formato_fecha(functions.current_time(as_string=False) + timedelta(hours=1), "%F"),
                     "texto": "",
                 }
             )

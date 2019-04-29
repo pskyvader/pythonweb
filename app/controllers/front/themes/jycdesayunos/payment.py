@@ -297,7 +297,7 @@ class payment(base):
                     )  # estado de pedido: pagado
                     seo_cuenta = seo_model.getById(9)
                     url_back = functions.generar_url(
-                        array(seo_cuenta["url"], "pedido", pedido["cookie_pedido"])
+                        [seo_cuenta["url"], "pedido", pedido["cookie_pedido"]]
                     )
                     campos = {}
                     campos["Estado del pedido"] = "Pagado"

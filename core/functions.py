@@ -169,10 +169,13 @@ class functions():
 
     @staticmethod
     def formato_precio(precio):
-        #final='${:.0f}'.format(float(precio))
-        final='${.,0f}'.format(float(precio))
+        precio=1000
+        final='${:.0f}'.format(float(precio))
+        #final='${.,0f}'.format(float(precio))
         return final
-    
+precio=1000
+final='${:.0f}'.format(float(precio))
+print(final)
 
     @staticmethod
     def current_time(formato:str="%Y-%m-%d %H:%M:%S", as_string:bool=True):

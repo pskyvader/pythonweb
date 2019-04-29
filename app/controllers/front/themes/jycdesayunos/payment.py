@@ -97,26 +97,26 @@ class payment(base):
 
     def update_pedido(self, pedido, medio_pago, idpedidoestado, fecha_pago=""):
         lista_direcciones = pedidodireccion_model.getAll({"idpedido": pedido[0]})
-        update_pedido = {
+        pedido_update = {
             "id": pedido[0],
             "idpedidoestado": idpedidoestado,
             "idmediopago": medio_pago[0],
         }
         if "" != fecha_pago:
-            update_pedido["fecha_pago"] = fecha_pago
+            pedido_update["fecha_pago"] = fecha_pago
 
-        pedido_model.update(update_pedido)
+        pedido_model.update(pedido_update)
         for direccion in lista_direcciones:
-            update_pedido = {
+            pedido_update = {
                 "id": direccion[0],
                 "idpedidoestado": 9,
             }  # estado de direccion: pago pendiente
             if idpedidoestado == 4:
-                update_pedido[
+                pedido_update[
                     "idpedidoestado"
                 ] = 5  # estado de direccion: preparando producto
 
-            pedidodireccion_model.update(update_pedido)
+            pedidodireccion_model.update(pedido_update)
 
     def medio(self, var=[]):
         ret = {"body": []}

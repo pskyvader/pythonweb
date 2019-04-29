@@ -32,7 +32,7 @@ class payment(base):
         seo_home = seo_model.getById(1)
         url_return = functions.url_redirect(seo_home["url"])
         if url_return != "":
-            ret={}
+            ret = {}
             ret["error"] = 301
             ret["redirect"] = url_return
             return ret
@@ -246,8 +246,8 @@ class payment(base):
         pedido = self.verificar_pedido(medio_pago)
 
         if not isinstance(pedido, tuple):
-            #self.update_pedido( pedido, medio_pago, 10 )  # estado de pedido: esperando transferencia
-            
+            # self.update_pedido( pedido, medio_pago, 10 )  # estado de pedido: esperando transferencia
+
             seo_cuenta = seo_model.getById(9)
             url_back = functions.generar_url(
                 [seo_cuenta["url"], "pedido", pedido["cookie_pedido"]]
@@ -417,28 +417,26 @@ class payment(base):
             + url_pedido
             + '"><b>haciendo click aquí</b></a>'
         }
-        carro=cart.get_cart(pedido['cookie_pedido'],False)
-        body_email['campos']=campos
-        
-        data={}
+        carro = cart.get_cart(pedido["cookie_pedido"], False)
+        body_email["campos"] = campos
+
+        data = {}
         data["productos"] = {}
-        for k,p in enumerate(carro['productos']):
-            data["productos"][str(k+1)+'-'+p['titulo']]=p['total']
+        for k, p in enumerate(carro["productos"]):
+            data["productos"][str(k + 1) + "-" + p["titulo"]] = p["total"]
         imagenes = []
         adjuntos = []
-        data['titulos']={'Producto':'Total'}
-        data['resumen']={}
-        data['resumen']["Subtotal"] = carro["subtotal"]
-        data['resumen']["Envio"] = carro["total_direcciones"]
-        data['resumen']["Total del pedido"] = carro["total"]
+        data["titulos"] = {"Producto": "Total"}
+        data["resumen"] = {}
+        data["resumen"]["Subtotal"] = carro["subtotal"]
+        data["resumen"]["Envio"] = carro["total_direcciones"]
+        data["resumen"]["Total del pedido"] = carro["total"]
 
-        
-        body = email.body_email(body_email,data)
-        
-        file_write = open(app.get_dir(True) + '/email.html', 'w+')
-        file_write.write(body)
-        file_write.close()
-        
+        body = email.body_email(body_email, data)
+
+        # file_write = open(app.get_dir(True) + '/email.html', 'w+')
+        # file_write.write(body)
+        # file_write.close()
 
         respuesta = email.enviar_email(
             [pedido["email"], email_empresa],

@@ -418,8 +418,8 @@ class payment(base):
         }
         productos=pedidoproducto_model.getAll({'idpedido':pedido[0]})
         body_email["campos"] = {}
-        for p in productos:
-            body_email["campos"][str(p[0])+'-'+p['titulo']]=p['precio']
+        for k,p in enumerate(productos):
+            body_email["campos"][str(k+1)+'-'+p['titulo']]=p['precio']
 
         imagenes = []
         adjuntos = []

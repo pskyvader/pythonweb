@@ -237,6 +237,7 @@ class payment(base):
             self.metadata["title"],
         )["body"]
 
+        pedido = self.verificar_pedido(medio_pago)
 
         f = footer()
         ret["body"] += f.normal()["body"]

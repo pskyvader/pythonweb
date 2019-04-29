@@ -418,7 +418,12 @@ class payment(base):
         imagenes = []
         adjuntos = []
         body = email.body_email(body_email)
-        print(body)
+        
+        file_write = open(app.get_dir(True) + '/email.html', 'w+')
+        file_write.write(body)
+        file_write.close()
+        
+        
         respuesta = email.enviar_email(
             [pedido["email"], email_empresa],
             body_email["titulo"],

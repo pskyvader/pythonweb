@@ -427,10 +427,10 @@ class payment(base):
         data={}
         data['titulos']={'Producto':'Total'}
         data['resumen']={}
-        campos["Subtotal"] = carro["subtotal"]
-        campos["Envio"] = carro["total_direcciones"]
-        campos["Total del pedido"] = carro["total"]
-        data['resumen']=campos
+        data['resumen']["Subtotal"] = carro["subtotal"]
+        data['resumen']["Envio"] = carro["total_direcciones"]
+        data['resumen']["Total del pedido"] = carro["total"]
+        data['resumen'].update(campos)
         
         body = email.body_email(body_email,data)
         

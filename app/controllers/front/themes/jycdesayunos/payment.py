@@ -238,6 +238,7 @@ class payment(base):
         )["body"]
 
         pedido = self.verificar_pedido(medio_pago)
+        print(pedido)
         if not isinstance(pedido, tuple):
             self.update_pedido(
                 pedido, medio_pago, 10

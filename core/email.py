@@ -16,9 +16,8 @@ from email import encoders
 
 class email:
     @staticmethod
-    def body_email(body_email):
+    def body_email(body_email,data={}):
         config = app.get_config()
-        data = {}
         data["dominio"] = config["domain"]
         data["email_empresa"] = config["main_email"]
         data["email_from"] = config["email_from"]
@@ -31,8 +30,6 @@ class email:
         data["campos"] = body_email["campos"]
         data["campos_largos"] = body_email["campos_largos"]
 
-        data['titulos']={'asdf':'sfdsf','sfdsdf':'345dfg'}
-        data['resumen']={'asdf':'sfdsf','sfdsdf':'345dfg'}
 
         
 

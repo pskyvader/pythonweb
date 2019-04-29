@@ -417,7 +417,7 @@ class payment(base):
             + url_pedido
             + '"><b>haciendo click aquí</b></a>'
         }
-        carro=cart.get_cart(pedido['cookie_pedido'],True)
+        carro=cart.get_cart(pedido['cookie_pedido'],False)
         body_email["campos"] = {}
         for k,p in enumerate(carro['productos']):
             body_email["campos"][str(k+1)+'-'+p['titulo']]=p['total']

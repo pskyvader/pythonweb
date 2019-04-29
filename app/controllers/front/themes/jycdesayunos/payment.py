@@ -428,7 +428,7 @@ class payment(base):
         for k, p in enumerate(carro["productos"]):
             data["productos"][str(k + 1) + "-" + p["titulo"]] = p["total"]
         imagenes = [
-            {'url':view.get_theme()+ 'images/okok.gif','tag':'ok_gif'}
+            {'url':view.get_theme()+ 'mail/images/okok.gif','tag':'ok_gif'}
         ]
         adjuntos = []
         data["titulos"] = {"Producto": "Total"}

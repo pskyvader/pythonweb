@@ -711,6 +711,7 @@ class user(base):
             dp["color_estado"] = functions.getContrastColor(
                 estados_pedido[dp["idpedidoestado"]]["color"]
             )
+            dp["fecha_entrega"]=functions.formato_fecha(dp['fecha_entrega'],'%d de %B del %Y a las %H:%M')
             lista_productos = []
             productos_pedido_copy=[]
             for p in productos_pedido:

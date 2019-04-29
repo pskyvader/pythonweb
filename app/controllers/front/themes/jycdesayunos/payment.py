@@ -6,6 +6,7 @@ from app.models.seo import seo as seo_model
 from core.app import app
 from core.functions import functions
 
+from .base import base
 
 from .head import head
 from .header import header

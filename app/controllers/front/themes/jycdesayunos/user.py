@@ -601,7 +601,7 @@ class user(base):
                 p["fecha"] = (
                     p["fecha_pago"] if p["fecha_pago"] != '0000-00-00 00:00:00' else p["fecha_creacion"]
                 )
-                p["fecha"]=functions.formato_fecha(p['fecha'])
+                p["fecha"]=functions.formato_fecha(p['fecha'],'%d de %B del %Y a las %H:%M')
                 p["url"] = functions.generar_url(
                     [self.url[0], "pedido", p["cookie_pedido"]]
                 )

@@ -169,8 +169,8 @@ class functions():
 
     @staticmethod
     def formato_precio(precio):
-        final='${:.0f}'.format(float(precio))
-        #final='${.,0f}'.format(float(precio))
+        #final='${:.0f}'.format(float(precio))
+        final='${.,0f}'.format(float(precio))
         return final
     
 

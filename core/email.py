@@ -32,6 +32,7 @@ class email:
         data["campos_largos"] = body_email["campos_largos"]
 
         data['titulos']={'asdf':'sfdsf','sfdsdf':'345dfg'}
+        data['resumen']={'asdf':'sfdsf','sfdsdf':'345dfg'}
 
         
 

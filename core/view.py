@@ -48,7 +48,7 @@ class view:
             first = number[:base1]
             second = number[base1:base2]
             third = number[base2:]
-            return first + "-" + second + "-" + third
+            return first + " " + second + " " + third
 
         env.filters["phone_number"] = phone_number
         # custom filter

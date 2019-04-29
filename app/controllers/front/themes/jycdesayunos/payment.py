@@ -198,7 +198,7 @@ class payment(base):
                 [seo_cuenta["url"], "pedido", pedido["cookie_pedido"]]
             )
             data["url_next"] = functions.generar_url(
-                [self.url[0], "pago".medio_pago[0], pedido["cookie_pedido"]]
+                [self.url[0], "pago"+medio_pago[0], pedido["cookie_pedido"]]
             )
             ret["body"].append(("payment/resumen", data))
         else:

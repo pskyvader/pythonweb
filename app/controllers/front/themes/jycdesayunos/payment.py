@@ -28,6 +28,7 @@ class payment(base):
         seo_home = seo_model.getById(1)
         url_return = functions.url_redirect(seo_home["url"])
         if url_return != "":
+            ret={}
             ret["error"] = 301
             ret["redirect"] = url_return
             return ret
@@ -417,13 +418,17 @@ class payment(base):
         body_email["campos"] = campos
         imagenes = []
         adjuntos = []
-        body = email.body_email(body_email)
+        data={}
+        data['titulos']={'Producto':'Total'}
+        data['resumen']=campos
+        
+        body = email.body_email(body_email,data)
         
         file_write = open(app.get_dir(True) + '/email.html', 'w+')
         file_write.write(body)
         file_write.close()
         
-        
+
         respuesta = email.enviar_email(
             [pedido["email"], email_empresa],
             body_email["titulo"],

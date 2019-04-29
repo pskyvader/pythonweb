@@ -394,7 +394,7 @@ class payment(base):
         config = app.get_config()
         email_empresa = config["main_email"]
         body_email = {
-            "body": view.get_theme() + "mail/pedido+html",
+            "template": "pedido",
             "titulo": "Pedido " + pedido["cookie_pedido"] + " Pago realizado",
             "cabecera": "Estimado {}, aquí enviamos su información de pago. Si tiene alguna duda, no dude en contactarse con el centro de atención al cliente de {}".format(
                 pedido["nombre"], nombre_sitio

@@ -43,7 +43,7 @@ class view:
         #custom filter
         def phone_number(number):
             """Convert a 10 character string into (xxx) xxx-xxxx."""
-            base=4
+            base=3
             first = number[:-2*base]
             second = number[-2*base:-base]
             third = number[-base:]

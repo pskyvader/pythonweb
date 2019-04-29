@@ -237,32 +237,6 @@ class payment(base):
             self.metadata["title"],
         )["body"]
 
-        pedido = self.verificar_pedido(medio_pago)
-        if not isinstance(pedido, tuple):
-            self.update_pedido(
-                pedido, medio_pago, 10
-            )  # estado de pedido: esperando transferencia
-            seo_cuenta = seo_model.getById(9)
-            url_back = functions.generar_url(
-                [seo_cuenta["url"], "pedido", pedido["cookie_pedido"]]
-            )
-            titulo = "Pedido " + pedido["cookie_pedido"] + " Esperando transferencia"
-            cabecera = "Estimado " + pedido["nombre"] + ", " + medio_pago["descripcion"]
-            campos = {}
-            campos["Código de pedido"] = pedido["cookie_pedido"]
-            campos["Estado del pedido"] = "Esperando transferencia"
-            campos["Medio de pago"] = medio_pago["titulo"]
-            campos["Total del pedido"] = functions.formato_precio(pedido["total"])
-
-            respuesta = self.email(pedido, titulo, cabecera, campos, url_back)
-            data = {}
-            data["title"] = medio_pago["titulo"]
-            data["description"] = medio_pago["descripcion"]
-            data["url_back"] = url_back
-
-            ret["body"].append(("payment/confirmation", data))
-        else:
-            ret["body"].append(pedido)
 
         f = footer()
         ret["body"] += f.normal()["body"]

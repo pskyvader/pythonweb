@@ -416,7 +416,7 @@ class payment(base):
             + url_pedido
             + '"><b>haciendo click aquí</b></a>'
         }
-        productos=pedidoproducto_model.getAll({'idproducto':pedido[0]})
+        productos=pedidoproducto_model.getAll({'idpedido':pedido[0]})
         print(productos)
         body_email["campos"] = {}
         for p in productos:

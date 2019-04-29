@@ -240,6 +240,8 @@ class payment(base):
         pedido = self.verificar_pedido(medio_pago)
 
         if not isinstance(pedido, tuple):
+            #self.update_pedido( pedido, medio_pago, 10 )  # estado de pedido: esperando transferencia
+            
             seo_cuenta = seo_model.getById(9)
             url_back = functions.generar_url(
                 [seo_cuenta["url"], "pedido", pedido["cookie_pedido"]]
@@ -252,7 +254,7 @@ class payment(base):
             campos["Medio de pago"] = medio_pago["titulo"]
             campos["Total del pedido"] = functions.formato_precio(pedido["total"])
 
-            respuesta = self.email(pedido, titulo, cabecera, campos, url_back)
+            respuesta = self.email_pedido(pedido, titulo, cabecera, campos, url_back)
             data = {}
             data["title"] = medio_pago["titulo"]
             data["description"] = medio_pago["descripcion"]
@@ -389,7 +391,7 @@ class payment(base):
         return ret
 
     @staticmethod
-    def email(pedido, titulo="", cabecera="", campos={}, url_pedido=""):
+    def email_pedido(pedido, titulo="", cabecera="", campos={}, url_pedido=""):
         nombre_sitio = app.title
         config = app.get_config()
         email_empresa = config["main_email"]

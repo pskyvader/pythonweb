@@ -107,7 +107,7 @@ class cart(base):
             return ret
 
     @staticmethod
-    def get_cart(cookie_pedido: str):
+    def get_cart(cookie_pedido: str, estado_carro=True):
         """ genera un array que contiene los datos del producto, y dentro un array de productos con datos procesados para ser mostrados.
         :type cookie_pedido:str:
         :param cookie_pedido:str:
@@ -117,7 +117,7 @@ class cart(base):
         :rtype:
         """
 
-        pedido = pedido_model.getByCookie(cookie_pedido)
+        pedido = pedido_model.getByCookie(cookie_pedido,estado_carro)
         if len(pedido) > 0:
             prod = pedidoproducto_model.getAll({"idpedido": pedido[0]})
             productos = []

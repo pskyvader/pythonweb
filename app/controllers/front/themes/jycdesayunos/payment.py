@@ -426,13 +426,16 @@ class payment(base):
         data["productos"] = {}
         for k, p in enumerate(carro["productos"]):
             data["productos"][str(k + 1) + "-" + p["titulo"]] = p["total"]
-        imagenes = []
+        imagenes = [
+            {'url':'images/okok.gif','tag':'ok_gif'}
+        ]
         adjuntos = []
         data["titulos"] = {"Producto": "Total"}
         data["resumen"] = {}
         data["resumen"]["Subtotal"] = carro["subtotal"]
         data["resumen"]["Envio"] = carro["total_direcciones"]
         data["resumen"]["Total del pedido"] = carro["total"]
+        data['image_gif']='cid:ok_gif'
 
         body = email.body_email(body_email, data)
 

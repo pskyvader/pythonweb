@@ -16,7 +16,7 @@ from email import encoders
 
 class email:
     @staticmethod
-    def body_email(body_email,data={}):
+    def body_email(body_email, data={}):
         config = app.get_config()
         data["dominio"] = config["domain"]
         data["email_empresa"] = config["main_email"]
@@ -29,10 +29,6 @@ class email:
         data["cabecera"] = body_email["cabecera"]
         data["campos"] = body_email["campos"]
         data["campos_largos"] = body_email["campos_largos"]
-
-
-        
-
 
         template = body_email["template"]
         body = view.render([(template, data)], True, view.get_theme() + "mail/")
@@ -129,7 +125,6 @@ class email:
             else:
                 part.set_payload(path.read())
 
-            
             encoders.encode_base64(part)
             part.add_header(
                 "Content-Disposition", 'attachment filename="{}"'.format(filename)
@@ -156,6 +151,6 @@ class email:
         except Exception as e:
             respuesta["mensaje"] = "Mailer Error: " + repr(e)
             respuesta["exito"] = False
-            #raise RuntimeError("Mailer Error: " + repr(e))
+            # raise RuntimeError("Mailer Error: " + repr(e))
 
         return respuesta

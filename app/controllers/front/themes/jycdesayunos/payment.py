@@ -17,6 +17,9 @@ from .breadcrumb import breadcrumb
 from .footer import footer
 
 
+from .cart import cart
+
+
 class payment(base):
     cookie = ""
     configuration_webpay = None
@@ -252,10 +255,11 @@ class payment(base):
             titulo = "Pedido " + pedido["cookie_pedido"] + " Esperando transferencia"
             cabecera = "Estimado " + pedido["nombre"] + ", " + medio_pago["descripcion"]
             campos = {}
+            campos["Envio"] = functions.formato_precio(pedido["total"])
+            campos["Total del pedido"] = functions.formato_precio(pedido["total"])
             campos["Código de pedido"] = pedido["cookie_pedido"]
             campos["Estado del pedido"] = "Esperando transferencia"
             campos["Medio de pago"] = medio_pago["titulo"]
-            campos["Total del pedido"] = functions.formato_precio(pedido["total"])
 
             respuesta = self.email_pedido(pedido, titulo, cabecera, campos, url_back)
             data = {}

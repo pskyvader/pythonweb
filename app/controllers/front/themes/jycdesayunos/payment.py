@@ -1,5 +1,6 @@
 from app.models.mediopago import mediopago as mediopago_model
 from app.models.pedido import pedido as pedido_model
+from app.models.pedidoproducto import pedidoproducto as pedidoproducto_model
 from app.models.pedidodireccion import pedidodireccion as pedidodireccion_model
 from app.models.seo import seo as seo_model
 
@@ -415,7 +416,11 @@ class payment(base):
             + url_pedido
             + '"><b>haciendo click aquí</b></a>'
         }
-        body_email["campos"] = campos
+        productos=pedidoproducto_model.getAll({'idproducto':pedido[0]})
+        body_email["campos"] = {}
+        for p in productos.items():
+            body_email["campos"][p[0]+'-'+p['titulo']]=p['precio']
+
         imagenes = []
         adjuntos = []
         data={}

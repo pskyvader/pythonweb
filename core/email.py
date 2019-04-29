@@ -30,6 +30,10 @@ class email:
         data["cabecera"] = body_email["cabecera"]
         data["campos"] = body_email["campos"]
         data["campos_largos"] = body_email["campos_largos"]
+
+        
+
+
         template = body_email["template"]
         body = view.render([(template, data)], True, view.get_theme() + "mail/")
 

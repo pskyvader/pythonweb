@@ -418,13 +418,14 @@ class payment(base):
             + '"><b>haciendo click aquí</b></a>'
         }
         carro=cart.get_cart(pedido['cookie_pedido'],False)
-        body_email["productos"] = {}
-        for k,p in enumerate(carro['productos']):
-            body_email["productos"][str(k+1)+'-'+p['titulo']]=p['total']
         body_email['campos']=campos
+        
+        data={}
+        data["productos"] = {}
+        for k,p in enumerate(carro['productos']):
+            data["productos"][str(k+1)+'-'+p['titulo']]=p['total']
         imagenes = []
         adjuntos = []
-        data={}
         data['titulos']={'Producto':'Total'}
         data['resumen']={}
         data['resumen']["Subtotal"] = carro["subtotal"]

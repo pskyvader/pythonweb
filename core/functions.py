@@ -171,7 +171,7 @@ class functions():
     def formato_precio(precio):
         precio=1000
         final='${:,}'.format(precio)
-        final=final.replace(',',',')
+        final=final.replace(',','.')
         #final='${.,0f}'.format(float(precio))
         return final
 

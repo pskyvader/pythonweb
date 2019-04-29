@@ -255,12 +255,9 @@ class payment(base):
             titulo = "Pedido " + pedido["cookie_pedido"] + " Esperando transferencia"
             cabecera = "Estimado " + pedido["nombre"] + ", " + medio_pago["descripcion"]
             campos = {}
-            campos["Envio"] = functions.formato_precio(pedido["total"])
-            campos["Total del pedido"] = functions.formato_precio(pedido["total"])
             campos["Código de pedido"] = pedido["cookie_pedido"]
             campos["Estado del pedido"] = "Esperando transferencia"
             campos["Medio de pago"] = medio_pago["titulo"]
-
             respuesta = self.email_pedido(pedido, titulo, cabecera, campos, url_back)
             data = {}
             data["title"] = medio_pago["titulo"]
@@ -420,15 +417,19 @@ class payment(base):
             + url_pedido
             + '"><b>haciendo click aquí</b></a>'
         }
-        productos=pedidoproducto_model.getAll({'idpedido':pedido[0]})
+        carro=cart.get_cart(pedido['cookie_pedido'])
         body_email["campos"] = {}
-        for k,p in enumerate(productos):
-            body_email["campos"][str(k+1)+'-'+p['titulo']]=functions.formato_precio(p['precio'])
+        for k,p in enumerate(carro['productos']):
+            body_email["campos"][str(k+1)+'-'+p['titulo']]=p['total']
 
         imagenes = []
         adjuntos = []
         data={}
         data['titulos']={'Producto':'Total'}
+        data['resumen']={}
+        campos["Subtotal"] = carro["subtotal"]
+        campos["Envio"] = carro["total_direcciones"]
+        campos["Total del pedido"] = carro["total"]
         data['resumen']=campos
         
         body = email.body_email(body_email,data)

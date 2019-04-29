@@ -78,7 +78,7 @@ class cart(base):
         ):
             logueado = usuario_model.verificar_sesion()
             if not logueado:
-                cookie = functions.get_cookie('cookieusuario' + prefix_site)
+                cookie = functions.get_cookie("cookieusuario" + prefix_site)
                 if cookie != False:
                     logueado = usuario_model.login_cookie(cookie)
 
@@ -168,8 +168,8 @@ class cart(base):
                 "total_original": functions.formato_precio(pedido["total_original"]),
                 "total_direcciones": total_direcciones,
                 "subtotal": functions.formato_precio(subtotal),
+                "productos": productos,
             }
-            pedido["productos"] = productos
             return pedido
         else:
             return {}
@@ -447,11 +447,13 @@ class cart(base):
             if "productos" in carro:
                 for p in carro["productos"]:
                     if p["idpedidoproducto"] == int(campos["idpedidoproducto"]):
-                        atributo = producto_model.getById(int(campos["idproductoatributo"]))
+                        atributo = producto_model.getById(
+                            int(campos["idproductoatributo"])
+                        )
                         update = {
                             "id": p["idpedidoproducto"],
                             "idproductoatributo": int(campos["idproductoatributo"]),
-                            "titulo_atributo": atributo['titulo'],
+                            "titulo_atributo": atributo["titulo"],
                         }
                         idpedidoproducto = pedidoproducto_model.update(update)
                         respuesta["exito"] = True

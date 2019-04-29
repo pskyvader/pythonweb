@@ -76,6 +76,7 @@ class payment(base):
             )
         else:
             pedido = pedido_model.getByCookie(self.cookie, False)
+            print(pedido)
             if "cookie_pedido" not in pedido:
                 mensaje = "Pedido no valido, Por favor ingresa a tu cuenta y selecciona un pedido valido"
             elif pagado:

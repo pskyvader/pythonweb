@@ -45,7 +45,7 @@ class payment(base):
         if "" != cookie:
             mp = mediopago_model.getById(idmedio)
             if "estado" in mp:
-                cookie = functions.test_input(cookie)
+                cookie = cookie
                 self.cookie = cookie
                 self.url.append(cookie)
                 medio_pago = mp

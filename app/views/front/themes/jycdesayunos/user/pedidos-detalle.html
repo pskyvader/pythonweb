@@ -72,17 +72,21 @@
                                 <li class="border-bottom-1x my-4 row">
                                     <div class="col-2"></div>
                                     <div class="col-6 col-md-2">Producto</div>
+                                    {% if mensaje!='' %}
                                     <div class="col-6 d-none d-md-flex">Mensaje</div>
+                                    {% endif %}
                                     <div class="col-2">Total</div>
                                 </li>
                                 {% for lp in dp.lista_productos %}
                                 <li class="py-4 producto row border-bottom-1x">
                                     <div class="col-2"><img src="{{lp.foto}}" alt="foto producto"></div>
                                     <div class="col-6 col-md-2">{{lp.titulo}} {% if lp.titulo_atributo!='' %}<span>({{lp.titulo_atributo}})</span>{% endif %} </div>
+                                    {% if mensaje!='' %}
                                     <div class="col-12 col-md-6 order-3 order-md-1 mt-5 mt-md-0">
                                         <h6 class="d-md-none">Mensaje:</h6>
                                         {{lp.mensaje}}
                                     </div>
+                                    {% endif %}
                                     <div class="col-2 order-2">{{lp.total}}</div>
                                 </li>
                                 {% endfor %}

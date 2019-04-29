@@ -260,6 +260,7 @@ class payment(base):
             campos["Medio de pago"] = medio_pago["titulo"]
             respuesta = self.email_pedido(pedido, titulo, cabecera, campos, url_back)
             data = {}
+            data["mensaje"] = respuesta["mensaje"]
             data["title"] = medio_pago["titulo"]
             data["description"] = medio_pago["descripcion"]
             data["url_back"] = url_back

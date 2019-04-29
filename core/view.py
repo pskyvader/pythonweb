@@ -39,18 +39,19 @@ class view:
             lstrip_blocks=True,
             undefined=DebugUndefined,
         )
-        
-        #custom filter
+
+        # custom filter
         def phone_number(number):
             """Convert a 10 character string into (xxx) xxx-xxxx."""
-            base1=-7 if len(number)==10 else -8
-            base2=-4
+            base1 = -7 if len(number) == 10 else -8
+            base2 = -4
             first = number[:base1]
             second = number[base1:base2]
             third = number[base2:]
-            return   first   + ' - ' + second + ' - ' + third
-        env.filters['phone_number'] = phone_number
-        #custom filter
+            return first + "-" + second + "-" + third
+
+        env.filters["phone_number"] = phone_number
+        # custom filter
 
         for template, data in template_list:
             template_url = theme + template + "." + view.extension

@@ -246,8 +246,9 @@ class payment(base):
         pedido = self.verificar_pedido(medio_pago)
 
         if not isinstance(pedido, tuple):
-            # self.update_pedido( pedido, medio_pago, 10 )  # estado de pedido: esperando transferencia
-
+            self.update_pedido(
+                pedido, medio_pago, 10
+            )  # estado de pedido: esperando transferencia
             seo_cuenta = seo_model.getById(9)
             url_back = functions.generar_url(
                 [seo_cuenta["url"], "pedido", pedido["cookie_pedido"]]

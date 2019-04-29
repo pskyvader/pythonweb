@@ -159,6 +159,6 @@ class email:
         except Exception as e:
             respuesta["mensaje"] = "Mailer Error: " + repr(e)
             respuesta["exito"] = False
-            raise RuntimeError("Mailer Error: " + repr(e))
+            #raise RuntimeError("Mailer Error: " + repr(e))
 
         return respuesta

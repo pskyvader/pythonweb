@@ -390,7 +390,7 @@ class payment(base):
 
     @staticmethod
     def email(pedido, titulo="", cabecera="", campos={}, url_pedido=""):
-        nombre_sitio = app._title
+        nombre_sitio = app.title
         config = app.get_config()
         email_empresa = config["main_email"]
         body_email = {

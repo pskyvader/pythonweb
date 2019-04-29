@@ -174,7 +174,7 @@ class functions():
         #final='${.,0f}'.format(float(precio))
         return final
 precio=1000
-final='${:.0f}'.format(float(precio))
+final='${:.1f}'.format(float(precio))
 print(final)
 
     @staticmethod

@@ -273,6 +273,8 @@ class app:
             request_body = (app.environ.copy())['wsgi.input'].read(post_env["CONTENT_LENGTH"])
             d = parse_qs(request_body)
             get = dict(d)
+            get = app.format_array(get)
+            get = app.parse_values(get)
             print(get)
 
             p = FieldStorage(

@@ -271,7 +271,7 @@ class app:
             input_post=post_env["wsgi.input"]
             import urllib.parse
 
-            post_input = urllib.parse.parse_qs(post_env['wsgi.input'].readline().decode(),True)
+            post_input = urllib.parse.parse_qs(post_env['wsgi.input'].read(post_env["CONTENT_LENGTH"]),True)
             print(post_input)
 
             p = FieldStorage(

@@ -272,7 +272,7 @@ class app:
             
             print(app.environ["CONTENT_LENGTH"],post_env["wsgi.input"])
 
-            request_body = app.environ['wsgi.input'].read(post_env["CONTENT_LENGTH"])
+            request_body = (app.environ.copy())['wsgi.input'].read(post_env["CONTENT_LENGTH"])
             d = parse_qs(request_body)
             print(d)
 

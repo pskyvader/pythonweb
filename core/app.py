@@ -270,7 +270,6 @@ class app:
             post_env["CONTENT_LENGTH"] = int(app.environ.get("CONTENT_LENGTH", 0))
             input_post=post_env["wsgi.input"]
             import urllib.parse
-
             post_input = urllib.parse.parse_qs(post_env['wsgi.input'].read(post_env["CONTENT_LENGTH"]),True)
             print(post_input)
 

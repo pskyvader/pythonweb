@@ -259,6 +259,16 @@ class app:
         return get
 
     @staticmethod
+    def fix(file):
+        # wrap 'func' to convert its return value to bytes using the specified encoding
+        def wrap(func, encoding):
+            def read(*args, **kwargs):
+                return bytes(func(*args, **kwargs), encoding)
+            return read
+        file.read = wrap(file.read, 'ascii')
+
+
+    @staticmethod
     def parse_post():
         from cgi import FieldStorage
         from cgi import parse_qs
@@ -268,6 +278,7 @@ class app:
             post_env = app.environ.copy()
             post_env["QUERY_STRING"] = ""
             post_env["CONTENT_LENGTH"] = int(app.environ.get("CONTENT_LENGTH", 0))
+            app.fix(post_env['wsgi.input'])
             input_post=post_env["wsgi.input"].fileno
             p = FieldStorage(
                 fp=input_post, environ=post_env, keep_blank_values=False

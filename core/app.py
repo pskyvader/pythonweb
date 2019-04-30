@@ -275,7 +275,7 @@ class app:
             # print(d)
 
             p = FieldStorage(
-                fp=post_env["wsgi.input"], environ=post_env, keep_blank_values=True
+                fp=post_env["wsgi.input"], environ=post_env, keep_blank_values=False
             )
             if p.list != None:
                 post = app.post_field(p)

@@ -268,13 +268,11 @@ class app:
             post_env = app.environ.copy()
             post_env["QUERY_STRING"] = ""
             post_env["CONTENT_LENGTH"] = int(app.environ.get("CONTENT_LENGTH", 0))
-
             
-            print(app.environ["CONTENT_LENGTH"],post_env["wsgi.input"])
-
-            request_body = (app.environ.copy())['wsgi.input'].read(post_env["CONTENT_LENGTH"])
-            d = parse_qs(request_body)
-            print(d)
+            # print(app.environ["CONTENT_LENGTH"],post_env["wsgi.input"])
+            # request_body = (app.environ.copy())['wsgi.input'].read(post_env["CONTENT_LENGTH"])
+            # d = parse_qs(request_body)
+            # print(d)
 
             p = FieldStorage(
                 fp=post_env["wsgi.input"], environ=post_env, keep_blank_values=True

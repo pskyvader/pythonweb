@@ -264,6 +264,7 @@ class app:
 
         post = {}
         if app.environ["REQUEST_METHOD"] == "POST":
+            print(app.environ["CONTENT_LENGTH"])
             post_env = app.environ.copy()
             post_env["QUERY_STRING"] = ""
             post_env["CONTENT_LENGTH"] = int(app.environ.get("CONTENT_LENGTH", 0))

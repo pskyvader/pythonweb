@@ -76,7 +76,7 @@ function generar_backup_rapido(e) {
     var accion = 'generar_backup';
     barra(5);
     post_basic(create_url(modulo, accion), {}, 'Recuperando lista de archivos', fin_backup);
-    leer_log(false);
+    //leer_log(false);
     websocket_start();
     setTimeout(function() {
         if (!respaldo_finalizado) {

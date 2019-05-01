@@ -49,7 +49,6 @@ class modulo(base_model):
                 r['recortes'] = []
 
             if 'estado' in r and r['estado'] != '':
-                #r['estado']=r['estado'].replace("'",'"')
                 r['estado'] =ast.literal_eval(r['estado'])
                 #r['estado'] = json.loads(r['estado'])
             else:

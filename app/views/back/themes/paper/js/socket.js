@@ -47,25 +47,26 @@ function onMessage(evt) {
     var message = evt.data;
     if (message.startsWith("log:")) {
         message = message.slice("log:".length);
-    } else if (message.startsWith("connected:")) {
-        message = message.slice("connected:".length);
-    }
+        if (message.indexOf("{") != -1) {
+            message = message.slice(message.indexOf("{"));
+            try {
+                data = JSON.parse(message)
+                if (data.porcentaje) {
+                    barra(data.porcentaje);
+                }
+                if (data.mensaje) {
+                    message = data.mensaje;
+                }
+            } catch (error) {}
+            notificacion_footer(message);
+        } else {
+            console.log(message);
+        }
 
-    if (message.indexOf("{") != -1) {
-        message = message.slice(message.indexOf("{"));
-        try {
-            data = JSON.parse(message)
-            if (data.porcentaje) {
-                barra(data.porcentaje);
-            }
-            if (data.mensaje) {
-                message = data.mensaje;
-            }
-        } catch (error) {}
-    }else{
+    } else if (message.startsWith("connected:")) {
+        //message = message.slice("connected:".length);
         console.log(message);
     }
-    notificacion_footer(message);
 }
 
 function onError(evt) {

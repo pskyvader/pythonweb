@@ -169,9 +169,10 @@ class backup(base):
                     respuesta['errores'].append(nombre)
 
                     if i % 500 == 0:
-                        log = {'mensaje': 'Restaurando ...' + nombre[-30:] + ' (' + str( i + 1) + '/' + str(total) + ')', 'porcentaje': ((i + 1) / total) * 90}
+                        log_file = {'mensaje': 'Restaurando ...' + nombre[-30:] + ' (' + str( i + 1) + '/' + str(total) + ')', 'porcentaje': ((i + 1) / total) * 90}
+                        self.sock.send(log_file)
                         file_write = open(self.archivo_log, 'w+')
-                        file_write.write(json.dumps(log,ensure_ascii=False))
+                        file_write.write(json.dumps(log_file,ensure_ascii=False))
                         file_write.close()
 
                     if functions.current_time(as_string=False) - tiempo > 15:
@@ -182,10 +183,10 @@ class backup(base):
                 if 'inicio' not in respuesta:
                     my_file = Path(self.base_dir + '/bdd.sql')
                     if my_file.is_file():
-                        log = {'mensaje': 'Restaurando Base de datos',
-                               'porcentaje': 95}
+                        log_file = {'mensaje': 'Restaurando Base de datos', 'porcentaje': 95}
+                        self.sock.send(log_file)
                         file_write = open(self.archivo_log, 'w+')
-                        file_write.write(json.dumps(log,ensure_ascii=False))
+                        file_write.write(json.dumps(log_file,ensure_ascii=False))
                         file_write.close()
                         connection = database.instance()
                         exito = connection.restore_backup(
@@ -212,11 +213,14 @@ class backup(base):
             c = configuracion_administrador()
             c.json_update(False)
 
-            log = {'mensaje': 'Restauracion finalizada', 'porcentaje': 100}
+            log_file = {'mensaje': 'Restauracion finalizada', 'porcentaje': 100}
+            self.sock.send(log_file)
             file_write = open(self.archivo_log, 'w+')
-            file_write.write(json.dumps(log,ensure_ascii=False))
+            file_write.write(json.dumps(log_file,ensure_ascii=False))
             file_write.close()
         ret['body'] = json.dumps(respuesta,ensure_ascii=False)
+        self.sock.send(ret['body'])
+        self.sock.close()
         return ret
 
     def eliminar(self):
@@ -364,10 +368,7 @@ class backup(base):
             if logging:
                 log_file = { 'mensaje': 'Respaldando Base de datos ', 'porcentaje': 90}
                 log_file=json.dumps(log_file,ensure_ascii=False)
-                print(self.sock)
                 self.sock.send(log_file)
-                #self.sock.send(log_file.encode())
-                print('send',log_file)
                 file_write = open(self.archivo_log, 'w+')
                 file_write.write(log_file)
                 file_write.close()
@@ -377,16 +378,16 @@ class backup(base):
             if logging:
                 log_file = {'mensaje': 'Restauracion finalizada', 'porcentaje': 100}
                 log_file=json.dumps(log_file,ensure_ascii=False)
+                self.sock.send(log_file)
                 file_write = open(self.archivo_log, 'w+')
                 file_write.write(log_file)
                 file_write.close()
-                #self.sock.send(bytes(log_file, 'utf-8'))
 
         if logging:
             ret['body'] = json.dumps(respuesta,ensure_ascii=False)
-            #self.sock.send(bytes(ret['body'], 'utf-8'))
+            self.sock.send(ret['body'])
 
-        #self.sock.close()
+        self.sock.close()
         return ret
 
     def get_files(self, source: str, log=True):
@@ -410,6 +411,7 @@ class backup(base):
                         if log and count % 1000 == 0:
                             log_file = { 'mensaje': 'Recuperando archivo ...' + fichero_final[-30:], 'porcentaje': 10 }
                             log_file=json.dumps(log_file,ensure_ascii=False)
+                            self.sock.send(log_file)
                             file_write = open(self.archivo_log, 'w+')
                             file_write.write(log_file)
                             file_write.close()
@@ -428,7 +430,7 @@ class backup(base):
             respuesta['exito'] = True
         else:
             respuesta['mensaje'] = 'Directorio no valido'
-
+        self.sock.close()
         return respuesta
 
     def bdd(self, log=True, archivo_backup=''):
@@ -500,6 +502,7 @@ class backup(base):
                     'mensaje': '...'+final_file[-30:] + ' (' + str(total - len(lista)) + '/' + str(total) + ')',
                     'porcentaje': 10 + ((total - len(lista)) / total) * 40
                 }
+                self.sock.send(log_file)
                 file_write = open(self.archivo_log, 'w+')
                 file_write.write(json.dumps(log_file,ensure_ascii=False))
                 file_write.close()
@@ -511,6 +514,7 @@ class backup(base):
                 'notificacion': 'Guardando archivo, Esta operacion puede tomar algun tiempo',
                 'porcentaje': 10 + ((total - len(lista)) / total) * 40
             }
+            self.sock.send(log_file)
             file_write = open(self.archivo_log, 'w+')
             file_write.write(json.dumps(log_file,ensure_ascii=False))
             file_write.close()
@@ -520,5 +524,5 @@ class backup(base):
         respuesta['lista'] = lista
         respuesta['archivo_backup'] = destination
         respuesta['archivo_actual'] = final_file
-
+        self.sock.close()
         return respuesta

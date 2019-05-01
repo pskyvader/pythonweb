@@ -40,11 +40,10 @@ function onMessage(evt) {
 
     if (message.startsWith("log:")) {
         message = message.slice("log:".length);
-        log.innerHTML = '<li class = "message">' +
-            message + "</li>" + log.innerHTML;
+        notificacion_footer(message);
     } else if (message.startsWith("connected:")) {
         message = message.slice("connected:".length);
-        connected.innerHTML = message;
+        notificacion_footer(message);
     }
 }
 
@@ -62,10 +61,7 @@ function onError(evt) {
     }
 }
 
-function addMessage() {
-    var message = chat.value;
-    chat.value = "";
+function addMessage(message) {
     websocket.send(message);
-    log.innerHTML = '<li class = "message">' +
-        message + "</li>" + log.innerHTML;
+    notificacion_footer(message);
 }

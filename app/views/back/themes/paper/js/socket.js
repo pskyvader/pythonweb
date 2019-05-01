@@ -2,7 +2,7 @@
 var wsUri = "ws://socket.mysitio.cl:8000/ws";
 var wsUri_start = "http://socket.mysitio.cl/";
 var intento = 0;
-
+websocket=null;
 function websocket_start() {
     if (window.WebSocket !== undefined) {
         websocket = new WebSocket(wsUri);
@@ -23,12 +23,20 @@ function websocket_start() {
     }
 }
 
+
+function websocket_start() {
+    if(websocket!=null){
+        websocket.close();
+    }
+}
+
 function onOpen(evt) {
     notificacion_footer("Log conectado");
 }
 
 function onClose(evt) {
     notificacion_footer("Log desconectado");
+    websocket==null;
 }
 
 function onMessage(evt) {
@@ -46,6 +54,7 @@ function onMessage(evt) {
 }
 
 function onError(evt) {
+    websocket==null;
     notificacion_footer("Error al conectar log");
     if (intento < 3) {
         intento++;

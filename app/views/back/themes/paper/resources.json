@@ -86,6 +86,7 @@
         {"url": "js/detail.js","local":true,"defer":false,"combine":true},
         {"url": "js/pedido.js","local":true,"defer":false,"combine":true},
         {"url": "js/online.js","local":true,"defer":false,"combine":true},
+        {"url": "js/socket.js","local":true,"defer":false,"combine":true}
         {"url": "js/custom.js","local":true,"defer":false,"combine":true}
     ]
 }

@@ -174,7 +174,7 @@ class backup(base):
                             respuesta["errores"].append(nombre)
                     respuesta["errores"].append(nombre)
 
-                    if i % 500 == 0:
+                    if i % 345 == 0:
                         log_file = {
                             "mensaje": "Restaurando ..."
                             + nombre[-30:]

@@ -37,7 +37,6 @@ function onMessage(evt) {
     // 1. a chat participant message itself
     // 2. a message with a number of connected chat participants
     var message = evt.data;
-
     if (message.startsWith("log:")) {
         message = message.slice("log:".length);
         notificacion_footer(message);

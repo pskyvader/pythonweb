@@ -1,4 +1,4 @@
-//var wsUri = "ws://127.0.0.1/ws";
+//var wsUri = "ws://127.0.0.1/ws"; 
 var wsUri = "ws://socket.mysitio.cl:8000/ws";
 var wsUri_start = "http://socket.mysitio.cl/";
 var intento = 0;
@@ -21,7 +21,6 @@ function websocket_start() {
     } else {
         console.log("sockets not supported");
     }
-
 }
 
 function onOpen(evt) {
@@ -33,9 +32,9 @@ function onClose(evt) {
 }
 
 function onMessage(evt) {
-    // There are two types of messages:
-    // 1. a chat participant message itself
-    // 2. a message with a number of connected chat participants
+    // There are two types of messages: 
+    // 1. a chat participant message itself 
+    // 2. a message with a number of connected chat participants 
     var message = evt.data;
     if (message.startsWith("log:")) {
         message = message.slice("log:".length);

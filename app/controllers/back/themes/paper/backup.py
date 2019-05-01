@@ -596,7 +596,7 @@ class backup(base):
 
             lista.remove(file)
 
-            if log and ( functions.current_time(as_string=False) - tiempo > 0.5 or count % 1000 == 0 ):
+            if log and ( functions.current_time(as_string=False) - tiempo > 1 or count % 1000 == 0 ):
                 log_file = {
                     "mensaje": "..."
                     + final_file[-30:]

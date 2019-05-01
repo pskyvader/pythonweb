@@ -31,11 +31,11 @@ function websocket_stop() {
 }
 
 function onOpen(evt) {
-    notificacion_footer("Log conectado");
+    console.log("Log conectado");
 }
 
 function onClose(evt) {
-    notificacion_footer("Log desconectado");
+    console.log("Log desconectado");
     websocket==null;
 }
 

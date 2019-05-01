@@ -25,7 +25,7 @@ class socket:
         import urllib.request
         url=socket.url
         try:
-            response = urllib.request.urlopen(url,timeout:100)
+            response = urllib.request.urlopen(url,timeout=100)
         except:
             pass
 

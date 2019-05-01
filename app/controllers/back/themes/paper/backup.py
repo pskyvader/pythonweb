@@ -14,11 +14,12 @@ from .configuracion_administrador import configuracion_administrador
 from core.app import app
 from core.database import database
 from core.functions import functions
+from core.socket import socket
 
 from pathlib import Path
 import os
 import json
-from websocket import create_connection
+
 
 
 class backup(base):
@@ -29,8 +30,6 @@ class backup(base):
     dir_backup = ""
     archivo_log = ""
     no_restore = ["backup/"]
-    sock = None
-    host = "ws://socket.mysitio.cl:8000/ws"
 
     def __init__(self):
         backup.base_dir = app.get_dir(True)
@@ -141,7 +140,6 @@ class backup(base):
 
     def restaurar(self):
         """Restaura un backup, usar con precaucion ya que reemplaza todos los archivos de codigo"""
-        self.sock = create_connection(self.host)
         ret = {
             "headers": [("Content-Type", "application/json; charset=utf-8")],
             "body": "",
@@ -188,7 +186,7 @@ class backup(base):
                             "porcentaje": ((i + 1) / total) * 90,
                         }
                         log_file = json.dumps(log_file, ensure_ascii=False)
-                        self.sock.send(log_file)
+                        socket.send(log_file)
                         file_write = open(self.archivo_log, "w+")
                         file_write.write(log_file)
                         file_write.close()
@@ -206,7 +204,7 @@ class backup(base):
                             "porcentaje": 95,
                         }
                         log_file = json.dumps(log_file, ensure_ascii=False)
-                        self.sock.send(log_file)
+                        socket.send(log_file)
                         file_write = open(self.archivo_log, "w+")
                         file_write.write(log_file)
                         file_write.close()
@@ -242,12 +240,11 @@ class backup(base):
 
             log_file = {"mensaje": "Restauracion finalizada", "porcentaje": 100}
             log_file = json.dumps(log_file, ensure_ascii=False)
-            self.sock.send(log_file)
+            socket.send(log_file)
             file_write = open(self.archivo_log, "w+")
             file_write.write(log_file)
             file_write.close()
         ret["body"] = json.dumps(respuesta, ensure_ascii=False)
-        self.sock.close()
         return ret
 
     def eliminar(self):
@@ -353,7 +350,6 @@ class backup(base):
 
     def generar(self):
         """comprueba las carpetas de respaldo y obtiene la lista de archivos para respaldar en zip"""
-        self.sock = create_connection(self.host)
         ret = {
             "headers": [("Content-Type", "application/json; charset=utf-8")],
             "body": "",
@@ -379,12 +375,10 @@ class backup(base):
             respuesta = self.get_files(self.base_dir)
 
         ret["body"] = json.dumps(respuesta, ensure_ascii=False)
-        self.sock.close()
         return ret
 
     def generar_backup(self, logging=True):
         """genera respaldo del sitio en zip, en formato "Respaldo rapido" (usa mas recursos)"""
-        self.sock = create_connection(self.host)
         ret = {
             "headers": [("Content-Type", "application/json; charset=utf-8")],
             "body": "",
@@ -428,7 +422,7 @@ class backup(base):
             if logging:
                 log_file = {"mensaje": "Respaldando Base de datos ", "porcentaje": 90}
                 log_file = json.dumps(log_file, ensure_ascii=False)
-                self.sock.send(log_file)
+                socket.send(log_file)
                 file_write = open(self.archivo_log, "w+")
                 file_write.write(log_file)
                 file_write.close()
@@ -438,14 +432,13 @@ class backup(base):
             if logging:
                 log_file = {"mensaje": "Restauracion finalizada", "porcentaje": 100}
                 log_file = json.dumps(log_file, ensure_ascii=False)
-                self.sock.send(log_file)
+                socket.send(log_file)
                 file_write = open(self.archivo_log, "w+")
                 file_write.write(log_file)
                 file_write.close()
 
         if logging:
             ret["body"] = json.dumps(respuesta, ensure_ascii=False)
-        self.sock.close()
         return ret
 
     def get_files(self, source: str, log=True):
@@ -486,7 +479,7 @@ class backup(base):
                                 "porcentaje": 10,
                             }
                             log_file = json.dumps(log_file, ensure_ascii=False)
-                            self.sock.send(log_file)
+                            socket.send(log_file)
                             file_write = open(self.archivo_log, "w+")
                             file_write.write(log_file)
                             file_write.close()
@@ -553,7 +546,6 @@ class backup(base):
 
     def continuar(self):
         """Inicio o continuacion de respaldo en modo lento (toma mas tiempo pero consume menos recursos)"""
-        self.sock = create_connection(self.host)
         ret = {
             "headers": [("Content-Type", "application/json; charset=utf-8")],
             "body": "",
@@ -564,7 +556,6 @@ class backup(base):
             self.base_dir, app.post["archivo_backup"], lista, app.post["total"]
         )
         ret["body"] = json.dumps(respuesta, ensure_ascii=False)
-        self.sock.close()
         return ret
 
     def zipData(self, source, destination, lista, total=1, log=True):
@@ -608,7 +599,7 @@ class backup(base):
                     "porcentaje": 10 + ((total - len(lista)) / total) * 40,
                 }
                 log_file = json.dumps(log_file, ensure_ascii=False)
-                self.sock.send(log_file)
+                socket.send(log_file)
                 file_write = open(self.archivo_log, "w+")
                 file_write.write(log_file)
                 file_write.close()
@@ -627,7 +618,7 @@ class backup(base):
                 "porcentaje": 10 + ((total - len(lista)) / total) * 40,
             }
             log_file = json.dumps(log_file, ensure_ascii=False)
-            self.sock.send(log_file)
+            socket.send(log_file)
             file_write = open(self.archivo_log, "w+")
             file_write.write(log_file)
             file_write.close()

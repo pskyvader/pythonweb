@@ -474,6 +474,7 @@ class backup(base):
 
     def zipData(self, source, destination, lista, total=1, log=True):
         '''recorre los archivos entregados y crea un archivo zip'''
+        print(self.sock)
         import zipfile
         total = int(total)
         respuesta = {'exito': False, 'mensaje': 'Error al crear archivo'}
@@ -506,7 +507,6 @@ class backup(base):
                     'porcentaje': 10 + ((total - len(lista)) / total) * 40
                 }
                 log_file=json.dumps(log_file,ensure_ascii=False)
-
                 self.sock.send(log_file)
                 file_write = open(self.archivo_log, 'w+')
                 file_write.write(log_file)

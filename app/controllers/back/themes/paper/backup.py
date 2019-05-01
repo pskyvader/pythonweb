@@ -351,6 +351,7 @@ class backup(base):
 
     def generar(self):
         """comprueba las carpetas de respaldo y obtiene la lista de archivos para respaldar en zip"""
+        self.sock = create_connection(self.host)
         ret = {
             "headers": [("Content-Type", "application/json; charset=utf-8")],
             "body": "",
@@ -376,6 +377,7 @@ class backup(base):
             respuesta = self.get_files(self.base_dir)
 
         ret["body"] = json.dumps(respuesta, ensure_ascii=False)
+        self.sock.close()
         return ret
 
     def generar_backup(self, logging=True):
@@ -446,7 +448,6 @@ class backup(base):
 
     def get_files(self, source: str, log=True):
         """obtiene lista de archivos para respaldar en zip"""
-        self.sock = create_connection(self.host)
         respuesta = {"exito": False, "mensaje": ""}
         my_file = Path(source)
         if my_file.is_dir():
@@ -516,7 +517,6 @@ class backup(base):
             respuesta["exito"] = True
         else:
             respuesta["mensaje"] = "Directorio no valido"
-        self.sock.close()
         return respuesta
 
     def bdd(self, log=True, archivo_backup=""):
@@ -567,7 +567,6 @@ class backup(base):
 
     def zipData(self, source, destination, lista, total=1, log=True):
         """recorre los archivos entregados y crea un archivo zip"""
-        print(self.sock.getstatus())
         import zipfile
 
         total = int(total)

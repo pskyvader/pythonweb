@@ -46,12 +46,17 @@ function onMessage(evt) {
     var message = evt.data;
     if (message.startsWith("log:")) {
         message = message.slice("log:".length);
-        console.log(message);
-        notificacion_footer(message);
     } else if (message.startsWith("connected:")) {
         message = message.slice("connected:".length);
-        notificacion_footer(message);
     }
+
+    if(message.indexOf("{")!=-1){
+        message = message.slice(message.indexOf("{"));
+        console.log(message);
+    }
+
+    notificacion_footer(message);
+
 }
 
 function onError(evt) {

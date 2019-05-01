@@ -1,5 +1,6 @@
 //var wsUri = "ws://127.0.0.1/ws";
 var wsUri = "ws://socket.mysitio.cl:8000/ws";
+var wsUri_start = "http://socket.mysitio.cl/";
 var intento = 0;
 
 function websocket_start() {
@@ -52,7 +53,7 @@ function onError(evt) {
     if (intento < 3) {
         intento++;
         $.ajax({
-            url: wsUri,
+            url: wsUri_start,
             timeout: 500,
             complete: function(data) {
                 websocket_start();

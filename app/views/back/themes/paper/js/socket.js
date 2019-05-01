@@ -1,6 +1,6 @@
 //var wsUri = "ws://127.0.0.1/ws";
 var wsUri = "ws://socket.mysitio.cl:8000/ws";
-var intento=0;
+var intento = 0;
 
 function websocket_start() {
     if (window.WebSocket !== undefined) {
@@ -49,7 +49,7 @@ function onMessage(evt) {
 
 function onError(evt) {
     notificacion_footer("Error al conectar log");
-    if(intento<3){
+    if (intento < 3) {
         intento++;
         $.ajax({
             url: wsUri,

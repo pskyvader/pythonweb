@@ -364,6 +364,7 @@ class backup(base):
             if logging:
                 log_file = { 'mensaje': 'Respaldando Base de datos ', 'porcentaje': 90}
                 log_file=json.dumps(log_file,ensure_ascii=False)
+                print(self.sock)
                 self.sock.send(log_file)
                 #self.sock.send(log_file.encode())
                 print('send',log_file)

@@ -44,7 +44,7 @@ class backup(base):
     def index(cls):
         '''Controlador de lista_class de elementos base, puede ser sobreescrito en el controlador de cada modulo'''
         
-        print(self.sock)
+        print(cls.sock)
         ret = {'body': []}
         # Clase para enviar a controlador de lista_class
         url_final = cls.url.copy()

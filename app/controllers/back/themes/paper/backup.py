@@ -30,7 +30,7 @@ class backup(base):
     archivo_log = ""
     no_restore = ["backup/"]
     sock = None
-    host = "ws://socket.mysitio.cl:8000/ws"
+    host = "ws://socket.mysitio.cl:8001/ws"
 
     def __init__(self):
         backup.base_dir = app.get_dir(True)

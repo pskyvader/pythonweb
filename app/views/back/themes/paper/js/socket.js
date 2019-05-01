@@ -62,10 +62,10 @@ function onMessage(evt) {
                 message = data.mensaje;
             }
         } catch (error) {}
+    }else{
+        console.log(message);
     }
-
     notificacion_footer(message);
-
 }
 
 function onError(evt) {

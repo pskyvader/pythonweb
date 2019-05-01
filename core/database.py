@@ -302,12 +302,12 @@ class database():
         sql = ""
 
         if self.disableForeignKeyChecks == True:
-            sql += "SET foreign_key_checks = 0;\n\n"
+            sql += 'SET foreign_key_checks = 0;\n\n'
 
         for table in tables:
             sql += 'DROP TABLE IF EXISTS `' + table + '`;'
             row = self.consulta('SHOW CREATE TABLE `' + table + '`', True)
-            sql += "\n\n" + row[0][1] + ";\n\n"
+            sql += '\n\n' + row[0][1] + ';\n\n'
 
             row = self.consulta(
                 'SELECT COUNT(*) FROM `' + table + '`', True)
@@ -351,19 +351,19 @@ class database():
                                 sql += ','
                         if rowCount == realBatchSize:
                             rowCount = 0
-                            sql += ");\n"
+                            sql += ');\n'
                         else:
-                            sql += "),\n"
+                            sql += '),\n'
 
                         rowCount += 1
 
                 respuesta['sql'].append(sql)
                 sql = ''
 
-            sql += "\n\n"
+            sql += '\n\n'
 
         if self.disableForeignKeyChecks:
-            sql += "SET foreign_key_checks = 1;\n"
+            sql += 'SET foreign_key_checks = 1;\n'
 
         respuesta['sql'].append(sql)
         respuesta['exito'] = True

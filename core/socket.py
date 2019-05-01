@@ -21,7 +21,7 @@ class socket:
 
 
     @staticmethod
-    async def create():
+    def create():
         import urllib.request
         url=socket.url
         try:

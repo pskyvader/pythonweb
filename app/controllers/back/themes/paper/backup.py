@@ -39,9 +39,12 @@ class backup(base):
             os.makedirs(backup.dir_backup)
         backup.archivo_log = app.get_dir(True) + '/log.json'
         self.sock = websockets.connect(self.host)
+        print(self.sock)
     @classmethod
     def index(cls):
         '''Controlador de lista_class de elementos base, puede ser sobreescrito en el controlador de cada modulo'''
+        
+        print(self.sock)
         ret = {'body': []}
         # Clase para enviar a controlador de lista_class
         url_final = cls.url.copy()

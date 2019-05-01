@@ -339,7 +339,7 @@ class backup(base):
 
     def generar_backup(self, logging=True):
         '''genera respaldo del sitio en zip, en formato "Respaldo rapido" (usa mas recursos)'''
-        backup.sock = create_connection(self.host)
+        self.sock = create_connection(self.host)
         ret = {'headers': [ ('Content-Type', 'application/json; charset=utf-8')], 'body': ''}
         c = configuracion_administrador()
         c.json(False)
@@ -474,7 +474,6 @@ class backup(base):
 
     def zipData(self, source, destination, lista, total=1, log=True):
         '''recorre los archivos entregados y crea un archivo zip'''
-        print(self.sock)
         import zipfile
         total = int(total)
         respuesta = {'exito': False, 'mensaje': 'Error al crear archivo'}

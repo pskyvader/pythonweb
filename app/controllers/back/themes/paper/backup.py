@@ -18,7 +18,7 @@ from core.functions import functions
 from pathlib import Path
 import os
 import json
-import socket
+import websockets
 
 
 class backup(base):
@@ -30,8 +30,7 @@ class backup(base):
     archivo_log = ''
     no_restore = ['backup/']
     sock=None
-    host =app.root_url
-    port =8001
+    host ='ws://socket.mysitio.cl:8000/ws'
 
     def __init__(self):
         backup.base_dir = app.get_dir(True)
@@ -39,7 +38,7 @@ class backup(base):
         if not os.path.exists(backup.dir_backup):
             os.makedirs(backup.dir_backup)
         backup.archivo_log = app.get_dir(True) + '/log.json'
-        self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.sock = websockets.connect(host)
     @classmethod
     def index(cls):
         '''Controlador de lista_class de elementos base, puede ser sobreescrito en el controlador de cada modulo'''
@@ -338,9 +337,6 @@ class backup(base):
         c = configuracion_administrador()
         c.json(False)
         respuesta = {'exito': True, 'mensaje': ''}
-        #self.sock.connect((self.host,self.port))
-        #self.sock.sendall("PRUEBA".encode())
-        #print(self.sock)
 
         my_file = Path(self.dir_backup)
         if my_file.is_dir():
@@ -368,6 +364,7 @@ class backup(base):
             if logging:
                 log_file = { 'mensaje': 'Respaldando Base de datos ', 'porcentaje': 90}
                 log_file=json.dumps(log_file,ensure_ascii=False)
+                self.sock.send(log_file)
                 #self.sock.send(log_file.encode())
                 print('send',log_file)
                 file_write = open(self.archivo_log, 'w+')

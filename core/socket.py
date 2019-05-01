@@ -1,4 +1,3 @@
-
 from websocket import create_connection
 
 class socket:

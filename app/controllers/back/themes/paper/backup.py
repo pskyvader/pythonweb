@@ -170,9 +170,10 @@ class backup(base):
 
                     if i % 500 == 0:
                         log_file = {'mensaje': 'Restaurando ...' + nombre[-30:] + ' (' + str( i + 1) + '/' + str(total) + ')', 'porcentaje': ((i + 1) / total) * 90}
+                        log_file = json.dumps(log_file,ensure_ascii=False)
                         self.sock.send(log_file)
                         file_write = open(self.archivo_log, 'w+')
-                        file_write.write(json.dumps(log_file,ensure_ascii=False))
+                        file_write.write(log_file)
                         file_write.close()
 
                     if functions.current_time(as_string=False) - tiempo > 15:
@@ -184,9 +185,10 @@ class backup(base):
                     my_file = Path(self.base_dir + '/bdd.sql')
                     if my_file.is_file():
                         log_file = {'mensaje': 'Restaurando Base de datos', 'porcentaje': 95}
+                        log_file = json.dumps(log_file,ensure_ascii=False)
                         self.sock.send(log_file)
                         file_write = open(self.archivo_log, 'w+')
-                        file_write.write(json.dumps(log_file,ensure_ascii=False))
+                        file_write.write(log_file)
                         file_write.close()
                         connection = database.instance()
                         exito = connection.restore_backup(
@@ -214,9 +216,10 @@ class backup(base):
             c.json_update(False)
 
             log_file = {'mensaje': 'Restauracion finalizada', 'porcentaje': 100}
+            log_file = json.dumps(log_file,ensure_ascii=False)
             self.sock.send(log_file)
             file_write = open(self.archivo_log, 'w+')
-            file_write.write(json.dumps(log_file,ensure_ascii=False))
+            file_write.write(log_file)
             file_write.close()
         ret['body'] = json.dumps(respuesta,ensure_ascii=False)
         self.sock.close()
@@ -502,9 +505,11 @@ class backup(base):
                     'mensaje': '...'+final_file[-30:] + ' (' + str(total - len(lista)) + '/' + str(total) + ')',
                     'porcentaje': 10 + ((total - len(lista)) / total) * 40
                 }
+                log_file=json.dumps(log_file,ensure_ascii=False)
+
                 self.sock.send(log_file)
                 file_write = open(self.archivo_log, 'w+')
-                file_write.write(json.dumps(log_file,ensure_ascii=False))
+                file_write.write(log_file)
                 file_write.close()
                 tiempo = functions.current_time(as_string=False)
 
@@ -514,9 +519,10 @@ class backup(base):
                 'notificacion': 'Guardando archivo, Esta operacion puede tomar algun tiempo',
                 'porcentaje': 10 + ((total - len(lista)) / total) * 40
             }
+            log_file=json.dumps(log_file,ensure_ascii=False)
             self.sock.send(log_file)
             file_write = open(self.archivo_log, 'w+')
-            file_write.write(json.dumps(log_file,ensure_ascii=False))
+            file_write.write(log_file)
             file_write.close()
 
         zip.close()

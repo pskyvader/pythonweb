@@ -18,7 +18,7 @@ from core.functions import functions
 from pathlib import Path
 import os
 import json
-import websockets
+from websocket import create_connection
 
 
 class backup(base):
@@ -38,7 +38,7 @@ class backup(base):
         if not os.path.exists(backup.dir_backup):
             os.makedirs(backup.dir_backup)
         backup.archivo_log = app.get_dir(True) + '/log.json'
-        backup.sock = websockets.connect(self.host)
+        backup.sock = create_connection(self.host)
     @classmethod
     def index(cls):
         '''Controlador de lista_class de elementos base, puede ser sobreescrito en el controlador de cada modulo'''

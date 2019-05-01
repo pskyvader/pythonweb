@@ -3,7 +3,7 @@ from websocket import create_connection
 
 class socket:
     sock = None
-    host = "ws://socket.mysitio.cl:8000/ws"
+    host = "ws://socket.mysitio.cl:8001/ws"
     url="http://socket.mysitio.cl"
     intento=False
 

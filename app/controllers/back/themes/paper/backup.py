@@ -150,6 +150,7 @@ class backup(base):
 
         file = None
         tiempo = functions.current_time(as_string=False)
+        tiempo2 = functions.current_time(as_string=False)
         respuesta = {"exito": False, "mensaje": "", "errores": []}
         id = app.post["id"]
         inicio = int(app.post["inicio"]) - 1 if "inicio" in app.post else 0
@@ -174,7 +175,8 @@ class backup(base):
                             respuesta["errores"].append(nombre)
                     respuesta["errores"].append(nombre)
 
-                    if i % 500 == 0 or functions.current_time(as_string=False) - tiempo > 1:
+                    if i % 500 == 0 or functions.current_time(as_string=False) - tiempo2 > 0.3:
+                        tiempo2 = functions.current_time(as_string=False)
                         log_file = {
                             "mensaje": "Restaurando ..."
                             + nombre[-30:]

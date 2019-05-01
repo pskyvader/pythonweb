@@ -84,7 +84,8 @@ class modulo(base_model):
             else:
                 row[0]['recortes'] = []
             if 'estado' in row[0] and row[0]['estado'] != '':
-                row[0]['estado'] = json.loads(row[0]['estado'])
+                row[0]['estado'] = ast.literal_eval(row[0]['estado'])
+                #row[0]['estado'] = json.loads(row[0]['estado'])
             else:
                 row[0]['estado'] = []
 

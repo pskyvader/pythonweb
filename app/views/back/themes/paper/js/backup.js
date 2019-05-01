@@ -58,6 +58,7 @@ function restaurar_elemento() {
         id: $('.modal-restaurar input[name=id_restaurar]').val()
     }, 'Restaurando', fin_restaurar);
     leer_log(true);
+    websocket_start();
     setTimeout(function() {
         if (!respaldo_finalizado) {
             notificacion('Advertencia', 'La restauracion puede tomar un tiempo <br/> <b>No cierres esta ventana<b/>', 'danger');
@@ -76,6 +77,7 @@ function generar_backup_rapido(e) {
     barra(5);
     post_basic(create_url(modulo, accion), {}, 'Recuperando lista de archivos', fin_backup);
     leer_log(false);
+    websocket_start();
     setTimeout(function() {
         if (!respaldo_finalizado) {
             notificacion('Advertencia', 'El respaldo puede tomar un tiempo <br/> <b>por favor no cierres esta ventana<b/>', 'warning');
@@ -93,6 +95,7 @@ function generar_backup(e) {
     barra(5);
     post_basic(create_url(modulo, accion), {}, 'Recuperando lista de archivos', lista_backup);
     leer_log(false);
+    websocket_start();
     setTimeout(function() {
         if (!respaldo_finalizado) {
             notificacion('Advertencia', 'El respaldo puede tomar un tiempo <br/> <b>por favor no cierres esta ventana<b/>', 'warning');
@@ -210,6 +213,7 @@ function fin_backup(data) {
     //console.log(data,end());
     if (!respaldo_finalizado) {
         habilitar(true);
+        websocket_stop();
         respaldo_finalizado = true;
         if (typeof(data) != 'object') {
             var data = JSON.parse(data);
@@ -231,7 +235,6 @@ function fin_backup(data) {
             notificacion('Oh no!', mensaje, 'error');
             barra(0);
         }
-        
     }
 }
 
@@ -257,6 +260,7 @@ function fin_restaurar(data) {
                     inicio: data.inicio
                 }, '', fin_restaurar);
             } else {
+                websocket_stop();
                 habilitar(true);
                 respaldo_finalizado = true;
                 notificacion('Confirmacion', 'Restauracion completada', 'success');
@@ -264,6 +268,7 @@ function fin_restaurar(data) {
                 go_url(url);
             }
         } else {
+            websocket_stop();
             habilitar(true);
             respaldo_finalizado = true;
             var mensaje = (($.isArray(data['mensaje'])) ? data['mensaje'].join('<br/>') : data['mensaje']);

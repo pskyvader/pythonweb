@@ -245,6 +245,7 @@ class backup(base):
             file_write.write(log_file)
             file_write.close()
         ret["body"] = json.dumps(respuesta, ensure_ascii=False)
+        socket.close()
         return ret
 
     def eliminar(self):
@@ -350,6 +351,7 @@ class backup(base):
 
     def generar(self):
         """comprueba las carpetas de respaldo y obtiene la lista de archivos para respaldar en zip"""
+
         ret = {
             "headers": [("Content-Type", "application/json; charset=utf-8")],
             "body": "",
@@ -375,10 +377,12 @@ class backup(base):
             respuesta = self.get_files(self.base_dir)
 
         ret["body"] = json.dumps(respuesta, ensure_ascii=False)
+        socket.close()
         return ret
 
     def generar_backup(self, logging=True):
         """genera respaldo del sitio en zip, en formato "Respaldo rapido" (usa mas recursos)"""
+
         ret = {
             "headers": [("Content-Type", "application/json; charset=utf-8")],
             "body": "",
@@ -439,6 +443,7 @@ class backup(base):
 
         if logging:
             ret["body"] = json.dumps(respuesta, ensure_ascii=False)
+        socket.close()
         return ret
 
     def get_files(self, source: str, log=True):
@@ -546,6 +551,7 @@ class backup(base):
 
     def continuar(self):
         """Inicio o continuacion de respaldo en modo lento (toma mas tiempo pero consume menos recursos)"""
+
         ret = {
             "headers": [("Content-Type", "application/json; charset=utf-8")],
             "body": "",
@@ -556,6 +562,7 @@ class backup(base):
             self.base_dir, app.post["archivo_backup"], lista, app.post["total"]
         )
         ret["body"] = json.dumps(respuesta, ensure_ascii=False)
+        socket.close()
         return ret
 
     def zipData(self, source, destination, lista, total=1, log=True):

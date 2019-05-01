@@ -47,6 +47,7 @@ class modulo(base_model):
             else:
                 r['recortes'] = []
 
+            print(r['estado'])
             if 'estado' in r and r['estado'] != '':
                 r['estado'] = json.loads(r['estado'])
             else:

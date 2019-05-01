@@ -32,11 +32,11 @@ function websocket_stop() {
 }
 
 function onOpen(evt) {
-    console.log("Log conectado");
+    //console.log("Log conectado");
 }
 
 function onClose(evt) {
-    console.log("Log desconectado");
+    //console.log("Log desconectado");
     websocket == null;
 }
 
@@ -60,12 +60,12 @@ function onMessage(evt) {
             } catch (error) {}
             notificacion_footer(message);
         } else {
-            console.log(message);
+            //console.log(message);
         }
 
     } else if (message.startsWith("connected:")) {
         //message = message.slice("connected:".length);
-        console.log(message);
+        //console.log(message);
     }
 }
 

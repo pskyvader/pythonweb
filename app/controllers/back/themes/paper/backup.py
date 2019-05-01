@@ -38,7 +38,6 @@ class backup(base):
         if not os.path.exists(backup.dir_backup):
             os.makedirs(backup.dir_backup)
         backup.archivo_log = app.get_dir(True) + '/log.json'
-        backup.sock = create_connection(self.host)
     @classmethod
     def index(cls):
         '''Controlador de lista_class de elementos base, puede ser sobreescrito en el controlador de cada modulo'''
@@ -137,6 +136,7 @@ class backup(base):
 
     def restaurar(self):
         '''Restaura un backup, usar con precaucion ya que reemplaza todos los archivos de codigo'''
+        self.sock = create_connection(self.host)
         ret = {'headers': [
             ('Content-Type', 'application/json; charset=utf-8')], 'body': ''}
         import zipfile
@@ -219,7 +219,6 @@ class backup(base):
             file_write.write(json.dumps(log_file,ensure_ascii=False))
             file_write.close()
         ret['body'] = json.dumps(respuesta,ensure_ascii=False)
-        self.sock.send(ret['body'])
         self.sock.close()
         return ret
 
@@ -337,6 +336,7 @@ class backup(base):
 
     def generar_backup(self, logging=True):
         '''genera respaldo del sitio en zip, en formato "Respaldo rapido" (usa mas recursos)'''
+        self.sock = create_connection(self.host)
         ret = {'headers': [ ('Content-Type', 'application/json; charset=utf-8')], 'body': ''}
         c = configuracion_administrador()
         c.json(False)
@@ -385,14 +385,12 @@ class backup(base):
 
         if logging:
             ret['body'] = json.dumps(respuesta,ensure_ascii=False)
-            self.sock.send(ret['body'])
-
         self.sock.close()
         return ret
 
     def get_files(self, source: str, log=True):
         '''obtiene lista de archivos para respaldar en zip'''
-
+        self.sock = create_connection(self.host)
         respuesta = {'exito': False, 'mensaje': ''}
         my_file = Path(source)
         if my_file.is_dir():
@@ -460,6 +458,7 @@ class backup(base):
 
     def continuar(self):
         '''Inicio o continuacion de respaldo en modo lento (toma mas tiempo pero consume menos recursos)'''
+        self.sock = create_connection(self.host)
         ret = {'headers': [
             ('Content-Type', 'application/json; charset=utf-8')], 'body': ''}
         # lista=json.loads(app.post['lista'])
@@ -467,6 +466,7 @@ class backup(base):
         respuesta = self.zipData(
             self.base_dir, app.post['archivo_backup'], lista, app.post['total'])
         ret['body'] = json.dumps(respuesta,ensure_ascii=False)
+        self.sock.close()
         return ret
 
     def zipData(self, source, destination, lista, total=1, log=True):
@@ -524,5 +524,4 @@ class backup(base):
         respuesta['lista'] = lista
         respuesta['archivo_backup'] = destination
         respuesta['archivo_actual'] = final_file
-        self.sock.close()
         return respuesta

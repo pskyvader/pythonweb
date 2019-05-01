@@ -4,9 +4,6 @@ from core.app import app
 import pprint
 from beaker.middleware import SessionMiddleware
 
-
-from asyncore_wsgi import AsyncWebSocketHandler, make_server
-
 sys.path.insert(0, os.path.dirname(__file__))
 
 
@@ -77,30 +74,3 @@ session_opts = {
 
 app2 = LoggingMiddleware(application2)
 application = SessionMiddleware(app2, session_opts)
-
-
-
-
-
-clients = []
-class SimpleChat(AsyncWebSocketHandler):
-    def handleMessage(self):
-        for client in clients:
-            if client != self:
-                client.sendMessage("log:" + self.client_address[0] + u" - " + self.data)
-
-    def handleConnected(self):
-        clients.append(self)
-        for client in clients:
-            client.sendMessage("log:" + self.client_address[0] + u" - connected")
-            client.sendMessage("connected:" + str(len(clients)))
-
-    def handleClose(self):
-        clients.remove(self)
-        for client in clients:
-            client.sendMessage("log:" + self.client_address[0] + u" - disconnected")
-            client.sendMessage("connected:" + str(len(clients)))
-
-
-#httpd = make_server("", 25588, application, ws_handler_class=SimpleChat)
-#httpd.serve_forever()

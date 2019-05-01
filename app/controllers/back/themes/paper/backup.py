@@ -38,7 +38,7 @@ class backup(base):
         if not os.path.exists(backup.dir_backup):
             os.makedirs(backup.dir_backup)
         backup.archivo_log = app.get_dir(True) + '/log.json'
-        self.sock = websockets.connect(host)
+        self.sock = websockets.connect(self.host)
     @classmethod
     def index(cls):
         '''Controlador de lista_class de elementos base, puede ser sobreescrito en el controlador de cada modulo'''

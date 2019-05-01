@@ -24,7 +24,7 @@ function websocket_start() {
 }
 
 
-function websocket_start() {
+function websocket_stop() {
     if(websocket!=null){
         websocket.close();
     }

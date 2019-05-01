@@ -46,6 +46,7 @@ function onMessage(evt) {
     var message = evt.data;
     if (message.startsWith("log:")) {
         message = message.slice("log:".length);
+        console.log(message);
         notificacion_footer(message);
     } else if (message.startsWith("connected:")) {
         message = message.slice("connected:".length);

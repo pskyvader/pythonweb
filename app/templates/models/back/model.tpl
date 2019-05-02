@@ -11,5 +11,5 @@ from .base_model import base_model
 
 
 class {{class}}(base_model):
-    idname = 'id{{idname}}'
+    idname = '{{idname}}'
     table = '{{table}}'

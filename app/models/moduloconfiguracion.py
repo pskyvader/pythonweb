@@ -37,8 +37,12 @@ class moduloconfiguracion(base_model):
             for r in row:
                 if 'mostrar' in r and r['mostrar']!='':
                     r['mostrar'] = json.loads(r['mostrar'])
+                else:
+                    r['mostrar']=[]
                 if 'detalle' in r and r['detalle']!='':
                     r['detalle'] = json.loads(r['detalle'])
+                else:
+                    r['detalle']=[]
 
         if return_total != None:
             return len(row)
@@ -52,8 +56,14 @@ class moduloconfiguracion(base_model):
         connection = database.instance()
         row = connection.get(cls.table, cls.idname, where)
         if len(row) == 1:
-            row[0]['mostrar'] = json.loads(row[0]['mostrar'])
-            row[0]['detalle'] = json.loads(row[0]['detalle'])
+            if 'mostrar' in row[0] and row[0]['mostrar']!='':
+                row[0]['mostrar'] = json.loads(row[0]['mostrar'])
+            else:
+                row[0]['mostrar'] = []
+            if 'detalle' in row[0] and row[0]['detalle']!='':
+                row[0]['detalle'] = json.loads(row[0]['detalle'])
+            else:
+                row[0]['detalle'] = []
         return row[0] if len(row) == 1 else row
 
     @classmethod

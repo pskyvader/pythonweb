@@ -240,7 +240,7 @@ class database():
 
     def create(self, table, columns):
         sql = "CREATE TABLE " + self._prefix + table + " ("
-        for key, column in columns.items():
+        for key, column in enumerate(columns):
             if key > 0:
                 sql += ","
 

@@ -122,6 +122,9 @@ class base:
         # titulo,campo de la tabla a usar, tipo (ver archivo lista_class.py funcion "field")
         # controlador de lista_class
         lista = lista_class(cls.metadata)
+        head=lista.head()
+        if head!=False:
+            return head
         configuracion = lista.configuracion(cls.metadata['modulo'])
         if 'error' in configuracion:
             ret['error'] = configuracion['error']

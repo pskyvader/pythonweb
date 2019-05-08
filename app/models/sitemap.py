@@ -16,7 +16,7 @@ class sitemap(base_model):
         row = connection.get(cls.table, cls.idname, where, condiciones, select)
 
         if return_total != None:
-            return len(row)
+            return row[0]['total']
         else:
             return row
 

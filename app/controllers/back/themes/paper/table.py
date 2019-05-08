@@ -67,6 +67,9 @@ class table(base):
 
         # controlador de lista_class
         lista = lista_class(cls.metadata)
+        head=lista.head()
+        if head!=False:
+            return head
         where = {}
         condiciones = {}
         url_detalle = url_final.copy()

@@ -45,7 +45,7 @@ class moduloconfiguracion(base_model):
                     r['detalle']=[]
 
         if return_total != None:
-            return len(row)
+            return row[0]['total']
         else:
             return row
 

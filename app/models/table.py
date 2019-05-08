@@ -34,7 +34,7 @@ class table(base_model):
             if 'fields' in r:
                 r['fields'] = json.loads(r['fields'])
         if return_total != None:
-            return len(row)
+            return row[0]['total']
         else:
             return row
 

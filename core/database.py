@@ -76,7 +76,7 @@ class database():
         if select == "":
             select = "*"
         elif select == 'total':
-            select = idname
+            select = "COUNT("+idname+") as total"
 
         sql = "SELECT " + select + " FROM " + self._prefix + table
         sql += " WHERE (TRUE"

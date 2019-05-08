@@ -55,7 +55,7 @@ class modulo(base_model):
                 r['estado'] = []
 
         if return_total != None:
-            return len(row)
+            return row[0]['total']
         else:
             return row
 

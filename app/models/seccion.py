@@ -90,7 +90,10 @@ class seccion(base_model):
                 row = row[limit:limit2+1]
 
         if return_total != None:
-            return len(row)
+            if idpadre != None:
+                return len(row)
+            else:
+                return row[0]['total']
         else:
             return row
 

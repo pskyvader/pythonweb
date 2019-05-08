@@ -17,6 +17,14 @@ class lista:
         for key, value in metadata.items():
             self.metadata[key] = value
 
+    def head(self):
+        h = head(self.metadata)
+        ret_head = h.normal()
+        if ret_head['headers'] != '':
+            return ret_head
+        else:
+            return False
+
     def normal(self, data: dict):
         ret = {'body': []}
         th = data['th']

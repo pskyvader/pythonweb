@@ -248,6 +248,7 @@ class configuracion_administrador(base):
                     h['detalle'] = json.dumps(h['detalle'])
                     h['recortes'] = json.dumps(h['recortes'])
                     h['estado'] = json.dumps(h['estado'])
+                    
                     if len(row2) == 1:
                         h['id'] = row2[0][0]
                         h['estado'] = row2[0]['estado']

@@ -77,9 +77,7 @@ class image:
         folder = image.get_upload_dir() + base_folder + '/' + \
             str(name_final) + '/' + subfolder
 
-        my_file = Path(folder)
-        if not my_file.is_dir():
-            makedirs(folder, 777)
+        makedirs(folder,exist_ok=True)
 
         name, extension = splitext(file_move['tmp'])
         file_move['url'] = file_move['id'] + extension
@@ -131,9 +129,7 @@ class image:
             if subfolder != '':
                 folder += '/' + subfolder
 
-            my_file = Path(folder)
-            if not my_file.is_dir():
-                makedirs(folder, 777)
+            makedirs(folder,exist_ok=True)
 
             destino = folder + '/' + new_file['url']
             if os.access(folder, os.W_OK):
@@ -185,7 +181,7 @@ class image:
         import stat
         import os
         import tempfile
-        folder = image.get_upload_dir() + folder_upload
+        folder = image.get_upload_dir()
         respuesta = image.validate(file)
         if respuesta['exito']:
             if '' == name_final:
@@ -196,10 +192,11 @@ class image:
 
             name, extension = os.path.splitext(file['name'])
             extension = extension.lower()
-
-            my_file = Path(folder)
-            if not my_file.is_dir():
-                makedirs(folder, 777)
+            
+            makedirs(folder,exist_ok=True)
+            folder += folder_upload
+            makedirs(folder,exist_ok=True)
+                
             with open(folder + '/' + name_final + extension, 'wb') as output_file:
                 output_file.write(file['tmp_name'])
 

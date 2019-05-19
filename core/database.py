@@ -2,17 +2,17 @@ from .app import app
 import pymysql
 
 
-class database:
-    _dbUser = ""
-    _dbPassword = ""
-    _dbHost = ""
-    _dbName = ""
+class database():
+    _dbUser = ''
+    _dbPassword = ''
+    _dbHost = ''
+    _dbName = ''
 
     _connection = None
     _instance = None
 
-    _prefix = ""
-    _errors = ""
+    _prefix = ''
+    _errors = ''
     last_insert_id = 0
 
     def __init__(self):
@@ -25,27 +25,13 @@ class database:
             self._prefix = config["prefix"] + "_"
             self.conect()
         except:
-            print("error DB connection")
-            self._errors = (
-                "Error DB connection "
-                + self._dbHost
-                + ","
-                + self._dbUser
-                + ","
-                + self._dbPassword
-                + ","
-                + self._dbName
-            )
+            print('error DB connection')
+            self._errors = 'Error DB connection ' + self._dbHost + ',' + \
+                self._dbUser + ','+self._dbPassword + ','+self._dbName
 
     def conect(self):
         self._connection = pymysql.connect(
-            self._dbHost,
-            self._dbUser,
-            self._dbPassword,
-            self._dbName,
-            charset="utf8mb4",
-            cursorclass=pymysql.cursors.DictCursor,
-        )
+            self._dbHost, self._dbUser, self._dbPassword, self._dbName, charset='utf8mb4', cursorclass=pymysql.cursors.DictCursor)
 
     def prepare(self):
         cursor = self._connection.cursor()
@@ -54,7 +40,6 @@ class database:
     def consulta(self, sql, return_query, delete_cache=True):
         from .cache import cache
         from datetime import datetime
-
         rows = None
         try:
             cursor = self.prepare()
@@ -75,7 +60,7 @@ class database:
         except pymysql.InternalError as error:
             code, message = error.args
             self._connection.rollback()
-            raise RuntimeError("error DB query: ", code, message, sql)
+            raise RuntimeError('error DB query: ', code, message, sql)
 
         if rows is None:
             if return_query:
@@ -90,8 +75,8 @@ class database:
     def get(self, table: str, idname: str, where: dict, condiciones={}, select=""):
         if select == "":
             select = "*"
-        elif select == "total":
-            select = "COUNT(" + idname + ") as total"
+        elif select == 'total':
+            select = "COUNT("+idname+") as total"
 
         sql = "SELECT " + select + " FROM " + self._prefix + table
         sql += " WHERE (TRUE"
@@ -102,39 +87,39 @@ class database:
                 sql += " AND " + key + "='" + str(value) + "'"
         sql += ") "
 
-        if "buscar" in condiciones and isinstance(condiciones["buscar"], dict):
+        if 'buscar' in condiciones and isinstance(condiciones['buscar'], dict):
             sql += " AND ("
             count = 0
-            for key, value in condiciones["buscar"].items():
+            for key, value in condiciones['buscar'].items():
                 count += 1
                 sql += key + " LIKE '%" + value + "%'"
-                sql += " OR " if (count < len(condiciones["buscar"])) else ""
+                sql += " OR " if (count < len(condiciones['buscar'])) else ""
             sql += ") "
 
-        if "order" in condiciones:
-            sql += " ORDER BY " + condiciones["order"]
+        if 'order' in condiciones:
+            sql += " ORDER BY " + condiciones['order']
 
-        if "group" in condiciones:
-            sql += " GROUP BY " + condiciones["group"]
+        if 'group' in condiciones:
+            sql += " GROUP BY " + condiciones['group']
 
-        if "limit" in condiciones:
-            sql += " LIMIT " + str(condiciones["limit"])
-            if "limit2" in condiciones and int(condiciones["limit2"]) > 0:
-                sql += " , " + str(condiciones["limit2"])
+        if 'limit' in condiciones:
+            sql += " LIMIT " + str(condiciones['limit'])
+            if 'limit2' in condiciones and int(condiciones['limit2']) > 0:
+                sql += " , " + str(condiciones['limit2'])
         row = self.consulta(sql, True)
         return row
 
     def insert(self, table, idname, insert, delete_cache=True):
         valor_primario = "NULL"
         image = []
-        if "image" in insert:
-            image = insert["image"]
-            del insert["image"]
+        if 'image' in insert:
+            image = insert['image']
+            del insert['image']
 
         file = []
-        if "file" in insert:
-            file = insert["file"]
-            del insert["file"]
+        if 'file' in insert:
+            file = insert['file']
+            del insert['file']
 
         sql = "INSERT INTO " + self._prefix + table
         sql += "(" + idname
@@ -146,15 +131,11 @@ class database:
 
         for key, value in insert.items():
             sql += ","
-            sql += (
-                str(value).lower()
-                if (str(value).lower() == "true" or str(value).lower() == "false")
-                else "'" + str(value).replace("'", "\\'") + "'"
-            )
+            sql += str(value).lower() if (str(value).lower() == "true" or str(value).lower() == "false") else "'" + str(value).replace("'", "\\'") + "'"
 
         sql += ")"
         row = self.consulta(sql, False, delete_cache)
-        if row:
+        if (row):
             last_id = self.get_last_insert_id()
             if len(image) > 0:
                 self.process_image(image, table, idname, last_id)
@@ -167,16 +148,16 @@ class database:
     def update(self, table, idname, set_query, where, delete_cache=True):
         set_query = self.process_multiple(set_query)
         image = []
-        if "image" in set_query:
-            image = set_query["image"]
-            del set_query["image"]
+        if 'image' in set_query:
+            image = set_query['image']
+            del set_query['image']
 
         file = []
-        if "file" in set_query:
-            file = set_query["file"]
-            del set_query["file"]
-        if "..." in set_query:
-            del set_query["..."]
+        if 'file' in set_query:
+            file = set_query['file']
+            del set_query['file']
+        if '...' in set_query:
+            del set_query['...']
 
         sql = "UPDATE " + self._prefix + table
         sql += " SET "
@@ -185,11 +166,7 @@ class database:
         for key, value in set_query.items():
             count += 1
             sql += key + "="
-            sql += (
-                value
-                if (value == "true" or value == "false")
-                else "'" + str(value).replace("'", "\\'") + "'"
-            )
+            sql += str(value).lower() if (str(value).lower() == "true" or str(value).lower() == "false") else "'" + str(value).replace("'", "\\'") + "'"
             sql += ", " if (count < len(set_query)) else ""
 
         sql += " WHERE (TRUE"
@@ -199,7 +176,7 @@ class database:
 
         if len(where) > 0:
             row = self.consulta(sql, False, delete_cache)
-            if row:
+            if (row):
                 if len(image) > 0:
                     self.process_image(image, table, idname, where[idname])
 
@@ -214,7 +191,6 @@ class database:
     def delete(self, table, idname, where, delete_cache=True):
         from core.image import image
         from core.file import file
-
         sql = "DELETE FROM " + self._prefix + table
 
         sql += " WHERE (TRUE"
@@ -224,8 +200,8 @@ class database:
 
         if len(where) > 0:
             row = self.consulta(sql, False, delete_cache)
-            image.delete(table, "", where[idname])
-            file.delete(table, "", where[idname])
+            image.delete(table, '', where[idname])
+            file.delete(table, '', where[idname])
             return row
         else:
             print("error cantidad de condiciones")
@@ -234,22 +210,22 @@ class database:
     def modify(self, table, column, type_var):
         sql = "ALTER TABLE " + self._prefix + table
         sql += " MODIFY " + column + " " + type_var + " NOT NULL "
-        if type_var == "tinyint(1)":
+        if type_var == 'tinyint(1)':
             sql += " DEFAULT '1' "
 
         row = self.consulta(sql, False)
         return row
 
-    def add(self, table, column, type_var, after="", primary=False):
+    def add(self, table, column, type_var, after='', primary=False):
         sql = "ALTER TABLE " + self._prefix + table
         sql += " ADD " + column + " " + type_var + " NOT NULL "
-        if type_var == "tinyint(1)":
+        if type_var == 'tinyint(1)':
             sql += " DEFAULT '1' "
 
         if primary:
             sql += " AUTO_INCREMENT "
 
-        if after != "":
+        if after != '':
             sql += " AFTER " + after
         else:
             sql += " FIRST"
@@ -266,15 +242,16 @@ class database:
             if key > 0:
                 sql += ","
 
-            sql += column["titulo"] + " " + column["tipo"] + " NOT NULL "
+            sql += column['titulo'] + " " + column['tipo'] + " NOT NULL "
 
-            if column["tipo"] == "tinyint(1)":
+            if column['tipo'] == 'tinyint(1)':
                 sql += " DEFAULT '1' "
 
-            if column["primary"]:
+            if column['primary']:
                 sql += " AUTO_INCREMENT PRIMARY KEY "
 
         sql += " )"
+        sql += " CHARACTER SET utf8mb4 COLLATE utf8mb4_bin"
         row = self.consulta(sql, False)
         return row
 
@@ -288,91 +265,76 @@ class database:
         import os
         import io
 
-        f = io.open(backup, "r", encoding="utf8")
+        f = io.open(backup, 'r', encoding='utf8')
         sql = f.read()
         f.close()
 
-        sql_list = sql.split(";\n")
+        sql_list = sql.split(';\n')
         for s in sql_list:
             s = str(s).strip()
-            if s == "":
+            if s == '':
                 continue
 
             exito = self.consulta(s, False)
             if not exito:
-                print("error consulta:", s)
+                print('error consulta:', s)
 
         if exito:
             os.remove(backup)
         return exito
 
-    def backup(self, tables="*"):
-        respuesta = {
-            "exito": False,
-            "mensaje": "Error al respaldar base de datos",
-            "sql": [],
-        }
+    def backup(self, tables='*'):
+        respuesta = {'exito': False,
+                     'mensaje': 'Error al respaldar base de datos', 'sql': []}
         self.disableForeignKeyChecks = True
         self.batchSize = 1000
         # try:
-        if tables == "*":
+        if tables == '*':
             tables = []
-            row = self.consulta("SHOW TABLES", True)
+            row = self.consulta('SHOW TABLES', True)
             for value in row:
                 tables.append(value[0])
         else:
-            tables = (
-                tables
-                if isinstance(tables, list)
-                else (tables.replace(" ", "")).split(",")
-            )
+            tables = tables if isinstance(tables, list) else (
+                tables.replace(' ', '')).split(',')
 
         sql = ""
 
         if self.disableForeignKeyChecks == True:
-            sql += "SET foreign_key_checks = 0;\n\n"
+            sql += 'SET foreign_key_checks = 0;\n\n'
 
         for table in tables:
-            sql += "DROP TABLE IF EXISTS `" + table + "`;"
-            row = self.consulta("SHOW CREATE TABLE `" + table + "`", True)
-            sql += "\n\n" + row[0][1] + ";\n\n"
+            sql += 'DROP TABLE IF EXISTS `' + table + '`;'
+            row = self.consulta('SHOW CREATE TABLE `' + table + '`', True)
+            sql += '\n\n' + row[0][1] + ';\n\n'
 
-            row = self.consulta("SELECT COUNT(*) FROM `" + table + "`", True)
+            row = self.consulta(
+                'SELECT COUNT(*) FROM `' + table + '`', True)
             numRows = row[0][0]
 
             numBatches = int(numRows / self.batchSize) + 1
 
-            campos = self.consulta(
-                "SELECT COLUMN_NAME,COLUMN_TYPE FROM information_schema.columns WHERE table_schema='"
-                + self._dbName
-                + "' AND table_name='"
-                + table
-                + "'",
-                True,
-            )
+            campos = self.consulta("SELECT COLUMN_NAME,COLUMN_TYPE FROM information_schema.columns WHERE table_schema='" +
+                                   self._dbName + "' AND table_name='" + table + "'", True)
 
-            for b in range(1, numBatches + 1):
-                query = (
-                    "SELECT * FROM `"
-                    + table
-                    + "` LIMIT "
-                    + str(b * self.batchSize - self.batchSize)
-                    + ","
-                    + str(self.batchSize)
-                )
+            for b in range(1, numBatches+1):
+                query = 'SELECT * FROM `' + table + '` LIMIT ' + \
+                    str(b * self.batchSize - self.batchSize) + \
+                    ',' + str(self.batchSize)
                 row = self.consulta(query, True)
                 realBatchSize = len(row)
                 numFields = len(campos)
                 if realBatchSize != 0:
-                    sql += "INSERT INTO `" + table + "` VALUES "
+                    sql += 'INSERT INTO `' + table + '` VALUES '
                     for key, fila in enumerate(row):
                         rowCount = key + 1
-                        sql += "("
+                        sql += '('
 
                         for k, v in enumerate(campos):
                             j = v[0]
                             if j in fila:
-                                fila[j] = self._connection.escape_string(str(fila[j]))
+                                fila[j] = self._connection.escape_string(
+                                    str(fila[j]))
                                 fila[j] = fila[j].replace("\n", "\\n")
                                 fila[j] = fila[j].replace("\r", "\\r")
                                 fila[j] = fila[j].replace("\f", "\\f")
@@ -382,28 +344,28 @@ class database:
                                 fila[j] = fila[j].replace("\b", "\\b")
                                 sql += '"' + fila[j] + '"'
                             else:
-                                sql += "NULL"
+                                sql += 'NULL'
 
                             if k < (numFields - 1):
-                                sql += ","
+                                sql += ','
                         if rowCount == realBatchSize:
                             rowCount = 0
-                            sql += ");\n"
+                            sql += ');\n'
                         else:
-                            sql += "),\n"
+                            sql += '),\n'
 
                         rowCount += 1
 
-                respuesta["sql"].append(sql)
-                sql = ""
+                respuesta['sql'].append(sql)
+                sql = ''
 
-            sql += "\n\n"
+            sql += '\n\n'
 
         if self.disableForeignKeyChecks:
-            sql += "SET foreign_key_checks = 1;\n"
+            sql += 'SET foreign_key_checks = 1;\n'
 
-        respuesta["sql"].append(sql)
-        respuesta["exito"] = True
+        respuesta['sql'].append(sql)
+        respuesta['exito'] = True
         # except Exception as e:
         #    respuesta['mensaje'] = str(e)
         #    raise RuntimeError('Error al obtener respaldo en base de datos: ' + repr(e)
@@ -413,11 +375,10 @@ class database:
     @staticmethod
     def encript(password):
         import hashlib
-
         part1 = hashlib.sha256()
-        part1.update(password.encode("utf-8"))
+        part1.update(password.encode('utf-8'))
         part2 = hashlib.sha256()
-        part2.update(part1.hexdigest().encode("utf-8"))
+        part2.update(part1.hexdigest().encode('utf-8'))
         password = part1.hexdigest() + part2.hexdigest()
         return password
 
@@ -429,23 +390,22 @@ class database:
             if key in data:
                 m[key] = data[key]
             else:
-                if value["tipo"] == "tinyint(1)":
-                    m[key] = "true"
+                if value['tipo'] == 'tinyint(1)':
+                    m[key] = 'true'
                 else:
-                    m[key] = ""
-        if "image" in data:
-            m["image"] = data["image"]
+                    m[key] = ''
+        if 'image' in data:
+            m['image'] = data['image']
 
-        if "file" in data:
-            m["file"] = data["file"]
+        if 'file' in data:
+            m['file'] = data['file']
         return m
 
     @staticmethod
     def process_multiple(data):
         import json
-
-        if "multiple" in data:
-            for key, multiple in data["multiple"].items():
+        if 'multiple' in data:
+            for key, multiple in data['multiple'].items():
                 row = {}
                 loop = None
                 if isinstance(multiple, dict):
@@ -457,7 +417,7 @@ class database:
                 if loop != None:
                     for k, e in loop:
                         subloop = None
-
+                        
                         if isinstance(e, dict):
                             subloop = e.items()
                         elif isinstance(e, list):
@@ -475,7 +435,7 @@ class database:
                                 if key == "image" or key == "file":
                                     if not k in row:
                                         row[k] = {}
-                                    if isinstance(f, list):
+                                    if isinstance(f,list):
                                         for ke, va in enumerate(f):
                                             if not ke in row[k]:
                                                 row[k][ke] = {}
@@ -490,57 +450,56 @@ class database:
                                         row[a] = {}
                                     row[a][k] = f
 
-                if isinstance(row, dict) and all(
-                    isinstance(item, int) for item in row.keys()
-                ):
+                if isinstance(row,dict) and all(isinstance(item, int) for item in row.keys()):
                     row = [row[key] for key in sorted(row.keys())]
 
                 if key != "image" and key != "file":
+                    if key=='recortes' and isinstance(row,dict):
+                        row=[row]
                     data[key] = json.dumps(row, ensure_ascii=False)
                 else:
                     data[key] = row
 
-            del data["multiple"]
+            del data['multiple']
         return data
 
     def process_image(self, image_list, table, idname, id_image):
         import json
         from core.image import image
-
         data = {}
         ids = {}
         for key, img in image_list.items():
             row = []
             portada = False
             for f in img.values():
-                if "tmp" in f and f["tmp"] != "":
+                if 'tmp' in f and f['tmp'] != '':
                     f = image.move(f, table, key, id_image)
                 if not key in ids:
                     ids[key] = {}
 
-                ids[key][f["id"]] = f["url"]
-                if f["portada"] == "true":
+                ids[key][f['id']] = f['url']
+                if f['portada'] == 'true':
                     if portada:
-                        f["portada"] = "false"
+                        f['portada'] = 'false'
                     else:
                         portada = True
-                f["parent"] = id_image
-                f["folder"] = table
+                f['parent'] = id_image
+                f['folder'] = table
                 row.append(f)
 
             if not portada:
-                row[0]["portada"] = "true"
+                row[0]['portada'] = 'true'
             data[key] = json.dumps(row)
-        row = self.get(table, idname, {idname: id_image}, {"limit": 1})
+        row = self.get(table, idname, {idname: id_image}, {'limit': 1})
         self.update(table, idname, data, {idname: id_image})
         for key, value in ids.items():
-            if row[0][key] != "":
+            if row[0][key]!='':
                 images = json.loads(row[0][key])
             else:
-                images = ""
+                images=''
             if isinstance(images, list):
                 for img in images:
-                    if img["id"] not in value or value[img["id"]] != img["url"]:
+                    if img['id'] not in value or value[img['id']] != img['url']:
                         image.delete(table, img, id_image, key)
 
         image.delete_temp()
@@ -549,33 +508,32 @@ class database:
     def process_file(self, file_list, table, idname, id_file):
         import json
         from core.file import file
-
         data = {}
         ids = {}
         for key, archivo in file_list.items():
             row = []
             for k, f in archivo.items():
-                if "tmp" in f and f["tmp"] != "":
+                if 'tmp' in f and f['tmp'] != '':
                     f = file.move(f, table, key, id_file)
                 if key not in ids:
-                    ids[key] = {}
-                ids[key][f["id"]] = f["url"]
-                f["parent"] = id_file
-                f["folder"] = table
+                    ids[key]={}
+                ids[key][f['id']] = f['url']
+                f['parent'] = id_file
+                f['folder'] = table
                 row.append(f)
 
             data[key] = json.dumps(row)
 
-        row = self.get(table, idname, {idname: id_file}, {"limit": 1})
+        row = self.get(table, idname, {idname: id_file}, {'limit': 1})
         self.update(table, idname, data, {idname: id_file})
         for key, value in ids.items():
-            if row[0][key] != "":
+            if row[0][key]!='':
                 files = json.loads(row[0][key])
             else:
-                files = ""
+                files=''
             if isinstance(files, list):
                 for fi in files:
-                    if fi["id"] not in value or value[fi["id"]] != fi["url"]:
+                    if fi['id'] not in value or value[fi['id']] != fi['url']:
                         file.delete(table, fi, id_file, key)
 
         file.delete_temp()
